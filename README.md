@@ -1,5 +1,5 @@
-#Home Cinema (Standard)
-
+Home Cinema (Standard)
+=======================
 	###version:	0.0.1
 	
 	###build:		001
