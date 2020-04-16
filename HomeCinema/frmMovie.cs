@@ -149,6 +149,7 @@ namespace HomeCinema
 
             // Change cover image, if error occurs, Dispose form
             MOVIE_COVER = GlobalVars.GetImageFromList(MOVIE_ID);
+            /*
             if (GlobalVars.GetIndexfromList(MOVIE_ID) < 1)
             {
                 // Get Image thumbnail and set as cover
@@ -158,10 +159,11 @@ namespace HomeCinema
                 MOVIE_COVER = bm;
                 shellFile.Dispose();
             }
+            */
             if (MOVIE_COVER is null)
             {
-                //GlobalVars.Log($"frmMovie-({Name})-LoadInformation", "Setting Image Cover error");
-                //Close();
+                GlobalVars.Log($"frmMovie-({Name})-LoadInformation", "Setting Image Cover error");
+                Close();
             }
             picBox.Image = MOVIE_COVER;
 
@@ -196,7 +198,7 @@ namespace HomeCinema
                 else
                 {
                     url = MOVIE_TRAILER;
-                    webTrailer.DocumentText = GetPlayerHTML(url);
+                    //webTrailer.DocumentText = GetPlayerHTML(url);
                     webTrailer.Navigate(url);
                 }
             }
@@ -207,12 +209,8 @@ namespace HomeCinema
                     if (File.Exists(GlobalVars.FILE_NOTRAILER))
                     {
                         webTrailer.DocumentText = ShowImageONWeb(GlobalVars.FILE_NOTRAILER);
-                        return;
                     }
-                    else
-                    {
-                        return;
-                    }
+                    return;
                 }
                 else
                 {
@@ -227,12 +225,8 @@ namespace HomeCinema
                         if (File.Exists(GlobalVars.FILE_NOTRAILER))
                         {
                             webTrailer.DocumentText = ShowImageONWeb(GlobalVars.FILE_NOTRAILER);
-                            return;
                         }
-                        else
-                        {
-                            return;
-                        };
+                        return;
                     }
                 }
             }
