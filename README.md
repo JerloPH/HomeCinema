@@ -6,8 +6,9 @@
 
 ## Downloads
 
-**Windows 32-bit**: [Installer](http://example.com) | [Zipped file](http://example.com)
-**Windows 64-bit**: [Installer](http://example.com) | [Zipped file](http://example.com)
+**Windows 32-bit**: [Installer](http://example.com) | [ZIP file](http://example.com)
+
+**Windows 64-bit**: [Installer](http://example.com) | [ZIP file](http://example.com)
 
 ## What is Home Cinema?
 
