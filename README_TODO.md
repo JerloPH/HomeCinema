@@ -1,4 +1,4 @@
-# Home Cinema (Standard)
+# HomeCinema
 
 ## To-DO List:
 

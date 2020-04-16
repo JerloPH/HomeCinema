@@ -1,4 +1,4 @@
-# Home Cinema (Standard)
+# HomeCinema
 
 ## Project Started:
 
@@ -6,8 +6,8 @@
 
 ## Project History:
 
-- **v0.0.1 build 001**
-  - F*irst Release*
+- **v0.0.0.1 build 001**
+  - *First Release*
   
 ## Commits by Label
 
@@ -22,7 +22,7 @@
 - **GUI**
   > Updates to UI and Form designs
 - **Docs**
-  > Updates to UTechnical documents and text files
+  > Updates to Technical documents and text files
   
 ## Versioning
 
@@ -33,3 +33,5 @@
 - **3**: Single *Feature* or *Fix*. Also, *GUI* changes.
 - **4**: *Optimizations* and *Technical Docs* changes.
 - **5678**: Latest *Commit ID* which the release is based on.
+
+*Sample*: **Release 0.0.0.1 build 590c138**

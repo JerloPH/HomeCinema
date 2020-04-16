@@ -1,6 +1,6 @@
-# Home Cinema (Standard)
+# HomeCinema
 
-> version:	0.0.1
+> version:	0.0.0.1
 >
 > build:	001
 
