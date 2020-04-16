@@ -34,9 +34,7 @@ Disclaimer:
 =======================
 
 > No ACTUAL media files are distributed along with this software.
->
 > This is ONLY a cataloguing system for your OWNED files.
->
 > The end-user is responsible fo any misuse of this software.
 >
 > No copyright infringement intended.
