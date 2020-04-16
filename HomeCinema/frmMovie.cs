@@ -177,7 +177,7 @@ namespace HomeCinema
         public void TrailerFrame()
         {
             // Adjust Trailer Box
-            webTrailer.ScriptErrorsSuppressed = true;
+            webTrailer.ScriptErrorsSuppressed = false;
 
             // Get url
             string url;
@@ -191,9 +191,11 @@ namespace HomeCinema
                 }
                 if (MOVIE_TRAILER.StartsWith("https://www.youtube.com/watch?v="))
                 {
-                    url = MOVIE_TRAILER.Replace("https://www.youtube.com/watch?v=", "");
+                    url = MOVIE_TRAILER.Replace("https://www.youtube.com/watch?v=", String.Empty);
                     //webTrailer.DocumentText = GetYouTubeVideoPlayerHTML(url);
                     webTrailer.DocumentText = YoutubeEmbed(url);
+                    // Log to file
+                    GlobalVars.WriteToFile(GlobalVars.PATH_START + "WebTrailer.log", YoutubeEmbed(url));
                 }
                 else
                 {
@@ -201,6 +203,7 @@ namespace HomeCinema
                     //webTrailer.DocumentText = GetPlayerHTML(url);
                     webTrailer.Navigate(url);
                 }
+                return;
             }
             else
             {
@@ -237,7 +240,7 @@ namespace HomeCinema
         }
         public string YoutubeEmbed(string code)
         {
-            string url = "https://www.youtube.com/embed/" + code + "autoplay=1;?version=3&amp;rel=0";
+            string url = "https://www.youtube.com/embed/" + code + "?autoplay=1;version=3&amp;rel=0";
             var sb = new StringBuilder();
             sb.Append("<html>");
             sb.Append("    <head>");
