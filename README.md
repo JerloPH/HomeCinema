@@ -1,17 +1,15 @@
-Home Cinema (Standard)
-=======================
+# Home Cinema (Standard)
 
 > version:	0.0.1
 >
-> build:		001
+> build:	001
 
-Downloads
-=======================
+## Downloads
 
-**Windows 32-bit**: [Click here to download](http://example.com)
+**Windows 32-bit**: [Installer](http://example.com) | [Zipped file](http://example.com)
+**Windows 64-bit**: [Installer](http://example.com) | [Zipped file](http://example.com)
 
-What is Home Cinema?
-=======================
+## What is Home Cinema?
 
 **Home Cinema** is a *"media cataloguing software"*.
 
@@ -21,8 +19,7 @@ It's main feature is to ease the pain of browsing thru many folders and finding 
 
 It uses an interface that almost look like movie streaming sites.
 	
-List of features:
-=======================
+## List of features:
 	
 - Automatically add all supported media files from designated folder.
 - Allows easy browsing of media files on your Computer / Local drive.
@@ -30,8 +27,7 @@ List of features:
 - Edit and Save information within the app.
 
 
-Disclaimer:
-=======================
+## Disclaimer:
 
 > No ACTUAL media files are distributed along with this software.
 > This is ONLY a cataloguing system for your OWNED files.
