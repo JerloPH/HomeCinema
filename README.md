@@ -36,12 +36,12 @@ It uses an interface that almost look like movie streaming sites.
 ## Find a bug or want a new feature?
 
 - **Submit a ticket at *Issue* tab**.
-- *When submitting a bug report,*
+- *When submitting a **bug report**,*
   - Include the App.Log file (Located at the same folder as the main app).
   - If possible, include a screenshot.
   - Explain the details in full. Strictly **NO GENERIC** *"I get an error"* or *"This app has bugs"*.
   - Failure to comply will make your report probably ignored.
-- *When requesting a new feature / feauture update,*
+- *When requesting a **new feature / feature update**,*
   - Include how it works.
   - Explain in full details.
   - State how useful the feature is.

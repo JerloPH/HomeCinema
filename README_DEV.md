@@ -6,6 +6,8 @@
 
 ## Project History:
 
+[See this link](/VERSION_HISTORY.md)
+
 - **v0.0.0.1 build 001**
   - *First Release* (Date of Release)
  
