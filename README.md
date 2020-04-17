@@ -1,7 +1,7 @@
 # HomeCinema
 
 > version:	0.0.0.1
-
+> 
 > build:	001
 
 ## Downloads
@@ -9,6 +9,7 @@
 **Windows 32-bit**: [Installer](http://example.com) | [ZIP file](http://example.com)
 
 **Windows 64-bit**: [Installer](http://example.com) | [ZIP file](http://example.com)
+
 
 ## What is Home Cinema?
 
@@ -27,11 +28,27 @@ It uses an interface that almost look like movie streaming sites.
 - Allows filter and search.
 - Edit and Save information within the app.
 
+## External Libraries used:
+
+- **[CefSharp]**(https://cefsharp.github.io/)
+
+## Find a bug or want a new feature?
+
+- **Submit a ticket at *Issue* tab**.
+- *When submitting a bug report,*
+  - Include the App.Log file (Located at the same folder as the main app).
+  - If possible, include a screenshot.
+  - Explain the details in full. Strictly NO GENERIC *I get an error* or *This app has bugs*.
+  - Failure to comply will make your report probably ignored.
+- *When requesting a new feature / feauture update,*
+  - Include how it works.
+  - Explain in full details.
+  - State how useful the feature is.
 
 ## Disclaimer:
 
-> No ACTUAL media files are distributed along with this software.
+> No ACTUAL media files are distributed with this software.
 > This is ONLY a cataloguing system for your OWNED files.
-> The end-user is responsible fo any misuse of this software.
+> The end-user is responsible for any misuse of this software.
 >
 > No copyright infringement intended.

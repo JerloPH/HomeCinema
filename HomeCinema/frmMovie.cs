@@ -195,6 +195,7 @@ namespace HomeCinema
                     //webTrailer.DocumentText = GetYouTubeVideoPlayerHTML(url);
                     webTrailer.DocumentText = YoutubeEmbed(url);
                     // Log to file
+                    GlobalVars.WriteToFile(GlobalVars.PATH_START + "WebTrailerDocText.log", webTrailer.DocumentText.ToString());
                     GlobalVars.WriteToFile(GlobalVars.PATH_START + "WebTrailer.log", YoutubeEmbed(url));
                 }
                 else
@@ -240,7 +241,7 @@ namespace HomeCinema
         }
         public string YoutubeEmbed(string code)
         {
-            string url = "https://www.youtube.com/embed/" + code + "?autoplay=1;version=3&amp;rel=0";
+            string url = "https://www.youtube.com/embed/" + code + "?rel=0"; // " ?autoplay=1;version=3&amp;rel=0;html5=1"
             var sb = new StringBuilder();
             sb.Append("<html>");
             sb.Append("    <head>");
