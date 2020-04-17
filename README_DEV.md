@@ -7,7 +7,7 @@
 ## Project History:
 
 - **v0.0.0.1 build 001**
-  - *First Release*
+  - *First Release* (Date of Release)
  
 ## Project specific files
   - **hc_data**	: Text files used by the app. 
@@ -37,7 +37,7 @@
 - **4**: *Optimizations* and *Technical Docs* changes.
 - **5678**: Latest *Commit ID* which the release is based on.
 
-*Sample*: **Release 0.0.0.1 build 590c138**
+***Sample***: **Release 0.0.0.1 build 590c138**
 
 ## How to commit?
 
