@@ -35,7 +35,7 @@ It uses an interface that almost look like movie streaming sites.
 
 ## Find a bug or want a new feature?
 
-- **Submit a ticket at *Issue* tab**.
+- **Submit a ticket at *Issues* tab**.
 - *When submitting a **bug report**,*
   - Include the App.Log file (Located at the same folder as the main app).
   - If possible, include a screenshot.
