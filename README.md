@@ -6,7 +6,7 @@
 
 ## Downloads
 
-**Windows 32-bit**: [Installer](http://example.com "Main Link") | [ZIP file](http://example.com) \
+**Windows 32-bit**: [Installer](http://example.com "Main Link") | [ZIP file](http://example.com) <br>
 **Windows 64-bit**: [Installer](http://example.com) | [ZIP file](http://example.com)
 
 ****
@@ -48,8 +48,8 @@ It uses an interface that almost look like movie streaming sites.
 
 ## Disclaimer:
 
-> No ACTUAL media files are distributed with this software.\
-> This is ONLY a cataloguing system for your OWNED files.\
-> The end-user is responsible for any misuse of this software.\
+> No ACTUAL media files are distributed with this software. <br>
+> This is ONLY a cataloguing system for your OWNED files.<br>
+> The end-user is responsible for any misuse of this software.
 >
 > No copyright infringement intended.
