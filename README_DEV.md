@@ -6,15 +6,12 @@
 
 ## Project History:
 
-[See this link](/VERSION_HISTORY.md)
-
-- **v0.0.0.1 build 001**
-  - *First Release* (Date of Release)
+**[Click HERE to view project history](/VERSION_HISTORY.md)**
  
 ## Project specific files
   - **hc_data**	: Text files used by the app. 
 
-## Commits Category
+## Commit / Pull Request Labels
 
 - **Feature**
   > Adds a new feature to the app
@@ -41,28 +38,25 @@
 
 ***Sample***: **Release 0.0.0.1 build 590c138**
 
-## How to commit?
+## How to commit? (NOTE: Each branch must contain separate feature / fix for it to be cherry-picked)
 
-1. Make a new branch from **master**
-2. Put the branch in specified folder (in relation to **root** folder):
-  - **feature**	: For new features
-  - **fix**		: For bugfixes
-  - **minor**	: For minor changes and optimizations. Include GUI changes
-  - **gui**		: For resources used in app. Icons, images, hc_data etc...
-  - **docs**	: For document files.
-3. Name your commit by these labels:
-  - **FT**		: When adding new Features
+1. Fork from **master**
+2. Name your *commit* and *PR* by following these naming conventions:
+  - **FT**		: When adding a Feature
   - **FIX**		: Bugfixes
   - **REV**		: Revisions to codes.
   - **MINOR**	: Minor changes and optimizations.
   - **GUI**		: GUI and Resource changes.
   - **DOC**		: Documents changes.
-4. Make a **Pull Request** with the name using the above labels.
+3. Make a **Pull Request** with the name using the above labels.
+  - Make the name short and simple.
   - Include a *description* of your code. (What it does).
   - Also include what files are affected.
+  - If *FIX*, include the **ticket ID**.
   - Sample:
-    - **FT: Adds button to allow changing of App icon.** (Commit and PR name)
+    - **FT: Adds new button.** (Commit and PR name)
 	- *Adds button on frmMain that when clicked, browse for an icon and replace the old one* (PR description)
+4. Send the **PR** back to the repository.
 5. Wait for approval (Might take days or weeks, even months).
 
 **\*Make sure that you have tested your code before you commit**

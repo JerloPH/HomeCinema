@@ -6,8 +6,7 @@
 
 ## Downloads
 
-**Windows 32-bit**: [Installer](http://example.com "Main Link") | [ZIP file](http://example.com)
-
+**Windows 32-bit**: [Installer](http://example.com "Main Link") | [ZIP file](http://example.com) \
 **Windows 64-bit**: [Installer](http://example.com) | [ZIP file](http://example.com)
 
 ****
@@ -26,6 +25,7 @@ It uses an interface that almost look like movie streaming sites.
 	
 - Automatically add all supported media files from designated folder.
 - Allows easy browsing of media files on your Computer / Local drive.
+- Display a collection from your locally stored files.
 - Allows filter and search.
 - Edit and Save information within the app.
 
@@ -48,8 +48,8 @@ It uses an interface that almost look like movie streaming sites.
 
 ## Disclaimer:
 
-> No ACTUAL media files are distributed with this software.
-> This is ONLY a cataloguing system for your OWNED files.
-> The end-user is responsible for any misuse of this software.
+> No ACTUAL media files are distributed with this software.\
+> This is ONLY a cataloguing system for your OWNED files.\
+> The end-user is responsible for any misuse of this software.\
 >
 > No copyright infringement intended.
