@@ -2,14 +2,19 @@
 
 ## Project Started:
 
-> March 04, 2020 PST (Philippine Standard Time)
+> March 04, 2020 PHT (Philippine Standard Time)
 
 ## Project History:
 
-**[Click HERE to view project history](/VERSION_HISTORY.md)**
+**[View Link to read project history](/VERSION_HISTORY.md)**
  
 ## Project specific files
   - **hc_data**	: Text files used by the app. 
+  
+## Project References
+  - **[SQLite](https://www.nuget.org/packages/System.Data.SQLite)**
+  - **[Microsoft Windows API CodePack Core](https://www.nuget.org/packages/Microsoft-WindowsAPICodePack-Core/)**
+  - **[Microsoft Windows API CodePack Shell](https://www.nuget.org/packages/Microsoft-WindowsAPICodePack-Shell/)**
 
 ## Commit / Pull Request Labels
 
@@ -36,7 +41,7 @@
 - **4**: *Optimizations* and *Technical Docs* changes.
 - **5678**: Latest *Commit ID* which the release is based on.
 
-***Sample***: **Release 0.0.0.1 build 590c138**
+***Sample***: **Release 0.0.0.1 build c0b7b7d**
 
 ## How to commit? (NOTE: Each branch must contain separate feature / fix for it to be cherry-picked)
 

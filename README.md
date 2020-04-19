@@ -1,13 +1,11 @@
 # HomeCinema
 
-> version:	0.0.0.1
-> 
-> build:	001
+version:	0.0.0.1 <br>
+build:		c0b7b7d
 
 ## Downloads
 
-**Windows 32-bit**: [Installer](http://example.com "Main Link") | [ZIP file](http://example.com) <br>
-**Windows 64-bit**: [Installer](http://example.com) | [ZIP file](http://example.com)
+**Windows 32/64 bit**: [ZIP file](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.1/HomeCinema-Windows_v0.0.0.1.zip "Extract and Open") <br>
 
 ****
 
@@ -15,11 +13,11 @@
 
 **Home Cinema** is a *"media cataloguing software"*.
 
+Organize your collection of Movies and TV shows with HomeCinema.
+
 It is like a book catalogue, except it's for Movies and Series located in your Local Drive.
 
-It's main feature is to ease the pain of browsing thru many folders and finding out which movie is which.
-
-It uses an interface that almost look like movie streaming sites.
+Ease the pain of browsing through many folders and finding out which movie is which.
 	
 ## List of features:
 	
@@ -45,6 +43,12 @@ It uses an interface that almost look like movie streaming sites.
   - Include how it works.
   - Explain in full details.
   - State how useful the feature is.
+
+## License
+
+***© 2020 JerloPH *** <br>
+*This project is licensed under* **[GPL v3](https://www.gnu.org/licenses/gpl-3.0.html)** <br>
+**[Click HERE to read LICENSE.md](/LICENSE.md)**
 
 ## Disclaimer:
 
