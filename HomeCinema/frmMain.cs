@@ -14,7 +14,7 @@ namespace HomeCinema
     public partial class frmMain : Form
     {
         SQLHelper DBCON = new SQLHelper();
-        ImageList MovieIcons = GlobalVars.MOVIE_IMGLIST;
+        //ImageList MovieIcons = GlobalVars.MOVIE_IMGLIST;
         Form formLoading = new frmLoading();
         string SEARCH_QUERY = "";
         string SEARCH_COLS = "";
@@ -73,12 +73,12 @@ namespace HomeCinema
             lvSearchResult.Columns.Add("ColEpName");
             lvSearchResult.Columns.Add("ColYear");
 
-            lvSearchResult.LargeImageList = MovieIcons;
-            lvSearchResult.SmallImageList = MovieIcons;
+            lvSearchResult.LargeImageList = GlobalVars.MOVIE_IMGLIST;
+            lvSearchResult.SmallImageList = GlobalVars.MOVIE_IMGLIST;
             lvSearchResult.View = View.LargeIcon;
             lvSearchResult.TileSize = new Size((lvSearchResult.ClientRectangle.Width / 2) - 35, GlobalVars.IMGTILE_HEIGHT); // lvSearchResult.Width - (GlobalVars.IMGTILE_WIDTH + 120)
-            MovieIcons.ImageSize = new Size(GlobalVars.IMGTILE_WIDTH, GlobalVars.IMGTILE_HEIGHT);
-            MovieIcons.ColorDepth = ColorDepth.Depth32Bit;
+            GlobalVars.MOVIE_IMGLIST.ImageSize = new Size(GlobalVars.IMGTILE_WIDTH, GlobalVars.IMGTILE_HEIGHT);
+            GlobalVars.MOVIE_IMGLIST.ColorDepth = ColorDepth.Depth32Bit;
             lvSearchResult.AllowDrop = false;
             lvSearchResult.AllowColumnReorder = false;
             lvSearchResult.MultiSelect = false;
@@ -229,9 +229,9 @@ namespace HomeCinema
                     }
                     temp.SubItems.Add(r6.ToString());
                     string imgKey = Convert.ToString(MOVIEID) + ".jpg";
-                    if (MovieIcons.Images.ContainsKey(imgKey))
+                    if (GlobalVars.MOVIE_IMGLIST.Images.ContainsKey(imgKey))
                     {
-                        temp.ImageIndex = MovieIcons.Images.IndexOfKey(imgKey); //CC;
+                        temp.ImageIndex = GlobalVars.MOVIE_IMGLIST.Images.IndexOfKey(imgKey); //CC;
                     }
                     else
                     {
@@ -447,10 +447,6 @@ namespace HomeCinema
             {
                 formLoading.Dispose();
             }
-            if (MovieIcons != null)
-            {
-                MovieIcons.Dispose();
-            }
             // Clean each image 1 by 1
             GlobalVars.Log("frmMain.Designer-Dispose", "Disposing MOVIE_IMGLIST");
             foreach (Image img in GlobalVars.MOVIE_IMGLIST.Images)
@@ -462,7 +458,6 @@ namespace HomeCinema
             }
             if (GlobalVars.MOVIE_IMGLIST != null)
             {
-                //GlobalVars.Log("frmMain.Designer-Dispose", "Disposed MOVIELIST");
                 GlobalVars.MOVIE_IMGLIST.Dispose();
             }
             // Run GC to clean

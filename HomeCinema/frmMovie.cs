@@ -166,6 +166,7 @@ namespace HomeCinema
                 Close();
             }
             picBox.Image = MOVIE_COVER;
+            picBox.Refresh();
 
             // Log changes
             GlobalVars.Log($"frmMovie-LoadInformation ({Name})", "Refreshed the Information!");

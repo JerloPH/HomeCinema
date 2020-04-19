@@ -326,18 +326,18 @@ namespace HomeCinema
 
             // Setup variables
             string IMGKey = MOVIE_ID + ".jpg";
-            ImageList imgList = GlobalVars.MOVIE_IMGLIST;
+            // ImageList imgList = GlobalVars.MOVIE_IMGLIST;
 
             // Delete previous image on the ImgList
-            int index = imgList.Images.IndexOfKey(IMGKey);
+            int index = GlobalVars.MOVIE_IMGLIST.Images.IndexOfKey(IMGKey);
             if (index > 0)
             {
-                Image prevImg = imgList.Images[index];
+                Image prevImg = GlobalVars.MOVIE_IMGLIST.Images[index];
                 if (prevImg != null)
                 {
                     GlobalVars.Log($"frmMovieInfo-({Name})-SaveCoverChanged Previous Image Name", IMGKey);
                     prevImg.Dispose();
-                    imgList.Images.RemoveByKey(IMGKey);
+                    GlobalVars.MOVIE_IMGLIST.Images.RemoveByKey(IMGKey);
                 }
             }
 
@@ -500,10 +500,6 @@ namespace HomeCinema
                     dtFile.Clear();
                     dtFile.Dispose();
                 }
-
-                // Refresh parent form fmMovie
-                string[] Params = { MOVIE_ID };
-                GlobalVars.CallMethod(PARENT_NAME, "LoadInformation", Params, $"frmMovieInfo-btnSave_Click ({Name})", "frmMovie PARENT: " + PARENT_NAME);
             }
 
             // Change Cover, or Add it
@@ -512,6 +508,10 @@ namespace HomeCinema
                 SaveCoverChanged(picBox.Tag.ToString());
             }
 
+            // Refresh parent form fmMovie
+            string[] Params = { MOVIE_ID };
+            GlobalVars.CallMethod(PARENT_NAME, "LoadInformation", Params, $"frmMovieInfo-btnSave_Click ({Name})", "frmMovie PARENT: " + PARENT_NAME);
+            
             // Perform Click on btnSearch
             frmMain master = (frmMain)Application.OpenForms["frmMain"];
             master.btnSearch.PerformClick();
@@ -541,6 +541,7 @@ namespace HomeCinema
                     tempImage = Image.FromFile(selectedFilename);
                     picBox.Image = tempImage;
                     picBox.Tag = selectedFilename;
+                    picBox.Refresh();
                     GlobalVars.ShowInfo("Changed the image cover!");
                 }
                 catch (Exception exc)
