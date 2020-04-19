@@ -451,6 +451,15 @@ namespace HomeCinema
             {
                 MovieIcons.Dispose();
             }
+            // Clean each image 1 by 1
+            GlobalVars.Log("frmMain.Designer-Dispose", "Disposing MOVIE_IMGLIST");
+            foreach (Image img in GlobalVars.MOVIE_IMGLIST.Images)
+            {
+                if (img != null)
+                {
+                    img.Dispose();
+                }
+            }
             if (GlobalVars.MOVIE_IMGLIST != null)
             {
                 //GlobalVars.Log("frmMain.Designer-Dispose", "Disposed MOVIELIST");

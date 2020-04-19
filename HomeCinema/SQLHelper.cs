@@ -291,7 +291,7 @@ namespace HomeCinema.SQLFunc
                 // Build query for INFO
                 foreach (string s in Arrcols)
                 {
-                    if ((s == "category") || (s == "year") || (s == "season") || (s == "episode"))
+                    if (GlobalVars.QryColNumeric(s))
                     {
                         vals += GlobalVars.QryString(r[cc].ToString(), false) + ",";
                     }
@@ -383,7 +383,7 @@ namespace HomeCinema.SQLFunc
                 r0 = r[0].ToString();
                 for (int i = 1; i < GlobalVars.DB_TABLE_INFO.Length; i++)
                 {
-                    if ((GlobalVars.DB_TABLE_INFO[i] == "category") || (GlobalVars.DB_TABLE_INFO[i] == "year") || (GlobalVars.DB_TABLE_INFO[i] == "season") || (GlobalVars.DB_TABLE_INFO[i] == "episode"))
+                    if (GlobalVars.QryColNumeric(GlobalVars.DB_TABLE_INFO[i]))
                     {
                         valpair += "[" + GlobalVars.DB_TABLE_INFO[i] + "]=" + GlobalVars.QryString(r[i].ToString(), false) + ",";
                     }

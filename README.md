@@ -35,7 +35,7 @@ It uses an interface that almost look like movie streaming sites.
 
 ## Find a bug or want a new feature?
 
-- **Submit a ticket at *Issues* tab**.
+**Submit a ticket at *Issues* tab**.
 - *When submitting a **bug report**,*
   - Include the App.Log file (Located at the same folder as the main app).
   - If possible, include a screenshot.
@@ -48,8 +48,7 @@ It uses an interface that almost look like movie streaming sites.
 
 ## Disclaimer:
 
-> No ACTUAL media files are distributed with this software. <br>
-> This is ONLY a cataloguing system for your OWNED files.<br>
-> The end-user is responsible for any misuse of this software.
->
-> No copyright infringement intended.
+No ACTUAL media files are distributed with this software. <br>
+This is ONLY a cataloguing system for your OWNED files.<br>
+The end-user is responsible for any misuse of this software. <br>
+No copyright infringement intended.
