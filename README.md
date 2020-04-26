@@ -35,7 +35,7 @@ To add multiple directories that the app loads media files from, follow this ste
 2. On the **"\data"** folder, Open **medialocation.hc-data** using any Text Editor.
 3. Paste the directory you want to add. Example: **D:\Movies**.
 4. NOTE: To add multiple directory, seperate each entry by a "," (comma)
-5. NOTE: **DO NOT USE LINE BREAK, ENTER, or TABS as it will now be recognized**
+5. NOTE: **DO NOT USE LINE BREAK, ENTER, or TABS as it will cause bugs / directory won't be recognized**
 
 **Example**: ***D:\Movies,D:\Anime,D:\Shows***
 
