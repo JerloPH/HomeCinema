@@ -83,7 +83,7 @@ namespace HomeCinema
             string qry = $"SELECT {cols} FROM {GlobalVars.DB_TNAME_FILEPATH} WHERE Id={ID} LIMIT 1;";
             GlobalVars.Log($"frmMovie-frmMovie Table({GlobalVars.DB_TNAME_FILEPATH})", $"Query src: {qry}");
             // Execute query
-            DataTable dtFile = conn.DbQuery(qry, cols);
+            DataTable dtFile = conn.DbQuery(qry, cols, "frmMovie-LoadInformation");
             // Get result in DT
             foreach (DataRow row in dtFile.Rows)
             {
@@ -105,7 +105,7 @@ namespace HomeCinema
             qry = $"SELECT {cols} FROM {GlobalVars.DB_TNAME_INFO} WHERE Id={ID} LIMIT 1;";
             GlobalVars.Log("frmMovieInfo-frmMovieInfo (Info)", $"Query src: {qry}");
             // Exxecute query
-            DataTable dtInfo = conn.DbQuery(qry, cols);
+            DataTable dtInfo = conn.DbQuery(qry, cols, "frmMovie-LoadInformation");
             // Get result in DT
             foreach (DataRow row in dtInfo.Rows)
             {
@@ -398,9 +398,10 @@ namespace HomeCinema
                         MOVIE_COVER.Dispose();
                         GlobalVars.TryDelete(GlobalVars.GetPicPath(MOVIE_ID), errFrom);
                     }
-                    // Perform Click on btnSearch
+                    // Refresh movie list
                     frmMain master = (frmMain)Application.OpenForms["frmMain"];
-                    master.btnSearch.PerformClick();
+                    master.RefreshMovieList();
+
                     // Show message
                     GlobalVars.ShowInfo($"[{Text}] is Deleted!");
                     // Dispose

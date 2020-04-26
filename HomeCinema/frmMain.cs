@@ -17,11 +17,13 @@ namespace HomeCinema
         //ImageList MovieIcons = GlobalVars.MOVIE_IMGLIST;
         Form formLoading = new frmLoading();
         string SEARCH_QUERY = "";
-        string SEARCH_COLS = "";
-        string FOLDERTOSEARCH = "";
-        string[] MOVIE_EXTENSIONS = { ".mp4", ".mkv", ".ts" };
+        string SEARCH_COLS = "[Id],[name],[name_ep],[name_series],[season],[episode],[year]";
+        string SEARCH_QUERY_PREV = "";
+        string[] FOLDERTOSEARCH = { "" };
+        string[] MOVIE_EXTENSIONS = { ".mp4", ".mkv", ".ts", ".avi", ".flv" };
         ListViewColumnSorter lvSorter = new ListViewColumnSorter();
         BackgroundWorker bgWorkInsertMovie = new BackgroundWorker();
+        BackgroundWorker bgSearchInDB = new BackgroundWorker();
 
         public frmMain()
         {
@@ -72,11 +74,15 @@ namespace HomeCinema
             lvSearchResult.Columns.Add("ColName");
             lvSearchResult.Columns.Add("ColEpName");
             lvSearchResult.Columns.Add("ColYear");
+            lvSearchResult.Columns[0].Width = lvSearchResult.ClientRectangle.Width / 3;
+            lvSearchResult.Columns[1].Width = lvSearchResult.ClientRectangle.Width / 3;
+            lvSearchResult.Columns[2].Width = lvSearchResult.ClientRectangle.Width / 3;
 
             lvSearchResult.LargeImageList = GlobalVars.MOVIE_IMGLIST;
             lvSearchResult.SmallImageList = GlobalVars.MOVIE_IMGLIST;
             lvSearchResult.View = View.LargeIcon;
-            lvSearchResult.TileSize = new Size((lvSearchResult.ClientRectangle.Width / 2) - 35, GlobalVars.IMGTILE_HEIGHT); // lvSearchResult.Width - (GlobalVars.IMGTILE_WIDTH + 120)
+            int sizeW = (lvSearchResult.ClientRectangle.Width / 2) - GlobalVars.IMGTILE_WIDTH;
+            lvSearchResult.TileSize = new Size(sizeW, GlobalVars.IMGTILE_HEIGHT + 2); // lvSearchResult.Width - (GlobalVars.IMGTILE_WIDTH + 120)
             GlobalVars.MOVIE_IMGLIST.ImageSize = new Size(GlobalVars.IMGTILE_WIDTH, GlobalVars.IMGTILE_HEIGHT);
             GlobalVars.MOVIE_IMGLIST.ColorDepth = ColorDepth.Depth32Bit;
             lvSearchResult.AllowDrop = false;
@@ -117,12 +123,13 @@ namespace HomeCinema
             cbGenre.SelectedIndex = 0;
 
             // Perform background worker that Automatically inserts all movies from designated folder
-            // It checks if it exists first on database, using filepath
-            string tempFolder = GlobalVars.GetSingleLine(GlobalVars.FILE_MEDIALOC, "frmMain"); // Get directory to start search
-            if (String.IsNullOrWhiteSpace(tempFolder))
+            // Check if directory exists first, by readling from file
+            //string tempFolder = GlobalVars.GetSingleLine(GlobalVars.FILE_MEDIALOC, "frmMain"); // Get directory to start search
+            string[] tempFolder = GlobalVars.BuildArrFromFile(GlobalVars.FILE_MEDIALOC, "frmMain"); // Get directory to start search
+            if (tempFolder.Length < 1)
             {
-                FOLDERTOSEARCH = GlobalVars.GetDirectoryFolder("Select folder to search for media files"); // Browse for Dir
-                GlobalVars.WriteToFile(GlobalVars.FILE_MEDIALOC, FOLDERTOSEARCH);
+                FOLDERTOSEARCH[0] = GlobalVars.GetDirectoryFolder("Select folder to search for media files"); // Browse for Dir
+                GlobalVars.WriteToFile(GlobalVars.FILE_MEDIALOC, FOLDERTOSEARCH[0]);
             }
             else
             {
@@ -133,9 +140,59 @@ namespace HomeCinema
             bgWorkInsertMovie.DoWork += new DoWorkEventHandler(bgw_SearchFileinFolder);
             bgWorkInsertMovie.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgw_DoneSearchFileinFolder);
 
+            // Add events to BG Worker for Searching movie in Database
+            bgSearchInDB.DoWork += new DoWorkEventHandler(bgw_SearchMovie);
+            bgSearchInDB.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgw_DoneSearchMovie);
+
             // Start finding files in folder
             getAllMediaFiles();
 
+        }
+        // ############################################################################## Database Functions
+        bool InsertToDB(List<string> listofFiles, string errFrom)
+        {
+            string callFrom = $"frmMain ({Name})-InsertToDB-({errFrom})";
+
+            // Insert to DB if NEW MOVIE
+            SQLHelper conn = new SQLHelper();
+
+            // Build new string[] from INFO, FIlepath
+            string[] combined = new string[GlobalVars.DB_TABLE_INFO.Length + GlobalVars.DB_TABLE_FILEPATH.Length - 2];
+            Array.Copy(GlobalVars.DB_TABLE_INFO, 1, combined, 0, GlobalVars.DB_TABLE_INFO.Length - 1);
+            Array.Copy(GlobalVars.DB_TABLE_FILEPATH, 1, combined, GlobalVars.DB_TABLE_INFO.Length - 1, 3);
+
+            // Create DT
+            DataTable dt = conn.InitializeDT(false, combined);
+            foreach (string filePath in listofFiles)
+            {
+                DataRow row = dt.NewRow();
+                row[0] = "0"; // IMDB
+                row[1] = Path.GetFileNameWithoutExtension(filePath); // name
+                row[2] = ""; // episode name
+                row[3] = ""; // series name
+                row[4] = ""; // season number
+                row[5] = ""; // episode num
+                row[6] = ""; // country
+                row[7] = "0"; // category
+                row[8] = ""; // genre
+                row[9] = ""; // studio
+                row[10] = ""; // producer
+                row[11] = ""; // director
+                row[12] = ""; // artist
+                row[13] = "0"; // year
+                row[14] = ""; // summary
+                row[15] = filePath; // filepath
+                row[16] = ""; // file sub
+                row[17] = ""; // trailer
+                dt.Rows.Add(row);
+            }
+            dt.AcceptChanges();
+
+            if (conn.DbInsertMovie(dt, callFrom) > 0)
+            {
+                return true;
+            }
+            return false;
         }
         // ############################################################################## Functions
         private void getAllMediaFiles()
@@ -161,7 +218,41 @@ namespace HomeCinema
                 txtSearch.Text = "";
             }
         }
-        
+        // Execute the query, by running bgWorker bgSearchInDB
+        public void RefreshMovieList()
+        {
+            if (String.IsNullOrWhiteSpace(SEARCH_QUERY_PREV))
+            {
+                btnSearch.PerformClick();
+                return;
+            }
+            else
+            {
+                SEARCH_QUERY = SEARCH_QUERY_PREV;
+                // Run BG Worker: bgSearchInDB, for Searching movies in database
+                bgSearchInDB.RunWorkerAsync();
+
+                // Display the loading form.
+                if (formLoading == null)
+                {
+                    formLoading.ShowDialog(this);
+                }
+            }
+        }
+        public void CloseLoading()
+        {
+            // Close the loading form.
+            if (formLoading != null)
+            {
+                formLoading.Close();
+            }
+
+            // Set Focus
+            txtSearch.Focus();
+
+            // Run GC to clean
+            GlobalVars.CleanMemory();
+        }
         // ############################################################################## BACKGROUND WORKERS
         private void bgw_SearchMovie(object sender, DoWorkEventArgs e)
         {
@@ -171,16 +262,38 @@ namespace HomeCinema
             string qry = SEARCH_QUERY;
             string cols = SEARCH_COLS;
 
+            // If no query
+            if (String.IsNullOrWhiteSpace(qry))
+            {
+                // Exit
+                GlobalVars.Log("frmMain-bgw_SearchMovie", $"Query is Empty!");
+                e.Result = null;
+                return;
+            }
+
+            // SET as Previous query
+            SEARCH_QUERY_PREV = SEARCH_QUERY;
+
             // Log Query
             GlobalVars.Log("frmMain-bgw_SearchMovie", $"Start Background worker from: {Name}");
-            DataTable dt = DBCON.DbQuery(qry, cols);
+            DataTable dt = DBCON.DbQuery(qry, cols, "frmMain-bgw_SearchMovie");
 
             e.Result = dt;
         }
         private void bgw_DoneSearchMovie(object sender, RunWorkerCompletedEventArgs e)
         {
             // Retrieve the result pass from bg_DoWork() if any.
-            // Note, you may need to cast it to the desired data type.
+            // If result is null, exit;
+            if (e.Result is null)
+            {
+                ListViewItem temp = new ListViewItem() { Text = "No Search Results!" };
+                temp.Tag = "0";
+                temp.ImageIndex = 0;
+                lvSearchResult.Items.Add(temp);
+                return;
+            }
+
+            // Get result, cast to object type
             GlobalVars.Log("frmMain-bgw_DoneSearchMovie", "RETRIEVES data from Previous Search query in bgWorker");
             DataTable dt = null;
             if (e.Result is DataTable)
@@ -202,8 +315,11 @@ namespace HomeCinema
                     var r5 = r[5]; // episode
                     var r6 = r[6]; // year
 
+                    // Make new ListView item, and assign properties to it
                     ListViewItem temp = new ListViewItem() { Text = r1.ToString() };
+
                     // Is it a Movie? (by checking if there are no season)
+                    // Add sub-item for Series Name, or Episode Name
                     if (String.IsNullOrWhiteSpace(r4.ToString()))
                     {
                         // If there is no Series name
@@ -227,7 +343,11 @@ namespace HomeCinema
                         }
                         temp.SubItems.Add("S" + GlobalVars.ValidateNum(r4.ToString()) + " E" + GlobalVars.ValidateNum(r5.ToString()));
                     }
+
+                    // Add year as 3rd sub item
                     temp.SubItems.Add(r6.ToString());
+
+                    // Display image (From ImageList) based on ID
                     string imgKey = Convert.ToString(MOVIEID) + ".jpg";
                     if (GlobalVars.MOVIE_IMGLIST.Images.ContainsKey(imgKey))
                     {
@@ -237,6 +357,10 @@ namespace HomeCinema
                     {
                         temp.ImageIndex = 0;
                     }
+
+                    // Add year to name/title of MOVIE
+                    temp.Text = temp.Text + $" ({r6.ToString()})";
+
                     // Save the ID as Tag, to NOT SHOW it on LIST
                     temp.Name = Convert.ToString(MOVIEID);
                     temp.Tag = GlobalVars.ValidateZero(MOVIEID);
@@ -248,12 +372,6 @@ namespace HomeCinema
             dt.Clear();
             dt.Dispose();
 
-            // Close the loading form.
-            if (formLoading != null)
-            {
-                formLoading.Close();
-            }
-
             // If there are no results, show message
             if (lvSearchResult.Items.Count < 1)
             {
@@ -264,11 +382,13 @@ namespace HomeCinema
                 //GlobalVars.ShowInfo("There are no results for search query '" + text + "'!");
             }
 
-            // Set Focus
-            txtSearch.Focus();
+            // Clear previous values of variables
+            SEARCH_QUERY = "";
+            //lvSearchResult.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            //lvSearchResult.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
 
-            // Run GC to clean
-            GlobalVars.CleanMemory();
+            // Close loading and refresh Memory
+            CloseLoading();
         }
         // Search all Movie files in folder
         private void bgw_SearchFileinFolder(object sender, DoWorkEventArgs e)
@@ -276,8 +396,7 @@ namespace HomeCinema
             formLoading.Focus(); // Set focus to Loading
 
             // Get Movie files on Folder, even subFolder
-            string folder = FOLDERTOSEARCH;
-            if (String.IsNullOrWhiteSpace(folder))
+            if (FOLDERTOSEARCH.Length < 1)
             {
                 e.Result = null;
                 return;
@@ -285,7 +404,8 @@ namespace HomeCinema
             // Create variables
             int count = 0;
             int countVoid = 0;
-            List<string> fileList = GlobalVars.DirSearch(folder, $"frmMain ({Name})-DirSearch (Exception)");
+            // Build a list of Directories from medialocation.hc-data
+            List<string> fileList = GlobalVars.DirSearch(FOLDERTOSEARCH, $"frmMain ({Name})-DirSearch (Exception)");
 
             // Find all files that match criteria
             if (fileList.Count > 0)
@@ -381,54 +501,8 @@ namespace HomeCinema
             // Run GC to clean
             GlobalVars.CleanMemory();
 
-            // Perform click on button: btnSearch
+            // Perform click on search button: btnSearch
             btnSearch_Click(this, EventArgs.Empty);
-        }
-        // ############################################################################## Database Functions
-        bool InsertToDB(List<string> listofFiles, string errFrom)
-        {
-            string callFrom = $"frmMain ({Name})-InsertToDB-({errFrom})";
-
-            // Insert to DB if NEW MOVIE
-            SQLHelper conn = new SQLHelper();
-
-            // Build new string[] from INFO, FIlepath
-            string[] combined = new string[GlobalVars.DB_TABLE_INFO.Length + GlobalVars.DB_TABLE_FILEPATH.Length - 2];
-            Array.Copy(GlobalVars.DB_TABLE_INFO, 1, combined, 0, GlobalVars.DB_TABLE_INFO.Length - 1);
-            Array.Copy(GlobalVars.DB_TABLE_FILEPATH, 1, combined, GlobalVars.DB_TABLE_INFO.Length - 1, 3);
-
-            // Create DT
-            DataTable dt = conn.InitializeDT(false, combined);
-            foreach (string filePath in listofFiles)
-            {
-                DataRow row = dt.NewRow();
-                row[0] = "0"; // IMDB
-                row[1] = Path.GetFileNameWithoutExtension(filePath); // name
-                row[2] = ""; // episode name
-                row[3] = ""; // series name
-                row[4] = ""; // season number
-                row[5] = ""; // episode num
-                row[6] = ""; // country
-                row[7] = "0"; // category
-                row[8] = ""; // genre
-                row[9] = ""; // studio
-                row[10] = ""; // producer
-                row[11] = ""; // director
-                row[12] = ""; // artist
-                row[13] = "0"; // year
-                row[14] = ""; // summary
-                row[15] = filePath; // filepath
-                row[16] = ""; // file sub
-                row[17] = ""; // trailer
-                dt.Rows.Add(row);
-            }
-            dt.AcceptChanges();
-
-            if (conn.DbInsertMovie(dt, callFrom) > 0)
-            {
-                return true;
-            }
-            return false;
         }
         // ############################################################################## Form Control events
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -484,87 +558,87 @@ namespace HomeCinema
         private void btnSearch_Click(object sender, EventArgs e)
         {
             // Search the db for movie with filters
-            // Clear previous values
+            // Setup columns needed
+            string qry = "";
+            SEARCH_COLS = "[Id],[name],[name_ep],[name_series],[season],[episode],[year]";
+
             SEARCH_QUERY = "";
-            SEARCH_COLS = "";
-            
-            string cols = "[Id],[name],[name_ep],[name_series],[season],[episode],[year]";
-            SEARCH_COLS = cols;
-
-            // SELECT query
-            string qry = $"SELECT {cols} FROM {GlobalVars.DB_TNAME_INFO}";
-
-            // Build Filter
-            // Name Text search
-            if (txtSearch.Text != GlobalVars.SEARCHBOX_PLACEHOLDER)
+            // If there is NO existing query for search,
+            if (String.IsNullOrWhiteSpace(SEARCH_QUERY))
             {
-                qry += " WHERE ";
-                qry += $"[name] LIKE '%{txtSearch.Text}%' ";
-                qry += $"OR [name_ep] LIKE '%{txtSearch.Text}%' ";
-                qry += $"OR [name_series] LIKE '%{txtSearch.Text}%'";
-            }
-            // Year range
-            if (String.IsNullOrEmpty(txtYearFrom.Text) == false)
-            {
-                qry += GlobalVars.QryWhere(qry);
-                if (String.IsNullOrEmpty(txtYearTo.Text) == false)
+                // Default SELECT Query
+                qry = $"SELECT {SEARCH_COLS} FROM {GlobalVars.DB_TNAME_INFO}";
+
+                // Build Filter for Query
+                // Name Text search
+                if (txtSearch.Text != GlobalVars.SEARCHBOX_PLACEHOLDER)
                 {
-                    qry += $"[year] BETWEEN {txtYearFrom.Text} AND {txtYearTo.Text}";
+                    qry += " WHERE ";
+                    qry += $"[name] LIKE '%{txtSearch.Text}%' ";
+                    qry += $"OR [name_ep] LIKE '%{txtSearch.Text}%' ";
+                    qry += $"OR [name_series] LIKE '%{txtSearch.Text}%'";
                 }
-                else
+                // Year range
+                if (String.IsNullOrEmpty(txtYearFrom.Text) == false)
                 {
-                    qry += $"[year] BETWEEN {txtYearFrom.Text} AND {DateTime.Now.Year.ToString()}";
+                    qry += GlobalVars.QryWhere(qry);
+                    if (String.IsNullOrEmpty(txtYearTo.Text) == false)
+                    {
+                        qry += $"[year] BETWEEN {txtYearFrom.Text} AND {txtYearTo.Text}";
+                    }
+                    else
+                    {
+                        qry += $"[year] BETWEEN {txtYearFrom.Text} AND {DateTime.Now.Year.ToString()}";
+                    }
                 }
-            }
-            // Category
-            if (cbCategory.SelectedIndex > 0)
-            {
-                qry += GlobalVars.QryWhere(qry);
-                qry += $"[category]={cbCategory.SelectedIndex}";
-            }
-            // Studio
-            if (String.IsNullOrWhiteSpace(txtStudio.Text) == false)
-            {
-                qry += GlobalVars.QryWhere(qry);
-                qry += $"[studio] LIKE '%{txtStudio.Text}%'";
-            }
-            // Cast
-            if (String.IsNullOrWhiteSpace(txtCast.Text) == false)
-            {
-                qry += GlobalVars.QryWhere(qry);
-                qry += $"[artist] LIKE '%{txtCast.Text}%'";
-            }
-            // Country
-            string CountryText = GlobalVars.RemoveLine(cbCountry.SelectedItem.ToString());
-            if ((String.IsNullOrWhiteSpace(CountryText) == false) && cbCountry.SelectedIndex > 0)
-            {
-                qry += GlobalVars.QryWhere(qry);
-                qry += $"[country] LIKE '%{CountryText}%'";
-            }
-            // Genre
-            if (cbGenre.SelectedIndex > 0)
-            {
-                qry += GlobalVars.QryWhere(qry);
-                qry += $"[genre] LIKE '%{cbGenre.Text}%'";
+                // Category
+                if (cbCategory.SelectedIndex > 0)
+                {
+                    qry += GlobalVars.QryWhere(qry);
+                    qry += $"[category]={cbCategory.SelectedIndex}";
+                }
+                // Studio
+                if (String.IsNullOrWhiteSpace(txtStudio.Text) == false)
+                {
+                    qry += GlobalVars.QryWhere(qry);
+                    qry += $"[studio] LIKE '%{txtStudio.Text}%'";
+                }
+                // Cast
+                if (String.IsNullOrWhiteSpace(txtCast.Text) == false)
+                {
+                    qry += GlobalVars.QryWhere(qry);
+                    qry += $"[artist] LIKE '%{txtCast.Text}%'";
+                }
+                // Country
+                string CountryText = GlobalVars.RemoveLine(cbCountry.SelectedItem.ToString());
+                if ((String.IsNullOrWhiteSpace(CountryText) == false) && cbCountry.SelectedIndex > 0)
+                {
+                    qry += GlobalVars.QryWhere(qry);
+                    qry += $"[country] LIKE '%{CountryText}%'";
+                }
+                // Genre
+                if (cbGenre.SelectedIndex > 0)
+                {
+                    qry += GlobalVars.QryWhere(qry);
+                    qry += $"[genre] LIKE '%{cbGenre.Text}%'";
+                }
+
+                // Remove Previous Filters and focus on IMDB Code
+                if (String.IsNullOrWhiteSpace(txtIMDB.Text) == false)
+                {
+                    qry = $"SELECT {SEARCH_COLS} FROM {GlobalVars.DB_TNAME_INFO} WHERE ";
+                    qry += $"[imdb] = '{txtIMDB.Text}'";
+                }
+
+                // Append to end
+                qry += ";";
+
+                // Set query to perform on search
+                SEARCH_QUERY = qry;
             }
 
-            // Remove Previous Filters and focus on IMDB Code
-            if (String.IsNullOrWhiteSpace(txtIMDB.Text) == false)
-            {
-                qry = $"SELECT {cols} FROM {GlobalVars.DB_TNAME_INFO} WHERE ";
-                qry += $"[imdb] = '{txtIMDB.Text}'";
-            }
-            // Append to end
-            qry += ";";
-            SEARCH_QUERY = qry;
-
-            // Create BG Worker
-            BackgroundWorker bg = new BackgroundWorker();
-            bg.DoWork += new DoWorkEventHandler(bgw_SearchMovie);
-            bg.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgw_DoneSearchMovie);
-
-            // Start the worker.
-            bg.RunWorkerAsync();
+            // Run BG Worker: bgSearchInDB, for Searching movies in database
+            bgSearchInDB.RunWorkerAsync();
 
             // Display the loading form.
             if (formLoading == null)
@@ -613,7 +687,10 @@ namespace HomeCinema
             cbCountry.SelectedIndex = 0;
             cbGenre.SelectedIndex = 0;
 
-            // Reset search
+            // Clear values of vars
+            SEARCH_QUERY = "";
+
+            // Reset search, Perform click on search button: btnSearch
             btnSearch.PerformClick();
         }
 
@@ -668,5 +745,25 @@ namespace HomeCinema
             }
         }
 
+        private void txtSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+            if (e.KeyCode == Keys.Enter)
+            {
+                // Perform click on search button: btnSearch
+                btnSearch.PerformClick();
+            }
+        }
+
+        private void btnShowNew_Click(object sender, EventArgs e)
+        {
+            // Set Search Query
+            SEARCH_COLS = "[Id],[name],[name_ep],[name_series],[season],[episode],[year]";
+            SEARCH_QUERY = $"SELECT {SEARCH_COLS} FROM {GlobalVars.DB_TNAME_INFO} WHERE imdb=0 OR category=0;";
+            SEARCH_QUERY_PREV = SEARCH_QUERY;
+
+            // Perform click on search button: btnSearch
+            RefreshMovieList();
+        }
     }
 }

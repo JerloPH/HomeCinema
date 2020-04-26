@@ -138,7 +138,7 @@ namespace HomeCinema
             string qry = $"SELECT {cols} FROM {GlobalVars.DB_TNAME_FILEPATH} WHERE Id={ID} LIMIT 1;";
             GlobalVars.Log($"frmMovieInfo-frmMovieInfo Table({GlobalVars.DB_TNAME_FILEPATH})", $"Query src: {qry}");
 
-            DataTable dtFile = conn.DbQuery(qry, cols); // run the query
+            DataTable dtFile = conn.DbQuery(qry, cols, "frmMovie-LoadInformation"); // run the query
             foreach (DataRow row in dtFile.Rows)
             {
                 txtPathFile.Text = row[GlobalVars.DB_TABLE_FILEPATH[1]].ToString();
@@ -158,7 +158,7 @@ namespace HomeCinema
             cols = cols.TrimEnd(',');
             qry = $"SELECT {cols} FROM {GlobalVars.DB_TNAME_INFO} WHERE [Id]={txtID.Text} LIMIT 1;";
             GlobalVars.Log("frmMovieInfo-frmMovieInfo", $"Query src: {qry}");
-            DataTable dtInfo = conn.DbQuery(qry, cols);
+            DataTable dtInfo = conn.DbQuery(qry, cols, "frmMovie-LoadInformation");
             foreach (DataRow row in dtInfo.Rows)
             {
                 var r1 = row[1]; // imdb
@@ -512,9 +512,9 @@ namespace HomeCinema
             string[] Params = { MOVIE_ID };
             GlobalVars.CallMethod(PARENT_NAME, "LoadInformation", Params, $"frmMovieInfo-btnSave_Click ({Name})", "frmMovie PARENT: " + PARENT_NAME);
             
-            // Perform Click on btnSearch
+            // Refresh Movie List
             frmMain master = (frmMain)Application.OpenForms["frmMain"];
-            master.btnSearch.PerformClick();
+            master.RefreshMovieList();
 
             // Close this form
             //Dispose();

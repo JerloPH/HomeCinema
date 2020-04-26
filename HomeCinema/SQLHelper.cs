@@ -21,7 +21,7 @@ namespace HomeCinema.SQLFunc
             {
                 // There is already a database!
                 conn = DbOpen();
-                GlobalVars.Log("SQLHelper", $"Database Already Exists!\n  Path: { GlobalVars.DB_PATH }");
+                GlobalVars.LogDb("SQLHelper", $"Database Already Exists!\n  Path: { GlobalVars.DB_PATH }");
             }
             else
             {
@@ -29,7 +29,7 @@ namespace HomeCinema.SQLFunc
                 conn = DbOpen();
 
                 //ExistingDB = true;
-                GlobalVars.Log("SQLHelper-SQLHelper (Create empty database)", "No Database found! Will create..");
+                GlobalVars.LogDb("SQLHelper-SQLHelper (Create empty database)", "No Database found! Will create..");
 
                 // Create Table and Schema
                 SQLiteCommand cmd = new SQLiteCommand(conn);
@@ -62,7 +62,7 @@ namespace HomeCinema.SQLFunc
                 cmd2.ExecuteNonQuery();
                 cmd2.Dispose();
                 //GlobalVars.ShowInfo("Database is Created succesfully!");
-                GlobalVars.Log("SQLHelper", "Database is Created succesfully!\n " + GlobalVars.DB_PATH);
+                GlobalVars.LogDb("SQLHelper", "Database is Created succesfully!\n " + GlobalVars.DB_PATH);
             }
             // Dispose (Close) Connection to DB
             DbClose(conn);
@@ -76,17 +76,17 @@ namespace HomeCinema.SQLFunc
         {
             SQLiteConnection conn = new SQLiteConnection(connectionString);
             conn.Open();
-            GlobalVars.Log("SQLHelper-DbOpen", "DB Open: " + conn.FileName);
+            GlobalVars.LogDb("SQLHelper-DbOpen", "DB Open: " + conn.FileName);
             return conn;
         }
         // Close connection to database
         public static void DbClose(SQLiteConnection c)
         {
-            GlobalVars.Log("SQLHelper-DbClose", "DB Closed: " + c.FileName);
+            GlobalVars.LogDb("SQLHelper-DbClose", "DB Closed: " + c.FileName);
             c.Dispose();
         }
         // Execute a query that has no return row
-        public static bool DbExecNonQuery(string qry)
+        public static bool DbExecNonQuery(string qry, string calledFrom)
         {
             bool DONE = false;
             SQLiteConnection conn = DbOpen();
@@ -94,7 +94,7 @@ namespace HomeCinema.SQLFunc
             cmd.CommandText = qry;
             try 
             {
-                GlobalVars.Log("SQLHelper-DbExecNonQuery (START)", "query is executing");
+                GlobalVars.LogDb($"SQLHelper-DbExecNonQuery (START)[Called by: {calledFrom}]", "query is executing");
                 if (cmd.ExecuteNonQuery() > 0)
                 {
                     DONE = true;
@@ -102,7 +102,7 @@ namespace HomeCinema.SQLFunc
             }
             catch (SQLiteException e)
             {
-                GlobalVars.Log("SQLHelper-DbExecNonQuery (error message)", qry);
+                GlobalVars.LogDb("SQLHelper-DbExecNonQuery (error message)", qry);
                 GlobalVars.ShowError("SQLHelper-DbExecNonQuery (SQL Error)", e.Message);
             }
             catch (Exception e)
@@ -112,7 +112,7 @@ namespace HomeCinema.SQLFunc
             finally
             {
                 // Dispose (Close) Connection to DB
-                GlobalVars.Log("SQLHelper-DbExecNonQuery (END)", "Finished executing non-query");
+                GlobalVars.LogDb("SQLHelper-DbExecNonQuery (END)", "Finished executing non-query");
                 cmd.Dispose();
                 DbClose(conn);
             }
@@ -174,7 +174,7 @@ namespace HomeCinema.SQLFunc
             return dt;
         }
         // Execute query statement
-        public DataTable DbQuery(string qry, string cols)
+        public DataTable DbQuery(string qry, string cols, string calledFrom)
         {
             // Create Connection to database
             SQLiteConnection conn = DbOpen();
@@ -191,7 +191,7 @@ namespace HomeCinema.SQLFunc
 
             // Execute query
             SQLiteDataReader r = cmd.ExecuteReader();
-            GlobalVars.Log("SQLHelper-DbQuery (START)", "qry: " + qry);
+            GlobalVars.LogDb($"SQLHelper-DbQuery (START) [Called by: {calledFrom}]", "qry: " + qry);
             
             // Get all data results
             while (r.Read())
@@ -201,15 +201,22 @@ namespace HomeCinema.SQLFunc
                 int cc = 0;
                 foreach (string text in cols_qry)
                 {
-                    row[cc] = r[text];
-                    //GlobalVars.Log("SQLHelper-122", Convert.ToString(cc) + " : " + text + " / " + row[cc] + " // " + r[text]);
-                    cc += 1;
+                    try
+                    {
+                        row[cc] = r[text];
+                        //GlobalVars.LogDb("SQLHelper-122", Convert.ToString(cc) + " : " + text + " / " + row[cc] + " // " + r[text]);
+                        cc += 1;
+                    }
+                    catch (Exception ex)
+                    {
+                        GlobalVars.ShowError("SQLHelper - DbQuery[r.Read() Error]", ex.Message);
+                    }
                 }
                 dt.Rows.Add(row);
             }
             // Log actions to textfile
-            //GlobalVars.Log("SQLHelper-DbQuery (END)", "Finished executing Query");
-            GlobalVars.Log("SQLHelper-DbQuery (Finished executing Query)", "Number of Rows returned by query: " + Convert.ToString(dt.Rows.Count));
+            //GlobalVars.LogDb("SQLHelper-DbQuery (END)", "Finished executing Query");
+            GlobalVars.LogDb("SQLHelper-DbQuery (Finished executing Query)", "Number of Rows returned by query: " + Convert.ToString(dt.Rows.Count));
             // Dispose (Close) Connection to DB
             cmd.Dispose();
             DbClose(conn);
@@ -230,14 +237,14 @@ namespace HomeCinema.SQLFunc
             List<string> list = new List<string>();
             // Execute query
             SQLiteDataReader r = cmd.ExecuteReader();
-            GlobalVars.Log($"SQLHelper-DbQrySingle (START)(From: {From})", "qry: " + qry);
+            GlobalVars.LogDb($"SQLHelper-DbQrySingle (START)(From: {From})", "qry: " + qry);
             
             // Get results
             while (r.Read())
             {
                 list.Add(r[0].ToString());
             }
-            GlobalVars.Log($"SQLHelper-DbQrySingle (END)(From: {From})", "Rows returned: " + list.Count.ToString());
+            GlobalVars.LogDb($"SQLHelper-DbQrySingle (END)(From: {From})", "Rows returned: " + list.Count.ToString());
 
             // Dispose res
             cmd.Dispose();
@@ -313,17 +320,17 @@ namespace HomeCinema.SQLFunc
                 cmd.CommandText = qry;
 
                 // Try Execute query for INFO
-                GlobalVars.Log($"SQLHelper-DbInsertMovie (INSERT MOVIE START)({callFrom})", "Start Try inserting movie");
+                GlobalVars.LogDb($"SQLHelper-DbInsertMovie (INSERT MOVIE START)({callFrom})", "Start Try inserting movie");
                 try
                 {
                     // Execute query for INFO
                     cmd.ExecuteNonQuery();
-                    GlobalVars.Log($"SQLHelper-DbInsertMovie ({GlobalVars.DB_TNAME_INFO})({callFrom})", $"qry: {qry}");
+                    GlobalVars.LogDb($"SQLHelper-DbInsertMovie ({GlobalVars.DB_TNAME_INFO})({callFrom})", $"qry: {qry}");
 
                     // LastID of insert movie ID
                     string LastID = conn.LastInsertRowId.ToString();
                     //rows = Convert.ToInt32(LastID);
-                    //GlobalVars.Log($"{callFrom} (LAST INSERT ID)", LastID);
+                    //GlobalVars.LogDb($"{callFrom} (LAST INSERT ID)", LastID);
 
                     // Try Execute query for FILEPATH
                     try
@@ -332,28 +339,28 @@ namespace HomeCinema.SQLFunc
                         qry = $"INSERT INTO {GlobalVars.DB_TNAME_FILEPATH} ({colsFile}) VALUES({LastID},'{fPathFile}','{fPathSub}','{fPathTrailer}');";
                         cmd.CommandText = qry;
                         cmd.ExecuteNonQuery();
-                        GlobalVars.Log($"SQLHelper-DbInsertMovie ({GlobalVars.DB_TNAME_FILEPATH})({callFrom})", $"qry: {qry}");
+                        GlobalVars.LogDb($"SQLHelper-DbInsertMovie ({GlobalVars.DB_TNAME_FILEPATH})({callFrom})", $"qry: {qry}");
                         rows += 1;
                     }
                     // Catch error on executing query for FILEPATH
                     catch (Exception e)
                     {
                         // Catch unknown exceptions
-                        GlobalVars.Log($"SQLHelper-DbInsertMovie (Insert error)({GlobalVars.DB_TNAME_FILEPATH})({callFrom})", "Error: " + e.Message);
+                        GlobalVars.LogDb($"SQLHelper-DbInsertMovie (Insert error)({GlobalVars.DB_TNAME_FILEPATH})({callFrom})", "Error: " + e.Message);
                     }
                 }
                 // Catch error on executing query for INFO
                 catch (Exception e)
                 {
                     // Catch unknown exceptions (GlobalVars.ShowError)
-                    GlobalVars.Log($"SQLHelper-DbInsertMovie (Insert error)({GlobalVars.DB_TNAME_INFO})({callFrom})", "Error: " + e.Message);
+                    GlobalVars.LogDb($"SQLHelper-DbInsertMovie (Insert error)({GlobalVars.DB_TNAME_INFO})({callFrom})", "Error: " + e.Message);
                 }
 
                 // Exit foreach
                 //break;
             }
             // Release memory
-            GlobalVars.Log($"SQLHelper-DbInsertMovie (FINISHED INSERT)({callFrom})", $"Rows returned: ({rows.ToString()})");
+            GlobalVars.LogDb($"SQLHelper-DbInsertMovie (FINISHED INSERT)({callFrom})", $"Rows returned: ({rows.ToString()})");
             dt.Clear();
             dt.Dispose();
 
@@ -394,7 +401,7 @@ namespace HomeCinema.SQLFunc
                 }
             }
             valpair = valpair.TrimEnd(',');
-            //GlobalVars.Log("SQLHelper-DbUpdateInfo", valpair);
+            //GlobalVars.LogDb("SQLHelper-DbUpdateInfo", valpair);
             // dispose table
             dt.Clear();
             dt.Dispose();
@@ -402,10 +409,10 @@ namespace HomeCinema.SQLFunc
             string qry = $"UPDATE {TableName} " +
                          "SET " + valpair + " " +
                         $"WHERE [Id] = {r0}";
-            GlobalVars.Log(callFrom, $"Update {GlobalVars.DB_TNAME_INFO} ID ({r0}) || Query: {qry}");
-            if (DbExecNonQuery(qry))
+            GlobalVars.LogDb(callFrom, $"Update {GlobalVars.DB_TNAME_INFO} ID ({r0}) || Query: {qry}");
+            if (DbExecNonQuery(qry, "SQLHelper-DbUpdateInfo"))
             {
-                GlobalVars.Log(callFrom, $"ID ({r0}) is updated Succesfully!");
+                GlobalVars.LogDb(callFrom, $"ID ({r0}) is updated Succesfully!");
                 return true;
             }
             return false;
@@ -427,7 +434,7 @@ namespace HomeCinema.SQLFunc
                 }
             }
             valpair = valpair.TrimEnd(',');
-            //GlobalVars.Log("SQLHelper-DbUpdateInfo", valpair);
+            //GlobalVars.LogDb("SQLHelper-DbUpdateInfo", valpair);
             // dispose table
             dt.Clear();
             dt.Dispose();
@@ -435,10 +442,10 @@ namespace HomeCinema.SQLFunc
             string qry = $"UPDATE {TableName} " +
                          "SET " + valpair + " " +
                         $"WHERE [Id] = {r0}";
-            GlobalVars.Log(callFrom, $"Update {GlobalVars.DB_TNAME_FILEPATH} ID ({r0}) || Query: {qry}");
-            if (DbExecNonQuery(qry))
+            GlobalVars.LogDb(callFrom, $"Update {GlobalVars.DB_TNAME_FILEPATH} ID ({r0}) || Query: {qry}");
+            if (DbExecNonQuery(qry, "SQLHelper-DbUpdateFilepath"))
             {
-                GlobalVars.Log(callFrom, $"ID ({r0}) is updated Succesfully!");
+                GlobalVars.LogDb(callFrom, $"ID ({r0}) is updated Succesfully!");
                 return true;
             }
             return false;
@@ -448,14 +455,14 @@ namespace HomeCinema.SQLFunc
         {
             // Remove info
             string qry = $"DELETE FROM {GlobalVars.DB_TNAME_INFO} WHERE [Id] = {ID};";
-            if (DbExecNonQuery(qry))
+            if (DbExecNonQuery(qry, "SQLHelper-DbDeleteMovie"))
             {
-                GlobalVars.Log(errFrom, $"ID ({ID}) is removed from database! Table: ({GlobalVars.DB_TNAME_INFO})");
+                GlobalVars.LogDb(errFrom, $"ID ({ID}) is removed from database! Table: ({GlobalVars.DB_TNAME_INFO})");
                 // Remove filepath
                 qry = $"DELETE FROM {GlobalVars.DB_TNAME_FILEPATH} WHERE [Id] = {ID};";
-                if (DbExecNonQuery(qry))
+                if (DbExecNonQuery(qry, "SQLHelper-DbDeleteMovie"))
                 {
-                    GlobalVars.Log(errFrom, $"ID ({ID}) is removed from database! Table: ({GlobalVars.DB_TNAME_FILEPATH})");
+                    GlobalVars.LogDb(errFrom, $"ID ({ID}) is removed from database! Table: ({GlobalVars.DB_TNAME_FILEPATH})");
                     return true;
                 }
             }

@@ -35,6 +35,8 @@ namespace HomeCinema
             this.btnAddMovie = new System.Windows.Forms.Button();
             this.btnChangeView = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbGenre = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.cbCountry = new System.Windows.Forms.ComboBox();
             this.cbCategory = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -53,8 +55,7 @@ namespace HomeCinema
             this.label1 = new System.Windows.Forms.Label();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.lvSearchResult = new System.Windows.Forms.ListView();
-            this.cbGenre = new System.Windows.Forms.ComboBox();
-            this.label8 = new System.Windows.Forms.Label();
+            this.btnShowNew = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -62,12 +63,13 @@ namespace HomeCinema
             // groupBox2
             // 
             this.groupBox2.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox2.Controls.Add(this.btnShowNew);
             this.groupBox2.Controls.Add(this.btnSort);
             this.groupBox2.Controls.Add(this.btnAddMovie);
             this.groupBox2.Controls.Add(this.btnChangeView);
-            this.groupBox2.Location = new System.Drawing.Point(1, 417);
+            this.groupBox2.Location = new System.Drawing.Point(1, 383);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(258, 158);
+            this.groupBox2.Size = new System.Drawing.Size(258, 190);
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Controls";
@@ -77,7 +79,7 @@ namespace HomeCinema
             this.btnSort.BackColor = System.Drawing.Color.Gray;
             this.btnSort.Font = new System.Drawing.Font("Felix Titling", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSort.ForeColor = System.Drawing.Color.Black;
-            this.btnSort.Location = new System.Drawing.Point(8, 67);
+            this.btnSort.Location = new System.Drawing.Point(8, 64);
             this.btnSort.Name = "btnSort";
             this.btnSort.Size = new System.Drawing.Size(244, 40);
             this.btnSort.TabIndex = 17;
@@ -90,7 +92,7 @@ namespace HomeCinema
             this.btnAddMovie.BackColor = System.Drawing.Color.Gray;
             this.btnAddMovie.Font = new System.Drawing.Font("Felix Titling", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddMovie.ForeColor = System.Drawing.Color.Black;
-            this.btnAddMovie.Location = new System.Drawing.Point(8, 113);
+            this.btnAddMovie.Location = new System.Drawing.Point(8, 110);
             this.btnAddMovie.Name = "btnAddMovie";
             this.btnAddMovie.Size = new System.Drawing.Size(244, 40);
             this.btnAddMovie.TabIndex = 15;
@@ -140,6 +142,27 @@ namespace HomeCinema
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Media List";
+            // 
+            // cbGenre
+            // 
+            this.cbGenre.BackColor = System.Drawing.Color.Silver;
+            this.cbGenre.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbGenre.ForeColor = System.Drawing.Color.Black;
+            this.cbGenre.FormattingEnabled = true;
+            this.cbGenre.Location = new System.Drawing.Point(77, 294);
+            this.cbGenre.Name = "cbGenre";
+            this.cbGenre.Size = new System.Drawing.Size(172, 24);
+            this.cbGenre.TabIndex = 22;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.BackColor = System.Drawing.Color.Transparent;
+            this.label8.Location = new System.Drawing.Point(6, 294);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(56, 17);
+            this.label8.TabIndex = 21;
+            this.label8.Text = "Genre :";
             // 
             // cbCountry
             // 
@@ -297,6 +320,7 @@ namespace HomeCinema
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(244, 22);
             this.txtSearch.TabIndex = 2;
+            this.txtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
             // 
             // lvSearchResult
             // 
@@ -305,31 +329,23 @@ namespace HomeCinema
             this.lvSearchResult.HideSelection = false;
             this.lvSearchResult.Location = new System.Drawing.Point(271, -3);
             this.lvSearchResult.Name = "lvSearchResult";
-            this.lvSearchResult.Size = new System.Drawing.Size(840, 588);
+            this.lvSearchResult.Size = new System.Drawing.Size(959, 588);
             this.lvSearchResult.TabIndex = 20;
             this.lvSearchResult.UseCompatibleStateImageBehavior = false;
             this.lvSearchResult.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvSearchResult_MouseDoubleClick);
             // 
-            // cbGenre
+            // btnShowNew
             // 
-            this.cbGenre.BackColor = System.Drawing.Color.Silver;
-            this.cbGenre.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbGenre.ForeColor = System.Drawing.Color.Black;
-            this.cbGenre.FormattingEnabled = true;
-            this.cbGenre.Location = new System.Drawing.Point(77, 294);
-            this.cbGenre.Name = "cbGenre";
-            this.cbGenre.Size = new System.Drawing.Size(172, 24);
-            this.cbGenre.TabIndex = 22;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.BackColor = System.Drawing.Color.Transparent;
-            this.label8.Location = new System.Drawing.Point(6, 294);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(56, 17);
-            this.label8.TabIndex = 21;
-            this.label8.Text = "Genre :";
+            this.btnShowNew.BackColor = System.Drawing.Color.Gray;
+            this.btnShowNew.Font = new System.Drawing.Font("Felix Titling", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnShowNew.ForeColor = System.Drawing.Color.Black;
+            this.btnShowNew.Location = new System.Drawing.Point(9, 156);
+            this.btnShowNew.Name = "btnShowNew";
+            this.btnShowNew.Size = new System.Drawing.Size(244, 40);
+            this.btnShowNew.TabIndex = 18;
+            this.btnShowNew.Text = "Show New";
+            this.btnShowNew.UseVisualStyleBackColor = false;
+            this.btnShowNew.Click += new System.EventHandler(this.btnShowNew_Click);
             // 
             // frmMain
             // 
@@ -338,7 +354,7 @@ namespace HomeCinema
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.ClientSize = new System.Drawing.Size(1116, 585);
+            this.ClientSize = new System.Drawing.Size(1229, 585);
             this.Controls.Add(this.lvSearchResult);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -381,6 +397,7 @@ namespace HomeCinema
         internal ListView lvSearchResult;
         private ComboBox cbGenre;
         private Label label8;
+        private Button btnShowNew;
     }
 }
 

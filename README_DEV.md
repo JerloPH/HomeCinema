@@ -26,7 +26,7 @@
   > Bugfixes
 - **Optimization**
   > Minor improvements to codes
-- **GUI**
+- **Resource**
   > Updates to UI / Form designs. Include changes to Resources used by app. Icon, Image, etc..
 - **Docs**
   > Updates to Technical document files
@@ -35,10 +35,10 @@
 
 **1**.**2**.**3**.**4** build **5678**
 
-- **1**: Major *Revisions* to codes.
-- **2**: Adds *Multiple Features* and *Bugfixes*.
-- **3**: Single *Feature* or *Fix*. Also, *GUI* changes.
-- **4**: *Optimizations* and *Technical Docs* changes.
+- **1**: Major *Revisions* and Changes to codes.
+- **2**: Major *Features* and/or *Bugfixes*. *(> 10)*
+- **3**: Multiple *Feature* and/or *Fix*. *(<= 10)*
+- **4**: Single *bugfix* or *feature* update. Includes *Optimizations, GUI, Resource* and *Documents* changes.
 - **5678**: Latest *Commit ID* which the release is based on.
 
 ***Sample***: **Release 0.0.0.1 build c0b7b7d**
@@ -51,7 +51,7 @@
   - **FIX**		: Bugfixes
   - **REV**		: Revisions to codes.
   - **MINOR**	: Minor changes and optimizations.
-  - **GUI**		: GUI and Resource changes.
+  - **RES**		: GUI and Resource changes.
   - **DOC**		: Documents changes.
 3. Make a **Pull Request** with the name using the above labels.
   - Make the name short and simple.
