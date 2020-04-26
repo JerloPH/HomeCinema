@@ -11,6 +11,10 @@
 ## Project specific files
   - **hc_data**	: Text files used by the app. 
   
+## External Libraries used:
+
+- **[CefSharp](https://cefsharp.github.io/)**
+
 ## Project References
   - **[SQLite](https://www.nuget.org/packages/System.Data.SQLite)**
   - **[Microsoft Windows API CodePack Core](https://www.nuget.org/packages/Microsoft-WindowsAPICodePack-Core/)**

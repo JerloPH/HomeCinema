@@ -1,11 +1,11 @@
 # HomeCinema
 
-version:	0.0.0.1 <br>
-build:		c0b7b7d
+**version:**	0.0.0.2 <br>
+**build:**		a57d298
 
 ## Downloads
 
-**Windows 32/64 bit**: [ZIP file](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.1/HomeCinema-Windows_v0.0.0.1.zip "Extract and Open") <br>
+**Windows 32/64 bit**: [ZIP file](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.2/HomeCinema-Windows_v0.0.0.2.zip "Extract and Open") <br>
 
 ****
 
@@ -32,12 +32,12 @@ Ease the pain of browsing through many folders and finding out which movie is wh
 To add multiple directories that the app loads media files from, follow this steps: <br>
 
 1. Go to the location of HomeCinema.exe
-2. On the *"\data"* folder, open *medialocation.hc-data* using any Text Editor.
-3. Paste the directory you want to add. Example: *D:\Movies*.
-4. NOTE: To add multiple directory, seperate each entry by a ", (comma)"
-5. NOTE: *DO NOT USE LINE BREAK, ENTER, or TABS as it will now be recognized*
+2. On the **"\data"** folder, Open **medialocation.hc-data** using any Text Editor.
+3. Paste the directory you want to add. Example: **D:\Movies**.
+4. NOTE: To add multiple directory, seperate each entry by a "," (comma)
+5. NOTE: **DO NOT USE LINE BREAK, ENTER, or TABS as it will now be recognized**
 
-*Example*: *D:\Movies,D:\Anime,D:\Shows*
+**Example**: ***D:\Movies,D:\Anime,D:\Shows***
 
 ## Find a bug or want a new feature?
 
