@@ -21,15 +21,23 @@ Ease the pain of browsing through many folders and finding out which movie is wh
 	
 ## List of features:
 	
-- Automatically add all supported media files from designated folder.
+- Automatically add all supported media files from designated folders.
 - Allows easy browsing of media files on your Computer / Local drive.
 - Display a collection from your locally stored files.
 - Allows filter and search.
 - Edit and Save information within the app.
 
-## External Libraries used:
+## Edit MediaLocation
 
-- **[CefSharp](https://cefsharp.github.io/)**
+To add multiple directories that the app loads media files from, follow this steps: <br>
+
+1. Go to the location of HomeCinema.exe
+2. On the *"\data"* folder, open *medialocation.hc-data* using any Text Editor.
+3. Paste the directory you want to add. Example: *D:\Movies*.
+4. NOTE: To add multiple directory, seperate each entry by a ", (comma)"
+5. NOTE: *DO NOT USE LINE BREAK, ENTER, or TABS as it will now be recognized*
+
+*Example*: *D:\Movies,D:\Anime,D:\Shows*
 
 ## Find a bug or want a new feature?
 
