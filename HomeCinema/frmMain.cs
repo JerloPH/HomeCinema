@@ -201,8 +201,7 @@ namespace HomeCinema
             bgWorkInsertMovie.RunWorkerAsync();
 
             // Display the loading form.
-            formLoading.ShowDialog(this);
-            formLoading.Focus();
+            DisplayLoading();
         }
         public void SearchBoxPlaceholder(object sender, EventArgs e)
         {
@@ -232,11 +231,17 @@ namespace HomeCinema
                 // Run BG Worker: bgSearchInDB, for Searching movies in database
                 bgSearchInDB.RunWorkerAsync();
 
-                // Display the loading form.
-                if (formLoading == null)
-                {
-                    formLoading.ShowDialog(this);
-                }
+                DisplayLoading();
+            }
+        }
+        // Display and close loading form
+        public void DisplayLoading()
+        {
+            // Display the loading form.
+            if (formLoading == null)
+            {
+                formLoading.ShowDialog(this);
+                formLoading.Focus();
             }
         }
         public void CloseLoading()
@@ -245,6 +250,7 @@ namespace HomeCinema
             if (formLoading != null)
             {
                 formLoading.Close();
+                formLoading = null;
             }
 
             // Set Focus
@@ -393,7 +399,10 @@ namespace HomeCinema
         // Search all Movie files in folder
         private void bgw_SearchFileinFolder(object sender, DoWorkEventArgs e)
         {
-            formLoading.Focus(); // Set focus to Loading
+            if (formLoading != null)
+            {
+                formLoading.Focus(); // Set focus to Loading
+            }
 
             // Get Movie files on Folder, even subFolder
             if (FOLDERTOSEARCH.Length < 1)
@@ -641,10 +650,7 @@ namespace HomeCinema
             bgSearchInDB.RunWorkerAsync();
 
             // Display the loading form.
-            if (formLoading == null)
-            {
-                formLoading.ShowDialog(this);
-            }
+            DisplayLoading();
         }
         private void lvSearchResult_MouseDoubleClick(object sender, MouseEventArgs e)
         {
