@@ -2,13 +2,13 @@
 
 ## HomeCinema
 
-****v0.0.0.3 build a57d298** - (30 April 2020 PHT) GUI Update**
+****v0.0.0.3 build 4b4217f** - (30 April 2020 PHT) GUI Update**
 
 - **Links:**
-  -  **[Windows 32/64 bit](link_here)**
+  -  **[Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.3/HomeCinema-Windows_v0.0.0.3.zip)**
 	
 - **What's New?**
-  - Added new ["File"](/Resources/media_ext.hc_data "media_ext.hc_data") that loads supported extensions for media files.
+  - Added new ["File"](https://github.com/JerloPH/HomeCinema/tree/master/HomeCinema/Resources/media_ext.hc_data "media_ext.hc_data") that loads supported extensions for media files.
   - Changed GUI.
   - Changed "No Cover" Image file.
 
