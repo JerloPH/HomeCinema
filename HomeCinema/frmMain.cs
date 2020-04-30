@@ -15,12 +15,11 @@ namespace HomeCinema
     {
         SQLHelper DBCON = new SQLHelper();
         //ImageList MovieIcons = GlobalVars.MOVIE_IMGLIST;
-        Form formLoading = new frmLoading();
+        Form formLoading = null;
         string SEARCH_QUERY = "";
         string SEARCH_COLS = "[Id],[name],[name_ep],[name_series],[season],[episode],[year]";
         string SEARCH_QUERY_PREV = "";
         string[] FOLDERTOSEARCH = { "" };
-        string[] MOVIE_EXTENSIONS = { ".mp4", ".mkv", ".ts", ".avi", ".flv" };
         ListViewColumnSorter lvSorter = new ListViewColumnSorter();
         BackgroundWorker bgWorkInsertMovie = new BackgroundWorker();
         BackgroundWorker bgSearchInDB = new BackgroundWorker();
@@ -80,7 +79,6 @@ namespace HomeCinema
 
             lvSearchResult.LargeImageList = GlobalVars.MOVIE_IMGLIST;
             lvSearchResult.SmallImageList = GlobalVars.MOVIE_IMGLIST;
-            lvSearchResult.View = View.LargeIcon;
             int sizeW = (lvSearchResult.ClientRectangle.Width / 2) - GlobalVars.IMGTILE_WIDTH;
             lvSearchResult.TileSize = new Size(sizeW, GlobalVars.IMGTILE_HEIGHT + 2); // lvSearchResult.Width - (GlobalVars.IMGTILE_WIDTH + 120)
             GlobalVars.MOVIE_IMGLIST.ImageSize = new Size(GlobalVars.IMGTILE_WIDTH, GlobalVars.IMGTILE_HEIGHT);
@@ -92,6 +90,10 @@ namespace HomeCinema
             {
                 lv.Font = GlobalVars.TILE_FONT;
             }
+            lvSearchResult.View = View.Tile;
+
+            // Perform click on Change View
+            btnChangeView.PerformClick();
 
             // Populate combobox cbCategory
             cbCategory.Items.AddRange(GlobalVars.DB_INFO_CATEGORY);
@@ -121,6 +123,22 @@ namespace HomeCinema
                 }
             }
             cbGenre.SelectedIndex = 0;
+
+            // Setup extensions for media files, load supported ext from file
+            string[] tempMediaExt = GlobalVars.BuildArrFromFile(GlobalVars.FILE_MEDIA_EXT, "frmMain-frmMain[FILE_MEDIA_EXT");
+            string tempExtToBrowse = "";
+            string extToAdd = "";
+            foreach (string c in tempMediaExt)
+            {
+                if (String.IsNullOrWhiteSpace(c) == false)
+                {
+                    extToAdd = "." + c.Trim().ToLower();
+                    GlobalVars.MOVIE_EXTENSIONS.Add(extToAdd);
+                    tempExtToBrowse += $"*{ extToAdd };";
+                }
+            }
+            tempMediaExt = null;
+            GlobalVars.FILTER_VIDEO = "Supported Media Files|" + tempExtToBrowse;
 
             // Perform background worker that Automatically inserts all movies from designated folder
             // Check if directory exists first, by readling from file
@@ -231,17 +249,23 @@ namespace HomeCinema
                 // Run BG Worker: bgSearchInDB, for Searching movies in database
                 bgSearchInDB.RunWorkerAsync();
 
+                // Display the loading form.
                 DisplayLoading();
             }
         }
         // Display and close loading form
         public void DisplayLoading()
         {
-            // Display the loading form.
+            // Show loading form, if not already visible
             if (formLoading == null)
             {
-                formLoading.ShowDialog(this);
-                formLoading.Focus();
+                formLoading = new frmLoading(this);
+                formLoading.Show(this);
+                return;
+            }
+            else
+            {
+                formLoading.Visible = true;
             }
         }
         public void CloseLoading()
@@ -249,11 +273,11 @@ namespace HomeCinema
             // Close the loading form.
             if (formLoading != null)
             {
-                formLoading.Close();
+                formLoading.Dispose();
                 formLoading = null;
             }
 
-            // Set Focus
+            // Set Focus to searchbox
             txtSearch.Focus();
 
             // Run GC to clean
@@ -399,11 +423,6 @@ namespace HomeCinema
         // Search all Movie files in folder
         private void bgw_SearchFileinFolder(object sender, DoWorkEventArgs e)
         {
-            if (formLoading != null)
-            {
-                formLoading.Focus(); // Set focus to Loading
-            }
-
             // Get Movie files on Folder, even subFolder
             if (FOLDERTOSEARCH.Length < 1)
             {
@@ -433,7 +452,7 @@ namespace HomeCinema
                 foreach (string file in fileList)
                 {
                     // Check if file have an extension of MOVIE_EXTENSIONS
-                    foreach (string ext in MOVIE_EXTENSIONS)
+                    foreach (string ext in GlobalVars.MOVIE_EXTENSIONS)
                     {
                         if (Path.GetExtension(file).ToLower() == ext)
                         {

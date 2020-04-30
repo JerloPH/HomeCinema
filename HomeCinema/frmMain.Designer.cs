@@ -31,6 +31,7 @@ namespace HomeCinema
         private void InitializeComponent()
         {
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnShowNew = new System.Windows.Forms.Button();
             this.btnSort = new System.Windows.Forms.Button();
             this.btnAddMovie = new System.Windows.Forms.Button();
             this.btnChangeView = new System.Windows.Forms.Button();
@@ -55,31 +56,44 @@ namespace HomeCinema
             this.label1 = new System.Windows.Forms.Label();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.lvSearchResult = new System.Windows.Forms.ListView();
-            this.btnShowNew = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox2
             // 
-            this.groupBox2.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox2.BackColor = System.Drawing.Color.White;
             this.groupBox2.Controls.Add(this.btnShowNew);
             this.groupBox2.Controls.Add(this.btnSort);
             this.groupBox2.Controls.Add(this.btnAddMovie);
             this.groupBox2.Controls.Add(this.btnChangeView);
-            this.groupBox2.Location = new System.Drawing.Point(1, 383);
+            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox2.Location = new System.Drawing.Point(6, 145);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(258, 190);
+            this.groupBox2.Size = new System.Drawing.Size(1167, 68);
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Controls";
             // 
+            // btnShowNew
+            // 
+            this.btnShowNew.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnShowNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnShowNew.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnShowNew.Location = new System.Drawing.Point(758, 21);
+            this.btnShowNew.Name = "btnShowNew";
+            this.btnShowNew.Size = new System.Drawing.Size(244, 40);
+            this.btnShowNew.TabIndex = 18;
+            this.btnShowNew.Text = "Show New";
+            this.btnShowNew.UseVisualStyleBackColor = false;
+            this.btnShowNew.Click += new System.EventHandler(this.btnShowNew_Click);
+            // 
             // btnSort
             // 
-            this.btnSort.BackColor = System.Drawing.Color.Gray;
-            this.btnSort.Font = new System.Drawing.Font("Felix Titling", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSort.ForeColor = System.Drawing.Color.Black;
-            this.btnSort.Location = new System.Drawing.Point(8, 64);
+            this.btnSort.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnSort.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSort.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnSort.Location = new System.Drawing.Point(258, 21);
             this.btnSort.Name = "btnSort";
             this.btnSort.Size = new System.Drawing.Size(244, 40);
             this.btnSort.TabIndex = 17;
@@ -89,10 +103,10 @@ namespace HomeCinema
             // 
             // btnAddMovie
             // 
-            this.btnAddMovie.BackColor = System.Drawing.Color.Gray;
-            this.btnAddMovie.Font = new System.Drawing.Font("Felix Titling", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddMovie.ForeColor = System.Drawing.Color.Black;
-            this.btnAddMovie.Location = new System.Drawing.Point(8, 110);
+            this.btnAddMovie.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnAddMovie.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddMovie.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnAddMovie.Location = new System.Drawing.Point(508, 21);
             this.btnAddMovie.Name = "btnAddMovie";
             this.btnAddMovie.Size = new System.Drawing.Size(244, 40);
             this.btnAddMovie.TabIndex = 15;
@@ -102,10 +116,10 @@ namespace HomeCinema
             // 
             // btnChangeView
             // 
-            this.btnChangeView.BackColor = System.Drawing.Color.Gray;
-            this.btnChangeView.Font = new System.Drawing.Font("Felix Titling", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnChangeView.ForeColor = System.Drawing.Color.Black;
-            this.btnChangeView.Location = new System.Drawing.Point(8, 21);
+            this.btnChangeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnChangeView.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnChangeView.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnChangeView.Location = new System.Drawing.Point(6, 21);
             this.btnChangeView.Name = "btnChangeView";
             this.btnChangeView.Size = new System.Drawing.Size(244, 40);
             this.btnChangeView.TabIndex = 14;
@@ -115,7 +129,7 @@ namespace HomeCinema
             // 
             // groupBox1
             // 
-            this.groupBox1.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox1.BackColor = System.Drawing.Color.White;
             this.groupBox1.Controls.Add(this.cbGenre);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.cbCountry);
@@ -135,32 +149,35 @@ namespace HomeCinema
             this.groupBox1.Controls.Add(this.txtIMDB);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.txtSearch);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.ForeColor = System.Drawing.Color.Black;
             this.groupBox1.Location = new System.Drawing.Point(6, 10);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(259, 373);
+            this.groupBox1.Size = new System.Drawing.Size(1167, 136);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Media List";
+            this.groupBox1.Text = "Search";
             // 
             // cbGenre
             // 
             this.cbGenre.BackColor = System.Drawing.Color.Silver;
             this.cbGenre.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbGenre.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbGenre.ForeColor = System.Drawing.Color.Black;
             this.cbGenre.FormattingEnabled = true;
-            this.cbGenre.Location = new System.Drawing.Point(77, 294);
+            this.cbGenre.Location = new System.Drawing.Point(971, 61);
             this.cbGenre.Name = "cbGenre";
-            this.cbGenre.Size = new System.Drawing.Size(172, 24);
+            this.cbGenre.Size = new System.Drawing.Size(172, 30);
             this.cbGenre.TabIndex = 22;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.BackColor = System.Drawing.Color.Transparent;
-            this.label8.Location = new System.Drawing.Point(6, 294);
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(892, 65);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(56, 17);
+            this.label8.Size = new System.Drawing.Size(73, 24);
             this.label8.TabIndex = 21;
             this.label8.Text = "Genre :";
             // 
@@ -168,31 +185,34 @@ namespace HomeCinema
             // 
             this.cbCountry.BackColor = System.Drawing.Color.Silver;
             this.cbCountry.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCountry.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbCountry.ForeColor = System.Drawing.Color.Black;
             this.cbCountry.FormattingEnabled = true;
-            this.cbCountry.Location = new System.Drawing.Point(77, 259);
+            this.cbCountry.Location = new System.Drawing.Point(691, 95);
             this.cbCountry.Name = "cbCountry";
-            this.cbCountry.Size = new System.Drawing.Size(172, 24);
+            this.cbCountry.Size = new System.Drawing.Size(172, 30);
             this.cbCountry.TabIndex = 20;
             // 
             // cbCategory
             // 
             this.cbCategory.BackColor = System.Drawing.Color.Silver;
             this.cbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCategory.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbCategory.ForeColor = System.Drawing.Color.Black;
             this.cbCategory.FormattingEnabled = true;
-            this.cbCategory.Location = new System.Drawing.Point(78, 223);
+            this.cbCategory.Location = new System.Drawing.Point(691, 58);
             this.cbCategory.Name = "cbCategory";
-            this.cbCategory.Size = new System.Drawing.Size(172, 24);
+            this.cbCategory.Size = new System.Drawing.Size(172, 30);
             this.cbCategory.TabIndex = 19;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.BackColor = System.Drawing.Color.Transparent;
-            this.label7.Location = new System.Drawing.Point(6, 259);
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(585, 95);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(65, 17);
+            this.label7.Size = new System.Drawing.Size(85, 24);
             this.label7.TabIndex = 18;
             this.label7.Text = "Country :";
             // 
@@ -200,18 +220,19 @@ namespace HomeCinema
             // 
             this.label6.AutoSize = true;
             this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.Location = new System.Drawing.Point(6, 223);
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(585, 64);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(77, 17);
+            this.label6.Size = new System.Drawing.Size(100, 24);
             this.label6.TabIndex = 16;
             this.label6.Text = "Category : ";
             // 
             // btnSearch
             // 
-            this.btnSearch.BackColor = System.Drawing.Color.Gray;
-            this.btnSearch.Font = new System.Drawing.Font("Felix Titling", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSearch.ForeColor = System.Drawing.Color.Black;
-            this.btnSearch.Location = new System.Drawing.Point(6, 327);
+            this.btnSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnSearch.Location = new System.Drawing.Point(916, 19);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(244, 40);
             this.btnSearch.TabIndex = 15;
@@ -221,10 +242,10 @@ namespace HomeCinema
             // 
             // btnClear
             // 
-            this.btnClear.BackColor = System.Drawing.Color.Gray;
-            this.btnClear.Font = new System.Drawing.Font("Felix Titling", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClear.ForeColor = System.Drawing.Color.Black;
-            this.btnClear.Location = new System.Drawing.Point(6, 21);
+            this.btnClear.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClear.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnClear.Location = new System.Drawing.Point(896, 97);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(244, 40);
             this.btnClear.TabIndex = 2;
@@ -234,118 +255,117 @@ namespace HomeCinema
             // 
             // txtCast
             // 
-            this.txtCast.Location = new System.Drawing.Point(65, 191);
+            this.txtCast.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCast.Location = new System.Drawing.Point(368, 97);
             this.txtCast.Name = "txtCast";
-            this.txtCast.Size = new System.Drawing.Size(185, 22);
+            this.txtCast.Size = new System.Drawing.Size(185, 28);
             this.txtCast.TabIndex = 12;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Location = new System.Drawing.Point(6, 191);
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(296, 94);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(48, 17);
+            this.label5.Size = new System.Drawing.Size(61, 24);
             this.label5.TabIndex = 11;
             this.label5.Text = "Cast : ";
             // 
             // txtStudio
             // 
-            this.txtStudio.Location = new System.Drawing.Point(65, 163);
+            this.txtStudio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtStudio.Location = new System.Drawing.Point(368, 61);
             this.txtStudio.Name = "txtStudio";
-            this.txtStudio.Size = new System.Drawing.Size(185, 22);
+            this.txtStudio.Size = new System.Drawing.Size(185, 28);
             this.txtStudio.TabIndex = 10;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 163);
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(296, 61);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(60, 17);
+            this.label4.Size = new System.Drawing.Size(78, 24);
             this.label4.TabIndex = 9;
             this.label4.Text = "Studio : ";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(149, 135);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(161, 97);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(13, 17);
+            this.label3.Size = new System.Drawing.Size(16, 24);
             this.label3.TabIndex = 8;
             this.label3.Text = "-";
             // 
             // txtYearTo
             // 
-            this.txtYearTo.Location = new System.Drawing.Point(168, 132);
+            this.txtYearTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtYearTo.Location = new System.Drawing.Point(181, 95);
             this.txtYearTo.Name = "txtYearTo";
-            this.txtYearTo.Size = new System.Drawing.Size(82, 22);
+            this.txtYearTo.Size = new System.Drawing.Size(82, 28);
             this.txtYearTo.TabIndex = 7;
             // 
             // txtYearFrom
             // 
-            this.txtYearFrom.Location = new System.Drawing.Point(65, 132);
+            this.txtYearFrom.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtYearFrom.Location = new System.Drawing.Point(77, 95);
             this.txtYearFrom.Name = "txtYearFrom";
-            this.txtYearFrom.Size = new System.Drawing.Size(81, 22);
+            this.txtYearFrom.Size = new System.Drawing.Size(81, 28);
             this.txtYearFrom.TabIndex = 6;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 132);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(3, 94);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(50, 17);
+            this.label2.Size = new System.Drawing.Size(64, 24);
             this.label2.TabIndex = 5;
             this.label2.Text = "Year : ";
             // 
             // txtIMDB
             // 
-            this.txtIMDB.Location = new System.Drawing.Point(65, 98);
+            this.txtIMDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtIMDB.Location = new System.Drawing.Point(78, 61);
             this.txtIMDB.Name = "txtIMDB";
-            this.txtIMDB.Size = new System.Drawing.Size(185, 22);
+            this.txtIMDB.Size = new System.Drawing.Size(185, 28);
             this.txtIMDB.TabIndex = 4;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 98);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(2, 61);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 17);
+            this.label1.Size = new System.Drawing.Size(70, 24);
             this.label1.TabIndex = 3;
             this.label1.Text = "IMDB : ";
             // 
             // txtSearch
             // 
             this.txtSearch.AccessibleDescription = "Search here";
-            this.txtSearch.Location = new System.Drawing.Point(6, 66);
+            this.txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSearch.Location = new System.Drawing.Point(3, 21);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(244, 22);
+            this.txtSearch.Size = new System.Drawing.Size(907, 34);
             this.txtSearch.TabIndex = 2;
             this.txtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
             // 
             // lvSearchResult
             // 
-            this.lvSearchResult.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.lvSearchResult.BackColor = System.Drawing.Color.Black;
+            this.lvSearchResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lvSearchResult.ForeColor = System.Drawing.Color.White;
             this.lvSearchResult.HideSelection = false;
-            this.lvSearchResult.Location = new System.Drawing.Point(271, -3);
+            this.lvSearchResult.Location = new System.Drawing.Point(6, 212);
             this.lvSearchResult.Name = "lvSearchResult";
-            this.lvSearchResult.Size = new System.Drawing.Size(959, 588);
+            this.lvSearchResult.Size = new System.Drawing.Size(1167, 461);
             this.lvSearchResult.TabIndex = 20;
             this.lvSearchResult.UseCompatibleStateImageBehavior = false;
             this.lvSearchResult.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvSearchResult_MouseDoubleClick);
-            // 
-            // btnShowNew
-            // 
-            this.btnShowNew.BackColor = System.Drawing.Color.Gray;
-            this.btnShowNew.Font = new System.Drawing.Font("Felix Titling", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnShowNew.ForeColor = System.Drawing.Color.Black;
-            this.btnShowNew.Location = new System.Drawing.Point(9, 156);
-            this.btnShowNew.Name = "btnShowNew";
-            this.btnShowNew.Size = new System.Drawing.Size(244, 40);
-            this.btnShowNew.TabIndex = 18;
-            this.btnShowNew.Text = "Show New";
-            this.btnShowNew.UseVisualStyleBackColor = false;
-            this.btnShowNew.Click += new System.EventHandler(this.btnShowNew_Click);
             // 
             // frmMain
             // 
@@ -354,7 +374,7 @@ namespace HomeCinema
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.ClientSize = new System.Drawing.Size(1229, 585);
+            this.ClientSize = new System.Drawing.Size(1178, 673);
             this.Controls.Add(this.lvSearchResult);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);

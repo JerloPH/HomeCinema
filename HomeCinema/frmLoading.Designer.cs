@@ -30,12 +30,10 @@ namespace HomeCinema
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLoading));
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.picBox = new System.Windows.Forms.PictureBox();
-            this.timeClose = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -78,11 +76,6 @@ namespace HomeCinema
             this.picBox.TabIndex = 2;
             this.picBox.TabStop = false;
             // 
-            // timeClose
-            // 
-            this.timeClose.Interval = 3000;
-            this.timeClose.Tick += new System.EventHandler(this.timeClose_Tick);
-            // 
             // frmLoading
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -93,13 +86,13 @@ namespace HomeCinema
             this.Controls.Add(this.picBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "frmLoading";
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Please wait while loading..";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.frmLoading_Load);
@@ -112,6 +105,5 @@ namespace HomeCinema
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox picBox;
-        private Timer timeClose;
     }
 }

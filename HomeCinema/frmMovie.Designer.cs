@@ -62,7 +62,6 @@
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnPlay = new System.Windows.Forms.Button();
             this.picBox = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
@@ -103,7 +102,6 @@
             this.groupBox2.Controls.Add(this.webTrailer);
             this.groupBox2.Controls.Add(this.groupBox3);
             this.groupBox2.Controls.Add(this.picBox);
-            this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.ForeColor = System.Drawing.SystemColors.ControlLight;
@@ -286,20 +284,20 @@
             // 
             // label22
             // 
-            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label22.ForeColor = System.Drawing.Color.White;
-            this.label22.Location = new System.Drawing.Point(455, 49);
+            this.label22.Location = new System.Drawing.Point(385, 49);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(53, 25);
+            this.label22.Size = new System.Drawing.Size(101, 25);
             this.label22.TabIndex = 16;
-            this.label22.Text = "Ep#";
+            this.label22.Text = "Episode #";
             this.label22.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // lblSeasonNum
             // 
             this.lblSeasonNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSeasonNum.ForeColor = System.Drawing.Color.Yellow;
-            this.lblSeasonNum.Location = new System.Drawing.Point(402, 50);
+            this.lblSeasonNum.Location = new System.Drawing.Point(290, 49);
             this.lblSeasonNum.Name = "lblSeasonNum";
             this.lblSeasonNum.Size = new System.Drawing.Size(43, 25);
             this.lblSeasonNum.TabIndex = 15;
@@ -307,13 +305,13 @@
             // 
             // label7
             // 
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(363, 50);
+            this.label7.Location = new System.Drawing.Point(190, 50);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(36, 25);
+            this.label7.Size = new System.Drawing.Size(93, 25);
             this.label7.TabIndex = 14;
-            this.label7.Text = "S#";
+            this.label7.Text = "Season #";
             // 
             // lblNameEp
             // 
@@ -370,7 +368,7 @@
             // 
             this.lblYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblYear.ForeColor = System.Drawing.Color.Yellow;
-            this.lblYear.Location = new System.Drawing.Point(273, 48);
+            this.lblYear.Location = new System.Drawing.Point(509, 18);
             this.lblYear.Name = "lblYear";
             this.lblYear.Size = new System.Drawing.Size(66, 25);
             this.lblYear.TabIndex = 7;
@@ -380,7 +378,7 @@
             // 
             this.lblIMDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblIMDB.ForeColor = System.Drawing.Color.Yellow;
-            this.lblIMDB.Location = new System.Drawing.Point(422, 21);
+            this.lblIMDB.Location = new System.Drawing.Point(268, 18);
             this.lblIMDB.Name = "lblIMDB";
             this.lblIMDB.Size = new System.Drawing.Size(148, 25);
             this.lblIMDB.TabIndex = 6;
@@ -391,11 +389,12 @@
             // 
             this.lblID.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblID.ForeColor = System.Drawing.Color.Yellow;
-            this.lblID.Location = new System.Drawing.Point(273, 21);
+            this.lblID.Location = new System.Drawing.Point(1, 496);
             this.lblID.Name = "lblID";
-            this.lblID.Size = new System.Drawing.Size(66, 25);
+            this.lblID.Size = new System.Drawing.Size(145, 25);
             this.lblID.TabIndex = 5;
-            this.lblID.Text = "ID";
+            this.lblID.Text = "ID Hidden";
+            this.lblID.Visible = false;
             // 
             // label15
             // 
@@ -423,7 +422,7 @@
             this.groupBox3.Controls.Add(this.btnEdit);
             this.groupBox3.Controls.Add(this.btnPlay);
             this.groupBox3.ForeColor = System.Drawing.Color.White;
-            this.groupBox3.Location = new System.Drawing.Point(6, 317);
+            this.groupBox3.Location = new System.Drawing.Point(4, 329);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(177, 151);
             this.groupBox3.TabIndex = 0;
@@ -475,22 +474,11 @@
             this.picBox.TabStop = false;
             this.picBox.Click += new System.EventHandler(this.picBox_Click);
             // 
-            // label1
-            // 
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(188, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(64, 25);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "ID";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
             // label2
             // 
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(343, 21);
+            this.label2.Location = new System.Drawing.Point(189, 18);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(73, 25);
             this.label2.TabIndex = 0;
@@ -500,7 +488,7 @@
             // 
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Location = new System.Drawing.Point(188, 48);
+            this.label8.Location = new System.Drawing.Point(422, 18);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(64, 25);
             this.label8.TabIndex = 3;
@@ -544,7 +532,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button btnPlay;
         private System.Windows.Forms.PictureBox picBox;

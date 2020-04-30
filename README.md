@@ -1,11 +1,11 @@
 # HomeCinema
 
-**version:**	0.0.0.2 <br>
+**version:**	0.0.0.3 <br>
 **build:**		a57d298
 
 ## Downloads
 
-**Windows 32/64 bit**: [ZIP file](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.2/HomeCinema-Windows_v0.0.0.2.zip "Extract and Open") <br>
+**Windows 32/64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.2/HomeCinema-Windows_v0.0.0.2.zip "Extract and Open") <br>
 
 ****
 

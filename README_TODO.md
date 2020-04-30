@@ -2,7 +2,9 @@
 
 ## To-DO List:
 - General
-  - [ ] Add file that contains media extensions to search
+  - [x] Add file that contains media extensions to search
+  
+  - [ ] Update GUI
 
 - Main Form
   - [ ] Add Button to Group Items (Group by: Series Name, if Series) *(Check if season or episode is not empty, and get only episode 1)*
@@ -16,4 +18,4 @@
   
   - [ ] Automatically get information from IMDB when newly added media (IMDB Scraper)
   
-  - [ ] Remove ID from information (hidden)
+  - [x] Hide ID from information (hidden)
