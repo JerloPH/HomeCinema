@@ -4,6 +4,8 @@ using System.IO;
 using System.Data.SQLite;
 using System.Data;
 using HomeCinema.Global;
+using Microsoft.WindowsAPICodePack.Shell;
+using System.Drawing;
 
 namespace HomeCinema.SQLFunc
 {
@@ -13,15 +15,18 @@ namespace HomeCinema.SQLFunc
         //public bool ExistingDB { get; set; } = false;
 
         // Start Connecting to database, when object is initialize
-        public SQLHelper()
+        public SQLHelper(string InitiatedFrom)
         {
             SQLiteConnection conn = null;
+
+            string CalledFrom = "SQLHelper (Instance)-" + InitiatedFrom;
+
             // Start connection
             if (File.Exists(GlobalVars.DB_PATH))
             {
                 // There is already a database!
                 conn = DbOpen();
-                GlobalVars.LogDb("SQLHelper", $"Database Already Exists!\n  Path: { GlobalVars.DB_PATH }");
+                GlobalVars.LogDb(CalledFrom, $"Database Already Exists!\n  Path: { GlobalVars.DB_PATH }");
             }
             else
             {
@@ -29,7 +34,7 @@ namespace HomeCinema.SQLFunc
                 conn = DbOpen();
 
                 //ExistingDB = true;
-                GlobalVars.LogDb("SQLHelper-SQLHelper (Create empty database)", "No Database found! Will create..");
+                GlobalVars.LogDb(CalledFrom + " (Create empty database)", "No Database found! Will create..");
 
                 // Create Table and Schema
                 SQLiteCommand cmd = new SQLiteCommand(conn);
@@ -62,7 +67,7 @@ namespace HomeCinema.SQLFunc
                 cmd2.ExecuteNonQuery();
                 cmd2.Dispose();
                 //GlobalVars.ShowInfo("Database is Created succesfully!");
-                GlobalVars.LogDb("SQLHelper", "Database is Created succesfully!\n " + GlobalVars.DB_PATH);
+                GlobalVars.LogDb(CalledFrom, "Database is Created succesfully!\n " + GlobalVars.DB_PATH);
             }
             // Dispose (Close) Connection to DB
             DbClose(conn);
@@ -82,10 +87,11 @@ namespace HomeCinema.SQLFunc
         // Close connection to database
         public static void DbClose(SQLiteConnection c)
         {
-            GlobalVars.LogDb("SQLHelper-DbClose", "DB Closed: " + c.FileName);
+            string cFile = c.FileName;
             c.Dispose();
+            GlobalVars.LogDb("SQLHelper-DbClose", "DB Closed: " + cFile);
         }
-        // Execute a query that has no return row
+        // Execute a query that has no return row, returns if succesful or not
         public static bool DbExecNonQuery(string qry, string calledFrom)
         {
             bool DONE = false;
@@ -102,7 +108,7 @@ namespace HomeCinema.SQLFunc
             }
             catch (SQLiteException e)
             {
-                GlobalVars.LogDb("SQLHelper-DbExecNonQuery (error message)", qry);
+                GlobalVars.LogDb("SQLHelper-DbExecNonQuery (Query)", qry);
                 GlobalVars.ShowError("SQLHelper-DbExecNonQuery (SQL Error)", e.Message);
             }
             catch (Exception e)
@@ -242,7 +248,11 @@ namespace HomeCinema.SQLFunc
             // Get results
             while (r.Read())
             {
-                list.Add(r[0].ToString());
+                string stringRes = r[0].ToString();
+                if (String.IsNullOrWhiteSpace(stringRes) == false)
+                {
+                    list.Add(stringRes);
+                }
             }
             GlobalVars.LogDb($"SQLHelper-DbQrySingle (END)(From: {From})", "Rows returned: " + list.Count.ToString());
 
@@ -341,6 +351,22 @@ namespace HomeCinema.SQLFunc
                         cmd.ExecuteNonQuery();
                         GlobalVars.LogDb($"SQLHelper-DbInsertMovie ({GlobalVars.DB_TNAME_FILEPATH})({callFrom})", $"qry: {qry}");
                         rows += 1;
+
+                        // Add cover image by capturing media
+                        string coverFilepath = GlobalVars.PATH_IMG + LastID + ".jpg";
+                        try
+                        {
+                            ShellFile shellFile = ShellFile.FromFilePath(fPathFile);
+                            Bitmap bm = shellFile.Thumbnail.Bitmap;
+                            bm.Save(coverFilepath, System.Drawing.Imaging.ImageFormat.Jpeg);
+                            bm.Dispose();
+                            shellFile.Dispose();
+                        }
+                        catch (Exception exShell)
+                        {
+                            GlobalVars.LogDb($"SQLHelper-DbInsertMovie (Insert Cover FilePath)({GlobalVars.DB_TNAME_FILEPATH})({callFrom})", coverFilepath);
+                            GlobalVars.LogDb($"SQLHelper-DbInsertMovie (ShellFile thumbnail Error)({GlobalVars.DB_TNAME_FILEPATH})({callFrom})", exShell.Message);
+                        }
                     }
                     // Catch error on executing query for FILEPATH
                     catch (Exception e)

@@ -2,6 +2,16 @@
 
 ## HomeCinema
 
+****v0.0.0.4 build null** - (30 April 2020 PHT) Title**
+
+- **Links:**
+  -  **[Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.3/HomeCinema-Windows_v0.0.0.3.zip)**
+	
+- **What's New?**
+  - Automatically add cover image from media thumbnail.
+  - FIX: Loading form infinite looping on first time load.
+  - Minor improvements and Code cleanup.
+
 ****v0.0.0.3 build 4b4217f** - (30 April 2020 PHT) GUI Update**
 
 - **Links:**

@@ -13,7 +13,7 @@ namespace HomeCinema
 {
     public partial class frmMain : Form
     {
-        SQLHelper DBCON = new SQLHelper();
+        SQLHelper DBCON = new SQLHelper("frmMain");
         //ImageList MovieIcons = GlobalVars.MOVIE_IMGLIST;
         Form formLoading = null;
         string SEARCH_QUERY = "";
@@ -41,7 +41,7 @@ namespace HomeCinema
 
             // Form properties
             FormClosing += new FormClosingEventHandler(frmMain_FormClosing);
-            Icon = new Icon(GlobalVars.FILE_ICON);
+            Icon = GlobalVars.HOMECINEMA_ICON;
 
             // Change Caption and Title
             Text = GlobalVars.HOMECINEMA_NAME + " v" + GlobalVars.HOMECINEMA_VERSION + " " + GlobalVars.HOMECINEMA_BUILD;
@@ -112,7 +112,7 @@ namespace HomeCinema
             cbCountry.SelectedIndex = 0;
 
             // Populate Genre from File
-            GlobalVars.TEXT_GENRE = GlobalVars.BuildArrFromFile(GlobalVars.FILE_GENRE, "frmMain-frmMain[FILE_GENRE");
+            GlobalVars.TEXT_GENRE = GlobalVars.BuildArrFromFile(GlobalVars.FILE_GENRE, "frmMain-frmMain[FILE_GENRE]");
             // Populate combobox cbCategory
             cbGenre.Items.Add("All");
             foreach (string c in GlobalVars.TEXT_GENRE)
@@ -125,7 +125,7 @@ namespace HomeCinema
             cbGenre.SelectedIndex = 0;
 
             // Setup extensions for media files, load supported ext from file
-            string[] tempMediaExt = GlobalVars.BuildArrFromFile(GlobalVars.FILE_MEDIA_EXT, "frmMain-frmMain[FILE_MEDIA_EXT");
+            string[] tempMediaExt = GlobalVars.BuildArrFromFile(GlobalVars.FILE_MEDIA_EXT, "frmMain-frmMain[FILE_MEDIA_EXT]");
             string tempExtToBrowse = "";
             string extToAdd = "";
             foreach (string c in tempMediaExt)
@@ -172,15 +172,13 @@ namespace HomeCinema
             string callFrom = $"frmMain ({Name})-InsertToDB-({errFrom})";
 
             // Insert to DB if NEW MOVIE
-            SQLHelper conn = new SQLHelper();
-
             // Build new string[] from INFO, FIlepath
             string[] combined = new string[GlobalVars.DB_TABLE_INFO.Length + GlobalVars.DB_TABLE_FILEPATH.Length - 2];
             Array.Copy(GlobalVars.DB_TABLE_INFO, 1, combined, 0, GlobalVars.DB_TABLE_INFO.Length - 1);
             Array.Copy(GlobalVars.DB_TABLE_FILEPATH, 1, combined, GlobalVars.DB_TABLE_INFO.Length - 1, 3);
 
             // Create DT
-            DataTable dt = conn.InitializeDT(false, combined);
+            DataTable dt = DBCON.InitializeDT(false, combined);
             foreach (string filePath in listofFiles)
             {
                 DataRow row = dt.NewRow();
@@ -206,7 +204,7 @@ namespace HomeCinema
             }
             dt.AcceptChanges();
 
-            if (conn.DbInsertMovie(dt, callFrom) > 0)
+            if (DBCON.DbInsertMovie(dt, callFrom) > 0)
             {
                 return true;
             }
@@ -261,7 +259,6 @@ namespace HomeCinema
             {
                 formLoading = new frmLoading(this);
                 formLoading.Show(this);
-                return;
             }
             else
             {
@@ -281,13 +278,11 @@ namespace HomeCinema
             txtSearch.Focus();
 
             // Run GC to clean
-            GlobalVars.CleanMemory();
+            GlobalVars.CleanMemory("frmMain-CloseLoading");
         }
         // ############################################################################## BACKGROUND WORKERS
         private void bgw_SearchMovie(object sender, DoWorkEventArgs e)
         {
-            // formLoading.Focus(); // set focus to loading
-
             // Get query from variable, set by background worker
             string qry = SEARCH_QUERY;
             string cols = SEARCH_COLS;
@@ -305,141 +300,157 @@ namespace HomeCinema
             SEARCH_QUERY_PREV = SEARCH_QUERY;
 
             // Log Query
-            GlobalVars.Log("frmMain-bgw_SearchMovie", $"Start Background worker from: {Name}");
+            GlobalVars.Log("frmMain-bgw_SearchMovie", $"START Background worker from: {Name}");
             DataTable dt = DBCON.DbQuery(qry, cols, "frmMain-bgw_SearchMovie");
-
-            e.Result = dt;
+            if (dt.Rows.Count > 0)
+            {
+                e.Result = dt;
+            }
+            else
+            {
+                e.Result = null;
+            }
         }
         private void bgw_DoneSearchMovie(object sender, RunWorkerCompletedEventArgs e)
         {
             // Retrieve the result pass from bg_DoWork() if any.
-            // If result is null, exit;
-            if (e.Result is null)
+            try
             {
-                ListViewItem temp = new ListViewItem() { Text = "No Search Results!" };
-                temp.Tag = "0";
-                temp.ImageIndex = 0;
-                lvSearchResult.Items.Add(temp);
-                return;
-            }
-
-            // Get result, cast to object type
-            GlobalVars.Log("frmMain-bgw_DoneSearchMovie", "RETRIEVES data from Previous Search query in bgWorker");
-            DataTable dt = null;
-            if (e.Result is DataTable)
-            {
-                // Set the e.Result from BgWorker as DT
-                dt = e.Result as DataTable;
-                // Clear previous list
-                lvSearchResult.Items.Clear();
-                // Load Icon Pics from folder
-                GlobalVars.PopulateCover();
-                // Add to listview lvSearchResult
-                foreach (DataRow r in dt.Rows)
+                // If result is null, exit;
+                if (e.Result == null)
                 {
-                    var MOVIEID = Convert.ToInt32(r[0]);
-                    var r1 = r[1]; // name
-                    var r2 = r[2]; // name_ep
-                    var r3 = r[3]; // name_series
-                    var r4 = r[4]; // season
-                    var r5 = r[5]; // episode
-                    var r6 = r[6]; // year
+                    ListViewItem temp = new ListViewItem() { Text = "No Search Results!" };
+                    temp.Tag = "0";
+                    temp.ImageIndex = 0;
+                    lvSearchResult.Items.Add(temp);
+                    CloseLoading(); // Close loading form
+                    return;
+                }
 
-                    // Make new ListView item, and assign properties to it
-                    ListViewItem temp = new ListViewItem() { Text = r1.ToString() };
-
-                    // Is it a Movie? (by checking if there are no season)
-                    // Add sub-item for Series Name, or Episode Name
-                    if (String.IsNullOrWhiteSpace(r4.ToString()))
+                // Get result, cast to object type
+                GlobalVars.Log("frmMain-bgw_DoneSearchMovie", "RETRIEVES data from Previous Search query in bgWorker");
+                DataTable dt = null;
+                if (e.Result is DataTable)
+                {
+                    // Set the e.Result from BgWorker as DT
+                    dt = e.Result as DataTable;
+                    // Clear previous list
+                    lvSearchResult.Items.Clear();
+                    // Load Icon Pics from folder
+                    GlobalVars.PopulateCover();
+                    // Add to listview lvSearchResult
+                    foreach (DataRow r in dt.Rows)
                     {
-                        // If there is no Series name
-                        if (String.IsNullOrWhiteSpace(r3.ToString()))
+                        var MOVIEID = Convert.ToInt32(r[0]);
+                        var r1 = r[1]; // name
+                        var r2 = r[2]; // name_ep
+                        var r3 = r[3]; // name_series
+                        var r4 = r[4]; // season
+                        var r5 = r[5]; // episode
+                        var r6 = r[6]; // year
+
+                        // Make new ListView item, and assign properties to it
+                        ListViewItem temp = new ListViewItem() { Text = r1.ToString() };
+
+                        // Is it a Movie? (by checking if there are no season)
+                        // Add sub-item for Series Name, or Episode Name
+                        if (String.IsNullOrWhiteSpace(r4.ToString()))
                         {
-                            // Use Episode name
-                            temp.SubItems.Add(r2.ToString());
+                            // If there is no Series name
+                            if (String.IsNullOrWhiteSpace(r3.ToString()))
+                            {
+                                // Use Episode name
+                                temp.SubItems.Add(r2.ToString());
+                            }
+                            else
+                            {
+                                // Otherwise use Series
+                                temp.SubItems.Add(r3.ToString());
+                            }
                         }
                         else
                         {
-                            // Otherwise use Series
-                            temp.SubItems.Add(r3.ToString());
+                            // Set Series Name
+                            if (String.IsNullOrWhiteSpace(r3.ToString()))
+                            {
+                                temp.Text = r3.ToString(); //Set Series Name
+                            }
+                            temp.SubItems.Add("S" + GlobalVars.ValidateNum(r4.ToString()) + " E" + GlobalVars.ValidateNum(r5.ToString()));
                         }
-                    }
-                    else
-                    {
-                        // Set Series Name
-                        if (String.IsNullOrWhiteSpace(r3.ToString()))
+
+                        // Add year as 3rd sub item
+                        temp.SubItems.Add(r6.ToString());
+
+                        // Display image (From ImageList) based on ID
+                        string imgKey = Convert.ToString(MOVIEID) + ".jpg";
+                        if (GlobalVars.MOVIE_IMGLIST.Images.ContainsKey(imgKey))
                         {
-                            temp.Text = r3.ToString(); //Set Series Name
+                            temp.ImageIndex = GlobalVars.MOVIE_IMGLIST.Images.IndexOfKey(imgKey); //CC;
                         }
-                        temp.SubItems.Add("S" + GlobalVars.ValidateNum(r4.ToString()) + " E" + GlobalVars.ValidateNum(r5.ToString()));
+                        else
+                        {
+                            temp.ImageIndex = 0;
+                        }
+
+                        // Add year to name/title of MOVIE
+                        temp.Text = temp.Text + $" ({r6.ToString()})";
+
+                        // Save the ID as Tag, to NOT SHOW it on LIST
+                        temp.Name = Convert.ToString(MOVIEID);
+                        temp.Tag = GlobalVars.ValidateZero(MOVIEID);
+                        lvSearchResult.Items.Add(temp);
                     }
-
-                    // Add year as 3rd sub item
-                    temp.SubItems.Add(r6.ToString());
-
-                    // Display image (From ImageList) based on ID
-                    string imgKey = Convert.ToString(MOVIEID) + ".jpg";
-                    if (GlobalVars.MOVIE_IMGLIST.Images.ContainsKey(imgKey))
-                    {
-                        temp.ImageIndex = GlobalVars.MOVIE_IMGLIST.Images.IndexOfKey(imgKey); //CC;
-                    }
-                    else
-                    {
-                        temp.ImageIndex = 0;
-                    }
-
-                    // Add year to name/title of MOVIE
-                    temp.Text = temp.Text + $" ({r6.ToString()})";
-
-                    // Save the ID as Tag, to NOT SHOW it on LIST
-                    temp.Name = Convert.ToString(MOVIEID);
-                    temp.Tag = GlobalVars.ValidateZero(MOVIEID);
-                    lvSearchResult.Items.Add(temp);
                 }
-            }
-            // Dispose the table after iterating thru its contents
-            GlobalVars.Log("frmMain-bgw_DoneSearchMovie", "Done with results!");
-            dt.Clear();
-            dt.Dispose();
+                // Dispose the table after iterating thru its contents
+                GlobalVars.Log("frmMain-bgw_DoneSearchMovie", "Done with results!");
+                dt.Clear();
+                dt.Dispose();
 
-            // If there are no results, show message
-            if (lvSearchResult.Items.Count < 1)
+                // If there are no results, show message
+                if (lvSearchResult.Items.Count < 1)
+                {
+                    ListViewItem temp = new ListViewItem() { Text = "No Search Results!" };
+                    temp.Tag = "0";
+                    temp.ImageIndex = 0;
+                    lvSearchResult.Items.Add(temp);
+                    //GlobalVars.ShowInfo("There are no results for search query '" + text + "'!");
+                }
+
+                // Clear previous values of variables
+                SEARCH_QUERY = "";
+                //lvSearchResult.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                //lvSearchResult.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            }
+            catch (Exception exc)
             {
-                ListViewItem temp = new ListViewItem() { Text = "No Search Results!" };
-                temp.Tag = "0";
-                temp.ImageIndex = 0;
-                lvSearchResult.Items.Add(temp);
-                //GlobalVars.ShowInfo("There are no results for search query '" + text + "'!");
+                GlobalVars.ShowError("frmMain-bgwDoneSearchMovie (General Exception)", exc.Message);
             }
-
-            // Clear previous values of variables
-            SEARCH_QUERY = "";
-            //lvSearchResult.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            //lvSearchResult.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-
-            // Close loading and refresh Memory
-            CloseLoading();
+            finally
+            {
+                // Close loading and refresh Memory
+                CloseLoading();
+            }
         }
         // Search all Movie files in folder
         private void bgw_SearchFileinFolder(object sender, DoWorkEventArgs e)
         {
+            // Error from
+            string calledFrom = $"frmMain-bgw_SearchFileinFolder";
+
             // Get Movie files on Folder, even subFolder
-            if (FOLDERTOSEARCH.Length < 1)
-            {
-                e.Result = null;
-                return;
-            }
             // Create variables
             int count = 0;
             int countVoid = 0;
-            // Build a list of Directories from medialocation.hc-data
-            List<string> fileList = GlobalVars.DirSearch(FOLDERTOSEARCH, $"frmMain ({Name})-DirSearch (Exception)");
 
+            // Build a list of Directories from medialocation.hc-data
+            List<string> DirListFrom = GlobalVars.DirSearch(FOLDERTOSEARCH, calledFrom +"- DirSearch (Exception)");
+
+            // Check first if there are directories to search from.
             // Find all files that match criteria
-            if (fileList.Count > 0)
+            if (DirListFrom.Count > 0)
             {
                 // List already in db
-                List<string> listAlreadyinDB = DBCON.DbQrySingle(GlobalVars.DB_TNAME_FILEPATH, "[file]", $"frmMain ({Name})-bgw_DoneSearchFileinFolder");
+                List<string> listAlreadyinDB = DBCON.DbQrySingle(GlobalVars.DB_TNAME_FILEPATH, "[file]", calledFrom + "-listAlreadyinDB");
 
                 // List of files valid to add
                 List<string> listToAdd = new List<string>();
@@ -449,7 +460,7 @@ namespace HomeCinema
                 string prevF = "";
 
                 // If file is a movie,
-                foreach (string file in fileList)
+                foreach (string file in DirListFrom)
                 {
                     // Check if file have an extension of MOVIE_EXTENSIONS
                     foreach (string ext in GlobalVars.MOVIE_EXTENSIONS)
@@ -458,14 +469,23 @@ namespace HomeCinema
                         {
                             // Check if file is already in the database
                             bool canAdd = true;
-                            foreach (string pathEx in listAlreadyinDB)
+
+                            // If there is existing movies to check from
+                            if (listAlreadyinDB.Count > 0)
                             {
-                                if (pathEx == file)
+                                // Go each movie filepath and check if it already exists
+                                foreach (string pathEx in listAlreadyinDB)
                                 {
-                                    canAdd = false;
-                                    break;
+                                    // If it exists, don't add this movie and continue to next
+                                    if (pathEx == file)
+                                    {
+                                        canAdd = false;
+                                        break;
+                                    }
                                 }
                             }
+
+                            // If possible to add, add to list
                             if (canAdd)
                             {
                                 listToAdd.Add(file);
@@ -485,14 +505,14 @@ namespace HomeCinema
                 }
 
                 // Clear previous lists
-                fileList.Clear();
+                DirListFrom.Clear();
                 listAlreadyinDB.Clear();
 
                 GlobalVars.WriteToFile(GlobalVars.PATH_START + "MovieResult.Log", res);
                 GlobalVars.WriteToFile(GlobalVars.PATH_START + "MovieResult_Void.Log", nonres);
 
                 // Add now to database
-                if (InsertToDB(listToAdd, "bgw_DoneSearchFileinFolder"))
+                if (InsertToDB(listToAdd, calledFrom + "-listToAdd"))
                 {
                     // Clear prev list
                     listToAdd.Clear();
@@ -506,31 +526,36 @@ namespace HomeCinema
             }
             else
             {
+                // Clear previous lists
+                DirListFrom.Clear();
                 e.Result = null;
             }
-
         }
         private void bgw_DoneSearchFileinFolder(object sender, RunWorkerCompletedEventArgs e)
         {
+            // Close loading and refresh Memory
+            CloseLoading();
+
             // Get result from BGworker
             if (e.Result != null)
             {
                 // Counter for files
-                int count = 0;
-                int countVoid = 0;
+                int count, countVoid;
 
                 List<int> res = e.Result as List<int>;
                 count = res[0];
                 countVoid = res[1];
+
                 // Show message
-                GlobalVars.ShowInfo($"\tTotal files added: {count.ToString()}\n\tFiles skipped: {countVoid.ToString()}");
+                GlobalVars.ShowInfo($"Total files added: {count.ToString()}\nFiles skipped: {countVoid.ToString()}");
             }
 
             // Run GC to clean
-            GlobalVars.CleanMemory();
+            GlobalVars.CleanMemory("frmMain-bgw_DoneSearchFileinFolder");
 
-            // Perform click on search button: btnSearch
-            btnSearch_Click(this, EventArgs.Empty);
+            // Perform click on search button: btnSearch by calling RefreshMovieList()
+            SEARCH_QUERY_PREV = "";
+            RefreshMovieList();
         }
         // ############################################################################## Form Control events
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -550,7 +575,7 @@ namespace HomeCinema
                 formLoading.Dispose();
             }
             // Clean each image 1 by 1
-            GlobalVars.Log("frmMain.Designer-Dispose", "Disposing MOVIE_IMGLIST");
+            GlobalVars.Log("frmMain-frmMain_FormClosing", "Disposing MOVIE_IMGLIST");
             foreach (Image img in GlobalVars.MOVIE_IMGLIST.Images)
             {
                 if (img != null)
@@ -563,10 +588,9 @@ namespace HomeCinema
                 GlobalVars.MOVIE_IMGLIST.Dispose();
             }
             // Run GC to clean
-            GlobalVars.Log("frmMain.Designer-GlobalVars.CleanMemory()", "Runs GC");
-            GlobalVars.CleanMemory();
+            GlobalVars.CleanMemory("frmMain_FormClosing");
 
-            GlobalVars.Log("frmMain.Designer-Dispose", "Closed the program");
+            GlobalVars.Log("frmMain-frmMain_FormClosing", "Closed the program");
             //MessageBox.Show("now exiting...");
             Dispose();
         }

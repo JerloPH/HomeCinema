@@ -16,6 +16,9 @@ namespace HomeCinema
         public static Image MOVIE_COVER { get; set; } = null;
         public static Image tempImage { get; set; } = null;
 
+        // Initiate SQLHelper DB Connection
+        SQLHelper conn = new SQLHelper("frmMovieInfo");
+
         // Fixed vars
         Form PARENT = null;
 
@@ -24,7 +27,7 @@ namespace HomeCinema
             InitializeComponent();
             // Form properties
             Name = formName;
-            Icon = new Icon(GlobalVars.FILE_ICON);
+            Icon = GlobalVars.HOMECINEMA_ICON;
             FormClosing += new FormClosingEventHandler(frmMovieInfo_FormClosing);
 
             // Set vars
@@ -126,7 +129,6 @@ namespace HomeCinema
             }
 
             // Set textbox values from Database
-            SQLHelper conn = new SQLHelper();
             string cols = null;
             // Get filepath FROM DB
             foreach (string s in GlobalVars.DB_TABLE_FILEPATH)
@@ -409,9 +411,7 @@ namespace HomeCinema
             if (Convert.ToInt32(MOVIE_ID) < 1)
             {
                 // Insert to DB if NEW MOVIE
-                SQLHelper conn = new SQLHelper();
-
-                // Build new string[] from INFO, FIlepath
+                // Build new string[] from [INFO] & [filepath]
                 string[] combined = new string[GlobalVars.DB_TABLE_INFO.Length + GlobalVars.DB_TABLE_FILEPATH.Length - 2];
                 Array.Copy(GlobalVars.DB_TABLE_INFO, 1, combined, 0, GlobalVars.DB_TABLE_INFO.Length - 1);
                 Array.Copy(GlobalVars.DB_TABLE_FILEPATH, 1, combined, GlobalVars.DB_TABLE_INFO.Length - 1, 3);
@@ -446,11 +446,7 @@ namespace HomeCinema
             else
             {
                 // Otherwise, SAVE changes to EXISTING MOVIE
-
-                // Create SQLHelper
-                SQLHelper conn = new SQLHelper();
-
-                // DT for INFO
+                // DataTable for INFO
                 DataTable dt = conn.InitializeDT(GlobalVars.DB_TABLE_INFO);
                 // Add row values
                 DataRow row = dt.NewRow();

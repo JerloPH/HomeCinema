@@ -10,7 +10,7 @@ namespace HomeCinema
         public frmLoading(Form parent)
         {
             InitializeComponent();
-            Icon = new Icon(GlobalVars.FILE_ICON);
+            Icon = GlobalVars.HOMECINEMA_ICON;
             //Show(parent);
             // Load image from app path and assign to picBox
             picBox.Image = GlobalVars.IMG_LOADING;

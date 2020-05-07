@@ -7,7 +7,6 @@ using System.Text;
 using System.Windows.Forms;
 using HomeCinema.Global;
 using HomeCinema.SQLFunc;
-using Microsoft.WindowsAPICodePack.Shell;
 
 namespace HomeCinema
 {
@@ -21,14 +20,14 @@ namespace HomeCinema
         public static string MOVIE_TRAILER { get; set; } = "";
         public static Image MOVIE_COVER { get; set; } = null;
         // SQLHelper connection
-        SQLHelper conn = new SQLHelper();
+        SQLHelper conn = new SQLHelper("frmMovie");
         public frmMovie(Form parent, string ID, string name)
         {
             InitializeComponent();
 
             // Form properties
             FormClosing += new FormClosingEventHandler(frmMovie_FormClosing);
-            Icon = new Icon(GlobalVars.FILE_ICON);
+            Icon = GlobalVars.HOMECINEMA_ICON;
 
             // Assign values to vars
             MOVIE_ID = ID;
@@ -149,18 +148,8 @@ namespace HomeCinema
 
             // Change cover image, if error occurs, Dispose form
             MOVIE_COVER = GlobalVars.GetImageFromList(MOVIE_ID);
-            /*
-            if (GlobalVars.GetIndexfromList(MOVIE_ID) < 1)
-            {
-                // Get Image thumbnail and set as cover
-                ShellFile shellFile = ShellFile.FromFilePath(MOVIE_FILEPATH);
-                Bitmap bm = shellFile.Thumbnail.Bitmap;
-                bm.Save(GlobalVars.PATH_START + @"thumbnails\" + MOVIE_ID + ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
-                MOVIE_COVER = bm;
-                shellFile.Dispose();
-            }
-            */
-            if (MOVIE_COVER is null)
+            
+            if (MOVIE_COVER is null || MOVIE_COVER == null)
             {
                 GlobalVars.Log($"frmMovie-({Name})-LoadInformation", "Setting Image Cover error");
                 Close();
@@ -334,7 +323,7 @@ namespace HomeCinema
             }
             GlobalVars.Log("Disposing frmMovie (" + Name + ")", "Controls are Disposed");
             // Run GC to clean
-            GlobalVars.CleanMemory();
+            GlobalVars.CleanMemory("frmMovie_FormClosing");
             Dispose();
         }
         private void btnPlay_Click(object sender, EventArgs e)
@@ -412,7 +401,12 @@ namespace HomeCinema
         // Open IMDB link using default browser
         private void lblIMDB_Click(object sender, EventArgs e)
         {
-            Process.Start("https://www.imdb.com/title/" + lblIMDB.Text);
+            string titleCode = lblIMDB.Text;
+            titleCode = titleCode.Trim();
+            if ((String.IsNullOrWhiteSpace(titleCode) == false) && (titleCode != "0"))
+            {
+                Process.Start("https://www.imdb.com/title/" + titleCode);
+            }
         }
     }
 }
