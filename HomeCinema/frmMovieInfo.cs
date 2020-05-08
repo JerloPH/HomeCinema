@@ -520,7 +520,7 @@ namespace HomeCinema
         private void btnChangeCover_Click(object sender, EventArgs e)
         {
             // Get FileName on openDialog
-            string selectedFilename = GlobalVars.GetAFile("Select Image file for Cover", "JPG Files (*.jpg)|*.jpg");
+            string selectedFilename = GlobalVars.GetAFile("Select Image file for Cover", "JPG Files (*.jpg)|*.jpg", GlobalVars.PATH_GETCOVER);
 
             if (selectedFilename != "")
             {
@@ -551,7 +551,7 @@ namespace HomeCinema
         private void btnChangeFile_Click(object sender, EventArgs e)
         {
             // Get file
-            string selectedFile = GlobalVars.GetAFile("Select file....", GlobalVars.FILTER_VIDEO, GlobalVars.PATH_GETVIDEO);
+            string selectedFile = GlobalVars.GetAFile("Select video file....", GlobalVars.FILTER_VIDEO, GlobalVars.PATH_GETVIDEO);
 
             // Check fileName from dialog
             if (String.IsNullOrWhiteSpace(selectedFile) == false)
@@ -580,8 +580,6 @@ namespace HomeCinema
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            //frmMovieInfo_FormClosing(sender, new FormClosingEventArgs(CloseReason.UserClosing, false));
-            //Dispose();
             Close();
         }
     }

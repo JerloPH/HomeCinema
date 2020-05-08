@@ -2,17 +2,17 @@
 
 ## HomeCinema
 
-****v0.0.0.4 build null** - (30 April 2020 PHT) Title**
+***v0.0.0.4 build 8343553 - (07 May 2020 PHT)*** **Auto Cover and Minor Update**
 
 - **Links:**
-  -  **[Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.3/HomeCinema-Windows_v0.0.0.3.zip)**
+  -  **[Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.4/HomeCinema-Windows_v0.0.0.4.zip)**
 	
 - **What's New?**
   - Automatically add cover image from media thumbnail.
   - FIX: Loading form infinite looping on first time load.
   - Minor improvements and Code cleanup.
 
-****v0.0.0.3 build 4b4217f** - (30 April 2020 PHT) GUI Update**
+***v0.0.0.3 build 4b4217f - (30 April 2020 PHT)*** **GUI Update**
 
 - **Links:**
   -  **[Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.3/HomeCinema-Windows_v0.0.0.3.zip)**
@@ -22,7 +22,7 @@
   - Changed GUI.
   - Changed "No Cover" Image file.
 
-****v0.0.0.2 build a57d298** - (26 April 2020 PHT) Second Release - First Update**
+***v0.0.0.2 build a57d298 - (26 April 2020 PHT)*** **Second Release - First Update**
 
 - **Links:**
   -  **[Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.2/HomeCinema-Windows_v0.0.0.2.zip)**
@@ -35,7 +35,7 @@
   - Add year to title of Movie / TV Show
   - Cleaned the GUI
 
-****v0.0.0.1 build c0b7b7d** - (19 April 2020 PHT) First Public Release of HomeCinema**
+***v0.0.0.1 build c0b7b7d - (19 April 2020 PHT)*** **First Public Release of HomeCinema**
 
 - **Links:**
   -  **[Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.1/HomeCinema-Windows_v0.0.0.1.zip)**

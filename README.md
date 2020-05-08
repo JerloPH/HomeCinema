@@ -1,11 +1,11 @@
 # HomeCinema
 
-**version:**	0.0.0.3 <br>
-**build:**		4b4217f
+**version:**	0.0.0.4 <br>
+**build:**		8343553
 
 ## Downloads
 
-**Windows 32/64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.3/HomeCinema-Windows_v0.0.0.3.zip "Extract and Open") <br>
+**Windows 32/64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.4/HomeCinema-Windows_v0.0.0.4.zip "Extract and Open") <br>
 
 ****
 
@@ -52,15 +52,17 @@ To add multiple directories that the app loads media files from, follow this ste
   - Explain in full details.
   - State how useful the feature is.
 
+****
+
 ## License
 
-***© 2020 JerloPH *** <br>
+*** Copyright 2020 © JerloPH *** <br>
 *This project is licensed under* **[GPL v3](https://www.gnu.org/licenses/gpl-3.0.html)** <br>
 **[Click HERE to read LICENSE.md](/LICENSE.md)**
 
 ## Disclaimer:
 
 No ACTUAL media files are distributed with this software. <br>
-This is ONLY a cataloguing system for your OWNED files.<br>
+This is ONLY a cataloguing system for your OWNED files. <br>
 The end-user is responsible for any misuse of this software. <br>
 No copyright infringement intended.

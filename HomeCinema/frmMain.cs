@@ -623,7 +623,7 @@ namespace HomeCinema
 
                 // Build Filter for Query
                 // Name Text search
-                if (txtSearch.Text != GlobalVars.SEARCHBOX_PLACEHOLDER)
+                if ((txtSearch.Text != GlobalVars.SEARCHBOX_PLACEHOLDER) && (String.IsNullOrWhiteSpace(txtSearch.Text) ==false))
                 {
                     qry += " WHERE ";
                     qry += $"[name] LIKE '%{txtSearch.Text}%' ";
