@@ -36,6 +36,7 @@ namespace HomeCinema
             this.btnAddMovie = new System.Windows.Forms.Button();
             this.btnChangeView = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbClearSearch = new System.Windows.Forms.CheckBox();
             this.cbGenre = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.cbCountry = new System.Windows.Forms.ComboBox();
@@ -68,9 +69,9 @@ namespace HomeCinema
             this.groupBox2.Controls.Add(this.btnAddMovie);
             this.groupBox2.Controls.Add(this.btnChangeView);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(6, 145);
+            this.groupBox2.Location = new System.Drawing.Point(1, 149);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1167, 68);
+            this.groupBox2.Size = new System.Drawing.Size(1167, 61);
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Controls";
@@ -130,6 +131,7 @@ namespace HomeCinema
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.White;
+            this.groupBox1.Controls.Add(this.cbClearSearch);
             this.groupBox1.Controls.Add(this.cbGenre);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.cbCountry);
@@ -151,12 +153,22 @@ namespace HomeCinema
             this.groupBox1.Controls.Add(this.txtSearch);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.ForeColor = System.Drawing.Color.Black;
-            this.groupBox1.Location = new System.Drawing.Point(6, 10);
+            this.groupBox1.Location = new System.Drawing.Point(1, 1);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1167, 136);
+            this.groupBox1.Size = new System.Drawing.Size(1172, 145);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Search";
+            // 
+            // cbClearSearch
+            // 
+            this.cbClearSearch.AutoSize = true;
+            this.cbClearSearch.Location = new System.Drawing.Point(960, 99);
+            this.cbClearSearch.Name = "cbClearSearch";
+            this.cbClearSearch.Size = new System.Drawing.Size(168, 24);
+            this.cbClearSearch.TabIndex = 23;
+            this.cbClearSearch.Text = "Search after Clear";
+            this.cbClearSearch.UseVisualStyleBackColor = true;
             // 
             // cbGenre
             // 
@@ -165,7 +177,7 @@ namespace HomeCinema
             this.cbGenre.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbGenre.ForeColor = System.Drawing.Color.Black;
             this.cbGenre.FormattingEnabled = true;
-            this.cbGenre.Location = new System.Drawing.Point(971, 61);
+            this.cbGenre.Location = new System.Drawing.Point(888, 61);
             this.cbGenre.Name = "cbGenre";
             this.cbGenre.Size = new System.Drawing.Size(172, 30);
             this.cbGenre.TabIndex = 22;
@@ -175,7 +187,7 @@ namespace HomeCinema
             this.label8.AutoSize = true;
             this.label8.BackColor = System.Drawing.Color.Transparent;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(892, 65);
+            this.label8.Location = new System.Drawing.Point(809, 65);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(73, 24);
             this.label8.TabIndex = 21;
@@ -188,7 +200,7 @@ namespace HomeCinema
             this.cbCountry.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbCountry.ForeColor = System.Drawing.Color.Black;
             this.cbCountry.FormattingEnabled = true;
-            this.cbCountry.Location = new System.Drawing.Point(691, 95);
+            this.cbCountry.Location = new System.Drawing.Point(629, 95);
             this.cbCountry.Name = "cbCountry";
             this.cbCountry.Size = new System.Drawing.Size(172, 30);
             this.cbCountry.TabIndex = 20;
@@ -200,7 +212,7 @@ namespace HomeCinema
             this.cbCategory.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbCategory.ForeColor = System.Drawing.Color.Black;
             this.cbCategory.FormattingEnabled = true;
-            this.cbCategory.Location = new System.Drawing.Point(691, 58);
+            this.cbCategory.Location = new System.Drawing.Point(629, 58);
             this.cbCategory.Name = "cbCategory";
             this.cbCategory.Size = new System.Drawing.Size(172, 30);
             this.cbCategory.TabIndex = 19;
@@ -210,7 +222,7 @@ namespace HomeCinema
             this.label7.AutoSize = true;
             this.label7.BackColor = System.Drawing.Color.Transparent;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(585, 95);
+            this.label7.Location = new System.Drawing.Point(523, 95);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(85, 24);
             this.label7.TabIndex = 18;
@@ -221,7 +233,7 @@ namespace HomeCinema
             this.label6.AutoSize = true;
             this.label6.BackColor = System.Drawing.Color.Transparent;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(585, 64);
+            this.label6.Location = new System.Drawing.Point(523, 64);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(100, 24);
             this.label6.TabIndex = 16;
@@ -232,9 +244,9 @@ namespace HomeCinema
             this.btnSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnSearch.Location = new System.Drawing.Point(916, 19);
+            this.btnSearch.Location = new System.Drawing.Point(995, 20);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(244, 40);
+            this.btnSearch.Size = new System.Drawing.Size(166, 40);
             this.btnSearch.TabIndex = 15;
             this.btnSearch.Text = "SEARCH";
             this.btnSearch.UseVisualStyleBackColor = false;
@@ -245,18 +257,18 @@ namespace HomeCinema
             this.btnClear.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClear.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnClear.Location = new System.Drawing.Point(896, 97);
+            this.btnClear.Location = new System.Drawing.Point(807, 94);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(244, 40);
+            this.btnClear.Size = new System.Drawing.Size(147, 38);
             this.btnClear.TabIndex = 2;
-            this.btnClear.Text = "Clear All";
+            this.btnClear.Text = "CLEAR";
             this.btnClear.UseVisualStyleBackColor = false;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // txtCast
             // 
             this.txtCast.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCast.Location = new System.Drawing.Point(368, 97);
+            this.txtCast.Location = new System.Drawing.Point(331, 97);
             this.txtCast.Name = "txtCast";
             this.txtCast.Size = new System.Drawing.Size(185, 28);
             this.txtCast.TabIndex = 12;
@@ -266,7 +278,7 @@ namespace HomeCinema
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(296, 94);
+            this.label5.Location = new System.Drawing.Point(259, 94);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(61, 24);
             this.label5.TabIndex = 11;
@@ -275,7 +287,7 @@ namespace HomeCinema
             // txtStudio
             // 
             this.txtStudio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtStudio.Location = new System.Drawing.Point(368, 61);
+            this.txtStudio.Location = new System.Drawing.Point(331, 61);
             this.txtStudio.Name = "txtStudio";
             this.txtStudio.Size = new System.Drawing.Size(185, 28);
             this.txtStudio.TabIndex = 10;
@@ -284,7 +296,7 @@ namespace HomeCinema
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(296, 61);
+            this.label4.Location = new System.Drawing.Point(259, 61);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(78, 24);
             this.label4.TabIndex = 9;
@@ -294,7 +306,7 @@ namespace HomeCinema
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(161, 97);
+            this.label3.Location = new System.Drawing.Point(152, 97);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(16, 24);
             this.label3.TabIndex = 8;
@@ -303,7 +315,7 @@ namespace HomeCinema
             // txtYearTo
             // 
             this.txtYearTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtYearTo.Location = new System.Drawing.Point(181, 95);
+            this.txtYearTo.Location = new System.Drawing.Point(172, 95);
             this.txtYearTo.Name = "txtYearTo";
             this.txtYearTo.Size = new System.Drawing.Size(82, 28);
             this.txtYearTo.TabIndex = 7;
@@ -311,7 +323,7 @@ namespace HomeCinema
             // txtYearFrom
             // 
             this.txtYearFrom.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtYearFrom.Location = new System.Drawing.Point(77, 95);
+            this.txtYearFrom.Location = new System.Drawing.Point(68, 95);
             this.txtYearFrom.Name = "txtYearFrom";
             this.txtYearFrom.Size = new System.Drawing.Size(81, 28);
             this.txtYearFrom.TabIndex = 6;
@@ -329,7 +341,7 @@ namespace HomeCinema
             // txtIMDB
             // 
             this.txtIMDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtIMDB.Location = new System.Drawing.Point(78, 61);
+            this.txtIMDB.Location = new System.Drawing.Point(69, 61);
             this.txtIMDB.Name = "txtIMDB";
             this.txtIMDB.Size = new System.Drawing.Size(185, 28);
             this.txtIMDB.TabIndex = 4;
@@ -350,7 +362,7 @@ namespace HomeCinema
             this.txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSearch.Location = new System.Drawing.Point(3, 21);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(907, 34);
+            this.txtSearch.Size = new System.Drawing.Size(986, 34);
             this.txtSearch.TabIndex = 2;
             this.txtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
             // 
@@ -418,6 +430,7 @@ namespace HomeCinema
         private ComboBox cbGenre;
         private Label label8;
         private Button btnShowNew;
+        private CheckBox cbClearSearch;
     }
 }
 

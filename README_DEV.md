@@ -41,8 +41,8 @@
 
 - **1**: Major *Revisions* and Changes to codes.
 - **2**: Major *Features* and/or *Bugfixes*. *(> 10)*
-- **3**: Multiple *Feature* and/or *Fix*. *(<= 10)*
-- **4**: Single *bugfix* or *feature* update. Includes *Optimizations, GUI, Resource* and *Documents* changes.
+- **3**: Multiple *Feature* and/or *Fix*, with at least 1 Major *Feature* addition/update. *(<= 10)*
+- **4**: Minor *bugfix* and/or *feature* update. Includes *Optimizations, GUI, Resource* and *Documents* changes.
 - **5678**: Latest *Commit ID* which the release is based on.
 
 ***Sample***: **Release 0.0.0.1 build c0b7b7d**

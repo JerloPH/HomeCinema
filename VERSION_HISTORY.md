@@ -1,6 +1,20 @@
 
 # HomeCinema - Project History:
 
+### v0.0.0.5 ***build null - (13 May 2020 PHT)***
+**Title**
+
+- **Links:**
+  -  **[Windows 32/64 bit](null "HomeCinema-Windows_v0.0.0.5.zip")**
+	
+- **What's New?**
+  - ADD: Checkbox to perform SEARCH after CLEAR of Search results.
+  - CHANGE: Only perform search on *Key Press Enter* when *Searchbox* is not empty.
+  - CHANGE: Set Movie Cover image as Form Icon
+  - FIX: Search results not clearing after Searching with no Results.
+  - Minor GUI Adjustments
+  - Minor adjustments and code cleanup.
+  
 ### v0.0.0.4 ***build 8343553 - (07 May 2020 PHT)***
 **Auto Cover and Minor Update**
 

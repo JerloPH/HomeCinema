@@ -11,5 +11,11 @@
   - [ ] Switch webBrowser to Cefsharp Browser
   
   - [ ] Automatically get information from IMDB when newly added media (IMDB Scraper)
+  
+  - [ ] Get information by scraping downloaded webpage, based on imdb id. Save html contents to string
+    
+	- Trailer: /video/imdb/
+    - Director: "director"
+	- Genre: "genre []"
 
 ## Bugs

@@ -37,15 +37,17 @@ namespace HomeCinema
         public static string MOVIE_SUB { get; set; } = "";
         public static string MOVIE_TRAILER { get; set; } = "";
         public static Image MOVIE_COVER { get; set; } = null;
+        public static Image MOVIE_COVER_FULL { get; set; } = null;
+
         // SQLHelper connection
         SQLHelper conn = new SQLHelper("frmMovie");
+
         public frmMovie(Form parent, string ID, string name)
         {
             InitializeComponent();
 
             // Form properties
             FormClosing += new FormClosingEventHandler(frmMovie_FormClosing);
-            Icon = GlobalVars.HOMECINEMA_ICON;
 
             // Assign values to vars
             MOVIE_ID = ID;
@@ -71,7 +73,6 @@ namespace HomeCinema
             LoadInformation(ID);
 
             // Show this form
-            //StartPosition = FormStartPosition.Manual;
             StartPosition = FormStartPosition.CenterParent;
             Show(parent);
 
@@ -174,6 +175,14 @@ namespace HomeCinema
             }
             picBox.Image = MOVIE_COVER;
             picBox.Refresh();
+
+            // Set FORM ICON
+            Bitmap thumb = (Bitmap)MOVIE_COVER.GetThumbnailImage(64, 64, null, IntPtr.Zero);
+            Icon = Icon.FromHandle(thumb.GetHicon());
+            thumb.Dispose();
+
+            // Set MOVIE_COVER_FULL | Image from file
+            MOVIE_COVER_FULL = Image.FromFile(GlobalVars.GetPicValid(lblID.Text));
 
             // Log changes
             GlobalVars.Log($"frmMovie-LoadInformation ({Name})", "Refreshed the Information!");
@@ -331,6 +340,10 @@ namespace HomeCinema
             {
                 picBox.Image.Dispose();
             }
+            if (MOVIE_COVER_FULL != null)
+            {
+                MOVIE_COVER_FULL.Dispose();
+            }
             foreach (Control c in groupBox2.Controls)
             {
                 c.Dispose();
@@ -346,6 +359,12 @@ namespace HomeCinema
         }
         private void btnPlay_Click(object sender, EventArgs e)
         {
+            // Directory of Series
+            if (lblCategory.Text.Contains("Series"))
+            {
+                return;
+            }
+            // Single movie file
             if (File.Exists(MOVIE_FILEPATH))
             {
                 Process.Start(MOVIE_FILEPATH);
@@ -363,32 +382,31 @@ namespace HomeCinema
         // Click to see Large Image cover
         private void picBox_Click(object sender, EventArgs e)
         {
+            // Size of Cover
+            int W = 340;
+            int H = 511;
             // Show bigger image
             Form temp = new Form();
             temp.Text = lblName.Text + " [Large Image]";
             temp.MaximizeBox = false;
             temp.MinimizeBox = false;
             temp.FormBorderStyle = FormBorderStyle.FixedToolWindow;
-            temp.StartPosition = FormStartPosition.CenterParent;
             temp.StartPosition = FormStartPosition.Manual;
             temp.Left = Left;
             temp.Top = Top;
-            temp.Size = new Size(350, 520);
+            temp.Size = new Size(W + 15, H + 38);
             temp.ShowInTaskbar = false;
             temp.SuspendLayout();
             PictureBox pic = new PictureBox
             {
-                Image = picBox.Image,
-                Location = new Point(0, 2),
-                Size = new Size(350, 480),
+                Image = MOVIE_COVER_FULL,
+                Location = new Point(0, 0),
+                Size = new Size(W, H),
                 SizeMode = PictureBoxSizeMode.StretchImage
             };
             temp.Controls.Add(pic);
             temp.ResumeLayout();
             temp.Show(this);
-            temp.StartPosition = FormStartPosition.CenterParent;
-            //temp.Left = this.Left - (this.Width/2) + (temp.Width/2);
-            //temp.Top = this.Top - (this.Height / 2) + (temp.Height / 2);
         }
         // Delete movie from database
         private void btnDeleteMovie_Click(object sender, EventArgs e)

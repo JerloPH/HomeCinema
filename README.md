@@ -1,11 +1,11 @@
 # HomeCinema
 
-**version:**	0.0.0.4 <br>
-**build:**		8343553
+**version:**	0.0.0.5 <br>
+**build:**		null
 
 ## Downloads
 
-**Windows 32/64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.4/HomeCinema-Windows_v0.0.0.4.zip "Extract and Open") <br>
+**Windows 32/64 bit [Compressed ZIP]**: [Click to Download latest version](null "Download, Extract and Open 'HomeCinema' Executable file") <br>
 
 ****
 
@@ -59,6 +59,27 @@ To add multiple directories that the app loads media files from, follow this ste
 *** Copyright 2020 © JerloPH *** <br>
 *This project is licensed under* **[GPL v3](https://www.gnu.org/licenses/gpl-3.0.html)** <br>
 **[Click HERE to read LICENSE.md](/LICENSE.md)**
+
+<details>
+	<summary> <b>View Snippet</b> </summary>
+	
+    <b>HomeCinema - Organize your Movie Collection</b>
+    Copyright (C) 2020  JerloPH (https://github.com/JerloPH)
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+</details>
 
 ## Disclaimer:
 

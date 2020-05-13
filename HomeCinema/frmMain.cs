@@ -111,7 +111,7 @@ namespace HomeCinema
             lvSearchResult.View = View.Tile;
 
             // Perform click on Change View
-            btnChangeView.PerformClick();
+            //btnChangeView.PerformClick();
 
             // Populate combobox cbCategory
             cbCategory.Items.AddRange(GlobalVars.DB_INFO_CATEGORY);
@@ -331,6 +331,15 @@ namespace HomeCinema
         }
         private void bgw_DoneSearchMovie(object sender, RunWorkerCompletedEventArgs e)
         {
+            // Clear previous list
+            lvSearchResult.Items.Clear();
+
+            // Others
+            // Perform click on Change View
+            btnChangeView.PerformClick();
+            // Perform click on Sort
+            btnSort.PerformClick();
+
             // Retrieve the result pass from bg_DoWork() if any.
             try
             {
@@ -352,8 +361,7 @@ namespace HomeCinema
                 {
                     // Set the e.Result from BgWorker as DT
                     dt = e.Result as DataTable;
-                    // Clear previous list
-                    lvSearchResult.Items.Clear();
+                    
                     // Load Icon Pics from folder
                     GlobalVars.PopulateCover();
                     // Add to listview lvSearchResult
@@ -757,8 +765,11 @@ namespace HomeCinema
             // Clear values of vars
             SEARCH_QUERY = "";
 
-            // Reset search, Perform click on search button: btnSearch
-            btnSearch.PerformClick();
+            // Perform click on search button: btnSearch
+            if (cbClearSearch.CheckState == CheckState.Checked)
+            {
+                btnSearch.PerformClick();
+            }
         }
 
         private void btnAddMovie_Click(object sender, EventArgs e)
@@ -817,8 +828,12 @@ namespace HomeCinema
             e.Handled = true;
             if (e.KeyCode == Keys.Enter)
             {
-                // Perform click on search button: btnSearch
-                btnSearch.PerformClick();
+                // Check if searchbox is empty
+                if ((String.IsNullOrWhiteSpace(txtSearch.Text)==false) && (txtSearch.Text != GlobalVars.SEARCHBOX_PLACEHOLDER))
+                {
+                    // Perform click on search button: btnSearch
+                    btnSearch.PerformClick();
+                }
             }
         }
 

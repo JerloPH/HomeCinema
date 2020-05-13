@@ -45,16 +45,13 @@ namespace HomeCinema
             InitializeComponent();
             // Form properties
             Name = formName;
-            Icon = GlobalVars.HOMECINEMA_ICON;
+            Icon = parent.Icon; //GlobalVars.HOMECINEMA_ICON;
             FormClosing += new FormClosingEventHandler(frmMovieInfo_FormClosing);
 
             // Set vars
             MOVIE_ID = ID;
             PARENT = parent;
             PARENT_NAME = PARENT.Name;
-
-            // Make every Label transparent
-            //GlobalVars.TransparentLabel(this);
 
             // Set Controls text and properties
             txtID.Text = GlobalVars.ValidateAndReturn(ID);
@@ -71,7 +68,6 @@ namespace HomeCinema
             //fPanelCountry.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 
             // Populate Country
-            // tmpCat = GlobalVars.BuildArrFromFile(GlobalVars.FILE_COUNTRY, "frmMain-frmMain-StreamReader[FILE_COUNTRY]");
             int cW = 105; // (fPanelCountry.Width / 2) - 5;
             int cH = 17;
             string[] tCountryArr = GlobalVars.BuildArrFromFile(GlobalVars.FILE_COUNTRY, $"frmMovieInfo-frmMovieInfo ({Name})-StreamReader[FILE_COUNTRY]");
