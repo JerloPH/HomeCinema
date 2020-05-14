@@ -7,7 +7,7 @@
 
 ## Downloads
 
-**Windows 32/64 bit [Compressed ZIP]**: [Click to Download latest version](null "Download, Extract and Open 'HomeCinema' Executable file") <br>
+**Windows 32/64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/0.0.0.6/HomeCinema-Windows_v0.0.0.6.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
 
 ****
 

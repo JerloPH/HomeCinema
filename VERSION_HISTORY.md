@@ -1,19 +1,25 @@
 # HomeCinema - Project History:
 
 ### v0.0.0.6 ***build 6dde01a - (14 May 2020 PHT)***
-**Quick Fix**
+<span style="color:green"> **Quick Fix** </span>
 
-**[Download link for Windows 32/64 bit](null "HomeCinema-Windows_v0.0.0.6.zip")**
+Build from latest commit: 6dde01a
+
+**[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/0.0.0.6/HomeCinema-Windows_v0.0.0.6.zip "HomeCinema-Windows_v0.0.0.6.zip")**
 	
 **What's New?**
 - FIX: When movie is deleted, dispose cover image from resources and delete it from disk.
 - FIX: Automatic change of *View* and *Sort*.
 - Code cleanup.
 
-### v0.0.0.5 ***build 99e2dd4 - (13 May 2020 PHT)***
-**GUI Update and Minor Improvements**
+****
 
-**[Download link for Windows 32/64 bit](null "HomeCinema-Windows_v0.0.0.5.zip")**
+### v0.0.0.5 ***build 99e2dd4 - (13 May 2020 PHT)***
+<span style="color:green"> **GUI Update and Minor Improvements** </span>
+
+Build from latest commit: 99e2dd4
+
+**[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/0.0.0.5/HomeCinema-Windows_v0.0.0.5.zip "HomeCinema-Windows_v0.0.0.5.zip")**
 	
 **What's New?**
 - ADD: Checkbox to perform SEARCH after CLEAR of Search results.
@@ -22,9 +28,13 @@
 - FIX: Search results not clearing after Searching with no Results.
 - Minor GUI Adjustments
 - Minor adjustments and code cleanup.
-  
+
+****
+
 ### v0.0.0.4 ***build 8343553 - (07 May 2020 PHT)***
-**Auto Cover and Minor Update**
+<span style="color:green"> **Auto Cover and Minor Update** </span>
+
+Build from latest commit: 8343553
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.4/HomeCinema-Windows_v0.0.0.4.zip "HomeCinema-Windows_v0.0.0.4.zip")**
 	
@@ -33,8 +43,12 @@
 - FIX: Loading form infinite looping on first time load.
 - Minor improvements and Code cleanup.
 
+****
+
 ### v0.0.0.3 ***build 4b4217f - (30 April 2020 PHT)***
-**GUI Update**
+<span style="color:green"> **GUI Update** </span>
+
+Build from latest commit: 4b4217f
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.3/HomeCinema-Windows_v0.0.0.3.zip "HomeCinema-Windows_v0.0.0.3.zip")**
 	
@@ -43,8 +57,12 @@
 - Changed GUI.
 - Changed "No Cover" Image file.
 
+****
+
 ### v0.0.0.2 ***build a57d298 - (26 April 2020 PHT)***
-**Second Release - First Update**
+<span style="color:green"> **Second Release - First Update** </span>
+
+Build from latest commit: a57d298
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.2/HomeCinema-Windows_v0.0.0.2.zip "HomeCinema-Windows_v0.0.0.2.zip")**
 	
@@ -56,10 +74,12 @@
 - Add year to title of Movie / TV Show
 - Cleaned the GUI
 
+****
+
 ### v0.0.0.1 ***build c0b7b7d - (19 April 2020 PHT)***
-**First Public Release of HomeCinema**
+<span style="color:green"> **First Public Release of HomeCinema** </span>
+
+Build from latest commit: c0b7b7d
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.1/HomeCinema-Windows_v0.0.0.1.zip "HomeCinema-Windows_v0.0.0.1.zip")**
-	
-
 
