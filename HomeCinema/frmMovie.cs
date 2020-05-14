@@ -421,6 +421,8 @@ namespace HomeCinema
                     if (MOVIE_COVER != null)
                     {
                         MOVIE_COVER.Dispose();
+                        MOVIE_COVER_FULL.Dispose();
+                        GlobalVars.DeleteImageFromList(MOVIE_ID + ".jpg", errFrom);
                         GlobalVars.TryDelete(GlobalVars.GetPicPath(MOVIE_ID), errFrom);
                     }
                     // Refresh movie list

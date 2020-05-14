@@ -1,7 +1,9 @@
 # HomeCinema
 
-**version:**	0.0.0.5 <br>
-**build:**		null
+<img src="\data\screenshot01.png"></img>
+
+**version:**	0.0.0.6 <br>
+**build:**		99e2dd4
 
 ## Downloads
 

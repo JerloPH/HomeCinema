@@ -340,21 +340,11 @@ namespace HomeCinema
             string ExceptionFrom = "frmMovieInfo-btnChangeCover_Click (" + Name + ")";
             //GlobalVars.Log(ExceptionFrom, "Try adding Image from File");
 
-            // Setup variables
-            string IMGKey = MOVIE_ID + ".jpg";
-            // ImageList imgList = GlobalVars.MOVIE_IMGLIST;
-
-            // Delete previous image on the ImgList
-            int index = GlobalVars.MOVIE_IMGLIST.Images.IndexOfKey(IMGKey);
-            if (index > 0)
+            // Delete previous image on the ImgList, exit if not succesful and show warning
+            if (GlobalVars.DeleteImageFromList(MOVIE_ID + ".jpg", $"frmMovieInfo-({Name})-SaveCoverChanged (Previous Image)") == false)
             {
-                Image prevImg = GlobalVars.MOVIE_IMGLIST.Images[index];
-                if (prevImg != null)
-                {
-                    GlobalVars.Log($"frmMovieInfo-({Name})-SaveCoverChanged Previous Image Name", IMGKey);
-                    prevImg.Dispose();
-                    GlobalVars.MOVIE_IMGLIST.Images.RemoveByKey(IMGKey);
-                }
+                GlobalVars.ShowWarning("Cannot replace image!\nFile must be NOT in use!");
+                return;
             }
 
             // Copy new file to App Path

@@ -1,4 +1,4 @@
-# HomeCinema
+# HomeCinema - Features to Add / Bugs to Fix
 
 ## Features:
 - General

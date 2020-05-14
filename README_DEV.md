@@ -1,4 +1,4 @@
-# HomeCinema
+# HomeCinema - For Devs [DO NOT EDIT]
 
 ## Project Started:
 

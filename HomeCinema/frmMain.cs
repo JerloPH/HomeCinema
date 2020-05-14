@@ -31,6 +31,7 @@ namespace HomeCinema
 {
     public partial class frmMain : Form
     {
+        bool Start = true;
         SQLHelper DBCON = new SQLHelper("frmMain");
         //ImageList MovieIcons = GlobalVars.MOVIE_IMGLIST;
         Form formLoading = null;
@@ -334,11 +335,15 @@ namespace HomeCinema
             // Clear previous list
             lvSearchResult.Items.Clear();
 
-            // Others
-            // Perform click on Change View
-            btnChangeView.PerformClick();
-            // Perform click on Sort
-            btnSort.PerformClick();
+            // Starting, opening of App?
+            if (Start)
+            {
+                // Perform click on Change View
+                btnChangeView.PerformClick();
+                // Perform click on Sort
+                btnSort.PerformClick();
+                Start = false;
+            }
 
             // Retrieve the result pass from bg_DoWork() if any.
             try
