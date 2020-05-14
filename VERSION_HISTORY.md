@@ -1,13 +1,14 @@
 # HomeCinema - Project History:
 
-### v0.0.0.6 ***build null - (13 May 2020 PHT)***
-**Title**
+### v0.0.0.6 ***build 6dde01a - (14 May 2020 PHT)***
+**Quick Fix**
 
 **[Download link for Windows 32/64 bit](null "HomeCinema-Windows_v0.0.0.6.zip")**
 	
 **What's New?**
 - FIX: When movie is deleted, dispose cover image from resources and delete it from disk.
 - FIX: Automatic change of *View* and *Sort*.
+- Code cleanup.
 
 ### v0.0.0.5 ***build 99e2dd4 - (13 May 2020 PHT)***
 **GUI Update and Minor Improvements**
