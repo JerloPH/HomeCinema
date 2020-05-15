@@ -352,6 +352,9 @@ namespace HomeCinema
             {
                 cc.Dispose();
             }
+            // Dispose ICON Image
+            Icon.Dispose();
+            // Log to file
             GlobalVars.Log("Disposing frmMovie (" + Name + ")", "Controls are Disposed");
             // Run GC to clean
             GlobalVars.CleanMemory("frmMovie_FormClosing");
