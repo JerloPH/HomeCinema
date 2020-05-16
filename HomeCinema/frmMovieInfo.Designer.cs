@@ -212,6 +212,7 @@
             this.txtSummary.Location = new System.Drawing.Point(41, 285);
             this.txtSummary.Multiline = true;
             this.txtSummary.Name = "txtSummary";
+            this.txtSummary.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtSummary.Size = new System.Drawing.Size(712, 196);
             this.txtSummary.TabIndex = 31;
             // 
