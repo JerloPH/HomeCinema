@@ -51,6 +51,7 @@ namespace HomeCinema
             // Create directories
             GlobalVars.CreateDir(GlobalVars.PATH_IMG);
             GlobalVars.CreateDir(GlobalVars.PATH_DATA);
+            GlobalVars.CreateDir(GlobalVars.PATH_TEMP);
 
             // Check files first
             GlobalVars.CheckAllFiles();

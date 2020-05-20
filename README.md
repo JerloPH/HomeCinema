@@ -41,6 +41,11 @@ To add multiple directories that the app loads media files from, follow this ste
 
 **Example**: ***D:\Movies,D:\Anime,D:\Shows***
 
+****
+## Credits
+
+[**The Movie Database**](https://www.themoviedb.org/) - Used to fetch movie details from the web.
+
 ## Find a bug or want a new feature?
 
 **Submit a ticket at *Issues* tab**.
