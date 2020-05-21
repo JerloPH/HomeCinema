@@ -15,6 +15,7 @@
   - **[SQLite](https://www.nuget.org/packages/System.Data.SQLite)**
   - **[Microsoft Windows API CodePack Core](https://www.nuget.org/packages/Microsoft-WindowsAPICodePack-Core/)**
   - **[Microsoft Windows API CodePack Shell](https://www.nuget.org/packages/Microsoft-WindowsAPICodePack-Shell/)**
+  - **[Microsoft Visual Basic](https://www.nuget.org/packages/Microsoft.VisualBasic/)**
 
 ## Commit / Pull Request Labels
 

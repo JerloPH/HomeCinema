@@ -3,9 +3,9 @@
 ## v0.0.0.8 ***build 8 - (21 May 2020 PHT)***
 ### TMDB Fetching Follow-up
 
-Build from latest commit: null
+Build from latest commit: e1cc236
 
-**[Download link for Windows 32/64 bit](null "HomeCinema-Windows_v0.0.0.8.zip")**
+**[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/0.0.0.8/HomeCinema-Windows_v0.0.0.8.zip "HomeCinema-Windows_v0.0.0.8.zip")**
 	
 **What's New?**
 - ADD: **Clean** button to delete *".jpg"* files in *temp* folder.
