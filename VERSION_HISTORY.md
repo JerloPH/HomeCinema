@@ -1,5 +1,22 @@
 # HomeCinema - Project History:
 
+## v0.0.0.8 ***build 8 - (21 May 2020 PHT)***
+### TMDB Fetching Follow-up
+
+Build from latest commit: null
+
+**[Download link for Windows 32/64 bit](null "HomeCinema-Windows_v0.0.0.8.zip")**
+	
+**What's New?**
+- ADD: **Clean** button to delete *".jpg"* files in *temp* folder.
+- ADD: **Search IMDB** button to search for Movie IMDB ID, using Movie title.
+- CHANGE: Asks to change Poster Image after clicking **Fetch Data**.
+- FIX: JSON file missing.
+- FIX: Changing of Poster Image with existing file not working.
+- GUI Adjustments.
+- Minor adjustments and Code cleanup.
+****
+
 ## v0.0.0.7 ***build 7 - (21 May 2020 PHT)***
 ### Auto Fetch from TMDB
 
