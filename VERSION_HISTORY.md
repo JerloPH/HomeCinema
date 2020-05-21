@@ -1,7 +1,7 @@
 # HomeCinema - Project History:
 
 ### v0.0.0.6 ***build 6 - (14 May 2020 PHT)***
-<span style="color:green"> **Quick Fix** </span>
+<p style="color:green"> **Quick Fix** </p>
 
 Build from latest commit: 6dde01a
 
@@ -15,7 +15,7 @@ Build from latest commit: 6dde01a
 ****
 
 ### v0.0.0.5 ***build 5 - (13 May 2020 PHT)***
-<span style="color:green"> **GUI Update and Minor Improvements** </span>
+<p style="color:green"> **GUI Update and Minor Improvements** </p>
 
 Build from latest commit: 99e2dd4
 
@@ -32,7 +32,7 @@ Build from latest commit: 99e2dd4
 ****
 
 ### v0.0.0.4 ***build 4 - (07 May 2020 PHT)***
-<span style="color:green"> **Auto Cover and Minor Update** </span>
+<p style="color:green"> **Auto Cover and Minor Update** </p>
 
 Build from latest commit: 8343553
 
@@ -46,7 +46,7 @@ Build from latest commit: 8343553
 ****
 
 ### v0.0.0.3 ***build 3 - (30 April 2020 PHT)***
-<span style="color:green"> **GUI Update** </span>
+<p style="color:green"> **GUI Update** </p>
 
 Build from latest commit: 4b4217f
 
@@ -60,7 +60,7 @@ Build from latest commit: 4b4217f
 ****
 
 ### v0.0.0.2 ***build 2 - (26 April 2020 PHT)***
-<span style="color:green"> **Second Release - First Update** </span>
+<p style="color:green"> **Second Release - First Update** </p>
 
 Build from latest commit: a57d298
 
@@ -77,7 +77,7 @@ Build from latest commit: a57d298
 ****
 
 ### v0.0.0.1 ***build 1 - (19 April 2020 PHT)***
-<span style="color:green"> **First Public Release of HomeCinema** </span>
+<p style="color:green"> **First Public Release of HomeCinema** </p>
 
 Build from latest commit: c0b7b7d
 
