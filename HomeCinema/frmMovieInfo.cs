@@ -586,5 +586,27 @@ namespace HomeCinema
         {
             Close();
         }
+        // Fetch data from TMDB, using IMDB ID
+        private void btnFetchData_Click(object sender, EventArgs e)
+        {
+            string IMDB_ID = txtIMDB.Text;
+            string TMDB_KEY = GlobalVars.TMDB_KEY;
+            string JSONgetMovieID = GlobalVars.PATH_TEMP + IMDB_ID + ".json";
+            string urlMovieID = "";
+            string YT_ID = "";
+            string urlMovieTrailerJSON = @"https://api.themoviedb.org/3/movie/" + $"{ IMDB_ID }/videos?api_key={ TMDB_KEY }&language=en-US";
+            if (File.Exists(JSONgetMovieID) == false)
+            {
+                GlobalVars.DownloadFrom(urlMovieTrailerJSON, JSONgetMovieID);
+            }
+            if (File.Exists(JSONgetMovieID))
+            {
+                
+                urlMovieID = GlobalVars.ParseJSON(JSONgetMovieID, "{\"id\":", ",");
+                YT_ID = GlobalVars.ParseJSON(JSONgetMovieID, "\"key\":\"", "\",\"name\":\"");
+
+                txtPathTrailer.Text = GlobalVars.LINK_YT + YT_ID;
+            }
+        }
     }
 }

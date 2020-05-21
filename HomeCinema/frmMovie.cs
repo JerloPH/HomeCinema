@@ -194,7 +194,7 @@ namespace HomeCinema
         public void TrailerFrame()
         {
             // Adjust Trailer Box
-            webTrailer.ScriptErrorsSuppressed = false;
+            webTrailer.ScriptErrorsSuppressed = true;
 
             // Get url
             string url;
@@ -204,13 +204,13 @@ namespace HomeCinema
                 if (GlobalVars.CheckConnection("https://www.youtube.com/") == false)
                 {
                     GlobalVars.ShowWarning("Cannot View Online Trailer!", "No Internet Connection");
+                    ShowImageONWeb(GlobalVars.FILE_NOTRAILER);
                     return;
                 }
-                string sLinkStart = "https://www.youtube.com/watch?v=";
+                string sLinkStart = GlobalVars.LINK_YT;
                 if (MOVIE_TRAILER.StartsWith(sLinkStart))
                 {
                     url = MOVIE_TRAILER.Replace(sLinkStart, String.Empty);
-                    //webTrailer.DocumentText = GetYouTubeVideoPlayerHTML(url);
                     webTrailer.DocumentText = YoutubeEmbed(url);
                     // Log to file
                     LogWebDoc(url);
@@ -218,7 +218,6 @@ namespace HomeCinema
                 else
                 {
                     url = MOVIE_TRAILER;
-                    //webTrailer.DocumentText = GetPlayerHTML(url);
                     webTrailer.Navigate(url);
                 }
                 return;
@@ -227,29 +226,6 @@ namespace HomeCinema
             {
                 if (String.IsNullOrWhiteSpace(MOVIE_TRAILER))
                 {
-                    string IMDB_ID = lblIMDB.Text;
-                    string TMDB_KEY = GlobalVars.TMDB_KEY;
-                    string JSONgetMovieID = GlobalVars.PATH_TEMP + IMDB_ID + ".json";
-                    string urlMovieID = "";
-                    string YT_ID = "";
-                    if (IMDB_ID.StartsWith("tt"))
-                    {
-                        string urlMovieTrailerJSON = @"https://api.themoviedb.org/3/movie/"+ $"{ IMDB_ID }/videos?api_key={ TMDB_KEY }&language=en-US";
-                        if (File.Exists(JSONgetMovieID) == false)
-                        {
-                            GlobalVars.DownloadFrom(urlMovieTrailerJSON, JSONgetMovieID);
-                        }
-                        if (File.Exists(JSONgetMovieID))
-                        {
-                            urlMovieID = GlobalVars.ParseJSON(JSONgetMovieID, "{\"id\":", ",");
-                            YT_ID = GlobalVars.ParseJSON(JSONgetMovieID, "\"key\":\"" , "\",\"name\":\"");
-                            //GlobalVars.ShowInfo(YT_ID);
-                            webTrailer.DocumentText = YoutubeEmbed(YT_ID);
-
-                            LogWebDoc(YT_ID);
-                            return;
-                        }
-                    }
                     ShowImageONWeb(GlobalVars.FILE_NOTRAILER);
                     return;
                 }
@@ -258,7 +234,7 @@ namespace HomeCinema
                     if (File.Exists(MOVIE_TRAILER))
                     {
                         url = "file://" + MOVIE_TRAILER;
-                        webTrailer.DocumentText = GetPlayerHTML(url);
+                        webTrailer.DocumentText = WebLocalFile(url);
                         return;
                     }
                     else
@@ -273,10 +249,6 @@ namespace HomeCinema
             // Log to file
             GlobalVars.WriteToFile(GlobalVars.PATH_START + "WebTrailerDocText.log", webTrailer.DocumentText);
             GlobalVars.WriteToFile(GlobalVars.PATH_START + "WebTrailer.log", YoutubeEmbed(Youtube_ID));
-        }
-        private static string GetPlayerHTML(string sourcelink)
-        {
-            return GetPlayerHTML(sourcelink, "");
         }
         public string YoutubeEmbed(string code)
         {
@@ -302,24 +274,16 @@ namespace HomeCinema
 
             return sb.ToString();
         }
-        private static string GetPlayerHTML(string sourcelink, string videoCode)
+        private string WebLocalFile(string sourcelink)
         {
             var sb = new StringBuilder();
-
-            //const string YOUTUBE_URL = @"https://www.youtube.com/watch?v=";
-            const string YOUTUBE_URL = @"https://www.youtube.com/embed/";
-            //const string YOUTUBE_URL = @"http://www.youtube.com/v/";
-
             string src;
-            if (String.IsNullOrWhiteSpace(videoCode))
+            if (String.IsNullOrWhiteSpace(sourcelink))
             {
-                src = sourcelink;
+                ShowImageONWeb(GlobalVars.FILE_NOTRAILER);
+                return "";
             }
-            else
-            {
-                src = YOUTUBE_URL + videoCode + "?autoplay=1;version=3&amp;rel=0";
-            }
-
+            src = sourcelink;
             sb.Append("<html>");
             sb.Append("    <head>");
             //sb.Append("        <meta http-equiv =\"X-UA-Compatible\" content=\"IE=Edge\"/>");
@@ -335,7 +299,6 @@ namespace HomeCinema
             sb.Append("        </object>");
             sb.Append("    </body>");
             sb.Append("</html>");
-
             return sb.ToString();
         }
         // Display a Fullscreen image
@@ -361,7 +324,6 @@ namespace HomeCinema
                 return;
             }
             webTrailer.DocumentText = "<html><body><h1>Unknown Error!</h1></body></html>";
-
         }
         // ############################################################################## Form Control events
         private void frmMovie_FormClosing(object sender, FormClosingEventArgs e)
@@ -395,6 +357,7 @@ namespace HomeCinema
             GlobalVars.CleanMemory("frmMovie_FormClosing");
             Dispose();
         }
+        // Play File on Default Player
         private void btnPlay_Click(object sender, EventArgs e)
         {
             // Directory of Series

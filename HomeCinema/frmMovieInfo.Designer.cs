@@ -39,8 +39,6 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label17 = new System.Windows.Forms.Label();
             this.txtSummary = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.txtYear = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtEpNum = new System.Windows.Forms.TextBox();
@@ -77,6 +75,9 @@
             this.btnChangeFile = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
             this.txtPathFile = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtYear = new System.Windows.Forms.TextBox();
+            this.btnFetchData = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
@@ -176,10 +177,11 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.label17);
-            this.tabPage1.Controls.Add(this.txtSummary);
+            this.tabPage1.Controls.Add(this.btnFetchData);
             this.tabPage1.Controls.Add(this.label8);
             this.tabPage1.Controls.Add(this.txtYear);
+            this.tabPage1.Controls.Add(this.label17);
+            this.tabPage1.Controls.Add(this.txtSummary);
             this.tabPage1.Controls.Add(this.groupBox4);
             this.tabPage1.Controls.Add(this.label3);
             this.tabPage1.Controls.Add(this.txtName);
@@ -199,7 +201,7 @@
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(36, 257);
+            this.label17.Location = new System.Drawing.Point(4, 257);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(102, 25);
             this.label17.TabIndex = 30;
@@ -209,30 +211,12 @@
             // txtSummary
             // 
             this.txtSummary.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSummary.Location = new System.Drawing.Point(41, 285);
+            this.txtSummary.Location = new System.Drawing.Point(9, 285);
             this.txtSummary.Multiline = true;
             this.txtSummary.Name = "txtSummary";
             this.txtSummary.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtSummary.Size = new System.Drawing.Size(712, 196);
+            this.txtSummary.Size = new System.Drawing.Size(749, 196);
             this.txtSummary.TabIndex = 31;
-            // 
-            // label8
-            // 
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(449, 13);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(84, 25);
-            this.label8.TabIndex = 29;
-            this.label8.Text = "Year";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // txtYear
-            // 
-            this.txtYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtYear.Location = new System.Drawing.Point(539, 8);
-            this.txtYear.Name = "txtYear";
-            this.txtYear.Size = new System.Drawing.Size(100, 30);
-            this.txtYear.TabIndex = 27;
             // 
             // groupBox4
             // 
@@ -247,7 +231,7 @@
             this.groupBox4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox4.Location = new System.Drawing.Point(16, 93);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(715, 154);
+            this.groupBox4.Size = new System.Drawing.Size(742, 154);
             this.groupBox4.TabIndex = 24;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "For Series";
@@ -330,7 +314,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(52, 53);
+            this.label3.Location = new System.Drawing.Point(9, 53);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(64, 25);
             this.label3.TabIndex = 23;
@@ -340,15 +324,15 @@
             // txtName
             // 
             this.txtName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtName.Location = new System.Drawing.Point(122, 53);
+            this.txtName.Location = new System.Drawing.Point(77, 53);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(585, 30);
+            this.txtName.Size = new System.Drawing.Size(666, 30);
             this.txtName.TabIndex = 28;
             // 
             // label2
             // 
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(215, 14);
+            this.label2.Location = new System.Drawing.Point(357, 13);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(85, 25);
             this.label2.TabIndex = 22;
@@ -358,7 +342,7 @@
             // txtIMDB
             // 
             this.txtIMDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtIMDB.Location = new System.Drawing.Point(311, 9);
+            this.txtIMDB.Location = new System.Drawing.Point(448, 8);
             this.txtIMDB.Name = "txtIMDB";
             this.txtIMDB.Size = new System.Drawing.Size(132, 30);
             this.txtIMDB.TabIndex = 26;
@@ -366,9 +350,9 @@
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(41, 13);
+            this.label1.Location = new System.Drawing.Point(9, 13);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 25);
+            this.label1.Size = new System.Drawing.Size(43, 25);
             this.label1.TabIndex = 25;
             this.label1.Text = "ID";
             this.label1.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -376,7 +360,7 @@
             // txtID
             // 
             this.txtID.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtID.Location = new System.Drawing.Point(102, 8);
+            this.txtID.Location = new System.Drawing.Point(58, 8);
             this.txtID.Name = "txtID";
             this.txtID.ReadOnly = true;
             this.txtID.Size = new System.Drawing.Size(86, 30);
@@ -597,6 +581,35 @@
             this.txtPathFile.TabIndex = 31;
             this.txtPathFile.Text = "Path to file";
             // 
+            // label8
+            // 
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(157, 13);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(66, 25);
+            this.label8.TabIndex = 33;
+            this.label8.Text = "Year";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // txtYear
+            // 
+            this.txtYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtYear.Location = new System.Drawing.Point(229, 8);
+            this.txtYear.Name = "txtYear";
+            this.txtYear.Size = new System.Drawing.Size(100, 30);
+            this.txtYear.TabIndex = 32;
+            // 
+            // btnFetchData
+            // 
+            this.btnFetchData.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFetchData.Location = new System.Drawing.Point(586, 6);
+            this.btnFetchData.Name = "btnFetchData";
+            this.btnFetchData.Size = new System.Drawing.Size(172, 38);
+            this.btnFetchData.TabIndex = 4;
+            this.btnFetchData.Text = "FETCH DATA";
+            this.btnFetchData.UseVisualStyleBackColor = true;
+            this.btnFetchData.Click += new System.EventHandler(this.btnFetchData_Click);
+            // 
             // frmMovieInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -636,8 +649,6 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.TextBox txtSummary;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox txtYear;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtEpNum;
@@ -676,5 +687,8 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox txtPathTrailer;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox txtYear;
+        private System.Windows.Forms.Button btnFetchData;
     }
 }
