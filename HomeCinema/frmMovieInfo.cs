@@ -135,11 +135,15 @@ namespace HomeCinema
 
             // Change cover image, if error occurs, Dispose form
             MOVIE_COVER = GlobalVars.GetImageFromList(MOVIE_ID);
-            picBox.Image = MOVIE_COVER;
             if (MOVIE_COVER == null)
             {
-                GlobalVars.Log($"frmMovieInfo-({Name})-LoadInformation", "Setting Image Cover error");
-                Close();
+                GlobalVars.Log($"frmMovieInfo-({Name})-LoadInformation", "MOVIE_COVER = null");
+                GlobalVars.ShowWarning("Poster Image not set!");
+                //Close();
+            }
+            else
+            {
+                picBox.Image = MOVIE_COVER;
             }
 
             // Set textbox values from Database
@@ -335,16 +339,44 @@ namespace HomeCinema
             }
             return null;
         }
+        // Load an Image from file and set to picBox Image
+        private void LoadImageFromFile(string selectedFilename, string actFrom)
+        {
+            // Change picBox image
+            if (tempImage != null)
+            {
+                tempImage.Dispose();
+            }
+
+            // Try load image from File
+            string errFrom = $"frmMovieInfo ({Name})-{actFrom}-(Image.FromFile Error)";
+            try
+            {
+                tempImage = Image.FromFile(selectedFilename);
+                picBox.Image = tempImage;
+                picBox.Tag = selectedFilename;
+                picBox.Refresh();
+                GlobalVars.ShowInfo("Changed the image cover!");
+            }
+            catch (Exception exc)
+            {
+                GlobalVars.ShowError(errFrom, exc.Message);
+            }
+        }
+        // Saved loaded image from picBox Tag property as Poster image
         private void SaveCoverChanged(string selectedFilename)
         {
             string ExceptionFrom = "frmMovieInfo-btnChangeCover_Click (" + Name + ")";
             //GlobalVars.Log(ExceptionFrom, "Try adding Image from File");
 
             // Delete previous image on the ImgList, exit if not succesful and show warning
-            if (GlobalVars.DeleteImageFromList(MOVIE_ID + ".jpg", $"frmMovieInfo-({Name})-SaveCoverChanged (Previous Image)") == false)
+            if (File.Exists(GlobalVars.PATH_IMG + MOVIE_ID + ".jpg"))
             {
-                GlobalVars.ShowWarning("Cannot replace image!\nFile must be NOT in use!");
-                return;
+                if (GlobalVars.DeleteImageFromList(MOVIE_ID + ".jpg", $"frmMovieInfo-({Name})-SaveCoverChanged (Previous Image)") == false)
+                {
+                    GlobalVars.ShowWarning("Cannot replace image!\nFile must be NOT in use!");
+                    return;
+                }
             }
 
             // Copy new file to App Path
@@ -528,27 +560,8 @@ namespace HomeCinema
 
             if (selectedFilename != "")
             {
-                // Change picBox image
-                if (tempImage != null)
-                {
-                    tempImage.Dispose();
-                }
-
-                // Try load image from File
-                string errFrom = $"frmMovieInfo ({Name})-btnChangeCover_Click-(Image.FromFile Error)";
-                try
-                {
-                    tempImage = Image.FromFile(selectedFilename);
-                    picBox.Image = tempImage;
-                    picBox.Tag = selectedFilename;
-                    picBox.Refresh();
-                    GlobalVars.ShowInfo("Changed the image cover!");
-                }
-                catch (Exception exc)
-                {
-                    GlobalVars.ShowError(errFrom, exc.Message);
-                }
-                
+                // Load image from file
+                LoadImageFromFile(selectedFilename, "btnChangeCover_Click");
             }
         }
         // Change Movie File path
@@ -591,21 +604,47 @@ namespace HomeCinema
         {
             string IMDB_ID = txtIMDB.Text;
             string TMDB_KEY = GlobalVars.TMDB_KEY;
-            string JSONgetMovieID = GlobalVars.PATH_TEMP + IMDB_ID + ".json";
-            string urlMovieID = "";
-            string YT_ID = "";
-            string urlMovieTrailerJSON = @"https://api.themoviedb.org/3/movie/" + $"{ IMDB_ID }/videos?api_key={ TMDB_KEY }&language=en-US";
-            if (File.Exists(JSONgetMovieID) == false)
+            // File paths
+            string JSONmovieinfo = GlobalVars.PATH_TEMP + IMDB_ID + ".json";
+            string JSONfindmovie = GlobalVars.PATH_TEMP + IMDB_ID + "_info.json";
+            // Links
+            string urlJSONMovieInfo = @"https://api.themoviedb.org/3/movie/" + $"{ IMDB_ID }/videos?api_key={ TMDB_KEY }&language=en-US";
+            string urlJSONFindMovie = @"https://api.themoviedb.org/3/find/" + IMDB_ID + "?api_key=" + TMDB_KEY + "&external_source=imdb_id";
+            // If File DOES exists,
+            if (File.Exists(JSONmovieinfo) == false)
             {
-                GlobalVars.DownloadFrom(urlMovieTrailerJSON, JSONgetMovieID);
+                // Download it
+                GlobalVars.DownloadFrom(urlJSONMovieInfo, JSONmovieinfo);
+                GlobalVars.DownloadFrom(urlJSONFindMovie, JSONfindmovie);
             }
-            if (File.Exists(JSONgetMovieID))
+            // Get Information from JSON files
+            // JSON - MOVIE WUTH GIVEN IMDB
+            if (File.Exists(JSONmovieinfo))
             {
-                
-                urlMovieID = GlobalVars.ParseJSON(JSONgetMovieID, "{\"id\":", ",");
-                YT_ID = GlobalVars.ParseJSON(JSONgetMovieID, "\"key\":\"", "\",\"name\":\"");
-
-                txtPathTrailer.Text = GlobalVars.LINK_YT + YT_ID;
+                if (String.IsNullOrWhiteSpace(txtPathTrailer.Text))
+                {
+                    string YT_ID = GlobalVars.ParseJSON(JSONmovieinfo, "\"key\":\"", "\",\"name\":\"");
+                    txtPathTrailer.Text = GlobalVars.LINK_YT + YT_ID;
+                }
+            }
+            // JSON - FIND USING IMDB
+            if (File.Exists(JSONfindmovie))
+            {
+                // If there is no existing poster image, download it
+                string moviePosterFile = GlobalVars.PATH_IMG + MOVIE_ID + ".jpg";
+                if (File.Exists(moviePosterFile) == false)
+                {
+                    string linkPoster = GlobalVars.ParseJSON(JSONfindmovie, "poster_path\":\"/", "\",\"popularity\"");
+                    if (String.IsNullOrWhiteSpace(linkPoster) == false)
+                    {
+                        string moviePosterDL = GlobalVars.PATH_TEMP + MOVIE_ID + ".jpg";
+                        if (File.Exists(moviePosterDL) == false)
+                        {
+                            GlobalVars.DownloadFrom("https://image.tmdb.org/t/p/w185/" + linkPoster, moviePosterDL);
+                        }
+                        LoadImageFromFile(moviePosterDL, "btnFetchData_Click");
+                    }
+                }
             }
         }
     }
