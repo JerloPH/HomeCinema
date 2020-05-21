@@ -148,12 +148,12 @@
             this.txtGenre.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtGenre.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtGenre.ForeColor = System.Drawing.Color.Goldenrod;
-            this.txtGenre.Location = new System.Drawing.Point(191, 488);
+            this.txtGenre.Location = new System.Drawing.Point(191, 518);
             this.txtGenre.Multiline = true;
             this.txtGenre.Name = "txtGenre";
             this.txtGenre.ReadOnly = true;
             this.txtGenre.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtGenre.Size = new System.Drawing.Size(387, 84);
+            this.txtGenre.Size = new System.Drawing.Size(387, 54);
             this.txtGenre.TabIndex = 44;
             this.txtGenre.Text = "Genre";
             // 
@@ -161,11 +161,12 @@
             // 
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label14.ForeColor = System.Drawing.Color.White;
-            this.label14.Location = new System.Drawing.Point(187, 460);
+            this.label14.Location = new System.Drawing.Point(92, 515);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(100, 25);
+            this.label14.Size = new System.Drawing.Size(89, 25);
             this.label14.TabIndex = 43;
             this.label14.Text = "Genre";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label13
             // 
@@ -228,7 +229,7 @@
             this.lblSummary.Name = "lblSummary";
             this.lblSummary.ReadOnly = true;
             this.lblSummary.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.lblSummary.Size = new System.Drawing.Size(386, 177);
+            this.lblSummary.Size = new System.Drawing.Size(386, 223);
             this.lblSummary.TabIndex = 32;
             this.lblSummary.Text = "Summary";
             // 

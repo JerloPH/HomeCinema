@@ -1,5 +1,19 @@
 # HomeCinema - Project History:
 
+## v0.0.0.7 ***build 7 - (14 May 2020 PHT)***
+### Quick Fix 
+
+Build from latest commit: 6dde01a
+
+**[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/0.0.0.6/HomeCinema-Windows_v0.0.0.6.zip "HomeCinema-Windows_v0.0.0.6.zip")**
+	
+**What's New?**
+- ADD: **Fetch Data** Button to automatically fetch information from [**The Movie Database**](https://www.themoviedb.org/).
+  - Fetch: Title, Summary, Year, Trailer, Poster Image
+- Minor GUI Adjustments
+- Minor adjustments and code cleanup.
+****
+
 ## v0.0.0.6 ***build 6 - (14 May 2020 PHT)***
 ### Quick Fix 
 

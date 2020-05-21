@@ -645,6 +645,16 @@ namespace HomeCinema
                         LoadImageFromFile(moviePosterDL, "btnFetchData_Click");
                     }
                 }
+                // Set the title of the Movie
+                string srcTitle = GlobalVars.ParseJSON(JSONfindmovie, "original_title\":\"", "\",\"genre_ids");
+                txtName.Text = srcTitle;
+                // Set description/summary
+                string srcDesc = GlobalVars.ParseJSON(JSONfindmovie, "overview\":\"", "\",\"poster_path");
+                srcDesc = srcDesc.Replace("\\", String.Empty);
+                txtSummary.Text = srcDesc;
+                // Set Year
+                string srcYear = GlobalVars.ParseJSON(JSONfindmovie, "release_date\":\"", "-");
+                txtYear.Text = srcYear;
             }
         }
     }
