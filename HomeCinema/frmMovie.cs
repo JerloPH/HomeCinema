@@ -30,14 +30,14 @@ namespace HomeCinema
 {
     public partial class frmMovie : Form
     {
-        public static string childForm { get; set; } = "";
-        public static string MOVIE_ID { get; set; } = "";
-        public static string MOVIE_NAME { get; set; } = "";
-        public static string MOVIE_FILEPATH { get; set; } = "";
-        public static string MOVIE_SUB { get; set; } = "";
-        public static string MOVIE_TRAILER { get; set; } = "";
-        public static Image MOVIE_COVER { get; set; } = null;
-        public static Image MOVIE_COVER_FULL { get; set; } = null;
+        private static string childForm { get; set; } = "";
+        private static string MOVIE_ID { get; set; } = "";
+        private static string MOVIE_NAME { get; set; } = "";
+        private static string MOVIE_FILEPATH { get; set; } = "";
+        private static string MOVIE_SUB { get; set; } = "";
+        private static string MOVIE_TRAILER { get; set; } = "";
+        private static Image MOVIE_COVER { get; set; } = null;
+        private static Image MOVIE_COVER_FULL { get; set; } = null;
 
         // SQLHelper connection
         SQLHelper conn = new SQLHelper("frmMovie");
@@ -79,9 +79,6 @@ namespace HomeCinema
             // Show this to other monitor
             //GlobalVars.MaximizeToMonitor(this, 1);
 
-            // Adjust Trailer Frame
-            TrailerFrame();
-
             // Set main focus at startup
             btnPlay.Focus();
         }
@@ -111,6 +108,9 @@ namespace HomeCinema
             }
             dtFile.Clear();
             dtFile.Dispose();
+
+            // Adjust Trailer Frame
+            TrailerFrame();
 
             // get Info FROM DB
             cols = "";
@@ -207,10 +207,9 @@ namespace HomeCinema
                     ShowImageONWeb(GlobalVars.FILE_NOTRAILER);
                     return;
                 }
-                string sLinkStart = GlobalVars.LINK_YT;
-                if (MOVIE_TRAILER.StartsWith(sLinkStart))
+                if (MOVIE_TRAILER.Contains("youtube.com"))
                 {
-                    url = MOVIE_TRAILER.Replace(sLinkStart, String.Empty);
+                    url = MOVIE_TRAILER.Substring(MOVIE_TRAILER.IndexOf("?v=") + 3);
                     webTrailer.DocumentText = YoutubeEmbed(url);
                     // Log to file
                     LogWebDoc(url);
