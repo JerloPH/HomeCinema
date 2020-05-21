@@ -37,6 +37,10 @@
             this.picBox = new System.Windows.Forms.PictureBox();
             this.tabInfo = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnGetImdb = new System.Windows.Forms.Button();
+            this.btnFetchData = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtYear = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.txtSummary = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -75,9 +79,6 @@
             this.btnChangeFile = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
             this.txtPathFile = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.txtYear = new System.Windows.Forms.TextBox();
-            this.btnFetchData = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
@@ -103,9 +104,11 @@
             // 
             // cbCategory
             // 
+            this.cbCategory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.cbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCategory.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.cbCategory.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbCategory.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.cbCategory.FormattingEnabled = true;
             this.cbCategory.Location = new System.Drawing.Point(6, 332);
             this.cbCategory.Name = "cbCategory";
@@ -172,11 +175,12 @@
             this.tabInfo.Location = new System.Drawing.Point(210, 12);
             this.tabInfo.Name = "tabInfo";
             this.tabInfo.SelectedIndex = 0;
-            this.tabInfo.Size = new System.Drawing.Size(772, 516);
+            this.tabInfo.Size = new System.Drawing.Size(772, 523);
             this.tabInfo.TabIndex = 4;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.btnGetImdb);
             this.tabPage1.Controls.Add(this.btnFetchData);
             this.tabPage1.Controls.Add(this.label8);
             this.tabPage1.Controls.Add(this.txtYear);
@@ -192,16 +196,56 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(764, 487);
+            this.tabPage1.Size = new System.Drawing.Size(764, 494);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Basic";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // btnGetImdb
+            // 
+            this.btnGetImdb.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGetImdb.Location = new System.Drawing.Point(586, 56);
+            this.btnGetImdb.Name = "btnGetImdb";
+            this.btnGetImdb.Size = new System.Drawing.Size(172, 38);
+            this.btnGetImdb.TabIndex = 34;
+            this.btnGetImdb.Text = "SEARCH IMDB";
+            this.btnGetImdb.UseVisualStyleBackColor = true;
+            this.btnGetImdb.Click += new System.EventHandler(this.btnGetImdb_Click);
+            // 
+            // btnFetchData
+            // 
+            this.btnFetchData.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFetchData.Location = new System.Drawing.Point(586, 6);
+            this.btnFetchData.Name = "btnFetchData";
+            this.btnFetchData.Size = new System.Drawing.Size(172, 41);
+            this.btnFetchData.TabIndex = 4;
+            this.btnFetchData.Text = "FETCH DATA";
+            this.btnFetchData.UseVisualStyleBackColor = true;
+            this.btnFetchData.Click += new System.EventHandler(this.btnFetchData_Click);
+            // 
+            // label8
+            // 
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(157, 13);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(66, 25);
+            this.label8.TabIndex = 33;
+            this.label8.Text = "Year";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // txtYear
+            // 
+            this.txtYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtYear.Location = new System.Drawing.Point(229, 8);
+            this.txtYear.Name = "txtYear";
+            this.txtYear.Size = new System.Drawing.Size(100, 30);
+            this.txtYear.TabIndex = 32;
             // 
             // label17
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(4, 257);
+            this.label17.Location = new System.Drawing.Point(4, 264);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(102, 25);
             this.label17.TabIndex = 30;
@@ -211,7 +255,7 @@
             // txtSummary
             // 
             this.txtSummary.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSummary.Location = new System.Drawing.Point(9, 285);
+            this.txtSummary.Location = new System.Drawing.Point(9, 290);
             this.txtSummary.Multiline = true;
             this.txtSummary.Name = "txtSummary";
             this.txtSummary.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -229,7 +273,7 @@
             this.groupBox4.Controls.Add(this.label4);
             this.groupBox4.Controls.Add(this.txtSeriesName);
             this.groupBox4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.groupBox4.Location = new System.Drawing.Point(16, 93);
+            this.groupBox4.Location = new System.Drawing.Point(16, 108);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(742, 154);
             this.groupBox4.TabIndex = 24;
@@ -314,7 +358,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(9, 53);
+            this.label3.Location = new System.Drawing.Point(9, 56);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(64, 25);
             this.label3.TabIndex = 23;
@@ -324,9 +368,9 @@
             // txtName
             // 
             this.txtName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtName.Location = new System.Drawing.Point(77, 53);
+            this.txtName.Location = new System.Drawing.Point(77, 56);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(666, 30);
+            this.txtName.Size = new System.Drawing.Size(503, 30);
             this.txtName.TabIndex = 28;
             // 
             // label2
@@ -581,35 +625,6 @@
             this.txtPathFile.TabIndex = 31;
             this.txtPathFile.Text = "Path to file";
             // 
-            // label8
-            // 
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(157, 13);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(66, 25);
-            this.label8.TabIndex = 33;
-            this.label8.Text = "Year";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // txtYear
-            // 
-            this.txtYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtYear.Location = new System.Drawing.Point(229, 8);
-            this.txtYear.Name = "txtYear";
-            this.txtYear.Size = new System.Drawing.Size(100, 30);
-            this.txtYear.TabIndex = 32;
-            // 
-            // btnFetchData
-            // 
-            this.btnFetchData.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFetchData.Location = new System.Drawing.Point(586, 6);
-            this.btnFetchData.Name = "btnFetchData";
-            this.btnFetchData.Size = new System.Drawing.Size(172, 38);
-            this.btnFetchData.TabIndex = 4;
-            this.btnFetchData.Text = "FETCH DATA";
-            this.btnFetchData.UseVisualStyleBackColor = true;
-            this.btnFetchData.Click += new System.EventHandler(this.btnFetchData_Click);
-            // 
             // frmMovieInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -690,5 +705,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtYear;
         private System.Windows.Forms.Button btnFetchData;
+        private System.Windows.Forms.Button btnGetImdb;
     }
 }

@@ -191,6 +191,14 @@ namespace HomeCinema
             Text = $"{lblName.Text} ({lblYear.Text})";
             btnPlay.Focus();
         }
+        // Dispose Image poster
+        public void DisposePoster(string none)
+        {
+            picBox.Image.Dispose();
+            MOVIE_COVER.Dispose();
+            MOVIE_COVER_FULL.Dispose();
+        }
+        // Adjust settings on webDoc
         public void TrailerFrame()
         {
             // Adjust Trailer Box

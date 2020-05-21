@@ -67,15 +67,7 @@ namespace HomeCinema
             Text = GlobalVars.HOMECINEMA_NAME + " v" + GlobalVars.HOMECINEMA_VERSION + " " + GlobalVars.HOMECINEMA_BUILD;
 
             // Delete previous log file, if exceeds file size limit
-            if (File.Exists(GlobalVars.PATH_LOG))
-            {
-                FileInfo f = new FileInfo(GlobalVars.PATH_LOG);
-                if (f.Length > GlobalVars.SET_LOGMAXSIZE)
-                {
-                    File.Delete(GlobalVars.PATH_LOG);
-                    GlobalVars.Log("frmMain-frmMain", Text + "\n  : Start of LogFile");
-                }
-            }
+            GlobalVars.CheckLogFile(GlobalVars.FILE_APPLOG, "frmMain-frmMain", Text + "\n  : Start of LogFile");
 
             // Add events to controls
             txtSearch.Text = GlobalVars.SEARCHBOX_PLACEHOLDER;
@@ -388,17 +380,8 @@ namespace HomeCinema
                         // Add sub-item for Series Name, or Episode Name
                         if (String.IsNullOrWhiteSpace(r4.ToString()))
                         {
-                            // If there is no Series name
-                            if (String.IsNullOrWhiteSpace(r3.ToString()))
-                            {
-                                // Use Episode name
-                                temp.SubItems.Add(r2.ToString());
-                            }
-                            else
-                            {
-                                // Otherwise use Series
-                                temp.SubItems.Add(r3.ToString());
-                            }
+                            temp.SubItems.Add(r3.ToString()); // Series Name
+                            temp.SubItems.Add(r2.ToString()); // Episode Name
                         }
                         else
                         {
@@ -407,11 +390,9 @@ namespace HomeCinema
                             {
                                 temp.Text = r3.ToString(); //Set Series Name
                             }
+                            temp.SubItems.Add(r2.ToString()); // Episode Name
                             temp.SubItems.Add("S" + GlobalVars.ValidateNum(r4.ToString()) + " E" + GlobalVars.ValidateNum(r5.ToString()));
                         }
-
-                        // Add year as 3rd sub item
-                        temp.SubItems.Add(r6.ToString());
 
                         // Display image (From ImageList) based on ID
                         string imgKey = Convert.ToString(MOVIEID) + ".jpg";
