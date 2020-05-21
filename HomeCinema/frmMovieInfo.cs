@@ -610,11 +610,13 @@ namespace HomeCinema
             // Links
             string urlJSONMovieInfo = @"https://api.themoviedb.org/3/movie/" + $"{ IMDB_ID }/videos?api_key={ TMDB_KEY }&language=en-US";
             string urlJSONFindMovie = @"https://api.themoviedb.org/3/find/" + IMDB_ID + "?api_key=" + TMDB_KEY + "&external_source=imdb_id";
-            // If File DOES exists,
+            // If JSON File DOES not exists, Download it
             if (File.Exists(JSONmovieinfo) == false)
             {
-                // Download it
                 GlobalVars.DownloadFrom(urlJSONMovieInfo, JSONmovieinfo);
+            }
+            if (File.Exists(JSONfindmovie) == false)
+            {
                 GlobalVars.DownloadFrom(urlJSONFindMovie, JSONfindmovie);
             }
             // Get Information from JSON files
