@@ -42,17 +42,25 @@ To add multiple directories that the app loads media files from, follow this ste
 **Example**: ***D:\Movies,D:\Anime,D:\Shows***
 
 ****
+
 ## Credits
 
 [**The Movie Database**](https://www.themoviedb.org/) - Used to fetch movie details from the web.
+
+****
 
 ## Find a bug or want a new feature?
 
 **Submit a ticket at *Issues* tab**.
 - *When submitting a **bug report**,*
-  - Include the App.Log file (Located at the same folder as the main app).
+  - Include the following file (Located at the same folder as the main app):
+    - App.log
+	- HomeCinemaDB.dblog
+	- WebTrailer.log
   - If possible, include a screenshot.
-  - Explain the details in full. Strictly **NO GENERIC** *"I get an error"* or *"This app has bugs"*.
+  - Explain the details in full. Describe what you are doing or trying to do, on what screen when the error apppeared.
+    NOTE: Strictly **NO GENERIC** *"I get an error"* or *"This app has bugs"*.
+  - Try to replicate the error / bug.
   - Failure to comply will make your report probably ignored.
 - *When requesting a **new feature / feature update**,*
   - Include how it works.
@@ -70,7 +78,7 @@ To add multiple directories that the app loads media files from, follow this ste
 <details>
 	<summary> <b>View Snippet</b> </summary>
 	
-    <b>HomeCinema - Organize your Movie Collection</b>
+    ** HomeCinema - Organize your Movie Collection **
     Copyright (C) 2020  JerloPH (https://github.com/JerloPH)
 
     This program is free software: you can redistribute it and/or modify
@@ -85,7 +93,6 @@ To add multiple directories that the app loads media files from, follow this ste
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
 </details>
 
 ## Disclaimer:
