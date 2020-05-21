@@ -57,6 +57,7 @@ namespace HomeCinema
             this.label1 = new System.Windows.Forms.Label();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.lvSearchResult = new System.Windows.Forms.ListView();
+            this.btnClean = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -64,6 +65,7 @@ namespace HomeCinema
             // groupBox2
             // 
             this.groupBox2.BackColor = System.Drawing.Color.White;
+            this.groupBox2.Controls.Add(this.btnClean);
             this.groupBox2.Controls.Add(this.btnShowNew);
             this.groupBox2.Controls.Add(this.btnSort);
             this.groupBox2.Controls.Add(this.btnAddMovie);
@@ -81,9 +83,9 @@ namespace HomeCinema
             this.btnShowNew.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnShowNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnShowNew.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnShowNew.Location = new System.Drawing.Point(758, 21);
+            this.btnShowNew.Location = new System.Drawing.Point(642, 21);
             this.btnShowNew.Name = "btnShowNew";
-            this.btnShowNew.Size = new System.Drawing.Size(244, 40);
+            this.btnShowNew.Size = new System.Drawing.Size(196, 40);
             this.btnShowNew.TabIndex = 18;
             this.btnShowNew.Text = "Show New";
             this.btnShowNew.UseVisualStyleBackColor = false;
@@ -94,9 +96,9 @@ namespace HomeCinema
             this.btnSort.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnSort.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSort.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnSort.Location = new System.Drawing.Point(258, 21);
+            this.btnSort.Location = new System.Drawing.Point(228, 21);
             this.btnSort.Name = "btnSort";
-            this.btnSort.Size = new System.Drawing.Size(244, 40);
+            this.btnSort.Size = new System.Drawing.Size(214, 40);
             this.btnSort.TabIndex = 17;
             this.btnSort.Text = "Sort By";
             this.btnSort.UseVisualStyleBackColor = false;
@@ -107,9 +109,9 @@ namespace HomeCinema
             this.btnAddMovie.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnAddMovie.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddMovie.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnAddMovie.Location = new System.Drawing.Point(508, 21);
+            this.btnAddMovie.Location = new System.Drawing.Point(448, 21);
             this.btnAddMovie.Name = "btnAddMovie";
-            this.btnAddMovie.Size = new System.Drawing.Size(244, 40);
+            this.btnAddMovie.Size = new System.Drawing.Size(188, 40);
             this.btnAddMovie.TabIndex = 15;
             this.btnAddMovie.Text = "Add Movie";
             this.btnAddMovie.UseVisualStyleBackColor = false;
@@ -122,7 +124,7 @@ namespace HomeCinema
             this.btnChangeView.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnChangeView.Location = new System.Drawing.Point(6, 21);
             this.btnChangeView.Name = "btnChangeView";
-            this.btnChangeView.Size = new System.Drawing.Size(244, 40);
+            this.btnChangeView.Size = new System.Drawing.Size(216, 40);
             this.btnChangeView.TabIndex = 14;
             this.btnChangeView.Text = "Change View";
             this.btnChangeView.UseVisualStyleBackColor = false;
@@ -379,6 +381,19 @@ namespace HomeCinema
             this.lvSearchResult.UseCompatibleStateImageBehavior = false;
             this.lvSearchResult.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvSearchResult_MouseDoubleClick);
             // 
+            // btnClean
+            // 
+            this.btnClean.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnClean.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClean.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnClean.Location = new System.Drawing.Point(844, 21);
+            this.btnClean.Name = "btnClean";
+            this.btnClean.Size = new System.Drawing.Size(196, 40);
+            this.btnClean.TabIndex = 19;
+            this.btnClean.Text = "Clean";
+            this.btnClean.UseVisualStyleBackColor = false;
+            this.btnClean.Click += new System.EventHandler(this.btnClean_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -431,6 +446,7 @@ namespace HomeCinema
         private Label label8;
         private Button btnShowNew;
         private CheckBox cbClearSearch;
+        private Button btnClean;
     }
 }
 

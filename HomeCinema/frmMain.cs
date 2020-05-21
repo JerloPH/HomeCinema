@@ -853,5 +853,13 @@ namespace HomeCinema
             // Perform click on search button: btnSearch
             RefreshMovieList();
         }
+        // Delete files from temp
+        private void btnClean_Click(object sender, EventArgs e)
+        {
+            if (GlobalVars.DeleteFilesExt(GlobalVars.PATH_TEMP, ".jpg", "frmMain-btnClean_Click"))
+            {
+                GlobalVars.ShowInfo("Cleanup done!");
+            }
+        }
     }
 }
