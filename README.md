@@ -24,7 +24,7 @@ Ease the pain of browsing through many folders and finding out which movie is wh
 ## List of features:
 	
 - Automatically add all supported media files from designated folders.
-- Automatically fetch movie information from [The Movie Database](https://www.themoviedb.org/). Requires Internet Connection.
+- Automatically fetch movie information from [The Movie Database](https://www.themoviedb.org/). *Requires Internet Connection.*
 - Allows easy browsing of media files on your Computer / Local drive.
 - Display a collection from your locally stored files.
 - Allows filter and search.

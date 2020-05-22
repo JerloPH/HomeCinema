@@ -23,6 +23,8 @@ using System.Windows.Forms;
 using System.IO;
 using HomeCinema.SQLFunc;
 using HomeCinema.Global;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 namespace HomeCinema
 {
@@ -131,7 +133,6 @@ namespace HomeCinema
         public void LoadInformation(string ID, string text)
         {
             // Set Form Properties
-            GlobalVars.Log("", "");
             Text = text + " [Edit Information]";
 
             // Change cover image, if error occurs, Dispose form
@@ -343,16 +344,15 @@ namespace HomeCinema
         // Load an Image from file and set to picBox Image
         private void LoadImageFromFile(string selectedFilename, string actFrom)
         {
-            // Change picBox image
-            if (tempImage != null)
-            {
-                tempImage.Dispose();
-            }
-
             // Try load image from File
             string errFrom = $"frmMovieInfo ({Name})-{actFrom}-(Image.FromFile Error)";
             try
             {
+                // Change picBox image
+                if (tempImage != null)
+                {
+                    tempImage.Dispose();
+                }
                 tempImage = Image.FromFile(selectedFilename);
                 picBox.Image = tempImage;
                 picBox.Tag = selectedFilename;
@@ -373,7 +373,7 @@ namespace HomeCinema
             // Delete previous image on the ImgList, exit if not succesful and show warning
             if (File.Exists(GlobalVars.PATH_IMG + MOVIE_ID + ".jpg"))
             {
-                if (GlobalVars.DeleteImageFromList(MOVIE_ID + ".jpg", ExceptionFrom + " (Previous Image)") == false)
+                if (GlobalVars.DeleteImageFromList(MOVIE_ID, ExceptionFrom + " (Previous Image)") == false)
                 {
                     GlobalVars.ShowWarning("Cannot replace image!\nFile must be NOT in use!");
                     return;
@@ -427,7 +427,7 @@ namespace HomeCinema
         // ############################################################################## Form Controls methods event
         private void frmMovieInfo_FormClosing(object sender, FormClosingEventArgs e)
         {
-            GlobalVars.Log("", "");
+            GlobalVars.LogLine();
             if (picBox.Image != null)
             {
                 picBox.Image.Dispose();
@@ -569,7 +569,6 @@ namespace HomeCinema
             master.RefreshMovieList();
 
             // Close this form
-            //Dispose();
             Close();
         }
         // OpenDialog and Select Cover of Movie and Set it to picBox.Image
@@ -623,6 +622,14 @@ namespace HomeCinema
         private void btnFetchData_Click(object sender, EventArgs e)
         {
             string IMDB_ID = txtIMDB.Text;
+            // Exit if IMDB id is invalid
+            if (String.IsNullOrWhiteSpace(IMDB_ID) || IMDB_ID=="0" || (IMDB_ID.StartsWith("tt")==false))
+            {
+                GlobalVars.ShowWarning("Invalid IMDB Id!");
+                txtIMDB.Focus();
+                return;
+            }
+            // Setup vars and links
             string TMDB_KEY = GlobalVars.TMDB_KEY;
             // File paths
             string JSONmovieinfo = GlobalVars.PATH_TEMP + IMDB_ID + ".json";
@@ -631,16 +638,11 @@ namespace HomeCinema
             string urlJSONMovieInfo = @"https://api.themoviedb.org/3/movie/" + $"{ IMDB_ID }/videos?api_key={ TMDB_KEY }&language=en-US";
             string urlJSONFindMovie = @"https://api.themoviedb.org/3/find/" + IMDB_ID + "?api_key=" + TMDB_KEY + "&external_source=imdb_id";
             // If JSON File DOES not exists, Download it
+            // JSON - MOVIE WITH GIVEN IMDB
             if (File.Exists(JSONmovieinfo) == false)
             {
                 GlobalVars.DownloadFrom(urlJSONMovieInfo, JSONmovieinfo);
             }
-            if (File.Exists(JSONfindmovie) == false)
-            {
-                GlobalVars.DownloadFrom(urlJSONFindMovie, JSONfindmovie);
-            }
-            // Get Information from JSON files
-            // JSON - MOVIE WUTH GIVEN IMDB
             if (File.Exists(JSONmovieinfo))
             {
                 if (String.IsNullOrWhiteSpace(txtPathTrailer.Text))
@@ -650,40 +652,61 @@ namespace HomeCinema
                 }
             }
             // JSON - FIND USING IMDB
+            if (File.Exists(JSONfindmovie) == false)
+            {
+                GlobalVars.DownloadFrom(urlJSONFindMovie, JSONfindmovie);
+            }
             if (File.Exists(JSONfindmovie))
             {
-                // If there is no existing poster image, download it
-                string moviePosterFile = GlobalVars.PATH_IMG + MOVIE_ID + ".jpg";
-                bool ChangeCover = GlobalVars.ShowYesNo("Do you want to change poster image?");
-                if ((File.Exists(moviePosterFile) == false) || ChangeCover)
+                // Get contents of JSON file
+                string contents;
+                using (StreamReader r = new StreamReader(JSONfindmovie))
                 {
-                    // Parse image link from JSON and download it
-                    string linkPoster = GlobalVars.ParseJSON(JSONfindmovie, "poster_path\":\"/", "\",\"popularity\"");
-                    if (String.IsNullOrWhiteSpace(linkPoster) == false)
+                    contents = r.ReadToEnd();
+                }
+                JObject json = JObject.Parse(contents);
+                JArray result = (JArray)json["movie_results"];
+                IList<MovieInfo> movie = result.ToObject<IList<MovieInfo>>();
+
+                if (movie.Count > 0)
+                {
+                    // Set properties and information of movies
+                    txtName.Text = movie[0].title;
+                    txtEpName.Text = movie[0].original_title;
+                    txtSummary.Text = movie[0].overview;
+                    txtYear.Text = movie[0].release_date.Substring(0, 4);
+                    string linkPoster = movie[0].poster_path;
+
+                    // Ask to change cover - poster image
+                    bool ChangeCover = GlobalVars.ShowYesNo("Do you want to change poster image?");
+                    //if ((File.Exists(moviePosterFile) == false) || ChangeCover)
+                    if (ChangeCover)
                     {
-                        string moviePosterDL = GlobalVars.PATH_TEMP + MOVIE_ID + ".jpg";
-                        if (File.Exists(moviePosterDL) == false)
+                        // Parse image link from JSON and download it
+                        if (String.IsNullOrWhiteSpace(linkPoster) == false)
                         {
-                            GlobalVars.DownloadFrom("https://image.tmdb.org/t/p/w185/" + linkPoster, moviePosterDL);
+                            string moviePosterDL = GlobalVars.PATH_TEMP + MOVIE_ID + ".jpg";
+                            if (File.Exists(moviePosterDL) == false)
+                            {
+                                GlobalVars.DownloadFrom("https://image.tmdb.org/t/p/original/" + linkPoster, moviePosterDL);
+                            }
+                            LoadImageFromFile(moviePosterDL, "btnFetchData_Click");
                         }
-                        LoadImageFromFile(moviePosterDL, "btnFetchData_Click");
                     }
                 }
-                // Set the title of the Movie
-                string srcTitle = GlobalVars.ParseJSON(JSONfindmovie, "original_title\":\"", "\",\"genre_ids");
-                txtName.Text = srcTitle;
-                // Set description/summary
-                string srcDesc = GlobalVars.ParseJSON(JSONfindmovie, "overview\":\"", "\",\"poster_path");
-                srcDesc = srcDesc.Replace("\\", String.Empty);
-                txtSummary.Text = srcDesc;
-                // Set Year
-                string srcYear = GlobalVars.ParseJSON(JSONfindmovie, "release_date\":\"", "-");
-                txtYear.Text = srcYear;
             }
         }
         // Get IMDB ID using Movie Name
         private void btnGetImdb_Click(object sender, EventArgs e)
         {
+            // Check if txtName is valid
+            if (String.IsNullOrWhiteSpace(txtName.Text))
+            {
+                GlobalVars.ShowWarning("Invalid Name!");
+                txtName.Focus();
+                return;
+            }
+            // Setup vars and links
             string KEY = GlobalVars.TMDB_KEY;
             // GET TMDB MOVIE ID
             string urlJSONgetId = @"https://api.themoviedb.org/3/search/movie?api_key=" + KEY + "&query=" + txtName.Text;
@@ -693,16 +716,21 @@ namespace HomeCinema
             {
                 GlobalVars.DownloadFrom(urlJSONgetId, JSONgetID);
             }
+            // Get TMDB Movie ID from JSON File (JSONgetID) downloaded
             string MovieID = GlobalVars.ParseJSON(JSONgetID, "id\":", ",\"adult");
-            // GET IMDB
-            string urlJSONgetImdb = @"https://api.themoviedb.org/3/movie/" + MovieID + "?api_key=" + KEY;
-            string JSONgetImdb = GlobalVars.PATH_TEMP + MOVIE_ID + "_imdb.json";
-            // Download file if not existing (TO GET IMDB)
-            if (File.Exists(JSONgetImdb) == false)
+            // Check if MovieID is not empty
+            if (String.IsNullOrWhiteSpace(MovieID) == false)
             {
-                GlobalVars.DownloadFrom(urlJSONgetImdb, JSONgetImdb);
+                // GET IMDB
+                string urlJSONgetImdb = @"https://api.themoviedb.org/3/movie/" + MovieID + "?api_key=" + KEY;
+                string JSONgetImdb = GlobalVars.PATH_TEMP + MOVIE_ID + "_imdb.json";
+                // Download file if not existing (TO GET IMDB)
+                if (File.Exists(JSONgetImdb) == false)
+                {
+                    GlobalVars.DownloadFrom(urlJSONgetImdb, JSONgetImdb);
+                }
+                txtIMDB.Text = GlobalVars.ParseJSON(JSONgetImdb, "imdb_id\":\"", "\",\"original_language");
             }
-            txtIMDB.Text = GlobalVars.ParseJSON(JSONgetImdb, "imdb_id\":\"", "\",\"original_language");
         }
     }
 }
