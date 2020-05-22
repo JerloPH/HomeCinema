@@ -432,6 +432,9 @@ namespace HomeCinema
                         GlobalVars.DeleteImageFromList(MOVIE_ID, errFrom);
                         GlobalVars.TryDelete(GlobalVars.GetPicPath(MOVIE_ID), errFrom);
                     }
+                    // Delete MovieFile from local disk
+                    GlobalVars.TryDelete(MOVIE_FILEPATH, errFrom);
+
                     // Refresh movie list
                     frmMain master = (frmMain)Application.OpenForms["frmMain"];
                     master.RefreshMovieList();
