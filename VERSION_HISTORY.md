@@ -1,5 +1,18 @@
 # HomeCinema - Project History:
 
+## v0.0.1.0 ***build 9 - (21 May 2020 PHT)***
+### Improvements to MovieInfo
+
+Build from latest commit: null
+
+**[Download link for Windows 32/64 bit](null "HomeCinema-Windows_v0.0.1.0.zip")**
+	
+**What's New?**
+- REV: Use *[Newtonsoft.Json](https://www.nuget.org/packages/Newtonsoft.Json/)* to parse JSON files.
+- FIX: Validate search strings for buttons: **Search IMDB** and **Fetch Data**.
+- Minor adjustments and Code cleanup.
+****
+
 ## v0.0.0.8 ***build 8 - (21 May 2020 PHT)***
 ### TMDB Fetching Follow-up
 

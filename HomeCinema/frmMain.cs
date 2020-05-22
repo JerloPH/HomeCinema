@@ -149,7 +149,6 @@ namespace HomeCinema
                     tempExtToBrowse += $"*{ extToAdd };";
                 }
             }
-            tempMediaExt = null;
             GlobalVars.FILTER_VIDEO = "Supported Media Files|" + tempExtToBrowse;
 
             // Perform background worker that Automatically inserts all movies from designated folder
@@ -298,12 +297,12 @@ namespace HomeCinema
             // Get query from variable, set by background worker
             string qry = SEARCH_QUERY;
             string cols = SEARCH_COLS;
-
+            string errFrom = "frmMain-bgw_SearchMovie";
             // If no query
             if (String.IsNullOrWhiteSpace(qry))
             {
                 // Exit
-                GlobalVars.Log("frmMain-bgw_SearchMovie", $"Query is Empty!");
+                GlobalVars.Log(errFrom, $"Query is Empty!");
                 e.Result = null;
                 return;
             }
@@ -312,8 +311,8 @@ namespace HomeCinema
             SEARCH_QUERY_PREV = SEARCH_QUERY;
 
             // Log Query
-            GlobalVars.Log("frmMain-bgw_SearchMovie", $"START Background worker from: {Name}");
-            DataTable dt = DBCON.DbQuery(qry, cols, "frmMain-bgw_SearchMovie");
+            GlobalVars.Log(errFrom, $"START Background worker from: {Name}");
+            DataTable dt = DBCON.DbQuery(qry, cols, errFrom);
             if (dt.Rows.Count > 0)
             {
                 e.Result = dt;

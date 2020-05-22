@@ -86,7 +86,7 @@ namespace HomeCinema
         public void LoadInformation(string ID)
         {
             // Set textbox values from Database
-            string cols = null;
+            string cols = "";
 
             // get filepath FROM DB
             foreach (string s in GlobalVars.DB_TABLE_FILEPATH)

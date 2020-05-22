@@ -419,6 +419,7 @@ namespace HomeCinema
             if (tempImage != null)
             {
                 tempImage.Dispose();
+                tempImage = null;
             }
             // Dispose from Parent
             string[] Params = { "" };

@@ -302,7 +302,7 @@ namespace HomeCinema.SQLFunc
             SQLiteCommand cmd = new SQLiteCommand(conn);
 
             // Make Transaction
-            SQLiteTransaction transaction = null;
+            SQLiteTransaction transaction;
             transaction = conn.BeginTransaction();
 
             // Vars
