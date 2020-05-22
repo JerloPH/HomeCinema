@@ -673,6 +673,12 @@ namespace HomeCinema
                     qry += GlobalVars.QryWhere(qry);
                     qry += $"[artist] LIKE '%{txtCast.Text}%'";
                 }
+                // Director
+                if (String.IsNullOrWhiteSpace(txtDirector.Text) == false)
+                {
+                    qry += GlobalVars.QryWhere(qry);
+                    qry += $"[director] LIKE '%{txtDirector.Text}%'";
+                }
                 // Country
                 string CountryText = GlobalVars.RemoveLine(cbCountry.SelectedItem.ToString());
                 if ((String.IsNullOrWhiteSpace(CountryText) == false) && cbCountry.SelectedIndex > 0)
@@ -742,6 +748,7 @@ namespace HomeCinema
             txtSearch.Text = GlobalVars.SEARCHBOX_PLACEHOLDER;
             txtIMDB.Text = "";
             txtStudio.Text = "";
+            txtDirector.Text = "";
             txtYearFrom.Text = "";
             txtYearTo.Text = DateTime.Now.Year.ToString();
             cbCategory.SelectedIndex = 0;
