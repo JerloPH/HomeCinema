@@ -64,7 +64,7 @@ namespace HomeCinema
             Icon = GlobalVars.HOMECINEMA_ICON;
 
             // Change Caption and Title
-            Text = GlobalVars.HOMECINEMA_NAME + " - Media Organizer";
+            Text = GlobalVars.HOMECINEMA_NAME + " - Media Organizer (v" + GlobalVars.HOMECINEMA_VERSION + " r" + GlobalVars.HOMECINEMA_BUILD + ")";
 
             // Delete previous log file, if exceeds file size limit
             GlobalVars.CheckLogFile(GlobalVars.FILE_APPLOG, "frmMain-frmMain", Text + "\n  : Start of LogFile");
@@ -713,6 +713,7 @@ namespace HomeCinema
             // Display the loading form.
             DisplayLoading();
         }
+        // When double-clicked on an item, open it in new form
         private void lvSearchResult_MouseDoubleClick(object sender, MouseEventArgs e)
         {
 
@@ -742,6 +743,7 @@ namespace HomeCinema
                 }
             }
         }
+        // Clear textboxes on filter
         private void btnClear_Click(object sender, EventArgs e)
         {
             // Clear searchbox and Filter
@@ -764,14 +766,14 @@ namespace HomeCinema
                 btnSearch.PerformClick();
             }
         }
-
+        // Add new movie
         private void btnAddMovie_Click(object sender, EventArgs e)
         {
             string formName = GlobalVars.PREFIX_MOVIEINFO + "0";
             // Create NEW MOVIE and (frmMovieInfo) SHOW Edit Information form
             GlobalVars.OpenFormMovieInfo(this, formName, "0", "New Movie ", "frmMain-btnAddMovie_Click (ADD MOVIE)");
         }
-
+        // Sort Tiles
         private void btnSort_Click(object sender, EventArgs e)
         {
             int toggle = 0;
@@ -815,7 +817,7 @@ namespace HomeCinema
                     break;
             }
         }
-
+        // Auto search if Enter key is pressed
         private void txtSearch_KeyDown(object sender, KeyEventArgs e)
         {
             e.Handled = true;
@@ -829,7 +831,7 @@ namespace HomeCinema
                 }
             }
         }
-
+        // Show ONLY Newly-added media files
         private void btnShowNew_Click(object sender, EventArgs e)
         {
             // Set Search Query

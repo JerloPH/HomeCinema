@@ -161,6 +161,7 @@ namespace HomeCinema
             this.lvSearchResult.Size = new System.Drawing.Size(1262, 450);
             this.lvSearchResult.TabIndex = 22;
             this.lvSearchResult.UseCompatibleStateImageBehavior = false;
+            this.lvSearchResult.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvSearchResult_MouseDoubleClick);
             // 
             // txtSearch
             // 
