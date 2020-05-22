@@ -15,7 +15,7 @@
   - [ ] Get information by scraping downloaded webpage, based on imdb id. Save html contents to string
     
 	- [x] Trailer: /video/imdb/. *Used TMDB API.*
-    - Director: "director"
-	- Genre: "genre []"
+    - [ ] Director: "director"
+	- [ ] Genre: "genre []"
 
 ## Bugs
