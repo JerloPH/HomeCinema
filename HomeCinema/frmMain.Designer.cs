@@ -31,6 +31,7 @@ namespace HomeCinema
         private void InitializeComponent()
         {
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnClean = new System.Windows.Forms.Button();
             this.btnShowNew = new System.Windows.Forms.Button();
             this.btnSort = new System.Windows.Forms.Button();
             this.btnAddMovie = new System.Windows.Forms.Button();
@@ -57,13 +58,14 @@ namespace HomeCinema
             this.label1 = new System.Windows.Forms.Label();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.lvSearchResult = new System.Windows.Forms.ListView();
-            this.btnClean = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox2
             // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.BackColor = System.Drawing.Color.White;
             this.groupBox2.Controls.Add(this.btnClean);
             this.groupBox2.Controls.Add(this.btnShowNew);
@@ -77,6 +79,19 @@ namespace HomeCinema
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Controls";
+            // 
+            // btnClean
+            // 
+            this.btnClean.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnClean.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClean.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnClean.Location = new System.Drawing.Point(844, 21);
+            this.btnClean.Name = "btnClean";
+            this.btnClean.Size = new System.Drawing.Size(196, 40);
+            this.btnClean.TabIndex = 19;
+            this.btnClean.Text = "Clean";
+            this.btnClean.UseVisualStyleBackColor = false;
+            this.btnClean.Click += new System.EventHandler(this.btnClean_Click);
             // 
             // btnShowNew
             // 
@@ -132,6 +147,8 @@ namespace HomeCinema
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.BackColor = System.Drawing.Color.White;
             this.groupBox1.Controls.Add(this.cbClearSearch);
             this.groupBox1.Controls.Add(this.cbGenre);
@@ -165,9 +182,10 @@ namespace HomeCinema
             // cbClearSearch
             // 
             this.cbClearSearch.AutoSize = true;
-            this.cbClearSearch.Location = new System.Drawing.Point(960, 99);
+            this.cbClearSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbClearSearch.Location = new System.Drawing.Point(965, 97);
             this.cbClearSearch.Name = "cbClearSearch";
-            this.cbClearSearch.Size = new System.Drawing.Size(168, 24);
+            this.cbClearSearch.Size = new System.Drawing.Size(192, 29);
             this.cbClearSearch.TabIndex = 23;
             this.cbClearSearch.Text = "Search after Clear";
             this.cbClearSearch.UseVisualStyleBackColor = true;
@@ -179,9 +197,9 @@ namespace HomeCinema
             this.cbGenre.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbGenre.ForeColor = System.Drawing.Color.Black;
             this.cbGenre.FormattingEnabled = true;
-            this.cbGenre.Location = new System.Drawing.Point(888, 61);
+            this.cbGenre.Location = new System.Drawing.Point(893, 61);
             this.cbGenre.Name = "cbGenre";
-            this.cbGenre.Size = new System.Drawing.Size(172, 30);
+            this.cbGenre.Size = new System.Drawing.Size(230, 30);
             this.cbGenre.TabIndex = 22;
             // 
             // label8
@@ -189,7 +207,7 @@ namespace HomeCinema
             this.label8.AutoSize = true;
             this.label8.BackColor = System.Drawing.Color.Transparent;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(809, 65);
+            this.label8.Location = new System.Drawing.Point(814, 65);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(73, 24);
             this.label8.TabIndex = 21;
@@ -243,6 +261,7 @@ namespace HomeCinema
             // 
             // btnSearch
             // 
+            this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
@@ -259,7 +278,7 @@ namespace HomeCinema
             this.btnClear.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClear.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnClear.Location = new System.Drawing.Point(807, 94);
+            this.btnClear.Location = new System.Drawing.Point(812, 94);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(147, 38);
             this.btnClear.TabIndex = 2;
@@ -361,6 +380,8 @@ namespace HomeCinema
             // txtSearch
             // 
             this.txtSearch.AccessibleDescription = "Search here";
+            this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSearch.Location = new System.Drawing.Point(3, 21);
             this.txtSearch.Name = "txtSearch";
@@ -370,44 +391,31 @@ namespace HomeCinema
             // 
             // lvSearchResult
             // 
+            this.lvSearchResult.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lvSearchResult.BackColor = System.Drawing.Color.Black;
             this.lvSearchResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lvSearchResult.ForeColor = System.Drawing.Color.White;
             this.lvSearchResult.HideSelection = false;
-            this.lvSearchResult.Location = new System.Drawing.Point(6, 212);
+            this.lvSearchResult.Location = new System.Drawing.Point(4, 216);
             this.lvSearchResult.Name = "lvSearchResult";
-            this.lvSearchResult.Size = new System.Drawing.Size(1167, 461);
-            this.lvSearchResult.TabIndex = 20;
+            this.lvSearchResult.Size = new System.Drawing.Size(1169, 450);
+            this.lvSearchResult.TabIndex = 22;
             this.lvSearchResult.UseCompatibleStateImageBehavior = false;
-            this.lvSearchResult.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvSearchResult_MouseDoubleClick);
-            // 
-            // btnClean
-            // 
-            this.btnClean.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnClean.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClean.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnClean.Location = new System.Drawing.Point(844, 21);
-            this.btnClean.Name = "btnClean";
-            this.btnClean.Size = new System.Drawing.Size(196, 40);
-            this.btnClean.TabIndex = 19;
-            this.btnClean.Text = "Clean";
-            this.btnClean.UseVisualStyleBackColor = false;
-            this.btnClean.Click += new System.EventHandler(this.btnClean_Click);
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.ClientSize = new System.Drawing.Size(1178, 673);
             this.Controls.Add(this.lvSearchResult);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.ForeColor = System.Drawing.Color.Black;
-            this.MaximizeBox = false;
             this.Name = "frmMain";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Home Cinema";
             this.groupBox2.ResumeLayout(false);
@@ -441,12 +449,12 @@ namespace HomeCinema
         private TextBox txtIMDB;
         private Label label1;
         private TextBox txtSearch;
-        internal ListView lvSearchResult;
         private ComboBox cbGenre;
         private Label label8;
         private Button btnShowNew;
         private CheckBox cbClearSearch;
         private Button btnClean;
+        internal ListView lvSearchResult;
     }
 }
 

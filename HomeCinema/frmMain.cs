@@ -64,7 +64,7 @@ namespace HomeCinema
             Icon = GlobalVars.HOMECINEMA_ICON;
 
             // Change Caption and Title
-            Text = GlobalVars.HOMECINEMA_NAME + " v" + GlobalVars.HOMECINEMA_VERSION + " " + GlobalVars.HOMECINEMA_BUILD;
+            Text = GlobalVars.HOMECINEMA_NAME + " - Media Organizer";
 
             // Delete previous log file, if exceeds file size limit
             GlobalVars.CheckLogFile(GlobalVars.FILE_APPLOG, "frmMain-frmMain", Text + "\n  : Start of LogFile");
