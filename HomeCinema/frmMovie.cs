@@ -109,9 +109,6 @@ namespace HomeCinema
             dtFile.Clear();
             dtFile.Dispose();
 
-            // Adjust Trailer Frame
-            TrailerFrame();
-
             // get Info FROM DB
             cols = "";
             foreach (string c in GlobalVars.DB_TABLE_INFO)
@@ -183,6 +180,9 @@ namespace HomeCinema
 
             // Set MOVIE_COVER_FULL | Image from file
             MOVIE_COVER_FULL = Image.FromFile(GlobalVars.GetPicValid(lblID.Text));
+
+            // Adjust Trailer Frame
+            TrailerFrame();
 
             // Log changes
             GlobalVars.Log($"frmMovie-LoadInformation ({Name})", "Refreshed the Information!");
@@ -425,12 +425,11 @@ namespace HomeCinema
             {
                 if (conn.DbDeleteMovie(MOVIE_ID, errFrom))
                 {
-                    // Delete image
+                    // Dispose and Delete image
                     if (MOVIE_COVER != null)
                     {
-                        MOVIE_COVER.Dispose();
-                        MOVIE_COVER_FULL.Dispose();
-                        GlobalVars.DeleteImageFromList(MOVIE_ID + ".jpg", errFrom);
+                        DisposePoster("");
+                        GlobalVars.DeleteImageFromList(MOVIE_ID, errFrom);
                         GlobalVars.TryDelete(GlobalVars.GetPicPath(MOVIE_ID), errFrom);
                     }
                     // Refresh movie list
