@@ -700,6 +700,7 @@ namespace HomeCinema
         // Get IMDB ID using Movie Name
         private void btnGetImdb_Click(object sender, EventArgs e)
         {
+            string errFrom = "frmMovieInfo-btnGetImdb_Click";
             // Check if txtName is valid
             if (String.IsNullOrWhiteSpace(txtName.Text))
             {
@@ -712,11 +713,12 @@ namespace HomeCinema
             // GET TMDB MOVIE ID
             string urlJSONgetId = @"https://api.themoviedb.org/3/search/movie?api_key=" + KEY + "&query=" + txtName.Text;
             string JSONgetID = GlobalVars.PATH_TEMP + MOVIE_ID + "_id.json";
-            // Download file if not existing (TO GET TMDB MOVIE ID)
-            if (File.Exists(JSONgetID) == false)
+            // Download file , force overwrite (TO GET TMDB MOVIE ID)
+            if (File.Exists(JSONgetID))
             {
-                GlobalVars.DownloadFrom(urlJSONgetId, JSONgetID);
+                GlobalVars.TryDelete(JSONgetID, errFrom);
             }
+            GlobalVars.DownloadFrom(urlJSONgetId, JSONgetID);
             // Get TMDB Movie ID from JSON File (JSONgetID) downloaded
             string MovieID = GlobalVars.ParseJSON(JSONgetID, "id\":", ",\"adult");
             // Check if MovieID is not empty
