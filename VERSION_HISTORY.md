@@ -1,15 +1,22 @@
 # HomeCinema - Project History:
 
-## v0.0.1.0 ***build 9 - (21 May 2020 PHT)***
+## v0.0.1.0 ***build 9 - (23 May 2020 PHT)***
 ### Improvements to MovieInfo
 
-Build from latest commit: null
+Build from latest commit: 33a6d77
 
-**[Download link for Windows 32/64 bit](null "HomeCinema-Windows_v0.0.1.0.zip")**
+**[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.1.0/HomeCinema-Windows_v0.0.1.0.zip "HomeCinema-Windows_v0.0.1.0.zip")**
 	
 **What's New?**
 - REV: Use *[Newtonsoft.Json](https://www.nuget.org/packages/Newtonsoft.Json/)* to parse JSON files.
+- REV: Main form is scalable - Can be Maximized and Resized.
+- ADD: **Director** Textbox filter.
+- CHANGE: Move files to recycle bin, instead of permanently deleting.
+- CHANGE: Force overwrite JSON file for Finding IMDB ID of Movie.
 - FIX: Validate search strings for buttons: **Search IMDB** and **Fetch Data**.
+- FIX: Double-clicking an item on ListView Movies is not working.
+- RES: Changed screenshot.
+- GUI adjustments.
 - Minor adjustments and Code cleanup.
 ****
 
@@ -94,7 +101,7 @@ Build from latest commit: 4b4217f
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.3/HomeCinema-Windows_v0.0.0.3.zip "HomeCinema-Windows_v0.0.0.3.zip")**
 	
 **What's New?**
-- Added new ["File"](https://github.com/JerloPH/HomeCinema/tree/master/HomeCinema/Resources/media_ext.hc_data "media_ext.hc_data") that loads supported extensions for media files.
+- Added new ["File"](https://github.com/JerloPH/HomeCinema/blob/v0.0.0.3/HomeCinema/Resources/media_ext.hc_data "media_ext.hc_data") that loads supported extensions for media files.
 - Changed GUI.
 - Changed "No Cover" Image file.
 ****
@@ -107,7 +114,7 @@ Build from latest commit: a57d298
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.2/HomeCinema-Windows_v0.0.0.2.zip "HomeCinema-Windows_v0.0.0.2.zip")**
 	
 **What's New?**
-- Allow to search in multiple directories (See ["Edit Media Location"](https://github.com/JerloPH/HomeCinema#edit-medialocation))
+- Allow to search in multiple directories (See ["Edit Media Location"](https://github.com/JerloPH/HomeCinema/blob/0.0.0.8/README.md#edit-medialocation))
 - Added **"Show New"** button: Shows all newly added media files
 - Automatically search when "ENTER" key is pressed on SearchBox
 - Movie / TV Show item Container is bigger

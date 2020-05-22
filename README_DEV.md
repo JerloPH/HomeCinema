@@ -9,7 +9,7 @@
 **[View Link to read project history](/VERSION_HISTORY.md)**
  
 ## Project specific files
-  - **hc_data**	: Text files used by the app. 
+  - **hc_data**	: Text files used by the app.
 
 ## Project References (Required Packages)
   - **[SQLite](https://www.nuget.org/packages/System.Data.SQLite)**
@@ -49,10 +49,10 @@
 
 1. Fork from **master**
 2. Name your *commit* and *PR* by following these naming conventions:
-  - **FT**		: When adding a Feature
-  - **FIX**		: Bugfixes
   - **REV**		: Revisions to codes.
+  - **FT**		: When adding a Feature
   - **MINOR**	: Minor changes and optimizations.
+  - **FIX**		: Bugfixes
   - **RES**		: GUI and Resource changes.
   - **DOC**		: Documents changes.
 3. Make a **Pull Request** with the name using the above labels.

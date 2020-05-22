@@ -2,12 +2,12 @@
 
 <img src="/data/screenshot01.PNG"></img>
 
-**version:**	0.0.0.8 <br>
-**build:**		8
+**version:**	0.0.1.0 <br>
+**build:**		9
 
 ## Downloads
 
-**Windows 32/64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/0.0.0.8/HomeCinema-Windows_v0.0.0.8.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
+**Windows 32/64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.1.0/HomeCinema-Windows_v0.0.1.0.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
 
 ****
 
@@ -47,6 +47,7 @@ To add multiple directories that the app loads media files from, follow this ste
 ## Credits
 
 [**The Movie Database**](https://www.themoviedb.org/) - Used to fetch movie details from the web.
+[**Newtonsoft.Json**](https://www.newtonsoft.com/json) - Parse JSON file that contains Movie Informations.
 
 ****
 
