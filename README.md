@@ -46,7 +46,7 @@ To add multiple directories that the app loads media files from, follow this ste
 
 ## Credits
 
-[**The Movie Database**](https://www.themoviedb.org/) - Used to fetch movie details from the web.
+[**The Movie Database**](https://www.themoviedb.org/) - Used to fetch movie details from the web. <br>
 [**Newtonsoft.Json**](https://www.newtonsoft.com/json) - Parse JSON file that contains Movie Informations.
 
 ****
