@@ -31,16 +31,13 @@ namespace HomeCinema
             Icon = GlobalVars.HOMECINEMA_ICON;
             //Show(parent);
             // Load image from app path and assign to picBox
-            picBox.Image = GlobalVars.IMG_LOADING;
+            //picBox.Image = GlobalVars.IMG_LOADING;
         }
 
         private void frmLoading_Load(object sender, EventArgs e)
         {
             // Load image from app path and assign to picBox
-            if (picBox.Image == null)
-            {
-                picBox.Image = GlobalVars.IMG_LOADING;
-            }
+            picBox.Image = GlobalVars.IMG_LOADING;
             // Center on screen
             CenterToParent();
             /*
