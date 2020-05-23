@@ -663,11 +663,7 @@ namespace HomeCinema
             if (File.Exists(JSONfindmovie))
             {
                 // Get contents of JSON file
-                string contents;
-                using (StreamReader r = new StreamReader(JSONfindmovie))
-                {
-                    contents = r.ReadToEnd();
-                }
+                string contents = GlobalVars.ReadStringFromFile(JSONfindmovie, "frmMovieInfo-btnFetchData_Click-JSONfindmovie");
                 JObject json = JObject.Parse(contents);
                 JArray result = (JArray)json["movie_results"];
                 IList<MovieInfo> movie = result.ToObject<IList<MovieInfo>>();

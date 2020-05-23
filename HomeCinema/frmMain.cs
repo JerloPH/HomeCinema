@@ -45,9 +45,6 @@ namespace HomeCinema
 
         public frmMain()
         {
-            // First Time to run app?
-            //bool Start = DBCON.ExistingDB; // First-time running the app?
-
             // Create directories
             GlobalVars.CreateDir(GlobalVars.PATH_IMG);
             GlobalVars.CreateDir(GlobalVars.PATH_DATA);
