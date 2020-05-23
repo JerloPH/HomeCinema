@@ -3,6 +3,22 @@
 ## Features:
 - General
   - [ ] Update GUI
+  - [ ] Menu Strip
+    - [ ] File
+	  - [ ] Version Log
+	  - [ ] Exit
+    - [ ] Actions. All buttons actions
+	- [ ] Settings
+	  - [ ] Auto-check update option
+	  - [ ] Play Movie, instead of Viewing information option
+	  - [ ] Log File Size limit
+	  - [ ] Edit MediaLocation, Country, Genre, Media Extensions
+	- [ ] Help
+	  - [ ] How to Use?
+	  - [ ] License
+	  - [ ] Credits
+	  - [ ] About
+  - [ ] Auto-check for Update
 
 - Main Form
   - [ ] Add Button to Group Items (Group by: Series Name, if Series) *(Check if season or episode is not empty, and get only episode 1)*

@@ -1,5 +1,17 @@
 # HomeCinema - Project History:
 
+## v0.0.1.0 ***build 10 - (23 May 2020 PHT)***
+### TITLE
+
+Build from latest commit: null
+
+**[Download link for Windows 32/64 bit](null "HomeCinema-Windows_v0.0.1.0.zip")**
+	
+**What's New?**
+- ADD: *[Config File](null)* to save persistent settings in App.
+- Minor improvements and code adjustments.
+****
+
 ## v0.0.1.0 ***build 9 - (23 May 2020 PHT)***
 ### Improvements to MovieInfo
 
