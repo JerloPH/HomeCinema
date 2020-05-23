@@ -346,22 +346,25 @@ namespace HomeCinema
         {
             // Try load image from File
             string errFrom = $"frmMovieInfo ({Name})-{actFrom}-(Image.FromFile Error)";
-            try
+            if (File.Exists(selectedFilename))
             {
-                // Change picBox image
-                if (tempImage != null)
+                try
                 {
-                    tempImage.Dispose();
+                    // Change picBox image
+                    if (tempImage != null)
+                    {
+                        tempImage.Dispose();
+                    }
+                    tempImage = Image.FromFile(selectedFilename);
+                    picBox.Image = tempImage;
+                    picBox.Tag = selectedFilename;
+                    picBox.Refresh();
+                    GlobalVars.ShowInfo("Changed the image cover!");
                 }
-                tempImage = Image.FromFile(selectedFilename);
-                picBox.Image = tempImage;
-                picBox.Tag = selectedFilename;
-                picBox.Refresh();
-                GlobalVars.ShowInfo("Changed the image cover!");
-            }
-            catch (Exception exc)
-            {
-                GlobalVars.ShowError(errFrom, exc.Message);
+                catch (Exception exc)
+                {
+                    GlobalVars.ShowError(errFrom, exc.Message);
+                }
             }
         }
         // Saved loaded image from picBox Tag property as Poster image
