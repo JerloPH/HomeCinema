@@ -3,6 +3,7 @@
 ## Features:
 - General
   - [ ] Update GUI
+  - [ ] Ctrl + S to OPEN Settings form
   - [ ] Menu Strip
     - [ ] File
 	  - [ ] Version Log
@@ -13,6 +14,7 @@
 	  - [ ] Play Movie, instead of Viewing information option
 	  - [ ] Log File Size limit
 	  - [ ] Edit MediaLocation, Country, Genre, Media Extensions
+	  - [ ] Change Color of ListView. Back/Fore.
 	- [ ] Help
 	  - [ ] How to Use?
 	  - [ ] License

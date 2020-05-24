@@ -1,14 +1,15 @@
 # HomeCinema - Project History:
 
-## v0.0.1.0 ***build 10 - (23 May 2020 PHT)***
-### TITLE
+## v0.0.1.1 ***build 10 - (24 May 2020 PHT)***
+### Quick Update
 
-Build from latest commit: null
+Build from latest commit: 3e3f94b
 
-**[Download link for Windows 32/64 bit](null "HomeCinema-Windows_v0.0.1.0.zip")**
+**[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.1.1/HomeCinema-Windows_v0.0.1.1.zip "HomeCinema-Windows_v0.0.1.1.zip")**
 	
 **What's New?**
-- ADD: *[Config File](null)* to save persistent settings in App.
+- ADD: *[Config File](https://github.com/JerloPH/HomeCinema/blob/v0.0.1.1/HomeCinema/Config.cs)* to save persistent settings in App.
+- CHANGE: Open Movie when *ENTER* Key is pressed. 
 - Minor improvements and code adjustments.
 ****
 
