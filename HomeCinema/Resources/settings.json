@@ -1,11 +1,11 @@
 {
 "settings":
 	[
-	{
-	"logsize":1,
-	"key":"value",
-	"key":"value",
-	"key":"value"
-	}
+		{
+			"logsize": 1,
+			"lastPathVideo": "",
+			"lastPathCover": "",
+			"offlineMode":  1
+		}
 	]
 }

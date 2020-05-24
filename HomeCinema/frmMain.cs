@@ -26,6 +26,8 @@ using HomeCinema.Global;
 using System.ComponentModel;
 using System.Linq;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace HomeCinema
 {
@@ -66,6 +68,9 @@ namespace HomeCinema
             // Delete previous log file, if exceeds file size limit
             GlobalVars.CheckLogFile(GlobalVars.FILE_APPLOG, "frmMain-frmMain", Text + "\n  : Start of LogFile");
 
+            // Load APp Settings
+            LoadSettings();
+
             // Add events to controls
             txtSearch.Text = GlobalVars.SEARCHBOX_PLACEHOLDER;
             txtSearch.GotFocus += new EventHandler(SearchBoxPlaceholderClear);
@@ -100,9 +105,6 @@ namespace HomeCinema
                 lv.Font = GlobalVars.TILE_FONT;
             }
             lvSearchResult.View = View.Tile;
-
-            // Perform click on Change View
-            //btnChangeView.PerformClick();
 
             // Populate combobox cbCategory
             cbCategory.Items.AddRange(GlobalVars.DB_INFO_CATEGORY);
@@ -318,6 +320,38 @@ namespace HomeCinema
 
             // Run GC to clean
             GlobalVars.CleanMemory("frmMain-CloseLoading");
+        }
+        // Check Settings and Load values to App
+        private void LoadSettings()
+        {
+            string contents = GlobalVars.ReadStringFromFile(GlobalVars.FILE_SETTINGS, "frmMain-LoadSettings");
+            JObject json = JObject.Parse(contents);
+            JArray result = (JArray)json["settings"];
+            IList<Config> config = result.ToObject<IList<Config>>();
+
+            if (config.Count > 0)
+            {
+                string stringVal = config[0].lastPathCover;
+                if (String.IsNullOrWhiteSpace(stringVal) == false)
+                {
+                    GlobalVars.PATH_GETCOVER = stringVal;
+                }
+                //GlobalVars.ShowInfo(GlobalVars.PATH_GETCOVER);
+                GlobalVars.SET_OFFLINE = Convert.ToBoolean(config[0].offlineMode);
+            }
+        }
+        // Save settings to replace old
+        private void SaveSettings()
+        {
+            Config config = new Config();
+            config.logsize = (int)(GlobalVars.SET_LOGMAXSIZE / GlobalVars.BYTES);
+            config.offlineMode = Convert.ToInt16(GlobalVars.SET_OFFLINE);
+            config.lastPathCover = GlobalVars.PATH_GETCOVER;
+            config.lastPathVideo = GlobalVars.PATH_GETVIDEO;
+
+            // Seriliaze to JSON
+            string json = JsonConvert.SerializeObject(config, Formatting.Indented);
+            GlobalVars.WriteToFile(GlobalVars.PATH_TEMP + "set.json", json);
         }
         // ############################################################################## BACKGROUND WORKERS
         private void bgw_SearchMovie(object sender, DoWorkEventArgs e)
@@ -601,14 +635,14 @@ namespace HomeCinema
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             GlobalVars.Log("frmMain.Designer-Dispose", "Exiting....");
+            // Save settings
+            SaveSettings();
             // Replace genre file
             GlobalVars.WriteArray(GlobalVars.TEXT_GENRE, GlobalVars.FILE_GENRE);
-
             // Replace country file
             string[] arrCountry = GlobalVars.BuildStringArrayFromCB(cbCountry);
             //Array.Sort(arrCountry);
             GlobalVars.WriteArray(arrCountry, GlobalVars.FILE_COUNTRY);
-
             // Dispose All Resources
             if (formLoading != null)
             {

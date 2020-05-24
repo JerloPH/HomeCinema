@@ -24,5 +24,8 @@ namespace HomeCinema
         // Settings Config
 
         public int logsize { get; set; } = 1;
+        public string lastPathVideo { get; set; } = "";
+        public string lastPathCover { get; set; } = "";
+        public int offlineMode { get; set; } = 1;
     }
 }

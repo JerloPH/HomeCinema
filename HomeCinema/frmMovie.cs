@@ -201,6 +201,12 @@ namespace HomeCinema
         // Adjust settings on webDoc
         public void TrailerFrame()
         {
+            // Exit if OfflineMOde
+            if (GlobalVars.SET_OFFLINE)
+            {
+                ShowImageONWeb(GlobalVars.FILE_NOTRAILER);
+                return;
+            }
             // Adjust Trailer Box
             webTrailer.ScriptErrorsSuppressed = true;
 
@@ -211,16 +217,21 @@ namespace HomeCinema
                 // Check internet connection first
                 if (GlobalVars.CheckConnection("https://www.youtube.com/") == false)
                 {
-                    GlobalVars.ShowWarning("Cannot View Online Trailer!", "No Internet Connection");
+                    //GlobalVars.ShowWarning("Cannot View Online Trailer!", "No Internet Connection");
                     ShowImageONWeb(GlobalVars.FILE_NOTRAILER);
                     return;
                 }
                 if (MOVIE_TRAILER.Contains("youtube.com"))
                 {
                     url = MOVIE_TRAILER.Substring(MOVIE_TRAILER.IndexOf("?v=") + 3);
-                    webTrailer.DocumentText = YoutubeEmbed(url);
-                    // Log to file
-                    LogWebDoc(url);
+                    if (String.IsNullOrWhiteSpace(url) == false)
+                    {
+                        webTrailer.DocumentText = YoutubeEmbed(url);
+                        // Log to file
+                        LogWebDoc(url);
+                        return;
+                    }
+                    ShowImageONWeb(GlobalVars.FILE_NOTRAILER);
                 }
                 else
                 {
