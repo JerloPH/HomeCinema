@@ -672,7 +672,11 @@ namespace HomeCinema
                 {
                     // Set properties and information of movies
                     txtName.Text = movie[0].title;
-                    txtEpName.Text = movie[0].original_title;
+                    string origTitle = movie[0].original_title;
+                    if (origTitle != txtName.Text)
+                    {
+                        txtEpName.Text = origTitle;
+                    }
                     txtSummary.Text = movie[0].overview;
                     txtYear.Text = movie[0].release_date.Substring(0, 4);
                     string linkPoster = movie[0].poster_path;
