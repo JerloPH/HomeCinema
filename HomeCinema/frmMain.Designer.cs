@@ -162,6 +162,7 @@ namespace HomeCinema
             this.lvSearchResult.TabIndex = 22;
             this.lvSearchResult.UseCompatibleStateImageBehavior = false;
             this.lvSearchResult.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvSearchResult_MouseDoubleClick);
+            this.lvSearchResult.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvSearchResult_KeyDown);
             // 
             // txtSearch
             // 

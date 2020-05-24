@@ -219,6 +219,36 @@ namespace HomeCinema
             return false;
         }
         // ############################################################################## Functions
+        // Open new form for MOVIE
+        public void OpenNewFormMovie()
+        {
+            // A movie/show is selected
+            if (lvSearchResult.SelectedItems.Count > 0)
+            {
+                string ID = Convert.ToString(lvSearchResult.SelectedItems[0].Tag).TrimStart(new Char[] { '0' });
+                // Exit if not a valid ID
+                if (Convert.ToInt16(ID) < 1)
+                {
+                    return;
+                }
+                // Otherwise, continue
+                string text = Convert.ToString(lvSearchResult.SelectedItems[0].Text);
+                string formName = "movie" + ID;
+                Form fc = Application.OpenForms[formName];
+                if (fc != null)
+                {
+                    fc.Focus();
+                }
+                else
+                {
+                    Form form = new frmMovie(this, ID, text);
+                    form.Name = formName;
+                    GlobalVars.Log(Name + " (OPEN a MOVIE)", "MOVIE formName: " + form.Name);
+                    //form.Show(this);
+                }
+            }
+        }
+        // Get all Media files from folder in medialocation file
         private void getAllMediaFiles()
         {
             // Start the worker to fetch all data
@@ -714,32 +744,8 @@ namespace HomeCinema
         // When double-clicked on an item, open it in new form
         private void lvSearchResult_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-
-            // A movie/show is selected
-            if (lvSearchResult.SelectedItems.Count > 0)
-            {
-                string ID = Convert.ToString(lvSearchResult.SelectedItems[0].Tag).TrimStart(new Char[] { '0' });
-                // Exit if not a valid ID
-                if (Convert.ToInt16(ID) < 1)
-                {
-                    return;
-                }
-                // Otherwise, continue
-                string text = Convert.ToString(lvSearchResult.SelectedItems[0].Text);
-                string formName = "movie" + ID;
-                Form fc = Application.OpenForms[formName];
-                if (fc != null)
-                {
-                    fc.Focus();
-                }
-                else
-                {
-                    Form form = new frmMovie(this, ID, text);
-                    form.Name = formName;
-                    GlobalVars.Log(Name + " (OPEN a MOVIE)", "MOVIE formName: " + form.Name);
-                    //form.Show(this);
-                }
-            }
+            // Call function OpenNewFormMovie
+            OpenNewFormMovie();
         }
         // Clear textboxes on filter
         private void btnClear_Click(object sender, EventArgs e)
@@ -846,6 +852,15 @@ namespace HomeCinema
             if (GlobalVars.DeleteFilesExt(GlobalVars.PATH_TEMP, ".jpg", "frmMain-btnClean_Click"))
             {
                 GlobalVars.ShowInfo("Cleanup done!");
+            }
+        }
+        // When ENTER Key is pressed on ListView
+        private void lvSearchResult_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                // Call function
+                OpenNewFormMovie();
             }
         }
     }
