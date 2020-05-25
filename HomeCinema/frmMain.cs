@@ -65,6 +65,9 @@ namespace HomeCinema
             // Change Caption and Title
             Text = GlobalVars.HOMECINEMA_NAME + " - Media Organizer (v" + GlobalVars.HOMECINEMA_VERSION + " r" + GlobalVars.HOMECINEMA_BUILD.ToString() + ")";
 
+            // Auto check update
+            GlobalVars.CheckForUpdate();
+
             // Load App Settings
             LoadSettings();
 
@@ -343,6 +346,8 @@ namespace HomeCinema
             }
             // Get Offline Mode
             GlobalVars.SET_OFFLINE = Convert.ToBoolean(config.offlineMode);
+            // Get auto update
+            GlobalVars.SET_AUTOUPDATE = Convert.ToBoolean(config.autoUpdate);
         }
         // Save settings to replace old
         private void SaveSettings()
@@ -352,6 +357,7 @@ namespace HomeCinema
             config.offlineMode = Convert.ToInt16(GlobalVars.SET_OFFLINE);
             config.lastPathCover = GlobalVars.PATH_GETCOVER;
             config.lastPathVideo = GlobalVars.PATH_GETVIDEO;
+            config.autoUpdate = Convert.ToInt16(GlobalVars.SET_AUTOUPDATE);
 
             // Seriliaze to JSON
             string json = JsonConvert.SerializeObject(config, Formatting.Indented);
