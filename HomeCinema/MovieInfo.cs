@@ -16,17 +16,38 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##################################################################################### */
+using Newtonsoft.Json;
+using System.Collections.Generic;
+
 namespace HomeCinema
 {
     public class MovieInfo
     {
+        [JsonProperty("id")]
         public string id { get; set; } = "";
-        //public string imdb_id { get; set; } = "";
+
+        [JsonProperty("imdb_id")]
+        public string imdb_id { get; set; } = "";
+
+        [JsonProperty("title")]
         public string title { get; set; } = "";
+
+        [JsonProperty("original_title")]
         public string original_title { get; set; } = "";
+
+        [JsonProperty("release_date")]
         public string release_date { get; set; } = "";
+
+        [JsonProperty("overview")]
         public string overview { get; set; } = "";
+
+        [JsonProperty("poster_path")]
         public string poster_path { get; set; } = "";
+
+        [JsonProperty("backdrop_path")]
         public string backdrop_path { get; set; } = "";
+
+        //[JsonProperty("genres")]
+        //public List<string[]> genres = new List<string[]>();
     }
 }

@@ -25,6 +25,8 @@ using HomeCinema.SQLFunc;
 using HomeCinema.Global;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using System.Linq;
 
 namespace HomeCinema
 {
@@ -428,6 +430,23 @@ namespace HomeCinema
             string[] Params = { "" };
             GlobalVars.CallMethod(PARENT_NAME, "DisposePoster", Params, $"frmMovieInfo-DisposeImages ({Name})", "frmMovie PARENT: " + PARENT_NAME);
         }
+        // Check Genre textboxes from List of genres
+        private void CheckGenreFromTMDB(List<string> list)
+        {
+            foreach (string val in list)
+            {
+                foreach (CheckBox cb in fPanelGenre.Controls)
+                {
+                    string string1 = cb.Text.ToLower().Trim();
+                    string string2 = val.ToLower().Trim();
+                    if (string1 == string2)
+                    {
+                        cb.Checked = true;
+                        break;
+                    }
+                }
+            }
+        }
         // ############################################################################## Form Controls methods event
         private void frmMovieInfo_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -585,6 +604,7 @@ namespace HomeCinema
             {
                 // Load image from file
                 LoadImageFromFile(selectedFilename, "btnChangeCover_Click");
+                GlobalVars.PATH_GETCOVER = Path.GetDirectoryName(selectedFilename);
             }
         }
         // Change Movie File path
@@ -635,12 +655,12 @@ namespace HomeCinema
             }
             // Setup vars and links
             string TMDB_KEY = GlobalVars.TMDB_KEY;
+            string TMDB_MovieID = "";
             // File paths
             string JSONmovieinfo = GlobalVars.PATH_TEMP + IMDB_ID + ".json";
             string JSONfindmovie = GlobalVars.PATH_TEMP + IMDB_ID + "_info.json";
             // Links
             string urlJSONMovieInfo = @"https://api.themoviedb.org/3/movie/" + $"{ IMDB_ID }/videos?api_key={ TMDB_KEY }&language=en-US";
-            string urlJSONFindMovie = @"https://api.themoviedb.org/3/find/" + IMDB_ID + "?api_key=" + TMDB_KEY + "&external_source=imdb_id";
             // If JSON File DOES not exists, Download it
             // JSON - MOVIE WITH GIVEN IMDB
             if (File.Exists(JSONmovieinfo) == false)
@@ -649,12 +669,21 @@ namespace HomeCinema
             }
             if (File.Exists(JSONmovieinfo))
             {
+                // Setup MOVIE ID from TMDB
+                TMDB_MovieID = GlobalVars.ParseJSON(JSONmovieinfo, "\"id\":", ",\"results\":");
                 if (String.IsNullOrWhiteSpace(txtPathTrailer.Text))
                 {
+                    // GET Trailer from JSON
                     string YT_ID = GlobalVars.ParseJSON(JSONmovieinfo, "\"key\":\"", "\",\"name\":\"");
                     txtPathTrailer.Text = GlobalVars.LINK_YT + YT_ID;
                 }
             }
+            if (String.IsNullOrWhiteSpace(TMDB_MovieID))
+            {
+                // Exit if no Movie ID from TMDB is found
+                return;
+            }
+            string urlJSONFindMovie =  @"https://api.themoviedb.org/3/movie/" + TMDB_MovieID + "?api_key=" + TMDB_KEY;
             // JSON - FIND USING IMDB
             if (File.Exists(JSONfindmovie) == false)
             {
@@ -664,22 +693,42 @@ namespace HomeCinema
             {
                 // Get contents of JSON file
                 string contents = GlobalVars.ReadStringFromFile(JSONfindmovie, "frmMovieInfo-btnFetchData_Click-JSONfindmovie");
-                JObject json = JObject.Parse(contents);
-                JArray result = (JArray)json["movie_results"];
-                IList<MovieInfo> movie = result.ToObject<IList<MovieInfo>>();
+                MovieInfo movie = JsonConvert.DeserializeObject<MovieInfo>(contents);
 
-                if (movie.Count > 0)
+                if (movie != null)
                 {
                     // Set properties and information of movies
-                    txtName.Text = movie[0].title;
-                    string origTitle = movie[0].original_title;
+                    txtName.Text = movie.title;
+                    string origTitle = movie.original_title;
                     if (origTitle != txtName.Text)
                     {
                         txtEpName.Text = origTitle;
                     }
-                    txtSummary.Text = movie[0].overview;
-                    txtYear.Text = movie[0].release_date.Substring(0, 4);
-                    string linkPoster = movie[0].poster_path;
+                    txtSummary.Text = movie.overview;
+                    txtYear.Text = movie.release_date.Substring(0, 4);
+                    string linkPoster = movie.poster_path;
+
+                    // Get Genres from JSON File
+                    var jObj = (JObject)JsonConvert.DeserializeObject(contents);
+                    var result = jObj["genres"]
+                                    .Select(item => new
+                                    {
+                                        name = (string)item["name"],
+                                    })
+                                    .ToList();
+                    if (result.Count > 0)
+                    {
+                        List<string> listGenre = new List<string>();
+                        foreach (var valGenre in result)
+                        {
+                            string valString = valGenre.ToString();
+                            string valTrim = valString.Substring(valString.IndexOf("name = ") + 7);
+                            valTrim = valTrim.TrimEnd('}');
+                            valTrim.Trim();
+                            listGenre.Add(valTrim);
+                        }
+                        CheckGenreFromTMDB(listGenre);
+                    }
 
                     // Ask to change cover - poster image
                     bool ChangeCover = GlobalVars.ShowYesNo("Do you want to change poster image?");
