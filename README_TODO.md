@@ -4,11 +4,10 @@
 - General
   - [ ] Update GUI
   - [ ] Ctrl + S to OPEN Settings form
-  - [ ] Menu Strip
+  - [ ] Menu Strip (Preferences Button)
     - [ ] File
 	  - [ ] Version Log
 	  - [ ] Exit
-    - [ ] Actions. All buttons actions
 	- [ ] Settings
 	  - [ ] Auto-check update option
 	  - [ ] Play Movie, instead of Viewing information option
@@ -23,7 +22,7 @@
   - [ ] Auto-check for Update
 
 - Main Form
-  - [ ] Add Button to Group Items (Group by: Series Name, if Series) *(Check if season or episode is not empty, and get only episode 1)*
+  - [ ] Add Button to Group Items (Group by: Series Name, if Series) *(Check if season or episode is not empty, and get only episode 1)* **On-HOLD**
   
 - Movie Information Form
   - [ ] Switch webBrowser to Cefsharp Browser. **On-HOLD**

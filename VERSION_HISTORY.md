@@ -1,5 +1,21 @@
 # HomeCinema - Project History:
 
+## v0.0.2.0 ***build 11 - (25 May 2020 PHT)***
+### Added In-App Settings
+
+Build from latest commit: e59d3ae
+
+**[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.2.0/HomeCinema-Windows_v0.0.2.0.zip "HomeCinema-Windows_v0.0.2.0.zip")**
+	
+**What's New?**
+- REV: **Load** and **Save** settings to [*settings file*](https://github.com/JerloPH/HomeCinema/blob/v0.0.2.0/HomeCinema/Resources/settings.json).
+- REV: Added "*Settings*" values to [*settings file*](https://github.com/JerloPH/HomeCinema/blob/v0.0.2.0/HomeCinema/Resources/settings.json).
+- FT: Generate list of "*Genre*" of Movie and Automatically tick the Checkbox in Movie Info Edit. [*Button*]: **Fetch Data**.
+- CHANGE: If *Original title* is the same as *Title*, don't apply it.
+- Minor GUI adjustments.
+- Minor code adjustments and improvements.
+****
+
 ## v0.0.1.1 ***build 10 - (24 May 2020 PHT)***
 ### Quick Update
 
@@ -8,7 +24,7 @@ Build from latest commit: 3e3f94b
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.1.1/HomeCinema-Windows_v0.0.1.1.zip "HomeCinema-Windows_v0.0.1.1.zip")**
 	
 **What's New?**
-- ADD: *[Config File](https://github.com/JerloPH/HomeCinema/blob/v0.0.1.1/HomeCinema/Config.cs)* to save persistent settings in App.
+- ADD: *[Settings File](https://github.com/JerloPH/HomeCinema/blob/v0.0.1.1/HomeCinema/Resources/settings.json)* to save persistent settings in App.
 - CHANGE: Open Movie when *ENTER* Key is pressed. 
 - Minor improvements and code adjustments.
 ****
