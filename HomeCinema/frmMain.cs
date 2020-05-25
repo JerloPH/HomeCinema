@@ -65,11 +65,11 @@ namespace HomeCinema
             // Change Caption and Title
             Text = GlobalVars.HOMECINEMA_NAME + " - Media Organizer (v" + GlobalVars.HOMECINEMA_VERSION + " r" + GlobalVars.HOMECINEMA_BUILD.ToString() + ")";
 
+            // Load App Settings
+            LoadSettings();
+
             // Delete previous log file, if exceeds file size limit
             GlobalVars.CheckLogFile(GlobalVars.FILE_APPLOG, "frmMain-frmMain", Text + "\n  : Start of LogFile");
-
-            // Load APp Settings
-            LoadSettings();
 
             // Add events to controls
             txtSearch.Text = GlobalVars.SEARCHBOX_PLACEHOLDER;
@@ -327,12 +327,21 @@ namespace HomeCinema
             string contents = GlobalVars.ReadStringFromFile(GlobalVars.FILE_SETTINGS, "frmMain-LoadSettings");
             Config config = JsonConvert.DeserializeObject<Config>(contents);
 
+            // Get Max log file size
+            GlobalVars.SET_LOGMAXSIZE = config.logsize * GlobalVars.BYTES;
+            // Get last path of poster image
             string stringVal = config.lastPathCover;
             if (String.IsNullOrWhiteSpace(stringVal) == false)
             {
                 GlobalVars.PATH_GETCOVER = stringVal;
             }
-            //GlobalVars.ShowInfo(GlobalVars.PATH_GETCOVER);
+            // Get last path of media file when adding new one
+            string strGetVideo = config.lastPathVideo;
+            if (String.IsNullOrWhiteSpace(strGetVideo) == false)
+            {
+                GlobalVars.PATH_GETVIDEO = strGetVideo;
+            }
+            // Get Offline Mode
             GlobalVars.SET_OFFLINE = Convert.ToBoolean(config.offlineMode);
         }
         // Save settings to replace old

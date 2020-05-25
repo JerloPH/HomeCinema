@@ -1,11 +1,6 @@
 {
-"settings":
-	[
-		{
-			"logsize": 1,
-			"lastPathVideo": "",
-			"lastPathCover": "",
-			"offlineMode":  1
-		}
-	]
+	"logsize": 1,
+	"lastPathVideo": "",
+	"lastPathCover": "",
+	"offlineMode": 1
 }
