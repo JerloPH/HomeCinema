@@ -91,17 +91,13 @@ namespace HomeCinema
 
             // Populate fPanelGenre with Checkbox
             fPanelGenre.AutoScroll = true;
-            cW = 88;
+            cW = 102;
             cH = 17;
-            //GlobalVars.COUNT_GENRECB = 0;
-            //Array.Sort(GlobalVars.TEXT_GENRE);
 
             for (int i=0; i<GlobalVars.TEXT_GENRE.Length; i++)
             {
                 string t = GlobalVars.TEXT_GENRE[i];
-                //GlobalVars.COUNT_GENRECB += 1;
                 CheckBox cb = new CheckBox();
-                //cb.Name = GlobalVars.PREFIX_GENRECB + GlobalVars.COUNT_GENRECB.ToString();
                 cb.Size = new Size(cW, cH);
                 cb.Text = GlobalVars.RemoveLine(t);
                 cb.AutoSize = false;
@@ -693,8 +689,13 @@ namespace HomeCinema
             {
                 // Get contents of JSON file
                 string contents = GlobalVars.ReadStringFromFile(JSONfindmovie, "frmMovieInfo-btnFetchData_Click-JSONfindmovie");
+                // Exit if no contents
+                if (String.IsNullOrWhiteSpace(contents))
+                {
+                    return;
+                }
+                // Deserialize JSON and Parse contents
                 MovieInfo movie = JsonConvert.DeserializeObject<MovieInfo>(contents);
-
                 if (movie != null)
                 {
                     // Set properties and information of movies
@@ -705,29 +706,35 @@ namespace HomeCinema
                         txtEpName.Text = origTitle;
                     }
                     txtSummary.Text = movie.overview;
-                    txtYear.Text = movie.release_date.Substring(0, 4);
+                    if (String.IsNullOrWhiteSpace(movie.release_date) == false)
+                    {
+                        txtYear.Text = movie.release_date.Substring(0, 4);
+                    }
                     string linkPoster = movie.poster_path;
 
                     // Get Genres from JSON File
-                    var jObj = (JObject)JsonConvert.DeserializeObject(contents);
-                    var result = jObj["genres"]
-                                    .Select(item => new
-                                    {
-                                        name = (string)item["name"],
-                                    })
-                                    .ToList();
-                    if (result.Count > 0)
+                    if (contents.Contains("genres"))
                     {
-                        List<string> listGenre = new List<string>();
-                        foreach (var valGenre in result)
+                        var jObj = (JObject)JsonConvert.DeserializeObject(contents);
+                        var result = jObj["genres"]
+                                        .Select(item => new
+                                        {
+                                            name = (string)item["name"],
+                                        })
+                                        .ToList();
+                        if (result.Count > 0)
                         {
-                            string valString = valGenre.ToString();
-                            string valTrim = valString.Substring(valString.IndexOf("name = ") + 7);
-                            valTrim = valTrim.TrimEnd('}');
-                            valTrim.Trim();
-                            listGenre.Add(valTrim);
+                            List<string> listGenre = new List<string>();
+                            foreach (var valGenre in result)
+                            {
+                                string valString = valGenre.ToString();
+                                string valTrim = valString.Substring(valString.IndexOf("name = ") + 7);
+                                valTrim = valTrim.TrimEnd('}');
+                                valTrim.Trim();
+                                listGenre.Add(valTrim);
+                            }
+                            CheckGenreFromTMDB(listGenre);
                         }
-                        CheckGenreFromTMDB(listGenre);
                     }
 
                     // Ask to change cover - poster image
