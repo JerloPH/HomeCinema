@@ -325,20 +325,15 @@ namespace HomeCinema
         private void LoadSettings()
         {
             string contents = GlobalVars.ReadStringFromFile(GlobalVars.FILE_SETTINGS, "frmMain-LoadSettings");
-            JObject json = JObject.Parse(contents);
-            JArray result = (JArray)json["settings"];
-            IList<Config> config = result.ToObject<IList<Config>>();
+            Config config = JsonConvert.DeserializeObject<Config>(contents);
 
-            if (config.Count > 0)
+            string stringVal = config.lastPathCover;
+            if (String.IsNullOrWhiteSpace(stringVal) == false)
             {
-                string stringVal = config[0].lastPathCover;
-                if (String.IsNullOrWhiteSpace(stringVal) == false)
-                {
-                    GlobalVars.PATH_GETCOVER = stringVal;
-                }
-                //GlobalVars.ShowInfo(GlobalVars.PATH_GETCOVER);
-                GlobalVars.SET_OFFLINE = Convert.ToBoolean(config[0].offlineMode);
+                GlobalVars.PATH_GETCOVER = stringVal;
             }
+            //GlobalVars.ShowInfo(GlobalVars.PATH_GETCOVER);
+            GlobalVars.SET_OFFLINE = Convert.ToBoolean(config.offlineMode);
         }
         // Save settings to replace old
         private void SaveSettings()
@@ -351,7 +346,7 @@ namespace HomeCinema
 
             // Seriliaze to JSON
             string json = JsonConvert.SerializeObject(config, Formatting.Indented);
-            GlobalVars.WriteToFile(GlobalVars.PATH_TEMP + "set.json", json);
+            GlobalVars.WriteToFile(GlobalVars.FILE_SETTINGS, json);
         }
         // ############################################################################## BACKGROUND WORKERS
         private void bgw_SearchMovie(object sender, DoWorkEventArgs e)
