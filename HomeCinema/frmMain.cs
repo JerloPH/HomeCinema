@@ -74,6 +74,9 @@ namespace HomeCinema
             // Delete previous log file, if exceeds file size limit
             GlobalVars.CheckLogFile(GlobalVars.FILE_APPLOG, "frmMain-frmMain", Text + "\n  : Start of LogFile");
 
+            // Load Cover Images from folder, by Populating ImageList
+            GlobalVars.PopulateCover();
+
             // Add events to controls
             txtSearch.Text = GlobalVars.SEARCHBOX_PLACEHOLDER;
             txtSearch.GotFocus += new EventHandler(SearchBoxPlaceholderClear);
@@ -83,12 +86,16 @@ namespace HomeCinema
             btnSort.Tag = 0;
             btnSort.Text = GlobalVars.TEXT_SORTBY[0];
 
-            // Load Cover Images from folder, by Populating ImageList
-            GlobalVars.PopulateCover();
+            // Setup SortingOrder
+            cbSortOrder.Items.Add("Sort Order");
+            cbSortOrder.Items.Add("Ascending");
+            cbSortOrder.Items.Add("Descending");
+            cbSortOrder.SelectedIndex = 0;
 
             // Setup listview lvSearchResult
             lvSearchResult.Columns.Add("ColName");
-            lvSearchResult.Columns.Add("ColEpName");
+            lvSearchResult.Columns.Add("ColSeriesName");
+            lvSearchResult.Columns.Add("ColEpName"); // Either [Episode Name] OR [Season Num + Episode Num]
             lvSearchResult.Columns.Add("ColYear");
             lvSearchResult.Columns[0].Width = lvSearchResult.ClientRectangle.Width / 3;
             lvSearchResult.Columns[1].Width = lvSearchResult.ClientRectangle.Width / 3;
@@ -363,6 +370,47 @@ namespace HomeCinema
             string json = JsonConvert.SerializeObject(config, Formatting.Indented);
             GlobalVars.WriteToFile(GlobalVars.FILE_SETTINGS, json);
         }
+        // Sort Items in lvSearchResult ListView
+        private void SortItemsInListView(int toggle)
+        {
+            // Change Sort Order
+            SortOrder Sorting = SortOrder.None;
+            if (cbSortOrder.SelectedIndex > 1)
+            {
+                Sorting = SortOrder.Descending;
+            }
+            else
+            {
+                Sorting = SortOrder.Ascending;
+            }
+
+            // Peform sort
+            switch (toggle)
+            {
+                case 0:
+                    //GlobalVars.ShowInfo("Sorted default");
+                    lvSearchResult.Sorting = Sorting;
+                    lvSearchResult.ListViewItemSorter = null;
+                    var items = lvSearchResult.Items.Cast<ListViewItem>().OrderBy(x => x.Tag.ToString()).ToList();
+                    lvSearchResult.Items.Clear();
+                    lvSearchResult.Items.AddRange(items.ToArray());
+                    break;
+                case 1:
+                    //GlobalVars.ShowInfo("Sorted AZ");
+                    lvSorter.SortColumn = 0;
+                    lvSorter.Order = Sorting;
+                    lvSearchResult.ListViewItemSorter = lvSorter;
+                    lvSearchResult.Sort();
+                    break;
+                case 2:
+                    //GlobalVars.ShowInfo("Sorted year");
+                    lvSorter.SortColumn = 3;
+                    lvSorter.Order = Sorting;
+                    lvSearchResult.ListViewItemSorter = lvSorter;
+                    lvSearchResult.Sort();
+                    break;
+            }
+        }
         // ############################################################################## BACKGROUND WORKERS
         private void bgw_SearchMovie(object sender, DoWorkEventArgs e)
         {
@@ -445,7 +493,7 @@ namespace HomeCinema
                         var r6 = r[6]; // year
 
                         // Make new ListView item, and assign properties to it
-                        ListViewItem temp = new ListViewItem() { Text = r1.ToString() };
+                        ListViewItem temp = new ListViewItem() { Text = r1.ToString().Replace('_', ' ').Replace('.',' ') };
 
                         // Is it a Movie? (by checking if there are no season)
                         // Add sub-item for Series Name, or Episode Name
@@ -464,6 +512,7 @@ namespace HomeCinema
                             temp.SubItems.Add(r2.ToString()); // Episode Name
                             temp.SubItems.Add("S" + GlobalVars.ValidateNum(r4.ToString()) + " E" + GlobalVars.ValidateNum(r5.ToString()));
                         }
+                        temp.SubItems.Add(r6.ToString()); // Year
 
                         // Display image (From ImageList) based on ID
                         string imgKey = Convert.ToString(MOVIEID) + ".jpg";
@@ -838,32 +887,7 @@ namespace HomeCinema
             btnSort.Tag = toggle;
             btnSort.Text = GlobalVars.TEXT_SORTBY[toggle];
 
-            // Peform sort
-            switch (toggle)
-            {
-                case 0:
-                    //GlobalVars.ShowInfo("Sorted default");
-                    lvSearchResult.Sorting = SortOrder.None;
-                    lvSearchResult.ListViewItemSorter = null;
-                    var items = lvSearchResult.Items.Cast<ListViewItem>().OrderBy(x => x.Tag.ToString()).ToList();
-                    lvSearchResult.Items.Clear();
-                    lvSearchResult.Items.AddRange(items.ToArray());
-                    break;
-                case 1:
-                    //GlobalVars.ShowInfo("Sorted AZ");
-                    lvSorter.SortColumn = 0;
-                    lvSorter.Order = SortOrder.Ascending;
-                    lvSearchResult.ListViewItemSorter = lvSorter;
-                    lvSearchResult.Sort();
-                    break;
-                case 2:
-                    //GlobalVars.ShowInfo("Sorted year");
-                    lvSorter.SortColumn = 2;
-                    lvSorter.Order = SortOrder.Descending;
-                    lvSearchResult.ListViewItemSorter = lvSorter;
-                    lvSearchResult.Sort();
-                    break;
-            }
+            SortItemsInListView(toggle);
         }
         // Auto search if Enter key is pressed
         private void txtSearch_KeyDown(object sender, KeyEventArgs e)
@@ -906,6 +930,11 @@ namespace HomeCinema
                 // Call function
                 OpenNewFormMovie();
             }
+        }
+
+        private void cbSortOrder_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SortItemsInListView(Convert.ToInt16(btnSort.Tag));
         }
     }
 }

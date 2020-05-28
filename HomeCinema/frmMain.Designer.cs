@@ -56,10 +56,11 @@ namespace HomeCinema
             this.cbGenre = new System.Windows.Forms.ComboBox();
             this.cbClearSearch = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.cbCategory = new System.Windows.Forms.ComboBox();
             this.txtDirector = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.cbCategory = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cbSortOrder = new System.Windows.Forms.ComboBox();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -69,6 +70,7 @@ namespace HomeCinema
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.BackColor = System.Drawing.Color.White;
+            this.groupBox2.Controls.Add(this.cbSortOrder);
             this.groupBox2.Controls.Add(this.btnClean);
             this.groupBox2.Controls.Add(this.btnShowNew);
             this.groupBox2.Controls.Add(this.btnSort);
@@ -161,8 +163,8 @@ namespace HomeCinema
             this.lvSearchResult.Size = new System.Drawing.Size(1262, 450);
             this.lvSearchResult.TabIndex = 22;
             this.lvSearchResult.UseCompatibleStateImageBehavior = false;
-            this.lvSearchResult.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvSearchResult_MouseDoubleClick);
             this.lvSearchResult.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvSearchResult_KeyDown);
+            this.lvSearchResult.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvSearchResult_MouseDoubleClick);
             // 
             // txtSearch
             // 
@@ -387,29 +389,6 @@ namespace HomeCinema
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Search";
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(780, 101);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(100, 24);
-            this.label6.TabIndex = 16;
-            this.label6.Text = "Category : ";
-            // 
-            // cbCategory
-            // 
-            this.cbCategory.BackColor = System.Drawing.Color.Silver;
-            this.cbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbCategory.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbCategory.ForeColor = System.Drawing.Color.Black;
-            this.cbCategory.FormattingEnabled = true;
-            this.cbCategory.Location = new System.Drawing.Point(884, 97);
-            this.cbCategory.Name = "cbCategory";
-            this.cbCategory.Size = new System.Drawing.Size(162, 30);
-            this.cbCategory.TabIndex = 19;
-            // 
             // txtDirector
             // 
             this.txtDirector.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -427,6 +406,42 @@ namespace HomeCinema
             this.label9.Size = new System.Drawing.Size(90, 24);
             this.label9.TabIndex = 24;
             this.label9.Text = "Director : ";
+            // 
+            // cbCategory
+            // 
+            this.cbCategory.BackColor = System.Drawing.Color.Silver;
+            this.cbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCategory.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbCategory.ForeColor = System.Drawing.Color.Black;
+            this.cbCategory.FormattingEnabled = true;
+            this.cbCategory.Location = new System.Drawing.Point(884, 97);
+            this.cbCategory.Name = "cbCategory";
+            this.cbCategory.Size = new System.Drawing.Size(162, 30);
+            this.cbCategory.TabIndex = 19;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.Color.Transparent;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(780, 101);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(100, 24);
+            this.label6.TabIndex = 16;
+            this.label6.Text = "Category : ";
+            // 
+            // cbSortOrder
+            // 
+            this.cbSortOrder.BackColor = System.Drawing.Color.Silver;
+            this.cbSortOrder.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbSortOrder.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbSortOrder.ForeColor = System.Drawing.Color.Black;
+            this.cbSortOrder.FormattingEnabled = true;
+            this.cbSortOrder.Location = new System.Drawing.Point(1062, 25);
+            this.cbSortOrder.Name = "cbSortOrder";
+            this.cbSortOrder.Size = new System.Drawing.Size(181, 30);
+            this.cbSortOrder.TabIndex = 26;
+            this.cbSortOrder.SelectedIndexChanged += new System.EventHandler(this.cbSortOrder_SelectedIndexChanged);
             // 
             // frmMain
             // 
@@ -481,6 +496,7 @@ namespace HomeCinema
         private Label label9;
         private ComboBox cbCategory;
         private Label label6;
+        private ComboBox cbSortOrder;
     }
 }
 
