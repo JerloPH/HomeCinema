@@ -203,7 +203,7 @@ namespace HomeCinema
             {
                 DataRow row = dt.NewRow();
                 row[0] = "0"; // IMDB
-                row[1] = Path.GetFileNameWithoutExtension(filePath); // name
+                row[1] = Path.GetFileNameWithoutExtension(filePath).Replace('_', ' ').Replace('.', ' '); // name
                 row[2] = ""; // episode name
                 row[3] = ""; // series name
                 row[4] = ""; // season number
@@ -493,7 +493,7 @@ namespace HomeCinema
                         var r6 = r[6]; // year
 
                         // Make new ListView item, and assign properties to it
-                        ListViewItem temp = new ListViewItem() { Text = r1.ToString().Replace('_', ' ').Replace('.',' ') };
+                        ListViewItem temp = new ListViewItem() { Text = r1.ToString() };
 
                         // Is it a Movie? (by checking if there are no season)
                         // Add sub-item for Series Name, or Episode Name
