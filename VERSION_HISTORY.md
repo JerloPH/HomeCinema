@@ -1,5 +1,20 @@
 # HomeCinema - Project History:
 
+## v0.0.2.0 ***build 12 - (25 May 2020 PHT)***
+### Title
+
+Build from latest commit: null
+
+**[Download link for Windows 32/64 bit](null "HomeCinema-Windows_v0.0.2.0.zip")**
+	
+**What's New?**
+- FT: Auto check for updates.
+- FT: Added **Sort Order** option: Sort Items in Ascending or Descending order.
+- FIX: **Sort by Year** not working properly.
+- GUI adjustments.
+- Minor improvements.
+****
+
 ## v0.0.2.0 ***build 11 - (25 May 2020 PHT)***
 ### Added In-App Settings
 

@@ -19,7 +19,7 @@
 	  - [ ] License
 	  - [ ] Credits
 	  - [ ] About
-  - [ ] Auto-check for Update
+  - [ ] Auto-download update
 
 - Main Form
   - [ ] Add Button to Group Items (Group by: Series Name, if Series) *(Check if season or episode is not empty, and get only episode 1)* **On-HOLD**
