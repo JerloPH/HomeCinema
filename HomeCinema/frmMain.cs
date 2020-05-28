@@ -218,7 +218,7 @@ namespace HomeCinema
                 row[13] = "0"; // year
                 row[14] = ""; // summary
                 row[15] = filePath; // filepath
-                row[16] = ""; // file sub
+                row[16] = GetSubtitleFile(filePath); // file sub
                 row[17] = ""; // trailer
                 dt.Rows.Add(row);
             }
@@ -410,6 +410,24 @@ namespace HomeCinema
                     lvSearchResult.Sort();
                     break;
             }
+        }
+        // Get subtitle file automatically
+        public string GetSubtitleFile(string filePath)
+        {
+            string fileName = Path.GetFileNameWithoutExtension(filePath);
+            string fileDir = Path.GetDirectoryName(filePath);
+            string fileSub = "";
+            string[] ext = { "sub", "srt", "ass" };
+
+            foreach (string r in ext)
+            {
+                fileSub = fileDir + "\\" + fileName + "." + r;
+                if (File.Exists(fileSub))
+                {
+                    return fileSub;
+                }
+            }
+            return "";
         }
         // ############################################################################## BACKGROUND WORKERS
         private void bgw_SearchMovie(object sender, DoWorkEventArgs e)
