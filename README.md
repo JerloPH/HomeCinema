@@ -1,6 +1,6 @@
 # HomeCinema
 
-<img src="/data/screenshot01.PNG"></img>
+<img src="/data/screenshot_v0.0.2.1.png"></img>
 
 **version:**	0.0.2.1 <br>
 **build:**		12
