@@ -2,12 +2,12 @@
 
 <img src="/data/screenshot01.PNG"></img>
 
-**version:**	0.0.2.0 <br>
-**build:**		11
+**version:**	0.0.2.1 <br>
+**build:**		12
 
 ## Downloads
 
-**Windows 32/64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.2.0/HomeCinema-Windows_v0.0.2.0.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
+**Windows 32/64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.2.1/HomeCinema-Windows_v0.0.2.1.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
 
 ****
 

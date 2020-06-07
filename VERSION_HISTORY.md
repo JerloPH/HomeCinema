@@ -1,18 +1,19 @@
 # HomeCinema - Project History:
 
-## v0.0.2.0 ***build 12 - (25 May 2020 PHT)***
-### Title
+## v0.0.2.1 ***build 12 - (07 June 2020 PHT)***
+### Various GUI and Settings adjustments
 
-Build from latest commit: null
+Build from latest commit: a35d7ed
 
-**[Download link for Windows 32/64 bit](null "HomeCinema-Windows_v0.0.2.0.zip")**
+**[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.2.1/HomeCinema-Windows_v0.0.2.1.zip "HomeCinema-Windows_v0.0.2.1.zip")**
 	
 **What's New?**
 - FT: Auto check for updates.
 - FT: Added **Sort Order** option: Sort Items in Ascending or Descending order.
+- FT: Added new setting to autoplay media files, instead of viewing its details.
 - FIX: **Sort by Year** not working properly.
 - GUI adjustments.
-- Minor improvements.
+- Minor improvements and code cleanup.
 ****
 
 ## v0.0.2.0 ***build 11 - (25 May 2020 PHT)***
