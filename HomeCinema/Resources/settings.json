@@ -1,6 +1,8 @@
 {
+	"autoUpdate": 1,
+	"offlineMode": 0,
 	"logsize": 1,
 	"lastPathVideo": "",
 	"lastPathCover": "",
-	"offlineMode": 1
+	"instantPlayMovie": 0
 }

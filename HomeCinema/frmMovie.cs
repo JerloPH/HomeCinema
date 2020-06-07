@@ -384,14 +384,7 @@ namespace HomeCinema
                 return;
             }
             // Single movie file
-            if (File.Exists(MOVIE_FILEPATH))
-            {
-                Process.Start(MOVIE_FILEPATH);
-            }
-            else
-            {
-                GlobalVars.ShowWarning("File not Found! \nIt may have been Moved or Deleted!", "File not Found!");
-            }
+            GlobalVars.PlayMedia(MOVIE_FILEPATH);
         }
         private void btnEdit_Click(object sender, EventArgs e)
         {

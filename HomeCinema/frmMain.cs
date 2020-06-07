@@ -28,6 +28,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace HomeCinema
 {
@@ -244,6 +245,24 @@ namespace HomeCinema
                     return;
                 }
                 // Otherwise, continue
+
+                // Just play the media
+                if (GlobalVars.SET_AUTOPLAY)
+                {
+                    string qry = $"SELECT [Id],[file] FROM { GlobalVars.DB_TNAME_FILEPATH } WHERE [Id]={ ID }";
+                    DataTable dtFile = DBCON.DbQuery(qry, "[Id],[file]", "frmMain-OpenNewFormMovie");
+                    foreach (DataRow r in dtFile.Rows)
+                    {
+                        string filePath = r[GlobalVars.DB_TABLE_FILEPATH[1]].ToString();
+                        GlobalVars.PlayMedia(filePath);
+                        break;
+                    }
+                    dtFile.Clear();
+                    dtFile.Dispose();
+                    return;
+                }
+
+                // Create form to View Movie Details / Info
                 string text = Convert.ToString(lvSearchResult.SelectedItems[0].Text);
                 string formName = "movie" + ID;
                 Form fc = Application.OpenForms[formName];
@@ -355,6 +374,8 @@ namespace HomeCinema
             GlobalVars.SET_OFFLINE = Convert.ToBoolean(config.offlineMode);
             // Get auto update
             GlobalVars.SET_AUTOUPDATE = Convert.ToBoolean(config.autoUpdate);
+            // AutoPlay Movie, instead of Viewing its Info / Details
+            GlobalVars.SET_AUTOPLAY = Convert.ToBoolean(config.instantPlayMovie);
         }
         // Save settings to replace old
         private void SaveSettings()
@@ -365,6 +386,7 @@ namespace HomeCinema
             config.lastPathCover = GlobalVars.PATH_GETCOVER;
             config.lastPathVideo = GlobalVars.PATH_GETVIDEO;
             config.autoUpdate = Convert.ToInt16(GlobalVars.SET_AUTOUPDATE);
+            config.instantPlayMovie = Convert.ToInt16(GlobalVars.SET_AUTOPLAY);
 
             // Seriliaze to JSON
             string json = JsonConvert.SerializeObject(config, Formatting.Indented);
