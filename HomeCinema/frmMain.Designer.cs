@@ -31,6 +31,7 @@ namespace HomeCinema
         private void InitializeComponent()
         {
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cbSortOrder = new System.Windows.Forms.ComboBox();
             this.btnClean = new System.Windows.Forms.Button();
             this.btnShowNew = new System.Windows.Forms.Button();
             this.btnSort = new System.Windows.Forms.Button();
@@ -60,7 +61,6 @@ namespace HomeCinema
             this.label9 = new System.Windows.Forms.Label();
             this.cbCategory = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.cbSortOrder = new System.Windows.Forms.ComboBox();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -83,6 +83,19 @@ namespace HomeCinema
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Controls";
+            // 
+            // cbSortOrder
+            // 
+            this.cbSortOrder.BackColor = System.Drawing.Color.Silver;
+            this.cbSortOrder.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbSortOrder.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbSortOrder.ForeColor = System.Drawing.Color.Black;
+            this.cbSortOrder.FormattingEnabled = true;
+            this.cbSortOrder.Location = new System.Drawing.Point(1062, 25);
+            this.cbSortOrder.Name = "cbSortOrder";
+            this.cbSortOrder.Size = new System.Drawing.Size(181, 30);
+            this.cbSortOrder.TabIndex = 26;
+            this.cbSortOrder.SelectedIndexChanged += new System.EventHandler(this.cbSortOrder_SelectedIndexChanged);
             // 
             // btnClean
             // 
@@ -430,19 +443,6 @@ namespace HomeCinema
             this.label6.TabIndex = 16;
             this.label6.Text = "Category : ";
             // 
-            // cbSortOrder
-            // 
-            this.cbSortOrder.BackColor = System.Drawing.Color.Silver;
-            this.cbSortOrder.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbSortOrder.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbSortOrder.ForeColor = System.Drawing.Color.Black;
-            this.cbSortOrder.FormattingEnabled = true;
-            this.cbSortOrder.Location = new System.Drawing.Point(1062, 25);
-            this.cbSortOrder.Name = "cbSortOrder";
-            this.cbSortOrder.Size = new System.Drawing.Size(181, 30);
-            this.cbSortOrder.TabIndex = 26;
-            this.cbSortOrder.SelectedIndexChanged += new System.EventHandler(this.cbSortOrder_SelectedIndexChanged);
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -453,6 +453,7 @@ namespace HomeCinema
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.ForeColor = System.Drawing.Color.Black;
+            this.KeyPreview = true;
             this.Name = "frmMain";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

@@ -175,6 +175,9 @@ namespace HomeCinema
                 FOLDERTOSEARCH = tempFolder; // Load existing dir from file
             }
 
+            // Add events to FORM
+            KeyDown += new KeyEventHandler(Form_KeyDown);
+
             // Add events to BG Worker for Searching movie files in a folder
             bgWorkInsertMovie.DoWork += new DoWorkEventHandler(bgw_SearchFileinFolder);
             bgWorkInsertMovie.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgw_DoneSearchFileinFolder);
@@ -729,6 +732,16 @@ namespace HomeCinema
             // Perform click on search button: btnSearch by calling RefreshMovieList()
             SEARCH_QUERY_PREV = "";
             RefreshMovieList();
+        }
+        // ############################################################################## Form CUSTOM events
+        void Form_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.S)     // Ctrl-S = Opens settings form
+            {
+                // Do what you want here
+                GlobalVars.ShowInfo("Hey!");
+                e.SuppressKeyPress = true;  // Stops other controls on the form receiving event.
+            }
         }
         // ############################################################################## Form Control events
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
