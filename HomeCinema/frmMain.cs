@@ -66,9 +66,6 @@ namespace HomeCinema
             // Change Caption and Title
             Text = GlobalVars.HOMECINEMA_NAME + " - Media Organizer (v" + GlobalVars.HOMECINEMA_VERSION + " r" + GlobalVars.HOMECINEMA_BUILD.ToString() + ")";
 
-            // Auto check update
-            GlobalVars.CheckForUpdate();
-
             // Load App Settings
             LoadSettings();
 
@@ -185,6 +182,9 @@ namespace HomeCinema
             // Add events to BG Worker for Searching movie in Database
             bgSearchInDB.DoWork += new DoWorkEventHandler(bgw_SearchMovie);
             bgSearchInDB.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgw_DoneSearchMovie);
+
+            // Auto check update
+            GlobalVars.CheckForUpdate();
 
             // Start finding files in folder
             getAllMediaFiles();
