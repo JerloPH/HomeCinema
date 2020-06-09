@@ -356,6 +356,14 @@ namespace HomeCinema
         // Check Settings and Load values to App
         private void LoadSettings()
         {
+            // If file does not exist, create it with default values from [Config.cs]
+            if (File.Exists(GlobalVars.FILE_SETTINGS) == false)
+            {
+                Config newconfig = new Config();
+                string json = JsonConvert.SerializeObject(newconfig, Formatting.Indented);
+                GlobalVars.WriteToFile(GlobalVars.FILE_SETTINGS, json);
+            }
+            // Load file contents to Config
             string contents = GlobalVars.ReadStringFromFile(GlobalVars.FILE_SETTINGS, "frmMain-LoadSettings");
             Config config = JsonConvert.DeserializeObject<Config>(contents);
 
