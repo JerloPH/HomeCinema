@@ -1,5 +1,17 @@
 # HomeCinema - Project History:
 
+## v0.0.2.2 ***build 13 - (30 June 2020 PHT)***
+### Minor Update Fix
+
+Build from latest commit: e51182d
+
+**[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.2.2/HomeCinema-Windows_v0.0.2.2.zip "HomeCinema-Windows_v0.0.2.2.zip")**
+	
+**What's New?**
+- FIX: Auto-check-update feature.
+- CHANGE: Auto-create settings File with default values, if not existing.
+****
+
 ## v0.0.2.1 ***build 12 - (07 June 2020 PHT)***
 ### Various GUI and Settings adjustments
 
