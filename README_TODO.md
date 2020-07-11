@@ -20,6 +20,7 @@
 	  - [ ] Credits
 	  - [ ] About
   - [ ] Auto-download update
+  - [ ] Check all Files in DB if Existed. If not, "move to another db / keep".
 
 - Main Form
   - [ ] Add Button to Group Items (Group by: Series Name, if Series) *(Check if season or episode is not empty, and get only episode 1)* **On-HOLD**
