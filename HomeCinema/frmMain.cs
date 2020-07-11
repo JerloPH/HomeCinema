@@ -38,8 +38,9 @@ namespace HomeCinema
         SQLHelper DBCON = new SQLHelper("frmMain");
         //ImageList MovieIcons = GlobalVars.MOVIE_IMGLIST;
         Form formLoading = null;
+        static string LVMovieItemsColumns = "[Id],[name],[name_ep],[name_series],[season],[episode],[year],[summary],[genre]";
         string SEARCH_QUERY = "";
-        string SEARCH_COLS = "[Id],[name],[name_ep],[name_series],[season],[episode],[year]";
+        string SEARCH_COLS = LVMovieItemsColumns;
         string SEARCH_QUERY_PREV = "";
         string[] FOLDERTOSEARCH = { "" };
         ListViewColumnSorter lvSorter = new ListViewColumnSorter();
@@ -91,6 +92,7 @@ namespace HomeCinema
             cbSortOrder.SelectedIndex = 0;
 
             // Setup listview lvSearchResult
+            lvSearchResult.ShowItemToolTips = true;
             lvSearchResult.Columns.Add("ColName");
             lvSearchResult.Columns.Add("ColSeriesName");
             lvSearchResult.Columns.Add("ColEpName"); // Either [Episode Name] OR [Season Num + Episode Num]
@@ -542,9 +544,14 @@ namespace HomeCinema
                         var r4 = r[4]; // season
                         var r5 = r[5]; // episode
                         var r6 = r[6]; // year
+                        string r7 = r[7].ToString(); // summary
+                        string r8 = r[8].ToString(); // genre
 
                         // Make new ListView item, and assign properties to it
                         ListViewItem temp = new ListViewItem() { Text = r1.ToString() };
+
+                        // Append ToolTip on it
+                        temp.ToolTipText = "Summary: \n" + r7 + "\n\nGenre:\n" + r8;
 
                         // Is it a Movie? (by checking if there are no season)
                         // Add sub-item for Series Name, or Episode Name
@@ -806,7 +813,7 @@ namespace HomeCinema
             // Search the db for movie with filters
             // Setup columns needed
             string qry = "";
-            SEARCH_COLS = "[Id],[name],[name_ep],[name_series],[season],[episode],[year]";
+            SEARCH_COLS = LVMovieItemsColumns;
 
             SEARCH_QUERY = "";
             // If there is NO existing query for search,
@@ -968,7 +975,7 @@ namespace HomeCinema
         private void btnShowNew_Click(object sender, EventArgs e)
         {
             // Set Search Query
-            SEARCH_COLS = "[Id],[name],[name_ep],[name_series],[season],[episode],[year]";
+            SEARCH_COLS = LVMovieItemsColumns;
             SEARCH_QUERY = $"SELECT {SEARCH_COLS} FROM {GlobalVars.DB_TNAME_INFO} WHERE imdb=0 OR category=0;";
             SEARCH_QUERY_PREV = SEARCH_QUERY;
 
