@@ -30,6 +30,7 @@ namespace HomeCinema
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.cbSortOrder = new System.Windows.Forms.ComboBox();
             this.btnClean = new System.Windows.Forms.Button();
@@ -61,6 +62,7 @@ namespace HomeCinema
             this.label9 = new System.Windows.Forms.Label();
             this.cbCategory = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.cmLV = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -177,6 +179,7 @@ namespace HomeCinema
             this.lvSearchResult.TabIndex = 22;
             this.lvSearchResult.UseCompatibleStateImageBehavior = false;
             this.lvSearchResult.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvSearchResult_KeyDown);
+            this.lvSearchResult.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lvSearchResult_MouseClick);
             this.lvSearchResult.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvSearchResult_MouseDoubleClick);
             // 
             // txtSearch
@@ -443,6 +446,12 @@ namespace HomeCinema
             this.label6.TabIndex = 16;
             this.label6.Text = "Category : ";
             // 
+            // cmLV
+            // 
+            this.cmLV.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmLV.Name = "cmLV";
+            this.cmLV.Size = new System.Drawing.Size(211, 32);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -498,6 +507,7 @@ namespace HomeCinema
         private ComboBox cbCategory;
         private Label label6;
         private ComboBox cbSortOrder;
+        private ContextMenuStrip cmLV;
     }
 }
 

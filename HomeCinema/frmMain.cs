@@ -47,6 +47,8 @@ namespace HomeCinema
         BackgroundWorker bgWorkInsertMovie = new BackgroundWorker();
         BackgroundWorker bgSearchInDB = new BackgroundWorker();
 
+        ToolStripItem toolMenuView;
+
         public frmMain()
         {
             // Create directories
@@ -115,6 +117,10 @@ namespace HomeCinema
                 lv.Font = GlobalVars.TILE_FONT;
             }
             lvSearchResult.View = View.Tile;
+
+            // Populate Context Menu for ListView item Rightclick
+            toolMenuView = cmLV.Items.Add("&View Details");
+            cmLV.ItemClicked += new ToolStripItemClickedEventHandler(cmLV_ItemCLicked);
 
             // Populate combobox cbCategory
             cbCategory.Items.AddRange(GlobalVars.DB_INFO_CATEGORY);
@@ -237,12 +243,13 @@ namespace HomeCinema
             return false;
         }
         // ############################################################################## Functions
-        // Open new form for MOVIE
-        public void OpenNewFormMovie()
+        // Play Movie or Open Movie Details
+        public void OpenFormPlayMovie()
         {
             // A movie/show is selected
             if (lvSearchResult.SelectedItems.Count > 0)
             {
+                // Validate ID
                 string ID = Convert.ToString(lvSearchResult.SelectedItems[0].Tag).TrimStart(new Char[] { '0' });
                 // Exit if not a valid ID
                 if (Convert.ToInt16(ID) < 1)
@@ -266,7 +273,25 @@ namespace HomeCinema
                     dtFile.Dispose();
                     return;
                 }
-
+                else
+                {
+                    OpenNewFormMovie();
+                }
+            }
+        }
+        // Open Movie Details form
+        private void OpenNewFormMovie()
+        {
+            // Validate ID
+            string ID = Convert.ToString(lvSearchResult.SelectedItems[0].Tag).TrimStart(new Char[] { '0' });
+            // Exit if not a valid ID
+            if (Convert.ToInt16(ID) < 1)
+            {
+                return;
+            }
+            // Otherwise, continue
+            if (lvSearchResult.SelectedItems.Count > 0)
+            {
                 // Create form to View Movie Details / Info
                 string text = Convert.ToString(lvSearchResult.SelectedItems[0].Text);
                 string formName = "movie" + ID;
@@ -280,7 +305,6 @@ namespace HomeCinema
                     Form form = new frmMovie(this, ID, text);
                     form.Name = formName;
                     GlobalVars.Log(Name + " (OPEN a MOVIE)", "MOVIE formName: " + form.Name);
-                    //form.Show(this);
                 }
             }
         }
@@ -609,8 +633,6 @@ namespace HomeCinema
 
                 // Clear previous values of variables
                 SEARCH_QUERY = "";
-                //lvSearchResult.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-                //lvSearchResult.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             }
             catch (Exception exc)
             {
@@ -756,6 +778,17 @@ namespace HomeCinema
                 // Do what you want here
                 GlobalVars.ShowInfo("Hey!");
                 e.SuppressKeyPress = true;  // Stops other controls on the form receiving event.
+            }
+        }
+        // Rightclicked on ListView Item event
+        void cmLV_ItemCLicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            ToolStripItem item = e.ClickedItem;
+            // check which item is clicked
+            if (item == toolMenuView)
+            {
+                // Open Movie Details form
+                OpenNewFormMovie();
             }
         }
         // ############################################################################## Form Control events
@@ -905,8 +938,8 @@ namespace HomeCinema
         // When double-clicked on an item, open it in new form
         private void lvSearchResult_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            // Call function OpenNewFormMovie
-            OpenNewFormMovie();
+            // Call function OpenFormPlayMovie
+            OpenFormPlayMovie();
         }
         // Clear textboxes on filter
         private void btnClear_Click(object sender, EventArgs e)
@@ -996,13 +1029,31 @@ namespace HomeCinema
             if (e.KeyCode == Keys.Enter)
             {
                 // Call function
-                OpenNewFormMovie();
+                OpenFormPlayMovie();
             }
         }
 
         private void cbSortOrder_SelectedIndexChanged(object sender, EventArgs e)
         {
             SortItemsInListView(Convert.ToInt16(btnSort.Tag));
+        }
+        // When clicked
+        private void lvSearchResult_MouseClick(object sender, MouseEventArgs e)
+        {
+            // Right clicked? Show Context menu
+            if (e.Button == MouseButtons.Right)
+            {
+                // Check if something is focused
+                if (lvSearchResult.FocusedItem != null)
+                {
+                    // check if mouse is on lv Item Bounds
+                    if (lvSearchResult.FocusedItem.Bounds.Contains(e.Location))
+                    {
+                        // Show pop-up context menu
+                        cmLV.Show(Cursor.Position);
+                    }
+                }
+            }
         }
     }
 }
