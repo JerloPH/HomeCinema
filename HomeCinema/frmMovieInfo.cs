@@ -402,7 +402,7 @@ namespace HomeCinema
             }
             catch (Exception fex)
             {
-                GlobalVars.ShowError(ExceptionFrom + " [File.Copy Error]", fex.Message);
+                GlobalVars.ShowError(ExceptionFrom + $" { fex.Source.ToString() }", fex.Message);
             }
         }
         // Dispose all Poster images

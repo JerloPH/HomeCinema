@@ -179,7 +179,15 @@ namespace HomeCinema
             thumb.Dispose();
 
             // Set MOVIE_COVER_FULL | Image from file
-            MOVIE_COVER_FULL = Image.FromFile(GlobalVars.GetPicValid(lblID.Text));
+            string Imagefile = GlobalVars.GetPicValid(lblID.Text);
+            try
+            {
+                MOVIE_COVER_FULL = Image.FromFile(Imagefile);
+            } catch (Exception exc)
+            {
+                // Error log
+                GlobalVars.Log("frmMovie-LoadInformation", $"File:\n{ Imagefile }\nError:\n{ exc.ToString() }");
+            }
 
             // Adjust Trailer Frame
             TrailerFrame();
