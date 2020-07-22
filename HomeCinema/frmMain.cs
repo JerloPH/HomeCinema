@@ -609,7 +609,7 @@ namespace HomeCinema
                         ListViewItem temp = new ListViewItem() { Text = r1.ToString() };
 
                         // Append ToolTip on it
-                        temp.ToolTipText = "Summary: \n" + r7 + "\n\nGenre:\n" + r8;
+                        temp.ToolTipText = "Summary: \n" + GlobalVars.LimitString(r7, 350) + "\n\nGenre:\n" + r8;
 
                         // Is it a Movie? (by checking if there are no season)
                         // Add sub-item for Series Name, or Episode Name
