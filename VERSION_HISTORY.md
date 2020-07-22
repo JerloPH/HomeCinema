@@ -1,5 +1,20 @@
 # HomeCinema - Project History:
 
+## v0.0.3.2 ***build 14 - (0 July 2020 PHT)***
+### ReleaseTitle
+
+Build from latest commit: null
+
+**[Download link for Windows 32/64 bit](null "HomeCinema-Windows_v0.0.2.2.zip")**
+	
+**What's New?**
+- REV: Improve loading of Movie, by using ProgressChanged on BGworker.
+- FT: Added ToolTip text to ListView Item. Shows Movie Summary and Genre.
+- FT: Added Right-click ContextMenu to ListView Item.
+  - *[View Details]* - Shows Movie Information / Details form.
+- Minor improvements and optimizations, and code cleanup.
+****
+
 ## v0.0.2.2 ***build 13 - (30 June 2020 PHT)***
 ### Minor Update Fix
 
