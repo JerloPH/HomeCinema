@@ -28,7 +28,6 @@ using System.Linq;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
-using System.Diagnostics;
 
 namespace HomeCinema
 {
@@ -188,8 +187,10 @@ namespace HomeCinema
             bgWorkInsertMovie.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgw_DoneSearchFileinFolder);
 
             // Add events to BG Worker for Searching movie in Database
-            bgSearchInDB.DoWork += new DoWorkEventHandler(bgw_SearchMovie);
-            bgSearchInDB.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgw_DoneSearchMovie);
+            bgSearchInDB.WorkerReportsProgress = true;
+            bgSearchInDB.ProgressChanged += bgwMovie_ProgressChanged;
+            bgSearchInDB.DoWork += new DoWorkEventHandler(bgwMovie_SearchMovie);
+            bgSearchInDB.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgwMovie_DoneSearchMovie);
 
             // Auto check update
             GlobalVars.CheckForUpdate();
@@ -489,12 +490,13 @@ namespace HomeCinema
             return "";
         }
         // ############################################################################## BACKGROUND WORKERS
-        private void bgw_SearchMovie(object sender, DoWorkEventArgs e)
+        private void bgwMovie_SearchMovie(object sender, DoWorkEventArgs e)
         {
             // Get query from variable, set by background worker
             string qry = SEARCH_QUERY;
             string cols = SEARCH_COLS;
-            string errFrom = "frmMain-bgw_SearchMovie";
+            string errFrom = "frmMain-bgwMovie_SearchMovie";
+
             // If no query
             if (String.IsNullOrWhiteSpace(qry))
             {
@@ -507,11 +509,22 @@ namespace HomeCinema
             // SET as Previous query
             SEARCH_QUERY_PREV = SEARCH_QUERY;
 
+            // Count progress
+            int progress = 0;
+            BackgroundWorker worker = sender as BackgroundWorker;
+            //BackgroundWorker worker = bgSearchInDB;
+
             // Log Query
             GlobalVars.Log(errFrom, $"START Background worker from: {Name}");
             DataTable dt = DBCON.DbQuery(qry, cols, errFrom);
+
             if (dt.Rows.Count > 0)
             {
+                foreach (DataRow r in dt.Rows)
+                {
+                    worker.ReportProgress(progress, r);
+                    progress += 1;
+                }
                 e.Result = dt;
             }
             else
@@ -519,49 +532,70 @@ namespace HomeCinema
                 e.Result = null;
             }
         }
-        private void bgw_DoneSearchMovie(object sender, RunWorkerCompletedEventArgs e)
+        private void bgwMovie_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            // Clear previous list
-            lvSearchResult.Items.Clear();
+            // Error log
+            string errFrom = "frmMain-bgwMovie_ProgressChanged";
 
-            // Starting, opening of App?
-            if (Start)
+            // Check if progress is the start
+            if (e.ProgressPercentage < 1)
             {
-                // Perform click on Change View
-                btnChangeView.PerformClick();
-                // Perform click on Sort
-                btnSort.PerformClick();
-                Start = false;
-            }
-
-            // Retrieve the result pass from bg_DoWork() if any.
-            try
-            {
-                // If result is null, exit;
-                if (e.Result == null)
-                {
-                    ListViewItem temp = new ListViewItem() { Text = "No Search Results!" };
-                    temp.Tag = "0";
-                    temp.ImageIndex = 0;
-                    lvSearchResult.Items.Add(temp);
-                    CloseLoading(); // Close loading form
-                    return;
-                }
+                // Clear previous list
+                lvSearchResult.Items.Clear();
 
                 // Get result, cast to object type
-                GlobalVars.Log("frmMain-bgw_DoneSearchMovie", "RETRIEVES data from Previous Search query in bgWorker");
-                DataTable dt = null;
-                if (e.Result is DataTable)
+                GlobalVars.Log(errFrom + $" [First Progress] ({ e.ProgressPercentage.ToString() })", "RETRIEVES data from Previous Search query in bgWorker");
+
+                // Starting, opening of App?
+                if (Start)
+                {
+                    // Perform click on Change View
+                    btnChangeView.PerformClick();
+                    // Perform click on Sort
+                    btnSort.PerformClick();
+                    Start = false;
+                }
+            }
+
+            // Retrieve Progress DataRow
+            try
+            {
+                // Get The DataRow progress
+                if (e.UserState is DataRow)
                 {
                     // Set the e.Result from BgWorker as DT
-                    dt = e.Result as DataTable;
-                    
-                    // Load Icon Pics from folder
-                    GlobalVars.PopulateCover();
-                    // Add to listview lvSearchResult
-                    foreach (DataRow r in dt.Rows)
+                    DataRow r = e.UserState as DataRow;
+
+                    // Convert ID object to ID int
+                    int MOVIEID;
+                    try
                     {
-                        var MOVIEID = Convert.ToInt32(r[0]);
+                        MOVIEID = Convert.ToInt32(r[0]);
+                    }
+                    catch (Exception exint)
+                    {
+                        // Error Log
+                        MOVIEID = 0;
+                        GlobalVars.Log(errFrom + " [MovieID obj to Int]", $"ID: { MOVIEID.ToString() }\nError:\n{ exint.ToString() }");
+                    }
+
+                    // Load Icon Pics from folder
+                    string Imagefile = GlobalVars.GetPicValid(MOVIEID.ToString());
+                    try
+                    {
+                        Image imgFromFile = Image.FromFile(Imagefile);
+                        GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imgFromFile);
+                    }
+                    catch (Exception exImg)
+                    {
+                        // Error Log
+                        GlobalVars.Log(errFrom + exImg.Source.ToString(), "File:\n" + Imagefile + "\nError: " + exImg.ToString());
+                    }
+
+                    // Add to listview lvSearchResult
+                    if (MOVIEID > 0)
+                    {
+
                         var r1 = r[1]; // name
                         var r2 = r[2]; // name_ep
                         var r3 = r[3]; // name_series
@@ -616,33 +650,56 @@ namespace HomeCinema
                         lvSearchResult.Items.Add(temp);
                     }
                 }
-                // Dispose the table after iterating thru its contents
-                GlobalVars.Log("frmMain-bgw_DoneSearchMovie", "Done with results!");
-                dt.Clear();
-                dt.Dispose();
-
-                // If there are no results, show message
-                if (lvSearchResult.Items.Count < 1)
-                {
-                    ListViewItem temp = new ListViewItem() { Text = "No Search Results!" };
-                    temp.Tag = "0";
-                    temp.ImageIndex = 0;
-                    lvSearchResult.Items.Add(temp);
-                    //GlobalVars.ShowInfo("There are no results for search query '" + text + "'!");
-                }
-
-                // Clear previous values of variables
-                SEARCH_QUERY = "";
             }
             catch (Exception exc)
             {
-                GlobalVars.ShowError("frmMain-bgwDoneSearchMovie (General Exception)", exc.Message);
+                GlobalVars.ShowError(errFrom + $" { exc.Source.ToString() }", exc.Message);
             }
-            finally
+        }
+        private void bgwMovie_DoneSearchMovie(object sender, RunWorkerCompletedEventArgs e)
+        {
+            // Error log
+            string errFrom = "frmMain-bgwMovie_DoneSearchMovie";
+
+            // If result is null, exit;
+            if (e.Result == null)
             {
-                // Close loading and refresh Memory
-                CloseLoading();
+                // Clear previous list
+                lvSearchResult.Items.Clear();
+
+                ListViewItem temp = new ListViewItem() { Text = "No Search Results!" };
+                temp.Tag = "0";
+                temp.ImageIndex = 0;
+                lvSearchResult.Items.Add(temp);
+                CloseLoading(); // Close loading form
+                return;
             }
+
+            // Get result as DataTable
+            if (e.Result is DataTable)
+            {
+                DataTable dt = e.Result as DataTable;
+                // Dispose the table after iterating thru its contents
+                GlobalVars.Log(errFrom, $"Done with results!\nTotal Count of Processed LV Items: { lvSearchResult.Items.Count.ToString() }\nTotal number of Rows: { dt.Rows.Count.ToString() }");
+                dt.Clear();
+                dt.Dispose();
+            }
+
+            // If there are no results, show message
+            if (lvSearchResult.Items.Count < 1)
+            {
+                ListViewItem temp = new ListViewItem() { Text = "No Search Results!" };
+                temp.Tag = "0";
+                temp.ImageIndex = 0;
+                lvSearchResult.Items.Add(temp);
+                //GlobalVars.ShowInfo("There are no results for search query '" + text + "'!");
+            }
+
+            // Clear previous values of variables
+            SEARCH_QUERY = "";
+
+            // Close loading and refresh Memory
+            CloseLoading();
         }
         // Search all Movie files in folder
         private void bgw_SearchFileinFolder(object sender, DoWorkEventArgs e)
