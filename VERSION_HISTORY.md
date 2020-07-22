@@ -5,7 +5,7 @@
 
 Build from latest commit: null
 
-**[Download link for Windows 32/64 bit](null "HomeCinema-Windows_v0.0.2.2.zip")**
+**[Download link for Windows 64 bit](null "HomeCinema-Windows_v0.0.2.2.zip")**
 	
 **What's New?**
 - REV: Improve loading of Movie, by using ProgressChanged on BGworker.
