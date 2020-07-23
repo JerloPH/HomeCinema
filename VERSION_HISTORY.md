@@ -1,11 +1,11 @@
 # HomeCinema - Project History:
 
-## v0.0.3.2 ***build 14 - (0 July 2020 PHT)***
-### ReleaseTitle
+## v0.0.3.2 ***build 14 - (23 July 2020 PHT)***
+### Optimizations and More Features
 
-Build from latest commit: null
+Build from latest commit: 49aee99
 
-**[Download link for Windows 64 bit](null "HomeCinema-Windows_v0.0.2.2.zip")**
+**[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.3.2/HomeCinema-Windows_v0.0.3.2.zip "HomeCinema-Windows_v0.0.3.2.zip")**
 	
 **What's New?**
 - REV: Improve loading of Movie, by using ProgressChanged on BGworker.
