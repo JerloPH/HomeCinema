@@ -579,56 +579,56 @@ namespace HomeCinema
                         GlobalVars.Log(errFrom + " [MovieID obj to Int]", $"ID: { MOVIEID.ToString() }\nError:\n{ exint.ToString() }");
                     }
 
-                    // Load Icon Pics from folder
-                    string Imagefile = GlobalVars.GetPicValid(MOVIEID.ToString());
-                    try
-                    {
-                        Image imgFromFile = Image.FromFile(Imagefile);
-                        GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imgFromFile);
-                    }
-                    catch (Exception exImg)
-                    {
-                        // Error Log
-                        GlobalVars.Log(errFrom + exImg.Source.ToString(), "File:\n" + Imagefile + "\nError: " + exImg.ToString());
-                    }
-
                     // Add to listview lvSearchResult
                     if (MOVIEID > 0)
                     {
+                        // Load 'cover' Image from 'cover' folder
+                        string Imagefile = GlobalVars.GetPicValid(MOVIEID.ToString());
+                        try
+                        {
+                            Image imgFromFile = Image.FromFile(Imagefile);
+                            GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imgFromFile);
+                        }
+                        catch (Exception exImg)
+                        {
+                            // Error Log
+                            GlobalVars.Log(errFrom + exImg.Source.ToString(), "File:\n" + Imagefile + "\nError: " + exImg.ToString());
+                        }
 
-                        var r1 = r[1]; // name
-                        var r2 = r[2]; // name_ep
-                        var r3 = r[3]; // name_series
-                        var r4 = r[4]; // season
-                        var r5 = r[5]; // episode
-                        var r6 = r[6]; // year
+                        // Get all strings from the DataRow, passed by the BG worker
+                        string r1 = r[1].ToString(); // name
+                        string r2 = r[2].ToString(); // name_ep
+                        string r3 = r[3].ToString(); // name_series
+                        string r4 = r[4].ToString(); // season
+                        string r5 = r[5].ToString(); // episode
+                        string r6 = r[6].ToString(); // year
                         string r7 = r[7].ToString(); // summary
                         string r8 = r[8].ToString(); // genre
 
                         // Make new ListView item, and assign properties to it
-                        ListViewItem temp = new ListViewItem() { Text = r1.ToString() };
+                        ListViewItem temp = new ListViewItem() { Text = r1 };
 
                         // Append ToolTip on it
                         temp.ToolTipText = "Summary: \n" + GlobalVars.LimitString(r7, 350) + "\n\nGenre:\n" + r8;
 
                         // Is it a Movie? (by checking if there are no season)
                         // Add sub-item for Series Name, or Episode Name
-                        if (String.IsNullOrWhiteSpace(r4.ToString()))
+                        if (String.IsNullOrWhiteSpace(r4))
                         {
-                            temp.SubItems.Add(r3.ToString()); // Series Name
-                            temp.SubItems.Add(r2.ToString()); // Episode Name
+                            temp.SubItems.Add(r3); // Series Name
+                            temp.SubItems.Add(r2); // Episode Name
                         }
                         else
                         {
                             // Set Series Name
-                            if (String.IsNullOrWhiteSpace(r3.ToString()))
+                            if (String.IsNullOrWhiteSpace(r3))
                             {
-                                temp.Text = r3.ToString(); //Set Series Name
+                                temp.Text = r3; //Set Series Name
                             }
-                            temp.SubItems.Add(r2.ToString()); // Episode Name
-                            temp.SubItems.Add("S" + GlobalVars.ValidateNum(r4.ToString()) + " E" + GlobalVars.ValidateNum(r5.ToString()));
+                            temp.SubItems.Add(r2); // Episode Name
+                            temp.SubItems.Add("S" + GlobalVars.ValidateNum(r4) + " E" + GlobalVars.ValidateNum(r5));
                         }
-                        temp.SubItems.Add(r6.ToString()); // Year
+                        temp.SubItems.Add(r6); // Year
 
                         // Display image (From ImageList) based on ID
                         string imgKey = Convert.ToString(MOVIEID) + ".jpg";
@@ -642,7 +642,7 @@ namespace HomeCinema
                         }
 
                         // Add year to name/title of MOVIE
-                        temp.Text = temp.Text + $" ({r6.ToString()})";
+                        temp.Text = temp.Text + $" ({r6})";
 
                         // Save the ID as Tag, to NOT SHOW it on LIST
                         temp.Name = Convert.ToString(MOVIEID);
