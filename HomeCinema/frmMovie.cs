@@ -167,7 +167,7 @@ namespace HomeCinema
             dtInfo.Dispose();
 
             // Change cover image, if error occurs, Dispose form
-            MOVIE_COVER = GlobalVars.GetImageFromList(MOVIE_ID);
+            MOVIE_COVER = GlobalVars.ImgGetImageFromList(MOVIE_ID);
             
             if (MOVIE_COVER is null || MOVIE_COVER == null)
             {
@@ -183,10 +183,11 @@ namespace HomeCinema
             thumb.Dispose();
 
             // Set MOVIE_COVER_FULL | Image from file
-            string Imagefile = GlobalVars.GetPicValid(lblID.Text);
+            string Imagefile = GlobalVars.ImgFullPathWithDefault(lblID.Text);
             try
             {
                 MOVIE_COVER_FULL = Image.FromFile(Imagefile);
+
             } catch (Exception exc)
             {
                 // Error log
@@ -452,7 +453,7 @@ namespace HomeCinema
                     {
                         DisposePoster("");
                         GlobalVars.DeleteImageFromList(MOVIE_ID, errFrom);
-                        GlobalVars.TryDelete(GlobalVars.GetPicPath(MOVIE_ID), errFrom);
+                        GlobalVars.TryDelete(GlobalVars.ImgFullPath(MOVIE_ID), errFrom);
                     }
                     // Delete MovieFile from local disk
                     GlobalVars.TryDelete(MOVIE_FILEPATH, errFrom);

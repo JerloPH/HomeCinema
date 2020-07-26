@@ -62,7 +62,7 @@ namespace HomeCinema
             LVITEM = lvitem;
 
             // Set Controls text and properties
-            txtID.Text = GlobalVars.ValidateAndReturn(ID);
+            txtID.Text = MOVIE_ID;
 
             // Set picBox size mode
             picBox.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -119,7 +119,7 @@ namespace HomeCinema
             else
             {
                 Text = text + "[Add New Movie]";
-                MOVIE_COVER = GlobalVars.GetImageFromList("0");
+                MOVIE_COVER = GlobalVars.ImgGetImageFromList("0");
                 picBox.Image = MOVIE_COVER;
                 cbCategory.SelectedIndex = 1;
             }
@@ -138,8 +138,8 @@ namespace HomeCinema
             // Set Form Properties
             Text = text + " [Edit Information]";
 
-            // Change cover image, if error occurs, Dispose form
-            MOVIE_COVER = GlobalVars.GetImageFromList(MOVIE_ID);
+            // Change cover image, if image exists in ImageList
+            MOVIE_COVER = GlobalVars.ImgGetImageFromList(MOVIE_ID);
             if (MOVIE_COVER == null)
             {
                 GlobalVars.Log($"frmMovieInfo-({Name})-LoadInformation", "MOVIE_COVER = null");
@@ -354,7 +354,7 @@ namespace HomeCinema
             //GlobalVars.Log(ExceptionFrom, "Try adding Image from File");
 
             // Delete previous image on the ImgList, exit if not succesful and show warning
-            if (File.Exists(GlobalVars.PATH_IMG + MOVIE_ID + ".jpg"))
+            if (File.Exists(GlobalVars.ImgFullPath(MOVIE_ID)))
             {
                 if (GlobalVars.DeleteImageFromList(MOVIE_ID, ExceptionFrom + " (Previous Image)") == false)
                 {
@@ -367,7 +367,7 @@ namespace HomeCinema
 
             // Copy new file to App Path
             string sourceFile = selectedFilename;
-            string destFile = GlobalVars.GetPicPath(MOVIE_ID);
+            string destFile = GlobalVars.ImgFullPath(MOVIE_ID);
 
             GlobalVars.TryDelete(destFile, ExceptionFrom + " [TryDelete error]");
 
@@ -504,6 +504,7 @@ namespace HomeCinema
 
                 MOVIE_ID = conn.DbInsertMovie(dt , callFrom).ToString();
                 txtID.Text = MOVIE_ID;
+
             }
             else
             {

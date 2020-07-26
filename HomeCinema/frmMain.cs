@@ -34,7 +34,7 @@ namespace HomeCinema
     public partial class frmMain : Form
     {
         bool Start = true; // Startup of App, to prevent startup event to repeat
-        double LoadingStart, LoadingEnd; // Record App load time
+        TimeSpan LoadingStart, LoadingEnd; // Record App load time
         SQLHelper DBCON = new SQLHelper("frmMain"); // Make an SQLite helper instance
         Form formLoading = null; // Make a form of : "Please wait while loading..."
         static string LVMovieItemsColumns = "[Id],[name],[name_ep],[name_series],[season],[episode],[year],[summary],[genre]";
@@ -51,7 +51,7 @@ namespace HomeCinema
         public frmMain()
         {
             //Record time start
-            LoadingStart = DateTime.Now.TimeOfDay.TotalMilliseconds;
+            LoadingStart = DateTime.Now.TimeOfDay;
 
             // Create directories
             GlobalVars.CreateDir(GlobalVars.PATH_IMG);
@@ -588,17 +588,8 @@ namespace HomeCinema
                 }
                 temp.SubItems.Add(r6); // Year
 
-                // Display image (From ImageList) based on ID
-                string imgKey = Convert.ToString(MOVIEID) + ".jpg";
-                if (GlobalVars.MOVIE_IMGLIST.Images.ContainsKey(imgKey))
-                {
-                    //temp.ImageIndex = GlobalVars.MOVIE_IMGLIST.Images.IndexOfKey(imgKey); // Get index based on ImageKey
-                    temp.ImageKey = imgKey;
-                }
-                else
-                {
-                    temp.ImageIndex = 0;
-                }
+                // Display image (From ImageList) based on ImageKey
+                temp.ImageKey = GlobalVars.ImgGetKey(MOVIEID.ToString());
 
                 // Add year to name/title of MOVIE
                 temp.Text = temp.Text + $" ({r6})";
@@ -697,11 +688,12 @@ namespace HomeCinema
                     if (MOVIEID > 0)
                     {
                         // Load 'cover' Image from 'cover' folder
-                        string Imagefile = GlobalVars.GetPicValid(MOVIEID.ToString());
+                        string Imagefile = GlobalVars.ImgFullPath(MOVIEID.ToString());
                         try
                         {
                             Image imgFromFile = Image.FromFile(Imagefile);
                             GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imgFromFile);
+
                         }
                         catch (Exception exImg)
                         {
@@ -764,12 +756,20 @@ namespace HomeCinema
                 Start = false;
 
                 //Record time end
-                LoadingEnd = DateTime.Now.TimeOfDay.TotalMilliseconds;
-                double TimeMS = LoadingEnd - LoadingStart;
-                double TimeSec = TimeMS / 100;
-                string TimeitTook = $"Took {TimeMS} milliseconds to load App!\n\tIn seconds : {TimeSec}";
-                GlobalVars.Log("frmMain", TimeitTook);
-                GlobalVars.ShowInfo(TimeitTook);
+                try
+                {
+                    LoadingEnd = DateTime.Now.TimeOfDay;
+                    TimeSpan duration = LoadingEnd.Subtract(LoadingStart);
+                    double TimeMS = Convert.ToDouble(duration.TotalMilliseconds);
+                    double TimeSec = TimeMS / 1000;
+                    string TimeitTook = $"Took {TimeMS} milliseconds to load App!\n\tIn seconds : {TimeSec}\n\tIn minutes : {duration.ToString("g")}";
+                    GlobalVars.Log("frmMain", TimeitTook);
+
+                } catch (Exception ex)
+                {
+                    // Log Error
+                    GlobalVars.Log("frmMain-bgwMovie_DoneSearchMovie", ex.ToString());
+                }
             }
 
             // Get result as DataTable, and Dispose it
@@ -961,6 +961,12 @@ namespace HomeCinema
 
             // Delete previous log file, if exceeds file size limit
             GlobalVars.CheckLogFile(GlobalVars.FILE_APPLOG, "frmMain-frmMain", Text + "\n  : Start of LogFile");
+
+            // Put default Image on ImageList
+            GlobalVars.MOVIE_IMGLIST.Images.Clear();
+            string Imagefile = GlobalVars.ImgFullPath("0");
+            Image imgFromFile = Image.FromFile(Imagefile);
+            GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imgFromFile);
 
             // Start finding files in folder
             getAllMediaFiles();
