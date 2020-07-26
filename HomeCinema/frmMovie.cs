@@ -191,7 +191,7 @@ namespace HomeCinema
             } catch (Exception exc)
             {
                 // Error log
-                GlobalVars.Log("frmMovie-LoadInformation", $"File:\n{ Imagefile }\nError:\n{ exc.ToString() }");
+                GlobalVars.ShowError($"frmMovie-LoadInformation\n\tFile:\n\t{ Imagefile }", exc, false);
             }
 
             // Adjust Trailer Frame
@@ -433,6 +433,7 @@ namespace HomeCinema
                 temp.Controls.Add(pic);
                 temp.ResumeLayout();
                 temp.Show(this);
+
             } catch (Exception ex)
             {
                 // Log Error
@@ -479,6 +480,7 @@ namespace HomeCinema
                 try
                 {
                     Process.Start(GlobalVars.LINK_IMDB + titleCode);
+
                 } catch (Exception ex)
                 {
                     // Log Error

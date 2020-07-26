@@ -681,7 +681,7 @@ namespace HomeCinema
                     {
                         // Error Log
                         MOVIEID = 0;
-                        GlobalVars.Log(errFrom + " [MovieID obj to Int]", $"ID: { MOVIEID.ToString() }\nError:\n{ exint.ToString() }");
+                        GlobalVars.ShowError($"{errFrom} [MovieID obj to Int]\n\tID: { MOVIEID.ToString() }", exint, false);
                     }
 
                     // Add to listview lvSearchResult
@@ -698,7 +698,7 @@ namespace HomeCinema
                         catch (Exception exImg)
                         {
                             // Error Log
-                            GlobalVars.Log(errFrom + exImg.Source.ToString(), "File:\n" + Imagefile + "\nError: " + exImg.ToString());
+                            GlobalVars.ShowError($"{errFrom}\n\tFile:\n\t{Imagefile}", exImg, false);
                         }
 
                         // Get all strings from the DataRow, passed by the BG worker
@@ -768,7 +768,7 @@ namespace HomeCinema
                 } catch (Exception ex)
                 {
                     // Log Error
-                    GlobalVars.Log("frmMain-bgwMovie_DoneSearchMovie", ex.ToString());
+                    GlobalVars.ShowError("frmMain-bgwMovie_DoneSearchMovie", ex, false);
                 }
             }
 
@@ -1116,8 +1116,7 @@ namespace HomeCinema
             {
                 bgSearchInDB.RunWorkerAsync();
 
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
                 // Show error
                 GlobalVars.ShowError($"frmMain-getAllMediaFiles", ex);

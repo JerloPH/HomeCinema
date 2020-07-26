@@ -387,17 +387,17 @@ namespace HomeCinema.SQLFunc
                         }
                     }
                     // Catch error on executing query for FILEPATH
-                    catch (Exception e)
+                    catch (Exception ex)
                     {
                         // Catch unknown exceptions
-                        GlobalVars.LogDb($"SQLHelper-DbInsertMovie (Insert error)({GlobalVars.DB_TNAME_FILEPATH})({callFrom})", "Error: " + e.Message);
+                        GlobalVars.ShowError($"SQLHelper-DbInsertMovie (Insert error)({GlobalVars.DB_TNAME_FILEPATH})({callFrom})", ex, false);
                     }
                 }
                 // Catch error on executing query for INFO
-                catch (Exception e)
+                catch (Exception ex)
                 {
                     // Catch unknown exceptions (GlobalVars.ShowError)
-                    GlobalVars.LogDb($"SQLHelper-DbInsertMovie (Insert error)({GlobalVars.DB_TNAME_INFO})({callFrom})", "Error: " + e.Message);
+                    GlobalVars.ShowError($"SQLHelper-DbInsertMovie (Insert error)({GlobalVars.DB_TNAME_INFO})({callFrom})", ex, false);
                 }
 
                 // Exit foreach
