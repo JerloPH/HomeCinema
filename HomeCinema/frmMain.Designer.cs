@@ -450,7 +450,7 @@ namespace HomeCinema
             // 
             this.cmLV.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.cmLV.Name = "cmLV";
-            this.cmLV.Size = new System.Drawing.Size(211, 32);
+            this.cmLV.Size = new System.Drawing.Size(61, 4);
             // 
             // frmMain
             // 
@@ -467,6 +467,7 @@ namespace HomeCinema
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Home Cinema";
+            this.Load += new System.EventHandler(this.frmMain_Load);
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

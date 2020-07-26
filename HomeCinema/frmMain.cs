@@ -33,10 +33,10 @@ namespace HomeCinema
 {
     public partial class frmMain : Form
     {
-        bool Start = true;
-        SQLHelper DBCON = new SQLHelper("frmMain");
-        //ImageList MovieIcons = GlobalVars.MOVIE_IMGLIST;
-        Form formLoading = null;
+        bool Start = true; // Startup of App, to prevent startup event to repeat
+        double LoadingStart, LoadingEnd; // Record App load time
+        SQLHelper DBCON = new SQLHelper("frmMain"); // Make an SQLite helper instance
+        Form formLoading = null; // Make a form of : "Please wait while loading..."
         static string LVMovieItemsColumns = "[Id],[name],[name_ep],[name_series],[season],[episode],[year],[summary],[genre]";
         string SEARCH_QUERY = "";
         string SEARCH_COLS = LVMovieItemsColumns;
@@ -50,6 +50,9 @@ namespace HomeCinema
 
         public frmMain()
         {
+            //Record time start
+            LoadingStart = DateTime.Now.TimeOfDay.TotalMilliseconds;
+
             // Create directories
             GlobalVars.CreateDir(GlobalVars.PATH_IMG);
             GlobalVars.CreateDir(GlobalVars.PATH_DATA);
@@ -70,12 +73,6 @@ namespace HomeCinema
 
             // Load App Settings
             LoadSettings();
-
-            // Delete previous log file, if exceeds file size limit
-            GlobalVars.CheckLogFile(GlobalVars.FILE_APPLOG, "frmMain-frmMain", Text + "\n  : Start of LogFile");
-
-            // Load Cover Images from folder, by Populating ImageList
-            GlobalVars.PopulateCover();
 
             // Add events to controls
             txtSearch.Text = GlobalVars.SEARCHBOX_PLACEHOLDER;
@@ -191,13 +188,6 @@ namespace HomeCinema
             bgSearchInDB.ProgressChanged += bgwMovie_ProgressChanged;
             bgSearchInDB.DoWork += new DoWorkEventHandler(bgwMovie_SearchMovie);
             bgSearchInDB.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgwMovie_DoneSearchMovie);
-
-            // Auto check update
-            GlobalVars.CheckForUpdate();
-
-            // Start finding files in folder
-            getAllMediaFiles();
-
         }
         // ############################################################################## Database Functions
         bool InsertToDB(List<string> listofFiles, string errFrom)
@@ -312,11 +302,21 @@ namespace HomeCinema
         // Get all Media files from folder in medialocation file
         private void getAllMediaFiles()
         {
-            // Start the worker to fetch all data
-            bgWorkInsertMovie.RunWorkerAsync();
-
             // Display the loading form.
             DisplayLoading();
+
+            // BGworker for: fetching all media filepaths
+            try
+            {
+                bgWorkInsertMovie.RunWorkerAsync();
+
+            } catch (Exception ex)
+            {
+                // Show error
+                GlobalVars.ShowError($"frmMain-getAllMediaFiles-[{ex.Source.ToString()}]", ex.ToString());
+                // Close loading form
+                CloseLoading();
+            }
         }
         public void SearchBoxPlaceholder(object sender, EventArgs e)
         {
@@ -385,11 +385,24 @@ namespace HomeCinema
             else
             {
                 SEARCH_QUERY = SEARCH_QUERY_PREV;
-                // Run BG Worker: bgSearchInDB, for Searching movies in database
-                bgSearchInDB.RunWorkerAsync();
 
                 // Display the loading form.
                 DisplayLoading();
+
+                // Run BG Worker: bgSearchInDB, for Searching movies in database
+                try
+                {
+                    bgSearchInDB.RunWorkerAsync();
+
+                }
+                catch (Exception ex)
+                {
+                    // Show error
+                    GlobalVars.ShowError($"frmMain-getAllMediaFiles-[{ex.Source.ToString()}]", ex.ToString());
+                    // Close loading form
+                    CloseLoading();
+                }
+
             }
         }
         // Display and close loading form
@@ -579,7 +592,8 @@ namespace HomeCinema
                 string imgKey = Convert.ToString(MOVIEID) + ".jpg";
                 if (GlobalVars.MOVIE_IMGLIST.Images.ContainsKey(imgKey))
                 {
-                    temp.ImageIndex = GlobalVars.MOVIE_IMGLIST.Images.IndexOfKey(imgKey); //CC;
+                    //temp.ImageIndex = GlobalVars.MOVIE_IMGLIST.Images.IndexOfKey(imgKey); // Get index based on ImageKey
+                    temp.ImageKey = imgKey;
                 }
                 else
                 {
@@ -653,18 +667,8 @@ namespace HomeCinema
                 // Clear previous list
                 lvSearchResult.Items.Clear();
 
-                // Get result, cast to object type
+                // Log progress Start [0]
                 GlobalVars.Log(errFrom + $" [First Progress] ({ e.ProgressPercentage.ToString() })", "RETRIEVES data from Previous Search query in bgWorker");
-
-                // Starting, opening of App?
-                if (Start)
-                {
-                    // Perform click on Change View
-                    btnChangeView.PerformClick();
-                    // Perform click on Sort
-                    btnSort.PerformClick();
-                    Start = false;
-                }
             }
 
             // Retrieve Progress DataRow
@@ -750,12 +754,30 @@ namespace HomeCinema
                 return;
             }
 
-            // Get result as DataTable
+            // Starting, opening of App?
+            if (Start)
+            {
+                // Perform click on Change View
+                btnChangeView.PerformClick();
+                // Perform click on Sort
+                btnSort.PerformClick();
+                Start = false;
+
+                //Record time end
+                LoadingEnd = DateTime.Now.TimeOfDay.TotalMilliseconds;
+                double TimeMS = LoadingEnd - LoadingStart;
+                double TimeSec = TimeMS / 100;
+                string TimeitTook = $"Took {TimeMS} milliseconds to load App!\n\tIn seconds : {TimeSec}";
+                GlobalVars.Log("frmMain", TimeitTook);
+                GlobalVars.ShowInfo(TimeitTook);
+            }
+
+            // Get result as DataTable, and Dispose it
             if (e.Result is DataTable)
             {
                 DataTable dt = e.Result as DataTable;
                 // Dispose the table after iterating thru its contents
-                GlobalVars.Log(errFrom, $"Done with results!\nTotal Count of Processed LV Items: { lvSearchResult.Items.Count.ToString() }\nTotal number of Rows: { dt.Rows.Count.ToString() }");
+                GlobalVars.Log(errFrom, $"Done with results!\n\tTotal Count of Processed LV Items: { lvSearchResult.Items.Count.ToString() }\n\tTotal number of Rows: { dt.Rows.Count.ToString() }");
                 dt.Clear();
                 dt.Dispose();
             }
@@ -767,7 +789,6 @@ namespace HomeCinema
                 temp.Tag = "0";
                 temp.ImageIndex = 0;
                 lvSearchResult.Items.Add(temp);
-                //GlobalVars.ShowInfo("There are no results for search query '" + text + "'!");
             }
 
             // Clear previous values of variables
@@ -931,6 +952,19 @@ namespace HomeCinema
             }
         }
         // ############################################################################## Form Control events
+        private void frmMain_Load(object sender, EventArgs e)
+        {
+            // Startup events
+
+            // Auto check update
+            GlobalVars.CheckForUpdate();
+
+            // Delete previous log file, if exceeds file size limit
+            GlobalVars.CheckLogFile(GlobalVars.FILE_APPLOG, "frmMain-frmMain", Text + "\n  : Start of LogFile");
+
+            // Start finding files in folder
+            getAllMediaFiles();
+        }
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             GlobalVars.Log("frmMain.Designer-Dispose", "Exiting....");
@@ -1068,11 +1102,22 @@ namespace HomeCinema
                 SEARCH_QUERY = qry;
             }
 
-            // Run BG Worker: bgSearchInDB, for Searching movies in database
-            bgSearchInDB.RunWorkerAsync();
-
             // Display the loading form.
             DisplayLoading();
+
+            // Run BG Worker: bgSearchInDB, for Searching movies in database
+            try
+            {
+                bgSearchInDB.RunWorkerAsync();
+
+            }
+            catch (Exception ex)
+            {
+                // Show error
+                GlobalVars.ShowError($"frmMain-getAllMediaFiles-[{ex.Source.ToString()}]", ex.ToString());
+                // Close loading form
+                CloseLoading();
+            }
         }
         // When double-clicked on an item, open it in new form
         private void lvSearchResult_MouseDoubleClick(object sender, MouseEventArgs e)
