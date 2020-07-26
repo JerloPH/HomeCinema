@@ -124,14 +124,14 @@ namespace HomeCinema.SQLFunc
                     DONE = true;
                 }
             }
-            catch (SQLiteException e)
+            catch (SQLiteException ex)
             {
                 GlobalVars.LogDb("SQLHelper-DbExecNonQuery (Query)", qry);
-                GlobalVars.ShowError("SQLHelper-DbExecNonQuery (SQL Error)", e.Message);
+                GlobalVars.ShowError("SQLHelper-DbExecNonQuery (SQL Error)", ex);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                GlobalVars.ShowError("SQLHelper-DbExecNonQuery (Error)", e.Message);
+                GlobalVars.ShowError("SQLHelper-DbExecNonQuery (Error)", ex);
             }
             finally
             {
@@ -233,7 +233,7 @@ namespace HomeCinema.SQLFunc
                     }
                     catch (Exception ex)
                     {
-                        GlobalVars.ShowError("SQLHelper - DbQuery[r.Read() Error]", ex.Message);
+                        GlobalVars.ShowError("SQLHelper - DbQuery[r.Read() Error]", ex);
                     }
                 }
                 dt.Rows.Add(row);

@@ -313,7 +313,7 @@ namespace HomeCinema
             } catch (Exception ex)
             {
                 // Show error
-                GlobalVars.ShowError($"frmMain-getAllMediaFiles-[{ex.Source.ToString()}]", ex.ToString());
+                GlobalVars.ShowError("frmMain-getAllMediaFiles", ex);
                 // Close loading form
                 CloseLoading();
             }
@@ -398,7 +398,7 @@ namespace HomeCinema
                 catch (Exception ex)
                 {
                     // Show error
-                    GlobalVars.ShowError($"frmMain-getAllMediaFiles-[{ex.Source.ToString()}]", ex.ToString());
+                    GlobalVars.ShowError($"frmMain-getAllMediaFiles", ex);
                     // Close loading form
                     CloseLoading();
                 }
@@ -610,7 +610,7 @@ namespace HomeCinema
             } catch (Exception ex)
             {
                 // Log error
-                GlobalVars.ShowError($"frmMain-LVItemSetDetails-[{ex.Source.ToString()}]", ex.ToString());
+                GlobalVars.ShowError($"frmMain-LVItemSetDetails", ex);
             }
         }
         // ############################################################################## BACKGROUND WORKERS
@@ -732,7 +732,7 @@ namespace HomeCinema
             }
             catch (Exception exc)
             {
-                GlobalVars.ShowError(errFrom + $" { exc.Source.ToString() }", exc.Message);
+                GlobalVars.ShowError(errFrom, exc);
             }
         }
         private void bgwMovie_DoneSearchMovie(object sender, RunWorkerCompletedEventArgs e)
@@ -1114,7 +1114,7 @@ namespace HomeCinema
             catch (Exception ex)
             {
                 // Show error
-                GlobalVars.ShowError($"frmMain-getAllMediaFiles-[{ex.Source.ToString()}]", ex.ToString());
+                GlobalVars.ShowError($"frmMain-getAllMediaFiles", ex);
                 // Close loading form
                 CloseLoading();
             }

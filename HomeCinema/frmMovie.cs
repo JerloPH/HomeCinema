@@ -435,7 +435,7 @@ namespace HomeCinema
             } catch (Exception ex)
             {
                 // Log Error
-                GlobalVars.ShowError($"frmMovie({Name.ToString()}-picBox_Click-[{ex.Source.ToString()}])", ex.ToString());
+                GlobalVars.ShowError($"frmMovie({Name.ToString()})-picBox_Click", ex);
             }
         }
         // Delete movie from database
@@ -481,7 +481,7 @@ namespace HomeCinema
                 } catch (Exception ex)
                 {
                     // Log Error
-                    GlobalVars.ShowError($"frmMovie({Name.ToString()}-lblIMDB_Click-[{ex.Source.ToString()}])", ex.ToString());
+                    GlobalVars.ShowError($"frmMovie({Name.ToString()})-lblIMDB_Click", ex);
                 }
             }
         }
