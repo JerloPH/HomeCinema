@@ -251,7 +251,7 @@ namespace HomeCinema
             if (lvSearchResult.SelectedItems.Count > 0)
             {
                 // Validate ID
-                string ID = Convert.ToString(lvSearchResult.SelectedItems[0].Tag).TrimStart(new Char[] { '0' });
+                string ID = lvSearchResult.SelectedItems[0].Tag.ToString().TrimStart('0');
                 // Exit if not a valid ID
                 if (Convert.ToInt16(ID) < 1)
                 {
@@ -284,7 +284,7 @@ namespace HomeCinema
         private void OpenNewFormMovie()
         {
             // Validate ID
-            string ID = Convert.ToString(lvSearchResult.SelectedItems[0].Tag).TrimStart(new Char[] { '0' });
+            string ID = lvSearchResult.SelectedItems[0].Tag.ToString().TrimStart('0');
             // Exit if not a valid ID
             if (Convert.ToInt16(ID) < 1)
             {
@@ -303,7 +303,7 @@ namespace HomeCinema
                 }
                 else
                 {
-                    Form form = new frmMovie(this, ID, text);
+                    Form form = new frmMovie(this, ID, text, lvSearchResult.SelectedItems[0]);
                     form.Name = formName;
                     GlobalVars.Log(Name + " (OPEN a MOVIE)", "MOVIE formName: " + form.Name);
                 }
@@ -330,6 +330,48 @@ namespace HomeCinema
             if (txtSearch.Text == GlobalVars.SEARCHBOX_PLACEHOLDER)
             {
                 txtSearch.Text = "";
+            }
+        }
+        // Update ListView lvSearchResult Item
+        public void UpdateMovieItemOnLV(ListViewItem lvItem)
+        {
+            if (lvItem != null)
+            {
+                // Get Id
+                string MOVIEID = lvItem.Tag.ToString().TrimStart('0');
+
+                // Change info of the item
+                string qry = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO} WHERE [Id]={MOVIEID} LIMIT 1;";
+
+                DataTable dtFile = DBCON.DbQuery(qry, LVMovieItemsColumns, "frmMain-UpdateMovieItemOnLV"); // run the query
+
+                // Check if there are results
+                if (dtFile.Rows.Count > 0)
+                {
+                    foreach (DataRow r in dtFile.Rows)
+                    {
+                        // Get all strings from the DataRow, passed by the BG worker
+                        string r1 = r[1].ToString(); // name
+                        string r2 = r[2].ToString(); // name_ep
+                        string r3 = r[3].ToString(); // name_series
+                        string r4 = r[4].ToString(); // season
+                        string r5 = r[5].ToString(); // episode
+                        string r6 = r[6].ToString(); // year
+                        string r7 = r[7].ToString(); // summary
+                        string r8 = r[8].ToString(); // genre
+
+                        // Edit Information on ListView Item
+                        LVItemSetDetails(lvItem, new string[] { MOVIEID.ToString(), r1, r2, r3, r4, r5, r6, r7, r8 });
+
+                        break;
+                    }
+                }
+                dtFile.Clear();
+                dtFile.Dispose();
+
+                // Refresh imagelist and lvSearchResult to refelct changes to Image
+                lvSearchResult.Refresh();
+
             }
         }
         // Execute the query, by running bgWorker bgSearchInDB
@@ -489,6 +531,74 @@ namespace HomeCinema
             }
             return "";
         }
+        // Set Informations and Details for LVItem on lvSearchResult
+        public void LVItemSetDetails(ListViewItem temp, string[] InfoString)
+        {
+            // Unparse InfoString
+            string MovieId = InfoString[0]; // ID
+            string r1 = InfoString[1]; // name
+            string r2 = InfoString[2]; // name_ep
+            string r3 = InfoString[3]; // name_series
+            string r4 = InfoString[4]; // season
+            string r5 = InfoString[5]; // episode
+            string r6 = InfoString[6]; // year
+            string r7 = InfoString[7]; // summary
+            string r8 = InfoString[8]; // genre
+
+            try
+            {
+                // Convert MovieId string to int
+                int MOVIEID = Convert.ToInt32(MovieId);
+
+                // Set default text for item
+                temp.Text = r1;
+
+                // Append ToolTip on it
+                temp.ToolTipText = "Summary: \n" + GlobalVars.LimitString(r7, 350) + "\n\nGenre:\n" + r8;
+
+                // Is it a Movie? (by checking if there are no season)
+                // Add sub-item for Series Name, or Episode Name
+                if (String.IsNullOrWhiteSpace(r4))
+                {
+                    temp.SubItems.Add(r3); // Series Name
+                    temp.SubItems.Add(r2); // Episode Name
+                }
+                else
+                {
+                    // Set Series Name
+                    if (String.IsNullOrWhiteSpace(r3))
+                    {
+                        temp.Text = r3; //Set Series Name
+                    }
+                    temp.SubItems.Add(r2); // Episode Name
+                    temp.SubItems.Add("S" + GlobalVars.ValidateNum(r4) + " E" + GlobalVars.ValidateNum(r5));
+                }
+                temp.SubItems.Add(r6); // Year
+
+                // Display image (From ImageList) based on ID
+                string imgKey = Convert.ToString(MOVIEID) + ".jpg";
+                if (GlobalVars.MOVIE_IMGLIST.Images.ContainsKey(imgKey))
+                {
+                    temp.ImageIndex = GlobalVars.MOVIE_IMGLIST.Images.IndexOfKey(imgKey); //CC;
+                }
+                else
+                {
+                    temp.ImageIndex = 0;
+                }
+
+                // Add year to name/title of MOVIE
+                temp.Text = temp.Text + $" ({r6})";
+
+                // Save the ID as Tag, to NOT SHOW it on LIST
+                temp.Name = Convert.ToString(MOVIEID);
+                temp.Tag = GlobalVars.ValidateZero(MOVIEID);
+
+            } catch (Exception ex)
+            {
+                // Log error
+                GlobalVars.ShowError($"frmMain-LVItemSetDetails-[{ex.Source.ToString()}]", ex.ToString());
+            }
+        }
         // ############################################################################## BACKGROUND WORKERS
         private void bgwMovie_SearchMovie(object sender, DoWorkEventArgs e)
         {
@@ -608,45 +718,10 @@ namespace HomeCinema
                         // Make new ListView item, and assign properties to it
                         ListViewItem temp = new ListViewItem() { Text = r1 };
 
-                        // Append ToolTip on it
-                        temp.ToolTipText = "Summary: \n" + GlobalVars.LimitString(r7, 350) + "\n\nGenre:\n" + r8;
+                        // Edit Information on ListView Item
+                        LVItemSetDetails(temp, new string[] { MOVIEID.ToString(), r1, r2, r3, r4, r5, r6, r7, r8 });
 
-                        // Is it a Movie? (by checking if there are no season)
-                        // Add sub-item for Series Name, or Episode Name
-                        if (String.IsNullOrWhiteSpace(r4))
-                        {
-                            temp.SubItems.Add(r3); // Series Name
-                            temp.SubItems.Add(r2); // Episode Name
-                        }
-                        else
-                        {
-                            // Set Series Name
-                            if (String.IsNullOrWhiteSpace(r3))
-                            {
-                                temp.Text = r3; //Set Series Name
-                            }
-                            temp.SubItems.Add(r2); // Episode Name
-                            temp.SubItems.Add("S" + GlobalVars.ValidateNum(r4) + " E" + GlobalVars.ValidateNum(r5));
-                        }
-                        temp.SubItems.Add(r6); // Year
-
-                        // Display image (From ImageList) based on ID
-                        string imgKey = Convert.ToString(MOVIEID) + ".jpg";
-                        if (GlobalVars.MOVIE_IMGLIST.Images.ContainsKey(imgKey))
-                        {
-                            temp.ImageIndex = GlobalVars.MOVIE_IMGLIST.Images.IndexOfKey(imgKey); //CC;
-                        }
-                        else
-                        {
-                            temp.ImageIndex = 0;
-                        }
-
-                        // Add year to name/title of MOVIE
-                        temp.Text = temp.Text + $" ({r6})";
-
-                        // Save the ID as Tag, to NOT SHOW it on LIST
-                        temp.Name = Convert.ToString(MOVIEID);
-                        temp.Tag = GlobalVars.ValidateZero(MOVIEID);
+                        // Add Item to ListView lvSearchResult
                         lvSearchResult.Items.Add(temp);
                     }
                 }
@@ -852,7 +927,7 @@ namespace HomeCinema
                 string MOVIE_ID = lvSearchResult.SelectedItems[0].Tag.ToString();
                 string MOVIE_NAME = lvSearchResult.SelectedItems[0].Text.ToString();
                 string childForm = GlobalVars.PREFIX_MOVIEINFO + MOVIE_ID;
-                GlobalVars.OpenFormMovieInfo(this, childForm, MOVIE_ID, MOVIE_NAME, "frmMain-cmLV_ItemCLicked");
+                GlobalVars.OpenFormMovieInfo(this, childForm, MOVIE_ID, MOVIE_NAME, "frmMain-cmLV_ItemCLicked", lvSearchResult.SelectedItems[0]);
             }
         }
         // ############################################################################## Form Control events

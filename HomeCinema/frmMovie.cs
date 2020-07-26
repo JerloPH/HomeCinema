@@ -39,10 +39,13 @@ namespace HomeCinema
         private static Image MOVIE_COVER { get; set; } = null;
         private static Image MOVIE_COVER_FULL { get; set; } = null;
 
+        // Source ListView lvSearch Item index
+        public ListViewItem LVITEM = null;
+
         // SQLHelper connection
         SQLHelper conn = new SQLHelper("frmMovie");
 
-        public frmMovie(Form parent, string ID, string name)
+        public frmMovie(Form parent, string ID, string name, ListViewItem lvitem)
         {
             InitializeComponent();
 
@@ -53,6 +56,7 @@ namespace HomeCinema
             MOVIE_ID = ID;
             MOVIE_NAME = name;
             childForm = GlobalVars.PREFIX_MOVIEINFO + MOVIE_ID;
+            LVITEM = lvitem;
 
             // Set picBox size mode
             picBox.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -396,7 +400,7 @@ namespace HomeCinema
         private void btnEdit_Click(object sender, EventArgs e)
         {
             // Create form, or OPEN if already exists
-            GlobalVars.OpenFormMovieInfo(this, childForm, MOVIE_ID, MOVIE_NAME, "frmMovie-btnEdit_Click");
+            GlobalVars.OpenFormMovieInfo(this, childForm, MOVIE_ID, MOVIE_NAME, "frmMovie-btnEdit_Click", LVITEM);
         }
         // Click to see Large Image cover
         private void picBox_Click(object sender, EventArgs e)

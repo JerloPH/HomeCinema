@@ -38,13 +38,16 @@ namespace HomeCinema
         public static Image MOVIE_COVER { get; set; } = null;
         public static Image tempImage { get; set; } = null;
 
+        // Source ListView lvSearch Item index
+        public ListViewItem LVITEM = null;
+
         // Initiate SQLHelper DB Connection
         SQLHelper conn = new SQLHelper("frmMovieInfo");
 
         // Fixed vars
         Form PARENT = null;
 
-        public frmMovieInfo(Form parent,string ID, string text, string formName)
+        public frmMovieInfo(Form parent,string ID, string text, string formName, ListViewItem lvitem)
         {
             InitializeComponent();
             // Form properties
@@ -53,9 +56,10 @@ namespace HomeCinema
             FormClosing += new FormClosingEventHandler(frmMovieInfo_FormClosing);
 
             // Set vars
-            MOVIE_ID = ID;
+            MOVIE_ID = ID.TrimStart('0');
             PARENT = parent;
             PARENT_NAME = PARENT.Name;
+            LVITEM = lvitem;
 
             // Set Controls text and properties
             txtID.Text = GlobalVars.ValidateAndReturn(ID);
@@ -400,9 +404,14 @@ namespace HomeCinema
                 tempImage.Dispose();
                 tempImage = null;
             }
-            // Dispose from Parent
-            string[] Params = { "" };
-            GlobalVars.CallMethod(PARENT_NAME, "DisposePoster", Params, $"frmMovieInfo-DisposeImages ({Name})", "frmMovie PARENT: " + PARENT_NAME);
+
+            // If Parent is of type: frmMovie
+            if (PARENT is frmMovie)
+            {
+                // Dispose from Parent
+                string[] Params = { "" };
+                GlobalVars.CallMethod(PARENT_NAME, "DisposePoster", Params, $"frmMovieInfo-DisposeImages ({Name})", "frmMovie PARENT: " + PARENT_NAME);
+            }
         }
         // Check Genre textboxes from List of genres
         private void CheckGenreFromTMDB(List<string> list)
@@ -566,7 +575,7 @@ namespace HomeCinema
             
             // Refresh Movie List
             frmMain master = (frmMain)Application.OpenForms["frmMain"];
-            master.RefreshMovieList();
+            master.UpdateMovieItemOnLV(LVITEM);
 
             // Close this form
             Close();
