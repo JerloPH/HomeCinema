@@ -177,8 +177,9 @@ namespace HomeCinema
             }
             cols = cols.TrimEnd(',');
             qry = $"SELECT {cols} FROM {GlobalVars.DB_TNAME_INFO} WHERE [Id]={txtID.Text} LIMIT 1;";
-            //GlobalVars.Log("frmMovieInfo-frmMovieInfo", $"Query src: {qry}");
+
             DataTable dtInfo = conn.DbQuery(qry, cols, "frmMovie-LoadInformation");
+
             foreach (DataRow row in dtInfo.Rows)
             {
                 var r1 = row[1]; // imdb
@@ -220,30 +221,6 @@ namespace HomeCinema
 
             // Set control focus
             txtName.Focus();
-        }
-        // Set Checkboxes text
-        public void SetCheckboxText(Control flp, string[] list)
-        {
-            string[] tempList = list;
-            Array.Sort(tempList);
-            FlowLayoutPanel f = flp as FlowLayoutPanel;
-            int num = 0;
-            if (f != null)
-            {
-                foreach (CheckBox c in f.Controls)
-                {
-                    c.Checked = false;
-                    if (num < tempList.Length)
-                    {
-                        c.Text = GlobalVars.RemoveLine(tempList[num]);
-                        num += 1;
-                    }
-                    else
-                    {
-                        c.Text = "[NONE]";
-                    }
-                }
-            }
         }
         // Get Checkboxes text from checked controls
         public string GetChecked(FlowLayoutPanel f)

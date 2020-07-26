@@ -312,7 +312,6 @@ namespace HomeCinema
             src = sourcelink;
             sb.Append("<html>");
             sb.Append("    <head>");
-            //sb.Append("        <meta http-equiv =\"X-UA-Compatible\" content=\"IE=Edge\"/>");
             sb.Append("        <meta name=\"viewport\" content=\"width=device-width; height=device-height;\">");
             sb.Append("    </head>");
             sb.Append("    <body marginheight=\"0\" marginwidth=\"0\" leftmargin=\"0\" topmargin=\"0\" style=\"overflow-y: hidden\">");
@@ -402,31 +401,38 @@ namespace HomeCinema
         // Click to see Large Image cover
         private void picBox_Click(object sender, EventArgs e)
         {
-            // Size of Cover
-            int W = 340;
-            int H = 511;
-            // Show bigger image
-            Form temp = new Form();
-            temp.Text = lblName.Text + " [Large Image]";
-            temp.MaximizeBox = false;
-            temp.MinimizeBox = false;
-            temp.FormBorderStyle = FormBorderStyle.FixedToolWindow;
-            temp.StartPosition = FormStartPosition.Manual;
-            temp.Left = Left;
-            temp.Top = Top;
-            temp.Size = new Size(W + 15, H + 38);
-            temp.ShowInTaskbar = false;
-            temp.SuspendLayout();
-            PictureBox pic = new PictureBox
+            try
             {
-                Image = MOVIE_COVER_FULL,
-                Location = new Point(0, 0),
-                Size = new Size(W, H),
-                SizeMode = PictureBoxSizeMode.StretchImage
-            };
-            temp.Controls.Add(pic);
-            temp.ResumeLayout();
-            temp.Show(this);
+                // Size of Cover
+                int W = 340;
+                int H = 511;
+                // Show bigger image
+                Form temp = new Form();
+                temp.Text = lblName.Text + " [Large Image]";
+                temp.MaximizeBox = false;
+                temp.MinimizeBox = false;
+                temp.FormBorderStyle = FormBorderStyle.FixedToolWindow;
+                temp.StartPosition = FormStartPosition.Manual;
+                temp.Left = Left;
+                temp.Top = Top;
+                temp.Size = new Size(W + 15, H + 38);
+                temp.ShowInTaskbar = false;
+                temp.SuspendLayout();
+                PictureBox pic = new PictureBox
+                {
+                    Image = MOVIE_COVER_FULL,
+                    Location = new Point(0, 0),
+                    Size = new Size(W, H),
+                    SizeMode = PictureBoxSizeMode.StretchImage
+                };
+                temp.Controls.Add(pic);
+                temp.ResumeLayout();
+                temp.Show(this);
+            } catch (Exception ex)
+            {
+                // Log Error
+                GlobalVars.ShowError($"frmMovie({Name.ToString()}-picBox_Click-[{ex.Source.ToString()}])", ex.ToString());
+            }
         }
         // Delete movie from database
         private void btnDeleteMovie_Click(object sender, EventArgs e)
@@ -465,7 +471,14 @@ namespace HomeCinema
             titleCode = titleCode.Trim();
             if ((String.IsNullOrWhiteSpace(titleCode) == false) && (titleCode != "0"))
             {
-                Process.Start(GlobalVars.LINK_IMDB + titleCode);
+                try
+                {
+                    Process.Start(GlobalVars.LINK_IMDB + titleCode);
+                } catch (Exception ex)
+                {
+                    // Log Error
+                    GlobalVars.ShowError($"frmMovie({Name.ToString()}-lblIMDB_Click-[{ex.Source.ToString()}])", ex.ToString());
+                }
             }
         }
     }

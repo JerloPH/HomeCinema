@@ -167,7 +167,6 @@ namespace HomeCinema
 
             // Perform background worker that Automatically inserts all movies from designated folder
             // Check if directory exists first, by readling from file
-            //string tempFolder = GlobalVars.GetSingleLine(GlobalVars.FILE_MEDIALOC, "frmMain"); // Get directory to start search
             string[] tempFolder = GlobalVars.BuildArrFromFile(GlobalVars.FILE_MEDIALOC, "frmMain"); // Get directory to start search
             if (tempFolder.Length < 1)
             {
@@ -276,7 +275,7 @@ namespace HomeCinema
                 }
                 else
                 {
-                    OpenNewFormMovie();
+                    OpenNewFormMovie(); // Open Movie Details form
                 }
             }
         }
@@ -858,8 +857,8 @@ namespace HomeCinema
             GlobalVars.WriteArray(GlobalVars.TEXT_GENRE, GlobalVars.FILE_GENRE);
             // Replace country file
             string[] arrCountry = GlobalVars.BuildStringArrayFromCB(cbCountry);
-            //Array.Sort(arrCountry);
             GlobalVars.WriteArray(arrCountry, GlobalVars.FILE_COUNTRY);
+
             // Dispose All Resources
             if (formLoading != null)
             {
@@ -867,13 +866,13 @@ namespace HomeCinema
             }
             // Clean each image 1 by 1
             GlobalVars.Log("frmMain-frmMain_FormClosing", "Disposing MOVIE_IMGLIST");
-            foreach (Image img in GlobalVars.MOVIE_IMGLIST.Images)
-            {
-                if (img != null)
-                {
-                    img.Dispose();
-                }
-            }
+            //foreach (Image img in GlobalVars.MOVIE_IMGLIST.Images)
+            //{
+            //    if (img != null)
+            //    {
+            //        img.Dispose();
+            //    }
+            //}
             if (GlobalVars.MOVIE_IMGLIST != null)
             {
                 GlobalVars.MOVIE_IMGLIST.Dispose();
