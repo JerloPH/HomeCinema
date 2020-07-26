@@ -62,7 +62,8 @@ namespace HomeCinema
 
             // Set picBox size mode
             picBox.SizeMode = PictureBoxSizeMode.StretchImage;
-            
+            picBox.Tag = null;
+
             // Add items to cbCategory
             cbCategory.Items.AddRange(GlobalVars.DB_INFO_CATEGORY);
 
@@ -523,7 +524,6 @@ namespace HomeCinema
                 dt.AcceptChanges();
                 // Check if first query successfully executed
                 bool ContAfterQry = conn.DbUpdateInfo(dt, callFrom);
-                //ContAfterQry = conn.DbUpdateInfo(dt, callFrom);
 
                 // dispose INFO table
                 dt.Clear();
@@ -556,9 +556,13 @@ namespace HomeCinema
                 SaveCoverChanged(picBox.Tag.ToString());
             }
 
-            // Refresh parent form fmMovie
-            string[] Params = { MOVIE_ID };
-            GlobalVars.CallMethod(PARENT_NAME, "LoadInformation", Params, $"frmMovieInfo-btnSave_Click ({Name})", "frmMovie PARENT: " + PARENT_NAME);
+            // Check if parent form is frmMovie
+            if (PARENT is frmMovie)
+            {
+                // Refresh parent form fmMovie
+                string[] Params = { MOVIE_ID };
+                GlobalVars.CallMethod(PARENT_NAME, "LoadInformation", Params, $"frmMovieInfo-btnSave_Click ({Name})", "frmMovie PARENT: " + PARENT_NAME);
+            }
             
             // Refresh Movie List
             frmMain master = (frmMain)Application.OpenForms["frmMain"];

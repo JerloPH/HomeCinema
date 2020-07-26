@@ -46,7 +46,7 @@ namespace HomeCinema
         BackgroundWorker bgWorkInsertMovie = new BackgroundWorker();
         BackgroundWorker bgSearchInDB = new BackgroundWorker();
 
-        ToolStripItem toolMenuView;
+        ToolStripItem toolMenuView, toolMenuEdit;
 
         public frmMain()
         {
@@ -118,7 +118,8 @@ namespace HomeCinema
             lvSearchResult.View = View.Tile;
 
             // Populate Context Menu for ListView item Rightclick
-            toolMenuView = cmLV.Items.Add("&View Details");
+            toolMenuView = cmLV.Items.Add("&View Details"); // View Movie Info
+            toolMenuEdit = cmLV.Items.Add("&Edit Information"); // Edit Movie Info
             cmLV.ItemClicked += new ToolStripItemClickedEventHandler(cmLV_ItemCLicked);
 
             // Populate combobox cbCategory
@@ -845,6 +846,13 @@ namespace HomeCinema
             {
                 // Open Movie Details form
                 OpenNewFormMovie();
+            } else if (item == toolMenuEdit)
+            {
+                // Create form for editing Movie information
+                string MOVIE_ID = lvSearchResult.SelectedItems[0].Tag.ToString();
+                string MOVIE_NAME = lvSearchResult.SelectedItems[0].Text.ToString();
+                string childForm = GlobalVars.PREFIX_MOVIEINFO + MOVIE_ID;
+                GlobalVars.OpenFormMovieInfo(this, childForm, MOVIE_ID, MOVIE_NAME, "frmMain-cmLV_ItemCLicked");
             }
         }
         // ############################################################################## Form Control events
@@ -1093,7 +1101,7 @@ namespace HomeCinema
         {
             SortItemsInListView(Convert.ToInt16(btnSort.Tag));
         }
-        // When clicked
+        // When ListView lvSearchResult is clicked on
         private void lvSearchResult_MouseClick(object sender, MouseEventArgs e)
         {
             // Right clicked? Show Context menu
