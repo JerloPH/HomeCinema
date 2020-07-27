@@ -83,6 +83,14 @@ namespace HomeCinema
             btnSort.Tag = 0;
             btnSort.Text = GlobalVars.TEXT_SORTBY[0];
 
+            // Set tooltips for controls
+            ToolTip ttShowNew = new ToolTip();
+            ttShowNew.SetToolTip(this.btnShowNew, "Show Recently Added Movies");
+            ttShowNew.SetToolTip(this.btnClean, "Clean temporary files");
+            ttShowNew.SetToolTip(this.btnAddMovie, "Add Single Movie to List");
+            ttShowNew.SetToolTip(this.btnSort, "Change Sorting Order");
+            ttShowNew.SetToolTip(this.btnChangeView, "Change List view of Items");
+
             // Setup SortingOrder
             cbSortOrder.Items.Add("Sort Order");
             cbSortOrder.Items.Add("Ascending");
@@ -567,7 +575,7 @@ namespace HomeCinema
                 temp.Text = r1;
 
                 // Append ToolTip on it
-                temp.ToolTipText = "Summary: \n" + GlobalVars.LimitString(r7, 350) + "\n\nGenre:\n" + r8;
+                temp.ToolTipText = "Summary: \n" + GlobalVars.LimitString(r7, 350) + "\n\nGenre:\n" + r8.Replace(",", ", ");
 
                 // Is it a Movie? (by checking if there are no season)
                 // Add sub-item for Series Name, or Episode Name
