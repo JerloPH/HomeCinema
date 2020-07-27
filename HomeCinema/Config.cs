@@ -22,11 +22,11 @@ namespace HomeCinema
     public class Config
     {
         // Settings Config
-        public int autoUpdate { get; set; } = 0;
-        public int offlineMode { get; set; } = 1;
+        public int autoUpdate { get; set; } = 1;
+        public int offlineMode { get; set; } = 0;
         public int logsize { get; set; } = 1;
         public string lastPathVideo { get; set; } = "";
         public string lastPathCover { get; set; } = "";
-        public int instantPlayMovie { get; set; } = 0;
+        public int instantPlayMovie { get; set; } = 1;
     }
 }
