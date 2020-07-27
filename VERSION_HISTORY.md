@@ -1,5 +1,23 @@
 # HomeCinema - Project History:
 
+## v0.0.3.3 ***build 15 - (27 July 2020 PHT)***
+### Performance Improvement
+
+Build from latest commit: a633a4b
+
+**[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.3.3/HomeCinema-Windows_v0.0.3.3.zip "HomeCinema-Windows_v0.0.3.3.zip")**
+	
+**What's New?**
+- REV: Changed how Movie Item is Refreshed. Instead of performing query, only the selected Movie is refreshed.
+- FT: Added Right-click ContextMenu to ListView Item.
+  - *[Edit Information]* - Edit Movie Information.
+- MINOR: Added Tooltips to Buttons.
+- MINOR: Improved Error-Logging and Checking.
+- RES: Updated settings default values.
+- Image-related Code Improvements.
+- Various improvements and optimizations, and code cleanup.
+****
+
 ## v0.0.3.2 ***build 14 - (23 July 2020 PHT)***
 ### Optimizations and More Features
 
