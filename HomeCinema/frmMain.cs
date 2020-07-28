@@ -37,11 +37,13 @@ namespace HomeCinema
         TimeSpan LoadingStart, LoadingEnd; // Record App load time
         SQLHelper DBCON = new SQLHelper("frmMain"); // Make an SQLite helper instance
         Form formLoading = null; // Make a form of : "Please wait while loading..."
+        // Strings
         static string LVMovieItemsColumns = "[Id],[name],[name_ep],[name_series],[season],[episode],[year],[summary],[genre]";
         string SEARCH_QUERY = "";
         string SEARCH_COLS = LVMovieItemsColumns;
         string SEARCH_QUERY_PREV = "";
         string[] FOLDERTOSEARCH = { "" };
+        // Objects
         ListViewColumnSorter lvSorter = new ListViewColumnSorter();
         BackgroundWorker bgWorkInsertMovie = new BackgroundWorker();
         BackgroundWorker bgSearchInDB = new BackgroundWorker();
@@ -69,7 +71,7 @@ namespace HomeCinema
             Icon = GlobalVars.HOMECINEMA_ICON;
 
             // Change Caption and Title
-            Text = GlobalVars.HOMECINEMA_NAME + " - Media Organizer (v" + GlobalVars.HOMECINEMA_VERSION + " r" + GlobalVars.HOMECINEMA_BUILD.ToString() + ")";
+            Text = $"{GlobalVars.HOMECINEMA_NAME} - Media Organizer (v {GlobalVars.HOMECINEMA_VERSION} r{GlobalVars.HOMECINEMA_BUILD.ToString()})";
 
             // Load App Settings
             LoadSettings();
@@ -934,10 +936,20 @@ namespace HomeCinema
         // ############################################################################## Form CUSTOM events
         void Form_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Control && e.KeyCode == Keys.S)     // Ctrl-S = Opens settings form
+            // Ctrl-S = Opens settings form
+            if (e.Control && e.KeyCode == Keys.S)
             {
-                // Do what you want here
-                GlobalVars.ShowInfo("Hey!");
+                // Create Form
+                if (GlobalVars.formSetting == null)
+                {
+                    Form form = new frmSettings();
+                    form.Show(this);
+                    GlobalVars.formSetting = form;
+                }
+                else
+                {
+                    GlobalVars.formSetting.Focus();
+                }
                 e.SuppressKeyPress = true;  // Stops other controls on the form receiving event.
             }
         }

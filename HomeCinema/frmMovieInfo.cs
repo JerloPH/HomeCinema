@@ -136,7 +136,7 @@ namespace HomeCinema
         public void LoadInformation(string ID, string text)
         {
             // Set Form Properties
-            Text = text + " [Edit Information]";
+            Text = $"[EDIT] {text}";//text + " [Edit Information]";
 
             // Change cover image, if image exists in ImageList
             MOVIE_COVER = GlobalVars.ImgGetImageFromList(MOVIE_ID);
@@ -730,7 +730,6 @@ namespace HomeCinema
 
                     // Ask to change cover - poster image
                     bool ChangeCover = GlobalVars.ShowYesNo("Do you want to change poster image?");
-                    //if ((File.Exists(moviePosterFile) == false) || ChangeCover)
                     if (ChangeCover)
                     {
                         // Parse image link from JSON and download it
