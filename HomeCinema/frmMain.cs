@@ -81,20 +81,17 @@ namespace HomeCinema
             txtSearch.GotFocus += new EventHandler(SearchBoxPlaceholderClear);
             txtSearch.LostFocus += new EventHandler(SearchBoxPlaceholder);
 
-            // Change control properties
-            btnSort.Tag = 0;
-            btnSort.Text = GlobalVars.TEXT_SORTBY[0];
-
             // Set tooltips for controls
             ToolTip ttShowNew = new ToolTip();
             ttShowNew.SetToolTip(this.btnShowNew, "Show Recently Added Movies");
             ttShowNew.SetToolTip(this.btnClean, "Clean temporary files");
             ttShowNew.SetToolTip(this.btnAddMovie, "Add Single Movie to List");
-            ttShowNew.SetToolTip(this.btnSort, "Change Sorting Order");
+            ttShowNew.SetToolTip(this.cbSort, "Change Sorting By");
             ttShowNew.SetToolTip(this.btnChangeView, "Change List view of Items");
 
-            // Setup SortingOrder
-            cbSortOrder.Items.Add("Sort Order");
+            // Setup Sort and SortingOrder
+            cbSort.Items.AddRange(GlobalVars.TEXT_SORTBY);
+            cbSort.SelectedIndex = 1;
             cbSortOrder.Items.Add("Ascending");
             cbSortOrder.Items.Add("Descending");
             cbSortOrder.SelectedIndex = 0;
@@ -500,7 +497,7 @@ namespace HomeCinema
         {
             // Change Sort Order
             SortOrder Sorting = SortOrder.None;
-            if (cbSortOrder.SelectedIndex > 1)
+            if (cbSortOrder.SelectedIndex > 0)
             {
                 Sorting = SortOrder.Descending;
             }
@@ -761,8 +758,7 @@ namespace HomeCinema
             {
                 // Perform click on Change View
                 btnChangeView.PerformClick();
-                // Perform click on Sort
-                btnSort.PerformClick();
+                // Toggle Start variable
                 Start = false;
 
                 //Record time end
@@ -1180,25 +1176,6 @@ namespace HomeCinema
             // Create NEW MOVIE and (frmMovieInfo) SHOW Edit Information form
             GlobalVars.OpenFormMovieInfo(this, formName, "0", "New Movie ", "frmMain-btnAddMovie_Click (ADD MOVIE)");
         }
-        // Sort Tiles
-        private void btnSort_Click(object sender, EventArgs e)
-        {
-            int toggle = 0;
-            if (btnSort.Tag != null)
-            {
-                toggle = Convert.ToInt32(btnSort.Tag);
-            }
-            toggle += 1;
-            if (toggle > GlobalVars.TEXT_SORTBY.Length - 1)
-            {
-                toggle = 0;
-            }
-
-            btnSort.Tag = toggle;
-            btnSort.Text = GlobalVars.TEXT_SORTBY[toggle];
-
-            SortItemsInListView(toggle);
-        }
         // Auto search if Enter key is pressed
         private void txtSearch_KeyDown(object sender, KeyEventArgs e)
         {
@@ -1241,10 +1218,34 @@ namespace HomeCinema
                 OpenFormPlayMovie();
             }
         }
+        // Change lvSearchResult Sort by
+        private void cbSort_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Change lvSearchResult Sort by
+            try
+            {
+                SortItemsInListView(cbSort.SelectedIndex);
 
+            } catch (Exception ex)
+            {
+                // Log Error
+                SortItemsInListView(0);
+                GlobalVars.ShowError("frmMain-cbSort_SelectedIndexChanged", ex, false);
+            }
+        }
         private void cbSortOrder_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SortItemsInListView(Convert.ToInt16(btnSort.Tag));
+            try
+            {
+                SortItemsInListView(cbSort.SelectedIndex);
+
+            }
+            catch (Exception ex)
+            {
+                // Log Error
+                SortItemsInListView(0);
+                GlobalVars.ShowError("frmMain-cbSortOrder_SelectedIndexChanged", ex, false);
+            }
         }
         // When ListView lvSearchResult is clicked on
         private void lvSearchResult_MouseClick(object sender, MouseEventArgs e)
