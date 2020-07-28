@@ -44,12 +44,64 @@ namespace HomeCinema
             // Try settings values
             try
             {
+                // ##################### - GENERAL
                 // Booleans
                 cbAutoUpdate.SelectedIndex = Convert.ToInt16(!GlobalVars.SET_AUTOUPDATE);
                 cbOffline.SelectedIndex = Convert.ToInt16(!GlobalVars.SET_OFFLINE);
                 cbPlayMovie.SelectedIndex = Convert.ToInt16(!GlobalVars.SET_AUTOPLAY);
                 // TextBox
                 txtLogSize.Text = (GlobalVars.SET_LOGMAXSIZE / GlobalVars.BYTES).ToString();
+
+                // ##################### - FILE
+                string text = "";
+                // Country Texts
+                text = "";
+                foreach (string c in GlobalVars.BuildArrFromFile(GlobalVars.FILE_COUNTRY, "frmSettings-frmSettings_Load[FILE_COUNTRY]"))
+                {
+                    if ((String.IsNullOrWhiteSpace(c) == false) && c != "All")
+                    {
+                        text += c.Trim() + ", ";
+                    }
+                }
+                text = text.TrimEnd();
+                text = text.TrimEnd(',');
+                txtCountry.Text = text;
+                // Genre Texts
+                text = "";
+                foreach (string c in GlobalVars.BuildArrFromFile(GlobalVars.FILE_GENRE, "frmSettings-frmSettings_Load[FILE_GENRE]"))
+                {
+                    if ((String.IsNullOrWhiteSpace(c) == false) && c != "All")
+                    {
+                        text += c.Trim() + ", ";
+                    }
+                }
+                text = text.TrimEnd();
+                text = text.TrimEnd(',');
+                txtGenre.Text = text;
+                // Media File Format / File Extensions Texts
+                text = "";
+                foreach (string c in GlobalVars.BuildArrFromFile(GlobalVars.FILE_MEDIA_EXT, "frmSettings-frmSettings_Load[FILE_MEDIA_EXT]"))
+                {
+                    if (String.IsNullOrWhiteSpace(c) == false)
+                    {
+                        text += c.Trim() + ", ";
+                    }
+                }
+                text = text.TrimEnd();
+                text = text.TrimEnd(',');
+                txtMediaExt.Text = text;
+                // Media LOCATIONS Folders Texts
+                text = "";
+                foreach (string c in GlobalVars.BuildArrFromFile(GlobalVars.FILE_MEDIALOC, "frmSettings-frmSettings_Load[FILE_MEDIALOC]"))
+                {
+                    if (String.IsNullOrWhiteSpace(c) == false)
+                    {
+                        text += c.Trim() + ", ";
+                    }
+                }
+                text = text.TrimEnd();
+                text = text.TrimEnd(',');
+                txtMediaLoc.Text = text;
 
             } catch (Exception ex)
             {

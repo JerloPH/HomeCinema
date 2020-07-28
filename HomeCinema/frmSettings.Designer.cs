@@ -40,15 +40,15 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtMediaExt = new System.Windows.Forms.TextBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtGenre = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.txtCountry = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.txtMediaLoc = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -59,6 +59,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -164,17 +165,17 @@
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.label8);
-            this.tabPage2.Controls.Add(this.textBox4);
+            this.tabPage2.Controls.Add(this.txtMediaLoc);
             this.tabPage2.Controls.Add(this.label7);
-            this.tabPage2.Controls.Add(this.textBox3);
+            this.tabPage2.Controls.Add(this.txtCountry);
             this.tabPage2.Controls.Add(this.label6);
-            this.tabPage2.Controls.Add(this.textBox2);
+            this.tabPage2.Controls.Add(this.txtGenre);
             this.tabPage2.Controls.Add(this.label5);
-            this.tabPage2.Controls.Add(this.textBox1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Controls.Add(this.txtMediaExt);
+            this.tabPage2.Location = new System.Drawing.Point(4, 31);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(802, 402);
+            this.tabPage2.Size = new System.Drawing.Size(802, 396);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "File";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -182,22 +183,21 @@
             // label5
             // 
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(3, 12);
+            this.label5.Location = new System.Drawing.Point(8, 15);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(184, 31);
+            this.label5.Size = new System.Drawing.Size(196, 31);
             this.label5.TabIndex = 9;
             this.label5.Text = "Media File Format :";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // textBox1
+            // txtMediaExt
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(193, 9);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(194, 95);
-            this.textBox1.TabIndex = 8;
+            this.txtMediaExt.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMediaExt.Location = new System.Drawing.Point(10, 49);
+            this.txtMediaExt.Multiline = true;
+            this.txtMediaExt.Name = "txtMediaExt";
+            this.txtMediaExt.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtMediaExt.Size = new System.Drawing.Size(194, 170);
+            this.txtMediaExt.TabIndex = 8;
             // 
             // btnCancel
             // 
@@ -222,42 +222,40 @@
             // label6
             // 
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(5, 122);
+            this.label6.Location = new System.Drawing.Point(217, 15);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(102, 31);
             this.label6.TabIndex = 11;
             this.label6.Text = "Genre :";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // textBox2
+            // txtGenre
             // 
-            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.Location = new System.Drawing.Point(113, 122);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox2.Size = new System.Drawing.Size(274, 95);
-            this.textBox2.TabIndex = 10;
+            this.txtGenre.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtGenre.Location = new System.Drawing.Point(222, 49);
+            this.txtGenre.Multiline = true;
+            this.txtGenre.Name = "txtGenre";
+            this.txtGenre.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtGenre.Size = new System.Drawing.Size(264, 170);
+            this.txtGenre.TabIndex = 10;
             // 
             // label7
             // 
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(405, 12);
+            this.label7.Location = new System.Drawing.Point(501, 15);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(90, 31);
+            this.label7.Size = new System.Drawing.Size(116, 31);
             this.label7.TabIndex = 13;
             this.label7.Text = "Country :";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // textBox3
+            // txtCountry
             // 
-            this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox3.Location = new System.Drawing.Point(501, 12);
-            this.textBox3.Multiline = true;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox3.Size = new System.Drawing.Size(293, 95);
-            this.textBox3.TabIndex = 12;
+            this.txtCountry.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCountry.Location = new System.Drawing.Point(506, 49);
+            this.txtCountry.Multiline = true;
+            this.txtCountry.Name = "txtCountry";
+            this.txtCountry.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtCountry.Size = new System.Drawing.Size(293, 170);
+            this.txtCountry.TabIndex = 12;
             // 
             // label8
             // 
@@ -269,15 +267,15 @@
             this.label8.Text = "Media Locations :";
             this.label8.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // textBox4
+            // txtMediaLoc
             // 
-            this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox4.Location = new System.Drawing.Point(193, 241);
-            this.textBox4.Multiline = true;
-            this.textBox4.Name = "textBox4";
-            this.textBox4.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox4.Size = new System.Drawing.Size(601, 95);
-            this.textBox4.TabIndex = 14;
+            this.txtMediaLoc.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMediaLoc.Location = new System.Drawing.Point(193, 241);
+            this.txtMediaLoc.Multiline = true;
+            this.txtMediaLoc.Name = "txtMediaLoc";
+            this.txtMediaLoc.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtMediaLoc.Size = new System.Drawing.Size(601, 133);
+            this.txtMediaLoc.TabIndex = 14;
             // 
             // frmSettings
             // 
@@ -287,6 +285,7 @@
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.tabControl1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "frmSettings";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
@@ -316,14 +315,14 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtLogSize;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtMediaExt;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox txtCountry;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtGenre;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox txtMediaLoc;
     }
 }
