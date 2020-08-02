@@ -1075,8 +1075,30 @@ namespace HomeCinema
                 // Category
                 if (cbCategory.SelectedIndex > 0)
                 {
+                    int index = cbCategory.SelectedIndex;
                     qry += GlobalVars.QryWhere(qry);
-                    qry += $"[category]={cbCategory.SelectedIndex}";
+                    // Search for all
+                    if ((index < 1) || (index > 2))
+                    {
+                        if (index < 1)
+                        {
+                            index = 0;
+                        }
+                        qry += $"[category]={index}";
+                    }
+                    else
+                    {
+                        // Search for All type of Movies
+                        if (index == 1)
+                        {
+                            qry += "[category]=1 OR [category]=3 OR [category]=5";
+                        }
+                        // Search for All types of Series
+                        else
+                        {
+                            qry += "[category]=2 OR [category]=4 OR [category]=6";
+                        }
+                    }
                 }
                 // Studio
                 if (String.IsNullOrWhiteSpace(txtStudio.Text) == false)
