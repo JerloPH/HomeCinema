@@ -858,6 +858,16 @@ namespace HomeCinema
                                     if (pathEx == file)
                                     {
                                         canAdd = false;
+                                        // remove the item from list of already existing
+                                        int index = listAlreadyinDB.IndexOf(pathEx);
+                                        try
+                                        {
+                                            listAlreadyinDB.RemoveAt(index);
+
+                                        } catch (Exception ex)
+                                        {
+                                            GlobalVars.ShowError(calledFrom, ex, false);
+                                        }
                                         break;
                                     }
                                 }
