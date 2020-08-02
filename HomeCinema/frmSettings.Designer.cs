@@ -49,6 +49,7 @@
             this.txtMediaExt = new System.Windows.Forms.TextBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -187,7 +188,7 @@
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(182, 31);
             this.label8.TabIndex = 15;
-            this.label8.Text = "Media Locations :";
+            this.label8.Text = "*Media Locations :";
             this.label8.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // txtMediaLoc
@@ -207,7 +208,7 @@
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(116, 31);
             this.label7.TabIndex = 13;
-            this.label7.Text = "Country :";
+            this.label7.Text = "*Country :";
             // 
             // txtCountry
             // 
@@ -226,7 +227,7 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(102, 31);
             this.label6.TabIndex = 11;
-            this.label6.Text = "Genre :";
+            this.label6.Text = "*Genre :";
             // 
             // txtGenre
             // 
@@ -245,7 +246,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(196, 31);
             this.label5.TabIndex = 9;
-            this.label5.Text = "Media File Format :";
+            this.label5.Text = "*Media File Format :";
             // 
             // txtMediaExt
             // 
@@ -278,11 +279,21 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // label9
+            // 
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(-1, 434);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(335, 34);
+            this.label9.TabIndex = 16;
+            this.label9.Text = "* Changes Apply after Restart";
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(810, 500);
+            this.Controls.Add(this.label9);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.tabControl1);
@@ -325,5 +336,6 @@
         private System.Windows.Forms.TextBox txtGenre;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtMediaLoc;
+        private System.Windows.Forms.Label label9;
     }
 }
