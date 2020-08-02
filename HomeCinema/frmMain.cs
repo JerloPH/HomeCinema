@@ -1094,6 +1094,12 @@ namespace HomeCinema
                         qry += $"[year] BETWEEN {txtYearFrom.Text} AND {DateTime.Now.Year.ToString()}";
                     }
                 }
+                // Genre
+                if (cbGenre.SelectedIndex > 0)
+                {
+                    qry += GlobalVars.QryWhere(qry);
+                    qry += $"[genre] LIKE '%{cbGenre.Text}%'";
+                }
                 // Category
                 if (cbCategory.SelectedIndex > 0)
                 {
@@ -1147,12 +1153,7 @@ namespace HomeCinema
                     qry += GlobalVars.QryWhere(qry);
                     qry += $"[country] LIKE '%{CountryText}%'";
                 }
-                // Genre
-                if (cbGenre.SelectedIndex > 0)
-                {
-                    qry += GlobalVars.QryWhere(qry);
-                    qry += $"[genre] LIKE '%{cbGenre.Text}%'";
-                }
+                
 
                 // Remove Previous Filters and focus on IMDB Code
                 if (String.IsNullOrWhiteSpace(txtIMDB.Text) == false)
