@@ -929,23 +929,29 @@ namespace HomeCinema
             SEARCH_QUERY_PREV = "";
             RefreshMovieList();
         }
+        // Create or Show frmSettings Form
+        private void ShowSettingsForm()
+        {
+            // Create Form
+            if (GlobalVars.formSetting == null)
+            {
+                Form form = new frmSettings();
+                form.Show(this);
+                GlobalVars.formSetting = form;
+            }
+            else
+            {
+                GlobalVars.formSetting.Focus();
+            }
+        }
         // ############################################################################## Form CUSTOM events
         void Form_KeyDown(object sender, KeyEventArgs e)
         {
             // Ctrl-S = Opens settings form
             if (e.Control && e.KeyCode == Keys.S)
             {
-                // Create Form
-                if (GlobalVars.formSetting == null)
-                {
-                    Form form = new frmSettings();
-                    form.Show(this);
-                    GlobalVars.formSetting = form;
-                }
-                else
-                {
-                    GlobalVars.formSetting.Focus();
-                }
+                // Create or Show Settings Form
+                ShowSettingsForm();
                 e.SuppressKeyPress = true;  // Stops other controls on the form receiving event.
             }
         }
@@ -989,7 +995,7 @@ namespace HomeCinema
         }
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            GlobalVars.Log("frmMain.Designer-Dispose", "Exiting....");
+            GlobalVars.Log("frmMain_FormClosing", "Exiting....");
             // Save settings
             SaveSettings();
             // Replace genre file
