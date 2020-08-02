@@ -96,7 +96,7 @@ namespace HomeCinema
                 {
                     if (String.IsNullOrWhiteSpace(c) == false)
                     {
-                        text += c.Trim() + ", ";
+                        text += c.Trim() + ", \r\n";
                     }
                 }
                 text = text.TrimEnd();
@@ -132,6 +132,18 @@ namespace HomeCinema
                 // TextBox
                 long logsize = (long)Convert.ToDouble(txtLogSize.Text);
                 GlobalVars.SET_LOGMAXSIZE = logsize * GlobalVars.BYTES;
+
+                // Write MediaLoc file
+                string toWrite = "";
+                foreach (string c in txtMediaLoc.Text.Split(','))
+                {
+                    toWrite += c.Trim();
+                    toWrite += ',';
+                }
+                toWrite = toWrite.TrimEnd(',');
+                GlobalVars.WriteToFile(GlobalVars.FILE_MEDIALOC, toWrite);
+                toWrite = "";
+
                 // Show Message
                 GlobalVars.ShowInfo("Done saving Settings!");
 

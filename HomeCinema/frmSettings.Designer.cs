@@ -39,16 +39,16 @@
             this.cbAutoUpdate = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtMediaLoc = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtCountry = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtGenre = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtMediaExt = new System.Windows.Forms.TextBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
-            this.txtGenre = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.txtCountry = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.txtMediaLoc = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -76,10 +76,10 @@
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.cbAutoUpdate);
             this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Location = new System.Drawing.Point(4, 31);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(802, 402);
+            this.tabPage1.Size = new System.Drawing.Size(802, 396);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "General";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -180,6 +180,64 @@
             this.tabPage2.Text = "File";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // label8
+            // 
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(5, 241);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(182, 31);
+            this.label8.TabIndex = 15;
+            this.label8.Text = "Media Locations :";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // txtMediaLoc
+            // 
+            this.txtMediaLoc.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMediaLoc.Location = new System.Drawing.Point(193, 241);
+            this.txtMediaLoc.Multiline = true;
+            this.txtMediaLoc.Name = "txtMediaLoc";
+            this.txtMediaLoc.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtMediaLoc.Size = new System.Drawing.Size(601, 78);
+            this.txtMediaLoc.TabIndex = 14;
+            // 
+            // label7
+            // 
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(501, 15);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(116, 31);
+            this.label7.TabIndex = 13;
+            this.label7.Text = "Country :";
+            // 
+            // txtCountry
+            // 
+            this.txtCountry.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCountry.Location = new System.Drawing.Point(506, 49);
+            this.txtCountry.Multiline = true;
+            this.txtCountry.Name = "txtCountry";
+            this.txtCountry.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtCountry.Size = new System.Drawing.Size(293, 170);
+            this.txtCountry.TabIndex = 12;
+            // 
+            // label6
+            // 
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(217, 15);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(102, 31);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "Genre :";
+            // 
+            // txtGenre
+            // 
+            this.txtGenre.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtGenre.Location = new System.Drawing.Point(222, 49);
+            this.txtGenre.Multiline = true;
+            this.txtGenre.Name = "txtGenre";
+            this.txtGenre.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtGenre.Size = new System.Drawing.Size(264, 170);
+            this.txtGenre.TabIndex = 10;
+            // 
             // label5
             // 
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -218,64 +276,7 @@
             this.btnSave.TabIndex = 10;
             this.btnSave.Text = "SAVE";
             this.btnSave.UseVisualStyleBackColor = true;
-            // 
-            // label6
-            // 
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(217, 15);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(102, 31);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "Genre :";
-            // 
-            // txtGenre
-            // 
-            this.txtGenre.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtGenre.Location = new System.Drawing.Point(222, 49);
-            this.txtGenre.Multiline = true;
-            this.txtGenre.Name = "txtGenre";
-            this.txtGenre.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtGenre.Size = new System.Drawing.Size(264, 170);
-            this.txtGenre.TabIndex = 10;
-            // 
-            // label7
-            // 
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(501, 15);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(116, 31);
-            this.label7.TabIndex = 13;
-            this.label7.Text = "Country :";
-            // 
-            // txtCountry
-            // 
-            this.txtCountry.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCountry.Location = new System.Drawing.Point(506, 49);
-            this.txtCountry.Multiline = true;
-            this.txtCountry.Name = "txtCountry";
-            this.txtCountry.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtCountry.Size = new System.Drawing.Size(293, 170);
-            this.txtCountry.TabIndex = 12;
-            // 
-            // label8
-            // 
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(5, 241);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(182, 31);
-            this.label8.TabIndex = 15;
-            this.label8.Text = "Media Locations :";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // txtMediaLoc
-            // 
-            this.txtMediaLoc.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMediaLoc.Location = new System.Drawing.Point(193, 241);
-            this.txtMediaLoc.Multiline = true;
-            this.txtMediaLoc.Name = "txtMediaLoc";
-            this.txtMediaLoc.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtMediaLoc.Size = new System.Drawing.Size(601, 133);
-            this.txtMediaLoc.TabIndex = 14;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // frmSettings
             // 
