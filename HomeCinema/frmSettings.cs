@@ -52,7 +52,7 @@ namespace HomeCinema
                 // TextBox
                 txtLogSize.Text = (GlobalVars.SET_LOGMAXSIZE / GlobalVars.BYTES).ToString();
 
-                // ##################### - FILE
+                // ##################### - FILE changes
                 string text = "";
                 // Country Texts
                 text = "";
