@@ -1003,7 +1003,8 @@ namespace HomeCinema
             GlobalVars.CheckForUpdate();
 
             // Delete previous log file, if exceeds file size limit
-            GlobalVars.CheckLogFile(GlobalVars.FILE_APPLOG, "frmMain-frmMain", Text + "\n  : Start of LogFile");
+            GlobalVars.CheckLogFile(GlobalVars.FILE_APPLOG, "frmMain-(Delete AppLog)", Text + "\n  : Start of LogFile");
+            GlobalVars.CheckLogFile(GlobalVars.DB_DBLOGPATH, "frmMain-(Delete Database dblog)", Text + "\n  : App Database Log is deleted!");
 
             // Put default Image on ImageList
             GlobalVars.MOVIE_IMGLIST.Images.Clear();
