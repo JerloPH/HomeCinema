@@ -911,6 +911,11 @@ namespace HomeCinema
                     listRes.Add(countVoid);
                     e.Result = listRes;
                 }
+                else
+                {
+                    // Failed to insert
+                    e.Result = null;
+                }
             }
             else
             {
