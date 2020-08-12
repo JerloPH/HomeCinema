@@ -1,5 +1,24 @@
 # HomeCinema - Project History:
 
+## v0.0.4.0 ***build 16 - (12 August 2020 PHT)***
+### Settings UI and Improvements
+
+Build from latest commit: 0b2987a
+
+**[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.4.0/HomeCinema-Windows_v0.0.4.0.zip "HomeCinema-Windows_v0.0.4.0.zip")**
+	
+**What's New?**
+- REV: Settings UI. Press **Control + S** to Open Settings UI.
+- FT: Update *country* and *media_location* files on Settings' changes.
+- MINOR: Faster searching for files already existing in DB.
+- FIX: When Genre: Animation, is selected, it also shows non-Animation.
+- FIX: Infinite loop on *Please wait form*.
+- CHANGE: category filters now show all Movies, *Eg. Show Anime and Animation Movies on selecting "Movie" filter.*
+- GUI: Sorting Button -> ComboBox.
+- GUI changes.
+- Various improvements and optimizations, and code cleanup.
+****
+
 ## v0.0.3.3 ***build 15 - (27 July 2020 PHT)***
 ### Performance Improvement
 

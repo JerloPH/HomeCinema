@@ -1,13 +1,13 @@
 # HomeCinema
 
-<img src="/data/screenshot_v0.0.2.1.png"></img>
+<img src="/data/screenshot_v0.0.4.0.png"></img>
 
-**version:**	0.0.3.3 <br>
-**build:**		15
+**version:**	0.0.4.0 <br>
+**build:**		16
 
 ## Downloads
 
-**Windows 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.3.3/HomeCinema-Windows_v0.0.3.3.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
+**Windows 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.4.0/HomeCinema-Windows_v0.0.4.0.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
 
 ## Requirements
 
@@ -36,17 +36,16 @@ Ease the pain of browsing through many folders and finding out which movie is wh
 - Allows filter and search.
 - Edit and Save information within the app.
 
-## Edit MediaLocation
+## How to Add Media Locations?
 
-To add multiple directories where the app looks for media files, follow this steps: <br>
-
-1. Go to the location of HomeCinema.exe
-2. On the **"\data"** folder, Open **medialocation.hc-data** using any Text Editor.
-3. Paste the directory you want to add. Example: **D:\Movies**.
-  - NOTE: To add multiple directory, seperate each entry by a "**,**" (comma)
-  - NOTE: **DO NOT USE LINE BREAK, ENTER, or TABS as it will cause bugs / directory won't be recognized**
-
-**Example**: ***D:\Movies,D:\Anime,D:\Shows***
+1. Press **Control + S** to Open Settings UI.
+2. Go to **File** Tab.
+3. Under **Media Locations**, enter the full directory of folders *containing your media files*.
+  - Note: Make sure each entry is seperated by a *comma* (**,**).
+  - **Example**: ***D:\Movies,D:\Anime,D:\Shows***
+  - **IMPORTANT NOTE: First-time loading of App takes a little bit long. Even more if you have a huge collection of media files.**
+  
+<img src="/data/guide_add_media_paths.png"></img>
 
 ****
 
