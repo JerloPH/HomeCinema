@@ -3,16 +3,16 @@
 ## Features:
 - General
   - [ ] Update GUI
-  - [ ] Ctrl + S to OPEN Settings form
+  - [x] Ctrl + S to OPEN Settings form
   - [ ] Menu Strip (Preferences Button)
     - [ ] File
 	  - [ ] Version Log
 	  - [ ] Exit
 	- [ ] Settings
-	  - [ ] Auto-check update option
-	  - [ ] Play Movie, instead of Viewing information option
-	  - [ ] Log File Size limit
-	  - [ ] Edit MediaLocation, Country, Genre, Media Extensions
+	  - [x] Auto-check update option
+	  - [x] Play Movie, instead of Viewing information option
+	  - [x] Log File Size limit
+	  - [x] Edit MediaLocation, Country, Genre, Media Extensions
 	  - [ ] Change Color of ListView. Back/Fore.
 	- [ ] Help
 	  - [ ] How to Use?
@@ -38,6 +38,6 @@
 	
   - [ ] ~~Switch webBrowser to Cefsharp Browser.~~ **Cancelled**
   
-  - [ ] Automatically get information from IMDB when newly added media (IMDB Scraper). **On-HOLD** *Might not be done*
+  - [ ] Automatically get information from IMDB when newly added media (IMDB Scraper). **On-HOLD**. *Might not be done*
 
 ## Bugs

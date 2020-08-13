@@ -41,9 +41,9 @@ Ease the pain of browsing through many folders and finding out which movie is wh
 1. Press **Control + S** to Open Settings UI.
 2. Go to **File** Tab.
 3. Under **Media Locations**, enter the full directory of folders *containing your media files*.
-  - Note: Make sure each entry is seperated by a *comma* (**,**).
-  - **Example**: ***D:\Movies,D:\Anime,D:\Shows***
-  - **IMPORTANT NOTE: First-time loading of App takes a little bit long. Even more if you have a huge collection of media files.**
+  - Note: Make sure each entry is seperated by a *comma* ( **,** ).
+  - Example: **D:\Movies,D:\Anime,D:\Shows**
+  - **IMPORTANT NOTE:** First-time loading of App takes a little bit long while to finish. Even more if you have a huge collection of media files.
   
 <img src="/data/guide_add_media_paths.png"></img>
 
