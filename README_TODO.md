@@ -38,6 +38,12 @@
 	
   - [ ] ~~Switch webBrowser to Cefsharp Browser.~~ **Cancelled**
   
-  - [ ] Automatically get information from IMDB when newly added media (IMDB Scraper). **On-HOLD**. *Might not be done*
+  - [ ] Automatically get information from IMDB when newly added media (IMDB Scraper). **Ongoing**.
+    - Done:
+	  - IMDB Id
+	  - Year, Title
+	  - Summary
+	  - Genre
+	  - Trailer YT Link
 
 ## Bugs

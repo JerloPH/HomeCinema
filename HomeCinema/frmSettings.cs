@@ -35,6 +35,7 @@ namespace HomeCinema
         // ############################################################################################### EVENTS
         private void frmSettings_Load(object sender, EventArgs e)
         {
+            string errFrom = "frmSettings-frmSettings_Load";
             // setup contents
             string[] choice = { "True", "False" };
             cbAutoUpdate.Items.AddRange(choice);
@@ -56,7 +57,7 @@ namespace HomeCinema
                 string text = "";
                 // Country Texts
                 text = "";
-                foreach (string c in GlobalVars.BuildArrFromFile(GlobalVars.FILE_COUNTRY, "frmSettings-frmSettings_Load[FILE_COUNTRY]"))
+                foreach (string c in GlobalVars.BuildArrFromFile(GlobalVars.FILE_COUNTRY, $"{errFrom}[FILE_COUNTRY]"))
                 {
                     if ((String.IsNullOrWhiteSpace(c) == false) && c != "All")
                     {
@@ -68,7 +69,7 @@ namespace HomeCinema
                 txtCountry.Text = text;
                 // Genre Texts
                 text = "";
-                foreach (string c in GlobalVars.BuildArrFromFile(GlobalVars.FILE_GENRE, "frmSettings-frmSettings_Load[FILE_GENRE]"))
+                foreach (string c in GlobalVars.BuildArrFromFile(GlobalVars.FILE_GENRE, $"{errFrom}[FILE_GENRE]"))
                 {
                     if ((String.IsNullOrWhiteSpace(c) == false) && c != "All")
                     {
@@ -80,7 +81,7 @@ namespace HomeCinema
                 txtGenre.Text = text;
                 // Media File Format / File Extensions Texts
                 text = "";
-                foreach (string c in GlobalVars.BuildArrFromFile(GlobalVars.FILE_MEDIA_EXT, "frmSettings-frmSettings_Load[FILE_MEDIA_EXT]"))
+                foreach (string c in GlobalVars.BuildArrFromFile(GlobalVars.FILE_MEDIA_EXT, $"{errFrom}[FILE_MEDIA_EXT]"))
                 {
                     if (String.IsNullOrWhiteSpace(c) == false)
                     {
@@ -92,7 +93,7 @@ namespace HomeCinema
                 txtMediaExt.Text = text;
                 // Media LOCATIONS Folders Texts
                 text = "";
-                foreach (string c in GlobalVars.BuildArrFromFile(GlobalVars.FILE_MEDIALOC, "frmSettings-frmSettings_Load[FILE_MEDIALOC]"))
+                foreach (string c in GlobalVars.BuildArrFromFile(GlobalVars.FILE_MEDIALOC, $"{errFrom}[FILE_MEDIALOC]"))
                 {
                     if (String.IsNullOrWhiteSpace(c) == false)
                     {
@@ -106,7 +107,7 @@ namespace HomeCinema
             } catch (Exception ex)
             {
                 // Log Error
-                GlobalVars.ShowError("frmSettings-frmSettings_Load", ex, false);
+                GlobalVars.ShowError(errFrom, ex, false);
             }
         }
         private void frmSettings_FormClosing(object sender, FormClosingEventArgs e)
