@@ -28,6 +28,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace HomeCinema
 {
@@ -203,30 +204,98 @@ namespace HomeCinema
             DataTable dt = DBCON.InitializeDT(false, combined);
             foreach (string filePath in listofFiles)
             {
+                // variables
+                string getIMDB = "";
+
+                string mName = GlobalVars.TrimMovieName(filePath);
+
+                // Remove year from file name
+                string regExPattern = "^(?:.*_)?([0-9]{4})([0-9]{2})([0-9]{2})(?:\\..*)?$";
+                string yearFromFname = "";
+                try
+                {
+                    yearFromFname = Regex.Match(mName, @regExPattern).Groups[1].Value;
+                    if (String.IsNullOrWhiteSpace(yearFromFname) == false)
+                    {
+                        mName = mName.Replace(yearFromFname, "");
+                    }
+
+                } catch (Exception ex)
+                {
+                    //LogError
+                    GlobalVars.ShowError(errFrom, ex, false);
+                }
+
+                string rJson = "";
+                string rTrailer = "";
+                string rTitle = "";
+                string rOrigTitle = "";
+                string rSummary = "";
+                string rYear = "";
+
+                string rGenre = "";
+
+                // Scrape from TMDB, for info and details
+                if (GlobalVars.SET_OFFLINE == false)
+                {
+                    // Get imdb id and set it to textbox
+                    getIMDB = GlobalVars.GetIMDBId(mName, "dummy", errFrom);
+                    if (String.IsNullOrWhiteSpace(getIMDB) == false)
+                    {
+                        // Get List of values from TMDB
+                        List<string> list = GlobalVars.GetMovieInfoByImdb(getIMDB);
+                        rJson = list[0];
+                        rTrailer = list[1];
+                        rTitle = list[2];
+                        rOrigTitle = list[3];
+                        rSummary = list[4];
+                        rYear = list[5].Substring(0, 4);
+
+                        // Get Genres
+                        foreach (string s in GlobalVars.GetGenresByJsonFile(rJson, errFrom))
+                        {
+                            rGenre += s.Trim() + ",";
+                        }
+                        rGenre = rGenre.TrimEnd(',');
+                    }
+                }
+
+                // If cannot get info online, make use of defaults
+                if (String.IsNullOrWhiteSpace(rTitle))
+                {
+                    rTitle = mName;
+                }
+                if (String.IsNullOrWhiteSpace(rYear))
+                {
+                    rYear = yearFromFname;
+                }
+
+                // Make the DataRow
                 DataRow row = dt.NewRow();
-                row[0] = "0"; // IMDB
-                row[1] = Path.GetFileNameWithoutExtension(filePath).Replace('_', ' ').Replace('.', ' '); // name
-                row[2] = ""; // episode name
+                row[0] = getIMDB; // IMDB
+                row[1] = rTitle; // name
+                row[2] = rOrigTitle; // episode name
                 row[3] = ""; // series name
                 row[4] = ""; // season number
                 row[5] = ""; // episode num
                 row[6] = ""; // country
                 row[7] = "0"; // category
-                row[8] = ""; // genre
+                row[8] = rGenre; // genre
                 row[9] = ""; // studio
                 row[10] = ""; // producer
                 row[11] = ""; // director
                 row[12] = ""; // artist
-                row[13] = "0"; // year
-                row[14] = ""; // summary
+                row[13] = rYear; // year
+                row[14] = rSummary; // summary
                 row[15] = filePath; // filepath
                 row[16] = GetSubtitleFile(filePath); // file sub
-                row[17] = ""; // trailer
+                row[17] = GlobalVars.LINK_YT + rTrailer; // trailer
                 dt.Rows.Add(row);
             }
             dt.AcceptChanges();
 
-            if (DBCON.DbInsertMovie(dt, callFrom) > 0)
+            int insertResult = DBCON.DbInsertMovie(dt, callFrom);
+            if (insertResult > 0)
             {
                 return true;
             }
