@@ -340,8 +340,8 @@ namespace HomeCinema
                     picBox.Tag = selectedFilename;
                     picBox.Refresh();
                     GlobalVars.ShowInfo("Changed the image cover!");
-                }
-                catch (Exception exc)
+
+                } catch (Exception exc)
                 {
                     GlobalVars.ShowError(errFrom, exc);
                 }
@@ -362,14 +362,15 @@ namespace HomeCinema
                     return;
                 }
             }
-            // Delete previous Image
+            // Remove previous Image from memory
             DisposeImages();
 
             // Copy new file to App Path
             string sourceFile = selectedFilename;
             string destFile = GlobalVars.ImgFullPath(MOVIE_ID);
 
-            GlobalVars.TryDelete(destFile, ExceptionFrom + " [TryDelete error]");
+            // Delete previous image file from disk
+            GlobalVars.TryDelete(destFile, ExceptionFrom + $" [Delete Error, FILE: {destFile}]");
 
             // Copy selected File to Application Path 'covers'
             try
@@ -381,8 +382,8 @@ namespace HomeCinema
                 GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(destFile), imgFromFile);
                 imgFromFile.Dispose();
                 GlobalVars.Log(ExceptionFrom + " [NEW Image File and Name]", sourceFile);
-            }
-            catch (Exception fex)
+
+            } catch (Exception fex)
             {
                 GlobalVars.ShowError(ExceptionFrom, fex);
             }
@@ -646,7 +647,7 @@ namespace HomeCinema
             }
 
             // Get List of values from TMDB
-            List<string> list = GlobalVars.GetMovieInfoByImdb(IMDB_ID);
+            List<string> list = GlobalVars.GetMovieInfoByImdb(IMDB_ID, errFrom);
 
             // Set the values to textboxes
             string YT_ID = list[1];
@@ -696,9 +697,15 @@ namespace HomeCinema
                     string moviePosterDL = GlobalVars.PATH_TEMP + MOVIE_ID + ".jpg";
                     while (File.Exists(moviePosterDL) == false)
                     {
-                        GlobalVars.DownloadFrom("https://image.tmdb.org/t/p/original/" + linkPoster, moviePosterDL);
+                        if (GlobalVars.DownloadFrom("https://image.tmdb.org/t/p/original/" + linkPoster, moviePosterDL) == 404)
+                        {
+                            break;
+                        }
                     }
-                    LoadImageFromFile(moviePosterDL, errFrom);
+                    if (File.Exists(moviePosterDL))
+                    {
+                        LoadImageFromFile(moviePosterDL, errFrom);
+                    }
                 }
             }
 

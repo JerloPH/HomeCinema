@@ -158,8 +158,7 @@ namespace HomeCinema
                 // Show Message
                 GlobalVars.ShowInfo("Done saving Settings!");
 
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
                 // Log Error
                 GlobalVars.ShowError("frmSettings-btnSave_Click", ex, false);

@@ -238,7 +238,7 @@ namespace HomeCinema
                     //LogError
                     GlobalVars.ShowError(errFrom, ex, false);
                 }
-                GlobalVars.ShowWarning("YEAR: [" + yearFromFname + "]\n" + mName);
+                //GlobalVars.ShowWarning("YEAR: [" + yearFromFname + "]\n" + mName);
 
                 string rJson = "";
                 string rTrailer = "";
@@ -257,7 +257,7 @@ namespace HomeCinema
                     if (String.IsNullOrWhiteSpace(getIMDB) == false)
                     {
                         // Get List of values from TMDB
-                        List<string> list = GlobalVars.GetMovieInfoByImdb(getIMDB);
+                        List<string> list = GlobalVars.GetMovieInfoByImdb(getIMDB, errFrom);
                         rJson = list[0];
                         rTrailer = list[1];
                         rTitle = list[2];
@@ -482,8 +482,7 @@ namespace HomeCinema
                 {
                     bgSearchInDB.RunWorkerAsync();
 
-                }
-                catch (Exception ex)
+                }  catch (Exception ex)
                 {
                     // Show error
                     GlobalVars.ShowError($"frmMain-getAllMediaFiles", ex);
@@ -778,8 +777,8 @@ namespace HomeCinema
                     try
                     {
                         MOVIEID = Convert.ToInt32(r[0]);
-                    }
-                    catch (Exception exint)
+
+                    }  catch (Exception exint)
                     {
                         // Error Log
                         MOVIEID = 0;
@@ -796,8 +795,7 @@ namespace HomeCinema
                             Image imgFromFile = Image.FromFile(Imagefile);
                             GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imgFromFile);
 
-                        }
-                        catch (Exception exImg)
+                        } catch (Exception exImg)
                         {
                             // Error Log
                             GlobalVars.ShowError($"{errFrom}\n\tFile:\n\t{Imagefile}", exImg, false);
@@ -869,7 +867,7 @@ namespace HomeCinema
                 } catch (Exception ex)
                 {
                     // Log Error
-                    GlobalVars.ShowError("frmMain-bgwMovie_DoneSearchMovie", ex, false);
+                    GlobalVars.ShowError(errFrom, ex, false);
                 }
             }
 
@@ -1092,7 +1090,7 @@ namespace HomeCinema
             GlobalVars.CheckForUpdate();
 
             // Delete previous log file, if exceeds file size limit
-            GlobalVars.CheckLogFile(GlobalVars.FILE_APPLOG, "frmMain-(Delete AppLog)", Text + "\n  : Start of LogFile");
+            GlobalVars.CheckLogFile(GlobalVars.FILE_LOG_APP, "frmMain-(Delete AppLog)", Text + "\n  : Start of LogFile");
             GlobalVars.CheckLogFile(GlobalVars.DB_DBLOGPATH, "frmMain-(Delete Database dblog)", Text + "\n  : App Database Log is deleted!");
 
             // Put default Image on ImageList
@@ -1379,8 +1377,7 @@ namespace HomeCinema
             {
                 SortItemsInListView(cbSort.SelectedIndex);
 
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
                 // Log Error
                 SortItemsInListView(0);
