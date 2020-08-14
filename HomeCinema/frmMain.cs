@@ -206,18 +206,30 @@ namespace HomeCinema
             {
                 // variables
                 string getIMDB = "";
+                string mName = "";
+                // Get proper name, without the folder paths
+                try
+                {
+                    mName = Path.GetFileNameWithoutExtension(filePath);
 
-                string mName = GlobalVars.TrimMovieName(filePath);
+                } catch (Exception ex)
+                {
+                    // Log Error
+                    GlobalVars.ShowError(callFrom, ex, false);
+                }
 
-                // Remove year from file name
-                string regExPattern = "^(?:.*_)?([0-9]{4})([0-9]{2})([0-9]{2})(?:\\..*)?$";
+                // Trim Movie Name
+                mName = GlobalVars.TrimMovieName(mName);
+
+                // Remove "year" and "other strings" from movie file name
+                string regExPattern = @"\b\d{4}\b"; // Match 4-digit number in the title
                 string yearFromFname = "";
                 try
                 {
-                    yearFromFname = Regex.Match(mName, @regExPattern).Groups[1].Value;
+                    yearFromFname = Regex.Match(mName, @regExPattern).Groups[0].Value;
                     if (String.IsNullOrWhiteSpace(yearFromFname) == false)
                     {
-                        mName = mName.Replace(yearFromFname, "");
+                        mName = mName.Substring(0, mName.IndexOf(yearFromFname));
                     }
 
                 } catch (Exception ex)
@@ -225,6 +237,7 @@ namespace HomeCinema
                     //LogError
                     GlobalVars.ShowError(errFrom, ex, false);
                 }
+                GlobalVars.ShowWarning("YEAR: [" + yearFromFname + "]\n" + mName);
 
                 string rJson = "";
                 string rTrailer = "";
