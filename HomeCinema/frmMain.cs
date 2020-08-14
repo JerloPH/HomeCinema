@@ -411,6 +411,7 @@ namespace HomeCinema
             if (string.IsNullOrWhiteSpace(txtSearch.Text))
             {
                 txtSearch.Text = GlobalVars.SEARCHBOX_PLACEHOLDER;
+                txtSearch.ForeColor = Color.White;
             }
         }
         public void SearchBoxPlaceholderClear(object sender, EventArgs e)
@@ -418,6 +419,7 @@ namespace HomeCinema
             if (txtSearch.Text == GlobalVars.SEARCHBOX_PLACEHOLDER)
             {
                 txtSearch.Text = "";
+                txtSearch.ForeColor = Color.Black;
             }
         }
         // Update ListView lvSearchResult Item
@@ -1288,6 +1290,7 @@ namespace HomeCinema
         private void btnClear_Click(object sender, EventArgs e)
         {
             // Clear searchbox and Filter
+            txtSearch.ForeColor = Color.White;
             txtSearch.Text = GlobalVars.SEARCHBOX_PLACEHOLDER;
             txtIMDB.Text = "";
             txtStudio.Text = "";
