@@ -1,13 +1,13 @@
 # HomeCinema
 
-<img src="/data/screenshot_v0.0.4.0.png"></img>
+<img src="/data/screenshot_v0.0.5.0.png"></img>
 
-**version:**	0.0.4.0 <br>
-**build:**		16
+**version:**	0.0.5.0 <br>
+**build:**		17
 
 ## Downloads
 
-**Windows 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.4.0/HomeCinema-Windows_v0.0.4.0.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
+**Windows 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.5.0/HomeCinema-Windows_v0.0.5.0.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
 
 ## Requirements
 
@@ -28,7 +28,7 @@ Ease the pain of browsing through many folders and finding out which movie is wh
 	
 ## List of features:
 	
-- Automatically add all supported media files from designated folders.
+- Automatically scan and add all supported media files from designated folders.
 - Automatically fetch movie information from [The Movie Database](https://www.themoviedb.org/). *Requires Internet Connection.*
 - Directly open the media file, using your default player.
 - Allows easy browsing of media files on your Computer / Local drive.

@@ -1,5 +1,23 @@
 # HomeCinema - Project History:
 
+## v0.0.5.0 ***build 17 - (14 August 2020 PHT)***
+### Automatic Data Fetching
+
+Build from latest commit: 203de9d
+
+**[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.5.0/HomeCinema-Windows_v0.0.5.0.zip "HomeCinema-Windows_v0.0.5.0.zip")**
+	
+**What's New?**
+- REV: Automatically fetch movie details, when the automatic media scan adds a new *Movie Item*.
+- REV: Improved how *Cover Image* is loaded when fetching data from [**The Movie Database**](https://www.themoviedb.org/).
+- REV: Heavy Improvements to Code.
+- MINOR: Delete Logfile for DataBase when file reached **Max Log File Size** in **Settings**.
+- MINOR: Make Most MessageBox *Top Most / Appear In front of other Forms*.
+- MINOR: Use a proper *Movie Title* from meda filename, when fetching from [**TMDB**](https://www.themoviedb.org/) is unavailable.
+- GUI: Changed Text and Background Color for Controls in Main Form.
+- Various Code cleanup, and error-logging improvements.
+****
+
 ## v0.0.4.0 ***build 16 - (12 August 2020 PHT)***
 ### Settings UI and Improvements
 
