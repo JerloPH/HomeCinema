@@ -527,6 +527,7 @@ namespace HomeCinema
         // Check Settings and Load values to App
         private void LoadSettings()
         {
+            string errorFrom = "frmMain-LoadSettings";
             // If file does not exist, create it with default values from [Config.cs]
             if (File.Exists(GlobalVars.FILE_SETTINGS) == false)
             {
@@ -535,7 +536,7 @@ namespace HomeCinema
                 GlobalVars.WriteToFile(GlobalVars.FILE_SETTINGS, json);
             }
             // Load file contents to Config
-            string contents = GlobalVars.ReadStringFromFile(GlobalVars.FILE_SETTINGS, "frmMain-LoadSettings");
+            string contents = GlobalVars.ReadStringFromFile(GlobalVars.FILE_SETTINGS, $"{errorFrom} [FILE_SETTINGS]");
             Config config = JsonConvert.DeserializeObject<Config>(contents);
 
             // Get Max log file size
@@ -546,11 +547,36 @@ namespace HomeCinema
             {
                 GlobalVars.PATH_GETCOVER = stringVal;
             }
+            else
+            {
+                try
+                {
+                    GlobalVars.PATH_GETCOVER = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+
+                }
+                catch (Exception ex)
+                {
+                    // Log Error
+                    GlobalVars.ShowError($"{errorFrom} [PATH_GETCOVER]", ex, false);
+                }
+            }
             // Get last path of media file when adding new one
             string strGetVideo = config.lastPathVideo;
             if (String.IsNullOrWhiteSpace(strGetVideo) == false)
             {
                 GlobalVars.PATH_GETVIDEO = strGetVideo;
+            }
+            else
+            {
+                try
+                {
+                    GlobalVars.PATH_GETVIDEO = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
+
+                } catch (Exception ex)
+                {
+                    // Log Error
+                    GlobalVars.ShowError($"{errorFrom} [PATH_GETVIDEO]", ex, false);
+                }
             }
             // Get Offline Mode
             GlobalVars.SET_OFFLINE = Convert.ToBoolean(config.offlineMode);
