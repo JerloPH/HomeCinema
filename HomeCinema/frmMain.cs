@@ -226,7 +226,8 @@ namespace HomeCinema
                 string yearFromFname = "";
                 try
                 {
-                    yearFromFname = Regex.Match(mName, @regExPattern).Groups[0].Value;
+                    Match r = Regex.Match(mName, @regExPattern);
+                    yearFromFname = r.Groups[r.Groups.Count - 1].Value;
                     if (String.IsNullOrWhiteSpace(yearFromFname) == false)
                     {
                         mName = mName.Substring(0, mName.IndexOf(yearFromFname));
