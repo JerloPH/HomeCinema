@@ -694,7 +694,7 @@ namespace HomeCinema
                 if (String.IsNullOrWhiteSpace(linkPoster) == false)
                 {
                     string moviePosterDL = GlobalVars.PATH_TEMP + MOVIE_ID + ".jpg";
-                    if (File.Exists(moviePosterDL) == false)
+                    while (File.Exists(moviePosterDL) == false)
                     {
                         GlobalVars.DownloadFrom("https://image.tmdb.org/t/p/original/" + linkPoster, moviePosterDL);
                     }
