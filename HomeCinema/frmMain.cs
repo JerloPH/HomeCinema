@@ -269,6 +269,12 @@ namespace HomeCinema
                 {
                     rYear = yearFromFname;
                 }
+                
+                // If Original title is the same as the main title, ignore it
+                if (rOrigTitle == rTitle)
+                {
+                    rOrigTitle = "";
+                }
 
                 // Make the DataRow
                 DataRow row = dt.NewRow();
