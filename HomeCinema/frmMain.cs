@@ -72,7 +72,7 @@ namespace HomeCinema
             Icon = GlobalVars.HOMECINEMA_ICON;
 
             // Change Caption and Title
-            Text = $"{GlobalVars.HOMECINEMA_NAME} - Media Organizer (v {GlobalVars.HOMECINEMA_VERSION} r{GlobalVars.HOMECINEMA_BUILD.ToString()})";
+            Text = $"{GlobalVars.HOMECINEMA_NAME} - Media Organizer (v{GlobalVars.HOMECINEMA_VERSION} r{GlobalVars.HOMECINEMA_BUILD.ToString()})";
 
             // Load App Settings
             LoadSettings();
