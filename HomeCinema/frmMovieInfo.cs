@@ -693,16 +693,15 @@ namespace HomeCinema
                 if (String.IsNullOrWhiteSpace(linkPoster) == false)
                 {
                     string moviePosterDL = GlobalVars.PATH_TEMP + MOVIE_ID + ".jpg";
-                    while (File.Exists(moviePosterDL) == false)
-                    {
-                        if (GlobalVars.DownloadFrom("https://image.tmdb.org/t/p/original/" + linkPoster, moviePosterDL) == 404)
-                        {
-                            break;
-                        }
-                    }
+                    GlobalVars.DownloadLoop(moviePosterDL, "https://image.tmdb.org/t/p/original/" + linkPoster, errFrom, false);
                     if (File.Exists(moviePosterDL))
                     {
                         LoadImageFromFile(moviePosterDL, errFrom);
+                    }
+                    else
+                    {
+                        // Show a Warning
+                        GlobalVars.ShowWarning("Image file cannot be downloaded at the moment!\n Try again later...");
                     }
                 }
             }
