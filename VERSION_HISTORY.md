@@ -1,5 +1,17 @@
 # HomeCinema - Project History:
 
+## v0.0.5.1 ***build 18 - (15 August 2020 PHT)***
+### Quick Fixes
+
+Build from latest commit: 8c57be2
+
+**[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.5.1/HomeCinema-Windows_v0.0.5.1.zip "HomeCinema-Windows_v0.0.5.1.zip")**
+	
+**What's New?**
+- FIX: Hangs on Fetching data when there is no Internet Connection.
+- FIX: Try to fix Image Cover sometimes not loading.
+****
+
 ## v0.0.5.0 ***build 17 - (14 August 2020 PHT)***
 ### Automatic Data Fetching
 
