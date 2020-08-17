@@ -49,7 +49,7 @@ namespace HomeCinema
         BackgroundWorker bgWorkInsertMovie = new BackgroundWorker();
         BackgroundWorker bgSearchInDB = new BackgroundWorker();
 
-        ToolStripItem toolMenuView, toolMenuEdit;
+        ToolStripItem toolMenuView, toolMenuEdit, toolMenuFileExplorer;
 
         public frmMain()
         {
@@ -125,6 +125,7 @@ namespace HomeCinema
             // Populate Context Menu for ListView item Rightclick
             toolMenuView = cmLV.Items.Add("&View Details"); // View Movie Info
             toolMenuEdit = cmLV.Items.Add("&Edit Information"); // Edit Movie Info
+            toolMenuFileExplorer = cmLV.Items.Add("&Find File in Explorer"); // Open File in Explorer
             cmLV.ItemClicked += new ToolStripItemClickedEventHandler(cmLV_ItemCLicked);
 
             // Populate combobox cbCategory
@@ -321,6 +322,22 @@ namespace HomeCinema
             }
             return false;
         }
+        // return filepath from DB
+        private string GetFilePath(string ID, string calledFrom)
+        {
+            string ret = "";
+            string errFrom = $"frmMain-GetFilePath [calledFrom: {calledFrom}]";
+            string qry = $"SELECT [Id],[file] FROM { GlobalVars.DB_TNAME_FILEPATH } WHERE [Id]={ ID } LIMIT 1";
+            DataTable dtFile = DBCON.DbQuery(qry, "[Id],[file]", errFrom);
+            foreach (DataRow r in dtFile.Rows)
+            {
+                ret = r[GlobalVars.DB_TABLE_FILEPATH[1]].ToString();
+                break;
+            }
+            dtFile.Clear();
+            dtFile.Dispose();
+            return ret;
+        }
         // ############################################################################## Functions
         // Play Movie or Open Movie Details
         public void OpenFormPlayMovie()
@@ -340,16 +357,7 @@ namespace HomeCinema
                 // Just play the media
                 if (GlobalVars.SET_AUTOPLAY)
                 {
-                    string qry = $"SELECT [Id],[file] FROM { GlobalVars.DB_TNAME_FILEPATH } WHERE [Id]={ ID }";
-                    DataTable dtFile = DBCON.DbQuery(qry, "[Id],[file]", "frmMain-OpenNewFormMovie");
-                    foreach (DataRow r in dtFile.Rows)
-                    {
-                        string filePath = r[GlobalVars.DB_TABLE_FILEPATH[1]].ToString();
-                        GlobalVars.PlayMedia(filePath);
-                        break;
-                    }
-                    dtFile.Clear();
-                    dtFile.Dispose();
+                    GlobalVars.PlayMedia(GetFilePath(ID, "frmMain-OpenNewFormMovie"));
                     return;
                 }
                 else
@@ -1094,19 +1102,28 @@ namespace HomeCinema
         // Rightclicked on ListView Item event
         void cmLV_ItemCLicked(object sender, ToolStripItemClickedEventArgs e)
         {
+            string errFrom = "frmMain - cmLV_ItemCLicked";
             ToolStripItem item = e.ClickedItem;
             // check which item is clicked
             if (item == toolMenuView)
             {
                 // Open Movie Details form
                 OpenNewFormMovie();
-            } else if (item == toolMenuEdit)
+            }
+            else if (item == toolMenuEdit)
             {
                 // Create form for editing Movie information
                 string MOVIE_ID = lvSearchResult.SelectedItems[0].Tag.ToString();
                 string MOVIE_NAME = lvSearchResult.SelectedItems[0].Text.ToString();
                 string childForm = GlobalVars.PREFIX_MOVIEINFO + MOVIE_ID;
-                GlobalVars.OpenFormMovieInfo(this, childForm, MOVIE_ID, MOVIE_NAME, "frmMain-cmLV_ItemCLicked", lvSearchResult.SelectedItems[0]);
+                GlobalVars.OpenFormMovieInfo(this, childForm, MOVIE_ID, MOVIE_NAME, $"{errFrom} [toolMenuEdit]", lvSearchResult.SelectedItems[0]);
+            }
+            else if (item == toolMenuFileExplorer)
+            {
+                // Open file in Explorer
+                string MOVIE_ID = lvSearchResult.SelectedItems[0].Tag.ToString();
+                string file = GetFilePath(MOVIE_ID, $"{errFrom} [toolMenuFileExplorer]");
+                GlobalVars.FileOpeninExplorer(file, $"{errFrom} [toolMenuFileExplorer]");
             }
         }
         // ############################################################################## Form Control events
