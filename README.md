@@ -85,8 +85,8 @@ Ease the pain of browsing through many folders and finding out which movie is wh
 <details>
 	<summary> <b>View Snippet</b> </summary>
 	
-    ** HomeCinema - Organize your Movie Collection **
-    Copyright (C) 2020  JerloPH (https://github.com/JerloPH)
+    ** <b>HomeCinema - Organize your Movie Collection</b> **
+    <b>Copyright (C) 2020  JerloPH (https://github.com/JerloPH)</b>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
