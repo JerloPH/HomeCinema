@@ -9,6 +9,10 @@
 
 **Windows 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.5.1/HomeCinema-Windows_v0.0.5.1.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
 
+**Download Counts** <br>
+[![**Current Version**](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.5.1/total.svg)]() <br>
+[![**Overall**](https://img.shields.io/github/downloads/JerloPH/HomeCinema/total.svg)]()
+
 ## Requirements
 
 - 2GB or more RAM. <br>
