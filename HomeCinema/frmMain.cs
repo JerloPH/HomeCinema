@@ -594,7 +594,7 @@ namespace HomeCinema
             GlobalVars.SET_AUTOPLAY = Convert.ToBoolean(config.instantPlayMovie);
         }
         // Save settings to replace old
-        private void SaveSettings()
+        private bool SaveSettings()
         {
             Config config = new Config();
             config.logsize = (int)(GlobalVars.SET_LOGMAXSIZE / GlobalVars.BYTES);
@@ -606,7 +606,7 @@ namespace HomeCinema
 
             // Seriliaze to JSON
             string json = JsonConvert.SerializeObject(config, Formatting.Indented);
-            GlobalVars.WriteToFile(GlobalVars.FILE_SETTINGS, json);
+            return GlobalVars.WriteToFile(GlobalVars.FILE_SETTINGS, json);
         }
         // Sort Items in lvSearchResult ListView
         private void SortItemsInListView(int toggle)
@@ -882,31 +882,6 @@ namespace HomeCinema
                 return;
             }
 
-            // Starting, opening of App?
-            if (Start)
-            {
-                // Perform click on Change View
-                btnChangeView.PerformClick();
-                // Toggle Start variable
-                Start = false;
-
-                //Record time end
-                try
-                {
-                    LoadingEnd = DateTime.Now.TimeOfDay;
-                    TimeSpan duration = LoadingEnd.Subtract(LoadingStart);
-                    double TimeMS = Convert.ToDouble(duration.TotalMilliseconds);
-                    double TimeSec = TimeMS / 1000;
-                    string TimeitTook = $"Took {TimeMS} milliseconds to load App!\n\tIn seconds : {TimeSec}\n\tIn minutes : {duration.ToString("g")}";
-                    GlobalVars.Log("frmMain", TimeitTook);
-
-                } catch (Exception ex)
-                {
-                    // Log Error
-                    GlobalVars.ShowError(errFrom, ex, false);
-                }
-            }
-
             // Get result as DataTable, and Dispose it
             if (e.Result is DataTable)
             {
@@ -931,6 +906,33 @@ namespace HomeCinema
 
             // Close loading and refresh Memory
             CloseLoading();
+
+            // Starting, opening of App?
+            if (Start)
+            {
+                // Perform click on Change View
+                btnChangeView.PerformClick();
+                // Toggle Start variable
+                Start = false;
+
+                //Record time end
+                try
+                {
+                    LoadingEnd = DateTime.Now.TimeOfDay;
+                    TimeSpan duration = LoadingEnd.Subtract(LoadingStart);
+                    double TimeMS = Convert.ToDouble(duration.TotalMilliseconds);
+                    double TimeSec = TimeMS / 1000;
+                    string TimeitTook = $"Took {TimeMS} milliseconds to load App!\n\tIn seconds : {TimeSec}\n\tIn minutes : {duration.ToString("g")}";
+                    string TimeStartEnd = $"\n\tTime Start: {LoadingStart.ToString()}\n\tTime End: {LoadingEnd.ToString()}";
+                    GlobalVars.Log("frmMain", TimeitTook + TimeStartEnd);
+
+                }
+                catch (Exception ex)
+                {
+                    // Log Error
+                    GlobalVars.ShowError(errFrom, ex, false);
+                }
+            }
         }
         // Search all Movie files in folder
         private void bgw_SearchFileinFolder(object sender, DoWorkEventArgs e)
@@ -1151,22 +1153,30 @@ namespace HomeCinema
         }
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            GlobalVars.Log("frmMain_FormClosing", "Exiting....");
+            string logClose = "Exit Log\n";
             // Save settings
-            SaveSettings();
+            if (SaveSettings())
+            {
+                logClose += $"\n\tSettings Saved! ({DateTime.Now.TimeOfDay.ToString()})";
+            }
             // Replace genre file
-            GlobalVars.WriteArray(GlobalVars.TEXT_GENRE, GlobalVars.FILE_GENRE);
+            if (GlobalVars.WriteArray(GlobalVars.TEXT_GENRE, GlobalVars.FILE_GENRE))
+            {
+                logClose += $"\n\tFILE_GENRE updated! ({DateTime.Now.TimeOfDay.ToString()})";
+            }
             // Replace country file
             string[] arrCountry = GlobalVars.BuildStringArrayFromCB(cbCountry);
-            GlobalVars.WriteArray(arrCountry, GlobalVars.FILE_COUNTRY);
-
+            if (GlobalVars.WriteArray(arrCountry, GlobalVars.FILE_COUNTRY))
+            {
+                logClose += $"\n\tFILE_COUNTRY updated! ({DateTime.Now.TimeOfDay.ToString()})";
+            }
             // Dispose All Resources
             if (formLoading != null)
             {
                 formLoading.Dispose();
             }
             // Clean each image 1 by 1
-            GlobalVars.Log("frmMain-frmMain_FormClosing", "Disposing MOVIE_IMGLIST");
+            //GlobalVars.Log("frmMain-frmMain_FormClosing", "Disposing MOVIE_IMGLIST");
             //foreach (Image img in GlobalVars.MOVIE_IMGLIST.Images)
             //{
             //    if (img != null)
@@ -1179,10 +1189,10 @@ namespace HomeCinema
                 GlobalVars.MOVIE_IMGLIST.Dispose();
             }
             // Run GC to clean
-            GlobalVars.CleanMemory("frmMain_FormClosing");
-
-            GlobalVars.Log("frmMain-frmMain_FormClosing", "Closed the program");
-            //MessageBox.Show("now exiting...");
+            GlobalVars.CleanMemory("");
+            logClose += $"\n\tDone Garbage Collector ({DateTime.Now.TimeOfDay.ToString()})";
+            logClose += "\n\tClosed the program.";
+            GlobalVars.Log("frmMain-frmMain_FormClosing", logClose);
             Dispose();
         }
         
