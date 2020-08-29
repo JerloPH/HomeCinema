@@ -322,7 +322,7 @@ namespace HomeCinema
             return null;
         }
         // Load an Image from file and set to picBox Image
-        private void LoadImageFromFile(string selectedFilename, string actFrom)
+        private bool LoadImageFromFile(string selectedFilename, string actFrom)
         {
             // Try load image from File
             string errFrom = $"frmMovieInfo ({Name})-{actFrom}-(Image.FromFile Error)";
@@ -335,17 +335,25 @@ namespace HomeCinema
                     {
                         tempImage.Dispose();
                     }
+                    // Dispose previous image
+                    if (picBox.Image != null)
+                    {
+                        picBox.Image.Dispose();
+                    }
                     tempImage = Image.FromFile(selectedFilename);
                     picBox.Image = tempImage;
                     picBox.Tag = selectedFilename;
                     picBox.Refresh();
                     GlobalVars.ShowInfo("Changed the image cover!");
+                    return true;
 
                 } catch (Exception exc)
                 {
                     GlobalVars.ShowError(errFrom, exc);
+                    return false;
                 }
             }
+            return false;
         }
         // Saved loaded image from picBox Tag property as Poster image
         private void SaveCoverChanged(string selectedFilename)
@@ -353,7 +361,7 @@ namespace HomeCinema
             string ExceptionFrom = "frmMovieInfo-SaveCoverChanged (" + Name + ")";
             //GlobalVars.Log(ExceptionFrom, "Try adding Image from File");
 
-            // Delete previous image on the ImgList, exit if not succesful and show warning
+            // Remove previous image from the ImgList, exit if not succesful and show warning
             if (File.Exists(GlobalVars.ImgFullPath(MOVIE_ID)))
             {
                 if (GlobalVars.DeleteImageFromList(MOVIE_ID, ExceptionFrom + " (Previous Image)") == false)
@@ -389,10 +397,6 @@ namespace HomeCinema
         // Dispose all Poster images
         private void DisposeImages()
         {
-            if (picBox.Image != null)
-            {
-                picBox.Image.Dispose();
-            }
             if (MOVIE_COVER != null)
             {
                 MOVIE_COVER.Dispose();
@@ -702,11 +706,7 @@ namespace HomeCinema
                     {
                         string moviePosterDL = GlobalVars.PATH_TEMP + MOVIE_ID + ".jpg";
                         GlobalVars.DownloadLoop(moviePosterDL, "https://image.tmdb.org/t/p/original/" + linkPoster, errFrom, false);
-                        if (File.Exists(moviePosterDL))
-                        {
-                            LoadImageFromFile(moviePosterDL, errFrom);
-                        }
-                        else
+                        if (LoadImageFromFile(moviePosterDL, errFrom) == false)
                         {
                             // Show a Warning
                             GlobalVars.ShowWarning("Image file cannot be downloaded at the moment!\n Try again later...");
