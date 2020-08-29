@@ -424,7 +424,7 @@ namespace HomeCinema
             if (string.IsNullOrWhiteSpace(txtSearch.Text))
             {
                 txtSearch.Text = GlobalVars.SEARCHBOX_PLACEHOLDER;
-                txtSearch.ForeColor = Color.White;
+                txtSearch.ForeColor = Color.Black;
             }
         }
         public void SearchBoxPlaceholderClear(object sender, EventArgs e)
