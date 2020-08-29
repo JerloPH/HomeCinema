@@ -686,26 +686,28 @@ namespace HomeCinema
             string linkPoster = r5;
 
             // Ask to change cover - poster image
-            bool ChangeCover = GlobalVars.ShowYesNo("Do you want to change poster image?");
-            if (ChangeCover)
+            if (String.IsNullOrWhiteSpace(r5) == false)
             {
-                // Parse image link from JSON and download it
-                if (String.IsNullOrWhiteSpace(linkPoster) == false)
+                bool ChangeCover = GlobalVars.ShowYesNo("Do you want to change poster image?");
+                if (ChangeCover)
                 {
-                    string moviePosterDL = GlobalVars.PATH_TEMP + MOVIE_ID + ".jpg";
-                    GlobalVars.DownloadLoop(moviePosterDL, "https://image.tmdb.org/t/p/original/" + linkPoster, errFrom, false);
-                    if (File.Exists(moviePosterDL))
+                    // Parse image link from JSON and download it
+                    if (String.IsNullOrWhiteSpace(linkPoster) == false)
                     {
-                        LoadImageFromFile(moviePosterDL, errFrom);
-                    }
-                    else
-                    {
-                        // Show a Warning
-                        GlobalVars.ShowWarning("Image file cannot be downloaded at the moment!\n Try again later...");
+                        string moviePosterDL = GlobalVars.PATH_TEMP + MOVIE_ID + ".jpg";
+                        GlobalVars.DownloadLoop(moviePosterDL, "https://image.tmdb.org/t/p/original/" + linkPoster, errFrom, false);
+                        if (File.Exists(moviePosterDL))
+                        {
+                            LoadImageFromFile(moviePosterDL, errFrom);
+                        }
+                        else
+                        {
+                            // Show a Warning
+                            GlobalVars.ShowWarning("Image file cannot be downloaded at the moment!\n Try again later...");
+                        }
                     }
                 }
             }
-
             // Set Genres
             CheckGenreFromTMDB(GlobalVars.GetGenresByJsonFile(jsonMainFullPath, errFrom + " (JSONfindmovie)"));
         }
