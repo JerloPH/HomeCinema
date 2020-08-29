@@ -190,7 +190,7 @@ namespace HomeCinema
             bgSearchInDB.DoWork += new DoWorkEventHandler(bgwMovie_SearchMovie);
             bgSearchInDB.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgwMovie_DoneSearchMovie);
         }
-        // ############################################################################## Database Functions
+// ####################################################################################### Database Functions
         bool InsertToDB(List<string> listofFiles, string errFrom)
         {
             string callFrom = $"frmMain ({Name})-InsertToDB-({errFrom})";
@@ -338,7 +338,7 @@ namespace HomeCinema
             dtFile.Dispose();
             return ret;
         }
-        // ############################################################################## Functions
+// ####################################################################################### Functions
         // Play Movie or Open Movie Details
         public void OpenFormPlayMovie()
         {
@@ -741,7 +741,7 @@ namespace HomeCinema
             }
             cbCountry.SelectedIndex = 0;
         }
-        // ############################################################################## BACKGROUND WORKERS
+// ####################################################################################### BACKGROUND WORKERS
         private void bgwMovie_SearchMovie(object sender, DoWorkEventArgs e)
         {
             // Get query from variable, set by background worker
@@ -1090,7 +1090,7 @@ namespace HomeCinema
                 GlobalVars.formSetting.Focus();
             }
         }
-        // ############################################################################## Form CUSTOM events
+// ####################################################################################### Form CUSTOM events
         void Form_KeyDown(object sender, KeyEventArgs e)
         {
             // Ctrl-S = Opens settings form
@@ -1128,7 +1128,7 @@ namespace HomeCinema
                 GlobalVars.FileOpeninExplorer(file, $"{errFrom} [toolMenuFileExplorer]");
             }
         }
-        // ############################################################################## Form Control events
+// ####################################################################################### Form Control events
         private void frmMain_Load(object sender, EventArgs e)
         {
             // Startup events
