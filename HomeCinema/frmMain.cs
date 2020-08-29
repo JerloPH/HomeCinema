@@ -956,13 +956,15 @@ namespace HomeCinema
                 // List of files valid to add
                 List<string> listToAdd = new List<string>();
 
-                string res = "";
-                string nonres = "";
-                string prevF = "";
+                string res = ""; // List of all newly Inserted "Media Files" filepaths
+                string nonres = ""; // List of "Voided Files" filepaths
+                bool voided = true; // Check if file can be added to "Voided Files" Log
 
                 // If file is a movie,
                 foreach (string file in DirListFrom)
                 {
+                    // Reset variable
+                    voided = true;
                     // Check if file have an extension of MOVIE_EXTENSIONS
                     foreach (string ext in GlobalVars.MOVIE_EXTENSIONS)
                     {
@@ -981,6 +983,7 @@ namespace HomeCinema
                                     if (pathEx == file)
                                     {
                                         canAdd = false;
+                                        voided = false;
                                         // remove the item from list of already existing
                                         int index = listAlreadyinDB.IndexOf(pathEx);
                                         try
@@ -1002,17 +1005,16 @@ namespace HomeCinema
                                 listToAdd.Add(file);
                                 res += file + "\n";
                                 count += 1;
-                                prevF = file;
+                                voided = false;
                             }
                             break;
                         }
                     }
-                    if (String.IsNullOrWhiteSpace(prevF))
+                    if (voided)
                     {
                         nonres += file + "\n";
                         countVoid += 1;
                     }
-                    prevF = "";
                 }
 
                 // Clear previous lists
