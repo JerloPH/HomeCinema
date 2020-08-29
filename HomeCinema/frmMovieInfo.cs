@@ -661,6 +661,9 @@ namespace HomeCinema
             string r3 = list[4]; // overview / summary
             string r4 = list[5]; // release date
             string r5 = list[6]; // poster_path
+            string r6 = list[7]; // Artist
+            string r7 = list[8]; // Director
+            string r8 = list[9]; // Producer
 
             // Set to textboxes
             if (String.IsNullOrWhiteSpace(r1)==false)
@@ -682,10 +685,13 @@ namespace HomeCinema
             {
                 txtYear.Text = r4.Substring(0, 4);
             }
-            
-            string linkPoster = r5;
+
+            txtArtist.Text = r6;
+            txtDirector.Text = r7;
+            txtProducer.Text = r8;
 
             // Ask to change cover - poster image
+            string linkPoster = r5;
             if (String.IsNullOrWhiteSpace(r5) == false)
             {
                 bool ChangeCover = GlobalVars.ShowYesNo("Do you want to change poster image?");

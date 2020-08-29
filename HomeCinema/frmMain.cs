@@ -247,8 +247,10 @@ namespace HomeCinema
                 string rOrigTitle = "";
                 string rSummary = "";
                 string rYear = "";
-
                 string rGenre = "";
+                string rArtist = "";
+                string rDirector = "";
+                string rProducer = "";
 
                 // Scrape from TMDB, for info and details
                 if (GlobalVars.SET_OFFLINE == false)
@@ -265,6 +267,9 @@ namespace HomeCinema
                         rOrigTitle = list[3];
                         rSummary = list[4];
                         rYear = list[5].Substring(0, 4);
+                        rArtist = list[7];
+                        rDirector = list[8];
+                        rProducer = list[9];
 
                         // Get Genres
                         foreach (string s in GlobalVars.GetGenresByJsonFile(rJson, errFrom))
@@ -303,9 +308,9 @@ namespace HomeCinema
                 row[7] = "0"; // category
                 row[8] = rGenre; // genre
                 row[9] = ""; // studio
-                row[10] = ""; // producer
-                row[11] = ""; // director
-                row[12] = ""; // artist
+                row[10] = rProducer; // producer
+                row[11] = rDirector; // director
+                row[12] = rArtist; // artist
                 row[13] = rYear; // year
                 row[14] = rSummary; // summary
                 row[15] = filePath; // filepath

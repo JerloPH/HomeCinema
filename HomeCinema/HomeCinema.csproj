@@ -93,6 +93,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CastCrew.cs" />
     <Compile Include="frmLoading.cs">
       <SubType>Form</SubType>
     </Compile>
