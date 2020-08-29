@@ -1,5 +1,27 @@
 # HomeCinema - Project History:
 
+## v0.0.6.0 ***build 19 - (29 August 2020 PHT)***
+### Major Update
+
+Build from latest commit: 6a4d90e
+
+**[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.6.0/HomeCinema-Windows_v0.0.6.0.zip "HomeCinema-Windows_v0.0.6.0.zip")**
+	
+**What's New?**
+- REV: Better handle on downloading files in Fetching data from TMDB.
+- FT: Fetch additional information from [**The Movie Database**](https://www.themoviedb.org/).
+  - Fetch: Artists, Director, and Producer.
+- FT: Added Right-click ContextMenu to ListView Item.
+  - *[Find File in Explorer]* - Open Explorer and Show where the file is located on the drive.
+- FIX: Don't ask for changing cover image when no JSON file is fetched.
+- MINOR: Better Closing Log. Functions return type changed.
+- MINOR: Logs of files skipped during startup.
+- GUI: Changed Title Caption.
+- GUI: Reverted SearchBox Placeholder text to Color Black.
+- DOC: Added download count.
+- Code cleanup and improvements.
+****
+
 ## v0.0.5.1 ***build 18 - (15 August 2020 PHT)***
 ### Quick Fixes
 

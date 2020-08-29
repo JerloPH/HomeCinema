@@ -32,9 +32,9 @@
 	- [ ] Country
 	- [ ] Category (Movie, Anime, Series,etc)
 	- [ ] Studio
-	- [ ] Producer
-	- [ ] Director
-	- [ ] Artist
+	- [x] Producer
+	- [x] Director
+	- [x] Artist
 	
   - [ ] ~~Switch webBrowser to Cefsharp Browser.~~ **Cancelled**
   
@@ -45,5 +45,6 @@
 	  - Summary
 	  - Genre
 	  - Trailer YT Link
+	  - Artist, Director, Producer
 
 ## Bugs
