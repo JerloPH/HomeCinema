@@ -1350,11 +1350,12 @@ namespace HomeCinema
         private void btnClear_Click(object sender, EventArgs e)
         {
             // Clear searchbox and Filter
-            txtSearch.ForeColor = Color.White;
+            txtSearch.ForeColor = Color.Black;
             txtSearch.Text = GlobalVars.SEARCHBOX_PLACEHOLDER;
             txtIMDB.Text = "";
             txtStudio.Text = "";
             txtDirector.Text = "";
+            txtCast.Text = "";
             txtYearFrom.Text = "";
             txtYearTo.Text = DateTime.Now.Year.ToString();
             cbCategory.SelectedIndex = 0;
