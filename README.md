@@ -2,16 +2,16 @@
 
 <img src="/data/screenshot_v0.0.5.0.png"></img>
 
-**version:**	0.0.6.0 <br>
-**build:**		19
+**version:**	0.0.6.1 <br>
+**build:**		20
 
 ## Downloads
 
-**Windows 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.6.0/HomeCinema-Windows_v0.0.6.0.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
+**Windows 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.6.1/HomeCinema-Windows_v0.0.6.1.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
 
 ### Download Counts
 
-**Current Version:** <br> &nbsp; &nbsp; &nbsp; &nbsp; [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.6.0/total.svg)]() <br>
+**Current Version:** <br> &nbsp; &nbsp; &nbsp; &nbsp; [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.6.1/total.svg)]() <br>
 **Overall:** <br> &nbsp; &nbsp; &nbsp; &nbsp; [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/total.svg)]()
 
 ## Requirements

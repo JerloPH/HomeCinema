@@ -1,5 +1,18 @@
 # HomeCinema - Project History:
 
+## v0.0.6.1 ***build 20 - (30 August 2020 PHT)***
+### Follow up Fixes
+
+Build from latest commit: 9e37136
+
+**[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.6.1/HomeCinema-Windows_v0.0.6.1.zip "HomeCinema-Windows_v0.0.6.1.zip")**
+	
+**What's New?**
+- FIX: Cast Textbox not reset when CLEAR button is pressed.
+- FIX: Another Attempt to fix cover not updating when fetched from TMDB.
+- Minor Code cleanups.
+****
+
 ## v0.0.6.0 ***build 19 - (29 August 2020 PHT)***
 ### Major Update
 
