@@ -307,7 +307,7 @@ namespace HomeCinema
                 row[4] = ""; // season number
                 row[5] = ""; // episode num
                 row[6] = rCountry; // country
-                row[7] = "0"; // category
+                row[7] = GlobalVars.GetCategoryByFilter(rGenre, rCountry); // category
                 row[8] = rGenre; // genre
                 row[9] = ""; // studio
                 row[10] = rProducer; // producer
