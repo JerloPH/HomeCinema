@@ -285,6 +285,7 @@ namespace HomeCinema.SQLFunc
         {
             // Set columns
             string colsInfo = "";
+            string errFrom = "SQLHelper-DbInsertMovie";
             //string cols_qry = "";
 
             // Get columns from info
@@ -332,7 +333,7 @@ namespace HomeCinema.SQLFunc
                     }
                     else
                     {
-                        vals += GlobalVars.QryString(r[cc].ToString(), true) + ",";
+                        vals += GlobalVars.QryString(r[cc].ToString().Replace('\'', '"'), true) + ",";
                     }
                     cc += 1;
                 }
@@ -347,64 +348,55 @@ namespace HomeCinema.SQLFunc
                 string qry = $"INSERT INTO {GlobalVars.DB_TNAME_INFO} ({colsInfo}) VALUES({vals});";
                 cmd.CommandText = qry;
 
-                // Try Execute query for INFO
-                GlobalVars.LogDb($"SQLHelper-DbInsertMovie (INSERT MOVIE START)({callFrom})", "Start Try inserting movie");
-                try
+                // Log Insert filePath and query
+                GlobalVars.LogDb($"{errFrom} (INSERT MOVIE START)({callFrom})", "Inserting: " + fPathFile);
+                GlobalVars.LogDb($"{errFrom} ({GlobalVars.DB_TNAME_INFO})({callFrom})", $"qry: {qry}");
+                
+                // Execute query for INFO
+                int affected = cmd.ExecuteNonQuery();
+
+                // LastID of insert movie ID
+                string LastID = conn.LastInsertRowId.ToString();
+                //rows = Convert.ToInt32(LastID);
+                //GlobalVars.LogDb($"{callFrom} (LAST INSERT ID)", LastID);
+
+                // Try Execute query for FILEPATH
+                if (affected > 0)
                 {
-                    // Execute query for INFO
+                    string colsFile = $"[{GlobalVars.DB_TABLE_FILEPATH[0]}],[{GlobalVars.DB_TABLE_FILEPATH[1]}],[{GlobalVars.DB_TABLE_FILEPATH[2]}],[{GlobalVars.DB_TABLE_FILEPATH[3]}]";
+                    qry = $"INSERT INTO {GlobalVars.DB_TNAME_FILEPATH} ({colsFile}) VALUES({LastID},'{fPathFile}','{fPathSub}','{fPathTrailer}');";
+                    cmd.CommandText = qry;
                     cmd.ExecuteNonQuery();
-                    GlobalVars.LogDb($"SQLHelper-DbInsertMovie ({GlobalVars.DB_TNAME_INFO})({callFrom})", $"qry: {qry}");
+                    GlobalVars.LogDb($"{errFrom} ({GlobalVars.DB_TNAME_FILEPATH})({callFrom})", $"qry: {qry}");
+                    rows += 1;
 
-                    // LastID of insert movie ID
-                    string LastID = conn.LastInsertRowId.ToString();
-                    //rows = Convert.ToInt32(LastID);
-                    //GlobalVars.LogDb($"{callFrom} (LAST INSERT ID)", LastID);
-
-                    // Try Execute query for FILEPATH
+                    // Add cover image by capturing media
+                    string coverFilepath = GlobalVars.PATH_IMG + LastID + ".jpg";
                     try
                     {
-                        string colsFile = $"[{GlobalVars.DB_TABLE_FILEPATH[0]}],[{GlobalVars.DB_TABLE_FILEPATH[1]}],[{GlobalVars.DB_TABLE_FILEPATH[2]}],[{GlobalVars.DB_TABLE_FILEPATH[3]}]";
-                        qry = $"INSERT INTO {GlobalVars.DB_TNAME_FILEPATH} ({colsFile}) VALUES({LastID},'{fPathFile}','{fPathSub}','{fPathTrailer}');";
-                        cmd.CommandText = qry;
-                        cmd.ExecuteNonQuery();
-                        GlobalVars.LogDb($"SQLHelper-DbInsertMovie ({GlobalVars.DB_TNAME_FILEPATH})({callFrom})", $"qry: {qry}");
-                        rows += 1;
-
-                        // Add cover image by capturing media
-                        string coverFilepath = GlobalVars.PATH_IMG + LastID + ".jpg";
-                        try
-                        {
-                            ShellFile shellFile = ShellFile.FromFilePath(fPathFile);
-                            Bitmap bm = shellFile.Thumbnail.Bitmap;
-                            bm.Save(coverFilepath, System.Drawing.Imaging.ImageFormat.Jpeg);
-                            bm.Dispose();
-                            shellFile.Dispose();
-                        }
-                        catch (Exception exShell)
-                        {
-                            GlobalVars.LogDb($"SQLHelper-DbInsertMovie (Insert Cover FilePath)({GlobalVars.DB_TNAME_FILEPATH})({callFrom})", coverFilepath);
-                            GlobalVars.LogDb($"SQLHelper-DbInsertMovie (ShellFile thumbnail Error)({GlobalVars.DB_TNAME_FILEPATH})({callFrom})", exShell.Message);
-                        }
+                        ShellFile shellFile = ShellFile.FromFilePath(fPathFile);
+                        Bitmap bm = shellFile.Thumbnail.Bitmap;
+                        bm.Save(coverFilepath, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        bm.Dispose();
+                        shellFile.Dispose();
                     }
-                    // Catch error on executing query for FILEPATH
-                    catch (Exception ex)
+                    catch (Exception exShell)
                     {
-                        // Catch unknown exceptions
-                        GlobalVars.ShowError($"SQLHelper-DbInsertMovie (Insert error)({GlobalVars.DB_TNAME_FILEPATH})({callFrom})", ex, false);
+                        GlobalVars.LogDb($"{errFrom} (Insert Cover FilePath)({GlobalVars.DB_TNAME_FILEPATH})({callFrom})", coverFilepath);
+                        GlobalVars.LogDb($"{errFrom} (ShellFile thumbnail Error)({GlobalVars.DB_TNAME_FILEPATH})({callFrom})", exShell.Message);
                     }
                 }
-                // Catch error on executing query for INFO
-                catch (Exception ex)
+                // Nothing is inserted
+                else
                 {
-                    // Catch unknown exceptions (GlobalVars.ShowError)
-                    GlobalVars.ShowError($"SQLHelper-DbInsertMovie (Insert error)({GlobalVars.DB_TNAME_INFO})({callFrom})", ex, false);
+                    GlobalVars.LogDb($"{errFrom}", "First INSERT [info] failed!");
                 }
 
                 // Exit foreach
                 //break;
             }
             // Release memory
-            GlobalVars.LogDb($"SQLHelper-DbInsertMovie (FINISHED INSERT)({callFrom})", $"Rows returned: ({rows.ToString()})");
+            GlobalVars.LogDb($"{errFrom} (FINISHED INSERT)({callFrom})", $"Rows returned: ({rows.ToString()})");
             dt.Clear();
             dt.Dispose();
 
