@@ -47,7 +47,13 @@ namespace HomeCinema
         [JsonProperty("backdrop_path")]
         public string backdrop_path { get; set; } = "";
 
-        //[JsonProperty("genres")]
-        //public List<string[]> genres = new List<string[]>();
+        [JsonProperty("production_companies")]
+        public List<ProdCom> production_companies { get; set; }
+    }
+
+    public class ProdCom
+    {
+        [JsonProperty("origin_country")]
+        public string origin_country { get; set; }
     }
 }

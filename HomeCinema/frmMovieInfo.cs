@@ -248,7 +248,7 @@ namespace HomeCinema
             {
                 foreach (string text in gSplit)
                 {
-                    if (c.Text.Contains(text) && (String.IsNullOrWhiteSpace(text) == false))
+                    if (c.Text.ToLower().Contains(text.ToLower()) && (String.IsNullOrWhiteSpace(text) == false))
                     {
                         c.Checked = true;
                         break;
@@ -668,6 +668,7 @@ namespace HomeCinema
             string r6 = list[7]; // Artist
             string r7 = list[8]; // Director
             string r8 = list[9]; // Producer
+            string r9 = list[10]; // country
 
             // Set to textboxes
             if (String.IsNullOrWhiteSpace(r1)==false)
@@ -693,6 +694,9 @@ namespace HomeCinema
             txtArtist.Text = r6;
             txtDirector.Text = r7;
             txtProducer.Text = r8;
+
+            // Set Country
+            LoadCountry(r9);
 
             // Ask to change cover - poster image
             string linkPoster = r5;
