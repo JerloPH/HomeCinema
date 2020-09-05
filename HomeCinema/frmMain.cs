@@ -482,6 +482,10 @@ namespace HomeCinema
         // Execute the query, by running bgWorker bgSearchInDB
         public void RefreshMovieList()
         {
+            lvSearchResult.BeginUpdate(); // Pause drawing events on ListView
+            lvSearchResult.SuspendLayout();
+
+            // Check if there was no prev query
             if (String.IsNullOrWhiteSpace(SEARCH_QUERY_PREV))
             {
                 btnSearch.PerformClick();
@@ -885,6 +889,8 @@ namespace HomeCinema
                 temp.Tag = "0";
                 temp.ImageIndex = 0;
                 lvSearchResult.Items.Add(temp);
+                lvSearchResult.EndUpdate(); // Draw the ListView
+                lvSearchResult.ResumeLayout();
                 CloseLoading(); // Close loading form
                 return;
             }
@@ -913,6 +919,9 @@ namespace HomeCinema
 
             // Close loading and refresh Memory
             CloseLoading();
+
+            lvSearchResult.EndUpdate(); // Draw the ListView
+            lvSearchResult.ResumeLayout();
 
             // Starting, opening of App?
             if (Start)
@@ -1217,12 +1226,13 @@ namespace HomeCinema
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            string errFrom = "frmMain-btnSearch_Click";
             // Search the db for movie with filters
             // Setup columns needed
             string qry = "";
             SEARCH_COLS = LVMovieItemsColumns;
 
-            SEARCH_QUERY = "";
+            SEARCH_QUERY = ""; // reset query
             // If there is NO existing query for search,
             if (String.IsNullOrWhiteSpace(SEARCH_QUERY))
             {
@@ -1337,7 +1347,7 @@ namespace HomeCinema
             } catch (Exception ex)
             {
                 // Show error
-                GlobalVars.ShowError($"frmMain-getAllMediaFiles", ex);
+                GlobalVars.ShowError(errFrom, ex);
                 // Close loading form
                 CloseLoading();
             }
