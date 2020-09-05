@@ -29,8 +29,8 @@
   - [ ] Scrape all info from *TMDB API*.
     - [x] Cover Image
     - [x] IMDB, Year, Name, Summary, Genre, Trailer YT Link
-	- [ ] Country
-	- [ ] Category (Movie, Anime, Series,etc)
+	- [x] Country
+	- [ ] Category (Movie, Anime, Series,etc). *Partially done*.
 	- [ ] Studio
 	- [x] Producer
 	- [x] Director
@@ -46,5 +46,6 @@
 	  - Genre
 	  - Trailer YT Link
 	  - Artist, Director, Producer
+	  - Country
 
 ## Bugs

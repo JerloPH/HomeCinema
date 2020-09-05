@@ -1,5 +1,22 @@
 # HomeCinema - Project History:
 
+## v0.0.6.2 ***build 21 - (05 September 2020 PHT)***
+### Additional Features and Fixes
+
+Build from latest commit: 6d0e4d6
+
+**[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.6.2/HomeCinema-Windows_v0.0.6.2.zip "HomeCinema-Windows_v0.0.6.2.zip")**
+	
+**What's New?**
+- REV: Speed improvements on Main Form.
+- FT: Fetch additional information from [**The Movie Database**](https://www.themoviedb.org/).
+  - Fetch: Country (Based on Producers).
+- FT: Automatically add *category* to the movie. *Movie, Animated Movie, etc..*
+- FIX: Problems with *single quotation characters ( **'** )*.
+- FIX: Settings Form: Closing the form when *Cancel* button is clicked.
+- Code cleanups.
+****
+
 ## v0.0.6.1 ***build 20 - (30 August 2020 PHT)***
 ### Follow up Fixes
 
