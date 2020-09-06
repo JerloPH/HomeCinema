@@ -137,17 +137,7 @@ namespace HomeCinema
             PopulateCountryCB();
 
             // Populate Genre from File
-            GlobalVars.TEXT_GENRE = GlobalVars.BuildArrFromFile(GlobalVars.FILE_GENRE, "frmMain-frmMain[FILE_GENRE]");
-
-            cbGenre.Items.Add("All");
-            foreach (string c in GlobalVars.TEXT_GENRE)
-            {
-                if (String.IsNullOrWhiteSpace(c) == false)
-                {
-                    cbGenre.Items.Add(c.Trim());
-                }
-            }
-            cbGenre.SelectedIndex = 0;
+            PopulateGenreCB();
 
             // Setup extensions for media files, load supported ext from file
             string[] tempMediaExt = GlobalVars.BuildArrFromFile(GlobalVars.FILE_MEDIA_EXT, "frmMain-frmMain[FILE_MEDIA_EXT]");
@@ -751,6 +741,21 @@ namespace HomeCinema
                 }
             }
             cbCountry.SelectedIndex = 0;
+        }
+        // Populate combobox cbGenre, from file
+        public void PopulateGenreCB()
+        {
+            GlobalVars.TEXT_GENRE = GlobalVars.BuildArrFromFile(GlobalVars.FILE_GENRE, "frmMain-PopulateGenreCB [FILE_GENRE]");
+            cbGenre.Items.Clear();
+            cbGenre.Items.Add("All");
+            foreach (string c in GlobalVars.TEXT_GENRE)
+            {
+                if (String.IsNullOrWhiteSpace(c) == false)
+                {
+                    cbGenre.Items.Add(c.Trim());
+                }
+            }
+            cbGenre.SelectedIndex = 0;
         }
 // ####################################################################################### BACKGROUND WORKERS
         private void bgwMovie_SearchMovie(object sender, DoWorkEventArgs e)
