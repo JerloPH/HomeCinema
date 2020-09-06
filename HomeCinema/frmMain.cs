@@ -731,9 +731,10 @@ namespace HomeCinema
         // Populate combobox cbCountry, from file
         public void PopulateCountryCB()
         {
+            GlobalVars.TEXT_COUNTRY = GlobalVars.BuildArrFromFile(GlobalVars.FILE_COUNTRY, "frmMain-PopulateCountryCB [FILE_COUNTRY]");
             cbCountry.Items.Clear();
             cbCountry.Items.Add("All");
-            foreach (string c in GlobalVars.BuildArrFromFile(GlobalVars.FILE_COUNTRY, "frmMain-PopulateCountryCB [FILE_COUNTRY]"))
+            foreach (string c in GlobalVars.TEXT_COUNTRY)
             {
                 if ((String.IsNullOrWhiteSpace(c) == false) && c != "All")
                 {

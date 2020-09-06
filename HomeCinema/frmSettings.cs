@@ -55,9 +55,10 @@ namespace HomeCinema
 
                 // ##################### - FILE changes
                 string text = "";
+
                 // Country Texts
                 text = "";
-                foreach (string c in GlobalVars.BuildArrFromFile(GlobalVars.FILE_COUNTRY, $"{errFrom}[FILE_COUNTRY]"))
+                foreach (string c in GlobalVars.TEXT_COUNTRY)
                 {
                     if ((String.IsNullOrWhiteSpace(c) == false) && c != "All")
                     {
@@ -67,9 +68,10 @@ namespace HomeCinema
                 text = text.TrimEnd();
                 text = text.TrimEnd(',');
                 txtCountry.Text = text;
+
                 // Genre Texts
                 text = "";
-                foreach (string c in GlobalVars.BuildArrFromFile(GlobalVars.FILE_GENRE, $"{errFrom}[FILE_GENRE]"))
+                foreach (string c in GlobalVars.TEXT_GENRE)
                 {
                     if ((String.IsNullOrWhiteSpace(c) == false) && c != "All")
                     {
@@ -79,6 +81,7 @@ namespace HomeCinema
                 text = text.TrimEnd();
                 text = text.TrimEnd(',');
                 txtGenre.Text = text;
+
                 // Media File Format / File Extensions Texts
                 text = "";
                 foreach (string c in GlobalVars.BuildArrFromFile(GlobalVars.FILE_MEDIA_EXT, $"{errFrom}[FILE_MEDIA_EXT]"))
@@ -91,6 +94,7 @@ namespace HomeCinema
                 text = text.TrimEnd();
                 text = text.TrimEnd(',');
                 txtMediaExt.Text = text;
+
                 // Media LOCATIONS Folders Texts
                 text = "";
                 foreach (string c in GlobalVars.BuildArrFromFile(GlobalVars.FILE_MEDIALOC, $"{errFrom}[FILE_MEDIALOC]"))

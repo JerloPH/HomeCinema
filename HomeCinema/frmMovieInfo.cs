@@ -79,8 +79,7 @@ namespace HomeCinema
             // Populate Country
             int cW = 105; // (fPanelCountry.Width / 2) - 5;
             int cH = 17;
-            string[] tCountryArr = GlobalVars.BuildArrFromFile(GlobalVars.FILE_COUNTRY, $"frmMovieInfo-frmMovieInfo ({Name})-StreamReader[FILE_COUNTRY]");
-            foreach (string t in tCountryArr)
+            foreach (string t in GlobalVars.TEXT_COUNTRY)
             {
                 if (t != "All")
                 {
@@ -98,17 +97,18 @@ namespace HomeCinema
             fPanelGenre.AutoScroll = true;
             cW = 102;
             cH = 17;
-
-            for (int i=0; i<GlobalVars.TEXT_GENRE.Length; i++)
+            foreach (string t in GlobalVars.TEXT_GENRE)
             {
-                string t = GlobalVars.TEXT_GENRE[i];
-                CheckBox cb = new CheckBox();
-                cb.Size = new Size(cW, cH);
-                cb.Text = GlobalVars.RemoveLine(t);
-                cb.AutoSize = false;
-                cb.TabIndex = 0;
-                cb.UseVisualStyleBackColor = true;
-                fPanelGenre.Controls.Add(cb);
+                if (t != "All")
+                {
+                    CheckBox cb = new CheckBox();
+                    cb.Size = new Size(cW, cH);
+                    cb.Text = GlobalVars.RemoveLine(t);
+                    cb.AutoSize = false;
+                    cb.TabIndex = 0;
+                    cb.UseVisualStyleBackColor = true;
+                    fPanelGenre.Controls.Add(cb);
+                }
             }
 
             // LOAD Information from DATABASE and SET to Controls
