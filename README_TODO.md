@@ -49,3 +49,8 @@
 	  - Country
 
 ## Bugs
+
+## Others
+
+Github Stats on README.md
+<img src="https://github-readme-stats.vercel.app/api?username=JerloPH&&show_icons=true">

@@ -1,5 +1,19 @@
 # HomeCinema - Project History:
 
+## v0.0.6.3 ***build 22 - (06 September 2020 PHT)***
+### Optimizations and Fixes
+
+Build from latest commit: 4b2f74d
+
+**[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.6.3/HomeCinema-Windows_v0.0.6.3.zip "HomeCinema-Windows_v0.0.6.3.zip")**
+	
+**What's New?**
+- FIX: Properly save the *genres* to file.
+- MINOR: Alpabetically arrange country list properly.
+- GUI: Settings form minor change.
+- Optimizations and code cleanups.
+****
+
 ## v0.0.6.2 ***build 21 - (05 September 2020 PHT)***
 ### Additional Features and Fixes
 
