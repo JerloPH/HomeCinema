@@ -138,7 +138,7 @@ namespace HomeCinema
 
             // Populate Genre from File
             GlobalVars.TEXT_GENRE = GlobalVars.BuildArrFromFile(GlobalVars.FILE_GENRE, "frmMain-frmMain[FILE_GENRE]");
-            // Populate combobox cbCategory
+
             cbGenre.Items.Add("All");
             foreach (string c in GlobalVars.TEXT_GENRE)
             {
@@ -743,7 +743,7 @@ namespace HomeCinema
         {
             cbCountry.Items.Clear();
             cbCountry.Items.Add("All");
-            foreach (string c in GlobalVars.BuildArrFromFile(GlobalVars.FILE_COUNTRY, "frmMain-frmMain[FILE_COUNTRY]"))
+            foreach (string c in GlobalVars.BuildArrFromFile(GlobalVars.FILE_COUNTRY, "frmMain-PopulateCountryCB [FILE_COUNTRY]"))
             {
                 if ((String.IsNullOrWhiteSpace(c) == false) && c != "All")
                 {
@@ -1175,17 +1175,7 @@ namespace HomeCinema
             {
                 logClose += $"\n\tSettings Saved! ({DateTime.Now.TimeOfDay.ToString()})";
             }
-            // Replace genre file
-            if (GlobalVars.WriteArray(GlobalVars.TEXT_GENRE, GlobalVars.FILE_GENRE))
-            {
-                logClose += $"\n\tFILE_GENRE updated! ({DateTime.Now.TimeOfDay.ToString()})";
-            }
-            // Replace country file
-            string[] arrCountry = GlobalVars.BuildStringArrayFromCB(cbCountry);
-            if (GlobalVars.WriteArray(arrCountry, GlobalVars.FILE_COUNTRY))
-            {
-                logClose += $"\n\tFILE_COUNTRY updated! ({DateTime.Now.TimeOfDay.ToString()})";
-            }
+            
             // Dispose All Resources
             if (formLoading != null)
             {

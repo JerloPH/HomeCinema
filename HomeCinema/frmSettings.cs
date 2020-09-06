@@ -148,8 +148,7 @@ namespace HomeCinema
                 // Replace country file
                 toWrite = txtCountry.Text.Replace('\r', ' ');
                 toWrite = toWrite.Replace('\n', ' ');
-                string[] arrCountry = toWrite.Split(',');
-                GlobalVars.WriteArray(arrCountry, GlobalVars.FILE_COUNTRY);
+                GlobalVars.WriteArray(toWrite.Split(','), GlobalVars.FILE_COUNTRY);
                 if (Application.OpenForms["frmMain"] != null)
                 {
                     (Application.OpenForms["frmMain"] as frmMain).PopulateCountryCB();
