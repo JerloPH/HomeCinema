@@ -1301,12 +1301,12 @@ namespace HomeCinema
                         // Search for All type of Movies
                         if (index == 1)
                         {
-                            qry += "[category]=1 OR [category]=3 OR [category]=5";
+                            qry += "([category]=1 OR [category]=3 OR [category]=5)";
                         }
                         // Search for All types of Series
                         else
                         {
-                            qry += "[category]=2 OR [category]=4 OR [category]=6";
+                            qry += "([category]=2 OR [category]=4 OR [category]=6)";
                         }
                     }
                 }
