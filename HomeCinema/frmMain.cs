@@ -1259,9 +1259,9 @@ namespace HomeCinema
                 if ((txtSearch.Text != GlobalVars.SEARCHBOX_PLACEHOLDER) && (String.IsNullOrWhiteSpace(txtSearch.Text) ==false))
                 {
                     qry += " WHERE ";
-                    qry += $"[name] LIKE '%{txtSearch.Text}%' ";
+                    qry += $"([name] LIKE '%{txtSearch.Text}%' ";
                     qry += $"OR [name_ep] LIKE '%{txtSearch.Text}%' ";
-                    qry += $"OR [name_series] LIKE '%{txtSearch.Text}%'";
+                    qry += $"OR [name_series] LIKE '%{txtSearch.Text}%')";
                 }
                 // Year range
                 if (String.IsNullOrEmpty(txtYearFrom.Text) == false)
