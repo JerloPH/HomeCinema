@@ -780,7 +780,22 @@ namespace HomeCinema
             }
             cbGenre.SelectedIndex = 0;
         }
-// ####################################################################################### BACKGROUND WORKERS
+        // Create or Show frmSettings Form
+        private void ShowSettingsForm()
+        {
+            // Create Form
+            if (GlobalVars.formSetting == null)
+            {
+                Form form = new frmSettings();
+                form.Show(this);
+                GlobalVars.formSetting = form;
+            }
+            else
+            {
+                GlobalVars.formSetting.Focus();
+            }
+        }
+        // ####################################################################################### BACKGROUND WORKERS
         private void bgwMovie_SearchMovie(object sender, DoWorkEventArgs e)
         {
             // Get query from variable, set by background worker
@@ -894,6 +909,7 @@ namespace HomeCinema
 
                         // Add Item to ListView lvSearchResult
                         lvSearchResult.Items.Add(temp);
+                        allMovieList.Add(temp);
                     }
                 }
             }
@@ -1120,21 +1136,6 @@ namespace HomeCinema
             // Perform click on search button: btnSearch by calling RefreshMovieList()
             SEARCH_QUERY_PREV = "";
             RefreshMovieList();
-        }
-        // Create or Show frmSettings Form
-        private void ShowSettingsForm()
-        {
-            // Create Form
-            if (GlobalVars.formSetting == null)
-            {
-                Form form = new frmSettings();
-                form.Show(this);
-                GlobalVars.formSetting = form;
-            }
-            else
-            {
-                GlobalVars.formSetting.Focus();
-            }
         }
 // ####################################################################################### Form CUSTOM events
         void Form_KeyDown(object sender, KeyEventArgs e)
