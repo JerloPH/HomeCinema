@@ -1433,10 +1433,18 @@ namespace HomeCinema
         // Delete files from temp
         private void btnClean_Click(object sender, EventArgs e)
         {
-            if (GlobalVars.DeleteFilesExt(GlobalVars.PATH_TEMP, ".jpg", "frmMain-btnClean_Click"))
+            string errFrom = "frmMain-btnClean_Click";
+            string msg = "Cleanup Log:";
+            if (GlobalVars.DeleteFilesExt(GlobalVars.PATH_TEMP, ".jpg", errFrom))
             {
-                GlobalVars.ShowInfo("Cleanup done!");
+                msg += "\nCleaned JPG Images!";
             }
+            if (GlobalVars.DeleteFilesExt(GlobalVars.PATH_TEMP, ".json", errFrom))
+            {
+                msg += "\nCleaned JSON Files!";
+            }
+            msg += "Done!";
+            GlobalVars.ShowInfo(msg);
         }
         // When ENTER Key is pressed on ListView
         private void lvSearchResult_KeyDown(object sender, KeyEventArgs e)
