@@ -51,9 +51,6 @@ namespace HomeCinema
 
         ToolStripItem toolMenuView, toolMenuEdit, toolMenuFileExplorer;
 
-        // Save all ListView Items on a List, reduces sql time of searching. Heavy on memory.
-        List<ListViewItem> allMovieList = new List<ListViewItem>();
-
         public frmMain()
         {
             //Record time start
@@ -909,7 +906,6 @@ namespace HomeCinema
 
                         // Add Item to ListView lvSearchResult
                         lvSearchResult.Items.Add(temp);
-                        allMovieList.Add(temp);
                     }
                 }
             }
