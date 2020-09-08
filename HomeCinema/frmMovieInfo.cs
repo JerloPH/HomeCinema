@@ -706,10 +706,9 @@ namespace HomeCinema
                 if (ChangeCover)
                 {
                     // Parse image link from JSON and download it
-                    if (String.IsNullOrWhiteSpace(linkPoster) == false)
+                    if (GlobalVars.DownloadCoverFromTMDB(MOVIE_ID, linkPoster, errFrom))
                     {
                         string moviePosterDL = GlobalVars.PATH_TEMP + MOVIE_ID + ".jpg";
-                        GlobalVars.DownloadLoop(moviePosterDL, "https://image.tmdb.org/t/p/original/" + linkPoster, errFrom, false);
                         if (LoadImageFromFile(moviePosterDL, errFrom) == false)
                         {
                             // Show a Warning

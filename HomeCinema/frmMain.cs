@@ -51,6 +51,9 @@ namespace HomeCinema
 
         ToolStripItem toolMenuView, toolMenuEdit, toolMenuFileExplorer;
 
+        // Save all ListView Items on a List, reduces sql time of searching. Heavy on memory.
+        List<ListViewItem> allMovieList = new List<ListViewItem>();
+
         public frmMain()
         {
             //Record time start
@@ -184,6 +187,7 @@ namespace HomeCinema
         bool InsertToDB(List<string> listofFiles, string errFrom)
         {
             string callFrom = $"frmMain ({Name})-InsertToDB-({errFrom})";
+            string rPosterLink = "";
 
             // Insert to DB if NEW MOVIE
             // Build new string[] from INFO, FIlepath
@@ -258,6 +262,7 @@ namespace HomeCinema
                         rOrigTitle = list[3];
                         rSummary = list[4];
                         rYear = list[5].Substring(0, 4);
+                        rPosterLink = list[6];
                         rArtist = list[7];
                         rDirector = list[8];
                         rProducer = list[9];
@@ -275,7 +280,7 @@ namespace HomeCinema
                 // If cannot get info online, make use of defaults
                 if (String.IsNullOrWhiteSpace(rTitle))
                 {
-                    rTitle = mName;
+                    rTitle = mName.Trim();
                 }
                 if (String.IsNullOrWhiteSpace(rYear))
                 {
@@ -315,6 +320,23 @@ namespace HomeCinema
             int insertResult = DBCON.DbInsertMovie(dt, callFrom);
             if (insertResult > 0)
             {
+                string movieId = insertResult.ToString();
+                // Download Cover from TMDB
+                if (GlobalVars.DownloadCoverFromTMDB(movieId, rPosterLink, errFrom))
+                {
+                    try
+                    {
+                        // Move from temp folder to poster path
+                        string oldFile = GlobalVars.PATH_TEMP + movieId + ".jpg";
+                        string newFile = GlobalVars.ImgFullPath(movieId);
+                        GlobalVars.DeleteMove(newFile, errFrom); // Delete existing cover first
+                        File.Move(oldFile, newFile);
+
+                    } catch (Exception ex)
+                    {
+                        GlobalVars.ShowError(errFrom, ex, false);
+                    }
+                }
                 return true;
             }
             return false;
