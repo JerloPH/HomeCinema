@@ -29,10 +29,10 @@ namespace HomeCinema.SQLFunc
 {
     public class SQLHelper
     {
-        // Variables
-        //public bool ExistingDB { get; set; } = false;
-
-        // Start Connecting to database, when object is initialize
+        /// <summary>
+        /// Initialize SQLite database. Create if NOT existing.
+        /// </summary>
+        /// <param name="InitiatedFrom">Caller of the function.</param>
         public SQLHelper(string InitiatedFrom)
         {
             SQLiteConnection conn = null;
@@ -90,11 +90,19 @@ namespace HomeCinema.SQLFunc
             // Dispose (Close) Connection to DB
             DbClose(conn);
         }
-        // Open connection to database
+        /// <summary>
+        /// Open connection to SQLite database, using default values.
+        /// </summary>
+        /// <returns>Handle of the SQLite connection.</returns>
         public static SQLiteConnection DbOpen()
         {
             return DbOpen(GlobalVars.DB_DATAPATH);
         }
+        /// <summary>
+        /// Open connection to SQLite database.
+        /// </summary>
+        /// <param name="connectionString">Connection string to use.</param>
+        /// <returns>Handle of the SQLite connection.</returns>
         public static SQLiteConnection DbOpen(string connectionString)
         {
             SQLiteConnection conn = new SQLiteConnection(connectionString);
@@ -102,14 +110,22 @@ namespace HomeCinema.SQLFunc
             GlobalVars.LogDb("SQLHelper-DbOpen", "DB Open: " + conn.FileName);
             return conn;
         }
-        // Close connection to database
+        /// <summary>
+        /// Close the open SQLite connection.
+        /// </summary>
+        /// <param name="c">Handle of the SQL connection.</param>
         public static void DbClose(SQLiteConnection c)
         {
             string cFile = c.FileName;
             c.Dispose();
             GlobalVars.LogDb("SQLHelper-DbClose", "DB Closed: " + cFile);
         }
-        // Execute a query that has no return row, returns if succesful or not
+        /// <summary>
+        /// Execute a query that has no return row.
+        /// </summary>
+        /// <param name="qry">SQL string query.</param>
+        /// <param name="calledFrom">Caller of this function.</param>
+        /// <returns>True, if successful. Otherwise, false</returns>
         public static bool DbExecNonQuery(string qry, string calledFrom)
         {
             bool DONE = false;
@@ -142,11 +158,21 @@ namespace HomeCinema.SQLFunc
             }
             return DONE;
         }
-        // Initialize datatable
+        /// <summary>
+        /// Initialize a DataTable, with columns.
+        /// </summary>
+        /// <param name="cols">String array of column names.</param>
+        /// <returns>DataTable ref.</returns>
         public DataTable InitializeDT(String[] cols)
         {
             return InitializeDT(true, cols);
         }
+        /// <summary>
+        /// Initialize a DataTable, with COLUMN [Id], and other columns.
+        /// </summary>
+        /// <param name="WITH_ID">Include [Id] to DataTable Column.</param>
+        /// <param name="cols">Column names.</param>
+        /// <returns>DataTable ref</returns>
         public DataTable InitializeDT(bool WITH_ID, String[] cols)
         {
             DataTable dt = new DataTable();
@@ -197,7 +223,13 @@ namespace HomeCinema.SQLFunc
             dt.AcceptChanges();
             return dt;
         }
-        // Execute query statement
+        /// <summary>
+        /// Execute generic query statement.
+        /// </summary>
+        /// <param name="qry">Query string to run.</param>
+        /// <param name="cols">Columns for return.</param>
+        /// <param name="calledFrom">Method calling this function.</param>
+        /// <returns>DataTable, filled with result sets.</returns>
         public DataTable DbQuery(string qry, string cols, string calledFrom)
         {
             string errFrom = "SQLHelper-DbQuery";
@@ -215,8 +247,8 @@ namespace HomeCinema.SQLFunc
             DataTable dt = InitializeDT(cols_qry);
 
             // Execute query
-            SQLiteDataReader r = cmd.ExecuteReader();
             GlobalVars.LogDb($"{errFrom} (START) [Called by: {calledFrom}]", "qry: " + qry);
+            SQLiteDataReader r = cmd.ExecuteReader();
             
             // Get all data results
             while (r.Read())
@@ -248,7 +280,13 @@ namespace HomeCinema.SQLFunc
             dt.AcceptChanges();
             return dt;
         }
-        // Get rows from single column query
+        /// <summary>
+        /// Get rows from single column query.
+        /// </summary>
+        /// <param name="tableName">Table Name.</param>
+        /// <param name="col">Column name.</param>
+        /// <param name="From">Calling method.</param>
+        /// <returns>List string of results.</returns>
         public List<string> DbQrySingle(string tableName, string col, string From)
         {
             // Create Connection to database
@@ -260,8 +298,8 @@ namespace HomeCinema.SQLFunc
             // Initiate the list
             List<string> list = new List<string>();
             // Execute query
-            SQLiteDataReader r = cmd.ExecuteReader();
             GlobalVars.LogDb($"SQLHelper-DbQrySingle (START)(From: {From})", "qry: " + qry);
+            SQLiteDataReader r = cmd.ExecuteReader();
             
             // Get results
             while (r.Read())
@@ -280,15 +318,19 @@ namespace HomeCinema.SQLFunc
             // Return list of results
             return list;
         }
-        // Insert new record, return ID of last insert. Otherwise 0
+        /// <summary>
+        /// // Insert new record, return ID of last insert. Otherwise 0
+        /// </summary>
+        /// <param name="dt">DataTable to insert the record to.</param>
+        /// <param name="callFrom">Method calling.</param>
+        /// <returns>LastID inserted or 0.</returns>
         public int DbInsertMovie(DataTable dt, string callFrom)
         {
             // Setups
             string colsInfo = "";
-            string errFrom = "SQLHelper-DbInsertMovie";
+            string errFrom = $"SQLHelper-DbInsertMovie [calledFrom: {callFrom}]";
             int LastID = 0; // Last ID Inserted succesfully
             int rows = 0; // Number of total rows inserted successfully
-            //string cols_qry = "";
 
             // Get columns from info
             foreach (string s in GlobalVars.DB_TABLE_INFO)
@@ -350,8 +392,8 @@ namespace HomeCinema.SQLFunc
                 cmd.CommandText = qry;
 
                 // Log Insert filePath and query
-                GlobalVars.LogDb($"{errFrom} (INSERT MOVIE START)({callFrom})", "Inserting: " + fPathFile);
-                GlobalVars.LogDb($"{errFrom} ({GlobalVars.DB_TNAME_INFO})({callFrom})", $"qry: {qry}");
+                GlobalVars.LogDb($"{errFrom} (INSERT MOVIE START)", "Inserting: " + fPathFile);
+                GlobalVars.LogDb($"{errFrom} ({GlobalVars.DB_TNAME_INFO})", $"qry: {qry}");
                 
                 // Execute query for INFO
                 int affected = cmd.ExecuteNonQuery();
@@ -365,8 +407,9 @@ namespace HomeCinema.SQLFunc
                     string colsFile = $"[{GlobalVars.DB_TABLE_FILEPATH[0]}],[{GlobalVars.DB_TABLE_FILEPATH[1]}],[{GlobalVars.DB_TABLE_FILEPATH[2]}],[{GlobalVars.DB_TABLE_FILEPATH[3]}]";
                     qry = $"INSERT INTO {GlobalVars.DB_TNAME_FILEPATH} ({colsFile}) VALUES({LastID},'{fPathFile}','{fPathSub}','{fPathTrailer}');";
                     cmd.CommandText = qry;
+                    GlobalVars.LogDb($"{errFrom} ({GlobalVars.DB_TNAME_FILEPATH})", $"qry: {qry}");
                     cmd.ExecuteNonQuery();
-                    GlobalVars.LogDb($"{errFrom} ({GlobalVars.DB_TNAME_FILEPATH})({callFrom})", $"qry: {qry}");
+                    
                     rows += 1;
 
                     // Add cover image by capturing media
@@ -381,8 +424,8 @@ namespace HomeCinema.SQLFunc
                     }
                     catch (Exception exShell)
                     {
-                        GlobalVars.LogDb($"{errFrom} (Insert Cover FilePath)({GlobalVars.DB_TNAME_FILEPATH})({callFrom})", coverFilepath);
-                        GlobalVars.LogDb($"{errFrom} (ShellFile thumbnail Error)({GlobalVars.DB_TNAME_FILEPATH})({callFrom})", exShell.Message);
+                        GlobalVars.LogDb($"{errFrom} (Insert Cover FilePath)({GlobalVars.DB_TNAME_FILEPATH})", coverFilepath);
+                        GlobalVars.LogDb($"{errFrom} (ShellFile thumbnail Error)({GlobalVars.DB_TNAME_FILEPATH})", exShell.Message);
                     }
                 }
                 // Nothing is inserted
@@ -395,7 +438,7 @@ namespace HomeCinema.SQLFunc
                 //break;
             }
             // Release memory
-            GlobalVars.LogDb($"{errFrom} (FINISHED INSERT)({callFrom})", $"Rows Inserted: ({rows.ToString()})");
+            GlobalVars.LogDb($"{errFrom} (FINISHED INSERT)", $"Rows Inserted: ({rows.ToString()})");
             dt.Clear();
             dt.Dispose();
 
@@ -412,12 +455,17 @@ namespace HomeCinema.SQLFunc
             // Return LastID inserted.
             return LastID;
         }
-        // update INFO
+        /// <summary>
+        /// Update Table INFO, with new values.
+        /// </summary>
+        /// <param name="dt">DataTable which contains the new values.</param>
+        /// <param name="from">Method calling.</param>
+        /// <returns>True if succesful. Otherwise, false.</returns>
         public bool DbUpdateInfo(DataTable dt, string from)
         {
             // Set values
             string TableName = GlobalVars.DB_TNAME_INFO;
-            string callFrom = $"SQLHelper-DbUpdateInfo ({from})";
+            string callFrom = $"SQLHelper-DbUpdateInfo (calledFrom: {from})";
             string valpair = "";
             string r0 = "";
             foreach (DataRow r in dt.Rows)
@@ -436,7 +484,7 @@ namespace HomeCinema.SQLFunc
                 }
             }
             valpair = valpair.TrimEnd(',');
-            //GlobalVars.LogDb("SQLHelper-DbUpdateInfo", valpair);
+
             // dispose table
             dt.Clear();
             dt.Dispose();
@@ -445,19 +493,24 @@ namespace HomeCinema.SQLFunc
                          "SET " + valpair + " " +
                         $"WHERE [Id] = {r0}";
             GlobalVars.LogDb(callFrom, $"Update {GlobalVars.DB_TNAME_INFO} ID ({r0}) || Query: {qry}");
-            if (DbExecNonQuery(qry, "SQLHelper-DbUpdateInfo"))
+            if (DbExecNonQuery(qry, callFrom))
             {
                 GlobalVars.LogDb(callFrom, $"ID ({r0}) is updated Succesfully!");
                 return true;
             }
             return false;
         }
-        // update FILEPATH
+        /// <summary>
+        /// Update Table FILEPATH, with new values.
+        /// </summary>
+        /// <param name="dt">DataTable which contains the new values.</param>
+        /// <param name="from">Method calling.</param>
+        /// <returns>True if succesful. Otherwise, false.</returns>
         public bool DbUpdateFilepath(DataTable dt, string from)
         {
             // Set values
             string TableName = GlobalVars.DB_TNAME_FILEPATH;
-            string callFrom = $"SQLHelper-DbUpdateFilepath ({from})";
+            string callFrom = $"SQLHelper-DbUpdateFilepath (CalledFrom: {from})";
             string valpair = "";
             string r0 = "";
             foreach (DataRow r in dt.Rows)
@@ -469,7 +522,7 @@ namespace HomeCinema.SQLFunc
                 }
             }
             valpair = valpair.TrimEnd(',');
-            //GlobalVars.LogDb("SQLHelper-DbUpdateInfo", valpair);
+
             // dispose table
             dt.Clear();
             dt.Dispose();
@@ -478,24 +531,30 @@ namespace HomeCinema.SQLFunc
                          "SET " + valpair + " " +
                         $"WHERE [Id] = {r0}";
             GlobalVars.LogDb(callFrom, $"Update {GlobalVars.DB_TNAME_FILEPATH} ID ({r0}) || Query: {qry}");
-            if (DbExecNonQuery(qry, "SQLHelper-DbUpdateFilepath"))
+            if (DbExecNonQuery(qry, callFrom))
             {
                 GlobalVars.LogDb(callFrom, $"ID ({r0}) is updated Succesfully!");
                 return true;
             }
             return false;
         }
-        // Delete MOVIE from Record
+        /// <summary>
+        /// Delete a MOVIE from Database.
+        /// </summary>
+        /// <param name="ID">Movie ID to delete.</param>
+        /// <param name="errFrom">Method calling.</param>
+        /// <returns>True if succesful. False if otherwise.</returns>
         public bool DbDeleteMovie(string ID, string errFrom)
         {
             // Remove info
+            string calledFrom = $"SQLHelper-DbDeleteMovie [calledFrom: {errFrom}]";
             string qry = $"DELETE FROM {GlobalVars.DB_TNAME_INFO} WHERE [Id] = {ID};";
-            if (DbExecNonQuery(qry, "SQLHelper-DbDeleteMovie"))
+            if (DbExecNonQuery(qry, calledFrom))
             {
                 GlobalVars.LogDb(errFrom, $"ID ({ID}) is removed from database! Table: ({GlobalVars.DB_TNAME_INFO})");
                 // Remove filepath
                 qry = $"DELETE FROM {GlobalVars.DB_TNAME_FILEPATH} WHERE [Id] = {ID};";
-                if (DbExecNonQuery(qry, "SQLHelper-DbDeleteMovie"))
+                if (DbExecNonQuery(qry, calledFrom))
                 {
                     GlobalVars.LogDb(errFrom, $"ID ({ID}) is removed from database! Table: ({GlobalVars.DB_TNAME_FILEPATH})");
                     return true;
