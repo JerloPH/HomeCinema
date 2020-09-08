@@ -200,6 +200,7 @@ namespace HomeCinema.SQLFunc
         // Execute query statement
         public DataTable DbQuery(string qry, string cols, string calledFrom)
         {
+            string errFrom = "SQLHelper-DbQuery";
             // Create Connection to database
             SQLiteConnection conn = DbOpen();
             SQLiteCommand cmd = new SQLiteCommand(conn);
@@ -215,7 +216,7 @@ namespace HomeCinema.SQLFunc
 
             // Execute query
             SQLiteDataReader r = cmd.ExecuteReader();
-            GlobalVars.LogDb($"SQLHelper-DbQuery (START) [Called by: {calledFrom}]", "qry: " + qry);
+            GlobalVars.LogDb($"{errFrom} (START) [Called by: {calledFrom}]", "qry: " + qry);
             
             // Get all data results
             while (r.Read())
@@ -233,14 +234,13 @@ namespace HomeCinema.SQLFunc
                     }
                     catch (Exception ex)
                     {
-                        GlobalVars.ShowError("SQLHelper - DbQuery[r.Read() Error]", ex);
+                        GlobalVars.ShowError($"{errFrom} [r.Read() Error]", ex);
                     }
                 }
                 dt.Rows.Add(row);
             }
             // Log actions to textfile
-            //GlobalVars.LogDb("SQLHelper-DbQuery (END)", "Finished executing Query");
-            GlobalVars.LogDb("SQLHelper-DbQuery (Finished executing Query)", "Number of Rows returned by query: " + Convert.ToString(dt.Rows.Count));
+            GlobalVars.LogDb($"{errFrom} (Finished executing Query)", "Number of Rows returned by query: " + Convert.ToString(dt.Rows.Count));
             // Dispose (Close) Connection to DB
             cmd.Dispose();
             DbClose(conn);
@@ -248,7 +248,7 @@ namespace HomeCinema.SQLFunc
             dt.AcceptChanges();
             return dt;
         }
-        // Get all from single column
+        // Get rows from single column query
         public List<string> DbQrySingle(string tableName, string col, string From)
         {
             // Create Connection to database
@@ -280,12 +280,14 @@ namespace HomeCinema.SQLFunc
             // Return list of results
             return list;
         }
-        // Insert new record, return lastID of insert, otherwise 0
+        // Insert new record, return ID of last insert. Otherwise 0
         public int DbInsertMovie(DataTable dt, string callFrom)
         {
-            // Set columns
+            // Setups
             string colsInfo = "";
             string errFrom = "SQLHelper-DbInsertMovie";
+            int LastID = 0; // Last ID Inserted succesfully
+            int rows = 0; // Number of total rows inserted successfully
             //string cols_qry = "";
 
             // Get columns from info
@@ -307,7 +309,6 @@ namespace HomeCinema.SQLFunc
             transaction = conn.BeginTransaction();
 
             // Vars
-            int rows = 0; // rows returned by query
             string vals = ""; // all values stored in row of DT
             int cc = 0; // counts string[] vals size
 
@@ -315,9 +316,9 @@ namespace HomeCinema.SQLFunc
             string fPathFile = "", fPathSub = "", fPathTrailer = "";
 
             // Create a copy of info table
-            var foos = new List<string>(GlobalVars.DB_TABLE_INFO);
-            foos.RemoveAt(0); // remove [Id] from table info
-            string[] Arrcols = foos.ToArray(); // turn column list to array
+            List<string> dbTableInfoCopy = new List<string>(GlobalVars.DB_TABLE_INFO);
+            dbTableInfoCopy.RemoveAt(0); // remove [Id] from table info
+            string[] dbTableInfoArr = dbTableInfoCopy.ToArray(); // turn column list to array
 
             // Get rows from DT
             foreach (DataRow r in dt.Rows)
@@ -325,7 +326,7 @@ namespace HomeCinema.SQLFunc
                 vals = ""; // Reset values to add
                 cc = 0; // reset column count
                 // Build query for INFO
-                foreach (string s in Arrcols)
+                foreach (string s in dbTableInfoArr)
                 {
                     if (GlobalVars.QryColNumeric(s))
                     {
@@ -340,9 +341,9 @@ namespace HomeCinema.SQLFunc
                 vals = vals.TrimEnd(',');
 
                 // Build for FILEPATH
-                fPathFile = r[Arrcols.Length].ToString(); // file
-                fPathSub = r[Arrcols.Length + 1].ToString(); // sub
-                fPathTrailer = r[Arrcols.Length + 2].ToString(); // trailer
+                fPathFile = r[dbTableInfoArr.Length].ToString(); // file
+                fPathSub = r[dbTableInfoArr.Length + 1].ToString(); // sub
+                fPathTrailer = r[dbTableInfoArr.Length + 2].ToString(); // trailer
 
                 // Set the command for query
                 string qry = $"INSERT INTO {GlobalVars.DB_TNAME_INFO} ({colsInfo}) VALUES({vals});";
@@ -356,9 +357,7 @@ namespace HomeCinema.SQLFunc
                 int affected = cmd.ExecuteNonQuery();
 
                 // LastID of insert movie ID
-                string LastID = conn.LastInsertRowId.ToString();
-                //rows = Convert.ToInt32(LastID);
-                //GlobalVars.LogDb($"{callFrom} (LAST INSERT ID)", LastID);
+                LastID = (int)conn.LastInsertRowId;
 
                 // Try Execute query for FILEPATH
                 if (affected > 0)
@@ -396,7 +395,7 @@ namespace HomeCinema.SQLFunc
                 //break;
             }
             // Release memory
-            GlobalVars.LogDb($"{errFrom} (FINISHED INSERT)({callFrom})", $"Rows returned: ({rows.ToString()})");
+            GlobalVars.LogDb($"{errFrom} (FINISHED INSERT)({callFrom})", $"Rows Inserted: ({rows.ToString()})");
             dt.Clear();
             dt.Dispose();
 
@@ -408,10 +407,10 @@ namespace HomeCinema.SQLFunc
             DbClose(conn);
 
             // Clear list
-            foos.Clear();
+            dbTableInfoCopy.Clear();
 
-            // Return rows affected
-            return rows;
+            // Return LastID inserted.
+            return LastID;
         }
         // update INFO
         public bool DbUpdateInfo(DataTable dt, string from)
