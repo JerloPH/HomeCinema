@@ -29,7 +29,8 @@ namespace HomeCinema
         // Strings PATH
         public string lastPathVideo { get; set; } = "";
         public string lastPathCover { get; set; } = "";
-        // Others
+        // Integers
         public int logsize { get; set; } = 1;
+        public int itemMaxLimit { get; set; } = 0;
     }
 }

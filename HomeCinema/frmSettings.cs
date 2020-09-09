@@ -36,6 +36,15 @@ namespace HomeCinema
         private void frmSettings_Load(object sender, EventArgs e)
         {
             string errFrom = "frmSettings-frmSettings_Load";
+
+            // Add ToolTips
+            ToolTip tooltip = new ToolTip();
+            tooltip.SetToolTip(lblAutoUpdate, "Automatically check for App updates.");
+            tooltip.SetToolTip(lblOfflineMode, "Disable Automatic online functionalities. Overrides Auto update.");
+            tooltip.SetToolTip(lblPlayMovieClick, "On double-clicking an item, plays the File, instead of viewing its details.");
+            tooltip.SetToolTip(lblItemDisplayCount, "Maximum file size of log before deleting it.");
+            tooltip.SetToolTip(lblItemDisplayCount, "Maximum number of Items displayed for Search results.\n'0' displays all.");
+
             // setup contents
             string[] choice = { "True", "False" };
             cbAutoUpdate.Items.AddRange(choice);
@@ -52,6 +61,7 @@ namespace HomeCinema
                 cbPlayMovie.SelectedIndex = Convert.ToInt16(!GlobalVars.SET_AUTOPLAY);
                 // TextBox
                 txtLogSize.Text = (GlobalVars.SET_LOGMAXSIZE / GlobalVars.BYTES).ToString();
+                txtMaxItemCount.Text = GlobalVars.SET_ITEMLIMIT.ToString();
 
                 // ##################### - FILE changes
                 string text = "";
@@ -134,9 +144,11 @@ namespace HomeCinema
                 GlobalVars.SET_AUTOUPDATE = !Convert.ToBoolean(cbAutoUpdate.SelectedIndex);
                 GlobalVars.SET_OFFLINE = !Convert.ToBoolean(cbOffline.SelectedIndex);
                 GlobalVars.SET_AUTOPLAY = !Convert.ToBoolean(cbPlayMovie.SelectedIndex);
+
                 // TextBox
                 long logsize = (long)Convert.ToDouble(txtLogSize.Text);
                 GlobalVars.SET_LOGMAXSIZE = logsize * GlobalVars.BYTES;
+                GlobalVars.SET_ITEMLIMIT = Convert.ToInt32(txtMaxItemCount.Text);
 
                 // Write MediaLoc file
                 string toWrite = "";
@@ -172,6 +184,12 @@ namespace HomeCinema
 
             } catch (Exception ex)
             {
+                // Set default values
+                GlobalVars.SET_AUTOUPDATE = true;
+                GlobalVars.SET_OFFLINE = false;
+                GlobalVars.SET_AUTOPLAY = true;
+                GlobalVars.SET_LOGMAXSIZE = 1 * GlobalVars.BYTES;
+                GlobalVars.SET_ITEMLIMIT = 10;
                 // Log Error
                 GlobalVars.ShowError("frmSettings-btnSave_Click", ex, false);
             }

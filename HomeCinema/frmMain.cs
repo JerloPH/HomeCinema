@@ -612,6 +612,8 @@ namespace HomeCinema
             GlobalVars.SET_AUTOUPDATE = Convert.ToBoolean(config.autoUpdate);
             // AutoPlay Movie, instead of Viewing its Info / Details
             GlobalVars.SET_AUTOPLAY = Convert.ToBoolean(config.instantPlayMovie);
+            // Limit MAX items in query
+            GlobalVars.SET_ITEMLIMIT = config.itemMaxLimit;
         }
         // Save settings to replace old
         private bool SaveSettings()
@@ -623,6 +625,7 @@ namespace HomeCinema
             config.lastPathVideo = GlobalVars.PATH_GETVIDEO;
             config.autoUpdate = Convert.ToInt16(GlobalVars.SET_AUTOUPDATE);
             config.instantPlayMovie = Convert.ToInt16(GlobalVars.SET_AUTOPLAY);
+            config.itemMaxLimit = GlobalVars.SET_ITEMLIMIT;
 
             // Seriliaze to JSON
             string json = JsonConvert.SerializeObject(config, Formatting.Indented);
@@ -1345,7 +1348,10 @@ namespace HomeCinema
                 }
 
                 // Append to end
-                qry += ";";
+                if (GlobalVars.SET_ITEMLIMIT > 0)
+                {
+                    qry += $" LIMIT {GlobalVars.SET_ITEMLIMIT};";
+                }
 
                 // Set query to perform on search
                 SEARCH_QUERY = qry;

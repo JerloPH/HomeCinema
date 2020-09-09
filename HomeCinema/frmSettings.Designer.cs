@@ -30,14 +30,14 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblMaxLogFileSize = new System.Windows.Forms.Label();
             this.txtLogSize = new System.Windows.Forms.TextBox();
             this.cbPlayMovie = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblPlayMovieClick = new System.Windows.Forms.Label();
             this.cbOffline = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblOfflineMode = new System.Windows.Forms.Label();
             this.cbAutoUpdate = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblAutoUpdate = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label8 = new System.Windows.Forms.Label();
             this.txtMediaLoc = new System.Windows.Forms.TextBox();
@@ -50,6 +50,8 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
+            this.lblItemDisplayCount = new System.Windows.Forms.Label();
+            this.txtMaxItemCount = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -69,14 +71,16 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.label4);
+            this.tabPage1.Controls.Add(this.lblItemDisplayCount);
+            this.tabPage1.Controls.Add(this.txtMaxItemCount);
+            this.tabPage1.Controls.Add(this.lblMaxLogFileSize);
             this.tabPage1.Controls.Add(this.txtLogSize);
             this.tabPage1.Controls.Add(this.cbPlayMovie);
-            this.tabPage1.Controls.Add(this.label3);
+            this.tabPage1.Controls.Add(this.lblPlayMovieClick);
             this.tabPage1.Controls.Add(this.cbOffline);
-            this.tabPage1.Controls.Add(this.label2);
+            this.tabPage1.Controls.Add(this.lblOfflineMode);
             this.tabPage1.Controls.Add(this.cbAutoUpdate);
-            this.tabPage1.Controls.Add(this.label1);
+            this.tabPage1.Controls.Add(this.lblAutoUpdate);
             this.tabPage1.Location = new System.Drawing.Point(4, 31);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -85,15 +89,15 @@
             this.tabPage1.Text = "General";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // label4
+            // lblMaxLogFileSize
             // 
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(11, 215);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(244, 31);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Max Log File Size (MB) :";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lblMaxLogFileSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMaxLogFileSize.Location = new System.Drawing.Point(11, 215);
+            this.lblMaxLogFileSize.Name = "lblMaxLogFileSize";
+            this.lblMaxLogFileSize.Size = new System.Drawing.Size(244, 31);
+            this.lblMaxLogFileSize.TabIndex = 7;
+            this.lblMaxLogFileSize.Text = "Max Log File Size (MB) :";
+            this.lblMaxLogFileSize.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // txtLogSize
             // 
@@ -113,15 +117,15 @@
             this.cbPlayMovie.Size = new System.Drawing.Size(167, 33);
             this.cbPlayMovie.TabIndex = 5;
             // 
-            // label3
+            // lblPlayMovieClick
             // 
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(6, 143);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(249, 23);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Play Movie on Click :";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lblPlayMovieClick.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPlayMovieClick.Location = new System.Drawing.Point(6, 143);
+            this.lblPlayMovieClick.Name = "lblPlayMovieClick";
+            this.lblPlayMovieClick.Size = new System.Drawing.Size(249, 23);
+            this.lblPlayMovieClick.TabIndex = 4;
+            this.lblPlayMovieClick.Text = "Play Movie on Click :";
+            this.lblPlayMovieClick.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // cbOffline
             // 
@@ -133,15 +137,15 @@
             this.cbOffline.Size = new System.Drawing.Size(167, 33);
             this.cbOffline.TabIndex = 3;
             // 
-            // label2
+            // lblOfflineMode
             // 
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(11, 89);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(244, 23);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Offline Mode :";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lblOfflineMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOfflineMode.Location = new System.Drawing.Point(11, 89);
+            this.lblOfflineMode.Name = "lblOfflineMode";
+            this.lblOfflineMode.Size = new System.Drawing.Size(244, 23);
+            this.lblOfflineMode.TabIndex = 2;
+            this.lblOfflineMode.Text = "Offline Mode :";
+            this.lblOfflineMode.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // cbAutoUpdate
             // 
@@ -153,15 +157,15 @@
             this.cbAutoUpdate.Size = new System.Drawing.Size(167, 33);
             this.cbAutoUpdate.TabIndex = 1;
             // 
-            // label1
+            // lblAutoUpdate
             // 
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(11, 32);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(244, 23);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Auto Update :";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lblAutoUpdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAutoUpdate.Location = new System.Drawing.Point(11, 32);
+            this.lblAutoUpdate.Name = "lblAutoUpdate";
+            this.lblAutoUpdate.Size = new System.Drawing.Size(244, 23);
+            this.lblAutoUpdate.TabIndex = 0;
+            this.lblAutoUpdate.Text = "Auto Update :";
+            this.lblAutoUpdate.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // tabPage2
             // 
@@ -289,6 +293,24 @@
             this.label9.TabIndex = 16;
             this.label9.Text = "* Changes Apply after Restart";
             // 
+            // lblItemDisplayCount
+            // 
+            this.lblItemDisplayCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblItemDisplayCount.Location = new System.Drawing.Point(11, 275);
+            this.lblItemDisplayCount.Name = "lblItemDisplayCount";
+            this.lblItemDisplayCount.Size = new System.Drawing.Size(244, 31);
+            this.lblItemDisplayCount.TabIndex = 9;
+            this.lblItemDisplayCount.Text = "Item Display Count : ";
+            this.lblItemDisplayCount.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // txtMaxItemCount
+            // 
+            this.txtMaxItemCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMaxItemCount.Location = new System.Drawing.Point(271, 269);
+            this.txtMaxItemCount.Name = "txtMaxItemCount";
+            this.txtMaxItemCount.Size = new System.Drawing.Size(167, 30);
+            this.txtMaxItemCount.TabIndex = 8;
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -319,13 +341,13 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblAutoUpdate;
         private System.Windows.Forms.ComboBox cbOffline;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblOfflineMode;
         private System.Windows.Forms.ComboBox cbAutoUpdate;
         private System.Windows.Forms.ComboBox cbPlayMovie;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblPlayMovieClick;
+        private System.Windows.Forms.Label lblMaxLogFileSize;
         private System.Windows.Forms.TextBox txtLogSize;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtMediaExt;
@@ -338,5 +360,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtMediaLoc;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lblItemDisplayCount;
+        private System.Windows.Forms.TextBox txtMaxItemCount;
     }
 }
