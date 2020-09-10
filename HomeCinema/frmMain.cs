@@ -818,7 +818,6 @@ namespace HomeCinema
             // Count progress
             int progress = 0;
             BackgroundWorker worker = sender as BackgroundWorker;
-            //BackgroundWorker worker = bgSearchInDB;
 
             // Log Query
             GlobalVars.Log(errFrom, $"START Background worker from: {Name}");
