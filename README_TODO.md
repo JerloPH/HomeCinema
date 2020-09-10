@@ -1,5 +1,10 @@
 # HomeCinema - Features to Add / Bugs to Fix
 
+## Priority ListView
+
+- Scrape Anime info from Anilist/MyAnimeList
+- Add folders as series into the App.
+
 ## Features:
 - General
   - [ ] Update GUI
@@ -21,10 +26,21 @@
 	  - [ ] About
   - [ ] Auto-download update
   - [ ] Check all Files in DB if Existed. If not, "move to another db / keep".
+  - Open Media Player in 2nd monitor, if existing. **On hold**.
 
 - Main Form
   - [ ] Add Button to Group Items (Group by: Series Name, if Series) *(Check if season or episode is not empty, and get only episode 1)* **On-HOLD**
-  
+  - [x] Automatically get information from IMDB when newly added media (IMDB Scraper). **Ongoing**.
+    - Done:
+	  - IMDB Id
+	  - Year, Title
+	  - Summary
+	  - Genre
+	  - Trailer YT Link
+	  - Artist, Director, Producer
+	  - Country
+	  - Cover Image
+	  
 - Movie Information Form
   - [ ] Scrape all info from *TMDB API*.
     - [x] Cover Image
@@ -38,15 +54,7 @@
 	
   - [ ] ~~Switch webBrowser to Cefsharp Browser.~~ **Cancelled**
   
-  - [x] Automatically get information from IMDB when newly added media (IMDB Scraper). **Ongoing**.
-    - Done:
-	  - IMDB Id
-	  - Year, Title
-	  - Summary
-	  - Genre
-	  - Trailer YT Link
-	  - Artist, Director, Producer
-	  - Country
+  
 
 ## Bugs
 
