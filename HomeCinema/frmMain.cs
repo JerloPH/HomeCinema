@@ -84,7 +84,7 @@ namespace HomeCinema
 
             // Set tooltips for controls
             ToolTip ttShowNew = new ToolTip();
-            ttShowNew.SetToolTip(this.btnShowNew, "Show Recently Added Movies");
+            ttShowNew.SetToolTip(this.btnSettings, "Show Recently Added Movies");
             ttShowNew.SetToolTip(this.btnClean, "Clean temporary files");
             ttShowNew.SetToolTip(this.btnAddMovie, "Add Single Movie to List");
             ttShowNew.SetToolTip(this.cbSort, "Change Sorting By");
@@ -1424,16 +1424,10 @@ namespace HomeCinema
                 }
             }
         }
-        // Show ONLY Newly-added media files
-        private void btnShowNew_Click(object sender, EventArgs e)
+        // Show "Settings"" form.
+        private void btnSettings_Click(object sender, EventArgs e)
         {
-            // Set Search Query
-            SEARCH_COLS = LVMovieItemsColumns;
-            SEARCH_QUERY = $"SELECT {SEARCH_COLS} FROM {GlobalVars.DB_TNAME_INFO} WHERE imdb=0 OR category=0;";
-            SEARCH_QUERY_PREV = SEARCH_QUERY;
-
-            // Perform click on search button: btnSearch
-            RefreshMovieList();
+            ShowSettingsForm();
         }
         // Delete files from temp
         private void btnClean_Click(object sender, EventArgs e)

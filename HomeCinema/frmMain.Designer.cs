@@ -35,7 +35,7 @@ namespace HomeCinema
             this.cbSortOrder = new System.Windows.Forms.ComboBox();
             this.cbSort = new System.Windows.Forms.ComboBox();
             this.btnClean = new System.Windows.Forms.Button();
-            this.btnShowNew = new System.Windows.Forms.Button();
+            this.btnSettings = new System.Windows.Forms.Button();
             this.btnAddMovie = new System.Windows.Forms.Button();
             this.btnChangeView = new System.Windows.Forms.Button();
             this.lvSearchResult = new System.Windows.Forms.ListView();
@@ -75,7 +75,7 @@ namespace HomeCinema
             this.groupBox2.Controls.Add(this.cbSortOrder);
             this.groupBox2.Controls.Add(this.cbSort);
             this.groupBox2.Controls.Add(this.btnClean);
-            this.groupBox2.Controls.Add(this.btnShowNew);
+            this.groupBox2.Controls.Add(this.btnSettings);
             this.groupBox2.Controls.Add(this.btnAddMovie);
             this.groupBox2.Controls.Add(this.btnChangeView);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -126,25 +126,25 @@ namespace HomeCinema
             this.btnClean.UseVisualStyleBackColor = false;
             this.btnClean.Click += new System.EventHandler(this.btnClean_Click);
             // 
-            // btnShowNew
+            // btnSettings
             // 
-            this.btnShowNew.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnShowNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnShowNew.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnShowNew.Location = new System.Drawing.Point(845, 21);
-            this.btnShowNew.Name = "btnShowNew";
-            this.btnShowNew.Size = new System.Drawing.Size(196, 40);
-            this.btnShowNew.TabIndex = 18;
-            this.btnShowNew.Text = "Show New";
-            this.btnShowNew.UseVisualStyleBackColor = false;
-            this.btnShowNew.Click += new System.EventHandler(this.btnShowNew_Click);
+            this.btnSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSettings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnSettings.Location = new System.Drawing.Point(842, 21);
+            this.btnSettings.Name = "btnSettings";
+            this.btnSettings.Size = new System.Drawing.Size(196, 40);
+            this.btnSettings.TabIndex = 18;
+            this.btnSettings.Text = "Settings";
+            this.btnSettings.UseVisualStyleBackColor = false;
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 
             // btnAddMovie
             // 
             this.btnAddMovie.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnAddMovie.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddMovie.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnAddMovie.Location = new System.Drawing.Point(651, 21);
+            this.btnAddMovie.Location = new System.Drawing.Point(643, 21);
             this.btnAddMovie.Name = "btnAddMovie";
             this.btnAddMovie.Size = new System.Drawing.Size(188, 40);
             this.btnAddMovie.TabIndex = 15;
@@ -491,7 +491,7 @@ namespace HomeCinema
         private GroupBox groupBox2;
         private Button btnAddMovie;
         private Button btnChangeView;
-        private Button btnShowNew;
+        private Button btnSettings;
         private Button btnClean;
         internal ListView lvSearchResult;
         private TextBox txtSearch;
