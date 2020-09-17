@@ -42,7 +42,7 @@ namespace HomeCinema
             tooltip.SetToolTip(lblAutoUpdate, "Automatically check for App updates.");
             tooltip.SetToolTip(lblOfflineMode, "Disable Automatic online functionalities. Overrides Auto update.");
             tooltip.SetToolTip(lblPlayMovieClick, "On double-clicking an item, plays the File, instead of viewing its details.");
-            tooltip.SetToolTip(lblItemDisplayCount, "Maximum file size of log before deleting it.");
+            tooltip.SetToolTip(lblMaxLogFileSize, "Maximum file size of log before deleting it.");
             tooltip.SetToolTip(lblItemDisplayCount, "Maximum number of Items displayed for Search results.\n'0' displays all.");
 
             // setup contents
