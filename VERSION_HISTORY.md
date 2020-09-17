@@ -1,5 +1,26 @@
 # HomeCinema - Project History:
 
+## v0.0.7.0 ***build 23 - (17 September 2020 PHT)***
+### More Features and Fixes
+
+Build from latest commit: e1c4a97
+
+**[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.7.0/HomeCinema-Windows_v0.0.7.0.zip "HomeCinema-Windows_v0.0.7.0.zip")**
+	
+**What's New?**
+- FT: Automatically Download cover image from [TMDB](https://www.themoviedb.org/), when online, during insert of new media.
+- FT: Added **[Settings]** button.
+- FT: Set LIMIT count to search results. *See **Item Display Count** in [Settings]*
+- FIX: Search results error:
+	- Other filters can override *Title* search.
+	- *Category* can override other filters.
+- MINOR: Clean JSON files from **temp** folder, when **[Clean]** button is pressed.
+- MINOR: Automatically remove excess final backslash, from Folder paths.
+- GUI: Removed **[Show New]** button.
+- RES: Changed App Icon.
+- Code cleanup, and improvements.
+****
+
 ## v0.0.6.3 ***build 22 - (06 September 2020 PHT)***
 ### Optimizations and Fixes
 
