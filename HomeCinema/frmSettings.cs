@@ -184,12 +184,8 @@ namespace HomeCinema
 
             } catch (Exception ex)
             {
-                // Set default values
-                GlobalVars.SET_AUTOUPDATE = true;
-                GlobalVars.SET_OFFLINE = false;
-                GlobalVars.SET_AUTOPLAY = true;
-                GlobalVars.SET_LOGMAXSIZE = 1 * GlobalVars.BYTES;
-                GlobalVars.SET_ITEMLIMIT = 10;
+                // Show Message error
+                GlobalVars.ShowWarning("Error on Saving Settings!\nCheck all values if correct.");
                 // Log Error
                 GlobalVars.ShowError("frmSettings-btnSave_Click", ex, false);
             }
