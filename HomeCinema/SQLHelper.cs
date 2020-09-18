@@ -404,8 +404,11 @@ namespace HomeCinema.SQLFunc
                 // Try Execute query for FILEPATH
                 if (affected > 0)
                 {
+                    // format FilePath with single quotations
+                    string fPathFileFix = fPathFile.Replace("'", "''");
+                    GlobalVars.LogDb($"{errFrom} (FORMAT filepath)", "Formatted: " + fPathFileFix);
                     string colsFile = $"[{GlobalVars.DB_TABLE_FILEPATH[0]}],[{GlobalVars.DB_TABLE_FILEPATH[1]}],[{GlobalVars.DB_TABLE_FILEPATH[2]}],[{GlobalVars.DB_TABLE_FILEPATH[3]}]";
-                    qry = $"INSERT INTO {GlobalVars.DB_TNAME_FILEPATH} ({colsFile}) VALUES({LastID},'{fPathFile}','{fPathSub}','{fPathTrailer}');";
+                    qry = $"INSERT INTO {GlobalVars.DB_TNAME_FILEPATH} ({colsFile}) VALUES({LastID},'{fPathFileFix}','{fPathSub}','{fPathTrailer}');";
                     cmd.CommandText = qry;
                     GlobalVars.LogDb($"{errFrom} ({GlobalVars.DB_TNAME_FILEPATH})", $"qry: {qry}");
                     cmd.ExecuteNonQuery();
