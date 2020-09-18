@@ -181,10 +181,13 @@ namespace HomeCinema
             bgSearchInDB.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgwMovie_DoneSearchMovie);
         }
 // ####################################################################################### Database Functions
-        bool InsertToDB(List<string> listofFiles, string errFrom)
+        int InsertToDB(List<string> listofFiles, string errFrom)
         {
             string callFrom = $"frmMain ({Name})-InsertToDB-({errFrom})";
             string rPosterLink = "";
+            string mediatype = "movie";
+            int count = 0; // count of inserts, whether success or fail
+            string logInsert = ""; // Log succesfully inserted and failed inserts
 
             // Insert to DB if NEW MOVIE
             // Build new string[] from INFO, FIlepath
@@ -199,10 +202,25 @@ namespace HomeCinema
                 // variables
                 string getIMDB = "";
                 string mName = "";
+                bool isFile = true;
+
                 // Get proper name, without the folder paths
                 try
                 {
-                    mName = Path.GetFileNameWithoutExtension(filePath);
+                    FileAttributes attr = File.GetAttributes(filePath);
+
+                    if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+                    {
+                        // Its a series directory
+                        isFile = false;
+                        mediatype = "tv";
+                        mName = new DirectoryInfo(filePath).Name;
+                    }
+                    else
+                    {
+                        // Its a file
+                        mName = Path.GetFileNameWithoutExtension(filePath);
+                    }
 
                 } catch (Exception ex)
                 {
@@ -248,11 +266,11 @@ namespace HomeCinema
                 if (GlobalVars.SET_OFFLINE == false)
                 {
                     // Get imdb id and set it to textbox
-                    getIMDB = GlobalVars.GetIMDBId(mName, "dummy", errFrom);
+                    getIMDB = GlobalVars.GetIMDBId(mName, "dummy", mediatype);
                     if (String.IsNullOrWhiteSpace(getIMDB) == false)
                     {
                         // Get List of values from TMDB
-                        List<string> list = GlobalVars.GetMovieInfoByImdb(getIMDB, errFrom);
+                        List<string> list = GlobalVars.GetMovieInfoByImdb(getIMDB, mediatype);
                         rJson = list[0];
                         rTrailer = list[1];
                         rTitle = list[2];
@@ -293,13 +311,13 @@ namespace HomeCinema
                 // Make the DataRow
                 DataRow row = dt.NewRow();
                 row[0] = getIMDB; // IMDB
-                row[1] = rTitle; // name
+                row[1] = rTitle.Replace('"', '\''); // name
                 row[2] = rOrigTitle; // episode name
                 row[3] = ""; // series name
                 row[4] = ""; // season number
                 row[5] = ""; // episode num
                 row[6] = rCountry; // country
-                row[7] = GlobalVars.GetCategoryByFilter(rGenre, rCountry); // category
+                row[7] = GlobalVars.GetCategoryByFilter(rGenre, rCountry, mediatype); // category
                 row[8] = rGenre; // genre
                 row[9] = ""; // studio
                 row[10] = rProducer; // producer
@@ -309,34 +327,41 @@ namespace HomeCinema
                 row[14] = rSummary; // summary
                 row[15] = filePath; // filepath
                 row[16] = GetSubtitleFile(filePath); // file sub
-                row[17] = GlobalVars.LINK_YT + rTrailer; // trailer
+                row[17] = (String.IsNullOrWhiteSpace(rTrailer) ? "" : GlobalVars.LINK_YT + rTrailer); // trailer
                 dt.Rows.Add(row);
+                count += 1; // add to count
+                logInsert += $"{filePath}\n";
             }
             dt.AcceptChanges();
 
             int insertResult = DBCON.DbInsertMovie(dt, callFrom);
             if (insertResult > 0)
             {
-                string movieId = insertResult.ToString();
-                // Download Cover from TMDB
-                if (GlobalVars.DownloadCoverFromTMDB(movieId, rPosterLink, errFrom))
+                // Download cover, if not OFFLINE_MODE
+                if (GlobalVars.SET_OFFLINE == false)
                 {
-                    try
+                    string movieId = insertResult.ToString();
+                    // Download Cover from TMDB
+                    if (GlobalVars.DownloadCoverFromTMDB(movieId, rPosterLink, errFrom))
                     {
-                        // Move from temp folder to poster path
-                        string oldFile = GlobalVars.PATH_TEMP + movieId + ".jpg";
-                        string newFile = GlobalVars.ImgFullPath(movieId);
-                        GlobalVars.DeleteMove(newFile, errFrom); // Delete existing cover first
-                        File.Move(oldFile, newFile);
+                        try
+                        {
+                            // Move from temp folder to poster path
+                            string oldFile = GlobalVars.PATH_TEMP + movieId + ".jpg";
+                            string newFile = GlobalVars.ImgFullPath(movieId);
+                            GlobalVars.DeleteMove(newFile, errFrom); // Delete existing cover first
+                            File.Move(oldFile, newFile);
 
-                    } catch (Exception ex)
-                    {
-                        GlobalVars.ShowError(errFrom, ex, false);
+                        }
+                        catch (Exception ex)
+                        {
+                            GlobalVars.ShowError(errFrom, ex, false);
+                        }
                     }
                 }
-                return true;
             }
-            return false;
+            GlobalVars.WriteToFile(GlobalVars.PATH_START + "MovieResult_DoneInsert.Log", logInsert);
+            return count;
         }
         // return filepath from DB
         private string GetFilePath(string ID, string calledFrom)
@@ -822,7 +847,7 @@ namespace HomeCinema
             // Log Query
             GlobalVars.Log(errFrom, $"START Background worker from: {Name}");
             DataTable dt = DBCON.DbQuery(qry, cols, errFrom);
-
+            GlobalVars.Log(errFrom, $"DT is obtained");
             if (dt.Rows.Count > 0)
             {
                 foreach (DataRow r in dt.Rows)
@@ -836,6 +861,7 @@ namespace HomeCinema
             {
                 e.Result = null;
             }
+            GlobalVars.Log(errFrom, $"DONE Background worker from: {Name}");
         }
         private void bgwMovie_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
@@ -1000,8 +1026,7 @@ namespace HomeCinema
 
             // Get Movie files on Folder, even subFolder
             // Create variables
-            int count = 0;
-            int countVoid = 0;
+            int countVoid = 0; // void files, not media
 
             // Build a list of Directories from medialocation.hc-data
             List<string> DirListFrom = GlobalVars.DirSearch(FOLDERTOSEARCH, calledFrom +"- DirSearch (Exception)");
@@ -1016,8 +1041,7 @@ namespace HomeCinema
                 // List of files valid to add
                 List<string> listToAdd = new List<string>();
 
-                string res = ""; // List of all newly Inserted "Media Files" filepaths
-                string nonres = ""; // List of "Voided Files" filepaths
+                string nonres = ""; // List of "Voided Files" filepaths, not media files
                 bool voided = true; // Check if file can be added to "Voided Files" Log
 
                 // If file is a movie,
@@ -1063,8 +1087,6 @@ namespace HomeCinema
                             if (canAdd)
                             {
                                 listToAdd.Add(file);
-                                res += file + "\n";
-                                count += 1;
                                 voided = false;
                             }
                             break;
@@ -1077,23 +1099,61 @@ namespace HomeCinema
                     }
                 }
 
+                // Add series' folder paths
+                List<string> listSeries = GlobalVars.GetSeriesLocations();
+                if (listSeries.Count > 0)
+                {
+                    foreach (string folderPath in listSeries)
+                    {
+                        // Check if folder already exists in the database
+                        if (listAlreadyinDB.Count > 0)
+                        {
+                            // Iterate over existing files/folder list
+                            foreach (string pathExist in listAlreadyinDB)
+                            {
+                                // Remove if it already exists
+                                if (pathExist == folderPath)
+                                {
+                                    // remove the item from list of already existing
+                                    int index = listAlreadyinDB.IndexOf(folderPath);
+                                    try
+                                    {
+                                        listAlreadyinDB.RemoveAt(index);
+
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        GlobalVars.ShowError(calledFrom, ex, false);
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // Add it to the list of new series to add to DB
+                            listToAdd.Add(folderPath);
+                        }
+                    }
+                }
+
                 // Clear previous lists
                 DirListFrom.Clear();
                 listAlreadyinDB.Clear();
 
-                GlobalVars.WriteToFile(GlobalVars.PATH_START + "MovieResult.Log", res);
-                GlobalVars.WriteToFile(GlobalVars.PATH_START + "MovieResult_Void.Log", nonres);
+                GlobalVars.WriteToFile(GlobalVars.PATH_START + "MovieResult_Skipped.Log", nonres);
 
                 // Add now to database
-                if (InsertToDB(listToAdd, calledFrom + "-listToAdd"))
+                int insertRes = InsertToDB(listToAdd, calledFrom + "-listToAdd");
+                if (insertRes > 0)
                 {
                     // Clear prev list
                     listToAdd.Clear();
 
                     // Send total count of results
                     List<int> listRes = new List<int>();
-                    listRes.Add(count);
-                    listRes.Add(countVoid);
+                    listRes.Add(insertRes); // success of inserts
+                    listRes.Add(countVoid); // not media files
                     e.Result = listRes;
                 }
                 else

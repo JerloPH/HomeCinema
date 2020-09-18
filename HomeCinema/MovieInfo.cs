@@ -41,6 +41,9 @@ namespace HomeCinema
         [JsonProperty("release_date")]
         public string release_date { get; set; } = "";
 
+        [JsonProperty("first_air_date")]
+        public string first_air_date { get; set; } = "";
+
         [JsonProperty("overview")]
         public string overview { get; set; } = "";
 

@@ -640,6 +640,7 @@ namespace HomeCinema
         {
             string errFrom = "frmMovieInfo-btnFetchData_Click";
             string IMDB_ID = txtIMDB.Text;
+            string mediatype = "movie";
             // Exit if IMDB id is invalid
             if (String.IsNullOrWhiteSpace(IMDB_ID) || IMDB_ID=="0" || (IMDB_ID.StartsWith("tt")==false))
             {
@@ -648,8 +649,14 @@ namespace HomeCinema
                 return;
             }
 
+            // Check if series
+            if (cbCategory.Text.ToLower().Contains("series"))
+            {
+                mediatype = "tv";
+            }
+
             // Get List of values from TMDB
-            List<string> list = GlobalVars.GetMovieInfoByImdb(IMDB_ID, errFrom);
+            List<string> list = GlobalVars.GetMovieInfoByImdb(IMDB_ID, mediatype);
 
             // Set the values to textboxes
             string YT_ID = list[1];
@@ -733,7 +740,12 @@ namespace HomeCinema
             }
 
             // Get imdb id and set it to textbox
-            string getIMDB = GlobalVars.GetIMDBId(txtName.Text, MOVIE_ID, errFrom);
+            string mediatype = "movie";
+            if (cbCategory.Text.ToLower().Contains("series"))
+            {
+                mediatype = "tv";
+            }
+            string getIMDB = GlobalVars.GetIMDBId(txtName.Text, MOVIE_ID, mediatype);
             if (String.IsNullOrWhiteSpace(getIMDB) == false)
             {
                 txtIMDB.Text = getIMDB;
