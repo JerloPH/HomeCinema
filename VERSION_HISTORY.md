@@ -1,5 +1,23 @@
 # HomeCinema - Project History:
 
+## v0.0.8.0 ***build 24 - (22 September 2020 PHT)***
+### [Series] can now be Added!
+
+Build from latest commit: 2070c18
+
+**[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.8.0/HomeCinema-Windows_v0.0.8.0.zip "HomeCinema-Windows_v0.0.8.0.zip")**
+	
+**What's New?**
+- REV: Add your "**Series**" top-folder into the App!
+- REV: Removed **[Add Movie]** Button.
+- FT: Added [**Hide Animation**] checkbox, to filter out *Anime and Cartoons*.
+- FIX: Allow to add File names / folders with single quotations ( **'** ).
+- MINOR: Show Message when error occurs on Settings changes.
+- GUI: Fix multiple label and tooltips mistakes.
+- GUI: Changed the **[Loading]** Icon.
+- Code cleanup, and improvements.
+****
+
 ## v0.0.7.0 ***build 23 - (17 September 2020 PHT)***
 ### More Features and Fixes
 

@@ -1,22 +1,22 @@
 # HomeCinema
 
-<img src="/data/screenshot_v0.0.7.0.png"></img>
+<img src="/data/screenshot_v0.0.8.0.png"></img>
 
-**version:**	0.0.7.0 <br>
-**build:**		23
+**version:**	0.0.8.0 <br>
+**build:**		24
 
 ## Downloads
 
-**Windows 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.7.0/HomeCinema-Windows_v0.0.7.0.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
+**Windows 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.8.0/HomeCinema-Windows_v0.0.8.0.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
 
 ### Download Counts
 
-**Current:** &nbsp; [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.7.0/total.svg)]() <br>
-**Overall:** &nbsp;  [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/total.svg)]()
+**Current:** &nbsp; [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.8.0/total.svg)]() <br>
+**Overall:** &nbsp; [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/total.svg)]()
 
 ## Requirements
 
-- 2GB or more RAM. <br>
+- 4GB or more RAM. <br>
 - Microsoft .NET Framework Runtime, version 4.6 or higher. [Download Link](https://dotnet.microsoft.com/download/dotnet-framework/net46) <br>
 
 ****
@@ -47,8 +47,14 @@ Ease the pain of browsing through many folders and finding out which movie is wh
 2. Go to **File** Tab.
 3. Under **Media Locations**, enter the full directory of folders *containing your media files*.
   - Note: Make sure each entry is seperated by a *comma* ( **,** ).
-  - Example: **D:\Movies,D:\Anime,D:\Shows**
+  - Example: **D:\Movies,D:\Anime Movies**
   - **IMPORTANT NOTE:** First-time loading of App takes a little bit long while to finish. Even more if you have a huge collection of media files.
+  - **NOTES for Adding TV Series :**
+    - The directory **must be** the top-level folder. You must have a directory structure like this:
+	  - **D:\TV Series**
+	  - **\Title of Series and Season**
+	  - **\Episode 1.mp4**
+    - With this structure, type **D:\TV Series** into the [**Series Locations**] Textbox.
   
 <img src="/data/guide_add_media_paths.png"></img>
 

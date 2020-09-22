@@ -3,7 +3,7 @@
 ## Priority ListView
 
 - Scrape Anime info from Anilist/MyAnimeList
-- Add folders as series into the App.
+- Add folders as series into the App. *Done*.
 
 ## Features:
 - General
