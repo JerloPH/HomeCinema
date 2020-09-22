@@ -390,12 +390,7 @@ namespace HomeCinema
         // Play File on Default Player
         private void btnPlay_Click(object sender, EventArgs e)
         {
-            // Directory of Series
-            if (lblCategory.Text.Contains("Series"))
-            {
-                return;
-            }
-            // Single movie file
+            // Play Movie file, or browse folder of Series
             GlobalVars.PlayMedia(MOVIE_FILEPATH);
         }
         private void btnEdit_Click(object sender, EventArgs e)
