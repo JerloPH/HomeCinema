@@ -202,7 +202,6 @@ namespace HomeCinema
                 // variables
                 string getIMDB = "";
                 string mName = "";
-                bool isFile = true;
 
                 // Get proper name, without the folder paths
                 try
@@ -212,7 +211,6 @@ namespace HomeCinema
                     if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
                     {
                         // Its a series directory
-                        isFile = false;
                         mediatype = "tv";
                         mName = new DirectoryInfo(filePath).Name;
                     }
@@ -248,7 +246,6 @@ namespace HomeCinema
                     //LogError
                     GlobalVars.ShowError(errFrom, ex, false);
                 }
-                //GlobalVars.ShowWarning("YEAR: [" + yearFromFname + "]\n" + mName);
 
                 string rJson = "";
                 string rTrailer = "";
