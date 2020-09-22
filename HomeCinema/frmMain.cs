@@ -86,7 +86,7 @@ namespace HomeCinema
             ToolTip ttShowNew = new ToolTip();
             ttShowNew.SetToolTip(this.btnSettings, "Show Recently Added Movies");
             ttShowNew.SetToolTip(this.btnClean, "Clean temporary files");
-            ttShowNew.SetToolTip(this.btnAddMovie, "Add Single Movie to List");
+            ttShowNew.SetToolTip(this.cbHideAnim, "Filter out Animations from Search Results");
             ttShowNew.SetToolTip(this.cbSort, "Change Sorting By");
             ttShowNew.SetToolTip(this.btnChangeView, "Change List view of Items");
 
@@ -1406,6 +1406,13 @@ namespace HomeCinema
                     qry += $"[imdb] = '{txtIMDB.Text}'";
                 }
 
+                // Filter out all animations
+                if (cbHideAnim.CheckState == CheckState.Checked)
+                {
+                    qry += GlobalVars.QryWhere(qry);
+                    qry += " ([category] <= 2)";
+                }
+
                 // Append to end
                 if (GlobalVars.SET_ITEMLIMIT > 0)
                 {
@@ -1462,13 +1469,6 @@ namespace HomeCinema
             {
                 btnSearch.PerformClick();
             }
-        }
-        // Add new movie
-        private void btnAddMovie_Click(object sender, EventArgs e)
-        {
-            string formName = GlobalVars.PREFIX_MOVIEINFO + "0";
-            // Create NEW MOVIE and (frmMovieInfo) SHOW Edit Information form
-            GlobalVars.OpenFormMovieInfo(this, formName, "0", "New Movie ", "frmMain-btnAddMovie_Click (ADD MOVIE)");
         }
         // Auto search if Enter key is pressed
         private void txtSearch_KeyDown(object sender, KeyEventArgs e)

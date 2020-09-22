@@ -36,7 +36,6 @@ namespace HomeCinema
             this.cbSort = new System.Windows.Forms.ComboBox();
             this.btnClean = new System.Windows.Forms.Button();
             this.btnSettings = new System.Windows.Forms.Button();
-            this.btnAddMovie = new System.Windows.Forms.Button();
             this.btnChangeView = new System.Windows.Forms.Button();
             this.lvSearchResult = new System.Windows.Forms.ListView();
             this.txtSearch = new System.Windows.Forms.TextBox();
@@ -63,6 +62,7 @@ namespace HomeCinema
             this.cbCategory = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.cmLV = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cbHideAnim = new System.Windows.Forms.CheckBox();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -72,11 +72,11 @@ namespace HomeCinema
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.BackColor = System.Drawing.Color.Black;
+            this.groupBox2.Controls.Add(this.cbHideAnim);
             this.groupBox2.Controls.Add(this.cbSortOrder);
             this.groupBox2.Controls.Add(this.cbSort);
             this.groupBox2.Controls.Add(this.btnClean);
             this.groupBox2.Controls.Add(this.btnSettings);
-            this.groupBox2.Controls.Add(this.btnAddMovie);
             this.groupBox2.Controls.Add(this.btnChangeView);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.ForeColor = System.Drawing.Color.White;
@@ -118,7 +118,7 @@ namespace HomeCinema
             this.btnClean.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnClean.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClean.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnClean.Location = new System.Drawing.Point(1047, 21);
+            this.btnClean.Location = new System.Drawing.Point(825, 18);
             this.btnClean.Name = "btnClean";
             this.btnClean.Size = new System.Drawing.Size(196, 40);
             this.btnClean.TabIndex = 19;
@@ -131,7 +131,7 @@ namespace HomeCinema
             this.btnSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSettings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnSettings.Location = new System.Drawing.Point(842, 21);
+            this.btnSettings.Location = new System.Drawing.Point(623, 18);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(196, 40);
             this.btnSettings.TabIndex = 18;
@@ -139,25 +139,12 @@ namespace HomeCinema
             this.btnSettings.UseVisualStyleBackColor = false;
             this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 
-            // btnAddMovie
-            // 
-            this.btnAddMovie.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnAddMovie.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddMovie.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnAddMovie.Location = new System.Drawing.Point(643, 21);
-            this.btnAddMovie.Name = "btnAddMovie";
-            this.btnAddMovie.Size = new System.Drawing.Size(188, 40);
-            this.btnAddMovie.TabIndex = 15;
-            this.btnAddMovie.Text = "Add Movie";
-            this.btnAddMovie.UseVisualStyleBackColor = false;
-            this.btnAddMovie.Click += new System.EventHandler(this.btnAddMovie_Click);
-            // 
             // btnChangeView
             // 
             this.btnChangeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnChangeView.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnChangeView.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnChangeView.Location = new System.Drawing.Point(411, 21);
+            this.btnChangeView.Location = new System.Drawing.Point(401, 18);
             this.btnChangeView.Name = "btnChangeView";
             this.btnChangeView.Size = new System.Drawing.Size(216, 40);
             this.btnChangeView.TabIndex = 14;
@@ -463,6 +450,18 @@ namespace HomeCinema
             this.cmLV.Name = "cmLV";
             this.cmLV.Size = new System.Drawing.Size(61, 4);
             // 
+            // cbHideAnim
+            // 
+            this.cbHideAnim.AutoSize = true;
+            this.cbHideAnim.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbHideAnim.ForeColor = System.Drawing.Color.White;
+            this.cbHideAnim.Location = new System.Drawing.Point(1027, 18);
+            this.cbHideAnim.Name = "cbHideAnim";
+            this.cbHideAnim.Size = new System.Drawing.Size(210, 33);
+            this.cbHideAnim.TabIndex = 26;
+            this.cbHideAnim.Text = "Hide Animations";
+            this.cbHideAnim.UseVisualStyleBackColor = true;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -480,6 +479,7 @@ namespace HomeCinema
             this.Text = "Home Cinema";
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -489,7 +489,6 @@ namespace HomeCinema
         #endregion
 
         private GroupBox groupBox2;
-        private Button btnAddMovie;
         private Button btnChangeView;
         private Button btnSettings;
         private Button btnClean;
@@ -520,6 +519,7 @@ namespace HomeCinema
         private ContextMenuStrip cmLV;
         private ComboBox cbSortOrder;
         private ComboBox cbSort;
+        private CheckBox cbHideAnim;
     }
 }
 
