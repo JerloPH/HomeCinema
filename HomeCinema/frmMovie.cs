@@ -91,6 +91,7 @@ namespace HomeCinema
         {
             // Set textbox values from Database
             string cols = "";
+            string errFrom = "frmMovie-LoadInformation";
 
             // get filepath FROM DB
             foreach (string s in GlobalVars.DB_TABLE_FILEPATH)
@@ -100,9 +101,9 @@ namespace HomeCinema
             cols = cols.TrimEnd(',');
             // Build query for FilePath
             string qry = $"SELECT {cols} FROM {GlobalVars.DB_TNAME_FILEPATH} WHERE Id={ID} LIMIT 1;";
-            GlobalVars.Log($"frmMovie-frmMovie Table({GlobalVars.DB_TNAME_FILEPATH})", $"Query src: {qry}");
+            GlobalVars.Log($"{errFrom} Table({GlobalVars.DB_TNAME_FILEPATH})", $"Query src: {qry}");
             // Execute query
-            DataTable dtFile = conn.DbQuery(qry, cols, "frmMovie-LoadInformation");
+            DataTable dtFile = conn.DbQuery(qry, cols, errFrom);
             // Get result in DT
             foreach (DataRow row in dtFile.Rows)
             {
@@ -113,6 +114,11 @@ namespace HomeCinema
             dtFile.Clear();
             dtFile.Dispose();
 
+            // Get filesize, Create ToolTip for Movie Title
+            lblName.Tag = "File Size: " + GlobalVars.GetFileSize(MOVIE_FILEPATH);
+            ToolTip tp = new ToolTip();
+            tp.SetToolTip(lblName, lblName.Tag.ToString());
+
             // get Info FROM DB
             cols = "";
             foreach (string c in GlobalVars.DB_TABLE_INFO)
@@ -122,9 +128,9 @@ namespace HomeCinema
             cols = cols.TrimEnd(',');
             // Build query for INFO
             qry = $"SELECT {cols} FROM {GlobalVars.DB_TNAME_INFO} WHERE Id={ID} LIMIT 1;";
-            GlobalVars.Log("frmMovieInfo-frmMovieInfo (Info)", $"Query src: {qry}");
+            GlobalVars.Log($"{errFrom} (Info)", $"Query src: {qry}");
             // Exxecute query
-            DataTable dtInfo = conn.DbQuery(qry, cols, "frmMovie-LoadInformation");
+            DataTable dtInfo = conn.DbQuery(qry, cols, errFrom);
             // Get result in DT
             foreach (DataRow row in dtInfo.Rows)
             {
@@ -171,7 +177,7 @@ namespace HomeCinema
             
             if (MOVIE_COVER is null || MOVIE_COVER == null)
             {
-                GlobalVars.Log($"frmMovie-({Name})-LoadInformation", "Setting Image Cover error");
+                GlobalVars.Log(errFrom, "Setting Image Cover error");
                 Close();
             }
             picBox.Image = MOVIE_COVER;
@@ -191,14 +197,14 @@ namespace HomeCinema
             } catch (Exception exc)
             {
                 // Error log
-                GlobalVars.ShowError($"frmMovie-LoadInformation\n\tFile:\n\t{ Imagefile }", exc, false);
+                GlobalVars.ShowError($"{errFrom}\n\tFile:\n\t{ Imagefile }", exc, false);
             }
 
             // Adjust Trailer Frame
             TrailerFrame();
 
             // Log changes
-            GlobalVars.Log($"frmMovie-LoadInformation ({Name})", "Refreshed the Information!");
+            GlobalVars.Log($"{errFrom} ({Name})", "Refreshed the Information!");
 
             // Set form title and focus
             Text = $"{lblName.Text} ({lblYear.Text})";
