@@ -30,6 +30,8 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.lblItemDisplayCount = new System.Windows.Forms.Label();
+            this.txtMaxItemCount = new System.Windows.Forms.TextBox();
             this.lblMaxLogFileSize = new System.Windows.Forms.Label();
             this.txtLogSize = new System.Windows.Forms.TextBox();
             this.cbPlayMovie = new System.Windows.Forms.ComboBox();
@@ -41,26 +43,29 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label8 = new System.Windows.Forms.Label();
             this.txtMediaLoc = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.txtCountry = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.txtGenre = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtMediaExt = new System.Windows.Forms.TextBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
-            this.lblItemDisplayCount = new System.Windows.Forms.Label();
-            this.txtMaxItemCount = new System.Windows.Forms.TextBox();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtCountry = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtGenre = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtSeriesLoc = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
@@ -88,6 +93,24 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "General";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // lblItemDisplayCount
+            // 
+            this.lblItemDisplayCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblItemDisplayCount.Location = new System.Drawing.Point(11, 275);
+            this.lblItemDisplayCount.Name = "lblItemDisplayCount";
+            this.lblItemDisplayCount.Size = new System.Drawing.Size(244, 31);
+            this.lblItemDisplayCount.TabIndex = 9;
+            this.lblItemDisplayCount.Text = "Item Display Count : ";
+            this.lblItemDisplayCount.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // txtMaxItemCount
+            // 
+            this.txtMaxItemCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMaxItemCount.Location = new System.Drawing.Point(271, 269);
+            this.txtMaxItemCount.Name = "txtMaxItemCount";
+            this.txtMaxItemCount.Size = new System.Drawing.Size(167, 30);
+            this.txtMaxItemCount.TabIndex = 8;
             // 
             // lblMaxLogFileSize
             // 
@@ -169,12 +192,10 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label1);
+            this.tabPage2.Controls.Add(this.txtSeriesLoc);
             this.tabPage2.Controls.Add(this.label8);
             this.tabPage2.Controls.Add(this.txtMediaLoc);
-            this.tabPage2.Controls.Add(this.label7);
-            this.tabPage2.Controls.Add(this.txtCountry);
-            this.tabPage2.Controls.Add(this.label6);
-            this.tabPage2.Controls.Add(this.txtGenre);
             this.tabPage2.Controls.Add(this.label5);
             this.tabPage2.Controls.Add(this.txtMediaExt);
             this.tabPage2.Location = new System.Drawing.Point(4, 31);
@@ -188,7 +209,7 @@
             // label8
             // 
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(5, 241);
+            this.label8.Location = new System.Drawing.Point(220, 15);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(182, 31);
             this.label8.TabIndex = 15;
@@ -198,50 +219,12 @@
             // txtMediaLoc
             // 
             this.txtMediaLoc.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMediaLoc.Location = new System.Drawing.Point(193, 241);
+            this.txtMediaLoc.Location = new System.Drawing.Point(225, 49);
             this.txtMediaLoc.Multiline = true;
             this.txtMediaLoc.Name = "txtMediaLoc";
             this.txtMediaLoc.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtMediaLoc.Size = new System.Drawing.Size(601, 78);
+            this.txtMediaLoc.Size = new System.Drawing.Size(566, 139);
             this.txtMediaLoc.TabIndex = 14;
-            // 
-            // label7
-            // 
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(501, 15);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(116, 31);
-            this.label7.TabIndex = 13;
-            this.label7.Text = "Country :";
-            // 
-            // txtCountry
-            // 
-            this.txtCountry.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCountry.Location = new System.Drawing.Point(506, 49);
-            this.txtCountry.Multiline = true;
-            this.txtCountry.Name = "txtCountry";
-            this.txtCountry.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtCountry.Size = new System.Drawing.Size(293, 170);
-            this.txtCountry.TabIndex = 12;
-            // 
-            // label6
-            // 
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(217, 15);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(102, 31);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "Genre :";
-            // 
-            // txtGenre
-            // 
-            this.txtGenre.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtGenre.Location = new System.Drawing.Point(222, 49);
-            this.txtGenre.Multiline = true;
-            this.txtGenre.Name = "txtGenre";
-            this.txtGenre.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtGenre.Size = new System.Drawing.Size(264, 170);
-            this.txtGenre.TabIndex = 10;
             // 
             // label5
             // 
@@ -259,7 +242,7 @@
             this.txtMediaExt.Multiline = true;
             this.txtMediaExt.Name = "txtMediaExt";
             this.txtMediaExt.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtMediaExt.Size = new System.Drawing.Size(194, 170);
+            this.txtMediaExt.Size = new System.Drawing.Size(194, 325);
             this.txtMediaExt.TabIndex = 8;
             // 
             // btnCancel
@@ -293,23 +276,76 @@
             this.label9.TabIndex = 16;
             this.label9.Text = "* Changes Apply after Restart";
             // 
-            // lblItemDisplayCount
+            // tabPage3
             // 
-            this.lblItemDisplayCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblItemDisplayCount.Location = new System.Drawing.Point(11, 275);
-            this.lblItemDisplayCount.Name = "lblItemDisplayCount";
-            this.lblItemDisplayCount.Size = new System.Drawing.Size(244, 31);
-            this.lblItemDisplayCount.TabIndex = 9;
-            this.lblItemDisplayCount.Text = "Item Display Count : ";
-            this.lblItemDisplayCount.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.tabPage3.Controls.Add(this.label7);
+            this.tabPage3.Controls.Add(this.txtCountry);
+            this.tabPage3.Controls.Add(this.label6);
+            this.tabPage3.Controls.Add(this.txtGenre);
+            this.tabPage3.Location = new System.Drawing.Point(4, 31);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(802, 396);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Filters";
+            this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // txtMaxItemCount
+            // label7
             // 
-            this.txtMaxItemCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMaxItemCount.Location = new System.Drawing.Point(271, 269);
-            this.txtMaxItemCount.Name = "txtMaxItemCount";
-            this.txtMaxItemCount.Size = new System.Drawing.Size(167, 30);
-            this.txtMaxItemCount.TabIndex = 8;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(8, 185);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(116, 31);
+            this.label7.TabIndex = 17;
+            this.label7.Text = "Country :";
+            // 
+            // txtCountry
+            // 
+            this.txtCountry.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCountry.Location = new System.Drawing.Point(13, 219);
+            this.txtCountry.Multiline = true;
+            this.txtCountry.Name = "txtCountry";
+            this.txtCountry.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtCountry.Size = new System.Drawing.Size(767, 161);
+            this.txtCountry.TabIndex = 16;
+            // 
+            // label6
+            // 
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(8, 12);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(102, 31);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "Genre :";
+            // 
+            // txtGenre
+            // 
+            this.txtGenre.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtGenre.Location = new System.Drawing.Point(13, 46);
+            this.txtGenre.Multiline = true;
+            this.txtGenre.Name = "txtGenre";
+            this.txtGenre.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtGenre.Size = new System.Drawing.Size(767, 126);
+            this.txtGenre.TabIndex = 14;
+            // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(220, 202);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(182, 31);
+            this.label1.TabIndex = 17;
+            this.label1.Text = "*Series Locations :";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // txtSeriesLoc
+            // 
+            this.txtSeriesLoc.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSeriesLoc.Location = new System.Drawing.Point(225, 236);
+            this.txtSeriesLoc.Multiline = true;
+            this.txtSeriesLoc.Name = "txtSeriesLoc";
+            this.txtSeriesLoc.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtSeriesLoc.Size = new System.Drawing.Size(566, 139);
+            this.txtSeriesLoc.TabIndex = 16;
             // 
             // frmSettings
             // 
@@ -332,6 +368,8 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -353,14 +391,17 @@
         private System.Windows.Forms.TextBox txtMediaExt;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox txtCountry;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtGenre;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtMediaLoc;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label lblItemDisplayCount;
         private System.Windows.Forms.TextBox txtMaxItemCount;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtCountry;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtGenre;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtSeriesLoc;
     }
 }

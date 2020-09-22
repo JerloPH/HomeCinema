@@ -118,6 +118,19 @@ namespace HomeCinema
                 text = text.TrimEnd(',');
                 txtMediaLoc.Text = text;
 
+                // Series LOCATIONS Folders Texts
+                text = "";
+                foreach (string c in GlobalVars.BuildArrFromFile(GlobalVars.FILE_SERIESLOC, $"{errFrom}[FILE_SERIESLOC]"))
+                {
+                    if (String.IsNullOrWhiteSpace(c) == false)
+                    {
+                        text += c.Trim() + ", \r\n";
+                    }
+                }
+                text = text.TrimEnd();
+                text = text.TrimEnd(',');
+                txtSeriesLoc.Text = text;
+
             } catch (Exception ex)
             {
                 // Log Error
@@ -159,6 +172,16 @@ namespace HomeCinema
                 }
                 toWrite = toWrite.TrimEnd(',');
                 GlobalVars.WriteToFile(GlobalVars.FILE_MEDIALOC, toWrite);
+                toWrite = "";
+
+                // Write SeriesLoc file
+                foreach (string c in txtSeriesLoc.Text.Split(','))
+                {
+                    toWrite += c.Trim();
+                    toWrite += ',';
+                }
+                toWrite = toWrite.TrimEnd(',');
+                GlobalVars.WriteToFile(GlobalVars.FILE_SERIESLOC, toWrite);
                 toWrite = "";
 
                 // Replace country file
