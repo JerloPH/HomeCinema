@@ -41,20 +41,20 @@
             this.cbAutoUpdate = new System.Windows.Forms.ComboBox();
             this.lblAutoUpdate = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtSeriesLoc = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.txtMediaLoc = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtMediaExt = new System.Windows.Forms.TextBox();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.label9 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label7 = new System.Windows.Forms.Label();
             this.txtCountry = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txtGenre = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtSeriesLoc = new System.Windows.Forms.TextBox();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -63,19 +63,25 @@
             // 
             // tabControl1
             // 
+            this.tabControl1.Alignment = System.Windows.Forms.TabAlignment.Left;
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabControl1.ItemSize = new System.Drawing.Size(30, 100);
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(810, 431);
+            this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
             // 
+            this.tabPage1.BackColor = System.Drawing.Color.Black;
             this.tabPage1.Controls.Add(this.lblItemDisplayCount);
             this.tabPage1.Controls.Add(this.txtMaxItemCount);
             this.tabPage1.Controls.Add(this.lblMaxLogFileSize);
@@ -86,23 +92,22 @@
             this.tabPage1.Controls.Add(this.lblOfflineMode);
             this.tabPage1.Controls.Add(this.cbAutoUpdate);
             this.tabPage1.Controls.Add(this.lblAutoUpdate);
-            this.tabPage1.Location = new System.Drawing.Point(4, 31);
+            this.tabPage1.ForeColor = System.Drawing.Color.White;
+            this.tabPage1.Location = new System.Drawing.Point(104, 4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(802, 396);
+            this.tabPage1.Size = new System.Drawing.Size(702, 423);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "General";
-            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // lblItemDisplayCount
             // 
             this.lblItemDisplayCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblItemDisplayCount.Location = new System.Drawing.Point(11, 275);
+            this.lblItemDisplayCount.Location = new System.Drawing.Point(6, 275);
             this.lblItemDisplayCount.Name = "lblItemDisplayCount";
             this.lblItemDisplayCount.Size = new System.Drawing.Size(244, 31);
             this.lblItemDisplayCount.TabIndex = 9;
             this.lblItemDisplayCount.Text = "Item Display Count : ";
-            this.lblItemDisplayCount.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // txtMaxItemCount
             // 
@@ -115,12 +120,11 @@
             // lblMaxLogFileSize
             // 
             this.lblMaxLogFileSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMaxLogFileSize.Location = new System.Drawing.Point(11, 215);
+            this.lblMaxLogFileSize.Location = new System.Drawing.Point(6, 215);
             this.lblMaxLogFileSize.Name = "lblMaxLogFileSize";
             this.lblMaxLogFileSize.Size = new System.Drawing.Size(244, 31);
             this.lblMaxLogFileSize.TabIndex = 7;
             this.lblMaxLogFileSize.Text = "Max Log File Size (MB) :";
-            this.lblMaxLogFileSize.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // txtLogSize
             // 
@@ -148,7 +152,6 @@
             this.lblPlayMovieClick.Size = new System.Drawing.Size(249, 23);
             this.lblPlayMovieClick.TabIndex = 4;
             this.lblPlayMovieClick.Text = "Play Movie on Click :";
-            this.lblPlayMovieClick.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // cbOffline
             // 
@@ -163,12 +166,11 @@
             // lblOfflineMode
             // 
             this.lblOfflineMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblOfflineMode.Location = new System.Drawing.Point(11, 89);
+            this.lblOfflineMode.Location = new System.Drawing.Point(6, 89);
             this.lblOfflineMode.Name = "lblOfflineMode";
             this.lblOfflineMode.Size = new System.Drawing.Size(244, 23);
             this.lblOfflineMode.TabIndex = 2;
             this.lblOfflineMode.Text = "Offline Mode :";
-            this.lblOfflineMode.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // cbAutoUpdate
             // 
@@ -183,53 +185,71 @@
             // lblAutoUpdate
             // 
             this.lblAutoUpdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAutoUpdate.Location = new System.Drawing.Point(11, 32);
+            this.lblAutoUpdate.Location = new System.Drawing.Point(6, 32);
             this.lblAutoUpdate.Name = "lblAutoUpdate";
             this.lblAutoUpdate.Size = new System.Drawing.Size(244, 23);
             this.lblAutoUpdate.TabIndex = 0;
             this.lblAutoUpdate.Text = "Auto Update :";
-            this.lblAutoUpdate.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // tabPage2
             // 
+            this.tabPage2.BackColor = System.Drawing.Color.Black;
             this.tabPage2.Controls.Add(this.label1);
             this.tabPage2.Controls.Add(this.txtSeriesLoc);
             this.tabPage2.Controls.Add(this.label8);
             this.tabPage2.Controls.Add(this.txtMediaLoc);
             this.tabPage2.Controls.Add(this.label5);
             this.tabPage2.Controls.Add(this.txtMediaExt);
-            this.tabPage2.Location = new System.Drawing.Point(4, 31);
+            this.tabPage2.ForeColor = System.Drawing.Color.White;
+            this.tabPage2.Location = new System.Drawing.Point(104, 4);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(802, 396);
+            this.tabPage2.Size = new System.Drawing.Size(702, 423);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "File";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(3, 267);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(182, 31);
+            this.label1.TabIndex = 17;
+            this.label1.Text = "*Series Locations :";
+            // 
+            // txtSeriesLoc
+            // 
+            this.txtSeriesLoc.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSeriesLoc.Location = new System.Drawing.Point(8, 301);
+            this.txtSeriesLoc.Multiline = true;
+            this.txtSeriesLoc.Name = "txtSeriesLoc";
+            this.txtSeriesLoc.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtSeriesLoc.Size = new System.Drawing.Size(612, 108);
+            this.txtSeriesLoc.TabIndex = 16;
             // 
             // label8
             // 
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(220, 15);
+            this.label8.Location = new System.Drawing.Point(5, 104);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(182, 31);
             this.label8.TabIndex = 15;
             this.label8.Text = "*Media Locations :";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // txtMediaLoc
             // 
             this.txtMediaLoc.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMediaLoc.Location = new System.Drawing.Point(225, 49);
+            this.txtMediaLoc.Location = new System.Drawing.Point(8, 138);
             this.txtMediaLoc.Multiline = true;
             this.txtMediaLoc.Name = "txtMediaLoc";
             this.txtMediaLoc.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtMediaLoc.Size = new System.Drawing.Size(566, 139);
+            this.txtMediaLoc.Size = new System.Drawing.Size(612, 126);
             this.txtMediaLoc.TabIndex = 14;
             // 
             // label5
             // 
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(8, 15);
+            this.label5.Location = new System.Drawing.Point(5, 5);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(196, 31);
             this.label5.TabIndex = 9;
@@ -238,56 +258,26 @@
             // txtMediaExt
             // 
             this.txtMediaExt.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMediaExt.Location = new System.Drawing.Point(10, 49);
+            this.txtMediaExt.Location = new System.Drawing.Point(8, 39);
             this.txtMediaExt.Multiline = true;
             this.txtMediaExt.Name = "txtMediaExt";
             this.txtMediaExt.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtMediaExt.Size = new System.Drawing.Size(194, 325);
+            this.txtMediaExt.Size = new System.Drawing.Size(612, 62);
             this.txtMediaExt.TabIndex = 8;
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 25.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(572, 433);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(226, 59);
-            this.btnCancel.TabIndex = 11;
-            this.btnCancel.Text = "CANCEL";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // btnSave
-            // 
-            this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 25.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(355, 433);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(198, 59);
-            this.btnSave.TabIndex = 10;
-            this.btnSave.Text = "SAVE";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // label9
-            // 
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(-1, 434);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(335, 34);
-            this.label9.TabIndex = 16;
-            this.label9.Text = "* Changes Apply after Restart";
             // 
             // tabPage3
             // 
+            this.tabPage3.BackColor = System.Drawing.Color.Black;
             this.tabPage3.Controls.Add(this.label7);
             this.tabPage3.Controls.Add(this.txtCountry);
             this.tabPage3.Controls.Add(this.label6);
             this.tabPage3.Controls.Add(this.txtGenre);
-            this.tabPage3.Location = new System.Drawing.Point(4, 31);
+            this.tabPage3.ForeColor = System.Drawing.Color.White;
+            this.tabPage3.Location = new System.Drawing.Point(104, 4);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(802, 396);
+            this.tabPage3.Size = new System.Drawing.Size(702, 423);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Filters";
-            this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // label7
             // 
@@ -305,7 +295,7 @@
             this.txtCountry.Multiline = true;
             this.txtCountry.Name = "txtCountry";
             this.txtCountry.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtCountry.Size = new System.Drawing.Size(767, 161);
+            this.txtCountry.Size = new System.Drawing.Size(600, 161);
             this.txtCountry.TabIndex = 16;
             // 
             // label6
@@ -324,38 +314,53 @@
             this.txtGenre.Multiline = true;
             this.txtGenre.Name = "txtGenre";
             this.txtGenre.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtGenre.Size = new System.Drawing.Size(767, 126);
+            this.txtGenre.Size = new System.Drawing.Size(600, 126);
             this.txtGenre.TabIndex = 14;
             // 
-            // label1
+            // btnCancel
             // 
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(220, 202);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(182, 31);
-            this.label1.TabIndex = 17;
-            this.label1.Text = "*Series Locations :";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.btnCancel.Font = new System.Drawing.Font("Calibri", 28.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancel.ForeColor = System.Drawing.Color.Black;
+            this.btnCancel.Location = new System.Drawing.Point(572, 433);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(226, 59);
+            this.btnCancel.TabIndex = 11;
+            this.btnCancel.Text = "CANCEL";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // txtSeriesLoc
+            // btnSave
             // 
-            this.txtSeriesLoc.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSeriesLoc.Location = new System.Drawing.Point(225, 236);
-            this.txtSeriesLoc.Multiline = true;
-            this.txtSeriesLoc.Name = "txtSeriesLoc";
-            this.txtSeriesLoc.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtSeriesLoc.Size = new System.Drawing.Size(566, 139);
-            this.txtSeriesLoc.TabIndex = 16;
+            this.btnSave.Font = new System.Drawing.Font("Calibri", 28.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSave.ForeColor = System.Drawing.Color.Black;
+            this.btnSave.Location = new System.Drawing.Point(355, 433);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(198, 59);
+            this.btnSave.TabIndex = 10;
+            this.btnSave.Text = "SAVE";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // label9
+            // 
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(-1, 434);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(335, 34);
+            this.label9.TabIndex = 16;
+            this.label9.Text = "* Changes Apply after Restart";
             // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(810, 500);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.tabControl1);
+            this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "frmSettings";
