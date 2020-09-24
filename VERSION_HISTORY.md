@@ -3,7 +3,7 @@
 ## v0.0.8.0 ***build 24 - (22 September 2020 PHT)***
 ### [Series] can now be Added!
 
-Build from latest commit: 2070c18
+Build from latest commit: [2070c18](https://github.com/JerloPH/HomeCinema/commit/2070c18938bde878abeb19c2c3fd3e2dd6b84f41)
 
 **[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.8.0/HomeCinema-Windows_v0.0.8.0.zip "HomeCinema-Windows_v0.0.8.0.zip")**
 	
@@ -21,7 +21,7 @@ Build from latest commit: 2070c18
 ## v0.0.7.0 ***build 23 - (17 September 2020 PHT)***
 ### More Features and Fixes
 
-Build from latest commit: e1c4a97
+Build from latest commit: [e1c4a97](https://github.com/JerloPH/HomeCinema/commit/e1c4a97bb763b8df0f8ad840db507501e250b72a)
 
 **[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.7.0/HomeCinema-Windows_v0.0.7.0.zip "HomeCinema-Windows_v0.0.7.0.zip")**
 	
@@ -42,7 +42,7 @@ Build from latest commit: e1c4a97
 ## v0.0.6.3 ***build 22 - (06 September 2020 PHT)***
 ### Optimizations and Fixes
 
-Build from latest commit: 4b2f74d
+Build from latest commit: [4b2f74d](https://github.com/JerloPH/HomeCinema/commit/4b2f74d59475f95a48fb7cecbda3e819cbf6fd0e)
 
 **[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.6.3/HomeCinema-Windows_v0.0.6.3.zip "HomeCinema-Windows_v0.0.6.3.zip")**
 	
@@ -56,7 +56,7 @@ Build from latest commit: 4b2f74d
 ## v0.0.6.2 ***build 21 - (05 September 2020 PHT)***
 ### Additional Features and Fixes
 
-Build from latest commit: 6d0e4d6
+Build from latest commit: [6d0e4d6](https://github.com/JerloPH/HomeCinema/commit/6d0e4d68d9ced73bdaaa6d7b143c8ec7ac34e4b7)
 
 **[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.6.2/HomeCinema-Windows_v0.0.6.2.zip "HomeCinema-Windows_v0.0.6.2.zip")**
 	
@@ -73,7 +73,7 @@ Build from latest commit: 6d0e4d6
 ## v0.0.6.1 ***build 20 - (30 August 2020 PHT)***
 ### Follow up Fixes
 
-Build from latest commit: 9e37136
+Build from latest commit: [9e37136](https://github.com/JerloPH/HomeCinema/commit/9e371367d44ab5b56a7368f9ceabfe280f9902b6)
 
 **[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.6.1/HomeCinema-Windows_v0.0.6.1.zip "HomeCinema-Windows_v0.0.6.1.zip")**
 	
@@ -86,7 +86,7 @@ Build from latest commit: 9e37136
 ## v0.0.6.0 ***build 19 - (29 August 2020 PHT)***
 ### Major Update
 
-Build from latest commit: 6a4d90e
+Build from latest commit: [6a4d90e](https://github.com/JerloPH/HomeCinema/commit/6a4d90e146e90100d2763a1fcc59bc5ba197cf6b)
 
 **[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.6.0/HomeCinema-Windows_v0.0.6.0.zip "HomeCinema-Windows_v0.0.6.0.zip")**
 	
@@ -108,7 +108,7 @@ Build from latest commit: 6a4d90e
 ## v0.0.5.1 ***build 18 - (15 August 2020 PHT)***
 ### Quick Fixes
 
-Build from latest commit: 8c57be2
+Build from latest commit: [8c57be2](https://github.com/JerloPH/HomeCinema/commit/8c57be28fed2c74e2c49c947ff08246de7cc884a)
 
 **[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.5.1/HomeCinema-Windows_v0.0.5.1.zip "HomeCinema-Windows_v0.0.5.1.zip")**
 	
@@ -120,7 +120,7 @@ Build from latest commit: 8c57be2
 ## v0.0.5.0 ***build 17 - (14 August 2020 PHT)***
 ### Automatic Data Fetching
 
-Build from latest commit: 203de9d
+Build from latest commit: [203de9d](https://github.com/JerloPH/HomeCinema/commit/203de9d8738e31eb9805320f878b91b477b58db6)
 
 **[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.5.0/HomeCinema-Windows_v0.0.5.0.zip "HomeCinema-Windows_v0.0.5.0.zip")**
 	
@@ -138,7 +138,7 @@ Build from latest commit: 203de9d
 ## v0.0.4.0 ***build 16 - (12 August 2020 PHT)***
 ### Settings UI and Improvements
 
-Build from latest commit: 0b2987a
+Build from latest commit: [0b2987a](https://github.com/JerloPH/HomeCinema/commit/0b2987a6f0e5b9717e5c4abe9a283bbb4d4382e5)
 
 **[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.4.0/HomeCinema-Windows_v0.0.4.0.zip "HomeCinema-Windows_v0.0.4.0.zip")**
 	
@@ -157,7 +157,7 @@ Build from latest commit: 0b2987a
 ## v0.0.3.3 ***build 15 - (27 July 2020 PHT)***
 ### Performance Improvement
 
-Build from latest commit: a633a4b
+Build from latest commit: [a633a4b](https://github.com/JerloPH/HomeCinema/commit/a633a4b62f15cedb7b6bb67f90cfea0a268eb9be)
 
 **[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.3.3/HomeCinema-Windows_v0.0.3.3.zip "HomeCinema-Windows_v0.0.3.3.zip")**
 	
@@ -175,7 +175,7 @@ Build from latest commit: a633a4b
 ## v0.0.3.2 ***build 14 - (23 July 2020 PHT)***
 ### Optimizations and More Features
 
-Build from latest commit: 49aee99
+Build from latest commit: [49aee99](https://github.com/JerloPH/HomeCinema/commit/49aee99)
 
 **[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.3.2/HomeCinema-Windows_v0.0.3.2.zip "HomeCinema-Windows_v0.0.3.2.zip")**
 	
@@ -190,7 +190,7 @@ Build from latest commit: 49aee99
 ## v0.0.2.2 ***build 13 - (30 June 2020 PHT)***
 ### Minor Update Fix
 
-Build from latest commit: e51182d
+Build from latest commit: [e51182d](https://github.com/JerloPH/HomeCinema/commit/e51182d)
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.2.2/HomeCinema-Windows_v0.0.2.2.zip "HomeCinema-Windows_v0.0.2.2.zip")**
 	
@@ -202,7 +202,7 @@ Build from latest commit: e51182d
 ## v0.0.2.1 ***build 12 - (07 June 2020 PHT)***
 ### Various GUI and Settings adjustments
 
-Build from latest commit: a35d7ed
+Build from latest commit: [a35d7ed](https://github.com/JerloPH/HomeCinema/commit/a35d7ed)
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.2.1/HomeCinema-Windows_v0.0.2.1.zip "HomeCinema-Windows_v0.0.2.1.zip")**
 	
@@ -218,7 +218,7 @@ Build from latest commit: a35d7ed
 ## v0.0.2.0 ***build 11 - (25 May 2020 PHT)***
 ### Added In-App Settings
 
-Build from latest commit: e59d3ae
+Build from latest commit: [e59d3ae](https://github.com/JerloPH/HomeCinema/commit/e59d3ae)
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.2.0/HomeCinema-Windows_v0.0.2.0.zip "HomeCinema-Windows_v0.0.2.0.zip")**
 	
@@ -234,7 +234,7 @@ Build from latest commit: e59d3ae
 ## v0.0.1.1 ***build 10 - (24 May 2020 PHT)***
 ### Quick Update
 
-Build from latest commit: 3e3f94b
+Build from latest commit: [3e3f94b](https://github.com/JerloPH/HomeCinema/commit/3e3f94b)
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.1.1/HomeCinema-Windows_v0.0.1.1.zip "HomeCinema-Windows_v0.0.1.1.zip")**
 	
@@ -247,7 +247,7 @@ Build from latest commit: 3e3f94b
 ## v0.0.1.0 ***build 9 - (23 May 2020 PHT)***
 ### Improvements to MovieInfo
 
-Build from latest commit: 33a6d77
+Build from latest commit: [33a6d77](https://github.com/JerloPH/HomeCinema/commit/33a6d77)
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.1.0/HomeCinema-Windows_v0.0.1.0.zip "HomeCinema-Windows_v0.0.1.0.zip")**
 	
@@ -267,7 +267,7 @@ Build from latest commit: 33a6d77
 ## v0.0.0.8 ***build 8 - (21 May 2020 PHT)***
 ### TMDB Fetching Follow-up
 
-Build from latest commit: e1cc236
+Build from latest commit: [e1cc236](https://github.com/JerloPH/HomeCinema/commit/e1cc236)
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/0.0.0.8/HomeCinema-Windows_v0.0.0.8.zip "HomeCinema-Windows_v0.0.0.8.zip")**
 	
@@ -284,7 +284,7 @@ Build from latest commit: e1cc236
 ## v0.0.0.7 ***build 7 - (21 May 2020 PHT)***
 ### Auto Fetch from TMDB
 
-Build from latest commit: ec36b4d
+Build from latest commit: [ec36b4d](https://github.com/JerloPH/HomeCinema/commit/ec36b4d)
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/0.0.0.7/HomeCinema-Windows_v0.0.0.7.zip "HomeCinema-Windows_v0.0.0.7.zip")**
 	
@@ -298,7 +298,7 @@ Build from latest commit: ec36b4d
 ## v0.0.0.6 ***build 6 - (14 May 2020 PHT)***
 ### Quick Fix 
 
-Build from latest commit: 6dde01a
+Build from latest commit: [6dde01a](https://github.com/JerloPH/HomeCinema/commit/6dde01a)
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/0.0.0.6/HomeCinema-Windows_v0.0.0.6.zip "HomeCinema-Windows_v0.0.0.6.zip")**
 	
@@ -311,7 +311,7 @@ Build from latest commit: 6dde01a
 ## v0.0.0.5 ***build 5 - (13 May 2020 PHT)***
 ### **GUI Update and Minor Improvements** 
 
-Build from latest commit: 99e2dd4
+Build from latest commit: [99e2dd4](https://github.com/JerloPH/HomeCinema/commit/99e2dd4)
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/0.0.0.5/HomeCinema-Windows_v0.0.0.5.zip "HomeCinema-Windows_v0.0.0.5.zip")**
 	
@@ -327,7 +327,7 @@ Build from latest commit: 99e2dd4
 ## v0.0.0.4 ***build 4 - (07 May 2020 PHT)***
 ### **Auto Cover and Minor Update** 
 
-Build from latest commit: 8343553
+Build from latest commit: [8343553](https://github.com/JerloPH/HomeCinema/commit/8343553)
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.4/HomeCinema-Windows_v0.0.0.4.zip "HomeCinema-Windows_v0.0.0.4.zip")**
 	
@@ -340,7 +340,7 @@ Build from latest commit: 8343553
 ## v0.0.0.3 ***build 3 - (30 April 2020 PHT)***
 ### **GUI Update** 
 
-Build from latest commit: 4b4217f
+Build from latest commit: [4b4217f](https://github.com/JerloPH/HomeCinema/commit/4b4217f)
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.3/HomeCinema-Windows_v0.0.0.3.zip "HomeCinema-Windows_v0.0.0.3.zip")**
 	
@@ -353,7 +353,7 @@ Build from latest commit: 4b4217f
 ## v0.0.0.2 ***build 2 - (26 April 2020 PHT)***
 ### **Second Release - First Update** 
 
-Build from latest commit: a57d298
+Build from latest commit: [a57d298](https://github.com/JerloPH/HomeCinema/commit/a57d298)
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.2/HomeCinema-Windows_v0.0.0.2.zip "HomeCinema-Windows_v0.0.0.2.zip")**
 	
@@ -369,7 +369,7 @@ Build from latest commit: a57d298
 ## v0.0.0.1 ***build 1 - (19 April 2020 PHT)***
 ### **First Public Release of HomeCinema** 
 
-Build from latest commit: c0b7b7d
+Build from latest commit: [c0b7b7d](https://github.com/JerloPH/HomeCinema/commit/c0b7b7d)
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.1/HomeCinema-Windows_v0.0.0.1.zip "HomeCinema-Windows_v0.0.0.1.zip")**
 
