@@ -6,7 +6,9 @@
 Build from latest commit: [2070c18](https://github.com/JerloPH/HomeCinema/commit/2070c18938bde878abeb19c2c3fd3e2dd6b84f41)
 
 **[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.8.0/HomeCinema-Windows_v0.0.8.0.zip "HomeCinema-Windows_v0.0.8.0.zip")**
-	
+
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.8.0/total.svg)]() <br>
+
 **What's New?**
 - REV: Add your "**Series**" top-folder into the App!
 - REV: Removed **[Add Movie]** Button.
@@ -24,7 +26,9 @@ Build from latest commit: [2070c18](https://github.com/JerloPH/HomeCinema/commit
 Build from latest commit: [e1c4a97](https://github.com/JerloPH/HomeCinema/commit/e1c4a97bb763b8df0f8ad840db507501e250b72a)
 
 **[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.7.0/HomeCinema-Windows_v0.0.7.0.zip "HomeCinema-Windows_v0.0.7.0.zip")**
-	
+
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.7.0/total.svg)]() <br>
+
 **What's New?**
 - FT: Automatically Download cover image from [TMDB](https://www.themoviedb.org/), when online, during insert of new media.
 - FT: Added **[Settings]** button.
@@ -45,7 +49,9 @@ Build from latest commit: [e1c4a97](https://github.com/JerloPH/HomeCinema/commit
 Build from latest commit: [4b2f74d](https://github.com/JerloPH/HomeCinema/commit/4b2f74d59475f95a48fb7cecbda3e819cbf6fd0e)
 
 **[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.6.3/HomeCinema-Windows_v0.0.6.3.zip "HomeCinema-Windows_v0.0.6.3.zip")**
-	
+
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.6.3/total.svg)]() <br>
+
 **What's New?**
 - FIX: Properly save the *genres* to file.
 - MINOR: Alpabetically arrange country list properly.
@@ -59,7 +65,9 @@ Build from latest commit: [4b2f74d](https://github.com/JerloPH/HomeCinema/commit
 Build from latest commit: [6d0e4d6](https://github.com/JerloPH/HomeCinema/commit/6d0e4d68d9ced73bdaaa6d7b143c8ec7ac34e4b7)
 
 **[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.6.2/HomeCinema-Windows_v0.0.6.2.zip "HomeCinema-Windows_v0.0.6.2.zip")**
-	
+
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.6.2/total.svg)]() <br>
+
 **What's New?**
 - REV: Speed improvements on Main Form.
 - FT: Fetch additional information from [**The Movie Database**](https://www.themoviedb.org/).
@@ -76,7 +84,9 @@ Build from latest commit: [6d0e4d6](https://github.com/JerloPH/HomeCinema/commit
 Build from latest commit: [9e37136](https://github.com/JerloPH/HomeCinema/commit/9e371367d44ab5b56a7368f9ceabfe280f9902b6)
 
 **[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.6.1/HomeCinema-Windows_v0.0.6.1.zip "HomeCinema-Windows_v0.0.6.1.zip")**
-	
+
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.6.1/total.svg)]() <br>
+
 **What's New?**
 - FIX: Cast Textbox not reset when CLEAR button is pressed.
 - FIX: Another Attempt to fix cover not updating when fetched from TMDB.
@@ -89,7 +99,9 @@ Build from latest commit: [9e37136](https://github.com/JerloPH/HomeCinema/commit
 Build from latest commit: [6a4d90e](https://github.com/JerloPH/HomeCinema/commit/6a4d90e146e90100d2763a1fcc59bc5ba197cf6b)
 
 **[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.6.0/HomeCinema-Windows_v0.0.6.0.zip "HomeCinema-Windows_v0.0.6.0.zip")**
-	
+
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.6.0/total.svg)]() <br>
+
 **What's New?**
 - REV: Better handle on downloading files in Fetching data from TMDB.
 - FT: Fetch additional information from [**The Movie Database**](https://www.themoviedb.org/).
@@ -111,7 +123,9 @@ Build from latest commit: [6a4d90e](https://github.com/JerloPH/HomeCinema/commit
 Build from latest commit: [8c57be2](https://github.com/JerloPH/HomeCinema/commit/8c57be28fed2c74e2c49c947ff08246de7cc884a)
 
 **[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.5.1/HomeCinema-Windows_v0.0.5.1.zip "HomeCinema-Windows_v0.0.5.1.zip")**
-	
+
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.5.1/total.svg)]() <br>
+
 **What's New?**
 - FIX: Hangs on Fetching data when there is no Internet Connection.
 - FIX: Try to fix Image Cover sometimes not loading.
@@ -123,7 +137,9 @@ Build from latest commit: [8c57be2](https://github.com/JerloPH/HomeCinema/commit
 Build from latest commit: [203de9d](https://github.com/JerloPH/HomeCinema/commit/203de9d8738e31eb9805320f878b91b477b58db6)
 
 **[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.5.0/HomeCinema-Windows_v0.0.5.0.zip "HomeCinema-Windows_v0.0.5.0.zip")**
-	
+
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.5.0/total.svg)]() <br>
+
 **What's New?**
 - REV: Automatically fetch movie details, when the automatic media scan adds a new *Movie Item*.
 - REV: Improved how *Cover Image* is loaded when fetching data from [**The Movie Database**](https://www.themoviedb.org/).
@@ -141,7 +157,9 @@ Build from latest commit: [203de9d](https://github.com/JerloPH/HomeCinema/commit
 Build from latest commit: [0b2987a](https://github.com/JerloPH/HomeCinema/commit/0b2987a6f0e5b9717e5c4abe9a283bbb4d4382e5)
 
 **[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.4.0/HomeCinema-Windows_v0.0.4.0.zip "HomeCinema-Windows_v0.0.4.0.zip")**
-	
+
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.4.0/total.svg)]() <br>
+
 **What's New?**
 - REV: Settings UI. Press **Control + S** to Open Settings UI.
 - FT: Update *country* and *media_location* files on Settings' changes.
@@ -160,7 +178,9 @@ Build from latest commit: [0b2987a](https://github.com/JerloPH/HomeCinema/commit
 Build from latest commit: [a633a4b](https://github.com/JerloPH/HomeCinema/commit/a633a4b62f15cedb7b6bb67f90cfea0a268eb9be)
 
 **[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.3.3/HomeCinema-Windows_v0.0.3.3.zip "HomeCinema-Windows_v0.0.3.3.zip")**
-	
+
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.3.3/total.svg)]() <br>
+
 **What's New?**
 - REV: Changed how Movie Item is Refreshed. Instead of performing query, only the selected Movie is refreshed.
 - FT: Added Right-click ContextMenu to ListView Item.
@@ -178,7 +198,9 @@ Build from latest commit: [a633a4b](https://github.com/JerloPH/HomeCinema/commit
 Build from latest commit: [49aee99](https://github.com/JerloPH/HomeCinema/commit/49aee99)
 
 **[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.3.2/HomeCinema-Windows_v0.0.3.2.zip "HomeCinema-Windows_v0.0.3.2.zip")**
-	
+
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.3.2/total.svg)]() <br>
+
 **What's New?**
 - REV: Improve loading of Movie, by using ProgressChanged on BGworker.
 - FT: Added ToolTip text to ListView Item. Shows Movie Summary and Genre.
@@ -193,7 +215,9 @@ Build from latest commit: [49aee99](https://github.com/JerloPH/HomeCinema/commit
 Build from latest commit: [e51182d](https://github.com/JerloPH/HomeCinema/commit/e51182d)
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.2.2/HomeCinema-Windows_v0.0.2.2.zip "HomeCinema-Windows_v0.0.2.2.zip")**
-	
+
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.2.2/total.svg)]() <br>
+
 **What's New?**
 - FIX: Auto-check-update feature.
 - CHANGE: Auto-create settings File with default values, if not existing.
@@ -205,7 +229,9 @@ Build from latest commit: [e51182d](https://github.com/JerloPH/HomeCinema/commit
 Build from latest commit: [a35d7ed](https://github.com/JerloPH/HomeCinema/commit/a35d7ed)
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.2.1/HomeCinema-Windows_v0.0.2.1.zip "HomeCinema-Windows_v0.0.2.1.zip")**
-	
+
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.2.1/total.svg)]() <br>
+
 **What's New?**
 - FT: Auto check for updates.
 - FT: Added **Sort Order** option: Sort Items in Ascending or Descending order.
@@ -221,7 +247,9 @@ Build from latest commit: [a35d7ed](https://github.com/JerloPH/HomeCinema/commit
 Build from latest commit: [e59d3ae](https://github.com/JerloPH/HomeCinema/commit/e59d3ae)
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.2.0/HomeCinema-Windows_v0.0.2.0.zip "HomeCinema-Windows_v0.0.2.0.zip")**
-	
+
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.2.0/total.svg)]() <br>
+
 **What's New?**
 - REV: **Load** and **Save** settings to [*settings file*](https://github.com/JerloPH/HomeCinema/blob/v0.0.2.0/HomeCinema/Resources/settings.json).
 - REV: Added "*Settings*" values to [*settings file*](https://github.com/JerloPH/HomeCinema/blob/v0.0.2.0/HomeCinema/Resources/settings.json).
@@ -237,7 +265,9 @@ Build from latest commit: [e59d3ae](https://github.com/JerloPH/HomeCinema/commit
 Build from latest commit: [3e3f94b](https://github.com/JerloPH/HomeCinema/commit/3e3f94b)
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.1.1/HomeCinema-Windows_v0.0.1.1.zip "HomeCinema-Windows_v0.0.1.1.zip")**
-	
+
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.1.1/total.svg)]() <br>
+
 **What's New?**
 - ADD: *[Settings File](https://github.com/JerloPH/HomeCinema/blob/v0.0.1.1/HomeCinema/Resources/settings.json)* to save persistent settings in App.
 - CHANGE: Open Movie when *ENTER* Key is pressed. 
@@ -250,7 +280,9 @@ Build from latest commit: [3e3f94b](https://github.com/JerloPH/HomeCinema/commit
 Build from latest commit: [33a6d77](https://github.com/JerloPH/HomeCinema/commit/33a6d77)
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.1.0/HomeCinema-Windows_v0.0.1.0.zip "HomeCinema-Windows_v0.0.1.0.zip")**
-	
+
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.1.0/total.svg)]() <br>
+
 **What's New?**
 - REV: Use *[Newtonsoft.Json](https://www.nuget.org/packages/Newtonsoft.Json/)* to parse JSON files.
 - REV: Main form is scalable - Can be Maximized and Resized.
@@ -270,7 +302,9 @@ Build from latest commit: [33a6d77](https://github.com/JerloPH/HomeCinema/commit
 Build from latest commit: [e1cc236](https://github.com/JerloPH/HomeCinema/commit/e1cc236)
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/0.0.0.8/HomeCinema-Windows_v0.0.0.8.zip "HomeCinema-Windows_v0.0.0.8.zip")**
-	
+
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/0.0.0.8/total.svg)]() <br>
+
 **What's New?**
 - ADD: **Clean** button to delete *".jpg"* files in *temp* folder.
 - ADD: **Search IMDB** button to search for Movie IMDB ID, using Movie title.
@@ -287,7 +321,9 @@ Build from latest commit: [e1cc236](https://github.com/JerloPH/HomeCinema/commit
 Build from latest commit: [ec36b4d](https://github.com/JerloPH/HomeCinema/commit/ec36b4d)
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/0.0.0.7/HomeCinema-Windows_v0.0.0.7.zip "HomeCinema-Windows_v0.0.0.7.zip")**
-	
+
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/0.0.0.7/total.svg)]() <br>
+
 **What's New?**
 - ADD: **Fetch Data** Button to automatically fetch information from [**The Movie Database**](https://www.themoviedb.org/).
   - Fetch: Title, Summary, Year, Trailer, Poster Image
@@ -301,7 +337,9 @@ Build from latest commit: [ec36b4d](https://github.com/JerloPH/HomeCinema/commit
 Build from latest commit: [6dde01a](https://github.com/JerloPH/HomeCinema/commit/6dde01a)
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/0.0.0.6/HomeCinema-Windows_v0.0.0.6.zip "HomeCinema-Windows_v0.0.0.6.zip")**
-	
+
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/0.0.0.6/total.svg)]() <br>
+
 **What's New?**
 - FIX: When movie is deleted, dispose cover image from resources and delete it from disk.
 - FIX: Automatic change of *View* and *Sort*.
@@ -314,7 +352,9 @@ Build from latest commit: [6dde01a](https://github.com/JerloPH/HomeCinema/commit
 Build from latest commit: [99e2dd4](https://github.com/JerloPH/HomeCinema/commit/99e2dd4)
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/0.0.0.5/HomeCinema-Windows_v0.0.0.5.zip "HomeCinema-Windows_v0.0.0.5.zip")**
-	
+
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/0.0.0.5/total.svg)]() <br>
+
 **What's New?**
 - ADD: Checkbox to perform SEARCH after CLEAR of Search results.
 - CHANGE: Only perform search on *Key Press Enter* when *Searchbox* is not empty.
@@ -330,7 +370,9 @@ Build from latest commit: [99e2dd4](https://github.com/JerloPH/HomeCinema/commit
 Build from latest commit: [8343553](https://github.com/JerloPH/HomeCinema/commit/8343553)
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.4/HomeCinema-Windows_v0.0.0.4.zip "HomeCinema-Windows_v0.0.0.4.zip")**
-	
+
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.0.4/total.svg)]() <br>
+
 **What's New?**
 - Automatically add cover image from media thumbnail.
 - FIX: Loading form infinite looping on first time load.
@@ -343,7 +385,9 @@ Build from latest commit: [8343553](https://github.com/JerloPH/HomeCinema/commit
 Build from latest commit: [4b4217f](https://github.com/JerloPH/HomeCinema/commit/4b4217f)
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.3/HomeCinema-Windows_v0.0.0.3.zip "HomeCinema-Windows_v0.0.0.3.zip")**
-	
+
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.0.3/total.svg)]() <br>
+
 **What's New?**
 - Added new ["File"](https://github.com/JerloPH/HomeCinema/blob/v0.0.0.3/HomeCinema/Resources/media_ext.hc_data "media_ext.hc_data") that loads supported extensions for media files.
 - Changed GUI.
@@ -356,7 +400,9 @@ Build from latest commit: [4b4217f](https://github.com/JerloPH/HomeCinema/commit
 Build from latest commit: [a57d298](https://github.com/JerloPH/HomeCinema/commit/a57d298)
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.2/HomeCinema-Windows_v0.0.0.2.zip "HomeCinema-Windows_v0.0.0.2.zip")**
-	
+
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.0.2/total.svg)]() <br>
+
 **What's New?**
 - Allow to search in multiple directories (See ["Edit Media Location"](https://github.com/JerloPH/HomeCinema/blob/0.0.0.8/README.md#edit-medialocation))
 - Added **"Show New"** button: Shows all newly added media files
@@ -373,3 +419,4 @@ Build from latest commit: [c0b7b7d](https://github.com/JerloPH/HomeCinema/commit
 
 **[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.0.1/HomeCinema-Windows_v0.0.0.1.zip "HomeCinema-Windows_v0.0.0.1.zip")**
 
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.0.1/total.svg)]() <br>
