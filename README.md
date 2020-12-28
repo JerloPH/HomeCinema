@@ -2,16 +2,16 @@
 
 <img src="/data/screenshot_v0.0.8.0.png"></img>
 
-**version:**	0.0.8.0 <br>
-**build:**		24
+**version:**	0.0.9.0 <br>
+**build:**		25
 
 ## Downloads
 
-**Windows 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.8.0/HomeCinema-Windows_v0.0.8.0.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
+**Windows 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.9.0/HomeCinema-Windows_v0.0.9.0.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
 
 ### Download Counts
 
-**Current:** &nbsp; [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.8.0/total.svg)]() <br>
+**Current:** &nbsp; [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.9.0/total.svg)]() <br>
 **Overall:** &nbsp; [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/total.svg)]()
 
 ## Requirements
@@ -61,9 +61,15 @@ Ease the pain of browsing through many folders and finding out which movie is wh
 ****
 
 ## Credits
-
+### Third-Party API
 [**The Movie Database**](https://www.themoviedb.org/) - Used to fetch movie details from the web. <br>
-[**Newtonsoft.Json**](https://www.newtonsoft.com/json) - Parse JSON file that contains Movie Informations.
+### NuGet Packages Used
+[**Newtonsoft.Json**](https://www.newtonsoft.com/json) - Parse JSON file that contains Movie Information. <br>
+[**SQLite**](https://www.nuget.org/packages/System.Data.SQLite.Core/) - Used to connect to a Local Database.<br>
+[**SQLite Stub**](https://packages.nuget.org/packages/Stub.System.Data.SQLite.Core.NetFramework/) - Used to connect to a Local Database. <br>
+[**Microsoft Windows API CodePack Core**](https://www.nuget.org/packages/Microsoft-WindowsAPICodePack-Core/) - For various functions. <br>
+[**Microsoft Windows API CodePack Shell**](https://www.nuget.org/packages/Microsoft-WindowsAPICodePack-Shell/) - For various functions. <br>
+[**Microsoft Universal Windows Platform**](https://www.nuget.org/packages/Microsoft.NETCore.UniversalWindowsPlatform/) - For various functions. <br>
 
 ****
 

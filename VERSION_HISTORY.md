@@ -1,5 +1,25 @@
 # HomeCinema - Project History:
 
+## v0.0.9.0 ***build 25 - (28 December 2020 PHT)***
+### Various Fixes and Improvements.
+
+**[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.9.0/HomeCinema-Windows_v0.0.9.0.zip "HomeCinema-Windows_v0.0.9.0.zip")**
+
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.9.0/total.svg)]() <br>
+
+**What's New?**
+- FT: Show **'File'** or **'Folder'** **size**, on **'Movie Title'**, in **'Movie Details'** form.
+- FIX: If Media type is 'Series', open Folder location in Explorer.
+- GUI: Changed **[Settings]** Form's Tabbed Navigator.
+- GUI: Increased Font size for **'Movie Summary'**.
+
+**'Under the Hood' changes:**
+- REV: Updated NuGets packages. (UWP and SQLite).
+- RES: Removed previous screenshots.
+- DOC: Included commit links, on VERSION_HISTORY.
+- DOC: Added Download counts on VERSION_HISTORY.
+****
+
 ## v0.0.8.0 ***build 24 - (22 September 2020 PHT)***
 ### [Series] can now be Added!
 

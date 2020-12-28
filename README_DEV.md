@@ -12,10 +12,11 @@
   - **hc_data**	: Text files used by the app.
 
 ## Project References (Required Packages)
-  - **[SQLite](https://www.nuget.org/packages/System.Data.SQLite)**
+  - **[SQLite](https://www.nuget.org/packages/System.Data.SQLite.Core/)**
+  - **[SQLite Stub](https://packages.nuget.org/packages/Stub.System.Data.SQLite.Core.NetFramework/)**
   - **[Microsoft Windows API CodePack Core](https://www.nuget.org/packages/Microsoft-WindowsAPICodePack-Core/)**
   - **[Microsoft Windows API CodePack Shell](https://www.nuget.org/packages/Microsoft-WindowsAPICodePack-Shell/)**
-  - **[Microsoft Visual Basic](https://www.nuget.org/packages/Microsoft.VisualBasic/)**
+  - **[Microsoft Universal Windows Platform](https://www.nuget.org/packages/Microsoft.NETCore.UniversalWindowsPlatform/)**
   - **[Newtonsoft.Json](https://www.nuget.org/packages/Newtonsoft.Json/)**
 
 ## Commit / Pull Request Labels
