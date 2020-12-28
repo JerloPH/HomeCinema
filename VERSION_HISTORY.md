@@ -321,10 +321,6 @@ Build from latest commit: [33a6d77](https://github.com/JerloPH/HomeCinema/commit
 
 Build from latest commit: [e1cc236](https://github.com/JerloPH/HomeCinema/commit/e1cc236)
 
-**[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/0.0.0.8/HomeCinema-Windows_v0.0.0.8.zip "HomeCinema-Windows_v0.0.0.8.zip")**
-
-[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/0.0.0.8/total.svg)]() <br>
-
 **What's New?**
 - ADD: **Clean** button to delete *".jpg"* files in *temp* folder.
 - ADD: **Search IMDB** button to search for Movie IMDB ID, using Movie title.
@@ -340,10 +336,6 @@ Build from latest commit: [e1cc236](https://github.com/JerloPH/HomeCinema/commit
 
 Build from latest commit: [ec36b4d](https://github.com/JerloPH/HomeCinema/commit/ec36b4d)
 
-**[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/0.0.0.7/HomeCinema-Windows_v0.0.0.7.zip "HomeCinema-Windows_v0.0.0.7.zip")**
-
-[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/0.0.0.7/total.svg)]() <br>
-
 **What's New?**
 - ADD: **Fetch Data** Button to automatically fetch information from [**The Movie Database**](https://www.themoviedb.org/).
   - Fetch: Title, Summary, Year, Trailer, Poster Image
@@ -356,10 +348,6 @@ Build from latest commit: [ec36b4d](https://github.com/JerloPH/HomeCinema/commit
 
 Build from latest commit: [6dde01a](https://github.com/JerloPH/HomeCinema/commit/6dde01a)
 
-**[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/0.0.0.6/HomeCinema-Windows_v0.0.0.6.zip "HomeCinema-Windows_v0.0.0.6.zip")**
-
-[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/0.0.0.6/total.svg)]() <br>
-
 **What's New?**
 - FIX: When movie is deleted, dispose cover image from resources and delete it from disk.
 - FIX: Automatic change of *View* and *Sort*.
@@ -370,10 +358,6 @@ Build from latest commit: [6dde01a](https://github.com/JerloPH/HomeCinema/commit
 ### **GUI Update and Minor Improvements** 
 
 Build from latest commit: [99e2dd4](https://github.com/JerloPH/HomeCinema/commit/99e2dd4)
-
-**[Download link for Windows 32/64 bit](https://github.com/JerloPH/HomeCinema/releases/download/0.0.0.5/HomeCinema-Windows_v0.0.0.5.zip "HomeCinema-Windows_v0.0.0.5.zip")**
-
-[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/0.0.0.5/total.svg)]() <br>
 
 **What's New?**
 - ADD: Checkbox to perform SEARCH after CLEAR of Search results.
