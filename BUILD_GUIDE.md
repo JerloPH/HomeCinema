@@ -1,6 +1,6 @@
 # Guide
 
-## Building the Exeecutable
+## Building the Executable
 1. Update Variable **"HOMECINEMA_BUILD"** in [\HomeCinema\GlobalVars.cs](\HomeCinema\GlobalVars.cs).
 2. Insert TMDB Key Variable: **"TMDB_KEY"** in [\HomeCinema\GlobalVars.cs](\HomeCinema\GlobalVars.cs).
 3. Update **version** in [\HomeCinema\Properties\AssemblyInfo.cs](\HomeCinema\Properties\AssemblyInfo.cs).
