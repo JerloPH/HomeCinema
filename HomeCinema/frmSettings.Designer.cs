@@ -277,7 +277,7 @@
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(702, 423);
             this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Filters";
+            this.tabPage3.Text = "Tags";
             // 
             // label7
             // 
