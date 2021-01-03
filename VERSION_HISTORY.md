@@ -1,5 +1,21 @@
 # HomeCinema - Project History:
 
+## vx.x.x.x ***build 26 - (00 January 2021 PHT)***
+### Various Fixes and Improvements.
+
+**[Windows 64-bit](https://github.com/JerloPH/HomeCinema/releases/download/vx.x.x.x/HomeCinema-Windows_vx.x.x.x.zip "HomeCinema-Windows_vx.x.x.x.zip")**
+
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/vx.x.x.x/total.svg)]() <br>
+
+**What's New?**
+- GUI: Renamed 'Filters' to 'Tags', in Settings.
+
+**'Under the Hood' changes:**
+- RES: Update guide_add_media_paths.png.
+- DOC: Removed links from previous releases (deleted).
+- DOC: Added **'BUILD_GUIDE.md'**.
+****
+
 ## v0.0.9.0 ***build 25 - (28 December 2020 PHT)***
 ### Various Fixes and Improvements.
 
