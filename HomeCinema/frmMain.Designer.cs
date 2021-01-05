@@ -32,6 +32,7 @@ namespace HomeCinema
         {
             this.components = new System.ComponentModel.Container();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cbHideAnim = new System.Windows.Forms.CheckBox();
             this.cbSortOrder = new System.Windows.Forms.ComboBox();
             this.cbSort = new System.Windows.Forms.ComboBox();
             this.btnClean = new System.Windows.Forms.Button();
@@ -62,7 +63,6 @@ namespace HomeCinema
             this.cbCategory = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.cmLV = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.cbHideAnim = new System.Windows.Forms.CheckBox();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -86,6 +86,19 @@ namespace HomeCinema
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Controls";
+            // 
+            // cbHideAnim
+            // 
+            this.cbHideAnim.AutoSize = true;
+            this.cbHideAnim.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbHideAnim.ForeColor = System.Drawing.Color.White;
+            this.cbHideAnim.Location = new System.Drawing.Point(1027, 18);
+            this.cbHideAnim.Name = "cbHideAnim";
+            this.cbHideAnim.Size = new System.Drawing.Size(210, 33);
+            this.cbHideAnim.TabIndex = 26;
+            this.cbHideAnim.Text = "Hide Animations";
+            this.cbHideAnim.UseVisualStyleBackColor = true;
+            this.cbHideAnim.CheckedChanged += new System.EventHandler(this.cbHideAnim_CheckedChanged);
             // 
             // cbSortOrder
             // 
@@ -449,18 +462,6 @@ namespace HomeCinema
             this.cmLV.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.cmLV.Name = "cmLV";
             this.cmLV.Size = new System.Drawing.Size(61, 4);
-            // 
-            // cbHideAnim
-            // 
-            this.cbHideAnim.AutoSize = true;
-            this.cbHideAnim.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbHideAnim.ForeColor = System.Drawing.Color.White;
-            this.cbHideAnim.Location = new System.Drawing.Point(1027, 18);
-            this.cbHideAnim.Name = "cbHideAnim";
-            this.cbHideAnim.Size = new System.Drawing.Size(210, 33);
-            this.cbHideAnim.TabIndex = 26;
-            this.cbHideAnim.Text = "Hide Animations";
-            this.cbHideAnim.UseVisualStyleBackColor = true;
             // 
             // frmMain
             // 

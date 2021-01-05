@@ -1516,6 +1516,13 @@ namespace HomeCinema
                 OpenFormPlayMovie();
             }
         }
+
+        private void cbHideAnim_CheckedChanged(object sender, EventArgs e)
+        {
+            // Perform Search
+            btnSearch.PerformClick();
+        }
+
         // Change lvSearchResult Sort by
         private void cbSort_SelectedIndexChanged(object sender, EventArgs e)
         {
