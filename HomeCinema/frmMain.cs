@@ -1231,7 +1231,8 @@ namespace HomeCinema
 
             // Delete previous log file, if exceeds file size limit
             GlobalVars.CheckLogFile(GlobalVars.FILE_LOG_APP, "frmMain-(Delete AppLog)", Text + "\n  : Start of LogFile");
-            GlobalVars.CheckLogFile(GlobalVars.DB_DBLOGPATH, "frmMain-(Delete Database dblog)", Text + "\n  : App Database Log is deleted!");
+            GlobalVars.CheckLogFile(GlobalVars.DB_DBLOGPATH, "frmMain-(Delete App_DB.log)", Text + "\n  : Database Log");
+            GlobalVars.CheckLogFile(GlobalVars.FILE_LOG_ERROR, "frmMain-(Delete App_ErrorLog.log)", Text + "\n  : Error Logs");
 
             // Put default Image on ImageList
             GlobalVars.MOVIE_IMGLIST.Images.Clear();
@@ -1490,7 +1491,18 @@ namespace HomeCinema
             {
                 msg += "\nCleaned JSON Files!";
             }
-            msg += "Done!";
+            GlobalVars.TryDelete(GlobalVars.FILE_LOG_APP, errFrom);
+            GlobalVars.TryDelete(GlobalVars.FILE_LOG_ERROR, errFrom);
+            GlobalVars.TryDelete(GlobalVars.DB_DBLOGPATH, errFrom);
+            if (GlobalVars.TryDelete(GlobalVars.PATH_TEMP + "_JSONLog.log", errFrom))
+            {
+                msg += "\nCleaned Log Files!";
+            }
+            if (GlobalVars.TryDelete(GlobalVars.PATH_TEMP + "version", errFrom))
+            {
+                msg += "\nCleaned other files!";
+            }
+            msg += "\nDone!";
             GlobalVars.ShowInfo(msg);
         }
         // When ENTER Key is pressed on ListView
