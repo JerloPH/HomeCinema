@@ -988,6 +988,10 @@ namespace HomeCinema
             {
                 // Perform click on Change View
                 btnChangeView.PerformClick();
+
+                // Auto check update
+                GlobalVars.CheckForUpdate();
+
                 // Toggle Start variable
                 Start = false;
 
@@ -1231,9 +1235,6 @@ namespace HomeCinema
         private void frmMain_Load(object sender, EventArgs e)
         {
             // Startup events
-
-            // Auto check update
-            GlobalVars.CheckForUpdate();
 
             // Delete previous log file, if exceeds file size limit
             GlobalVars.CheckLogFile(GlobalVars.FILE_LOG_APP, "frmMain-(Delete AppLog)", Text + "\n  : Start of LogFile");
