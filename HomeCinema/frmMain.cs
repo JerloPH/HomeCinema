@@ -173,7 +173,7 @@ namespace HomeCinema
             bgWorkInsertMovie.DoWork += new DoWorkEventHandler(bgw_SearchFileinFolder);
             bgWorkInsertMovie.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgw_DoneSearchFileinFolder);
 
-            // Add events to BG Worker for Searching movie in Database
+            // Add events to BG Worker for Fetching movie in Local Database
             bgSearchInDB.WorkerReportsProgress = true;
             bgSearchInDB.ProgressChanged += bgwMovie_ProgressChanged;
             bgSearchInDB.DoWork += new DoWorkEventHandler(bgwMovie_SearchMovie);
@@ -844,57 +844,23 @@ namespace HomeCinema
             GlobalVars.Log(errFrom, $"START Background worker from: {Name}");
             DataTable dt = DBCON.DbQuery(qry, cols, errFrom);
             GlobalVars.Log(errFrom, $"DT is obtained");
-            if (dt.Rows.Count > 0)
+
+            // Clear previous list
+            this.Invoke(new Action(() => lvSearchResult.Items.Clear()));
+
+            // Count progress
+            int progressMax = dt.Rows.Count;
+
+            // Iterate thru all DataRows
+            if (progressMax > 0)
             {
                 foreach (DataRow r in dt.Rows)
                 {
-                    worker.ReportProgress(progress, r);
-                    progress += 1;
-                }
-                e.Result = dt;
-            }
-            else
-            {
-                e.Result = null;
-            }
-            GlobalVars.Log(errFrom, $"DONE Background worker from: {Name}");
-        }
-        private void bgwMovie_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            // Error log
-            string errFrom = "frmMain-bgwMovie_ProgressChanged";
-
-            // Check if progress is the start
-            if (e.ProgressPercentage < 1)
-            {
-                // Clear previous list
-                lvSearchResult.Items.Clear();
-
-                // Log progress Start [0]
-                GlobalVars.Log(errFrom + $" [First Progress] ({ e.ProgressPercentage.ToString() })", "RETRIEVES data from Previous Search query in bgWorker");
-            }
-
-            // Retrieve Progress DataRow
-            try
-            {
-                // Get The DataRow progress
-                if (e.UserState is DataRow)
-                {
-                    // Set the e.Result from BgWorker as DT
-                    DataRow r = e.UserState as DataRow;
-
+                    // Add Item to ListView
                     // Convert ID object to ID int
                     int MOVIEID;
-                    try
-                    {
-                        MOVIEID = Convert.ToInt32(r[0]);
-
-                    }  catch (Exception exint)
-                    {
-                        // Error Log
-                        MOVIEID = 0;
-                        GlobalVars.ShowError($"{errFrom} [MovieID obj to Int]\n\tID: 0", exint, false);
-                    }
+                    try { MOVIEID = Convert.ToInt32(r[0]); }
+                    catch  {  MOVIEID = 0; }
 
                     // Add to listview lvSearchResult
                     if (MOVIEID > 0)
@@ -904,9 +870,10 @@ namespace HomeCinema
                         try
                         {
                             Image imgFromFile = Image.FromFile(Imagefile);
-                            GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imgFromFile);
+                            this.Invoke(new Action(() => GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imgFromFile)));
 
-                        } catch (Exception exImg)
+                        }
+                        catch (Exception exImg)
                         {
                             // Error Log
                             GlobalVars.ShowError($"{errFrom}\n\tFile:\n\t{Imagefile}", exImg, false);
@@ -929,14 +896,39 @@ namespace HomeCinema
                         LVItemSetDetails(temp, new string[] { MOVIEID.ToString(), r1, r2, r3, r4, r5, r6, r7, r8 });
 
                         // Add Item to ListView lvSearchResult
-                        lvSearchResult.Items.Add(temp);
+                        this.Invoke(new Action(() => lvSearchResult.Items.Add(temp)));
                     }
+                    else
+                    {
+                        GlobalVars.Log(errFrom, $"Invalid MovieID: {r[0].ToString()}");
+                    }
+
+                    // Report progress, increasing count
+                    worker.ReportProgress(progress, progressMax);
+                    progress += 1;
                 }
+                e.Result = dt;
             }
-            catch (Exception exc)
+            else
             {
-                GlobalVars.ShowError(errFrom, exc);
+                e.Result = null;
             }
+            GlobalVars.Log(errFrom, $"DONE Background worker from: {Name}");
+        }
+        private void bgwMovie_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            // Error log
+            string errFrom = "frmMain-bgwMovie_ProgressChanged";
+
+            // Check if progress is the start
+            if (e.ProgressPercentage < 1)
+            {
+                // Log progress Start [0]
+                GlobalVars.Log(errFrom + $" [First Progress] ({ e.ProgressPercentage.ToString() })", "RETRIEVES data from Previous Search query in bgWorker");
+            }
+
+            // Retrieve Progress Count
+            GlobalVars.Log(errFrom, $" [Progress Count] ({e.ProgressPercentage.ToString()} / {e.UserState.ToString()})");
         }
         private void bgwMovie_DoneSearchMovie(object sender, RunWorkerCompletedEventArgs e)
         {
