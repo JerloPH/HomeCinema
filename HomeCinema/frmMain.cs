@@ -157,6 +157,7 @@ namespace HomeCinema
 
             // Perform background worker that Automatically inserts all movies from designated folder
             // Check if directory exists first, by readling from file
+            GlobalVars.Log("frmMain", "Loading files into App..");
             string[] tempFolder = GlobalVars.BuildArrFromFile(GlobalVars.FILE_MEDIALOC, "frmMain"); // Get directory to start search
             if (tempFolder.Length < 1)
             {
@@ -171,6 +172,7 @@ namespace HomeCinema
             // Add events to FORM
             KeyDown += new KeyEventHandler(Form_KeyDown);
 
+            GlobalVars.Log("frmMain", "Initialize BackgroundWorkers..");
             // Add events to BG Worker for Searching movie files in a folder
             bgWorkInsertMovie.DoWork += new DoWorkEventHandler(bgw_SearchFileinFolder);
             bgWorkInsertMovie.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgw_DoneSearchFileinFolder);
@@ -1015,6 +1017,7 @@ namespace HomeCinema
             string calledFrom = $"frmMain-bgw_SearchFileinFolder";
 
             // Get Movie files on Folder, even subFolder
+            GlobalVars.Log(calledFrom, "Search for Supported Media files in Folder..");
             // Create variables
             int countVoid = 0; // void files, not media
 
@@ -1090,6 +1093,7 @@ namespace HomeCinema
                 }
 
                 // Add series' folder paths
+                GlobalVars.Log(calledFrom, "Search for Series Folders in Directory..");
                 List<string> listSeries = GlobalVars.GetSeriesLocations();
                 if (listSeries.Count > 0)
                 {
