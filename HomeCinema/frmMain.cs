@@ -26,7 +26,6 @@ using HomeCinema.Global;
 using System.ComponentModel;
 using System.Linq;
 using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 
@@ -894,7 +893,7 @@ namespace HomeCinema
                     {
                         // Error Log
                         MOVIEID = 0;
-                        GlobalVars.ShowError($"{errFrom} [MovieID obj to Int]\n\tID: { MOVIEID.ToString() }", exint, false);
+                        GlobalVars.ShowError($"{errFrom} [MovieID obj to Int]\n\tID: 0", exint, false);
                     }
 
                     // Add to listview lvSearchResult
