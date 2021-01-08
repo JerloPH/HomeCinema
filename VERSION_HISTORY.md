@@ -1,6 +1,6 @@
 # HomeCinema - Project History:
 
-[**Go to Latest Release Log](/VERSION_HISTORY.md#v0090-build-25---28-december-2020-pht)
+[**Go to Latest Release Log**](/VERSION_HISTORY.md#v0090-build-25---28-december-2020-pht)
 
 # Upcoming Release
 ## vx.x.x.x ***build 26 - (00 January 2021 PHT)***
