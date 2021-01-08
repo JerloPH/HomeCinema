@@ -63,6 +63,7 @@ namespace HomeCinema
             this.cbCategory = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.cmLV = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.btnAbout = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -72,6 +73,7 @@ namespace HomeCinema
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.BackColor = System.Drawing.Color.Black;
+            this.groupBox2.Controls.Add(this.btnAbout);
             this.groupBox2.Controls.Add(this.cbHideAnim);
             this.groupBox2.Controls.Add(this.cbSortOrder);
             this.groupBox2.Controls.Add(this.cbSort);
@@ -107,9 +109,9 @@ namespace HomeCinema
             this.cbSortOrder.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbSortOrder.ForeColor = System.Drawing.Color.Black;
             this.cbSortOrder.FormattingEnabled = true;
-            this.cbSortOrder.Location = new System.Drawing.Point(201, 26);
+            this.cbSortOrder.Location = new System.Drawing.Point(147, 25);
             this.cbSortOrder.Name = "cbSortOrder";
-            this.cbSortOrder.Size = new System.Drawing.Size(181, 30);
+            this.cbSortOrder.Size = new System.Drawing.Size(131, 30);
             this.cbSortOrder.TabIndex = 29;
             this.cbSortOrder.SelectedIndexChanged += new System.EventHandler(this.cbSortOrder_SelectedIndexChanged);
             // 
@@ -122,7 +124,7 @@ namespace HomeCinema
             this.cbSort.FormattingEnabled = true;
             this.cbSort.Location = new System.Drawing.Point(7, 25);
             this.cbSort.Name = "cbSort";
-            this.cbSort.Size = new System.Drawing.Size(186, 30);
+            this.cbSort.Size = new System.Drawing.Size(134, 30);
             this.cbSort.TabIndex = 28;
             this.cbSort.SelectedIndexChanged += new System.EventHandler(this.cbSort_SelectedIndexChanged);
             // 
@@ -131,9 +133,9 @@ namespace HomeCinema
             this.btnClean.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnClean.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClean.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnClean.Location = new System.Drawing.Point(825, 18);
+            this.btnClean.Location = new System.Drawing.Point(814, 16);
             this.btnClean.Name = "btnClean";
-            this.btnClean.Size = new System.Drawing.Size(196, 40);
+            this.btnClean.Size = new System.Drawing.Size(143, 40);
             this.btnClean.TabIndex = 19;
             this.btnClean.Text = "Clean";
             this.btnClean.UseVisualStyleBackColor = false;
@@ -144,9 +146,9 @@ namespace HomeCinema
             this.btnSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSettings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnSettings.Location = new System.Drawing.Point(623, 18);
+            this.btnSettings.Location = new System.Drawing.Point(477, 16);
             this.btnSettings.Name = "btnSettings";
-            this.btnSettings.Size = new System.Drawing.Size(196, 40);
+            this.btnSettings.Size = new System.Drawing.Size(161, 40);
             this.btnSettings.TabIndex = 18;
             this.btnSettings.Text = "Settings";
             this.btnSettings.UseVisualStyleBackColor = false;
@@ -157,9 +159,9 @@ namespace HomeCinema
             this.btnChangeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnChangeView.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnChangeView.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnChangeView.Location = new System.Drawing.Point(401, 18);
+            this.btnChangeView.Location = new System.Drawing.Point(285, 16);
             this.btnChangeView.Name = "btnChangeView";
-            this.btnChangeView.Size = new System.Drawing.Size(216, 40);
+            this.btnChangeView.Size = new System.Drawing.Size(181, 40);
             this.btnChangeView.TabIndex = 14;
             this.btnChangeView.Text = "Change View";
             this.btnChangeView.UseVisualStyleBackColor = false;
@@ -463,6 +465,19 @@ namespace HomeCinema
             this.cmLV.Name = "cmLV";
             this.cmLV.Size = new System.Drawing.Size(61, 4);
             // 
+            // btnAbout
+            // 
+            this.btnAbout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnAbout.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAbout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnAbout.Location = new System.Drawing.Point(645, 16);
+            this.btnAbout.Name = "btnAbout";
+            this.btnAbout.Size = new System.Drawing.Size(161, 40);
+            this.btnAbout.TabIndex = 30;
+            this.btnAbout.Text = "About";
+            this.btnAbout.UseVisualStyleBackColor = false;
+            this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -521,6 +536,7 @@ namespace HomeCinema
         private ComboBox cbSortOrder;
         private ComboBox cbSort;
         private CheckBox cbHideAnim;
+        private Button btnAbout;
     }
 }
 

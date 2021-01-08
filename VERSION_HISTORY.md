@@ -11,6 +11,7 @@
 - REV: Automatically refresh Media List, when checkbox **Hide Animation** is checked/unchecked.
 - REV: Perform **Update checking** when App is completely loaded, instead of *'before App Loads'*.
 - GUI: Renamed **'Filters'** to **'Tags'**, in Settings.
+- GUI: Added **[About]** button, to Display Info about the App.
 
 **'Under the Hood' changes:**
 - REV: Invoke method, when adding items to ListView Media List.

@@ -820,6 +820,21 @@ namespace HomeCinema
                 GlobalVars.formSetting.Focus();
             }
         }
+        // Create or Show frmAbout Form
+        private void ShowAboutForm()
+        {
+            // Create Form
+            if (GlobalVars.formAbout == null)
+            {
+                Form form = new frmAbout();
+                form.Show(this);
+                GlobalVars.formAbout = form;
+            }
+            else
+            {
+                GlobalVars.formAbout.Focus();
+            }
+        }
         // ####################################################################################### BACKGROUND WORKERS
         private void bgwMovie_SearchMovie(object sender, DoWorkEventArgs e)
         {
@@ -1526,6 +1541,12 @@ namespace HomeCinema
         {
             // Perform Search
             btnSearch.PerformClick();
+        }
+
+        private void btnAbout_Click(object sender, EventArgs e)
+        {
+            //Show About form
+            ShowAboutForm();
         }
 
         // Change lvSearchResult Sort by
