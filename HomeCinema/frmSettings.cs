@@ -1,4 +1,5 @@
-﻿/* #####################################################################################
+﻿#region License
+/* #####################################################################################
  * LICENSE - GPL v3
 * HomeCinema - Organize your Movie Collection
 * Copyright (C) 2020  JerloPH (https://github.com/JerloPH)
@@ -16,6 +17,7 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##################################################################################### */
+#endregion
 using System;
 using System.Drawing;
 using System.Windows.Forms;
