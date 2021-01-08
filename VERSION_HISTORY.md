@@ -8,12 +8,20 @@
 [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/vx.x.x.x/total.svg)]() <br>
 
 **What's New?**
-- GUI: Renamed 'Filters' to 'Tags', in Settings.
+- REV: Automatically refresh Media List, when checkbox **Hide Animation** is checked/unchecked.
+- REV: Perform **Update checking** when App is completely loaded, instead of *'before App Loads'*.
+- GUI: Renamed **'Filters'** to **'Tags'**, in Settings.
 
 **'Under the Hood' changes:**
+- REV: Invoke method, when adding items to ListView Media List.
 - RES: Update guide_add_media_paths.png.
 - DOC: Removed links from previous releases (deleted).
 - DOC: Added **'BUILD_GUIDE.md'**.
+- MINOR: Changed logging string format.
+- MINOR: Add return type and value for method:  **TryDelete**, in [**GlobalVars**](/HomeCinema/GlobalVars.cs).
+- MINOR: Added logging files to **[Clean]** Button.
+- MINOR: Add some more logs.
+- MINOR: Code cleanup.
 ****
 
 ## v0.0.9.0 ***build 25 - (28 December 2020 PHT)***
