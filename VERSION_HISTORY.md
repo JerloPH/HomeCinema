@@ -1,14 +1,11 @@
 # HomeCinema - Project History:
 
-[**Go to Latest Release Log**](/VERSION_HISTORY.md#v0090-build-25---28-december-2020-pht)
+## v0.1.0.0 ***build 26 - (12 January 2021 PHT)***
+### Major Improvements.
 
-# Upcoming Release
-## vx.x.x.x ***build 26 - (00 January 2021 PHT)***
-### Various Fixes and Improvements.
+**[Windows 64-bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.1.0.0/HomeCinema-Windows_v0.1.0.0.zip "HomeCinema-Windows_v0.1.0.0.zip")**
 
-**[Windows 64-bit](https://github.com/JerloPH/HomeCinema/releases/download/vx.x.x.x/HomeCinema-Windows_vx.x.x.x.zip "HomeCinema-Windows_vx.x.x.x.zip")**
-
-[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/vx.x.x.x/total.svg)]() <br>
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.1.0.0/total.svg)]() <br>
 
 **What's New?**
 - REV: Automatically refresh Media List, when checkbox **Hide Animation** is checked/unchecked.

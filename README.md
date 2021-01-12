@@ -1,17 +1,17 @@
 # HomeCinema
 
-<img src="/data/screenshot_v0.0.8.0.png"></img>
+<img src="/data/v0.1.jpg"></img>
 
-**version:**	0.0.9.0 <br>
-**build:**		25
+**version:**	0.1.0.0 <br>
+**build:**		26
 
 ## Downloads
 
-**Windows 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.9.0/HomeCinema-Windows_v0.0.9.0.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
+**Windows 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.1.0.0/HomeCinema-Windows_v0.1.0.0.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
 
 ### Download Counts
 
-**Current:** &nbsp; [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.9.0/total.svg)]() <br>
+**Current:** &nbsp; [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.1.0.0/total.svg)]() <br>
 **Overall:** &nbsp; [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/total.svg)]()
 
 ## Requirements
@@ -56,7 +56,7 @@ Ease the pain of browsing through many folders and finding out which movie is wh
 	  - **\Episode 1.mp4**
     - With this structure, type **D:\TV Series** into the [**Series Locations**] Textbox.
   
-<img src="/data/guide_add_media_paths.png"></img>
+<img src="/data/guide_add_media_paths.jpg"></img>
 
 ****
 
