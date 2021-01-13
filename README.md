@@ -79,8 +79,8 @@ Ease the pain of browsing through many folders and finding out which movie is wh
 - *When submitting a **bug report**,*
   - Include the following file (Located at the same folder as the main app):
     - App.log
-	- HomeCinemaDB.dblog
-	- WebTrailer.log
+    - App_DB.log
+    - App_ErrorLog.log
   - If possible, include a screenshot.
   - Explain the details in full. Describe what you are doing or trying to do, on what screen when the error apppeared.
     NOTE: Strictly **NO GENERIC** *"I get an error"* or *"This app has bugs"*.
