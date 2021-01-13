@@ -6,7 +6,7 @@
 
 ## Project History:
 
-**[View Link to read project history](/VERSION_HISTORY.md)**
+**[View Link to read project history](../VERSION_HISTORY.md)**
  
 ## Project specific files
   - **hc_data**	: Text files used by the app.
