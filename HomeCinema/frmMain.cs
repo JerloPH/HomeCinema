@@ -888,8 +888,13 @@ namespace HomeCinema
                         string Imagefile = GlobalVars.ImgFullPath(MOVIEID.ToString());
                         try
                         {
-                            Image imgFromFile = Image.FromFile(Imagefile);
-                            this.Invoke(new Action(() => GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imgFromFile)));
+                            if (File.Exists(Imagefile))
+                            {
+                                Image imgFromFile = Image.FromFile(Imagefile);
+                                this.Invoke(new Action(() => {
+                                    GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imgFromFile);
+                                }));
+                            }
 
                         }
                         catch (Exception exImg)
