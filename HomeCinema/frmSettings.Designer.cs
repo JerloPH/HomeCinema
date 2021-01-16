@@ -398,6 +398,7 @@
             this.btnMediaLocClear.TabIndex = 19;
             this.btnMediaLocClear.Text = "CLEAR";
             this.btnMediaLocClear.UseVisualStyleBackColor = true;
+            this.btnMediaLocClear.Click += new System.EventHandler(this.btnMediaLocClear_Click);
             // 
             // BoxMediaLoc
             // 

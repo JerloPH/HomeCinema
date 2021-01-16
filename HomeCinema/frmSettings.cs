@@ -265,7 +265,17 @@ namespace HomeCinema
 
         private void btnMediaLocRemove_Click(object sender, EventArgs e)
         {
-            //
+            // Remove selected from ListBox: BoxMediaLoc
+            for (int i = BoxMediaLoc.SelectedIndices.Count - 1; i >= 0; i--)
+            {
+                BoxMediaLoc.Items.RemoveAt(BoxMediaLoc.SelectedIndices[i]);
+            }
+        }
+
+        private void btnMediaLocClear_Click(object sender, EventArgs e)
+        {
+            // Remove all from ListBox: BoxMediaLoc
+            BoxMediaLoc.Items.Clear();
         }
     }
 }
