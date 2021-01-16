@@ -58,6 +58,9 @@
             this.btnMediaLocClear = new System.Windows.Forms.Button();
             this.BoxMediaLoc = new System.Windows.Forms.ListBox();
             this.BoxSeriesLoc = new System.Windows.Forms.ListBox();
+            this.btnSeriesLocClear = new System.Windows.Forms.Button();
+            this.btnSeriesLocRemove = new System.Windows.Forms.Button();
+            this.btnSeriesLocAdd = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -209,6 +212,9 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Black;
+            this.tabPage2.Controls.Add(this.btnSeriesLocClear);
+            this.tabPage2.Controls.Add(this.btnSeriesLocRemove);
+            this.tabPage2.Controls.Add(this.btnSeriesLocAdd);
             this.tabPage2.Controls.Add(this.BoxSeriesLoc);
             this.tabPage2.Controls.Add(this.BoxMediaLoc);
             this.tabPage2.Controls.Add(this.btnMediaLocClear);
@@ -418,6 +424,45 @@
             this.BoxSeriesLoc.Size = new System.Drawing.Size(395, 106);
             this.BoxSeriesLoc.TabIndex = 21;
             // 
+            // btnSeriesLocClear
+            // 
+            this.btnSeriesLocClear.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSeriesLocClear.ForeColor = System.Drawing.Color.Black;
+            this.btnSeriesLocClear.Location = new System.Drawing.Point(406, 318);
+            this.btnSeriesLocClear.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSeriesLocClear.Name = "btnSeriesLocClear";
+            this.btnSeriesLocClear.Size = new System.Drawing.Size(88, 30);
+            this.btnSeriesLocClear.TabIndex = 24;
+            this.btnSeriesLocClear.Text = "CLEAR";
+            this.btnSeriesLocClear.UseVisualStyleBackColor = true;
+            this.btnSeriesLocClear.Click += new System.EventHandler(this.btnSeriesLocClear_Click);
+            // 
+            // btnSeriesLocRemove
+            // 
+            this.btnSeriesLocRemove.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSeriesLocRemove.ForeColor = System.Drawing.Color.Black;
+            this.btnSeriesLocRemove.Location = new System.Drawing.Point(406, 284);
+            this.btnSeriesLocRemove.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSeriesLocRemove.Name = "btnSeriesLocRemove";
+            this.btnSeriesLocRemove.Size = new System.Drawing.Size(88, 30);
+            this.btnSeriesLocRemove.TabIndex = 23;
+            this.btnSeriesLocRemove.Text = "REMOVE";
+            this.btnSeriesLocRemove.UseVisualStyleBackColor = true;
+            this.btnSeriesLocRemove.Click += new System.EventHandler(this.btnSeriesLocRemove_Click);
+            // 
+            // btnSeriesLocAdd
+            // 
+            this.btnSeriesLocAdd.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSeriesLocAdd.ForeColor = System.Drawing.Color.Black;
+            this.btnSeriesLocAdd.Location = new System.Drawing.Point(406, 250);
+            this.btnSeriesLocAdd.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSeriesLocAdd.Name = "btnSeriesLocAdd";
+            this.btnSeriesLocAdd.Size = new System.Drawing.Size(87, 30);
+            this.btnSeriesLocAdd.TabIndex = 22;
+            this.btnSeriesLocAdd.Text = "ADD";
+            this.btnSeriesLocAdd.UseVisualStyleBackColor = true;
+            this.btnSeriesLocAdd.Click += new System.EventHandler(this.btnSeriesLocAdd_Click);
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -480,5 +525,8 @@
         private System.Windows.Forms.Button btnMediaLocRemove;
         private System.Windows.Forms.ListBox BoxMediaLoc;
         private System.Windows.Forms.ListBox BoxSeriesLoc;
+        private System.Windows.Forms.Button btnSeriesLocClear;
+        private System.Windows.Forms.Button btnSeriesLocRemove;
+        private System.Windows.Forms.Button btnSeriesLocAdd;
     }
 }

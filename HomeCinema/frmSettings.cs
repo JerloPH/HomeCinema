@@ -277,5 +277,34 @@ namespace HomeCinema
             // Remove all from ListBox: BoxMediaLoc
             BoxMediaLoc.Items.Clear();
         }
+
+        private void btnSeriesLocAdd_Click(object sender, EventArgs e)
+        {
+            using (var fbd = new FolderBrowserDialog())
+            {
+                fbd.Description = "Select base folder that contains series' folders";
+                DialogResult result = fbd.ShowDialog();
+
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    BoxSeriesLoc.Items.Add(fbd.SelectedPath);
+                }
+            }
+        }
+
+        private void btnSeriesLocRemove_Click(object sender, EventArgs e)
+        {
+            // Remove selected from ListBox: BoxSeriesLoc
+            for (int i = BoxSeriesLoc.SelectedIndices.Count - 1; i >= 0; i--)
+            {
+                BoxSeriesLoc.Items.RemoveAt(BoxSeriesLoc.SelectedIndices[i]);
+            }
+        }
+
+        private void btnSeriesLocClear_Click(object sender, EventArgs e)
+        {
+            // Remove all from ListBox: BoxSeriesLoc
+            BoxSeriesLoc.Items.Clear();
+        }
     }
 }
