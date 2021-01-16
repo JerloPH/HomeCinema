@@ -720,14 +720,14 @@ namespace HomeCinema
         {
             // Unparse InfoString
             string MovieId = InfoString[0]; // ID
-            string r1 = InfoString[1]; // name
-            string r2 = InfoString[2]; // name_ep
-            string r3 = InfoString[3]; // name_series
-            string r4 = InfoString[4]; // season
-            string r5 = InfoString[5]; // episode
-            string r6 = InfoString[6]; // year
-            string r7 = InfoString[7]; // summary
-            string r8 = InfoString[8]; // genre
+            string resName = InfoString[1]; // name
+            string resNameEp = InfoString[2]; // name_ep
+            string resNameSer = InfoString[3]; // name_series
+            string resSeason = InfoString[4]; // season
+            string resEp = InfoString[5]; // episode
+            string resYear = InfoString[6]; // year
+            string resSummary = InfoString[7]; // summary
+            string resGenre = InfoString[8]; // genre
 
             try
             {
@@ -735,35 +735,35 @@ namespace HomeCinema
                 int MOVIEID = Convert.ToInt32(MovieId);
 
                 // Set default text for item
-                temp.Text = r1;
+                temp.Text = resName;
 
                 // Append ToolTip on it
-                temp.ToolTipText = "Summary: \n" + GlobalVars.LimitString(r7, 350) + "\n\nGenre:\n" + r8.Replace(",", ", ");
+                temp.ToolTipText = "Summary: \n" + GlobalVars.LimitString(resSummary, 350) + "\n\nGenre:\n" + resGenre.Replace(",", ", ");
 
                 // Is it a Movie? (by checking if there are no season)
                 // Add sub-item for Series Name, or Episode Name
-                if (String.IsNullOrWhiteSpace(r4))
+                if (String.IsNullOrWhiteSpace(resSeason))
                 {
-                    temp.SubItems.Add(r3); // Series Name
-                    temp.SubItems.Add(r2); // Episode Name
+                    temp.SubItems.Add(resNameSer); // Series Name
+                    temp.SubItems.Add(resNameEp); // Episode Name
                 }
                 else
                 {
                     // Set Series Name
-                    if (String.IsNullOrWhiteSpace(r3))
+                    if (String.IsNullOrWhiteSpace(resNameSer))
                     {
-                        temp.Text = r3; //Set Series Name
+                        temp.Text = resNameSer; //Set Series Name
                     }
-                    temp.SubItems.Add(r2); // Episode Name
-                    temp.SubItems.Add("S" + GlobalVars.ValidateNum(r4) + " E" + GlobalVars.ValidateNum(r5));
+                    temp.SubItems.Add(resNameEp); // Episode Name
+                    temp.SubItems.Add("S" + GlobalVars.ValidateNum(resSeason) + " E" + GlobalVars.ValidateNum(resEp));
                 }
-                temp.SubItems.Add(r6); // Year
+                temp.SubItems.Add(resYear); // Year
 
                 // Display image (From ImageList) based on ImageKey
                 temp.ImageKey = GlobalVars.ImgGetKey(MOVIEID.ToString());
 
                 // Add year to name/title of MOVIE
-                temp.Text = temp.Text + $" ({r6})";
+                temp.Text = temp.Text + $" ({resYear})";
 
                 // Save the ID as Tag, to NOT SHOW it on LIST
                 temp.Name = Convert.ToString(MOVIEID);
@@ -904,20 +904,22 @@ namespace HomeCinema
                         }
 
                         // Get all strings from the DataRow, passed by the BG worker
-                        string r1 = r[1].ToString(); // name
-                        string r2 = r[2].ToString(); // name_ep
-                        string r3 = r[3].ToString(); // name_series
-                        string r4 = r[4].ToString(); // season
-                        string r5 = r[5].ToString(); // episode
-                        string r6 = r[6].ToString(); // year
-                        string r7 = r[7].ToString(); // summary
-                        string r8 = r[8].ToString(); // genre
+                        string resName = r[1].ToString(); // name
+                        string resNameEp = r[2].ToString(); // name_ep
+                        string resNameSer = r[3].ToString(); // name_series
+                        string resSeason = r[4].ToString(); // season
+                        string resEp = r[5].ToString(); // episode
+                        string resYear = r[6].ToString(); // year
+                        string resSum = r[7].ToString(); // summary
+                        string resGenre = r[8].ToString(); // genre
 
                         // Make new ListView item, and assign properties to it
-                        ListViewItem temp = new ListViewItem() { Text = r1 };
+                        ListViewItem temp = new ListViewItem() { Text = resName };
 
                         // Edit Information on ListView Item
-                        LVItemSetDetails(temp, new string[] { MOVIEID.ToString(), r1, r2, r3, r4, r5, r6, r7, r8 });
+                        LVItemSetDetails(temp, new string[] { MOVIEID.ToString(), 
+                            resName, resNameEp, resNameSer,
+                            resSeason, resEp, resYear, resSum, resGenre });
 
                         // Add Item to ListView lvSearchResult
                         this.Invoke(new Action(() => lvSearchResult.Items.Add(temp)));
