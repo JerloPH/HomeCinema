@@ -372,6 +372,7 @@
             this.btnMediaLocAdd.TabIndex = 17;
             this.btnMediaLocAdd.Text = "ADD";
             this.btnMediaLocAdd.UseVisualStyleBackColor = true;
+            this.btnMediaLocAdd.Click += new System.EventHandler(this.btnMediaLocAdd_Click);
             // 
             // btnMediaLocRemove
             // 
@@ -384,6 +385,7 @@
             this.btnMediaLocRemove.TabIndex = 18;
             this.btnMediaLocRemove.Text = "REMOVE";
             this.btnMediaLocRemove.UseVisualStyleBackColor = true;
+            this.btnMediaLocRemove.Click += new System.EventHandler(this.btnMediaLocRemove_Click);
             // 
             // btnMediaLocClear
             // 

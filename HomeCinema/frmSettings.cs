@@ -146,6 +146,7 @@ namespace HomeCinema
                 txtMediaExt.Text = text;
 
                 // Media LOCATIONS Folders Texts
+                BoxMediaLoc.SelectionMode = SelectionMode.MultiExtended;
                 foreach (string c in GlobalVars.BuildArrFromFile(GlobalVars.FILE_MEDIALOC, $"{errFrom}[FILE_MEDIALOC]", '*'))
                 {
                     if (String.IsNullOrWhiteSpace(c) == false)
@@ -155,6 +156,7 @@ namespace HomeCinema
                 }
 
                 // Series LOCATIONS Folders Texts
+                BoxSeriesLoc.SelectionMode = SelectionMode.MultiExtended;
                 foreach (string c in GlobalVars.BuildArrFromFile(GlobalVars.FILE_SERIESLOC, $"{errFrom}[FILE_SERIESLOC]", '*'))
                 {
                     if (String.IsNullOrWhiteSpace(c) == false)
@@ -245,6 +247,25 @@ namespace HomeCinema
                 // Log Error
                 GlobalVars.ShowError("frmSettings-btnSave_Click", ex, false);
             }
+        }
+
+        private void btnMediaLocAdd_Click(object sender, EventArgs e)
+        {
+            using (var fbd = new FolderBrowserDialog())
+            {
+                fbd.Description = "Select folder that contains movie files";
+                DialogResult result = fbd.ShowDialog();
+
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    BoxMediaLoc.Items.Add(fbd.SelectedPath);
+                }
+            }
+        }
+
+        private void btnMediaLocRemove_Click(object sender, EventArgs e)
+        {
+            //
         }
     }
 }
