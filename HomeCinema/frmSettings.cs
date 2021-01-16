@@ -258,6 +258,11 @@ namespace HomeCinema
 
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
+                    if (BoxMediaLoc.Items.Contains(fbd.SelectedPath))
+                    {
+                        GlobalVars.ShowInfo("Path already exists!");
+                        return;
+                    }
                     BoxMediaLoc.Items.Add(fbd.SelectedPath);
                 }
             }
@@ -287,6 +292,11 @@ namespace HomeCinema
 
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
+                    if (BoxSeriesLoc.Items.Contains(fbd.SelectedPath))
+                    {
+                        GlobalVars.ShowInfo("Path already exists!");
+                        return;
+                    }
                     BoxSeriesLoc.Items.Add(fbd.SelectedPath);
                 }
             }
