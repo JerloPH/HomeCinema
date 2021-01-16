@@ -181,7 +181,7 @@
     <None Include="Resources\genre.hc_data">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\medialocation.hc-data">
+    <None Include="Resources\medialocation.hc_data">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Resources\media_ext.hc_data">
