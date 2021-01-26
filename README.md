@@ -30,6 +30,8 @@ Organize your collection of Movies and TV shows with HomeCinema.
 It is like a book catalogue, except it's for Movies and Series located in your Local Drive.
 
 Ease the pain of browsing through many folders and finding out which movie is which.
+
+[View **Softpedia** review here](https://www.softpedia.com/get/Multimedia/Video/Other-VIDEO-Tools/HomeCinema.shtml)
 	
 ## List of features:
 	
