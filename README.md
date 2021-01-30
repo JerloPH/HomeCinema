@@ -9,6 +9,11 @@
 
 **Windows 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.2.0.0/HomeCinema-Windows.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
 
+**NOTE: This update breaks the old way that the App saves directories** <br>
+- After updating, open the App and find the folder where your movies are saved.
+- To add additional folders, and TV series location(s), go to **Settings** -> **File**.
+  - Click on **[Add]** and navigate to your directories.
+  
 ### Download Counts
 
 **Current:** &nbsp; [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.2.0.0/total.svg)]() <br>
