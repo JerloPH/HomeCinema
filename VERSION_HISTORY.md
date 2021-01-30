@@ -1,5 +1,28 @@
 # HomeCinema - Project History:
 
+## v0.2.0.0 ***build 27 - (30 January 2021 PHT)***
+### Breaking Changes!
+
+**[Windows 64-bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.2.0.0/HomeCinema-Windows.zip "HomeCinema-Windows.zip")**
+
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.2.0.0/total.svg)]() <br>
+
+**NOTE: This update breaks the old way that the App saves directories** <br>
+- After updating, open the App and find the folder where your movies are saved.
+- To add additional folders, and TV series location(s), go to **Settings** -> **File**.
+- Click on **[Add]** and navigate to your directories.
+
+**What's New?**
+- REV: New GUI for Settings: Added Buttons to **[Add], [Remove], [Clear]** Directories to search media files from.
+
+**'Under the Hood' changes:**
+- REV: All required DLLs and files are saved under *lib* subfolder.
+- MINOR: Renamed variables for readability.
+- MINOR: Code cleanups.
+- DOCS: Updated README.
+- RES: Updated screenshots.
+****
+
 ## v0.1.0.0 ***build 26 - (12 January 2021 PHT)***
 ### Major Improvements.
 
