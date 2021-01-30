@@ -10,7 +10,7 @@
 **NOTE: This update breaks the old way that the App saves directories** <br>
 - After updating, open the App and find the folder where your movies are saved.
 - To add additional folders, and TV series location(s), go to **Settings** -> **File**.
-- Click on **[Add]** and navigate to your directories.
+  - Click on **[Add]** and navigate to your directories.
 
 **What's New?**
 - REV: New GUI for Settings: Added Buttons to **[Add], [Remove], [Clear]** Directories to search media files from.
