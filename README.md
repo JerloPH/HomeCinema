@@ -48,18 +48,20 @@ Ease the pain of browsing through many folders and finding out which movie is wh
 
 ## How to Add Media Locations?
 
-1. Press **Control + S** to Open Settings UI.
+1. Press **CTRL + S** or click on **[Settings]** button to Open Settings UI.
 2. Go to **File** Tab.
-3. Under **Media Locations**, enter the full directory of folders *containing your media files*.
-  - Note: Make sure each entry is seperated by a *comma* ( **,** ).
-  - Example: **D:\Movies,D:\Anime Movies**
-  - **IMPORTANT NOTE:** First-time loading of App takes a little bit long while to finish. Even more if you have a huge collection of media files.
-  - **NOTES for Adding TV Series :**
-    - The directory **must be** the top-level folder. You must have a directory structure like this:
-	  - **D:\TV Series**
-	  - **\Title of Series and Season**
-	  - **\Episode 1.mp4**
-    - With this structure, type **D:\TV Series** into the [**Series Locations**] Textbox.
+3. Under **Media Locations**, click on **[Add]** button and navigate to the directory where your movie files are located. <br>
+
+**IMPORTANT NOTE:** First-time loading of App takes a while to finish. Even longer if you have a huge collection of media files. <br>
+
+### NOTES for Adding TV Series
+  - Located under **Series Locations**.
+  - The directory **must be** the top-level *base* folder.
+  - A sample directory structure:
+```
+D:\TV Series\Title of Series and Season\Episode 1.mp4
+```
+  - With this structure, ``D:\TV Series`` is your base folder.
   
 <img src="/data/guide_add_media_paths.jpg"></img>
 
