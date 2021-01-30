@@ -1,9 +1,13 @@
 # HomeCinema - Features to Add / Bugs to Fix
 
-## Priority ListView
+## Priority List
 
-- Scrape Anime info from Anilist/MyAnimeList
+- Scrape Anime info from Anilist/MyAnimeList.
 - Add folders as series into the App. *Done*.
+- Improve speed of App load (check background worker and optimize).
+- Check if file still exists, before loading it into the App.
+  - Delete entry from database, and cover picture (if existing).
+- Warning on entry deletion.
 
 ## Features:
 - General
