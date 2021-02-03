@@ -839,7 +839,7 @@ namespace HomeCinema
         private void bgwMovie_SearchMovie(object sender, DoWorkEventArgs e)
         {
             // Get query from variable, set by background worker
-            DataTable dt;
+            DataTable dt, dtGetFile;
             BackgroundWorker worker;
             string qry = SEARCH_QUERY;
             string cols = SEARCH_COLS;
@@ -888,6 +888,18 @@ namespace HomeCinema
                     // Add to listview lvSearchResult
                     if (MOVIEID > 0)
                     {
+                        // Break if file does not exist
+                        dtGetFile = DBCON.DbQuery($"SELECT `file` FROM {GlobalVars.DB_TNAME_FILEPATH} WHERE `Id` = {MOVIEID}", "file", errFrom);
+                        if (dtGetFile.Rows.Count > 0)
+                        {
+                            DataRow rFile = dtGetFile.Rows[0];
+                            if (!File.Exists(rFile[0].ToString()))
+                            {
+                                dtGetFile.Clear();
+                                continue;
+                            }
+                        }
+
                         // Load 'cover' Image from 'cover' folder
                         string Imagefile = GlobalVars.ImgFullPath(MOVIEID.ToString());
                         try
