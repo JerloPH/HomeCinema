@@ -179,7 +179,6 @@ namespace HomeCinema
 
             // Add events to BG Worker for Fetching movie in Local Database
             bgSearchInDB.WorkerReportsProgress = true;
-            bgSearchInDB.ProgressChanged += bgwMovie_ProgressChanged;
             bgSearchInDB.DoWork += new DoWorkEventHandler(bgwMovie_SearchMovie);
             bgSearchInDB.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgwMovie_DoneSearchMovie);
         }
@@ -956,21 +955,6 @@ namespace HomeCinema
                 e.Result = null;
             }
             GlobalVars.Log(errFrom, $"DONE Background worker from: {Name}");
-        }
-        private void bgwMovie_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            // Error log
-            string errFrom = "frmMain-bgwMovie_ProgressChanged";
-
-            // Check if progress is the start
-            if (e.ProgressPercentage < 1)
-            {
-                // Log progress Start [0]
-                GlobalVars.Log(errFrom + $" [First Progress] ({ e.ProgressPercentage.ToString() })", "RETRIEVES data from Previous Search query in bgWorker");
-            }
-
-            // Retrieve Progress Count
-            //GlobalVars.Log(errFrom, $" [Progress Count] ({e.ProgressPercentage.ToString()} / {e.UserState.ToString()})");
         }
         private void bgwMovie_DoneSearchMovie(object sender, RunWorkerCompletedEventArgs e)
         {
