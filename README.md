@@ -14,6 +14,8 @@
 - To add additional folders, and TV series location(s), go to **Settings** -> **File**.
   - Click on **[Add]** and navigate to your directories.
   
+**NOTE: This does NOT remove all your previous Movies in database.**
+  
 ### Download Counts
 
 **Current:** &nbsp; [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.2.0.0/total.svg)]() <br>
