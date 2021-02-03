@@ -839,9 +839,13 @@ namespace HomeCinema
         private void bgwMovie_SearchMovie(object sender, DoWorkEventArgs e)
         {
             // Get query from variable, set by background worker
+            DataTable dt;
+            BackgroundWorker worker;
             string qry = SEARCH_QUERY;
             string cols = SEARCH_COLS;
             string errFrom = "frmMain-bgwMovie_SearchMovie";
+            int progress = 0;
+            int progressMax = 0;
 
             // If no query
             if (String.IsNullOrWhiteSpace(qry))
@@ -856,19 +860,19 @@ namespace HomeCinema
             SEARCH_QUERY_PREV = SEARCH_QUERY;
 
             // Count progress
-            int progress = 0;
-            BackgroundWorker worker = sender as BackgroundWorker;
+            progress = 0;
+            worker = sender as BackgroundWorker;
 
             // Log Query
             GlobalVars.Log(errFrom, $"START Background worker from: {Name}");
-            DataTable dt = DBCON.DbQuery(qry, cols, errFrom);
+            dt = DBCON.DbQuery(qry, cols, errFrom);
             GlobalVars.Log(errFrom, $"DT is obtained");
 
             // Clear previous list
             this.Invoke(new Action(() => lvSearchResult.Items.Clear()));
 
-            // Count progress
-            int progressMax = dt.Rows.Count;
+            // Set Max Progress
+            progressMax = dt.Rows.Count;
 
             // Iterate thru all DataRows
             if (progressMax > 0)
