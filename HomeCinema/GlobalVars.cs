@@ -691,7 +691,7 @@ namespace HomeCinema.Global
         {
             string errFrom = "GlobalVars-GetSeriesLocations";
             List<string> list = new List<string>();
-            string[] arr = GlobalVars.BuildArrFromFile(FILE_SERIESLOC, errFrom, '*');
+            string[] arr = GlobalVars.BuildDirArrFromFile(FILE_SERIESLOC, errFrom, '*');
             string directory;
             try
             {

@@ -147,7 +147,7 @@ namespace HomeCinema
 
                 // Media LOCATIONS Folders Texts
                 BoxMediaLoc.SelectionMode = SelectionMode.MultiExtended;
-                foreach (string c in GlobalVars.BuildArrFromFile(GlobalVars.FILE_MEDIALOC, $"{errFrom}[FILE_MEDIALOC]", '*'))
+                foreach (string c in GlobalVars.BuildDirArrFromFile(GlobalVars.FILE_MEDIALOC, $"{errFrom}[FILE_MEDIALOC]", '*'))
                 {
                     if (String.IsNullOrWhiteSpace(c) == false)
                     {
@@ -157,7 +157,7 @@ namespace HomeCinema
 
                 // Series LOCATIONS Folders Texts
                 BoxSeriesLoc.SelectionMode = SelectionMode.MultiExtended;
-                foreach (string c in GlobalVars.BuildArrFromFile(GlobalVars.FILE_SERIESLOC, $"{errFrom}[FILE_SERIESLOC]", '*'))
+                foreach (string c in GlobalVars.BuildDirArrFromFile(GlobalVars.FILE_SERIESLOC, $"{errFrom}[FILE_SERIESLOC]", '*'))
                 {
                     if (String.IsNullOrWhiteSpace(c) == false)
                     {

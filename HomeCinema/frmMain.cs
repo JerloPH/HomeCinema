@@ -158,7 +158,7 @@ namespace HomeCinema
             // Perform background worker that Automatically inserts all movies from designated folder
             // Check if directory exists first, by readling from file
             GlobalVars.Log("frmMain", "Loading files into App..");
-            string[] tempFolder = GlobalVars.BuildArrFromFile(GlobalVars.FILE_MEDIALOC, "frmMain", '*'); // Get directory to start search
+            string[] tempFolder = GlobalVars.BuildDirArrFromFile(GlobalVars.FILE_MEDIALOC, "frmMain", '*'); // Get directory to start search
             if (tempFolder.Length < 1)
             {
                 FOLDERTOSEARCH[0] = GlobalVars.GetDirectoryFolder("Select folder to search for media files"); // Browse for Dir
@@ -1136,15 +1136,8 @@ namespace HomeCinema
                                 {
                                     // remove the item from list of already existing
                                     int index = listAlreadyinDB.IndexOf(folderPath);
-                                    try
-                                    {
-                                        listAlreadyinDB.RemoveAt(index);
-
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        GlobalVars.ShowError(calledFrom, ex, false);
-                                    }
+                                    try {  listAlreadyinDB.RemoveAt(index); }
+                                    catch (Exception ex) { GlobalVars.ShowError(calledFrom, ex, false); }
                                     break;
                                 }
                             }
@@ -1184,7 +1177,7 @@ namespace HomeCinema
             }
             else
             {
-                // Clear previous lists
+                // There's no entry on file
                 DirListFrom.Clear();
                 e.Result = null;
             }
