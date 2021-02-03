@@ -359,7 +359,7 @@ namespace HomeCinema
                     }
                 }
             }
-            GlobalVars.WriteToFile(GlobalVars.PATH_START + "MovieResult_DoneInsert.Log", logInsert);
+            GlobalVars.WriteAppend(GlobalVars.PATH_START + "MovieResult_DoneInsert.Log", logInsert);
             return count;
         }
         // return filepath from DB
