@@ -423,6 +423,27 @@ namespace HomeCinema.Global
             
             return items;
         }
+        // Build directory string array from file
+        public static string[] BuildDirArrFromFile(string fileToread, string calledFrom, char sep = '*')
+        {
+            // Try build array
+            string errFrom = "GlobalVars-BuildDirArrFromFile";
+            try
+            {
+                string x = ReadStringFromFile(fileToread, $"{errFrom} [calledFrom: {calledFrom}]");
+
+                if (!String.IsNullOrWhiteSpace(x))
+                {
+                    string[] tmpCat = x.Split(sep);
+                    return tmpCat;
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError($"{errFrom} [calledFrom: {calledFrom}]", ex);
+            }
+            return new string[0];
+        }
         // Build string array from File Text
         public static string[] BuildArrFromFile(string fileToread, string calledFrom, char sep = ',')
         {
@@ -435,29 +456,27 @@ namespace HomeCinema.Global
                 // Cut all unnecessary strings
                 x = x.TrimEnd(',');
                 x = x.Trim();
-                if (String.IsNullOrWhiteSpace(x))
+                if (!String.IsNullOrWhiteSpace(x))
                 {
-                    return new string[0];
-                }
-                string[] tmpCat = x.Split(sep);
+                    string[] tmpCat = x.Split(sep);
 
-                // Remove duplicates
-                tmpCat = new HashSet<string>(tmpCat).ToArray();
+                    // Remove duplicates
+                    tmpCat = new HashSet<string>(tmpCat).ToArray();
 
-                // Sort Alphabetically
-                string[] ret = tmpCat.OrderBy(item => item, StringComparer.Ordinal).ToArray();
+                    // Sort Alphabetically
+                    string[] ret = tmpCat.OrderBy(item => item, StringComparer.Ordinal).ToArray();
 
-                // Check strings from array
-                for (int i=0; i<tmpCat.Length; i++)
-                {
-                    string c = tmpCat[i].Trim();
-                    if (String.IsNullOrWhiteSpace(c) == false)
+                    // Check strings from array
+                    for (int i = 0; i < tmpCat.Length; i++)
                     {
-                        ret[i] = c.ToString();
+                        string c = tmpCat[i].Trim();
+                        if (String.IsNullOrWhiteSpace(c) == false)
+                        {
+                            ret[i] = c.ToString();
+                        }
                     }
+                    return ret;
                 }
-                return ret;
-
             } catch (Exception ex)
             {
                 ShowError($"{errFrom} [calledFrom: {calledFrom}]", ex);
