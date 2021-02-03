@@ -241,4 +241,7 @@
 ROBOCOPY "$(TargetDir) " "$(TargetDir)lib\ " /XF *.pdb *.exe *.config *.manifest *.log *.db /XD x64 x86 Resources covers temp lib logs data /E /IS /MOVE
 if %25errorlevel%25 leq 4 exit 0 else exit %25errorlevel%25</PostBuildEvent>
   </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>RD /S /Q "$(TargetDir)lib\"</PreBuildEvent>
+  </PropertyGroup>
 </Project>
