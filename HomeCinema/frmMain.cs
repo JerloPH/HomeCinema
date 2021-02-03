@@ -889,11 +889,11 @@ namespace HomeCinema
                     if (MOVIEID > 0)
                     {
                         // Break if file does not exist
-                        dtGetFile = DBCON.DbQuery($"SELECT `file` FROM {GlobalVars.DB_TNAME_FILEPATH} WHERE `Id` = {MOVIEID}", "file", errFrom);
+                        dtGetFile = DBCON.DbQuery($"SELECT `Id`,`file` FROM {GlobalVars.DB_TNAME_FILEPATH} WHERE `Id` = {MOVIEID}", "Id,file", errFrom);
                         if (dtGetFile.Rows.Count > 0)
                         {
                             DataRow rFile = dtGetFile.Rows[0];
-                            if (!File.Exists(rFile[0].ToString()))
+                            if (!File.Exists(rFile[1].ToString()))
                             {
                                 dtGetFile.Clear();
                                 continue;
