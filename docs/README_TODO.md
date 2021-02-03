@@ -8,6 +8,8 @@
 - Check if file still exists, before loading it into the App.
   - Delete entry from database, and cover picture (if existing).
 - Warning on entry deletion.
+- Loading screen on Background Worker. [Link](https://stackoverflow.com/questions/29094016/background-worker-loading-screen-in-winforms)
+- Separate background worker for Populating Movie ListView to another class.
 
 ## Features:
 - General
