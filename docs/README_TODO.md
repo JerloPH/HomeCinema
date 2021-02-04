@@ -1,11 +1,9 @@
 # HomeCinema - Features to Add / Bugs to Fix
 
 ## Priority List
-
 - Scrape Anime info from Anilist/MyAnimeList.
-- Add folders as series into the App. *Done*.
 - Improve speed of App load (check background worker and optimize).
-- Check if file still exists, before loading it into the App.
+- Check if file still exists, before loading it into the App. *For now, skips the entry.*
   - Delete entry from database, and cover picture (if existing).
 - Warning on entry deletion.
 - Loading screen on Background Worker. [Link](https://stackoverflow.com/questions/29094016/background-worker-loading-screen-in-winforms)
@@ -14,6 +12,7 @@
 ## Features:
 - General
   - [ ] Update GUI
+  - [x] Add folders as series into the App. *Done*.
   - [x] Ctrl + S to OPEN Settings form
   - [ ] Menu Strip (Preferences Button)
     - [ ] File
@@ -27,12 +26,12 @@
 	  - [ ] Change Color of ListView. Back/Fore.
 	- [ ] Help
 	  - [ ] How to Use?
-	  - [ ] License
+	  - [x] License
 	  - [ ] Credits
 	  - [ ] About
   - [ ] Auto-download update
   - [ ] Check all Files in DB if Existed. If not, "move to another db / keep".
-  - Open Media Player in 2nd monitor, if existing. **On hold**.
+  - [ ] Open Media Player in 2nd monitor, if existing. **On hold**.
 
 - Main Form
   - [ ] Add Button to Group Items (Group by: Series Name, if Series) *(Check if season or episode is not empty, and get only episode 1)* **On-HOLD**
@@ -59,7 +58,6 @@
 	- [x] Artist
 	
   - [ ] ~~Switch webBrowser to Cefsharp Browser.~~ **Cancelled**
-  
   
 
 ## Bugs
