@@ -350,7 +350,6 @@ namespace HomeCinema
                             string newFile = GlobalVars.ImgFullPath(movieId);
                             GlobalVars.DeleteMove(newFile, errFrom); // Delete existing cover first
                             File.Move(oldFile, newFile);
-
                         }
                         catch (Exception ex)
                         {
@@ -378,7 +377,8 @@ namespace HomeCinema
             dtFile.Dispose();
             return ret;
         }
-// ####################################################################################### Functions
+        // ####################################################################################### Functions
+        #region Functions
         // Play Movie or Open Movie Details
         public void OpenFormPlayMovie()
         {
@@ -834,7 +834,9 @@ namespace HomeCinema
                 GlobalVars.formAbout.Focus();
             }
         }
+        #endregion
         // ####################################################################################### BACKGROUND WORKERS
+        #region Background Workers
         private void bgwMovie_SearchMovie(object sender, DoWorkEventArgs e)
         {
             // Get query from variable, set by background worker
@@ -1208,7 +1210,8 @@ namespace HomeCinema
             SEARCH_QUERY_PREV = "";
             RefreshMovieList();
         }
-// ####################################################################################### Form CUSTOM events
+        #endregion
+        // ####################################################################################### Form CUSTOM events
         void Form_KeyDown(object sender, KeyEventArgs e)
         {
             // Ctrl-S = Opens settings form
