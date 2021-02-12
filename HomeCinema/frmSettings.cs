@@ -76,9 +76,11 @@ namespace HomeCinema
         private void frmSettings_Load(object sender, EventArgs e)
         {
             string errFrom = "frmSettings-frmSettings_Load";
+            ToolTip tooltip = new ToolTip();
+            string[] choice = { "True", "False" };
+            string text = "";
 
             // Add ToolTips
-            ToolTip tooltip = new ToolTip();
             tooltip.SetToolTip(lblAutoUpdate, "Automatically check for App updates.");
             tooltip.SetToolTip(lblOfflineMode, "Disable Automatic online functionalities. Overrides Auto update.");
             tooltip.SetToolTip(lblPlayMovieClick, "On double-clicking an item, plays the File, instead of viewing its details.");
@@ -86,89 +88,87 @@ namespace HomeCinema
             tooltip.SetToolTip(lblItemDisplayCount, "Maximum number of Items displayed for Search results.\n'0' displays all.");
 
             // setup contents
-            string[] choice = { "True", "False" };
             cbAutoUpdate.Items.AddRange(choice);
             cbOffline.Items.AddRange(choice);
             cbPlayMovie.Items.AddRange(choice);
 
-            // Try settings values
-            try
+            // Setting Values Initialization
+            // ##################### - GENERAL
+            // Booleans
+            try { cbAutoUpdate.SelectedIndex = Convert.ToInt16(!GlobalVars.SET_AUTOUPDATE); }
+            catch { cbAutoUpdate.SelectedIndex = 0; }
+
+            try { cbOffline.SelectedIndex = Convert.ToInt16(!GlobalVars.SET_OFFLINE); }
+            catch { cbOffline.SelectedIndex = 1; }
+
+            try { cbPlayMovie.SelectedIndex = Convert.ToInt16(!GlobalVars.SET_AUTOPLAY); }
+            catch { cbPlayMovie.SelectedIndex = 0; }
+
+            // TextBox
+            try { txtLogSize.Text = (GlobalVars.SET_LOGMAXSIZE / GlobalVars.BYTES).ToString(); }
+            catch { txtLogSize.Text = "1"; }
+
+            try { txtMaxItemCount.Text = GlobalVars.SET_ITEMLIMIT.ToString(); }
+            catch { txtMaxItemCount.Text = "0"; }
+
+            // ##################### - FILE changes
+            // Country Texts
+            text = "";
+            foreach (string c in GlobalVars.TEXT_COUNTRY)
             {
-                // ##################### - GENERAL
-                // Booleans
-                cbAutoUpdate.SelectedIndex = Convert.ToInt16(!GlobalVars.SET_AUTOUPDATE);
-                cbOffline.SelectedIndex = Convert.ToInt16(!GlobalVars.SET_OFFLINE);
-                cbPlayMovie.SelectedIndex = Convert.ToInt16(!GlobalVars.SET_AUTOPLAY);
-                // TextBox
-                txtLogSize.Text = (GlobalVars.SET_LOGMAXSIZE / GlobalVars.BYTES).ToString();
-                txtMaxItemCount.Text = GlobalVars.SET_ITEMLIMIT.ToString();
-
-                // ##################### - FILE changes
-                string text = "";
-
-                // Country Texts
-                text = "";
-                foreach (string c in GlobalVars.TEXT_COUNTRY)
+                if ((String.IsNullOrWhiteSpace(c) == false) && c != "All")
                 {
-                    if ((String.IsNullOrWhiteSpace(c) == false) && c != "All")
-                    {
-                        text += c.Trim() + ", ";
-                    }
+                    text += c.Trim() + ", ";
                 }
-                text = text.TrimEnd();
-                text = text.TrimEnd(',');
-                txtCountry.Text = text;
+            }
+            text = text.TrimEnd();
+            text = text.TrimEnd(',');
+            txtCountry.Text = text;
 
-                // Genre Texts
-                text = "";
-                foreach (string c in GlobalVars.TEXT_GENRE)
-                {
-                    if ((String.IsNullOrWhiteSpace(c) == false) && c != "All")
-                    {
-                        text += c.Trim() + ", ";
-                    }
-                }
-                text = text.TrimEnd();
-                text = text.TrimEnd(',');
-                txtGenre.Text = text;
-
-                // Media File Format / File Extensions Texts
-                text = "";
-                foreach (string c in GlobalVars.BuildArrFromFile(GlobalVars.FILE_MEDIA_EXT, $"{errFrom}[FILE_MEDIA_EXT]"))
-                {
-                    if (String.IsNullOrWhiteSpace(c) == false)
-                    {
-                        text += c.Trim() + ", ";
-                    }
-                }
-                text = text.TrimEnd();
-                text = text.TrimEnd(',');
-                txtMediaExt.Text = text;
-
-                // Media LOCATIONS Folders Texts
-                BoxMediaLoc.SelectionMode = SelectionMode.MultiExtended;
-                foreach (string c in GlobalVars.BuildDirArrFromFile(GlobalVars.FILE_MEDIALOC, $"{errFrom}[FILE_MEDIALOC]", '*'))
-                {
-                    if (String.IsNullOrWhiteSpace(c) == false)
-                    {
-                        BoxMediaLoc.Items.Add(c.Trim());
-                    }
-                }
-
-                // Series LOCATIONS Folders Texts
-                BoxSeriesLoc.SelectionMode = SelectionMode.MultiExtended;
-                foreach (string c in GlobalVars.BuildDirArrFromFile(GlobalVars.FILE_SERIESLOC, $"{errFrom}[FILE_SERIESLOC]", '*'))
-                {
-                    if (String.IsNullOrWhiteSpace(c) == false)
-                    {
-                        BoxSeriesLoc.Items.Add(c.Trim());
-                    }
-                }
-
-            } catch (Exception ex)
+            // Genre Texts
+            text = "";
+            foreach (string c in GlobalVars.TEXT_GENRE)
             {
-                // Log Error
-                GlobalVars.ShowError(errFrom, ex, false);
+                if ((String.IsNullOrWhiteSpace(c) == false) && c != "All")
+                {
+                    text += c.Trim() + ", ";
+                }
+            }
+            text = text.TrimEnd();
+            text = text.TrimEnd(',');
+            txtGenre.Text = text;
+
+            // Media File Format / File Extensions Texts
+            text = "";
+            foreach (string c in GlobalVars.BuildArrFromFile(GlobalVars.FILE_MEDIA_EXT, $"{errFrom}[FILE_MEDIA_EXT]"))
+            {
+                if (String.IsNullOrWhiteSpace(c) == false)
+                {
+                    text += c.Trim() + ", ";
+                }
+            }
+            text = text.TrimEnd();
+            text = text.TrimEnd(',');
+            txtMediaExt.Text = text;
+
+            // Media LOCATIONS Folders Texts
+            BoxMediaLoc.SelectionMode = SelectionMode.MultiExtended;
+            foreach (string c in GlobalVars.BuildDirArrFromFile(GlobalVars.FILE_MEDIALOC, $"{errFrom}[FILE_MEDIALOC]", '*'))
+            {
+                if (String.IsNullOrWhiteSpace(c) == false)
+                {
+                    BoxMediaLoc.Items.Add(c);
+                }
+            }
+
+            // Series LOCATIONS Folders Texts
+            BoxSeriesLoc.SelectionMode = SelectionMode.MultiExtended;
+            foreach (string c in GlobalVars.BuildDirArrFromFile(GlobalVars.FILE_SERIESLOC, $"{errFrom}[FILE_SERIESLOC]", '*'))
+            {
+                if (String.IsNullOrWhiteSpace(c) == false)
+                {
+                    BoxSeriesLoc.Items.Add(c);
+                }
             }
         }
         private void frmSettings_FormClosing(object sender, FormClosingEventArgs e)
@@ -185,68 +185,58 @@ namespace HomeCinema
         private void btnSave_Click(object sender, EventArgs e)
         {
             // Try settings values
-            try
+            long logsize;
+            char separator = '*';
+            string toWrite = "";
+
+            // Booleans
+            GlobalVars.SET_AUTOUPDATE = !Convert.ToBoolean(cbAutoUpdate.SelectedIndex);
+            GlobalVars.SET_OFFLINE = !Convert.ToBoolean(cbOffline.SelectedIndex);
+            GlobalVars.SET_AUTOPLAY = !Convert.ToBoolean(cbPlayMovie.SelectedIndex);
+
+            // TextBox
+            logsize = (long)Convert.ToDouble(txtLogSize.Text);
+            GlobalVars.SET_LOGMAXSIZE = logsize * GlobalVars.BYTES;
+            GlobalVars.SET_ITEMLIMIT = Convert.ToInt32(txtMaxItemCount.Text);
+
+            // Write MediaLoc file
+            foreach (var x in BoxMediaLoc.Items)
             {
-                // Booleans
-                GlobalVars.SET_AUTOUPDATE = !Convert.ToBoolean(cbAutoUpdate.SelectedIndex);
-                GlobalVars.SET_OFFLINE = !Convert.ToBoolean(cbOffline.SelectedIndex);
-                GlobalVars.SET_AUTOPLAY = !Convert.ToBoolean(cbPlayMovie.SelectedIndex);
-
-                // TextBox
-                long logsize = (long)Convert.ToDouble(txtLogSize.Text);
-                GlobalVars.SET_LOGMAXSIZE = logsize * GlobalVars.BYTES;
-                GlobalVars.SET_ITEMLIMIT = Convert.ToInt32(txtMaxItemCount.Text);
-
-                // Write MediaLoc file
-                char separator = '*';
-                string toWrite = "";
-                foreach (var x in BoxMediaLoc.Items)
-                {
-                    toWrite += x.ToString().Trim();
-                    toWrite += separator;
-                }
-                toWrite = toWrite.TrimEnd(separator);
-                GlobalVars.WriteToFile(GlobalVars.FILE_MEDIALOC, toWrite);
-                toWrite = "";
-
-                // Write SeriesLoc file
-                foreach (var x in BoxSeriesLoc.Items)
-                {
-                    toWrite += x.ToString().Trim();
-                    toWrite += separator;
-                }
-                toWrite = toWrite.TrimEnd(separator);
-                GlobalVars.WriteToFile(GlobalVars.FILE_SERIESLOC, toWrite);
-                toWrite = "";
-
-                // Replace country file
-                toWrite = txtCountry.Text.Replace('\r', ' ');
-                toWrite = toWrite.Replace('\n', ' ');
-                GlobalVars.WriteArray(toWrite.Split(','), GlobalVars.FILE_COUNTRY);
-                if (Application.OpenForms["frmMain"] != null)
-                {
-                    (Application.OpenForms["frmMain"] as frmMain).PopulateCountryCB();
-                }
-
-                // Replace genre file
-                toWrite = txtGenre.Text.Replace('\r', ' ');
-                toWrite = toWrite.Replace('\n', ' ');
-                GlobalVars.WriteArray(toWrite.Split(','), GlobalVars.FILE_GENRE);
-                if (Application.OpenForms["frmMain"] != null)
-                {
-                    (Application.OpenForms["frmMain"] as frmMain).PopulateGenreCB();
-                }
-
-                // Show Message
-                GlobalVars.ShowInfo("Done saving Settings!");
-
-            } catch (Exception ex)
-            {
-                // Show Message error
-                GlobalVars.ShowWarning("Error on Saving Settings!\nCheck all values if correct.");
-                // Log Error
-                GlobalVars.ShowError("frmSettings-btnSave_Click", ex, false);
+                toWrite += x.ToString() + separator;
             }
+            toWrite = toWrite.TrimEnd(separator);
+            GlobalVars.WriteToFile(GlobalVars.FILE_MEDIALOC, toWrite);
+            toWrite = "";
+
+            // Write SeriesLoc file
+            foreach (var x in BoxSeriesLoc.Items)
+            {
+                toWrite += x.ToString() + separator;
+            }
+            toWrite = toWrite.TrimEnd(separator);
+            GlobalVars.WriteToFile(GlobalVars.FILE_SERIESLOC, toWrite);
+            toWrite = "";
+
+            // Replace country file
+            toWrite = txtCountry.Text.Replace('\r', ' ');
+            toWrite = toWrite.Replace('\n', ' ');
+            GlobalVars.WriteArray(toWrite.Split(','), GlobalVars.FILE_COUNTRY);
+            if (Application.OpenForms["frmMain"] != null)
+            {
+                (Application.OpenForms["frmMain"] as frmMain).PopulateCountryCB();
+            }
+
+            // Replace genre file
+            toWrite = txtGenre.Text.Replace('\r', ' ');
+            toWrite = toWrite.Replace('\n', ' ');
+            GlobalVars.WriteArray(toWrite.Split(','), GlobalVars.FILE_GENRE);
+            if (Application.OpenForms["frmMain"] != null)
+            {
+                (Application.OpenForms["frmMain"] as frmMain).PopulateGenreCB();
+            }
+
+            // Show Message
+            GlobalVars.ShowInfo("Done saving Settings!");
         }
 
         private void btnMediaLocAdd_Click(object sender, EventArgs e)
