@@ -833,7 +833,7 @@ namespace HomeCinema
         }
         #endregion
         // ####################################################################################### BACKGROUND WORKERS
-        #region Background Workers
+        #region BG Worker: Get files in folders
         // Search all Movie files in folder
         private void bgw_SearchFileinFolder(object sender, DoWorkEventArgs e)
         {
@@ -1004,6 +1004,8 @@ namespace HomeCinema
             SEARCH_QUERY_PREV = "";
             RefreshMovieList();
         }
+        #endregion
+        #region BG Worker: Populate MOVIE ListView
         private void bgwMovie_SearchMovie(object sender, DoWorkEventArgs e)
         {
             // Get query from variable, set by background worker
@@ -1034,8 +1036,6 @@ namespace HomeCinema
             // Log Query
             GlobalVars.Log(errFrom, $"START Background worker from: {Name}");
             dt = DBCON.DbQuery(qry, cols, errFrom);
-            GlobalVars.Log(errFrom, $"DT is obtained");
-
             // Clear previous list
             this.Invoke(new Action(() => lvSearchResult.Items.Clear()));
 
@@ -1051,7 +1051,7 @@ namespace HomeCinema
                     // Convert ID object to ID int
                     int MOVIEID;
                     try { MOVIEID = Convert.ToInt32(r[0]); }
-                    catch  {  MOVIEID = 0; }
+                    catch { MOVIEID = 0; }
 
                     // Add to listview lvSearchResult
                     if (MOVIEID > 0)
@@ -1075,7 +1075,8 @@ namespace HomeCinema
                             if (File.Exists(Imagefile))
                             {
                                 Image imgFromFile = Image.FromFile(Imagefile);
-                                this.Invoke(new Action(() => {
+                                this.Invoke(new Action(() =>
+                                {
                                     GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imgFromFile);
                                 }));
                             }
@@ -1101,9 +1102,9 @@ namespace HomeCinema
                         ListViewItem temp = new ListViewItem() { Text = resName };
 
                         // Edit Information on ListView Item
-                        LVItemSetDetails(temp, new string[] { MOVIEID.ToString(), 
-                            resName, resNameEp, resNameSer,
-                            resSeason, resEp, resYear, resSum, resGenre });
+                        LVItemSetDetails(temp, new string[] { MOVIEID.ToString(),
+                        resName, resNameEp, resNameSer,
+                        resSeason, resEp, resYear, resSum, resGenre });
 
                         // Add Item to ListView lvSearchResult
                         this.Invoke(new Action(() => lvSearchResult.Items.Add(temp)));
@@ -1118,12 +1119,11 @@ namespace HomeCinema
                     progress += 1;
                 }
                 e.Result = dt;
+                GlobalVars.Log(errFrom, $"DONE Background worker from: {Name}");
+                return;
             }
-            else
-            {
-                e.Result = null;
-            }
-            GlobalVars.Log(errFrom, $"DONE Background worker from: {Name}");
+            e.Result = null;
+            GlobalVars.Log(errFrom, $"ResultSet is null or empty!");
         }
         private void bgwMovie_DoneSearchMovie(object sender, RunWorkerCompletedEventArgs e)
         {
