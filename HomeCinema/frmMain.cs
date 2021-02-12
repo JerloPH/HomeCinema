@@ -42,7 +42,6 @@ namespace HomeCinema
         // Strings
         static string LVMovieItemsColumns = "[Id],[name],[name_ep],[name_series],[season],[episode],[year],[summary],[genre]";
         string SEARCH_QUERY = "";
-        string SEARCH_COLS = LVMovieItemsColumns;
         string SEARCH_QUERY_PREV = "";
         string[] FOLDERTOSEARCH = { "" };
         // Objects
@@ -532,17 +531,18 @@ namespace HomeCinema
             lvSearchResult.BeginUpdate(); // Pause drawing events on ListView
             lvSearchResult.SuspendLayout();
 
-            // Check if there was no prev query
-            if (String.IsNullOrWhiteSpace(SEARCH_QUERY_PREV))
-            {
-                btnSearch.PerformClick();
-                return;
-            }
-            else
+            // Check if there was prev query
+            if (!String.IsNullOrWhiteSpace(SEARCH_QUERY_PREV))
             {
                 SEARCH_QUERY = SEARCH_QUERY_PREV;
-                RunSearchWorker();
             }
+            // Check if SEARCH_QUERY is empty
+            if (String.IsNullOrWhiteSpace(SEARCH_QUERY))
+            {
+                // Default SELECT Query
+                SEARCH_QUERY = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO}";
+            }
+            RunSearchWorker();
         }
         // Display and close loading form
         public void DisplayLoading()
@@ -1010,7 +1010,7 @@ namespace HomeCinema
             DataTable dt, dtGetFile;
             BackgroundWorker worker;
             string qry = SEARCH_QUERY;
-            string cols = SEARCH_COLS;
+            string cols = LVMovieItemsColumns;
             string errFrom = "frmMain-bgwMovie_SearchMovie";
             int progress = 0;
             int progressMax = 0;
@@ -1316,14 +1316,12 @@ namespace HomeCinema
             // Search the db for movie with filters
             // Setup columns needed
             string qry = "";
-            SEARCH_COLS = LVMovieItemsColumns;
-
             SEARCH_QUERY = ""; // reset query
             // If there is NO existing query for search,
             if (String.IsNullOrWhiteSpace(SEARCH_QUERY))
             {
                 // Default SELECT Query
-                qry = $"SELECT {SEARCH_COLS} FROM {GlobalVars.DB_TNAME_INFO}";
+                qry = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO}";
 
                 // Build Filter for Query
                 // Name Text search
@@ -1410,7 +1408,7 @@ namespace HomeCinema
                 // Remove Previous Filters and focus on IMDB Code
                 if (String.IsNullOrWhiteSpace(txtIMDB.Text) == false)
                 {
-                    qry = $"SELECT {SEARCH_COLS} FROM {GlobalVars.DB_TNAME_INFO} WHERE ";
+                    qry = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO} WHERE ";
                     qry += $"[imdb] = '{txtIMDB.Text}'";
                 }
 
