@@ -54,7 +54,7 @@ namespace HomeCinema
 
         public frmMain()
         {
-            //Record time start
+            // Record time start
             LoadingStart = DateTime.Now.TimeOfDay;
 
             // Create directories
@@ -182,7 +182,8 @@ namespace HomeCinema
             bgSearchInDB.DoWork += new DoWorkEventHandler(bgwMovie_SearchMovie);
             bgSearchInDB.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgwMovie_DoneSearchMovie);
         }
-// ####################################################################################### Database Functions
+        // ####################################################################################### Database Functions
+        #region Insert to Database
         int InsertToDB(List<string> listofFiles, string errFrom)
         {
             string callFrom = $"frmMain ({Name})-InsertToDB-({errFrom})";
@@ -377,6 +378,7 @@ namespace HomeCinema
             dtFile.Dispose();
             return ret;
         }
+        #endregion
         // ####################################################################################### Functions
         #region Functions
         // Play Movie or Open Movie Details
@@ -1212,6 +1214,7 @@ namespace HomeCinema
         }
         #endregion
         // ####################################################################################### Form CUSTOM events
+        #region Custom Events
         void Form_KeyDown(object sender, KeyEventArgs e)
         {
             // Ctrl-S = Opens settings form
@@ -1249,7 +1252,8 @@ namespace HomeCinema
                 GlobalVars.FileOpeninExplorer(file, $"{errFrom} [toolMenuFileExplorer]");
             }
         }
-// ####################################################################################### Form Control events
+        #endregion
+        // ####################################################################################### Form Control events
         private void frmMain_Load(object sender, EventArgs e)
         {
             // Startup events
