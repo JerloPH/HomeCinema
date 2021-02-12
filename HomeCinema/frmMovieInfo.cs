@@ -740,11 +740,7 @@ namespace HomeCinema
             }
 
             // Get imdb id and set it to textbox
-            string mediatype = "movie";
-            if (cbCategory.Text.ToLower().Contains("series"))
-            {
-                mediatype = "tv";
-            }
+            string mediatype = (cbCategory.Text.ToLower().Contains("series") ? "tv" : "movie");
             string getIMDB = GlobalVars.GetIMDBId(txtName.Text, MOVIE_ID, mediatype);
             if (String.IsNullOrWhiteSpace(getIMDB) == false)
             {
