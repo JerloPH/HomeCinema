@@ -395,7 +395,6 @@ namespace HomeCinema
                 // Show error
                 GlobalVars.ShowError(errFrom, ex);
             }
-            CloseLoading(); // Close loading form
         }
         // Play Movie or Open Movie Details
         public void OpenFormPlayMovie()
@@ -454,7 +453,7 @@ namespace HomeCinema
             }
         }
         // Get all Media files from folder in medialocation file
-        private void getAllMediaFiles()
+        private void GetAllMediaFiles()
         {
             DisplayLoading(); // Display the loading form.
             // BGworker for: fetching all media filepaths
@@ -466,8 +465,8 @@ namespace HomeCinema
             {
                 // Show error
                 GlobalVars.ShowError("frmMain-getAllMediaFiles", ex);
+                CloseLoading(); // Close loading form
             }
-            CloseLoading(); // Close loading form
         }
         public void SearchBoxPlaceholder(object sender, EventArgs e)
         {
@@ -1262,7 +1261,7 @@ namespace HomeCinema
             GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imgFromFile);
 
             // Start finding files in folder
-            getAllMediaFiles();
+            GetAllMediaFiles();
         }
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
