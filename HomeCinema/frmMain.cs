@@ -381,6 +381,22 @@ namespace HomeCinema
         #endregion
         // ####################################################################################### Functions
         #region Functions
+        public void RunSearchWorker()
+        {
+            string errFrom = "frmMain-RunSearchWorker()";
+            DisplayLoading(); // Display the loading form.
+            // Run BG Worker: bgSearchInDB, for Searching movies in database
+            try
+            {
+                bgSearchInDB.RunWorkerAsync();
+            }
+            catch (Exception ex)
+            {
+                // Show error
+                GlobalVars.ShowError(errFrom, ex);
+            }
+            CloseLoading(); // Close loading form
+        }
         // Play Movie or Open Movie Details
         public void OpenFormPlayMovie()
         {
@@ -440,9 +456,7 @@ namespace HomeCinema
         // Get all Media files from folder in medialocation file
         private void getAllMediaFiles()
         {
-            // Display the loading form.
-            DisplayLoading();
-
+            DisplayLoading(); // Display the loading form.
             // BGworker for: fetching all media filepaths
             try
             {
@@ -452,9 +466,8 @@ namespace HomeCinema
             {
                 // Show error
                 GlobalVars.ShowError("frmMain-getAllMediaFiles", ex);
-                // Close loading form
-                CloseLoading();
             }
+            CloseLoading(); // Close loading form
         }
         public void SearchBoxPlaceholder(object sender, EventArgs e)
         {
@@ -529,23 +542,7 @@ namespace HomeCinema
             else
             {
                 SEARCH_QUERY = SEARCH_QUERY_PREV;
-
-                // Display the loading form.
-                DisplayLoading();
-
-                // Run BG Worker: bgSearchInDB, for Searching movies in database
-                try
-                {
-                    bgSearchInDB.RunWorkerAsync();
-
-                }  catch (Exception ex)
-                {
-                    // Show error
-                    GlobalVars.ShowError($"frmMain-getAllMediaFiles", ex);
-                    // Close loading form
-                    CloseLoading();
-                }
-
+                RunSearchWorker();
             }
         }
         // Display and close loading form
@@ -570,13 +567,12 @@ namespace HomeCinema
             {
                 formLoading.Dispose();
                 formLoading = null;
+
+                // Set Focus to searchbox
+                txtSearch.Focus();
+                // Run GC to clean
+                GlobalVars.CleanMemory("frmMain-CloseLoading");
             }
-
-            // Set Focus to searchbox
-            txtSearch.Focus();
-
-            // Run GC to clean
-            GlobalVars.CleanMemory("frmMain-CloseLoading");
         }
         // Check Settings and Load values to App
         private void LoadSettings()
@@ -988,9 +984,6 @@ namespace HomeCinema
         }
         private void bgw_DoneSearchFileinFolder(object sender, RunWorkerCompletedEventArgs e)
         {
-            // Close loading and refresh Memory
-            CloseLoading();
-
             // Get result from BGworker
             if (e.Result != null)
             {
@@ -1175,9 +1168,7 @@ namespace HomeCinema
 
             // Clear previous values of variables
             SEARCH_QUERY = "";
-
-            // Close loading and refresh Memory
-            CloseLoading();
+            CloseLoading(); // Close loading and refresh Memory
 
             lvSearchResult.EndUpdate(); // Draw the ListView
             lvSearchResult.ResumeLayout();
@@ -1416,7 +1407,6 @@ namespace HomeCinema
                     qry += GlobalVars.QryWhere(qry);
                     qry += $"[country] LIKE '%{CountryText}%'";
                 }
-                
 
                 // Remove Previous Filters and focus on IMDB Code
                 if (String.IsNullOrWhiteSpace(txtIMDB.Text) == false)
@@ -1441,22 +1431,7 @@ namespace HomeCinema
                 // Set query to perform on search
                 SEARCH_QUERY = qry;
             }
-
-            // Display the loading form.
-            DisplayLoading();
-
-            // Run BG Worker: bgSearchInDB, for Searching movies in database
-            try
-            {
-                bgSearchInDB.RunWorkerAsync();
-
-            } catch (Exception ex)
-            {
-                // Show error
-                GlobalVars.ShowError(errFrom, ex);
-                // Close loading form
-                CloseLoading();
-            }
+            RunSearchWorker();
         }
         // When double-clicked on an item, open it in new form
         private void lvSearchResult_MouseDoubleClick(object sender, MouseEventArgs e)
