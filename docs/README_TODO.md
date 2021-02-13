@@ -7,7 +7,9 @@
   - Delete entry from database, and cover picture (if existing).
 - Warning on entry deletion.
 - Loading screen on Background Worker. [Link](https://stackoverflow.com/questions/29094016/background-worker-loading-screen-in-winforms)
-- Separate background worker for Populating Movie ListView to another class.
+- Separate background worker for Populating Movie ListView to another class. *Experimental*
+- Delete Covers not in Database, when **[Clean]** button is pressed.
+- Remove ListView item, when the file is not existing. Then, delete the entry from database. *Or archive to another ddatabase*.
 
 ## Features:
 - General
