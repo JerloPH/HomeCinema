@@ -462,7 +462,7 @@ namespace HomeCinema
             string callFrom = $"frmMovieInfo ({Name})-btnSave_Click";
 
             // List for metadata values
-            List<string> metaData = null;
+            var metaData = new List<string>();
 
             // Exit if Movie Name is empty
             if (String.IsNullOrWhiteSpace(txtName.Text))
@@ -543,6 +543,10 @@ namespace HomeCinema
 
                 // Save MetaData details
                 metaData.Add(row[2].ToString()); // title
+                metaData.Add(row[14].ToString()); // year
+                metaData.Add(row[9].ToString()); // genre
+                metaData.Add(row[12].ToString()); // director
+                metaData.Add(row[11].ToString()); // producer
 
                 dt.Rows.Add(row);
                 dt.AcceptChanges();
