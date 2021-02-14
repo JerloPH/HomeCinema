@@ -19,3 +19,4 @@
 - MINOR: Refactor. Log if ResultSet is empty. [aa6efdd]
 - MINOR: Refactor setting saving. [d319d5f]
 - MINOR: Change **IF** statement to one line. [f86298a]
+- MINOR: **IF statement** to one line. [e702638]
