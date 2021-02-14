@@ -94,7 +94,6 @@ namespace HomeCinema.Global
 
         public static string[] DB_INFO_CATEGORY = new string[] { "None", "Movie", "TV Series", "Anime Movie", "Anime Series", "Animated Movie", "Cartoon Series" };
 
-
         // For the tiles in frmMain
         public static ImageList MOVIE_IMGLIST = new ImageList();
         public static int IMGTILE_WIDTH = 96;
@@ -282,8 +281,8 @@ namespace HomeCinema.Global
                         File.Delete(logFile); // Delete LogFile permanently
                         Log(calledFrom, log);
                     }
-
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     // Log error
                     ShowError(calledFrom, ex, false);
@@ -312,8 +311,8 @@ namespace HomeCinema.Global
             try
             {
                 Directory.CreateDirectory(fPath);
-
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 ShowError("(GlobalVars-CreateDir) Create Folder: " + fPath, ex);
             }
@@ -324,13 +323,12 @@ namespace HomeCinema.Global
             if (!File.Exists(fPath))
             {
                 string fName = Path.GetFileName(fPath);
-
                 // try Copying
                 try
                 {
                     File.Copy(PATH_RES + fName, fPath);
-
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     ShowError("(GlobalVars-CopyFromRes) Copying required files error. File: " + fName, ex);
                 }
@@ -349,8 +347,8 @@ namespace HomeCinema.Global
                     ret = r.ReadToEnd();
                 }
                 return ret;
-
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 ShowError(errFrom, ex);
             }
@@ -374,7 +372,6 @@ namespace HomeCinema.Global
                     w.Write(toWrite);
                 }
                 return true;
-
             } catch (Exception ex)
             {
                 // Log Error
@@ -417,12 +414,10 @@ namespace HomeCinema.Global
         public static string[] BuildStringArrayFromCB(ComboBox currentComboBox)
         {
             string[] items = new string[currentComboBox.Items.Count];
-
             for (int i = 0; i < currentComboBox.Items.Count; i++)
             {
                 items[i] = currentComboBox.Items[i].ToString();
             }
-            
             return items;
         }
         // Build directory string array from file
@@ -498,41 +493,18 @@ namespace HomeCinema.Global
         // Build a query, Use WHERE or AND on Filter
         public static string QryWhere(string qry)
         {
-            string ret;
-            if (qry.Contains("WHERE") == false)
-            {
-                ret = " WHERE ";
-            }
-            else
-            {
-                ret = " AND ";
-            }
-            return ret;
+            return (qry.Contains("WHERE") == false) ? " WHERE " : " AND ";
         }
         // Build a query, If value is string or not
         public static string QryString(string text, bool UseSingleQuote)
         {
             if (String.IsNullOrWhiteSpace(text))
             {
-                if (UseSingleQuote)
-                {
-                    return "''";
-                }
-                else
-                {
-                    return "null";
-                }
+                return (UseSingleQuote ? "''" : "null");
             }
             else
             {
-                if (UseSingleQuote)
-                {
-                    return $"'{text}'";
-                }
-                else
-                {
-                    return $"{text}";
-                }
+                return (UseSingleQuote ? $"'{text}'" : $"{text}");
             }
         }
         // Validation for Strings or Int
