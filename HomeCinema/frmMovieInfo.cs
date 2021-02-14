@@ -461,6 +461,9 @@ namespace HomeCinema
             // Call is from 
             string callFrom = $"frmMovieInfo ({Name})-btnSave_Click";
 
+            // List for metadata values
+            List<string> metaData = null;
+
             // Exit if Movie Name is empty
             if (String.IsNullOrWhiteSpace(txtName.Text))
             {
@@ -538,6 +541,9 @@ namespace HomeCinema
                 row[14] = GlobalVars.ValidateEmptyOrNull(txtYear.Text);
                 row[15] = GlobalVars.ValidateEmptyOrNull(txtSummary.Text);
 
+                // Save MetaData details
+                metaData.Add(row[2].ToString()); // title
+
                 dt.Rows.Add(row);
                 dt.AcceptChanges();
                 // Check if first query successfully executed
@@ -585,6 +591,12 @@ namespace HomeCinema
             // Refresh Movie List
             frmMain master = (frmMain)Application.OpenForms["frmMain"];
             master.UpdateMovieItemOnLV(LVITEM);
+
+            // Save Metadata
+            if (cbSaveMetadata.Checked)
+            {
+                GlobalVars.SaveMetadata(txtPathFile.Text, metaData);
+            }
 
             // Close this form
             Close();

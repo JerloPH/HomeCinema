@@ -32,6 +32,8 @@ using System.Threading;
 using Microsoft.VisualBasic.FileIO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Microsoft.WindowsAPICodePack.Shell;
+using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 
 namespace HomeCinema.Global
 {
@@ -1456,6 +1458,19 @@ namespace HomeCinema.Global
                 ShowError(errFrom, ex, false);
                 return "Unknown";
             }
+        }
+        public static bool SaveMetadata(string filename, List<string> data)
+        {
+            var file = ShellFile.FromFilePath(filename);
+
+            try { file.Properties.System.Title.Value = data[0]; }
+            catch { }
+
+            try { }
+            catch { }
+
+            ShowInfo("Saved metadata to file!");
+            return true;
         }
         // ######################################################################## END - Add code above
     }
