@@ -132,6 +132,7 @@ namespace HomeCinema
             txtName.Focus();
         }
         // ############################################################################## Functions
+        #region Functions
         // REFRESH INFORMATION
         public void LoadInformation(string ID, string text)
         {
@@ -436,6 +437,7 @@ namespace HomeCinema
                 }
             }
         }
+        #endregion
         // ############################################################################## Form Controls methods event
         private void frmMovieInfo_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -458,6 +460,9 @@ namespace HomeCinema
         {
             // Call is from 
             string callFrom = $"frmMovieInfo ({Name})-btnSave_Click";
+
+            // List for metadata values
+            var metaData = new List<string>();
 
             // Exit if Movie Name is empty
             if (String.IsNullOrWhiteSpace(txtName.Text))
@@ -536,6 +541,13 @@ namespace HomeCinema
                 row[14] = GlobalVars.ValidateEmptyOrNull(txtYear.Text);
                 row[15] = GlobalVars.ValidateEmptyOrNull(txtSummary.Text);
 
+                // Save MetaData details
+                metaData.Add(row[2].ToString()); // title
+                metaData.Add(row[14].ToString()); // year
+                metaData.Add(row[9].ToString()); // genre
+                metaData.Add(row[12].ToString()); // director
+                metaData.Add(row[11].ToString()); // producer
+
                 dt.Rows.Add(row);
                 dt.AcceptChanges();
                 // Check if first query successfully executed
@@ -583,6 +595,12 @@ namespace HomeCinema
             // Refresh Movie List
             frmMain master = (frmMain)Application.OpenForms["frmMain"];
             master.UpdateMovieItemOnLV(LVITEM);
+
+            // Save Metadata
+            if (cbSaveMetadata.Checked)
+            {
+                GlobalVars.SaveMetadata(txtPathFile.Text, metaData);
+            }
 
             // Close this form
             Close();
