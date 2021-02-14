@@ -1377,32 +1377,14 @@ namespace HomeCinema.Global
             {
                 if (country.ToLower().Contains("japan"))
                 {
-                    if (mediatype == "tv")
-                    {
-                        return 4;
-                    }
-                    else
-                    {
-                        return 3;
-                    }
+                    return (mediatype == "tv" ? 4 : 3);
                 }
                 else
                 {
-                    if (mediatype == "tv")
-                    {
-                        return 6;
-                    }
-                    else
-                    {
-                        return 5;
-                    }
+                    return (mediatype == "tv" ? 6 : 5);
                 }
             }
-            if (mediatype == "tv")
-            {
-                return 2;
-            }
-            return 1;
+            return (mediatype == "tv" ? 2 : 1);
         }
         // Download Movie cover image from TMB
         public static bool DownloadCoverFromTMDB(string MOVIE_ID, string linkPoster, string calledFrom)
