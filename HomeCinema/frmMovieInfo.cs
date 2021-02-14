@@ -132,6 +132,7 @@ namespace HomeCinema
             txtName.Focus();
         }
         // ############################################################################## Functions
+        #region Functions
         // REFRESH INFORMATION
         public void LoadInformation(string ID, string text)
         {
@@ -436,6 +437,7 @@ namespace HomeCinema
                 }
             }
         }
+        #endregion
         // ############################################################################## Form Controls methods event
         private void frmMovieInfo_FormClosing(object sender, FormClosingEventArgs e)
         {
