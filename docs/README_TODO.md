@@ -63,6 +63,9 @@
   
 
 ## Bugs
+- TV Series search not getting imdb id for new entries.
+- JSON not properly deserialized.
+
 
 ## Others
 
