@@ -378,6 +378,23 @@ namespace HomeCinema
             return ret;
         }
         #endregion
+        // ####################################################################################### Thread-safe functions
+        #region Thread-safe func
+        private delegate void AddItemDelegate(ListView lv, ListViewItem item);
+        public static void AddItem(ListView lv, ListViewItem item)
+        {
+            if (lv.InvokeRequired)
+            {
+                lv.Invoke(new AddItemDelegate
+                (AddItem),
+                new object[] { lv, item });
+            }
+            else
+            {
+                lv.Items.Add(item);
+            }
+        }
+        #endregion
         // ####################################################################################### Functions
         #region Functions
         public void RunSearchWorker()
@@ -1107,7 +1124,8 @@ namespace HomeCinema
                         resSeason, resEp, resYear, resSum, resGenre });
 
                         // Add Item to ListView lvSearchResult
-                        this.Invoke(new Action(() => lvSearchResult.Items.Add(temp)));
+                        //this.Invoke(new Action(() => lvSearchResult.Items.Add(temp)));
+                        AddItem(lvSearchResult, temp);
                     }
                     else
                     {
