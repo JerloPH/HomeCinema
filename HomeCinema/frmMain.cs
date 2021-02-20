@@ -2,7 +2,7 @@
 /* #####################################################################################
  * LICENSE - GPL v3
 * HomeCinema - Organize your Movie Collection
-* Copyright (C) 2020  JerloPH (https://github.com/JerloPH)
+* Copyright (C) 2021  JerloPH (https://github.com/JerloPH)
 
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@ namespace HomeCinema
         BackgroundWorker bgSearchInDB = new BackgroundWorker();
 
         ToolStripItem toolMenuView, toolMenuEdit, toolMenuFileExplorer;
-
+        #region frmMain
         public frmMain()
         {
             // Record time start
@@ -181,6 +181,7 @@ namespace HomeCinema
             bgSearchInDB.DoWork += new DoWorkEventHandler(bgwMovie_SearchMovie);
             bgSearchInDB.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgwMovie_DoneSearchMovie);
         }
+        #endregion
         // ####################################################################################### Database Functions
         #region Insert to Database
         int InsertToDB(List<string> listofFiles, string errFrom)
