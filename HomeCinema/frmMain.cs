@@ -47,7 +47,7 @@ namespace HomeCinema
         // Objects
         ListViewColumnSorter lvSorter = new ListViewColumnSorter();
         BackgroundWorker bgWorkInsertMovie = new BackgroundWorker();
-        BackgroundWorker bgSearchInDB = new BackgroundWorker();
+        //BackgroundWorker bgSearchInDB = new BackgroundWorker();
 
         ToolStripItem toolMenuView, toolMenuEdit, toolMenuFileExplorer;
         #region frmMain
@@ -175,11 +175,6 @@ namespace HomeCinema
             // Add events to BG Worker for Searching movie files in a folder
             bgWorkInsertMovie.DoWork += new DoWorkEventHandler(bgw_SearchFileinFolder);
             bgWorkInsertMovie.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgw_DoneSearchFileinFolder);
-
-            // Add events to BG Worker for Fetching movie in Local Database
-            bgSearchInDB.WorkerReportsProgress = true;
-            bgSearchInDB.DoWork += new DoWorkEventHandler(bgwMovie_SearchMovie);
-            bgSearchInDB.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgwMovie_DoneSearchMovie);
         }
         #endregion
         // ####################################################################################### Database Functions
@@ -379,8 +374,8 @@ namespace HomeCinema
             return ret;
         }
         #endregion
-        // ####################################################################################### Thread-safe functions
-        #region Thread-safe func
+        // ####################################################################################### Thread-safe static functions
+        #region Thread-safe static func
         private delegate void AddItemDelegate(ListView lv, ListViewItem item);
         public static void AddItem(ListView lv, ListViewItem item)
         {
@@ -395,24 +390,27 @@ namespace HomeCinema
                 lv.Items.Add(item);
             }
         }
+        public static void AfterPopulatingMovieLV(ListView lv, int count)
+        {
+            // Error log
+            string errFrom = "frmMain-bgwMovie_DoneSearchMovie";
+
+            // If there are no results, show message
+            if (count < 1)
+            {
+                ListViewItem temp = new ListViewItem() { Text = "No Search Results!" };
+                temp.Tag = "0";
+                temp.ImageIndex = 0;
+                AddItem(lv, temp);
+                GlobalVars.Log(errFrom, $"ResultSet is null or empty!");
+            }
+
+            lv.EndUpdate(); // Draw the ListView
+            lv.ResumeLayout();
+        }
         #endregion
         // ####################################################################################### Functions
         #region Functions
-        public void RunSearchWorker()
-        {
-            string errFrom = "frmMain-RunSearchWorker()";
-            DisplayLoading(); // Display the loading form.
-            // Run BG Worker: bgSearchInDB, for Searching movies in database
-            try
-            {
-                bgSearchInDB.RunWorkerAsync();
-            }
-            catch (Exception ex)
-            {
-                // Show error
-                GlobalVars.ShowError(errFrom, ex);
-            }
-        }
         // Play Movie or Open Movie Details
         public void OpenFormPlayMovie()
         {
@@ -546,9 +544,6 @@ namespace HomeCinema
         // Execute the query, by running bgWorker bgSearchInDB
         public void RefreshMovieList()
         {
-            lvSearchResult.BeginUpdate(); // Pause drawing events on ListView
-            lvSearchResult.SuspendLayout();
-
             // Check if there was prev query
             if (!String.IsNullOrWhiteSpace(SEARCH_QUERY_PREV))
             {
@@ -560,7 +555,7 @@ namespace HomeCinema
                 // Default SELECT Query
                 SEARCH_QUERY = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO}";
             }
-            RunSearchWorker();
+            PopulateMovieBG();
         }
         // Display and close loading form
         public void DisplayLoading()
@@ -1020,13 +1015,20 @@ namespace HomeCinema
 
             // Perform click on search button: btnSearch by calling RefreshMovieList()
             SEARCH_QUERY_PREV = "";
+            CloseLoading();
             RefreshMovieList();
         }
         #endregion
         #region BG Worker: Populate MOVIE ListView
-        private void bgwMovie_SearchMovie(object sender, DoWorkEventArgs e)
+        private void PopulateMovieBG()
         {
-            // Get query from variable, set by background worker
+            // Stop ListView form Drawing
+            lvSearchResult.BeginUpdate(); // Pause drawing events on ListView
+            lvSearchResult.SuspendLayout();
+            // Clear previous list
+            lvSearchResult.Items.Clear();
+            // Populate movie listview with new entries, from another form thread
+            frmPopulateMovie form = new frmPopulateMovie("Please wait while loading", "Loading");
             DataTable dt, dtGetFile;
             string qry = SEARCH_QUERY;
             string cols = LVMovieItemsColumns;
@@ -1038,8 +1040,7 @@ namespace HomeCinema
             if (String.IsNullOrWhiteSpace(qry))
             {
                 // Exit
-                GlobalVars.Log(errFrom, $"Query is Empty!");
-                e.Result = null;
+                AfterPopulatingMovieLV(lvSearchResult, 0);
                 return;
             }
 
@@ -1048,12 +1049,7 @@ namespace HomeCinema
 
             // Count progress
             progress = 0;
-
-            // Log Query
-            GlobalVars.Log(errFrom, $"START Background worker from: {Name}");
-            dt = DBCON.DbQuery(qry, cols, errFrom);
-            // Clear previous list
-            this.Invoke(new Action(() => lvSearchResult.Items.Clear()));
+            dt = DBCON.DbQuery(qry, cols, errFrom); // Get DataTable from query
 
             // Set Max Progress
             progressMax = dt.Rows.Count;
@@ -1061,161 +1057,86 @@ namespace HomeCinema
             // Iterate thru all DataRows
             if (progressMax > 0)
             {
-                foreach (DataRow r in dt.Rows)
+                form.BackgroundWorker.DoWork += (sender1, e1) =>
                 {
-                    // Add Item to ListView
-                    // Convert ID object to ID int
-                    int MOVIEID;
-                    try { MOVIEID = Convert.ToInt32(r[0]); }
-                    catch { MOVIEID = 0; }
-
-                    // Add to listview lvSearchResult
-                    if (MOVIEID > 0)
+                    foreach (DataRow r in dt.Rows)
                     {
-                        // Break if file does not exist
-                        dtGetFile = DBCON.DbQuery($"SELECT `Id`,`file` FROM {GlobalVars.DB_TNAME_FILEPATH} WHERE `Id` = {MOVIEID}", "Id,file", errFrom);
-                        if (dtGetFile.Rows.Count > 0)
-                        {
-                            DataRow rFile = dtGetFile.Rows[0];
-                            if (!File.Exists(rFile[1].ToString()))
-                            {
-                                dtGetFile.Clear();
-                                continue;
-                            }
-                        }
+                        // Add Item to ListView
+                        // Convert ID object to ID int
+                        int MOVIEID;
+                        try { MOVIEID = Convert.ToInt32(r[0]); }
+                        catch { MOVIEID = 0; }
 
-                        // Load 'cover' Image from 'cover' folder
-                        string Imagefile = GlobalVars.ImgFullPath(MOVIEID.ToString());
-                        try
+                        // Add to listview lvSearchResult
+                        if (MOVIEID > 0)
                         {
-                            if (File.Exists(Imagefile))
+                            // Break if file does not exist
+                            dtGetFile = DBCON.DbQuery($"SELECT `Id`,`file` FROM {GlobalVars.DB_TNAME_FILEPATH} WHERE `Id` = {MOVIEID}", "Id,file", errFrom);
+                            if (dtGetFile.Rows.Count > 0)
                             {
-                                Image imgFromFile = Image.FromFile(Imagefile);
-                                this.Invoke(new Action(() =>
+                                DataRow rFile = dtGetFile.Rows[0];
+                                if (!File.Exists(rFile[1].ToString()))
                                 {
-                                    GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imgFromFile);
-                                }));
+                                    dtGetFile.Clear();
+                                    continue;
+                                }
                             }
 
+                            // Load 'cover' Image from 'cover' folder
+                            string Imagefile = GlobalVars.ImgFullPath(MOVIEID.ToString());
+                            try
+                            {
+                                if (File.Exists(Imagefile))
+                                {
+                                    Image imgFromFile = Image.FromFile(Imagefile);
+                                    this.Invoke(new Action(() =>
+                                    {
+                                        GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imgFromFile);
+                                    }));
+                                }
+
+                            }
+                            catch (Exception exImg)
+                            {
+                                // Error Log
+                                GlobalVars.ShowError($"{errFrom}\n\tFile:\n\t{Imagefile}", exImg, false);
+                            }
+
+                            // Get all strings from the DataRow, passed by the BG worker
+                            string resName = r[1].ToString(); // name
+                            string resNameEp = r[2].ToString(); // name_ep
+                            string resNameSer = r[3].ToString(); // name_series
+                            string resSeason = r[4].ToString(); // season
+                            string resEp = r[5].ToString(); // episode
+                            string resYear = r[6].ToString(); // year
+                            string resSum = r[7].ToString(); // summary
+                            string resGenre = r[8].ToString(); // genre
+
+                            // Make new ListView item, and assign properties to it
+                            ListViewItem temp = new ListViewItem() { Text = resName };
+
+                            // Edit Information on ListView Item
+                            LVItemSetDetails(temp, new string[] { MOVIEID.ToString(),
+                            resName, resNameEp, resNameSer,
+                            resSeason, resEp, resYear, resSum, resGenre });
+
+                            // Add Item to ListView lvSearchResult
+                            AddItem(lvSearchResult, temp);
                         }
-                        catch (Exception exImg)
+                        else
                         {
-                            // Error Log
-                            GlobalVars.ShowError($"{errFrom}\n\tFile:\n\t{Imagefile}", exImg, false);
+                            GlobalVars.Log(errFrom, $"Invalid MovieID: {r[0].ToString()}");
                         }
 
-                        // Get all strings from the DataRow, passed by the BG worker
-                        string resName = r[1].ToString(); // name
-                        string resNameEp = r[2].ToString(); // name_ep
-                        string resNameSer = r[3].ToString(); // name_series
-                        string resSeason = r[4].ToString(); // season
-                        string resEp = r[5].ToString(); // episode
-                        string resYear = r[6].ToString(); // year
-                        string resSum = r[7].ToString(); // summary
-                        string resGenre = r[8].ToString(); // genre
-
-                        // Make new ListView item, and assign properties to it
-                        ListViewItem temp = new ListViewItem() { Text = resName };
-
-                        // Edit Information on ListView Item
-                        LVItemSetDetails(temp, new string[] { MOVIEID.ToString(),
-                        resName, resNameEp, resNameSer,
-                        resSeason, resEp, resYear, resSum, resGenre });
-
-                        // Add Item to ListView lvSearchResult
-                        AddItem(lvSearchResult, temp);
+                        progress += 1;
                     }
-                    else
-                    {
-                        GlobalVars.Log(errFrom, $"Invalid MovieID: {r[0].ToString()}");
-                    }
-
-                    progress += 1;
-                }
-                e.Result = dt;
-                GlobalVars.Log(errFrom, $"DONE Background worker from: {Name}");
+                    GlobalVars.Log(errFrom, $"DONE Background worker from: {Name}");
+                };
+                form.ShowDialog();
+                AfterPopulatingMovieLV(lvSearchResult, progress);
                 return;
             }
-            e.Result = null;
-            GlobalVars.Log(errFrom, $"ResultSet is null or empty!");
-        }
-        private void bgwMovie_DoneSearchMovie(object sender, RunWorkerCompletedEventArgs e)
-        {
-            // Error log
-            string errFrom = "frmMain-bgwMovie_DoneSearchMovie";
-
-            // If result is null, exit;
-            if (e.Result == null)
-            {
-                // Clear previous list
-                lvSearchResult.Items.Clear();
-
-                ListViewItem temp = new ListViewItem() { Text = "No Search Results!" };
-                temp.Tag = "0";
-                temp.ImageIndex = 0;
-                lvSearchResult.Items.Add(temp);
-                lvSearchResult.EndUpdate(); // Draw the ListView
-                lvSearchResult.ResumeLayout();
-                CloseLoading(); // Close loading form
-                return;
-            }
-
-            // Get result as DataTable, and Dispose it
-            if (e.Result is DataTable)
-            {
-                DataTable dt = e.Result as DataTable;
-                // Dispose the table after iterating thru its contents
-                GlobalVars.Log(errFrom, $"Done with results!\n\tTotal Count of Processed LV Items: { lvSearchResult.Items.Count.ToString() }\n\tTotal number of Rows: { dt.Rows.Count.ToString() }");
-                dt.Clear();
-                dt.Dispose();
-            }
-
-            // If there are no results, show message
-            if (lvSearchResult.Items.Count < 1)
-            {
-                ListViewItem temp = new ListViewItem() { Text = "No Search Results!" };
-                temp.Tag = "0";
-                temp.ImageIndex = 0;
-                lvSearchResult.Items.Add(temp);
-            }
-
-            // Clear previous values of variables
-            SEARCH_QUERY = "";
-            CloseLoading(); // Close loading and refresh Memory
-
-            lvSearchResult.EndUpdate(); // Draw the ListView
-            lvSearchResult.ResumeLayout();
-
-            // Starting, opening of App?
-            if (Start)
-            {
-                // Perform click on Change View
-                btnChangeView.PerformClick();
-
-                // Auto check update
-                GlobalVars.CheckForUpdate();
-
-                // Toggle Start variable
-                Start = false;
-
-                //Record time end
-                try
-                {
-                    LoadingEnd = DateTime.Now.TimeOfDay;
-                    TimeSpan duration = LoadingEnd.Subtract(LoadingStart);
-                    double TimeMS = Convert.ToDouble(duration.TotalMilliseconds);
-                    double TimeSec = TimeMS / 1000;
-                    string TimeitTook = $"Took {TimeMS} milliseconds to load App!\n\tIn seconds : {TimeSec}\n\tIn minutes : {duration.ToString("g")}";
-                    string TimeStartEnd = $"\n\tTime Start: {LoadingStart.ToString()}\n\tTime End: {LoadingEnd.ToString()}";
-                    GlobalVars.Log("frmMain", TimeitTook + TimeStartEnd);
-
-                }
-                catch (Exception ex)
-                {
-                    // Log Error
-                    GlobalVars.ShowError(errFrom, ex, false);
-                }
-            }
+            AfterPopulatingMovieLV(lvSearchResult, 0);
         }
         #endregion
         // ####################################################################################### Form CUSTOM events
@@ -1273,6 +1194,11 @@ namespace HomeCinema
             string Imagefile = GlobalVars.ImgFullPath("0");
             Image imgFromFile = Image.FromFile(Imagefile);
             GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imgFromFile);
+
+            // Perform click on Change View
+            btnChangeView.PerformClick();
+            // Auto check update
+            GlobalVars.CheckForUpdate();
 
             // Start finding files in folder
             GetAllMediaFiles();
@@ -1442,7 +1368,7 @@ namespace HomeCinema
                 // Set query to perform on search
                 SEARCH_QUERY = qry;
             }
-            RunSearchWorker();
+            PopulateMovieBG();
         }
         // When double-clicked on an item, open it in new form
         private void lvSearchResult_MouseDoubleClick(object sender, MouseEventArgs e)
