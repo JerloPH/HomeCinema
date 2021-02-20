@@ -440,18 +440,17 @@ namespace HomeCinema
         private void OpenNewFormMovie()
         {
             // Validate ID
-            string ID = lvSearchResult.SelectedItems[0].Tag.ToString().TrimStart('0');
-            // Exit if not a valid ID
-            if (Convert.ToInt16(ID) < 1)
-            {
-                return;
-            }
+            int ID;
+            try { ID = Convert.ToInt32(lvSearchResult.SelectedItems[0].Tag.ToString().TrimStart('0')); }
+            catch { return; };
+            if (ID < 1) { return; };
+
             // Otherwise, continue
             if (lvSearchResult.SelectedItems.Count > 0)
             {
                 // Create form to View Movie Details / Info
                 string text = Convert.ToString(lvSearchResult.SelectedItems[0].Text);
-                string formName = "movie" + ID;
+                string formName = "movie" + ID.ToString();
                 Form fc = Application.OpenForms[formName];
                 if (fc != null)
                 {
@@ -459,7 +458,7 @@ namespace HomeCinema
                 }
                 else
                 {
-                    Form form = new frmMovie(this, ID, text, lvSearchResult.SelectedItems[0]);
+                    Form form = new frmMovie(this, ID.ToString(), text, lvSearchResult.SelectedItems[0]);
                     form.Name = formName;
                     GlobalVars.Log(Name + " (OPEN a MOVIE)", "MOVIE formName: " + form.Name);
                 }
