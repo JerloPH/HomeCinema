@@ -124,6 +124,12 @@
     <Compile Include="frmMovieInfo.Designer.cs">
       <DependentUpon>frmMovieInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmPopulateMovie.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPopulateMovie.Designer.cs">
+      <DependentUpon>frmPopulateMovie.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmSettings.cs">
       <SubType>Form</SubType>
     </Compile>
