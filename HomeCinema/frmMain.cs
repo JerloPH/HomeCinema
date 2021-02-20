@@ -35,8 +35,6 @@ namespace HomeCinema
 {
     public partial class frmMain : Form
     {
-        bool Start = true; // Startup of App, to prevent startup event to repeat
-        TimeSpan LoadingStart, LoadingEnd; // Record App load time
         SQLHelper DBCON = new SQLHelper("frmMain"); // Make an SQLite helper instance
         Form formLoading = null; // Make a form of : "Please wait while loading..."
         // Strings
@@ -53,10 +51,7 @@ namespace HomeCinema
         #region frmMain
         public frmMain()
         {
-            // Record time start
-            LoadingStart = DateTime.Now.TimeOfDay;
-
-            // Create directories
+             // Create directories
             GlobalVars.CreateDir(GlobalVars.PATH_IMG);
             GlobalVars.CreateDir(GlobalVars.PATH_DATA);
             GlobalVars.CreateDir(GlobalVars.PATH_TEMP);
@@ -1249,7 +1244,7 @@ namespace HomeCinema
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            string errFrom = "frmMain-btnSearch_Click";
+            //string errFrom = "frmMain-btnSearch_Click";
             // Search the db for movie with filters
             // Setup columns needed
             string qry = "";
