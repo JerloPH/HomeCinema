@@ -1028,7 +1028,6 @@ namespace HomeCinema
         {
             // Get query from variable, set by background worker
             DataTable dt, dtGetFile;
-            BackgroundWorker worker;
             string qry = SEARCH_QUERY;
             string cols = LVMovieItemsColumns;
             string errFrom = "frmMain-bgwMovie_SearchMovie";
@@ -1049,7 +1048,6 @@ namespace HomeCinema
 
             // Count progress
             progress = 0;
-            worker = sender as BackgroundWorker;
 
             // Log Query
             GlobalVars.Log(errFrom, $"START Background worker from: {Name}");
@@ -1125,7 +1123,6 @@ namespace HomeCinema
                         resSeason, resEp, resYear, resSum, resGenre });
 
                         // Add Item to ListView lvSearchResult
-                        //this.Invoke(new Action(() => lvSearchResult.Items.Add(temp)));
                         AddItem(lvSearchResult, temp);
                     }
                     else
@@ -1133,8 +1130,6 @@ namespace HomeCinema
                         GlobalVars.Log(errFrom, $"Invalid MovieID: {r[0].ToString()}");
                     }
 
-                    // Report progress, increasing count
-                    worker.ReportProgress(progress, progressMax);
                     progress += 1;
                 }
                 e.Result = dt;
