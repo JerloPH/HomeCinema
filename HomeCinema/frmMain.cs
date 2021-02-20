@@ -418,18 +418,16 @@ namespace HomeCinema
             if (lvSearchResult.SelectedItems.Count > 0)
             {
                 // Validate ID
-                string ID = lvSearchResult.SelectedItems[0].Tag.ToString().TrimStart('0');
-                // Exit if not a valid ID
-                if (Convert.ToInt16(ID) < 1)
-                {
-                    return;
-                }
-                // Otherwise, continue
+                int ID;
+                try { ID = Convert.ToInt16(lvSearchResult.SelectedItems[0].Tag.ToString().TrimStart('0')); }
+                catch { return; };
+
+                if (ID < 1) { return;  }; // exit if ID is less than 1
 
                 // Just play the media
                 if (GlobalVars.SET_AUTOPLAY)
                 {
-                    GlobalVars.PlayMedia(GetFilePath(ID, "frmMain-OpenNewFormMovie"));
+                    GlobalVars.PlayMedia(GetFilePath(ID.ToString(), "frmMain-OpenNewFormMovie"));
                     return;
                 }
                 else
