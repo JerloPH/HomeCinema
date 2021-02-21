@@ -130,13 +130,13 @@
     <Compile Include="frmSettings.Designer.cs">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="GlobalVars.cs" />
-    <Compile Include="ListViewColumnSorter.cs" />
+    <Compile Include="Func\GlobalVars.cs" />
+    <Compile Include="Func\ListViewColumnSorter.cs" />
     <Compile Include="JSONs\MovieInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Config.cs" />
-    <Compile Include="SQLHelper.cs" />
+    <Compile Include="Func\Config.cs" />
+    <Compile Include="Func\SQLHelper.cs" />
     <EmbeddedResource Include="frmAbout.resx">
       <DependentUpon>frmAbout.cs</DependentUpon>
     </EmbeddedResource>
