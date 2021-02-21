@@ -34,7 +34,6 @@ namespace HomeCinema
                     label1.Text = value;
             }
         }
-        public bool isCanceled { get; set; }
         public int TopPosition { get; set; }
         public frmLoading(string message, string caption)
         {
@@ -42,7 +41,6 @@ namespace HomeCinema
             Icon = GlobalVars.HOMECINEMA_ICON;
             Message = message;
             Caption = caption;
-            isCanceled = false;
             TopPosition = 0;
             CenterToParent();
         }
@@ -65,21 +63,6 @@ namespace HomeCinema
         private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Close();
-        }
-
-        private void cancelButton_Click(object sender, EventArgs e)
-        {
-            isCanceled = true;
-        }
-
-        private void frmPopulateMovie_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.KeyCode)
-            {
-                case Keys.Escape:
-                    escapeButton.PerformClick();
-                    break;
-            }
         }
     }
 }
