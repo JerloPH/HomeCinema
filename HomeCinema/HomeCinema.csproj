@@ -93,7 +93,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CastCrew.cs" />
+    <Compile Include="JSONs\CastCrew.cs" />
     <Compile Include="frmAbout.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -132,7 +132,7 @@
     </Compile>
     <Compile Include="GlobalVars.cs" />
     <Compile Include="ListViewColumnSorter.cs" />
-    <Compile Include="MovieInfo.cs" />
+    <Compile Include="JSONs\MovieInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Config.cs" />
