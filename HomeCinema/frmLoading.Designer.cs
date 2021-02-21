@@ -43,9 +43,10 @@ namespace HomeCinema
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(0, 7);
+            this.label1.Location = new System.Drawing.Point(0, 9);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(339, 40);
+            this.label1.Size = new System.Drawing.Size(474, 49);
             this.label1.TabIndex = 2;
             this.label1.Text = "INSERT MESSAGE HERE";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -53,9 +54,10 @@ namespace HomeCinema
             // escapeButton
             // 
             this.escapeButton.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.escapeButton.Location = new System.Drawing.Point(93, 127);
+            this.escapeButton.Location = new System.Drawing.Point(124, 198);
+            this.escapeButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.escapeButton.Name = "escapeButton";
-            this.escapeButton.Size = new System.Drawing.Size(145, 38);
+            this.escapeButton.Size = new System.Drawing.Size(193, 47);
             this.escapeButton.TabIndex = 126;
             this.escapeButton.TabStop = false;
             this.escapeButton.Text = "Cancel (ESC)";
@@ -68,27 +70,30 @@ namespace HomeCinema
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pictureBox1.Image = global::HomeCinema.Properties.Resources.LoadingColored;
-            this.pictureBox1.Location = new System.Drawing.Point(127, 50);
+            this.pictureBox1.Location = new System.Drawing.Point(169, 62);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(72, 71);
+            this.pictureBox1.Size = new System.Drawing.Size(128, 128);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
             // 
-            // frmPopulateMovie
+            // frmLoading
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(351, 168);
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(487, 249);
             this.ControlBox = false;
             this.Controls.Add(this.escapeButton);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmPopulateMovie";
+            this.Name = "frmLoading";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Tag = "main";
             this.Text = "frmPopulateMovie";
