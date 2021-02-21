@@ -36,7 +36,6 @@ namespace HomeCinema
     public partial class frmMain : Form
     {
         SQLHelper DBCON = new SQLHelper("frmMain"); // Make an SQLite helper instance
-        Form formLoading = null; // Make a form of : "Please wait while loading..."
         // Strings
         static string LVMovieItemsColumns = "[Id],[name],[name_ep],[name_series],[season],[episode],[year],[summary],[genre]";
         string SEARCH_QUERY = "";
@@ -167,9 +166,6 @@ namespace HomeCinema
             KeyDown += new KeyEventHandler(Form_KeyDown);
 
             GlobalVars.Log("frmMain", "Initialize BackgroundWorkers..");
-            // Add events to BG Worker for Searching movie files in a folder
-            bgWorkInsertMovie.DoWork += new DoWorkEventHandler(bgw_SearchFileinFolder);
-            bgWorkInsertMovie.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgw_DoneSearchFileinFolder);
         }
         #endregion
         // ####################################################################################### Database Functions
@@ -459,22 +455,6 @@ namespace HomeCinema
                 }
             }
         }
-        // Get all Media files from folder in medialocation file
-        private void GetAllMediaFiles()
-        {
-            DisplayLoading(); // Display the loading form.
-            // BGworker for: fetching all media filepaths
-            try
-            {
-                bgWorkInsertMovie.RunWorkerAsync();
-
-            } catch (Exception ex)
-            {
-                // Show error
-                GlobalVars.ShowError("frmMain-getAllMediaFiles", ex);
-                CloseLoading(); // Close loading form
-            }
-        }
         public void SearchBoxPlaceholder(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtSearch.Text))
@@ -548,35 +528,6 @@ namespace HomeCinema
                 SEARCH_QUERY = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO}";
             }
             PopulateMovieBG();
-        }
-        // Display and close loading form
-        public void DisplayLoading()
-        {
-            // Show loading form, if not already visible
-            if (formLoading == null)
-            {
-                formLoading = new frmLoading(this);
-                formLoading.Show(this);
-            }
-            else
-            {
-                formLoading.Visible = true;
-                formLoading.Focus();
-            }
-        }
-        public void CloseLoading()
-        {
-            // Close the loading form.
-            if (formLoading != null)
-            {
-                formLoading.Dispose();
-                formLoading = null;
-
-                // Set Focus to searchbox
-                txtSearch.Focus();
-                // Run GC to clean
-                GlobalVars.CleanMemory("frmMain-CloseLoading");
-            }
         }
         // Check Settings and Load values to App
         private void LoadSettings()
@@ -840,174 +791,138 @@ namespace HomeCinema
         // ####################################################################################### BACKGROUND WORKERS
         #region BG Worker: Get files in folders
         // Search all Movie files in folder
-        private void bgw_SearchFileinFolder(object sender, DoWorkEventArgs e)
+        private void GetMediaFromFolders()
         {
-            // Error from
-            string calledFrom = $"frmMain-bgw_SearchFileinFolder";
-
             // Get Movie files on Folder, even subFolder
+            string calledFrom = $"frmMain-GetMediaFromFolders()";
             GlobalVars.Log(calledFrom, "Search for Supported Media files in Folder..");
-            // Create variables
+
+            // Declare vars
+            frmPopulateMovie form = new frmPopulateMovie("Getting media files from directories..", "Loading");
+            var DirListFrom = new List<string>();
+            var listAlreadyinDB = new List<string>();
+            var listToAdd = new List<string>();
+            var listSeries = new List<string>();
             int countVoid = 0; // void files, not media
 
-            // Build a list of Directories from medialocation.hc-data
-            List<string> DirListFrom = GlobalVars.DirSearch(FOLDERTOSEARCH, calledFrom + "- DirSearch (Exception)");
-
-            // Check first if there are directories to search from.
-            // Find all files that match criteria
-            if (DirListFrom.Count > 0)
+            // Delegate task to frmLoading
+            form.BackgroundWorker.DoWork += (sender1, e1) =>
             {
-                // List already in db
-                List<string> listAlreadyinDB = DBCON.DbQrySingle(GlobalVars.DB_TNAME_FILEPATH, "[file]", calledFrom + "-listAlreadyinDB");
+                // Build a list of Directories from medialocation.hc-data
+                DirListFrom = GlobalVars.DirSearch(FOLDERTOSEARCH, calledFrom + "- DirSearch (Exception)");
 
-                // List of files valid to add
-                List<string> listToAdd = new List<string>();
-
-                string nonres = ""; // List of "Voided Files" filepaths, not media files
-                bool voided = true; // Check if file can be added to "Voided Files" Log
-
-                // If file is a movie,
-                foreach (string file in DirListFrom)
+                // Check first if there are directories to search from.
+                // Find all files that match criteria
+                if (DirListFrom.Count > 0)
                 {
-                    // Reset variable
-                    voided = true;
-                    // Check if file have an extension of MOVIE_EXTENSIONS
-                    foreach (string ext in GlobalVars.MOVIE_EXTENSIONS)
-                    {
-                        if (Path.GetExtension(file).ToLower() == ext)
-                        {
-                            // Check if file is already in the database
-                            bool canAdd = true;
+                    // List already in db
+                    listAlreadyinDB = DBCON.DbQrySingle(GlobalVars.DB_TNAME_FILEPATH, "[file]", calledFrom + "-listAlreadyinDB");
 
-                            // If there is existing movies to check from
+                    // List of files valid to add
+                    listToAdd = new List<string>();
+
+                    string nonres = ""; // List of "Voided Files" filepaths, not media files
+                    bool voided = true; // Check if file can be added to "Voided Files" Log
+
+                    // If file is a movie,
+                    foreach (string file in DirListFrom)
+                    {
+                        // Reset variable
+                        voided = true;
+                        // Check if file have an extension of MOVIE_EXTENSIONS
+                        foreach (string ext in GlobalVars.MOVIE_EXTENSIONS)
+                        {
+                            if (Path.GetExtension(file).ToLower() == ext)
+                            {
+                                // Check if file is already in the database
+                                bool canAdd = true;
+
+                                // If there is existing movies to check from
+                                if (listAlreadyinDB.Count > 0)
+                                {
+                                    // Go each movie filepath and check if it already exists
+                                    foreach (string pathEx in listAlreadyinDB)
+                                    {
+                                        // If it exists, don't add this movie and continue to next
+                                        if (pathEx == file)
+                                        {
+                                            canAdd = false;
+                                            voided = false;
+                                            // remove the item from list of already existing
+                                            int index = listAlreadyinDB.IndexOf(pathEx);
+                                            try
+                                            {
+                                                listAlreadyinDB.RemoveAt(index);
+
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                GlobalVars.ShowError(calledFrom, ex, false);
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                // If possible to add, add to list
+                                if (canAdd)
+                                {
+                                    listToAdd.Add(file);
+                                    voided = false;
+                                }
+                                break;
+                            }
+                        }
+                        if (voided)
+                        {
+                            nonres += file + "\n";
+                            countVoid += 1;
+                        }
+                    }
+
+                    // Add series' folder paths
+                    GlobalVars.Log(calledFrom, "Search for Series Folders in Directory..");
+                    listSeries = GlobalVars.GetSeriesLocations();
+                    if (listSeries.Count > 0)
+                    {
+                        foreach (string folderPath in listSeries)
+                        {
+                            // Check if folder already exists in the database
                             if (listAlreadyinDB.Count > 0)
                             {
-                                // Go each movie filepath and check if it already exists
-                                foreach (string pathEx in listAlreadyinDB)
+                                // Iterate over existing files/folder list
+                                foreach (string pathExist in listAlreadyinDB)
                                 {
-                                    // If it exists, don't add this movie and continue to next
-                                    if (pathEx == file)
+                                    // Remove if it already exists
+                                    if (pathExist == folderPath)
                                     {
-                                        canAdd = false;
-                                        voided = false;
                                         // remove the item from list of already existing
-                                        int index = listAlreadyinDB.IndexOf(pathEx);
-                                        try
-                                        {
-                                            listAlreadyinDB.RemoveAt(index);
-
-                                        }
-                                        catch (Exception ex)
-                                        {
-                                            GlobalVars.ShowError(calledFrom, ex, false);
-                                        }
+                                        int index = listAlreadyinDB.IndexOf(folderPath);
+                                        try { listAlreadyinDB.RemoveAt(index); }
+                                        catch (Exception ex) { GlobalVars.ShowError(calledFrom, ex, false); }
                                         break;
                                     }
                                 }
                             }
-
-                            // If possible to add, add to list
-                            if (canAdd)
+                            else
                             {
-                                listToAdd.Add(file);
-                                voided = false;
-                            }
-                            break;
-                        }
-                    }
-                    if (voided)
-                    {
-                        nonres += file + "\n";
-                        countVoid += 1;
-                    }
-                }
-
-                // Add series' folder paths
-                GlobalVars.Log(calledFrom, "Search for Series Folders in Directory..");
-                List<string> listSeries = GlobalVars.GetSeriesLocations();
-                if (listSeries.Count > 0)
-                {
-                    foreach (string folderPath in listSeries)
-                    {
-                        // Check if folder already exists in the database
-                        if (listAlreadyinDB.Count > 0)
-                        {
-                            // Iterate over existing files/folder list
-                            foreach (string pathExist in listAlreadyinDB)
-                            {
-                                // Remove if it already exists
-                                if (pathExist == folderPath)
-                                {
-                                    // remove the item from list of already existing
-                                    int index = listAlreadyinDB.IndexOf(folderPath);
-                                    try { listAlreadyinDB.RemoveAt(index); }
-                                    catch (Exception ex) { GlobalVars.ShowError(calledFrom, ex, false); }
-                                    break;
-                                }
+                                // Add it to the list of new series to add to DB
+                                listToAdd.Add(folderPath);
                             }
                         }
-                        else
-                        {
-                            // Add it to the list of new series to add to DB
-                            listToAdd.Add(folderPath);
-                        }
                     }
-                }
 
+                    GlobalVars.WriteToFile(GlobalVars.PATH_START + "MovieResult_Skipped.Log", nonres);
+
+                    // Add now to database
+                    int insertRes = InsertToDB(listToAdd, calledFrom + "-listToAdd");
+                }
                 // Clear previous lists
                 DirListFrom.Clear();
                 listAlreadyinDB.Clear();
-
-                GlobalVars.WriteToFile(GlobalVars.PATH_START + "MovieResult_Skipped.Log", nonres);
-
-                // Add now to database
-                int insertRes = InsertToDB(listToAdd, calledFrom + "-listToAdd");
-                if (insertRes > 0)
-                {
-                    // Clear prev list
-                    listToAdd.Clear();
-
-                    // Send total count of results
-                    List<int> listRes = new List<int>();
-                    listRes.Add(insertRes); // success of inserts
-                    listRes.Add(countVoid); // not media files
-                    e.Result = listRes;
-                }
-                else
-                {
-                    // Failed to insert
-                    e.Result = null;
-                }
-            }
-            else
-            {
-                // There's no entry on file
-                DirListFrom.Clear();
-                e.Result = null;
-            }
-        }
-        private void bgw_DoneSearchFileinFolder(object sender, RunWorkerCompletedEventArgs e)
-        {
-            // Get result from BGworker
-            if (e.Result != null)
-            {
-                // Counter for files
-                int count, countVoid;
-
-                List<int> res = e.Result as List<int>;
-                count = res[0];
-                countVoid = res[1];
-
-                // Show message
-                GlobalVars.ShowInfo($"Total files added: {count.ToString()}\nFiles skipped: {countVoid.ToString()}");
-            }
-
-            // Run GC to clean
-            GlobalVars.CleanMemory("frmMain-bgw_DoneSearchFileinFolder");
-
-            // Perform click on search button: btnSearch by calling RefreshMovieList()
-            SEARCH_QUERY_PREV = "";
-            CloseLoading();
+                listToAdd.Clear();
+            };
+            form.ShowDialog(this);
             RefreshMovieList();
         }
         #endregion
@@ -1024,7 +939,7 @@ namespace HomeCinema
             DataTable dt, dtGetFile;
             string qry = SEARCH_QUERY;
             string cols = LVMovieItemsColumns;
-            string errFrom = "frmMain-bgwMovie_SearchMovie";
+            string errFrom = "frmMain-PopulateMovieBG()";
             int progress = 0;
             int progressMax = 0;
 
@@ -1193,7 +1108,7 @@ namespace HomeCinema
             GlobalVars.CheckForUpdate();
 
             // Start finding files in folder
-            GetAllMediaFiles();
+            GetMediaFromFolders();
         }
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -1202,12 +1117,6 @@ namespace HomeCinema
             if (SaveSettings())
             {
                 logClose += $"\n\tSettings Saved! ({DateTime.Now.TimeOfDay.ToString()})";
-            }
-            
-            // Dispose All Resources
-            if (formLoading != null)
-            {
-                formLoading.Dispose();
             }
             // Clean each image 1 by 1
             //GlobalVars.Log("frmMain-frmMain_FormClosing", "Disposing MOVIE_IMGLIST");
