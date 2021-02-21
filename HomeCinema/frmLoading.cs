@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using HomeCinema.Global;
 
 namespace HomeCinema
 {
@@ -38,10 +39,12 @@ namespace HomeCinema
         public frmLoading(string message, string caption)
         {
             InitializeComponent();
+            Icon = GlobalVars.HOMECINEMA_ICON;
             Message = message;
             Caption = caption;
             isCanceled = false;
             TopPosition = 0;
+            CenterToParent();
         }
 
         private void frmPopulateMovie_Shown(object sender, EventArgs e)
