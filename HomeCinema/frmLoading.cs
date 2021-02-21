@@ -1,49 +1,68 @@
-﻿/* #####################################################################################
- * LICENSE - GPL v3
-* HomeCinema - Organize your Movie Collection
-* Copyright (C) 2020  JerloPH (https://github.com/JerloPH)
-
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-
-* You should have received a copy of the GNU General Public License
-* along with this program.  If not, see <https://www.gnu.org/licenses/>.
-##################################################################################### */
-using HomeCinema.Global;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Drawing;
-using System.Threading;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using HomeCinema.Global;
 
 namespace HomeCinema
 {
     public partial class frmLoading : Form
     {
-        public frmLoading(Form parent)
+        public string Caption
+        {
+            get { return this.Text; }
+            set { this.Text = value; }
+        }
+        public string Message
+        {
+            get { return label1.Text; }
+            set
+            {
+                if (label1.InvokeRequired)
+                {
+                    BeginInvoke((Action)delegate
+                    {
+                        label1.Text = value;
+                    });
+                }
+                else
+                    label1.Text = value;
+            }
+        }
+        public int TopPosition { get; set; }
+        public frmLoading(string message, string caption)
         {
             InitializeComponent();
-            Thread.Sleep(500);
-
-            SuspendLayout();
-
             Icon = GlobalVars.HOMECINEMA_ICON;
-            // Load image from app path and assign to picBox
-            picBox.Image = GlobalVars.IMG_LOADING;
-
-            ResumeLayout();
+            Message = message;
+            Caption = caption;
+            TopPosition = 0;
+            CenterToParent();
         }
 
-        private void frmLoading_Load(object sender, EventArgs e)
+        private void frmPopulateMovie_Shown(object sender, EventArgs e)
         {
-            // Center on screen
-            CenterToParent();
+            if (BackgroundWorker.IsBusy)
+                return;
+            BackgroundWorker.RunWorkerAsync();
+            if (TopPosition != 0)
+                this.Top = TopPosition;
+        }
+
+        private void frmPopulateMovie_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (BackgroundWorker.IsBusy)
+                e.Cancel = true;
+        }
+
+        private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            Close();
         }
     }
 }

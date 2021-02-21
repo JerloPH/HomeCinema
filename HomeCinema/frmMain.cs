@@ -2,7 +2,7 @@
 /* #####################################################################################
  * LICENSE - GPL v3
 * HomeCinema - Organize your Movie Collection
-* Copyright (C) 2020  JerloPH (https://github.com/JerloPH)
+* Copyright (C) 2021  JerloPH (https://github.com/JerloPH)
 
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -35,10 +35,7 @@ namespace HomeCinema
 {
     public partial class frmMain : Form
     {
-        bool Start = true; // Startup of App, to prevent startup event to repeat
-        TimeSpan LoadingStart, LoadingEnd; // Record App load time
         SQLHelper DBCON = new SQLHelper("frmMain"); // Make an SQLite helper instance
-        Form formLoading = null; // Make a form of : "Please wait while loading..."
         // Strings
         static string LVMovieItemsColumns = "[Id],[name],[name_ep],[name_series],[season],[episode],[year],[summary],[genre]";
         string SEARCH_QUERY = "";
@@ -47,16 +44,13 @@ namespace HomeCinema
         // Objects
         ListViewColumnSorter lvSorter = new ListViewColumnSorter();
         BackgroundWorker bgWorkInsertMovie = new BackgroundWorker();
-        BackgroundWorker bgSearchInDB = new BackgroundWorker();
+        //BackgroundWorker bgSearchInDB = new BackgroundWorker();
 
         ToolStripItem toolMenuView, toolMenuEdit, toolMenuFileExplorer;
-
+        #region frmMain
         public frmMain()
         {
-            // Record time start
-            LoadingStart = DateTime.Now.TimeOfDay;
-
-            // Create directories
+             // Create directories
             GlobalVars.CreateDir(GlobalVars.PATH_IMG);
             GlobalVars.CreateDir(GlobalVars.PATH_DATA);
             GlobalVars.CreateDir(GlobalVars.PATH_TEMP);
@@ -172,15 +166,8 @@ namespace HomeCinema
             KeyDown += new KeyEventHandler(Form_KeyDown);
 
             GlobalVars.Log("frmMain", "Initialize BackgroundWorkers..");
-            // Add events to BG Worker for Searching movie files in a folder
-            bgWorkInsertMovie.DoWork += new DoWorkEventHandler(bgw_SearchFileinFolder);
-            bgWorkInsertMovie.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgw_DoneSearchFileinFolder);
-
-            // Add events to BG Worker for Fetching movie in Local Database
-            bgSearchInDB.WorkerReportsProgress = true;
-            bgSearchInDB.DoWork += new DoWorkEventHandler(bgwMovie_SearchMovie);
-            bgSearchInDB.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgwMovie_DoneSearchMovie);
         }
+        #endregion
         // ####################################################################################### Database Functions
         #region Insert to Database
         int InsertToDB(List<string> listofFiles, string errFrom)
@@ -378,23 +365,43 @@ namespace HomeCinema
             return ret;
         }
         #endregion
-        // ####################################################################################### Functions
-        #region Functions
-        public void RunSearchWorker()
+        // ####################################################################################### Thread-safe static functions
+        #region Thread-safe static func
+        private delegate void AddItemDelegate(ListView lv, ListViewItem item);
+        public static void AddItem(ListView lv, ListViewItem item)
         {
-            string errFrom = "frmMain-RunSearchWorker()";
-            DisplayLoading(); // Display the loading form.
-            // Run BG Worker: bgSearchInDB, for Searching movies in database
-            try
+            if (lv.InvokeRequired)
             {
-                bgSearchInDB.RunWorkerAsync();
+                lv.Invoke(new AddItemDelegate
+                (AddItem),
+                new object[] { lv, item });
             }
-            catch (Exception ex)
+            else
             {
-                // Show error
-                GlobalVars.ShowError(errFrom, ex);
+                lv.Items.Add(item);
             }
         }
+        public static void AfterPopulatingMovieLV(ListView lv, int count)
+        {
+            // Error log
+            string errFrom = "frmMain-bgwMovie_DoneSearchMovie";
+
+            // If there are no results, show message
+            if (count < 1)
+            {
+                ListViewItem temp = new ListViewItem() { Text = "No Search Results!" };
+                temp.Tag = "0";
+                temp.ImageIndex = 0;
+                AddItem(lv, temp);
+                GlobalVars.Log(errFrom, $"ResultSet is null or empty!");
+            }
+
+            lv.EndUpdate(); // Draw the ListView
+            lv.ResumeLayout();
+        }
+        #endregion
+        // ####################################################################################### Functions
+        #region Functions
         // Play Movie or Open Movie Details
         public void OpenFormPlayMovie()
         {
@@ -402,18 +409,16 @@ namespace HomeCinema
             if (lvSearchResult.SelectedItems.Count > 0)
             {
                 // Validate ID
-                string ID = lvSearchResult.SelectedItems[0].Tag.ToString().TrimStart('0');
-                // Exit if not a valid ID
-                if (Convert.ToInt16(ID) < 1)
-                {
-                    return;
-                }
-                // Otherwise, continue
+                int ID;
+                try { ID = Convert.ToInt16(lvSearchResult.SelectedItems[0].Tag.ToString().TrimStart('0')); }
+                catch { return; };
+
+                if (ID < 1) { return;  }; // exit if ID is less than 1
 
                 // Just play the media
                 if (GlobalVars.SET_AUTOPLAY)
                 {
-                    GlobalVars.PlayMedia(GetFilePath(ID, "frmMain-OpenNewFormMovie"));
+                    GlobalVars.PlayMedia(GetFilePath(ID.ToString(), "frmMain-OpenNewFormMovie"));
                     return;
                 }
                 else
@@ -426,18 +431,17 @@ namespace HomeCinema
         private void OpenNewFormMovie()
         {
             // Validate ID
-            string ID = lvSearchResult.SelectedItems[0].Tag.ToString().TrimStart('0');
-            // Exit if not a valid ID
-            if (Convert.ToInt16(ID) < 1)
-            {
-                return;
-            }
+            int ID;
+            try { ID = Convert.ToInt32(lvSearchResult.SelectedItems[0].Tag.ToString().TrimStart('0')); }
+            catch { return; };
+            if (ID < 1) { return; };
+
             // Otherwise, continue
             if (lvSearchResult.SelectedItems.Count > 0)
             {
                 // Create form to View Movie Details / Info
                 string text = Convert.ToString(lvSearchResult.SelectedItems[0].Text);
-                string formName = "movie" + ID;
+                string formName = "movie" + ID.ToString();
                 Form fc = Application.OpenForms[formName];
                 if (fc != null)
                 {
@@ -445,26 +449,10 @@ namespace HomeCinema
                 }
                 else
                 {
-                    Form form = new frmMovie(this, ID, text, lvSearchResult.SelectedItems[0]);
+                    Form form = new frmMovie(this, ID.ToString(), text, lvSearchResult.SelectedItems[0]);
                     form.Name = formName;
                     GlobalVars.Log(Name + " (OPEN a MOVIE)", "MOVIE formName: " + form.Name);
                 }
-            }
-        }
-        // Get all Media files from folder in medialocation file
-        private void GetAllMediaFiles()
-        {
-            DisplayLoading(); // Display the loading form.
-            // BGworker for: fetching all media filepaths
-            try
-            {
-                bgWorkInsertMovie.RunWorkerAsync();
-
-            } catch (Exception ex)
-            {
-                // Show error
-                GlobalVars.ShowError("frmMain-getAllMediaFiles", ex);
-                CloseLoading(); // Close loading form
             }
         }
         public void SearchBoxPlaceholder(object sender, EventArgs e)
@@ -528,9 +516,6 @@ namespace HomeCinema
         // Execute the query, by running bgWorker bgSearchInDB
         public void RefreshMovieList()
         {
-            lvSearchResult.BeginUpdate(); // Pause drawing events on ListView
-            lvSearchResult.SuspendLayout();
-
             // Check if there was prev query
             if (!String.IsNullOrWhiteSpace(SEARCH_QUERY_PREV))
             {
@@ -542,36 +527,7 @@ namespace HomeCinema
                 // Default SELECT Query
                 SEARCH_QUERY = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO}";
             }
-            RunSearchWorker();
-        }
-        // Display and close loading form
-        public void DisplayLoading()
-        {
-            // Show loading form, if not already visible
-            if (formLoading == null)
-            {
-                formLoading = new frmLoading(this);
-                formLoading.Show(this);
-            }
-            else
-            {
-                formLoading.Visible = true;
-                formLoading.Focus();
-            }
-        }
-        public void CloseLoading()
-        {
-            // Close the loading form.
-            if (formLoading != null)
-            {
-                formLoading.Dispose();
-                formLoading = null;
-
-                // Set Focus to searchbox
-                txtSearch.Focus();
-                // Run GC to clean
-                GlobalVars.CleanMemory("frmMain-CloseLoading");
-            }
+            PopulateMovieBG();
         }
         // Check Settings and Load values to App
         private void LoadSettings()
@@ -835,185 +791,155 @@ namespace HomeCinema
         // ####################################################################################### BACKGROUND WORKERS
         #region BG Worker: Get files in folders
         // Search all Movie files in folder
-        private void bgw_SearchFileinFolder(object sender, DoWorkEventArgs e)
+        private void GetMediaFromFolders()
         {
-            // Error from
-            string calledFrom = $"frmMain-bgw_SearchFileinFolder";
-
             // Get Movie files on Folder, even subFolder
+            string calledFrom = $"frmMain-GetMediaFromFolders()";
             GlobalVars.Log(calledFrom, "Search for Supported Media files in Folder..");
-            // Create variables
+
+            // Declare vars
+            frmLoading form = new frmLoading("Getting media files from directories..", "Loading");
+            var DirListFrom = new List<string>();
+            var listAlreadyinDB = new List<string>();
+            var listToAdd = new List<string>();
+            var listSeries = new List<string>();
             int countVoid = 0; // void files, not media
 
-            // Build a list of Directories from medialocation.hc-data
-            List<string> DirListFrom = GlobalVars.DirSearch(FOLDERTOSEARCH, calledFrom + "- DirSearch (Exception)");
-
-            // Check first if there are directories to search from.
-            // Find all files that match criteria
-            if (DirListFrom.Count > 0)
+            // Delegate task to frmLoading
+            form.BackgroundWorker.DoWork += (sender1, e1) =>
             {
-                // List already in db
-                List<string> listAlreadyinDB = DBCON.DbQrySingle(GlobalVars.DB_TNAME_FILEPATH, "[file]", calledFrom + "-listAlreadyinDB");
+                // Build a list of Directories from medialocation.hc-data
+                DirListFrom = GlobalVars.DirSearch(FOLDERTOSEARCH, calledFrom + "- DirSearch (Exception)");
 
-                // List of files valid to add
-                List<string> listToAdd = new List<string>();
-
-                string nonres = ""; // List of "Voided Files" filepaths, not media files
-                bool voided = true; // Check if file can be added to "Voided Files" Log
-
-                // If file is a movie,
-                foreach (string file in DirListFrom)
+                // Check first if there are directories to search from.
+                // Find all files that match criteria
+                if (DirListFrom.Count > 0)
                 {
-                    // Reset variable
-                    voided = true;
-                    // Check if file have an extension of MOVIE_EXTENSIONS
-                    foreach (string ext in GlobalVars.MOVIE_EXTENSIONS)
-                    {
-                        if (Path.GetExtension(file).ToLower() == ext)
-                        {
-                            // Check if file is already in the database
-                            bool canAdd = true;
+                    // List already in db
+                    listAlreadyinDB = DBCON.DbQrySingle(GlobalVars.DB_TNAME_FILEPATH, "[file]", calledFrom + "-listAlreadyinDB");
 
-                            // If there is existing movies to check from
+                    // List of files valid to add
+                    listToAdd = new List<string>();
+
+                    string nonres = ""; // List of "Voided Files" filepaths, not media files
+                    bool voided = true; // Check if file can be added to "Voided Files" Log
+
+                    // If file is a movie,
+                    foreach (string file in DirListFrom)
+                    {
+                        // Reset variable
+                        voided = true;
+                        // Check if file have an extension of MOVIE_EXTENSIONS
+                        foreach (string ext in GlobalVars.MOVIE_EXTENSIONS)
+                        {
+                            if (Path.GetExtension(file).ToLower() == ext)
+                            {
+                                // Check if file is already in the database
+                                bool canAdd = true;
+
+                                // If there is existing movies to check from
+                                if (listAlreadyinDB.Count > 0)
+                                {
+                                    // Go each movie filepath and check if it already exists
+                                    foreach (string pathEx in listAlreadyinDB)
+                                    {
+                                        // If it exists, don't add this movie and continue to next
+                                        if (pathEx == file)
+                                        {
+                                            canAdd = false;
+                                            voided = false;
+                                            // remove the item from list of already existing
+                                            int index = listAlreadyinDB.IndexOf(pathEx);
+                                            try
+                                            {
+                                                listAlreadyinDB.RemoveAt(index);
+
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                GlobalVars.ShowError(calledFrom, ex, false);
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                // If possible to add, add to list
+                                if (canAdd)
+                                {
+                                    listToAdd.Add(file);
+                                    voided = false;
+                                }
+                                break;
+                            }
+                        }
+                        if (voided)
+                        {
+                            nonres += file + "\n";
+                            countVoid += 1;
+                        }
+                    }
+
+                    // Add series' folder paths
+                    GlobalVars.Log(calledFrom, "Search for Series Folders in Directory..");
+                    listSeries = GlobalVars.GetSeriesLocations();
+                    if (listSeries.Count > 0)
+                    {
+                        foreach (string folderPath in listSeries)
+                        {
+                            // Check if folder already exists in the database
                             if (listAlreadyinDB.Count > 0)
                             {
-                                // Go each movie filepath and check if it already exists
-                                foreach (string pathEx in listAlreadyinDB)
+                                // Iterate over existing files/folder list
+                                foreach (string pathExist in listAlreadyinDB)
                                 {
-                                    // If it exists, don't add this movie and continue to next
-                                    if (pathEx == file)
+                                    // Remove if it already exists
+                                    if (pathExist == folderPath)
                                     {
-                                        canAdd = false;
-                                        voided = false;
                                         // remove the item from list of already existing
-                                        int index = listAlreadyinDB.IndexOf(pathEx);
-                                        try
-                                        {
-                                            listAlreadyinDB.RemoveAt(index);
-
-                                        }
-                                        catch (Exception ex)
-                                        {
-                                            GlobalVars.ShowError(calledFrom, ex, false);
-                                        }
+                                        int index = listAlreadyinDB.IndexOf(folderPath);
+                                        try { listAlreadyinDB.RemoveAt(index); }
+                                        catch (Exception ex) { GlobalVars.ShowError(calledFrom, ex, false); }
                                         break;
                                     }
                                 }
                             }
-
-                            // If possible to add, add to list
-                            if (canAdd)
+                            else
                             {
-                                listToAdd.Add(file);
-                                voided = false;
-                            }
-                            break;
-                        }
-                    }
-                    if (voided)
-                    {
-                        nonres += file + "\n";
-                        countVoid += 1;
-                    }
-                }
-
-                // Add series' folder paths
-                GlobalVars.Log(calledFrom, "Search for Series Folders in Directory..");
-                List<string> listSeries = GlobalVars.GetSeriesLocations();
-                if (listSeries.Count > 0)
-                {
-                    foreach (string folderPath in listSeries)
-                    {
-                        // Check if folder already exists in the database
-                        if (listAlreadyinDB.Count > 0)
-                        {
-                            // Iterate over existing files/folder list
-                            foreach (string pathExist in listAlreadyinDB)
-                            {
-                                // Remove if it already exists
-                                if (pathExist == folderPath)
-                                {
-                                    // remove the item from list of already existing
-                                    int index = listAlreadyinDB.IndexOf(folderPath);
-                                    try { listAlreadyinDB.RemoveAt(index); }
-                                    catch (Exception ex) { GlobalVars.ShowError(calledFrom, ex, false); }
-                                    break;
-                                }
+                                // Add it to the list of new series to add to DB
+                                listToAdd.Add(folderPath);
                             }
                         }
-                        else
-                        {
-                            // Add it to the list of new series to add to DB
-                            listToAdd.Add(folderPath);
-                        }
                     }
-                }
 
+                    GlobalVars.WriteToFile(GlobalVars.PATH_START + "MovieResult_Skipped.Log", nonres);
+
+                    // Add now to database
+                    int insertRes = InsertToDB(listToAdd, calledFrom + "-listToAdd");
+                }
                 // Clear previous lists
                 DirListFrom.Clear();
                 listAlreadyinDB.Clear();
-
-                GlobalVars.WriteToFile(GlobalVars.PATH_START + "MovieResult_Skipped.Log", nonres);
-
-                // Add now to database
-                int insertRes = InsertToDB(listToAdd, calledFrom + "-listToAdd");
-                if (insertRes > 0)
-                {
-                    // Clear prev list
-                    listToAdd.Clear();
-
-                    // Send total count of results
-                    List<int> listRes = new List<int>();
-                    listRes.Add(insertRes); // success of inserts
-                    listRes.Add(countVoid); // not media files
-                    e.Result = listRes;
-                }
-                else
-                {
-                    // Failed to insert
-                    e.Result = null;
-                }
-            }
-            else
-            {
-                // There's no entry on file
-                DirListFrom.Clear();
-                e.Result = null;
-            }
-        }
-        private void bgw_DoneSearchFileinFolder(object sender, RunWorkerCompletedEventArgs e)
-        {
-            // Get result from BGworker
-            if (e.Result != null)
-            {
-                // Counter for files
-                int count, countVoid;
-
-                List<int> res = e.Result as List<int>;
-                count = res[0];
-                countVoid = res[1];
-
-                // Show message
-                GlobalVars.ShowInfo($"Total files added: {count.ToString()}\nFiles skipped: {countVoid.ToString()}");
-            }
-
-            // Run GC to clean
-            GlobalVars.CleanMemory("frmMain-bgw_DoneSearchFileinFolder");
-
-            // Perform click on search button: btnSearch by calling RefreshMovieList()
-            SEARCH_QUERY_PREV = "";
+                listToAdd.Clear();
+            };
+            form.ShowDialog(this);
             RefreshMovieList();
         }
         #endregion
         #region BG Worker: Populate MOVIE ListView
-        private void bgwMovie_SearchMovie(object sender, DoWorkEventArgs e)
+        private void PopulateMovieBG()
         {
-            // Get query from variable, set by background worker
+            // Stop ListView form Drawing
+            lvSearchResult.BeginUpdate(); // Pause drawing events on ListView
+            lvSearchResult.SuspendLayout();
+            // Clear previous list
+            lvSearchResult.Items.Clear();
+            // Populate movie listview with new entries, from another form thread
+            frmLoading form = new frmLoading("Please wait while loading", "Loading");
             DataTable dt, dtGetFile;
-            BackgroundWorker worker;
             string qry = SEARCH_QUERY;
             string cols = LVMovieItemsColumns;
-            string errFrom = "frmMain-bgwMovie_SearchMovie";
+            string errFrom = "frmMain-PopulateMovieBG()";
             int progress = 0;
             int progressMax = 0;
 
@@ -1021,8 +947,7 @@ namespace HomeCinema
             if (String.IsNullOrWhiteSpace(qry))
             {
                 // Exit
-                GlobalVars.Log(errFrom, $"Query is Empty!");
-                e.Result = null;
+                AfterPopulatingMovieLV(lvSearchResult, 0);
                 return;
             }
 
@@ -1031,13 +956,7 @@ namespace HomeCinema
 
             // Count progress
             progress = 0;
-            worker = sender as BackgroundWorker;
-
-            // Log Query
-            GlobalVars.Log(errFrom, $"START Background worker from: {Name}");
-            dt = DBCON.DbQuery(qry, cols, errFrom);
-            // Clear previous list
-            this.Invoke(new Action(() => lvSearchResult.Items.Clear()));
+            dt = DBCON.DbQuery(qry, cols, errFrom); // Get DataTable from query
 
             // Set Max Progress
             progressMax = dt.Rows.Count;
@@ -1045,163 +964,86 @@ namespace HomeCinema
             // Iterate thru all DataRows
             if (progressMax > 0)
             {
-                foreach (DataRow r in dt.Rows)
+                form.BackgroundWorker.DoWork += (sender1, e1) =>
                 {
-                    // Add Item to ListView
-                    // Convert ID object to ID int
-                    int MOVIEID;
-                    try { MOVIEID = Convert.ToInt32(r[0]); }
-                    catch { MOVIEID = 0; }
-
-                    // Add to listview lvSearchResult
-                    if (MOVIEID > 0)
+                    foreach (DataRow r in dt.Rows)
                     {
-                        // Break if file does not exist
-                        dtGetFile = DBCON.DbQuery($"SELECT `Id`,`file` FROM {GlobalVars.DB_TNAME_FILEPATH} WHERE `Id` = {MOVIEID}", "Id,file", errFrom);
-                        if (dtGetFile.Rows.Count > 0)
-                        {
-                            DataRow rFile = dtGetFile.Rows[0];
-                            if (!File.Exists(rFile[1].ToString()))
-                            {
-                                dtGetFile.Clear();
-                                continue;
-                            }
-                        }
+                        // Add Item to ListView
+                        // Convert ID object to ID int
+                        int MOVIEID;
+                        try { MOVIEID = Convert.ToInt32(r[0]); }
+                        catch { MOVIEID = 0; }
 
-                        // Load 'cover' Image from 'cover' folder
-                        string Imagefile = GlobalVars.ImgFullPath(MOVIEID.ToString());
-                        try
+                        // Add to listview lvSearchResult
+                        if (MOVIEID > 0)
                         {
-                            if (File.Exists(Imagefile))
+                            // Break if file does not exist
+                            dtGetFile = DBCON.DbQuery($"SELECT `Id`,`file` FROM {GlobalVars.DB_TNAME_FILEPATH} WHERE `Id` = {MOVIEID}", "Id,file", errFrom);
+                            if (dtGetFile.Rows.Count > 0)
                             {
-                                Image imgFromFile = Image.FromFile(Imagefile);
-                                this.Invoke(new Action(() =>
+                                DataRow rFile = dtGetFile.Rows[0];
+                                if (!File.Exists(rFile[1].ToString()))
                                 {
-                                    GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imgFromFile);
-                                }));
+                                    dtGetFile.Clear();
+                                    continue;
+                                }
                             }
 
+                            // Load 'cover' Image from 'cover' folder
+                            string Imagefile = GlobalVars.ImgFullPath(MOVIEID.ToString());
+                            try
+                            {
+                                if (File.Exists(Imagefile))
+                                {
+                                    Image imgFromFile = Image.FromFile(Imagefile);
+                                    this.Invoke(new Action(() =>
+                                    {
+                                        GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imgFromFile);
+                                    }));
+                                }
+
+                            }
+                            catch (Exception exImg)
+                            {
+                                // Error Log
+                                GlobalVars.ShowError($"{errFrom}\n\tFile:\n\t{Imagefile}", exImg, false);
+                            }
+
+                            // Get all strings from the DataRow, passed by the BG worker
+                            string resName = r[1].ToString(); // name
+                            string resNameEp = r[2].ToString(); // name_ep
+                            string resNameSer = r[3].ToString(); // name_series
+                            string resSeason = r[4].ToString(); // season
+                            string resEp = r[5].ToString(); // episode
+                            string resYear = r[6].ToString(); // year
+                            string resSum = r[7].ToString(); // summary
+                            string resGenre = r[8].ToString(); // genre
+
+                            // Make new ListView item, and assign properties to it
+                            ListViewItem temp = new ListViewItem() { Text = resName };
+
+                            // Edit Information on ListView Item
+                            LVItemSetDetails(temp, new string[] { MOVIEID.ToString(),
+                            resName, resNameEp, resNameSer,
+                            resSeason, resEp, resYear, resSum, resGenre });
+
+                            // Add Item to ListView lvSearchResult
+                            AddItem(lvSearchResult, temp);
                         }
-                        catch (Exception exImg)
+                        else
                         {
-                            // Error Log
-                            GlobalVars.ShowError($"{errFrom}\n\tFile:\n\t{Imagefile}", exImg, false);
+                            GlobalVars.Log(errFrom, $"Invalid MovieID: {r[0].ToString()}");
                         }
 
-                        // Get all strings from the DataRow, passed by the BG worker
-                        string resName = r[1].ToString(); // name
-                        string resNameEp = r[2].ToString(); // name_ep
-                        string resNameSer = r[3].ToString(); // name_series
-                        string resSeason = r[4].ToString(); // season
-                        string resEp = r[5].ToString(); // episode
-                        string resYear = r[6].ToString(); // year
-                        string resSum = r[7].ToString(); // summary
-                        string resGenre = r[8].ToString(); // genre
-
-                        // Make new ListView item, and assign properties to it
-                        ListViewItem temp = new ListViewItem() { Text = resName };
-
-                        // Edit Information on ListView Item
-                        LVItemSetDetails(temp, new string[] { MOVIEID.ToString(),
-                        resName, resNameEp, resNameSer,
-                        resSeason, resEp, resYear, resSum, resGenre });
-
-                        // Add Item to ListView lvSearchResult
-                        this.Invoke(new Action(() => lvSearchResult.Items.Add(temp)));
+                        progress += 1;
                     }
-                    else
-                    {
-                        GlobalVars.Log(errFrom, $"Invalid MovieID: {r[0].ToString()}");
-                    }
-
-                    // Report progress, increasing count
-                    worker.ReportProgress(progress, progressMax);
-                    progress += 1;
-                }
-                e.Result = dt;
-                GlobalVars.Log(errFrom, $"DONE Background worker from: {Name}");
+                    GlobalVars.Log(errFrom, $"DONE Background worker from: {Name}");
+                };
+                form.ShowDialog();
+                AfterPopulatingMovieLV(lvSearchResult, progress);
                 return;
             }
-            e.Result = null;
-            GlobalVars.Log(errFrom, $"ResultSet is null or empty!");
-        }
-        private void bgwMovie_DoneSearchMovie(object sender, RunWorkerCompletedEventArgs e)
-        {
-            // Error log
-            string errFrom = "frmMain-bgwMovie_DoneSearchMovie";
-
-            // If result is null, exit;
-            if (e.Result == null)
-            {
-                // Clear previous list
-                lvSearchResult.Items.Clear();
-
-                ListViewItem temp = new ListViewItem() { Text = "No Search Results!" };
-                temp.Tag = "0";
-                temp.ImageIndex = 0;
-                lvSearchResult.Items.Add(temp);
-                lvSearchResult.EndUpdate(); // Draw the ListView
-                lvSearchResult.ResumeLayout();
-                CloseLoading(); // Close loading form
-                return;
-            }
-
-            // Get result as DataTable, and Dispose it
-            if (e.Result is DataTable)
-            {
-                DataTable dt = e.Result as DataTable;
-                // Dispose the table after iterating thru its contents
-                GlobalVars.Log(errFrom, $"Done with results!\n\tTotal Count of Processed LV Items: { lvSearchResult.Items.Count.ToString() }\n\tTotal number of Rows: { dt.Rows.Count.ToString() }");
-                dt.Clear();
-                dt.Dispose();
-            }
-
-            // If there are no results, show message
-            if (lvSearchResult.Items.Count < 1)
-            {
-                ListViewItem temp = new ListViewItem() { Text = "No Search Results!" };
-                temp.Tag = "0";
-                temp.ImageIndex = 0;
-                lvSearchResult.Items.Add(temp);
-            }
-
-            // Clear previous values of variables
-            SEARCH_QUERY = "";
-            CloseLoading(); // Close loading and refresh Memory
-
-            lvSearchResult.EndUpdate(); // Draw the ListView
-            lvSearchResult.ResumeLayout();
-
-            // Starting, opening of App?
-            if (Start)
-            {
-                // Perform click on Change View
-                btnChangeView.PerformClick();
-
-                // Auto check update
-                GlobalVars.CheckForUpdate();
-
-                // Toggle Start variable
-                Start = false;
-
-                //Record time end
-                try
-                {
-                    LoadingEnd = DateTime.Now.TimeOfDay;
-                    TimeSpan duration = LoadingEnd.Subtract(LoadingStart);
-                    double TimeMS = Convert.ToDouble(duration.TotalMilliseconds);
-                    double TimeSec = TimeMS / 1000;
-                    string TimeitTook = $"Took {TimeMS} milliseconds to load App!\n\tIn seconds : {TimeSec}\n\tIn minutes : {duration.ToString("g")}";
-                    string TimeStartEnd = $"\n\tTime Start: {LoadingStart.ToString()}\n\tTime End: {LoadingEnd.ToString()}";
-                    GlobalVars.Log("frmMain", TimeitTook + TimeStartEnd);
-
-                }
-                catch (Exception ex)
-                {
-                    // Log Error
-                    GlobalVars.ShowError(errFrom, ex, false);
-                }
-            }
+            AfterPopulatingMovieLV(lvSearchResult, 0);
         }
         #endregion
         // ####################################################################################### Form CUSTOM events
@@ -1260,8 +1102,13 @@ namespace HomeCinema
             Image imgFromFile = Image.FromFile(Imagefile);
             GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imgFromFile);
 
+            // Perform click on Change View
+            btnChangeView.PerformClick();
+            // Auto check update
+            GlobalVars.CheckForUpdate();
+
             // Start finding files in folder
-            GetAllMediaFiles();
+            GetMediaFromFolders();
         }
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -1270,12 +1117,6 @@ namespace HomeCinema
             if (SaveSettings())
             {
                 logClose += $"\n\tSettings Saved! ({DateTime.Now.TimeOfDay.ToString()})";
-            }
-            
-            // Dispose All Resources
-            if (formLoading != null)
-            {
-                formLoading.Dispose();
             }
             // Clean each image 1 by 1
             //GlobalVars.Log("frmMain-frmMain_FormClosing", "Disposing MOVIE_IMGLIST");
@@ -1312,7 +1153,7 @@ namespace HomeCinema
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            string errFrom = "frmMain-btnSearch_Click";
+            //string errFrom = "frmMain-btnSearch_Click";
             // Search the db for movie with filters
             // Setup columns needed
             string qry = "";
@@ -1428,7 +1269,7 @@ namespace HomeCinema
                 // Set query to perform on search
                 SEARCH_QUERY = qry;
             }
-            RunSearchWorker();
+            PopulateMovieBG();
         }
         // When double-clicked on an item, open it in new form
         private void lvSearchResult_MouseDoubleClick(object sender, MouseEventArgs e)

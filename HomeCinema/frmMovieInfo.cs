@@ -748,7 +748,7 @@ namespace HomeCinema
         // Get IMDB ID using Movie Name
         private void btnGetImdb_Click(object sender, EventArgs e)
         {
-            string errFrom = "frmMovieInfo-btnGetImdb_Click";
+            //string errFrom = "frmMovieInfo-btnGetImdb_Click";
             // Check if txtName is valid
             if (String.IsNullOrWhiteSpace(txtName.Text))
             {

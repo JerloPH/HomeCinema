@@ -75,8 +75,13 @@ D:\TV Series\Title of Series and Season\Episode 1.mp4
 ****
 
 ## Credits
+
+### Resources
+**Animated Loading GIF** is from [**Icons8.com**](https://icons8.com/preloaders/) <br>
+
 ### Third-Party API
 [**The Movie Database**](https://www.themoviedb.org/) - Used to fetch movie details from the web. <br>
+
 ### NuGet Packages Used
 [**Newtonsoft.Json**](https://www.newtonsoft.com/json) - Parse JSON file that contains Movie Information. <br>
 [**SQLite**](https://www.nuget.org/packages/System.Data.SQLite.Core/) - Used to connect to a Local Database.<br>
