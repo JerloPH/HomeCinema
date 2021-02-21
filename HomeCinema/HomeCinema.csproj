@@ -118,11 +118,11 @@
     <Compile Include="frmMovieInfo.Designer.cs">
       <DependentUpon>frmMovieInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmPopulateMovie.cs">
+    <Compile Include="frmLoading.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmPopulateMovie.Designer.cs">
-      <DependentUpon>frmPopulateMovie.cs</DependentUpon>
+    <Compile Include="frmLoading.Designer.cs">
+      <DependentUpon>frmLoading.cs</DependentUpon>
     </Compile>
     <Compile Include="frmSettings.cs">
       <SubType>Form</SubType>
@@ -149,8 +149,8 @@
     <EmbeddedResource Include="frmMovieInfo.resx">
       <DependentUpon>frmMovieInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmPopulateMovie.resx">
-      <DependentUpon>frmPopulateMovie.cs</DependentUpon>
+    <EmbeddedResource Include="frmLoading.resx">
+      <DependentUpon>frmLoading.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmSettings.resx">
       <DependentUpon>frmSettings.cs</DependentUpon>

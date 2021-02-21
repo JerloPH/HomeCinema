@@ -1,7 +1,7 @@
 ﻿
 namespace HomeCinema
 {
-    partial class frmPopulateMovie
+    partial class frmLoading
     {
         /// <summary>
         /// Required designer variable.

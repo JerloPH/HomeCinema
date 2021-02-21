@@ -798,7 +798,7 @@ namespace HomeCinema
             GlobalVars.Log(calledFrom, "Search for Supported Media files in Folder..");
 
             // Declare vars
-            frmPopulateMovie form = new frmPopulateMovie("Getting media files from directories..", "Loading");
+            frmLoading form = new frmLoading("Getting media files from directories..", "Loading");
             var DirListFrom = new List<string>();
             var listAlreadyinDB = new List<string>();
             var listToAdd = new List<string>();
@@ -935,7 +935,7 @@ namespace HomeCinema
             // Clear previous list
             lvSearchResult.Items.Clear();
             // Populate movie listview with new entries, from another form thread
-            frmPopulateMovie form = new frmPopulateMovie("Please wait while loading", "Loading");
+            frmLoading form = new frmLoading("Please wait while loading", "Loading");
             DataTable dt, dtGetFile;
             string qry = SEARCH_QUERY;
             string cols = LVMovieItemsColumns;

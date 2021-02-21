@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace HomeCinema
 {
-    public partial class frmPopulateMovie : Form
+    public partial class frmLoading : Form
     {
         public string Caption
         {
@@ -35,7 +35,7 @@ namespace HomeCinema
         }
         public bool isCanceled { get; set; }
         public int TopPosition { get; set; }
-        public frmPopulateMovie(string message, string caption)
+        public frmLoading(string message, string caption)
         {
             InitializeComponent();
             Message = message;
