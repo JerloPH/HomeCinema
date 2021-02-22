@@ -47,6 +47,7 @@ namespace HomeCinema
         // Fixed vars
         Form PARENT = null;
 
+        #region Initialize class
         public frmMovieInfo(Form parent,string ID, string text, string formName, ListViewItem lvitem)
         {
             InitializeComponent();
@@ -131,8 +132,49 @@ namespace HomeCinema
             // Set main focus at startup
             txtName.Focus();
         }
+        #endregion
+        // Thread-safe functions
+        #region Thread-safe functions
+        #endregion
         // ############################################################################## Functions
         #region Functions
+        // ########################## FOR CATEGORY
+        // Get Category INT
+        private string GetCategory()
+        {
+            if (cbCategory.SelectedIndex < 1)
+            {
+                return "0";
+            }
+            return cbCategory.SelectedIndex.ToString();
+        }
+        // ########################## FOR GENRE
+        // Return genre [string], from checked checkboxes
+        public string GetGenre()
+        {
+            FlowLayoutPanel f = GetFlowPanel("fPanelGenre", "tabPage2");
+            return GetChecked(f);
+        }
+        // Check [x] the Genre for the movie
+        public void LoadGenre(string gen)
+        {
+            FlowLayoutPanel f = GetFlowPanel("fPanelGenre", "tabPage2");
+            ActivateCheckbox(f, gen);
+        }
+        // ########################## FOR COUNTRY
+        // Return country, from checkboxes
+        public string GetCountry()
+        {
+            FlowLayoutPanel f = GetFlowPanel("fPanelCountry", "tabPage2");
+            return GetChecked(f);
+        }
+        // Check [x] the Country for the movie
+        public void LoadCountry(string country)
+        {
+            FlowLayoutPanel f = GetFlowPanel("fPanelCountry", "tabPage2");
+            ActivateCheckbox(f, country);
+        }
+        // ########################## OTHER FUNCTIONS
         // REFRESH INFORMATION
         public void LoadInformation(string ID, string text)
         {
@@ -257,43 +299,6 @@ namespace HomeCinema
                 }
             }
         }
-        // ########################## FOR CATEGORY
-        // Get Category INT
-        private string GetCategory()
-        {
-            if (cbCategory.SelectedIndex < 1)
-            {
-                return "0";
-            }
-            return cbCategory.SelectedIndex.ToString();
-        }
-        // ########################## FOR GENRE
-        // Return genre [string], from checked checkboxes
-        public string GetGenre()
-        {
-            FlowLayoutPanel f = GetFlowPanel("fPanelGenre", "tabPage2");
-            return GetChecked(f);
-        }
-        // Check [x] the Genre for the movie
-        public void LoadGenre(string gen)
-        {
-            FlowLayoutPanel f = GetFlowPanel("fPanelGenre", "tabPage2");
-            ActivateCheckbox(f, gen);
-        }
-        // ########################## FOR COUNTRY
-        // Return country, from checkboxes
-        public string GetCountry()
-        {
-            FlowLayoutPanel f = GetFlowPanel("fPanelCountry", "tabPage2");
-            return GetChecked(f);
-        }
-        // Check [x] the Country for the movie
-        public void LoadCountry(string country)
-        {
-            FlowLayoutPanel f = GetFlowPanel("fPanelCountry", "tabPage2");
-            ActivateCheckbox(f, country);
-        }
-        // ########################## Other Functions
         // GET FlowLayoutPanel inside [tabInfo]
         public FlowLayoutPanel GetFlowPanel(string panelName, string TABpage)
         {
@@ -322,33 +327,32 @@ namespace HomeCinema
             }
             return null;
         }
-        // Load an Image from file and set to picBox Image
-        private bool LoadImageFromFile(string selectedFilename, string actFrom)
+        // Set Image to picBox Image
+        public static bool SetPicboxImgFromFile(PictureBox picbox, string selectedFilename, string actFrom)
         {
-            // Try load image from File
-            string errFrom = $"frmMovieInfo ({Name})-{actFrom}-(Image.FromFile Error)";
+            string errFrom = $"frmMovieInfo (SetPicboxImg)-{actFrom}";
             if (File.Exists(selectedFilename))
             {
                 try
                 {
-                    // Change picBox image
+                    // Dispose previous tempImage
                     if (tempImage != null)
                     {
                         tempImage.Dispose();
                     }
-                    // Dispose previous image
-                    if (picBox.Image != null)
-                    {
-                        picBox.Image.Dispose();
-                    }
                     tempImage = Image.FromFile(selectedFilename);
-                    picBox.Image = tempImage;
-                    picBox.Tag = selectedFilename;
-                    picBox.Refresh();
+                    // Dispose previous image
+                    if (picbox.Image != null)
+                    {
+                        picbox.Image.Dispose();
+                    }
+                    picbox.Image = tempImage;
+                    picbox.Tag = selectedFilename;
+                    picbox.Refresh();
                     GlobalVars.ShowInfo("Changed the image cover!");
                     return true;
-
-                } catch (Exception exc)
+                }
+                catch (Exception exc)
                 {
                     GlobalVars.ShowError(errFrom, exc);
                     return false;
@@ -610,11 +614,10 @@ namespace HomeCinema
         {
             // Get FileName on openDialog
             string selectedFilename = GlobalVars.GetAFile("Select Image file for Cover", "JPG Files (*.jpg)|*.jpg", GlobalVars.PATH_GETCOVER);
-
             if (selectedFilename != "")
             {
                 // Load image from file
-                LoadImageFromFile(selectedFilename, "btnChangeCover_Click");
+                SetPicboxImgFromFile(picBox, selectedFilename, "btnChangeCover_Click");
                 GlobalVars.PATH_GETCOVER = Path.GetDirectoryName(selectedFilename);
             }
         }
@@ -656,9 +659,20 @@ namespace HomeCinema
         // Fetch data from TMDB, using IMDB ID
         private void btnFetchData_Click(object sender, EventArgs e)
         {
+            // Declare vars
+            frmLoading form = new frmLoading("Fetching info from TMDB..", "Loading");
+            var list = new List<string>();
+
             string errFrom = "frmMovieInfo-btnFetchData_Click";
             string IMDB_ID = txtIMDB.Text;
             string mediatype = "movie";
+            
+            string jsonMainFullPath; // json file full path
+            string r1, r2, r3, r4, r5, r6, r7, r8, r9; // List Info from TMDB
+            string linkPoster, YT_ID;
+
+            bool coverDownloaded = false;
+
             // Exit if IMDB id is invalid
             if (String.IsNullOrWhiteSpace(IMDB_ID) || IMDB_ID=="0" || (IMDB_ID.StartsWith("tt")==false))
             {
@@ -674,26 +688,30 @@ namespace HomeCinema
             }
 
             // Get List of values from TMDB
-            List<string> list = GlobalVars.GetMovieInfoByImdb(IMDB_ID, mediatype);
+            form.BackgroundWorker.DoWork += (sender1, e1) =>
+            {
+                list = GlobalVars.GetMovieInfoByImdb(IMDB_ID, mediatype);
+            };
+            form.ShowDialog(this);
 
             // Set the values to textboxes
-            string YT_ID = list[1];
+            YT_ID = list[1];
             if ((String.IsNullOrWhiteSpace(txtPathTrailer.Text)) && (string.IsNullOrWhiteSpace(YT_ID) ==false))
             {
                 txtPathTrailer.Text = GlobalVars.LINK_YT + YT_ID;
             }
 
             // Get properties and information of movies
-            string jsonMainFullPath = list[0]; // json file full path
-            string r1 = list[2]; // title
-            string r2 = list[3]; // orig title
-            string r3 = list[4]; // overview / summary
-            string r4 = list[5]; // release date
-            string r5 = list[6]; // poster_path
-            string r6 = list[7]; // Artist
-            string r7 = list[8]; // Director
-            string r8 = list[9]; // Producer
-            string r9 = list[10]; // country
+            jsonMainFullPath = list[0]; // json file full path
+            r1 = list[2]; // title
+            r2 = list[3]; // orig title
+            r3 = list[4]; // overview / summary
+            r4 = list[5]; // release date
+            r5 = list[6]; // poster_path
+            r6 = list[7]; // Artist
+            r7 = list[8]; // Director
+            r8 = list[9]; // Producer
+            r9 = list[10]; // country
 
             // Set to textboxes
             if (String.IsNullOrWhiteSpace(r1)==false)
@@ -724,17 +742,24 @@ namespace HomeCinema
             LoadCountry(r9);
 
             // Ask to change cover - poster image
-            string linkPoster = r5;
+            linkPoster = r5;
             if (String.IsNullOrWhiteSpace(r5) == false)
             {
-                bool ChangeCover = GlobalVars.ShowYesNo("Do you want to change poster image?");
-                if (ChangeCover)
+                if (GlobalVars.ShowYesNo("Do you want to change poster image?"))
                 {
-                    // Parse image link from JSON and download it
-                    if (GlobalVars.DownloadCoverFromTMDB(MOVIE_ID, linkPoster, errFrom))
+                    // Show form loading
+                    form.Message = "Downloading cover from TMDB..";
+                    form.BackgroundWorker.DoWork += (sender1, e1) =>
+                    {
+                        // Parse image link from JSON and download it
+                        coverDownloaded = GlobalVars.DownloadCoverFromTMDB(MOVIE_ID, linkPoster, errFrom);
+                    };
+                    form.ShowDialog(this);
+                    // Update Image in PictureBox
+                    if (coverDownloaded)
                     {
                         string moviePosterDL = GlobalVars.PATH_TEMP + MOVIE_ID + ".jpg";
-                        if (LoadImageFromFile(moviePosterDL, errFrom) == false)
+                        if (SetPicboxImgFromFile(picBox, moviePosterDL, errFrom) == false)
                         {
                             // Show a Warning
                             GlobalVars.ShowWarning("Image file cannot be downloaded at the moment!\n Try again later...");
