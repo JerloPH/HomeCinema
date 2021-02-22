@@ -773,6 +773,9 @@ namespace HomeCinema
         // Get IMDB ID using Movie Name
         private void btnGetImdb_Click(object sender, EventArgs e)
         {
+            // Declare vars
+            frmLoading form = new frmLoading("Searching movie..", "Loading");
+            string mediatype, getIMDB = "";
             //string errFrom = "frmMovieInfo-btnGetImdb_Click";
             // Check if txtName is valid
             if (String.IsNullOrWhiteSpace(txtName.Text))
@@ -783,8 +786,12 @@ namespace HomeCinema
             }
 
             // Get imdb id and set it to textbox
-            string mediatype = (cbCategory.Text.ToLower().Contains("series") ? "tv" : "movie");
-            string getIMDB = GlobalVars.GetIMDBId(txtName.Text, MOVIE_ID, mediatype);
+            mediatype = (cbCategory.Text.ToLower().Contains("series") ? "tv" : "movie");
+            form.BackgroundWorker.DoWork += (sender1, e1) =>
+            {
+                getIMDB = GlobalVars.GetIMDBId(txtName.Text, MOVIE_ID, mediatype);
+            };
+            form.ShowDialog(this);
             if (String.IsNullOrWhiteSpace(getIMDB) == false)
             {
                 txtIMDB.Text = getIMDB;
