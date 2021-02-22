@@ -1,5 +1,6 @@
 # Commits not released
 
+# Released on v0.3
 ### What's New?
 - REV: Remove entries that doesn't exist on the disk, during startup. [fca3696]
 - REV: New Loading form. [PR # 2](https://github.com/JerloPH/HomeCinema/pull/2)

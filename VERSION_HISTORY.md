@@ -1,5 +1,28 @@
 # HomeCinema - Project History:
 
+## v0.3.0.0 ***build 28 - (22 February 2021 PHT)***
+### New Loading Form, and Improvements
+
+**[Windows 64-bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.3.0.0/HomeCinema-Windows.zip "HomeCinema-Windows.zip")**
+
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.3.0.0/total.svg)]() <br>
+
+### What's New?
+- REV: New Loading form.
+- REV: Show Loading form on Fetching data from TMDB, and Saving Metadata.
+- FIX: Playing media file for invalid movie ID.
+- FIX: Cannot view Movie Info for Invalid ID.
+
+### 'Under the Hood' changes
+- REV: Separate string array builder for directories.
+- REV: Delegate background tasks to loading form.
+- MINOR: Added pre-build event to delete **'lib'** subfolder.
+- MINOR: Append new entries to **'MovieResult_DoneInsert.Log'**, instead of replacing file every form load.
+- MINOR: Organized source files.
+- Code cleanups, and various refactors.
+- Removed un-used lines of code.
+****
+
 ## v0.2.0.0 ***build 27 - (30 January 2021 PHT)***
 ### Breaking Changes!
 
