@@ -22,6 +22,6 @@
 4. Use tag: **v.x.x.x.x** , where **x** is the number version, *see [/HomeCinema/Properties/AssemblyInfo.cs](../HomeCinema/Properties/AssemblyInfo.cs)*.
 5. Use Title from the [/VERSION_HISTORY.md](../VERSION_HISTORY.md) file.
 6. Use Release details from [/VERSION_HISTORY.md](../VERSION_HISTORY.md).
-7. Rename the compressed **zipped** file: **HomeCinema-Windows_[tag].zip** , where **[tag]** is the *'Tag'* in **Step 4**.
+7. Rename the compressed **zipped** file: **HomeCinema-Windows.zip**.
 8. Attach the **zipped file** to the Release draft.
 9. Publish release.
