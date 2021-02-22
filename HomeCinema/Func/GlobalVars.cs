@@ -1414,25 +1414,29 @@ namespace HomeCinema.Global
         }
         public static bool SaveMetadata(string filename, List<string> data)
         {
-            ShowWarning("Saving metadata...\nThis will take a minute to finish!\nWait for message of 'Done'!");
-            var file = ShellFile.FromFilePath(filename);
+            frmLoading form = new frmLoading("Please wait while saving..", "Saving Metadata");
 
-            try { file.Properties.System.Title.Value = data[0]; }
-            catch { }
+            form.BackgroundWorker.DoWork += (sender1, e1) =>
+            {
+                var file = ShellFile.FromFilePath(filename);
 
-            try { file.Properties.System.Media.Year.Value = Convert.ToUInt16(data[1]); }
-            catch { }
+                try { file.Properties.System.Title.Value = data[0]; }
+                catch { }
 
-            try { file.Properties.System.Music.Genre.Value = data[2].Replace(", ", ",").Split(','); }
-            catch { }
+                try { file.Properties.System.Media.Year.Value = Convert.ToUInt16(data[1]); }
+                catch { }
 
-            try { file.Properties.System.Video.Director.Value = data[3].Replace(", ", ",").Split(','); }
-            catch { }
+                try { file.Properties.System.Music.Genre.Value = data[2].Replace(", ", ",").Split(','); }
+                catch { }
 
-            try { file.Properties.System.Media.Producer.Value = data[4].Replace(", ", ",").Split(','); }
-            catch { }
+                try { file.Properties.System.Video.Director.Value = data[3].Replace(", ", ",").Split(','); }
+                catch { }
 
-            ShowInfo("Saved metadata to file!");
+                try { file.Properties.System.Media.Producer.Value = data[4].Replace(", ", ",").Split(','); }
+                catch { }
+
+            };
+            form.ShowDialog();
             return true;
         }
         // ######################################################################## END - Add code above
