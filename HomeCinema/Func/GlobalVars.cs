@@ -78,7 +78,6 @@ namespace HomeCinema.Global
         public static string FILE_SERIESLOC = PATH_DATA + "serieslocation.hc_data"; // For series, root folder.
 
         // Image files loaded from disk
-        public static Image IMG_LOADING = Image.FromFile(PATH_RES + "Loading.gif"); // used in "Pls wait Loading" form
         public static Icon HOMECINEMA_ICON = new Icon(FILE_ICON); // Icon as a resource, used by forms
 
         // Database Vars
