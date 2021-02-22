@@ -3,6 +3,8 @@
 ### What's New?
 - REV: Remove entries that doesn't exist on the disk, during startup. [fca3696]
 - REV: New Loading form. [PR # 2](https://github.com/JerloPH/HomeCinema/pull/2)
+- REV: Show Loading form on Fetching data from TMDB. [251fbcd], [d9ca20d]
+- REV: Show Loading form on Saving Metadata. [7fdcd7f]
 - FIX: Playing media file for invalid movie ID. [1e58380]
 - FIX: Cannot view Movie Info for Invalid ID. [81a3526]
 
@@ -26,3 +28,4 @@
 - MINOR: Change **IF** statement to one line. [f86298a]
 - MINOR: **IF statement** to one line. [e702638]
 - MINOR: Removed un-used variable. [a413e3f], [c6a0464]
+- MINOR: Removed un-used resource. [b0da3a6]
