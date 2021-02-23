@@ -1,4 +1,21 @@
 # Commits not released
+## All changes
+**See** [**PR # 3**](https://github.com/JerloPH/HomeCinema/pull/3) **to see all commit ids**. <br>
+
+### What's New?
+- REV: Add loading form to **[Clean]** button.
+- REV: Search for Trailers in all media.
+- FIX: **'Series Directories'** not showing up on ListView.
+- FIX: Cannot perform **[Clean]** when cover is changed recently.
+- GUI: Changed Font of Items.
+
+### 'Under the Hood' changes
+- REV: Refactor query for Searching.
+- REV: Refactor ListView Item details.
+- REV: Refactor **frmMovie** Initialization.
+- REV: Increase TimeOut for **CheckConnection()**.
+- REV: Cast all API queries of TMDB to JSON files.
+
 
 # Released on v0.3
 ### What's New?
