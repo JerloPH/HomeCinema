@@ -1291,28 +1291,24 @@ namespace HomeCinema
         private void btnClean_Click(object sender, EventArgs e)
         {
             string errFrom = "frmMain-btnClean_Click";
-            string msg = "Cleanup Log:";
-            if (GlobalVars.DeleteFilesExt(GlobalVars.PATH_TEMP, ".jpg", errFrom))
+            frmLoading form = new frmLoading("Cleaning App..", "Loading");
+            form.BackgroundWorker.DoWork += (sender1, e1) =>
             {
-                msg += "\nCleaned JPG Images!";
-            }
-            if (GlobalVars.DeleteFilesExt(GlobalVars.PATH_TEMP, ".json", errFrom))
-            {
-                msg += "\nCleaned JSON Files!";
-            }
-            GlobalVars.TryDelete(GlobalVars.FILE_LOG_APP, errFrom);
-            GlobalVars.TryDelete(GlobalVars.FILE_LOG_ERROR, errFrom);
-            GlobalVars.TryDelete(GlobalVars.DB_DBLOGPATH, errFrom);
-            if (GlobalVars.TryDelete(GlobalVars.PATH_TEMP + "_JSONLog.log", errFrom))
-            {
-                msg += "\nCleaned Log Files!";
-            }
-            if (GlobalVars.TryDelete(GlobalVars.PATH_TEMP + "version", errFrom))
-            {
-                msg += "\nCleaned other files!";
-            }
-            msg += "\nDone!";
-            GlobalVars.ShowInfo(msg);
+                form.Message = "Removing temporary image files..";
+                GlobalVars.DeleteFilesExt(GlobalVars.PATH_TEMP, ".jpg", errFrom);
+                form.Message = "Removing temporary json files..";
+                GlobalVars.DeleteFilesExt(GlobalVars.PATH_TEMP, ".json", errFrom);
+                form.Message = "Removing old logs..";
+                GlobalVars.TryDelete(GlobalVars.FILE_LOG_APP, errFrom);
+                GlobalVars.TryDelete(GlobalVars.FILE_LOG_ERROR, errFrom);
+                GlobalVars.TryDelete(GlobalVars.DB_DBLOGPATH, errFrom);
+                GlobalVars.TryDelete(GlobalVars.PATH_TEMP + "_JSONLog.log", errFrom);
+                form.Message = "Removing old version file..";
+                GlobalVars.TryDelete(GlobalVars.PATH_TEMP + "version", errFrom);
+                form.Message = "Done!";
+            };
+            form.ShowDialog();
+            GlobalVars.ShowInfo("Cleanup Done!");
         }
         // When ENTER Key is pressed on ListView
         private void lvSearchResult_KeyDown(object sender, KeyEventArgs e)
