@@ -87,24 +87,44 @@ namespace HomeCinema
             btnPlay.Focus();
         }
         // ############################################################################## Functions
+        #region Functions
         public void LoadInformation(string ID)
         {
             // Set textbox values from Database
-            string cols = "";
             string errFrom = "frmMovie-LoadInformation";
+            string qry1, qry2, Imagefile;
+            string cols1 = "", cols2 = "";
+            var dtFile = new DataTable();
+            var dtInfo = new DataTable();
+            var tp = new ToolTip();
+            Bitmap thumb;
+            frmLoading form = new frmLoading("Opening media info..", "Loading");
 
-            // get filepath FROM DB
-            foreach (string s in GlobalVars.DB_TABLE_FILEPATH)
+            form.BackgroundWorker.DoWork += (sender1, e1) =>
             {
-                cols += "[" + s + "],";
-            }
-            cols = cols.TrimEnd(',');
-            // Build query for FilePath
-            string qry = $"SELECT {cols} FROM {GlobalVars.DB_TNAME_FILEPATH} WHERE Id={ID} LIMIT 1;";
-            GlobalVars.Log($"{errFrom} Table({GlobalVars.DB_TNAME_FILEPATH})", $"Query src: {qry}");
-            // Execute query
-            DataTable dtFile = conn.DbQuery(qry, cols, errFrom);
-            // Get result in DT
+                // Build columns for query
+                foreach (string s in GlobalVars.DB_TABLE_FILEPATH)
+                {
+                    cols1 += "[" + s + "],";
+                }
+                cols1 = cols1.TrimEnd(',');
+                foreach (string c in GlobalVars.DB_TABLE_INFO)
+                {
+                    cols2 += "[" + c + "],";
+                }
+                cols2 = cols2.TrimEnd(',');
+
+                // Build query for FilePath, and Movie Info
+                qry1 = $"SELECT {cols1} FROM {GlobalVars.DB_TNAME_FILEPATH} WHERE Id={ID} LIMIT 1;";
+                qry2 = $"SELECT {cols2} FROM {GlobalVars.DB_TNAME_INFO} WHERE Id={ID} LIMIT 1;";
+
+                // Execute queries
+                dtFile = conn.DbQuery(qry1, cols1, errFrom);
+                dtInfo = conn.DbQuery(qry2, cols2, errFrom);
+            };
+            form.ShowDialog(this);
+
+            // Get ResultSet for FilePaths
             foreach (DataRow row in dtFile.Rows)
             {
                 MOVIE_FILEPATH = row[GlobalVars.DB_TABLE_FILEPATH[1]].ToString();
@@ -113,25 +133,7 @@ namespace HomeCinema
             }
             dtFile.Clear();
             dtFile.Dispose();
-
-            // Get filesize, Create ToolTip for Movie Title
-            lblName.Tag = "File Size: " + GlobalVars.GetFileSize(MOVIE_FILEPATH);
-            ToolTip tp = new ToolTip();
-            tp.SetToolTip(lblName, lblName.Tag.ToString());
-
-            // get Info FROM DB
-            cols = "";
-            foreach (string c in GlobalVars.DB_TABLE_INFO)
-            {
-                cols += "[" + c + "],";
-            }
-            cols = cols.TrimEnd(',');
-            // Build query for INFO
-            qry = $"SELECT {cols} FROM {GlobalVars.DB_TNAME_INFO} WHERE Id={ID} LIMIT 1;";
-            GlobalVars.Log($"{errFrom} (Info)", $"Query src: {qry}");
-            // Exxecute query
-            DataTable dtInfo = conn.DbQuery(qry, cols, errFrom);
-            // Get result in DT
+            // Get ResultSet for Movie Info
             foreach (DataRow row in dtInfo.Rows)
             {
                 var r0 = row[0]; // ID
@@ -172,6 +174,10 @@ namespace HomeCinema
             dtInfo.Clear();
             dtInfo.Dispose();
 
+            // Get filesize, Create ToolTip for Movie Title
+            lblName.Tag = "File Size: " + GlobalVars.GetFileSize(MOVIE_FILEPATH);
+            tp.SetToolTip(lblName, lblName.Tag.ToString());
+
             // Change cover image, if error occurs, Dispose form
             MOVIE_COVER = GlobalVars.ImgGetImageFromList(MOVIE_ID);
             
@@ -184,17 +190,17 @@ namespace HomeCinema
             picBox.Refresh();
 
             // Set FORM ICON
-            Bitmap thumb = (Bitmap)MOVIE_COVER.GetThumbnailImage(64, 64, null, IntPtr.Zero);
+            thumb = (Bitmap)MOVIE_COVER.GetThumbnailImage(64, 64, null, IntPtr.Zero);
             Icon = Icon.FromHandle(thumb.GetHicon());
             thumb.Dispose();
 
             // Set MOVIE_COVER_FULL | Image from file
-            string Imagefile = GlobalVars.ImgFullPathWithDefault(lblID.Text);
+            Imagefile = GlobalVars.ImgFullPathWithDefault(lblID.Text);
             try
             {
                 MOVIE_COVER_FULL = Image.FromFile(Imagefile);
-
-            } catch (Exception exc)
+            }
+            catch (Exception exc)
             {
                 // Error log
                 GlobalVars.ShowError($"{errFrom}\n\tFile:\n\t{ Imagefile }", exc, false);
@@ -361,6 +367,7 @@ namespace HomeCinema
             }
             webTrailer.DocumentText = "<html><body><h1>Unknown Error!</h1></body></html>";
         }
+        #endregion
         // ############################################################################## Form Control events
         private void frmMovie_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -434,10 +441,9 @@ namespace HomeCinema
                 temp.Controls.Add(pic);
                 temp.ResumeLayout();
                 temp.Show(this);
-
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                // Log Error
                 GlobalVars.ShowError($"frmMovie({Name.ToString()})-picBox_Click", ex);
             }
         }
@@ -481,11 +487,10 @@ namespace HomeCinema
                 try
                 {
                     Process.Start(GlobalVars.LINK_IMDB + titleCode);
-
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
-                    // Log Error
-                    GlobalVars.ShowError($"frmMovie({Name.ToString()})-lblIMDB_Click", ex);
+                    GlobalVars.ShowError($"frmMovie({Name})-lblIMDB_Click", ex);
                 }
             }
         }

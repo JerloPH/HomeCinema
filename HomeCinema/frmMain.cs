@@ -43,8 +43,6 @@ namespace HomeCinema
         string[] FOLDERTOSEARCH = { "" };
         // Objects
         ListViewColumnSorter lvSorter = new ListViewColumnSorter();
-        BackgroundWorker bgWorkInsertMovie = new BackgroundWorker();
-        //BackgroundWorker bgSearchInDB = new BackgroundWorker();
 
         ToolStripItem toolMenuView, toolMenuEdit, toolMenuFileExplorer;
         #region frmMain
@@ -110,10 +108,6 @@ namespace HomeCinema
             lvSearchResult.AllowDrop = false;
             lvSearchResult.AllowColumnReorder = false;
             lvSearchResult.MultiSelect = false;
-            foreach (ListViewItem lv in lvSearchResult.Items)
-            {
-                lv.Font = GlobalVars.TILE_FONT;
-            }
             lvSearchResult.View = View.Tile;
 
             // Populate Context Menu for ListView item Rightclick
@@ -262,7 +256,8 @@ namespace HomeCinema
                         rTitle = list[2];
                         rOrigTitle = list[3];
                         rSummary = list[4];
-                        rYear = list[5].Substring(0, 4);
+                        try { rYear = list[5].Substring(0, 4); }
+                        catch { rYear = ""; }
                         rPosterLink = list[6];
                         rArtist = list[7];
                         rDirector = list[8];
@@ -313,7 +308,7 @@ namespace HomeCinema
                 row[14] = rSummary; // summary
                 row[15] = filePath; // filepath
                 row[16] = GetSubtitleFile(filePath); // file sub
-                row[17] = (String.IsNullOrWhiteSpace(rTrailer) ? "" : GlobalVars.LINK_YT + rTrailer); // trailer
+                row[17] = (!String.IsNullOrWhiteSpace(rTrailer)) ? GlobalVars.LINK_YT + rTrailer : ""; // trailer
                 dt.Rows.Add(row);
                 count += 1; // add to count
                 logInsert += $"{filePath}\n";
@@ -379,6 +374,7 @@ namespace HomeCinema
             else
             {
                 lv.Items.Add(item);
+                //GlobalVars.Log("frmMain-AddItem()", "Added: " + item.Text);
             }
         }
         public static void AfterPopulatingMovieLV(ListView lv, int count)
@@ -612,15 +608,7 @@ namespace HomeCinema
         private void SortItemsInListView(int toggle)
         {
             // Change Sort Order
-            SortOrder Sorting = SortOrder.None;
-            if (cbSortOrder.SelectedIndex > 0)
-            {
-                Sorting = SortOrder.Descending;
-            }
-            else
-            {
-                Sorting = SortOrder.Ascending;
-            }
+            SortOrder Sorting = (cbSortOrder.SelectedIndex > 0) ? SortOrder.Descending : SortOrder.Ascending;
 
             // Peform sort
             switch (toggle)
@@ -671,6 +659,7 @@ namespace HomeCinema
         public void LVItemSetDetails(ListViewItem temp, string[] InfoString)
         {
             // Unparse InfoString
+            int MOVIEID;
             string MovieId = InfoString[0]; // ID
             string resName = InfoString[1]; // name
             string resNameEp = InfoString[2]; // name_ep
@@ -680,12 +669,12 @@ namespace HomeCinema
             string resYear = InfoString[6]; // year
             string resSummary = InfoString[7]; // summary
             string resGenre = InfoString[8]; // genre
+            // Convert MovieId string to int
+            try { MOVIEID = Convert.ToInt32(MovieId); }
+            catch { MOVIEID = 0; }
 
-            try
+            if (MOVIEID > 0)
             {
-                // Convert MovieId string to int
-                int MOVIEID = Convert.ToInt32(MovieId);
-
                 // Set default text for item
                 temp.Text = resName;
 
@@ -702,10 +691,7 @@ namespace HomeCinema
                 else
                 {
                     // Set Series Name
-                    if (String.IsNullOrWhiteSpace(resNameSer))
-                    {
-                        temp.Text = resNameSer; //Set Series Name
-                    }
+                    temp.Text = (String.IsNullOrWhiteSpace(resNameSer)) ? resNameSer : temp.Text;
                     temp.SubItems.Add(resNameEp); // Episode Name
                     temp.SubItems.Add("S" + GlobalVars.ValidateNum(resSeason) + " E" + GlobalVars.ValidateNum(resEp));
                 }
@@ -721,10 +707,8 @@ namespace HomeCinema
                 temp.Name = Convert.ToString(MOVIEID);
                 temp.Tag = GlobalVars.ValidateZero(MOVIEID);
 
-            } catch (Exception ex)
-            {
-                // Log error
-                GlobalVars.ShowError($"frmMain-LVItemSetDetails", ex);
+                // Set font
+                temp.Font = GlobalVars.TILE_FONT;
             }
         }
         // Populate combobox cbCountry, from file
@@ -940,6 +924,7 @@ namespace HomeCinema
             string qry = SEARCH_QUERY;
             string cols = LVMovieItemsColumns;
             string errFrom = "frmMain-PopulateMovieBG()";
+            string fileNamePath;
             int progress = 0;
             int progressMax = 0;
 
@@ -982,10 +967,24 @@ namespace HomeCinema
                             if (dtGetFile.Rows.Count > 0)
                             {
                                 DataRow rFile = dtGetFile.Rows[0];
-                                if (!File.Exists(rFile[1].ToString()))
+                                fileNamePath = rFile[1].ToString();
+                                FileAttributes attr = File.GetAttributes(fileNamePath);
+                                if (attr.HasFlag(FileAttributes.Directory))
                                 {
-                                    dtGetFile.Clear();
-                                    continue;
+                                    // Non existing directory, skip it
+                                    if (!Directory.Exists(fileNamePath))
+                                    {
+                                        dtGetFile.Clear();
+                                        continue;
+                                    }
+                                }
+                                else
+                                {
+                                    if (!File.Exists(fileNamePath))
+                                    {
+                                        dtGetFile.Clear();
+                                        continue;
+                                    }
                                 }
                             }
 
@@ -1141,14 +1140,7 @@ namespace HomeCinema
         
         private void btnChangeView_Click(object sender, EventArgs e)
         {
-            if (lvSearchResult.View == View.Tile)
-            {
-                lvSearchResult.View = View.LargeIcon;
-            }
-            else
-            {
-                lvSearchResult.View = View.Tile;
-            }
+            lvSearchResult.View = (lvSearchResult.View == View.Tile) ? View.LargeIcon : View.Tile;
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -1187,11 +1179,8 @@ namespace HomeCinema
                     }
                 }
                 // Genre
-                if (cbGenre.SelectedIndex > 0)
-                {
-                    qry += GlobalVars.QryWhere(qry);
-                    qry += $"[genre] LIKE '%{cbGenre.Text}%'";
-                }
+                qry += (cbGenre.SelectedIndex > 0) ? GlobalVars.QryWhere(qry) + $"[genre] LIKE '%{cbGenre.Text}%'" : "";
+
                 // Category
                 if (cbCategory.SelectedIndex > 0)
                 {
@@ -1200,71 +1189,47 @@ namespace HomeCinema
                     // Search for all
                     if ((index < 1) || (index > 2))
                     {
-                        if (index < 1)
-                        {
-                            index = 0;
-                        }
                         qry += $"[category]={index}";
                     }
                     else
                     {
-                        // Search for All type of Movies
-                        if (index == 1)
-                        {
-                            qry += "([category]=1 OR [category]=3 OR [category]=5)";
-                        }
-                        // Search for All types of Series
-                        else
-                        {
-                            qry += "([category]=2 OR [category]=4 OR [category]=6)";
-                        }
+                        // Search for All type of Movies, if index == 1. Otherwise, Search for All types of Series
+                        qry += (index == 1) ? "([category]=1 OR [category]=3 OR [category]=5)" : "([category]=2 OR [category]=4 OR [category]=6)";
                     }
                 }
                 // Studio
                 if (String.IsNullOrWhiteSpace(txtStudio.Text) == false)
                 {
-                    qry += GlobalVars.QryWhere(qry);
-                    qry += $"[studio] LIKE '%{txtStudio.Text}%'";
+                    qry += GlobalVars.QryWhere(qry) + $"[studio] LIKE '%{txtStudio.Text}%'";
                 }
                 // Cast
                 if (String.IsNullOrWhiteSpace(txtCast.Text) == false)
                 {
-                    qry += GlobalVars.QryWhere(qry);
-                    qry += $"[artist] LIKE '%{txtCast.Text}%'";
+                    qry += GlobalVars.QryWhere(qry) + $"[artist] LIKE '%{txtCast.Text}%'";
                 }
                 // Director
                 if (String.IsNullOrWhiteSpace(txtDirector.Text) == false)
                 {
-                    qry += GlobalVars.QryWhere(qry);
-                    qry += $"[director] LIKE '%{txtDirector.Text}%'";
+                    qry += GlobalVars.QryWhere(qry) + $"[director] LIKE '%{txtDirector.Text}%'";
                 }
                 // Country
                 string CountryText = GlobalVars.RemoveLine(cbCountry.SelectedItem.ToString());
                 if ((String.IsNullOrWhiteSpace(CountryText) == false) && cbCountry.SelectedIndex > 0)
                 {
-                    qry += GlobalVars.QryWhere(qry);
-                    qry += $"[country] LIKE '%{CountryText}%'";
+                    qry += GlobalVars.QryWhere(qry) + $"[country] LIKE '%{CountryText}%'";
                 }
 
-                // Remove Previous Filters and focus on IMDB Code
+                // Override filter string build-up and Use IMDB Code
                 if (String.IsNullOrWhiteSpace(txtIMDB.Text) == false)
                 {
-                    qry = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO} WHERE ";
-                    qry += $"[imdb] = '{txtIMDB.Text}'";
+                    qry = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO} WHERE [imdb] = '{txtIMDB.Text}'";
                 }
 
                 // Filter out all animations
-                if (cbHideAnim.CheckState == CheckState.Checked)
-                {
-                    qry += GlobalVars.QryWhere(qry);
-                    qry += " ([category] <= 2)";
-                }
+                qry += (cbHideAnim.CheckState == CheckState.Checked) ? GlobalVars.QryWhere(qry) + " ([category] <= 2)" : "";
 
                 // Append to end
-                if (GlobalVars.SET_ITEMLIMIT > 0)
-                {
-                    qry += $" LIMIT {GlobalVars.SET_ITEMLIMIT};";
-                }
+                qry += (GlobalVars.SET_ITEMLIMIT > 0) ? $" LIMIT {GlobalVars.SET_ITEMLIMIT};" : "";
 
                 // Set query to perform on search
                 SEARCH_QUERY = qry;
@@ -1325,28 +1290,24 @@ namespace HomeCinema
         private void btnClean_Click(object sender, EventArgs e)
         {
             string errFrom = "frmMain-btnClean_Click";
-            string msg = "Cleanup Log:";
-            if (GlobalVars.DeleteFilesExt(GlobalVars.PATH_TEMP, ".jpg", errFrom))
+            frmLoading form = new frmLoading("Cleaning App..", "Loading");
+            form.BackgroundWorker.DoWork += (sender1, e1) =>
             {
-                msg += "\nCleaned JPG Images!";
-            }
-            if (GlobalVars.DeleteFilesExt(GlobalVars.PATH_TEMP, ".json", errFrom))
-            {
-                msg += "\nCleaned JSON Files!";
-            }
-            GlobalVars.TryDelete(GlobalVars.FILE_LOG_APP, errFrom);
-            GlobalVars.TryDelete(GlobalVars.FILE_LOG_ERROR, errFrom);
-            GlobalVars.TryDelete(GlobalVars.DB_DBLOGPATH, errFrom);
-            if (GlobalVars.TryDelete(GlobalVars.PATH_TEMP + "_JSONLog.log", errFrom))
-            {
-                msg += "\nCleaned Log Files!";
-            }
-            if (GlobalVars.TryDelete(GlobalVars.PATH_TEMP + "version", errFrom))
-            {
-                msg += "\nCleaned other files!";
-            }
-            msg += "\nDone!";
-            GlobalVars.ShowInfo(msg);
+                form.Message = "Removing temporary image files..";
+                GlobalVars.DeleteFilesExt(GlobalVars.PATH_TEMP, ".jpg", errFrom);
+                form.Message = "Removing temporary json files..";
+                GlobalVars.DeleteFilesExt(GlobalVars.PATH_TEMP, ".json", errFrom);
+                form.Message = "Removing old logs..";
+                GlobalVars.TryDelete(GlobalVars.FILE_LOG_APP, errFrom);
+                GlobalVars.TryDelete(GlobalVars.FILE_LOG_ERROR, errFrom);
+                GlobalVars.TryDelete(GlobalVars.DB_DBLOGPATH, errFrom);
+                GlobalVars.TryDelete(GlobalVars.PATH_TEMP + "_JSONLog.log", errFrom);
+                form.Message = "Removing old version file..";
+                GlobalVars.TryDelete(GlobalVars.PATH_TEMP + "version", errFrom);
+                form.Message = "Done!";
+            };
+            form.ShowDialog();
+            GlobalVars.ShowInfo("Cleanup Done!");
         }
         // When ENTER Key is pressed on ListView
         private void lvSearchResult_KeyDown(object sender, KeyEventArgs e)

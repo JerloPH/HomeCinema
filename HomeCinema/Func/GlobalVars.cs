@@ -99,7 +99,7 @@ namespace HomeCinema.Global
         public static int IMGTILE_HEIGHT = 128;
         public static int IMG_WIDTH = 192;
         public static int IMG_HEIGHT = 256;
-        public static Font TILE_FONT = new Font("Times New Roman", 9f);
+        public static Font TILE_FONT = new Font("Calibri", 10f);
 
         // String arrays for extensions
         public static List<string> MOVIE_EXTENSIONS = new List<string>();
@@ -135,8 +135,8 @@ namespace HomeCinema.Global
                 {
                     LogFormatted(codefrom, log, w);
                 }
-
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 // Log Error
                 ShowError("GlobalVars-LogDb", ex, false);
@@ -154,8 +154,8 @@ namespace HomeCinema.Global
                 {
                     LogFormatted(codefrom, log, w);
                 }
-
-            } catch { }
+            }
+            catch { }
         }
         public static void Log(string codefrom, string log)
         {
@@ -169,8 +169,8 @@ namespace HomeCinema.Global
                 w.Write($"[{DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss:fff tt")}]: ");
                 w.Write($"'({ codefrom })'\n");
                 w.Write($"{ logMessage }\n");
-
-            } catch { }
+            }
+            catch { }
         }
         public static void LogLine()
         {
@@ -181,8 +181,8 @@ namespace HomeCinema.Global
                 {
                     w.Write("##############################################################################");
                 }
-
-            } catch { }
+            }
+            catch { }
         }
         // LOG Error Message, seperate from main Log
         public static void LogErr(string codefrom, string log)
@@ -196,8 +196,8 @@ namespace HomeCinema.Global
             try
             {
                 MessageBox.Show(new Form { TopMost = true }, msg, caption, mbbtn, mbIcon);
-
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 // Log Error
                 ShowError("GlobalVars-ShowMsg", ex, false);
@@ -228,16 +228,13 @@ namespace HomeCinema.Global
             if (ShowAMsg)
             {
                 ShowMsg($"An error occured!\nError message: {err}\nError File Location:\n{file}", CAPTION_DIALOG, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //Clipboard.SetText(FILE_APPLOG);
-                // Open file using its default "open with"
+                // Open file in explorer
                 try
                 {
-                    //Process.Start(FILE_APPLOG);
                     Process.Start("explorer.exe", @"/select," + $"{ file }" + '"');
-
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
-                    // Dont do anything at this point
                     ShowWarning($"Cannot open folder containing error file!\n{ex.ToString()}");
                 }
             }
@@ -246,14 +243,10 @@ namespace HomeCinema.Global
         {
             try
             {
-                if (MessageBox.Show(msg, CAPTION_DIALOG, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
-                {
-                    return true;
-                }
-
-            } catch (Exception ex)
+                return (MessageBox.Show(msg, CAPTION_DIALOG, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes);
+            }
+            catch (Exception ex)
             {
-                // Log Error
                 ShowError("GlobalVars-ShowYesNo", ex, false);
             }
             return false;
@@ -345,7 +338,6 @@ namespace HomeCinema.Global
                 {
                     ret = r.ReadToEnd();
                 }
-                return ret;
             }
             catch (Exception ex)
             {
@@ -371,9 +363,9 @@ namespace HomeCinema.Global
                     w.Write(toWrite);
                 }
                 return true;
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                // Log Error
                 ShowError("GlobalVars-WriteToFile", ex, false);
             }
             return false;
@@ -401,10 +393,9 @@ namespace HomeCinema.Global
                 // Get the string, joined
                 sw = String.Join(",", sorted.ToArray());
                 return WriteToFile(FilePath, sw);
-
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                // Log Error
                 ShowError("GlobalVars-WriteArray", ex, false);
             }
             return false;
@@ -427,11 +418,9 @@ namespace HomeCinema.Global
             try
             {
                 string x = ReadStringFromFile(fileToread, $"{errFrom} [calledFrom: {calledFrom}]");
-
                 if (!String.IsNullOrWhiteSpace(x))
                 {
-                    string[] tmpCat = x.Split(sep);
-                    return tmpCat;
+                    return x.Split(sep);
                 }
             }
             catch (Exception ex)
@@ -473,7 +462,8 @@ namespace HomeCinema.Global
                     }
                     return ret;
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 ShowError($"{errFrom} [calledFrom: {calledFrom}]", ex);
             }
@@ -483,11 +473,7 @@ namespace HomeCinema.Global
         public static bool QryColNumeric(string colName)
         {
             string s = colName.ToLower();
-            if ((s == "category") || (s == "year") || (s == "season") || (s == "episode"))
-            {
-                return true;
-            }
-            return false;
+            return ((s == "category") || (s == "year") || (s == "season") || (s == "episode"));
         }
         // Build a query, Use WHERE or AND on Filter
         public static string QryWhere(string qry)
@@ -555,25 +541,14 @@ namespace HomeCinema.Global
         public static string ImgGetKey(string MovieID)
         {
             string imgKey = MovieID + ".jpg";
-            if (MOVIE_IMGLIST.Images.ContainsKey(imgKey))
-            {
-                return imgKey;
-            }
-            else
-            {
-                return "0.jpg";
-            }
+            return (MOVIE_IMGLIST.Images.ContainsKey(imgKey)) ? imgKey : "0.jpg";
         }
         // Get Image from IMG LIST
         public static Image ImgGetImageFromList(string MOVIE_ID)
         {
             int key = MOVIE_IMGLIST.Images.IndexOfKey(MOVIE_ID + ".jpg");
-            if (key < 1)
-            {
-                key = 0;
-            }
-            Image img = MOVIE_IMGLIST.Images[key];
-            return img;
+            key = (key < 1) ? 0 : key;
+            return MOVIE_IMGLIST.Images[key];
         }
         // Delete Image from ImageList
         public static bool DeleteImageFromList(string movieID, string logFrom)
@@ -626,12 +601,11 @@ namespace HomeCinema.Global
                 {
                     files.AddRange(DirSearch(d, errFrom));
                 }
-
-            } catch (Exception excpt)
+            }
+            catch (Exception excpt)
             {
                 ShowError(errFrom, excpt, false);
             }
-
             return files;
         }
         // Get All Files on MULTIPLE Directories
@@ -651,12 +625,11 @@ namespace HomeCinema.Global
                         files.AddRange(DirSearch(d, errFrom));
                     }
                 }
-
-            } catch (Exception excpt)
+            }
+            catch (Exception excpt)
             {
                 ShowError(errFrom, excpt, false);
             }
-
             return files;
         }
         // Return List<String> of folder directories, from "seriesloc" File
@@ -683,8 +656,8 @@ namespace HomeCinema.Global
                         }
                     }
                 }
-
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 // Log error
                 ShowError(errFrom, ex, false);
@@ -698,7 +671,6 @@ namespace HomeCinema.Global
             {
                 fbd.Description = caption;
                 DialogResult result = fbd.ShowDialog();
-
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
                     return fbd.SelectedPath;
@@ -737,10 +709,9 @@ namespace HomeCinema.Global
                 {
                     File.Delete(fName);
                     return true;
-
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
-                    // Log Error
                     ShowError($"{errFrom} [calledFrom: {calledFrom}]", ex, false);
                 }
             }
@@ -772,7 +743,6 @@ namespace HomeCinema.Global
         {
             // Log who call this, the form in which the method is invoked from
             Log(LogFrom, "Invoked method (" + MethodName  + ") in  " + LogInvokeFrom);
-
             string LogExceptions = "GlobalVars-CallMethod ";
 
             // Refresh parent form
@@ -786,8 +756,8 @@ namespace HomeCinema.Global
                 {
                     method.Invoke(classObj, Params);
                     return true;
-
-                } catch (Exception tex)
+                }
+                catch (Exception tex)
                 {
                     ShowError(LogExceptions + " (Error)", tex);
                 }
@@ -801,18 +771,17 @@ namespace HomeCinema.Global
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
-                request.Timeout = 2000;
+                request.Timeout = 3000;
                 request.Credentials = CredentialCache.DefaultNetworkCredentials;
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     ret = true;
                 }
                 response.Dispose();
                 return ret;
-
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 ShowError("(GlobalVars-CheckConnection)", ex, false);
                 return false;
@@ -839,15 +808,15 @@ namespace HomeCinema.Global
                         {
                             HttpStatusCode status = ((HttpWebResponse)wex.Response).StatusCode;
                             return Convert.ToInt32(status);
-
-                        } catch (Exception exw)
+                        }
+                        catch (Exception exw)
                         {
                             // Log Error and Exit
                             ShowError(errFrom, exw, showAMsg);
                             return 404;
                         }
-
-                    } catch (Exception ex)
+                    }
+                    catch (Exception ex)
                     {
                         ShowError(errFrom, ex, showAMsg);
                     }
@@ -882,13 +851,11 @@ namespace HomeCinema.Global
         public static bool DownloadAndReplace(string filePath, string urlFrom, string calledFrom, bool showAMsg = false)
         {
             string errFrom = $"GlobalVars-DownloadAndReplace [calledFrom: {calledFrom}]";
-
             // Delete previous file
             if (File.Exists(filePath))
             {
                 TryDelete(filePath, errFrom);
             }
-            
             return DownloadLoop(filePath, urlFrom, errFrom, showAMsg);
         }
         // Read JSON from file and un-parse a specific string from it
@@ -928,8 +895,8 @@ namespace HomeCinema.Global
                         WriteAppend(PATH_TEMP + "_JSONLog.log", debug);
                         return ret;
                     }
-
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     // Log Error
                     ShowError("GlobalVars-UnParseJSON", ex, false);
@@ -949,8 +916,8 @@ namespace HomeCinema.Global
                     return true;
                 }
                 return false;
-
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 ShowWarning("File cannot be moved to Recycle Bin!\n" + file);
                 ShowError("GlobalVars-DeleteMove (" + errFrom + ")", ex, false);
@@ -987,12 +954,13 @@ namespace HomeCinema.Global
                 string fileName = PATH_TEMP + "version";
                 string link = @"https://raw.githubusercontent.com/JerloPH/HomeCinema/master/data/version";
                 string linkRelease = @"https://github.com/JerloPH/HomeCinema/releases";
+                int tryCount = 3;
+
                 if (File.Exists(fileName))
                 {
-                    File.Delete(fileName);
+                    TryDelete(fileName, errFrom);
                 }
                 // Keep trying to download version file, to check for update
-                int tryCount = 3;
                 while (tryCount > 0)
                 {
                     GlobalVars.Log(errFrom, $"Fetching update version.. (Tries Left: {tryCount.ToString()})");
@@ -1009,27 +977,22 @@ namespace HomeCinema.Global
                     GlobalVars.Log(errFrom, "Compare version..");
                     string vString = ReadStringFromFile(fileName, "GlobalVars-CheckForUpdate");
                     int version;
-                    try
-                    {
-                        version = Convert.ToInt32(vString);
 
-                    } catch (Exception ex)
-                    {
-                        ShowError(errFrom, ex, false);
-                        version = 0;
-                    }
+                    try { version = Convert.ToInt32(vString); }
+                    catch { version = 0; }
+
                     if (version > HOMECINEMA_BUILD)
                     {
                         GlobalVars.Log(errFrom, "Update found!");
                         // there is an update, goto page of releases
                         try
                         {
-                            if (ShowYesNo("There is an update!\nGo to Download Page?\nNOTE: It will open a Link in Chrome"))
+                            if (ShowYesNo("There is an update!\nGo to Download Page?\nNOTE: It will open a Link in your Default Web Browser"))
                             {
                                 Process.Start(linkRelease);//Process.Start("chrome.exe", linkRelease);
                             }
-
-                        } catch (Exception ex)
+                        }
+                        catch (Exception ex)
                         {
                             ShowWarning("Update Error!\nTry Updating Later..");
                             ShowError(errFrom, ex, false);
@@ -1049,7 +1012,6 @@ namespace HomeCinema.Global
             try
             {
                 FileAttributes attr = File.GetAttributes(MOVIE_FILEPATH);
-
                 if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
                 {
                     FileOpeninExplorer(MOVIE_FILEPATH, errFrom);
@@ -1058,10 +1020,9 @@ namespace HomeCinema.Global
                 {
                     Process.Start(MOVIE_FILEPATH);
                 }
-
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                // LogError
                 ShowError(errFrom, ex, false);
                 GlobalVars.ShowWarning("File or folder not Found! \nIt may have been Moved or Deleted!", "File not Found!");
             }
@@ -1085,31 +1046,40 @@ namespace HomeCinema.Global
             // GET TMDB MOVIE ID
             string urlJSONgetId = @"https://api.themoviedb.org/3/search/" + mediatype + "?api_key=" + KEY + "&query=" + Movie_Title;
             string JSONgetID = PATH_TEMP + MOVIE_ID + "_id.json";
-            string JSONgetImdb = "";
+            string JSONgetImdb = "", MovieID = "";
+            string JSONContents = "", urlJSONgetImdb;
 
-            if (String.IsNullOrWhiteSpace(mediatype))
-            {
-                mediatype = "movie";
-            }
+            mediatype = (String.IsNullOrWhiteSpace(mediatype)) ? "movie" : mediatype;
 
             // Download file , force overwrite (TO GET TMDB MOVIE ID)
             if (DownloadAndReplace(JSONgetID, urlJSONgetId, errFrom, showAMsg))
             {
 
                 // Get TMDB Movie ID from JSON File (JSONgetID) downloaded
-                string MovieID = UnParseJSON(JSONgetID, "id\":", ",\"adult");
-                
+                JSONContents = ReadStringFromFile(JSONgetID, errFrom);
+                var objPageResult = JsonConvert.DeserializeObject<TmdbPageResult>(JSONContents);
+                try { MovieID = objPageResult.results[0].id.ToString(); }
+                catch { MovieID = ""; }
+                //ShowInfo("Movie ID: " + MovieID);
+
                 // Check if MovieID is not empty
                 if (String.IsNullOrWhiteSpace(MovieID) == false)
                 {
                     // GET IMDB
-                    string urlJSONgetImdb = @"https://api.themoviedb.org/3/" + mediatype + "/" + MovieID + "?api_key=" + KEY;
+                    urlJSONgetImdb = @"https://api.themoviedb.org/3/" + mediatype + "/" + MovieID + "?api_key=" + KEY;
+                    urlJSONgetImdb += (mediatype != "movie") ? "&append_to_response=external_ids" : ""; // Append external_ids param for non-movie
                     JSONgetImdb = PATH_TEMP + MOVIE_ID + "_imdb.json";
 
                     // Download file if not existing (TO GET IMDB Id)
                     if (DownloadAndReplace(JSONgetImdb, urlJSONgetImdb, errFrom, showAMsg))
                     {
-                        ret = UnParseJSON(JSONgetImdb, "imdb_id\":\"", "\",\"original_language");
+                        JSONContents = ReadStringFromFile(JSONgetImdb, errFrom);
+                        try
+                        {
+                            var objMovieInfo = JsonConvert.DeserializeObject<MovieInfo>(JSONContents);
+                            ret = (mediatype == "movie") ? objMovieInfo.imdb_id : objMovieInfo.external_ids.imdb_id;
+                        }
+                        catch { ret = ""; }
                     }
                 }
             }
@@ -1147,116 +1117,133 @@ namespace HomeCinema.Global
             string JSONmovieinfo = PATH_TEMP + IMDB_ID + ".json";
             string JSONfindmovie = PATH_TEMP + IMDB_ID + "_info.json";
             string JSONcrewcast = PATH_TEMP + IMDB_ID + "_crewcast.json";
+            string JSONfindtrailer = PATH_TEMP + IMDB_ID + "_videos.json";
             // Links
-            string urlJSONMovieInfo = "";
+            string urlJSONMovieInfo, urlJSONFindMovie, urlJSONcrewcast, urlJSONtrailer;
 
-            if (mediatype == "movie")
-            {
-                urlJSONMovieInfo = @"https://api.themoviedb.org/3/movie/" + $"{ IMDB_ID }/videos?api_key={ TMDB_KEY }&language=en-US";
-            }
-            else
-            {
-                urlJSONMovieInfo = @"https://api.themoviedb.org/3/find/" + $"{ IMDB_ID }?api_key={ TMDB_KEY }&language=en-US&external_source=imdb_id";
-            }
+            string JSONContents;
+
             // If JSON File DOES not exists, Download it
+            urlJSONMovieInfo = @"https://api.themoviedb.org/3/find/" + $"{ IMDB_ID }?api_key={ TMDB_KEY }&language=en-US&external_source=imdb_id";
             // JSON - MOVIE WITH GIVEN IMDB
             DownloadAndReplace(JSONmovieinfo, urlJSONMovieInfo, errFrom + " [JSONmovieinfo]", showAMsg);
             if (File.Exists(JSONmovieinfo))
             {
-                if (mediatype == "movie")
+                try
                 {
-                    // Setup MOVIE ID from TMDB
-                    TMDB_MovieID = UnParseJSON(JSONmovieinfo, "\"id\":", ",\"results\":");
-                    // GET Trailer from JSON, and save it to list
-                    list[1] = UnParseJSON(JSONmovieinfo, "\"key\":\"", "\",\"name\":\"");
+                    JSONContents = ReadStringFromFile(JSONmovieinfo, errFrom);
+                    var objJson = JsonConvert.DeserializeObject<ImdbResult>(JSONContents);
+                    TMDB_MovieID = (mediatype == "movie") ? objJson.movie_results[0].id : objJson.tv_results[0].id;
                 }
-                else
-                {
-                    // For TV Series
-                    TMDB_MovieID = UnParseJSON(JSONmovieinfo, "\"id\":", ",\"name\":");
-                }
+                catch { TMDB_MovieID = ""; }
             }
 
             // Find main movie info
-            // JSON - FIND USING IMDB
-            string urlJSONFindMovie = @"https://api.themoviedb.org/3/" + mediatype + "/" + TMDB_MovieID + "?api_key=" + TMDB_KEY;
-            // Download file, if not existing, to fetch info
-            DownloadAndReplace(JSONfindmovie, urlJSONFindMovie, errFrom, showAMsg);
-
-            // Get contents from JSON File, Deserialize it into MovieInfo class
-            if (File.Exists(JSONfindmovie))
+            if (!String.IsNullOrWhiteSpace(TMDB_MovieID))
             {
-                // Save to list  the json file  path
-                list[0] = JSONfindmovie;
+                // JSON - FIND USING IMDB
+                urlJSONFindMovie = @"https://api.themoviedb.org/3/" + mediatype + "/" + TMDB_MovieID + "?api_key=" + TMDB_KEY;
+                // FETCH TRAILER
+                urlJSONtrailer = @"https://api.themoviedb.org/3/" + mediatype + "/" + TMDB_MovieID + "/videos?api_key=" + TMDB_KEY;
 
-                // Get contents of JSON file
-                string contents = ReadStringFromFile(JSONfindmovie, errFrom + " [JSONfindmovie]");
+                // Download file, if not existing, to fetch info
+                DownloadAndReplace(JSONfindmovie, urlJSONFindMovie, errFrom, showAMsg);
 
-                // Deserialize JSON and Parse contents
-                MovieInfo movie = JsonConvert.DeserializeObject<MovieInfo>(contents);
-                if (movie != null)
+                // Download file, if not existing, to fetch trailer
+                DownloadAndReplace(JSONfindtrailer, urlJSONtrailer, errFrom, showAMsg);
+
+                // Get contents from JSON File, Deserialize it into MovieInfo class
+                if (File.Exists(JSONfindmovie))
                 {
-                    if (mediatype == "movie")
-                    {
-                        list[2] = movie.title; // title
-                        list[3] = movie.original_title; // original title
-                        list[5] = movie.release_date; // release date
-                    }
-                    else
-                    {
-                        list[2] = movie.original_name; // series title
-                        list[3] = movie.original_name;
-                        list[5] = movie.first_air_date; // release date
-                    }
-                    list[4] = movie.overview; // summary / overview
-                    list[6] = movie.poster_path; // poster_path
+                    // Save to list  the json file  path
+                    list[0] = JSONfindmovie;
 
-                    string tmp = "";
-                    foreach (ProdCom c in movie.production_companies)
+                    // Get contents of JSON file
+                    string contents = ReadStringFromFile(JSONfindmovie, errFrom + " [JSONfindmovie]");
+
+                    // Deserialize JSON and Parse contents
+                    MovieInfo movie = JsonConvert.DeserializeObject<MovieInfo>(contents);
+                    if (movie != null)
                     {
-                        tmp += c.origin_country += ",";
-                    }
-                    list[10] = tmp.TrimEnd(','); // country
-                }
-            }
+                        if (mediatype == "movie")
+                        {
+                            list[2] = movie.title; // title
+                            list[3] = movie.original_title; // original title
+                            list[5] = movie.release_date; // release date
+                        }
+                        else
+                        {
+                            list[2] = movie.name; // series title
+                            list[3] = movie.original_name;
+                            list[5] = movie.first_air_date; // release date
+                        }
+                        list[4] = movie.overview; // summary / overview
+                        list[6] = movie.poster_path; // poster_path
 
-            // Get crew and cast
-            string urlJSONcrewcast = @"https://api.themoviedb.org/3/" + mediatype + "/" + TMDB_MovieID + "/credits?api_key=" + TMDB_KEY;
-            DownloadAndReplace(JSONcrewcast, urlJSONcrewcast, errFrom + " [JSONcrewcast]", showAMsg);
-            if (File.Exists(JSONcrewcast))
-            {
-                // Unparse json into object list
-                string contents = ReadStringFromFile(JSONcrewcast, errFrom + " [JSONcrewcast]");
-                CastCrew castcrew = JsonConvert.DeserializeObject<CastCrew>(contents);
-
-                string tmp = ""; // temporary string var. Use to get strings
-
-                foreach (Cast c in castcrew.cast)
-                {
-                    // Get informations
-                    tmp += c.name + ", ";
-                }
-                // Save to list as artist
-                list[7] = tmp.TrimEnd().TrimEnd(',');
-
-                // get Director and producer
-                string tmpDir = "", tmpProd = ""; // Use to get director and producer
-                foreach (Crew c in castcrew.crew)
-                {
-                    // Get informations
-                    if (c.job == "Director")
-                    {
-                        // add to director
-                        tmpDir += c.name + ", ";
-                    }
-                    else if (c.job == "Producer")
-                    {
-                        tmpProd += c.name + ", ";
+                        string tmp = "";
+                        foreach (ProdCom c in movie.production_companies)
+                        {
+                            tmp += c.origin_country += ",";
+                        }
+                        list[10] = tmp.TrimEnd(','); // country
                     }
                 }
-                // Save to list as director and producer
-                list[8] = tmpDir.TrimEnd().TrimEnd(',');
-                list[9] = tmpProd.TrimEnd().TrimEnd(',');
+
+                // Get Trailer
+                if (File.Exists(JSONfindtrailer))
+                {
+                    // Get contents of JSON file
+                    string contents = ReadStringFromFile(JSONfindtrailer, errFrom + " [JSONfindtrailer]");
+                    try
+                    {
+                        var objJson = JsonConvert.DeserializeObject<TmdbVideos>(contents);
+                        if (objJson.results[0].site.ToLower() == "youtube")
+                        {
+                            list[1] = objJson.results[0].key;
+                        }
+                    }
+                    catch
+                    {
+                        list[1] = "";
+                    }
+                }
+
+                // Get crew and cast
+                urlJSONcrewcast = @"https://api.themoviedb.org/3/" + mediatype + "/" + TMDB_MovieID + "/credits?api_key=" + TMDB_KEY;
+                DownloadAndReplace(JSONcrewcast, urlJSONcrewcast, errFrom + " [JSONcrewcast]", showAMsg);
+                if (File.Exists(JSONcrewcast))
+                {
+                    // Unparse json into object list
+                    string contents = ReadStringFromFile(JSONcrewcast, errFrom + " [JSONcrewcast]");
+                    CastCrew castcrew = JsonConvert.DeserializeObject<CastCrew>(contents);
+
+                    string tmp = ""; // temporary string var. Use to get strings
+                    foreach (Cast c in castcrew.cast)
+                    {
+                        // Get informations
+                        tmp += c.name + ", ";
+                    }
+                    // Save to list as artist
+                    list[7] = tmp.TrimEnd().TrimEnd(',');
+
+                    // get Director and producer
+                    string tmpDir = "", tmpProd = ""; // Use to get director and producer
+                    foreach (Crew c in castcrew.crew)
+                    {
+                        // Get informations
+                        if (c.job == "Director")
+                        {
+                            tmpDir += c.name + ", ";
+                        }
+                        else if (c.job == "Producer")
+                        {
+                            tmpProd += c.name + ", ";
+                        }
+                    }
+                    // Save to list as director and producer
+                    list[8] = tmpDir.TrimEnd().TrimEnd(',');
+                    list[9] = tmpProd.TrimEnd().TrimEnd(',');
+                }
             }
             return list;
         }
@@ -1283,7 +1270,6 @@ namespace HomeCinema.Global
                                 .ToList();
                 if (result.Count > 0)
                 {
-                    
                     foreach (var valGenre in result)
                     {
                         string valString = valGenre.ToString();
@@ -1313,8 +1299,8 @@ namespace HomeCinema.Global
                 mName = mName.Replace("(", "");
                 mName = mName.Replace(")", "");
                 mName = mName.Replace("-", "");
-
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 // If all the trimming failed, revert back to original
                 mName = movieFileName;
@@ -1327,16 +1313,13 @@ namespace HomeCinema.Global
         public static bool FileOpeninExplorer(string filePath, string calledFrom)
         {
             string errFrom = $"GlobalVars-FileOpeninExplorer [calledFrom: {calledFrom}]";
-
             try
             {
-                // Open
                 Process.Start("explorer.exe", @"/select," + $"{ filePath }" + '"');
                 return true;
-
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                // Log Error
                 ShowError(errFrom, ex, false);
             }
             return false;
@@ -1377,6 +1360,7 @@ namespace HomeCinema.Global
             {
                 string[] sizes = { "B", "KB", "MB", "GB", "TB" };
                 double len = 0;
+                int order;
 
                 // Check if directory or a single file
                 FileAttributes attr = File.GetAttributes(filename);
@@ -1394,7 +1378,7 @@ namespace HomeCinema.Global
                     len = new FileInfo(filename).Length;
                 }
 
-                int order = 0;
+                order = 0;
                 while (len >= 1024 && order < sizes.Length - 1)
                 {
                     order++;
@@ -1403,10 +1387,9 @@ namespace HomeCinema.Global
 
                 // Adjust the format string to your preferences.
                 // For example "{0:0.#}{1}" would show a single decimal place, and no space.
-                string result = String.Format("{0:0.##} {1}", len, sizes[order]);
-                return result;
-            
-            } catch (Exception ex)
+                return String.Format("{0:0.##} {1}", len, sizes[order]);
+            }
+            catch (Exception ex)
             {
                 ShowError(errFrom, ex, false);
                 return "Unknown";

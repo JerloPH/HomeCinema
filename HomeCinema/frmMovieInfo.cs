@@ -133,9 +133,6 @@ namespace HomeCinema
             txtName.Focus();
         }
         #endregion
-        // Thread-safe functions
-        #region Thread-safe functions
-        #endregion
         // ############################################################################## Functions
         #region Functions
         // ########################## FOR CATEGORY
@@ -391,10 +388,10 @@ namespace HomeCinema
                 File.Copy(sourceFile, destFile, true);
 
                 // Set picBox Image, from File Selected
-                GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(destFile), Image.FromFile(sourceFile));
+                GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(destFile), Image.FromFile(destFile));
                 GlobalVars.Log(ExceptionFrom + " [NEW Image File and Name]", sourceFile);
-
-            } catch (Exception fex)
+            }
+            catch (Exception fex)
             {
                 GlobalVars.ShowError(ExceptionFrom, fex);
             }
@@ -412,7 +409,12 @@ namespace HomeCinema
                 tempImage.Dispose();
                 tempImage = null;
             }
-
+            try
+            {
+                picBox.Image.Dispose();
+                picBox.Image = null;
+            }
+            catch { }
             // If Parent is of type: frmMovie
             if (PARENT is frmMovie)
             {
@@ -445,7 +447,6 @@ namespace HomeCinema
         // ############################################################################## Form Controls methods event
         private void frmMovieInfo_FormClosing(object sender, FormClosingEventArgs e)
         {
-            GlobalVars.LogLine();
             if (picBox.Image != null)
             {
                 picBox.Image.Dispose();
