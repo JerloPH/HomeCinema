@@ -132,6 +132,7 @@
     </Compile>
     <Compile Include="Func\GlobalVars.cs" />
     <Compile Include="Func\ListViewColumnSorter.cs" />
+    <Compile Include="JSONs\ImdbResult.cs" />
     <Compile Include="JSONs\MovieInfo.cs" />
     <Compile Include="JSONs\TmdbPageResult.cs" />
     <Compile Include="Program.cs" />

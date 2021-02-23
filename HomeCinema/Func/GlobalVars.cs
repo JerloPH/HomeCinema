@@ -1118,115 +1118,106 @@ namespace HomeCinema.Global
             string JSONfindmovie = PATH_TEMP + IMDB_ID + "_info.json";
             string JSONcrewcast = PATH_TEMP + IMDB_ID + "_crewcast.json";
             // Links
-            string urlJSONMovieInfo = "";
+            string urlJSONMovieInfo, urlJSONFindMovie, urlJSONcrewcast;
 
-            if (mediatype == "movie")
-            {
-                urlJSONMovieInfo = @"https://api.themoviedb.org/3/movie/" + $"{ IMDB_ID }/videos?api_key={ TMDB_KEY }&language=en-US";
-            }
-            else
-            {
-                urlJSONMovieInfo = @"https://api.themoviedb.org/3/find/" + $"{ IMDB_ID }?api_key={ TMDB_KEY }&language=en-US&external_source=imdb_id";
-            }
+            string JSONContents;
+
+            urlJSONMovieInfo = @"https://api.themoviedb.org/3/find/" + $"{ IMDB_ID }?api_key={ TMDB_KEY }&language=en-US&external_source=imdb_id";
+
             // If JSON File DOES not exists, Download it
             // JSON - MOVIE WITH GIVEN IMDB
             DownloadAndReplace(JSONmovieinfo, urlJSONMovieInfo, errFrom + " [JSONmovieinfo]", showAMsg);
             if (File.Exists(JSONmovieinfo))
             {
-                if (mediatype == "movie")
+                try
                 {
-                    // Setup MOVIE ID from TMDB
-                    TMDB_MovieID = UnParseJSON(JSONmovieinfo, "\"id\":", ",\"results\":");
-                    // GET Trailer from JSON, and save it to list
-                    list[1] = UnParseJSON(JSONmovieinfo, "\"key\":\"", "\",\"name\":\"");
+                    JSONContents = ReadStringFromFile(JSONmovieinfo, errFrom);
+                    var objJson = JsonConvert.DeserializeObject<ImdbResult>(JSONContents);
+                    TMDB_MovieID = (mediatype == "movie") ? objJson.movie_results[0].id : objJson.tv_results[0].id;
                 }
-                else
-                {
-                    // For TV Series
-                    TMDB_MovieID = UnParseJSON(JSONmovieinfo, "\"id\":", ",\"name\":");
-                }
+                catch { TMDB_MovieID = ""; }
             }
 
             // Find main movie info
-            // JSON - FIND USING IMDB
-            string urlJSONFindMovie = @"https://api.themoviedb.org/3/" + mediatype + "/" + TMDB_MovieID + "?api_key=" + TMDB_KEY;
-            // Download file, if not existing, to fetch info
-            DownloadAndReplace(JSONfindmovie, urlJSONFindMovie, errFrom, showAMsg);
-
-            // Get contents from JSON File, Deserialize it into MovieInfo class
-            if (File.Exists(JSONfindmovie))
+            if (!String.IsNullOrWhiteSpace(TMDB_MovieID))
             {
-                // Save to list  the json file  path
-                list[0] = JSONfindmovie;
+                // JSON - FIND USING IMDB
+                urlJSONFindMovie = @"https://api.themoviedb.org/3/" + mediatype + "/" + TMDB_MovieID + "?api_key=" + TMDB_KEY;
+                // Download file, if not existing, to fetch info
+                DownloadAndReplace(JSONfindmovie, urlJSONFindMovie, errFrom, showAMsg);
 
-                // Get contents of JSON file
-                string contents = ReadStringFromFile(JSONfindmovie, errFrom + " [JSONfindmovie]");
-
-                // Deserialize JSON and Parse contents
-                MovieInfo movie = JsonConvert.DeserializeObject<MovieInfo>(contents);
-                if (movie != null)
+                // Get contents from JSON File, Deserialize it into MovieInfo class
+                if (File.Exists(JSONfindmovie))
                 {
-                    if (mediatype == "movie")
-                    {
-                        list[2] = movie.title; // title
-                        list[3] = movie.original_title; // original title
-                        list[5] = movie.release_date; // release date
-                    }
-                    else
-                    {
-                        list[2] = movie.name; // series title
-                        list[3] = movie.original_name;
-                        list[5] = movie.first_air_date; // release date
-                    }
-                    list[4] = movie.overview; // summary / overview
-                    list[6] = movie.poster_path; // poster_path
+                    // Save to list  the json file  path
+                    list[0] = JSONfindmovie;
 
-                    string tmp = "";
-                    foreach (ProdCom c in movie.production_companies)
+                    // Get contents of JSON file
+                    string contents = ReadStringFromFile(JSONfindmovie, errFrom + " [JSONfindmovie]");
+
+                    // Deserialize JSON and Parse contents
+                    MovieInfo movie = JsonConvert.DeserializeObject<MovieInfo>(contents);
+                    if (movie != null)
                     {
-                        tmp += c.origin_country += ",";
-                    }
-                    list[10] = tmp.TrimEnd(','); // country
-                }
-            }
+                        if (mediatype == "movie")
+                        {
+                            list[2] = movie.title; // title
+                            list[3] = movie.original_title; // original title
+                            list[5] = movie.release_date; // release date
+                        }
+                        else
+                        {
+                            list[2] = movie.name; // series title
+                            list[3] = movie.original_name;
+                            list[5] = movie.first_air_date; // release date
+                        }
+                        list[4] = movie.overview; // summary / overview
+                        list[6] = movie.poster_path; // poster_path
 
-            // Get crew and cast
-            string urlJSONcrewcast = @"https://api.themoviedb.org/3/" + mediatype + "/" + TMDB_MovieID + "/credits?api_key=" + TMDB_KEY;
-            DownloadAndReplace(JSONcrewcast, urlJSONcrewcast, errFrom + " [JSONcrewcast]", showAMsg);
-            if (File.Exists(JSONcrewcast))
-            {
-                // Unparse json into object list
-                string contents = ReadStringFromFile(JSONcrewcast, errFrom + " [JSONcrewcast]");
-                CastCrew castcrew = JsonConvert.DeserializeObject<CastCrew>(contents);
-
-                string tmp = ""; // temporary string var. Use to get strings
-
-                foreach (Cast c in castcrew.cast)
-                {
-                    // Get informations
-                    tmp += c.name + ", ";
-                }
-                // Save to list as artist
-                list[7] = tmp.TrimEnd().TrimEnd(',');
-
-                // get Director and producer
-                string tmpDir = "", tmpProd = ""; // Use to get director and producer
-                foreach (Crew c in castcrew.crew)
-                {
-                    // Get informations
-                    if (c.job == "Director")
-                    {
-                        // add to director
-                        tmpDir += c.name + ", ";
-                    }
-                    else if (c.job == "Producer")
-                    {
-                        tmpProd += c.name + ", ";
+                        string tmp = "";
+                        foreach (ProdCom c in movie.production_companies)
+                        {
+                            tmp += c.origin_country += ",";
+                        }
+                        list[10] = tmp.TrimEnd(','); // country
                     }
                 }
-                // Save to list as director and producer
-                list[8] = tmpDir.TrimEnd().TrimEnd(',');
-                list[9] = tmpProd.TrimEnd().TrimEnd(',');
+                // Get crew and cast
+                urlJSONcrewcast = @"https://api.themoviedb.org/3/" + mediatype + "/" + TMDB_MovieID + "/credits?api_key=" + TMDB_KEY;
+                DownloadAndReplace(JSONcrewcast, urlJSONcrewcast, errFrom + " [JSONcrewcast]", showAMsg);
+                if (File.Exists(JSONcrewcast))
+                {
+                    // Unparse json into object list
+                    string contents = ReadStringFromFile(JSONcrewcast, errFrom + " [JSONcrewcast]");
+                    CastCrew castcrew = JsonConvert.DeserializeObject<CastCrew>(contents);
+
+                    string tmp = ""; // temporary string var. Use to get strings
+                    foreach (Cast c in castcrew.cast)
+                    {
+                        // Get informations
+                        tmp += c.name + ", ";
+                    }
+                    // Save to list as artist
+                    list[7] = tmp.TrimEnd().TrimEnd(',');
+
+                    // get Director and producer
+                    string tmpDir = "", tmpProd = ""; // Use to get director and producer
+                    foreach (Crew c in castcrew.crew)
+                    {
+                        // Get informations
+                        if (c.job == "Director")
+                        {
+                            tmpDir += c.name + ", ";
+                        }
+                        else if (c.job == "Producer")
+                        {
+                            tmpProd += c.name + ", ";
+                        }
+                    }
+                    // Save to list as director and producer
+                    list[8] = tmpDir.TrimEnd().TrimEnd(',');
+                    list[9] = tmpProd.TrimEnd().TrimEnd(',');
+                }
             }
             return list;
         }
