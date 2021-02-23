@@ -851,13 +851,11 @@ namespace HomeCinema.Global
         public static bool DownloadAndReplace(string filePath, string urlFrom, string calledFrom, bool showAMsg = false)
         {
             string errFrom = $"GlobalVars-DownloadAndReplace [calledFrom: {calledFrom}]";
-
             // Delete previous file
             if (File.Exists(filePath))
             {
                 TryDelete(filePath, errFrom);
             }
-            
             return DownloadLoop(filePath, urlFrom, errFrom, showAMsg);
         }
         // Read JSON from file and un-parse a specific string from it
@@ -897,8 +895,8 @@ namespace HomeCinema.Global
                         WriteAppend(PATH_TEMP + "_JSONLog.log", debug);
                         return ret;
                     }
-
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     // Log Error
                     ShowError("GlobalVars-UnParseJSON", ex, false);
@@ -918,8 +916,8 @@ namespace HomeCinema.Global
                     return true;
                 }
                 return false;
-
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 ShowWarning("File cannot be moved to Recycle Bin!\n" + file);
                 ShowError("GlobalVars-DeleteMove (" + errFrom + ")", ex, false);
@@ -956,12 +954,13 @@ namespace HomeCinema.Global
                 string fileName = PATH_TEMP + "version";
                 string link = @"https://raw.githubusercontent.com/JerloPH/HomeCinema/master/data/version";
                 string linkRelease = @"https://github.com/JerloPH/HomeCinema/releases";
+                int tryCount = 3;
+
                 if (File.Exists(fileName))
                 {
-                    File.Delete(fileName);
+                    TryDelete(fileName, errFrom);
                 }
                 // Keep trying to download version file, to check for update
-                int tryCount = 3;
                 while (tryCount > 0)
                 {
                     GlobalVars.Log(errFrom, $"Fetching update version.. (Tries Left: {tryCount.ToString()})");
@@ -978,27 +977,22 @@ namespace HomeCinema.Global
                     GlobalVars.Log(errFrom, "Compare version..");
                     string vString = ReadStringFromFile(fileName, "GlobalVars-CheckForUpdate");
                     int version;
-                    try
-                    {
-                        version = Convert.ToInt32(vString);
 
-                    } catch (Exception ex)
-                    {
-                        ShowError(errFrom, ex, false);
-                        version = 0;
-                    }
+                    try { version = Convert.ToInt32(vString); }
+                    catch { version = 0; }
+
                     if (version > HOMECINEMA_BUILD)
                     {
                         GlobalVars.Log(errFrom, "Update found!");
                         // there is an update, goto page of releases
                         try
                         {
-                            if (ShowYesNo("There is an update!\nGo to Download Page?\nNOTE: It will open a Link in Chrome"))
+                            if (ShowYesNo("There is an update!\nGo to Download Page?\nNOTE: It will open a Link in your Default Web Browser"))
                             {
                                 Process.Start(linkRelease);//Process.Start("chrome.exe", linkRelease);
                             }
-
-                        } catch (Exception ex)
+                        }
+                        catch (Exception ex)
                         {
                             ShowWarning("Update Error!\nTry Updating Later..");
                             ShowError(errFrom, ex, false);
@@ -1018,7 +1012,6 @@ namespace HomeCinema.Global
             try
             {
                 FileAttributes attr = File.GetAttributes(MOVIE_FILEPATH);
-
                 if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
                 {
                     FileOpeninExplorer(MOVIE_FILEPATH, errFrom);
@@ -1027,10 +1020,9 @@ namespace HomeCinema.Global
                 {
                     Process.Start(MOVIE_FILEPATH);
                 }
-
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                // LogError
                 ShowError(errFrom, ex, false);
                 GlobalVars.ShowWarning("File or folder not Found! \nIt may have been Moved or Deleted!", "File not Found!");
             }
@@ -1252,7 +1244,6 @@ namespace HomeCinema.Global
                                 .ToList();
                 if (result.Count > 0)
                 {
-                    
                     foreach (var valGenre in result)
                     {
                         string valString = valGenre.ToString();
@@ -1282,8 +1273,8 @@ namespace HomeCinema.Global
                 mName = mName.Replace("(", "");
                 mName = mName.Replace(")", "");
                 mName = mName.Replace("-", "");
-
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 // If all the trimming failed, revert back to original
                 mName = movieFileName;
@@ -1296,16 +1287,13 @@ namespace HomeCinema.Global
         public static bool FileOpeninExplorer(string filePath, string calledFrom)
         {
             string errFrom = $"GlobalVars-FileOpeninExplorer [calledFrom: {calledFrom}]";
-
             try
             {
-                // Open
                 Process.Start("explorer.exe", @"/select," + $"{ filePath }" + '"');
                 return true;
-
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                // Log Error
                 ShowError(errFrom, ex, false);
             }
             return false;
@@ -1346,6 +1334,7 @@ namespace HomeCinema.Global
             {
                 string[] sizes = { "B", "KB", "MB", "GB", "TB" };
                 double len = 0;
+                int order;
 
                 // Check if directory or a single file
                 FileAttributes attr = File.GetAttributes(filename);
@@ -1363,7 +1352,7 @@ namespace HomeCinema.Global
                     len = new FileInfo(filename).Length;
                 }
 
-                int order = 0;
+                order = 0;
                 while (len >= 1024 && order < sizes.Length - 1)
                 {
                     order++;
@@ -1372,10 +1361,9 @@ namespace HomeCinema.Global
 
                 // Adjust the format string to your preferences.
                 // For example "{0:0.#}{1}" would show a single decimal place, and no space.
-                string result = String.Format("{0:0.##} {1}", len, sizes[order]);
-                return result;
-            
-            } catch (Exception ex)
+                return String.Format("{0:0.##} {1}", len, sizes[order]);
+            }
+            catch (Exception ex)
             {
                 ShowError(errFrom, ex, false);
                 return "Unknown";
