@@ -133,9 +133,6 @@ namespace HomeCinema
             txtName.Focus();
         }
         #endregion
-        // Thread-safe functions
-        #region Thread-safe functions
-        #endregion
         // ############################################################################## Functions
         #region Functions
         // ########################## FOR CATEGORY
