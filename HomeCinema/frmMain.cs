@@ -310,7 +310,7 @@ namespace HomeCinema
                 row[14] = rSummary; // summary
                 row[15] = filePath; // filepath
                 row[16] = GetSubtitleFile(filePath); // file sub
-                row[17] = (String.IsNullOrWhiteSpace(rTrailer) ? "" : GlobalVars.LINK_YT + rTrailer); // trailer
+                row[17] = (!String.IsNullOrWhiteSpace(rTrailer)) ? GlobalVars.LINK_YT + rTrailer : ""; // trailer
                 dt.Rows.Add(row);
                 count += 1; // add to count
                 logInsert += $"{filePath}\n";
