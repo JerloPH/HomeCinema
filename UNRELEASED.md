@@ -1,5 +1,7 @@
 # Commits not released
-## All changes
+
+
+# Released on v0.4
 **See** [**PR # 3**](https://github.com/JerloPH/HomeCinema/pull/3) **to see all commit ids**. <br>
 
 ### What's New?

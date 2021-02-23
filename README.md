@@ -1,13 +1,13 @@
 # HomeCinema
 
-<img src="/data/v0.3.jpg"></img>
+<img src="/data/v0.4.jpg"></img>
 
-**version:**	0.3.0.0 <br>
-**build:**		28
+**version:**	0.4.0.0 <br>
+**build:**		29
 
 ## Downloads
 
-**Windows 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.3.0.0/HomeCinema-Windows.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
+**Windows 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.4.0.0/HomeCinema-Windows.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
 
 **NOTE: This update breaks the old way that the App saves directories** <br>
 - After updating, open the App and find the folder where your movies are saved.
@@ -18,7 +18,7 @@
   
 ### Download Counts
 
-**Current:** &nbsp; [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.3.0.0/total.svg)]() <br>
+**Current:** &nbsp; [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.4.0.0/total.svg)]() <br>
 **Overall:** &nbsp; [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/total.svg)]()
 
 ## Requirements
