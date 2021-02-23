@@ -43,8 +43,6 @@ namespace HomeCinema
         string[] FOLDERTOSEARCH = { "" };
         // Objects
         ListViewColumnSorter lvSorter = new ListViewColumnSorter();
-        BackgroundWorker bgWorkInsertMovie = new BackgroundWorker();
-        //BackgroundWorker bgSearchInDB = new BackgroundWorker();
 
         ToolStripItem toolMenuView, toolMenuEdit, toolMenuFileExplorer;
         #region frmMain
