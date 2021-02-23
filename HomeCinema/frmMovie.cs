@@ -87,6 +87,7 @@ namespace HomeCinema
             btnPlay.Focus();
         }
         // ############################################################################## Functions
+        #region Functions
         public void LoadInformation(string ID)
         {
             // Set textbox values from Database
@@ -366,6 +367,7 @@ namespace HomeCinema
             }
             webTrailer.DocumentText = "<html><body><h1>Unknown Error!</h1></body></html>";
         }
+        #endregion
         // ############################################################################## Form Control events
         private void frmMovie_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -439,10 +441,9 @@ namespace HomeCinema
                 temp.Controls.Add(pic);
                 temp.ResumeLayout();
                 temp.Show(this);
-
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                // Log Error
                 GlobalVars.ShowError($"frmMovie({Name.ToString()})-picBox_Click", ex);
             }
         }
@@ -486,11 +487,10 @@ namespace HomeCinema
                 try
                 {
                     Process.Start(GlobalVars.LINK_IMDB + titleCode);
-
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
-                    // Log Error
-                    GlobalVars.ShowError($"frmMovie({Name.ToString()})-lblIMDB_Click", ex);
+                    GlobalVars.ShowError($"frmMovie({Name})-lblIMDB_Click", ex);
                 }
             }
         }
