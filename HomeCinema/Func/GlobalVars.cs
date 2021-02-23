@@ -1047,12 +1047,9 @@ namespace HomeCinema.Global
             string urlJSONgetId = @"https://api.themoviedb.org/3/search/" + mediatype + "?api_key=" + KEY + "&query=" + Movie_Title;
             string JSONgetID = PATH_TEMP + MOVIE_ID + "_id.json";
             string JSONgetImdb = "", MovieID = "";
-            string JSONContents = "";
+            string JSONContents = "", urlJSONgetImdb;
 
-            if (String.IsNullOrWhiteSpace(mediatype))
-            {
-                mediatype = "movie";
-            }
+            mediatype = (String.IsNullOrWhiteSpace(mediatype)) ? "movie" : mediatype;
 
             // Download file , force overwrite (TO GET TMDB MOVIE ID)
             if (DownloadAndReplace(JSONgetID, urlJSONgetId, errFrom, showAMsg))
@@ -1064,18 +1061,25 @@ namespace HomeCinema.Global
                 try { MovieID = objPageResult.results[0].id.ToString(); }
                 catch { MovieID = ""; }
                 //ShowInfo("Movie ID: " + MovieID);
-                
+
                 // Check if MovieID is not empty
                 if (String.IsNullOrWhiteSpace(MovieID) == false)
                 {
                     // GET IMDB
-                    string urlJSONgetImdb = @"https://api.themoviedb.org/3/" + mediatype + "/" + MovieID + "?api_key=" + KEY;
+                    urlJSONgetImdb = @"https://api.themoviedb.org/3/" + mediatype + "/" + MovieID + "?api_key=" + KEY;
+                    urlJSONgetImdb += (mediatype != "movie") ? "&append_to_response=external_ids" : ""; // Append external_ids param for non-movie
                     JSONgetImdb = PATH_TEMP + MOVIE_ID + "_imdb.json";
 
                     // Download file if not existing (TO GET IMDB Id)
                     if (DownloadAndReplace(JSONgetImdb, urlJSONgetImdb, errFrom, showAMsg))
                     {
-                        ret = UnParseJSON(JSONgetImdb, "imdb_id\":\"", "\",\"original_language");
+                        JSONContents = ReadStringFromFile(JSONgetImdb, errFrom);
+                        try
+                        {
+                            var objMovieInfo = JsonConvert.DeserializeObject<MovieInfo>(JSONContents);
+                            ret = (mediatype == "movie") ? objMovieInfo.imdb_id : objMovieInfo.external_ids.imdb_id;
+                        }
+                        catch { ret = ""; }
                     }
                 }
             }
@@ -1170,7 +1174,7 @@ namespace HomeCinema.Global
                     }
                     else
                     {
-                        list[2] = movie.original_name; // series title
+                        list[2] = movie.name; // series title
                         list[3] = movie.original_name;
                         list[5] = movie.first_air_date; // release date
                     }
