@@ -667,6 +667,7 @@ namespace HomeCinema
         public void LVItemSetDetails(ListViewItem temp, string[] InfoString)
         {
             // Unparse InfoString
+            int MOVIEID;
             string MovieId = InfoString[0]; // ID
             string resName = InfoString[1]; // name
             string resNameEp = InfoString[2]; // name_ep
@@ -676,12 +677,12 @@ namespace HomeCinema
             string resYear = InfoString[6]; // year
             string resSummary = InfoString[7]; // summary
             string resGenre = InfoString[8]; // genre
+            // Convert MovieId string to int
+            try { MOVIEID = Convert.ToInt32(MovieId); }
+            catch { MOVIEID = 0; }
 
-            try
+            if (MOVIEID > 0)
             {
-                // Convert MovieId string to int
-                int MOVIEID = Convert.ToInt32(MovieId);
-
                 // Set default text for item
                 temp.Text = resName;
 
@@ -698,10 +699,7 @@ namespace HomeCinema
                 else
                 {
                     // Set Series Name
-                    if (String.IsNullOrWhiteSpace(resNameSer))
-                    {
-                        temp.Text = resNameSer; //Set Series Name
-                    }
+                    temp.Text = (String.IsNullOrWhiteSpace(resNameSer)) ? resNameSer : temp.Text;
                     temp.SubItems.Add(resNameEp); // Episode Name
                     temp.SubItems.Add("S" + GlobalVars.ValidateNum(resSeason) + " E" + GlobalVars.ValidateNum(resEp));
                 }
@@ -719,11 +717,6 @@ namespace HomeCinema
 
                 // Set font
                 temp.Font = GlobalVars.TILE_FONT;
-
-            } catch (Exception ex)
-            {
-                // Log error
-                GlobalVars.ShowError($"frmMain-LVItemSetDetails", ex);
             }
         }
         // Populate combobox cbCountry, from file
