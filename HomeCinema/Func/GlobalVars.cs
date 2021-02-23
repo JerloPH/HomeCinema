@@ -1046,7 +1046,8 @@ namespace HomeCinema.Global
             // GET TMDB MOVIE ID
             string urlJSONgetId = @"https://api.themoviedb.org/3/search/" + mediatype + "?api_key=" + KEY + "&query=" + Movie_Title;
             string JSONgetID = PATH_TEMP + MOVIE_ID + "_id.json";
-            string JSONgetImdb = "";
+            string JSONgetImdb = "", MovieID = "";
+            string JSONContents = "";
 
             if (String.IsNullOrWhiteSpace(mediatype))
             {
@@ -1058,7 +1059,11 @@ namespace HomeCinema.Global
             {
 
                 // Get TMDB Movie ID from JSON File (JSONgetID) downloaded
-                string MovieID = UnParseJSON(JSONgetID, "id\":", ",\"adult");
+                JSONContents = ReadStringFromFile(JSONgetID, errFrom);
+                var objPageResult = JsonConvert.DeserializeObject<TmdbPageResult>(JSONContents);
+                try { MovieID = objPageResult.results[0].id.ToString(); }
+                catch { MovieID = ""; }
+                //ShowInfo("Movie ID: " + MovieID);
                 
                 // Check if MovieID is not empty
                 if (String.IsNullOrWhiteSpace(MovieID) == false)
