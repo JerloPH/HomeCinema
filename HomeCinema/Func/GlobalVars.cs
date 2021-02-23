@@ -135,8 +135,8 @@ namespace HomeCinema.Global
                 {
                     LogFormatted(codefrom, log, w);
                 }
-
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 // Log Error
                 ShowError("GlobalVars-LogDb", ex, false);
@@ -154,8 +154,8 @@ namespace HomeCinema.Global
                 {
                     LogFormatted(codefrom, log, w);
                 }
-
-            } catch { }
+            }
+            catch { }
         }
         public static void Log(string codefrom, string log)
         {
@@ -169,8 +169,8 @@ namespace HomeCinema.Global
                 w.Write($"[{DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss:fff tt")}]: ");
                 w.Write($"'({ codefrom })'\n");
                 w.Write($"{ logMessage }\n");
-
-            } catch { }
+            }
+            catch { }
         }
         public static void LogLine()
         {
@@ -181,8 +181,8 @@ namespace HomeCinema.Global
                 {
                     w.Write("##############################################################################");
                 }
-
-            } catch { }
+            }
+            catch { }
         }
         // LOG Error Message, seperate from main Log
         public static void LogErr(string codefrom, string log)
@@ -196,8 +196,8 @@ namespace HomeCinema.Global
             try
             {
                 MessageBox.Show(new Form { TopMost = true }, msg, caption, mbbtn, mbIcon);
-
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 // Log Error
                 ShowError("GlobalVars-ShowMsg", ex, false);
@@ -228,16 +228,13 @@ namespace HomeCinema.Global
             if (ShowAMsg)
             {
                 ShowMsg($"An error occured!\nError message: {err}\nError File Location:\n{file}", CAPTION_DIALOG, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //Clipboard.SetText(FILE_APPLOG);
-                // Open file using its default "open with"
+                // Open file in explorer
                 try
                 {
-                    //Process.Start(FILE_APPLOG);
                     Process.Start("explorer.exe", @"/select," + $"{ file }" + '"');
-
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
-                    // Dont do anything at this point
                     ShowWarning($"Cannot open folder containing error file!\n{ex.ToString()}");
                 }
             }
@@ -246,14 +243,10 @@ namespace HomeCinema.Global
         {
             try
             {
-                if (MessageBox.Show(msg, CAPTION_DIALOG, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
-                {
-                    return true;
-                }
-
-            } catch (Exception ex)
+                return (MessageBox.Show(msg, CAPTION_DIALOG, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes);
+            }
+            catch (Exception ex)
             {
-                // Log Error
                 ShowError("GlobalVars-ShowYesNo", ex, false);
             }
             return false;
@@ -345,7 +338,6 @@ namespace HomeCinema.Global
                 {
                     ret = r.ReadToEnd();
                 }
-                return ret;
             }
             catch (Exception ex)
             {
@@ -371,9 +363,9 @@ namespace HomeCinema.Global
                     w.Write(toWrite);
                 }
                 return true;
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                // Log Error
                 ShowError("GlobalVars-WriteToFile", ex, false);
             }
             return false;
@@ -401,10 +393,9 @@ namespace HomeCinema.Global
                 // Get the string, joined
                 sw = String.Join(",", sorted.ToArray());
                 return WriteToFile(FilePath, sw);
-
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                // Log Error
                 ShowError("GlobalVars-WriteArray", ex, false);
             }
             return false;
@@ -427,11 +418,9 @@ namespace HomeCinema.Global
             try
             {
                 string x = ReadStringFromFile(fileToread, $"{errFrom} [calledFrom: {calledFrom}]");
-
                 if (!String.IsNullOrWhiteSpace(x))
                 {
-                    string[] tmpCat = x.Split(sep);
-                    return tmpCat;
+                    return x.Split(sep);
                 }
             }
             catch (Exception ex)
@@ -473,7 +462,8 @@ namespace HomeCinema.Global
                     }
                     return ret;
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 ShowError($"{errFrom} [calledFrom: {calledFrom}]", ex);
             }
@@ -483,11 +473,7 @@ namespace HomeCinema.Global
         public static bool QryColNumeric(string colName)
         {
             string s = colName.ToLower();
-            if ((s == "category") || (s == "year") || (s == "season") || (s == "episode"))
-            {
-                return true;
-            }
-            return false;
+            return ((s == "category") || (s == "year") || (s == "season") || (s == "episode"));
         }
         // Build a query, Use WHERE or AND on Filter
         public static string QryWhere(string qry)
@@ -555,25 +541,14 @@ namespace HomeCinema.Global
         public static string ImgGetKey(string MovieID)
         {
             string imgKey = MovieID + ".jpg";
-            if (MOVIE_IMGLIST.Images.ContainsKey(imgKey))
-            {
-                return imgKey;
-            }
-            else
-            {
-                return "0.jpg";
-            }
+            return (MOVIE_IMGLIST.Images.ContainsKey(imgKey)) ? imgKey : "0.jpg";
         }
         // Get Image from IMG LIST
         public static Image ImgGetImageFromList(string MOVIE_ID)
         {
             int key = MOVIE_IMGLIST.Images.IndexOfKey(MOVIE_ID + ".jpg");
-            if (key < 1)
-            {
-                key = 0;
-            }
-            Image img = MOVIE_IMGLIST.Images[key];
-            return img;
+            key = (key < 1) ? 0 : key;
+            return MOVIE_IMGLIST.Images[key];
         }
         // Delete Image from ImageList
         public static bool DeleteImageFromList(string movieID, string logFrom)
@@ -626,12 +601,11 @@ namespace HomeCinema.Global
                 {
                     files.AddRange(DirSearch(d, errFrom));
                 }
-
-            } catch (Exception excpt)
+            }
+            catch (Exception excpt)
             {
                 ShowError(errFrom, excpt, false);
             }
-
             return files;
         }
         // Get All Files on MULTIPLE Directories
@@ -651,12 +625,11 @@ namespace HomeCinema.Global
                         files.AddRange(DirSearch(d, errFrom));
                     }
                 }
-
-            } catch (Exception excpt)
+            }
+            catch (Exception excpt)
             {
                 ShowError(errFrom, excpt, false);
             }
-
             return files;
         }
         // Return List<String> of folder directories, from "seriesloc" File
@@ -683,8 +656,8 @@ namespace HomeCinema.Global
                         }
                     }
                 }
-
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 // Log error
                 ShowError(errFrom, ex, false);
@@ -698,7 +671,6 @@ namespace HomeCinema.Global
             {
                 fbd.Description = caption;
                 DialogResult result = fbd.ShowDialog();
-
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
                     return fbd.SelectedPath;
@@ -737,10 +709,9 @@ namespace HomeCinema.Global
                 {
                     File.Delete(fName);
                     return true;
-
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
-                    // Log Error
                     ShowError($"{errFrom} [calledFrom: {calledFrom}]", ex, false);
                 }
             }
@@ -772,7 +743,6 @@ namespace HomeCinema.Global
         {
             // Log who call this, the form in which the method is invoked from
             Log(LogFrom, "Invoked method (" + MethodName  + ") in  " + LogInvokeFrom);
-
             string LogExceptions = "GlobalVars-CallMethod ";
 
             // Refresh parent form
@@ -786,8 +756,8 @@ namespace HomeCinema.Global
                 {
                     method.Invoke(classObj, Params);
                     return true;
-
-                } catch (Exception tex)
+                }
+                catch (Exception tex)
                 {
                     ShowError(LogExceptions + " (Error)", tex);
                 }
@@ -804,15 +774,14 @@ namespace HomeCinema.Global
                 request.Timeout = 2000;
                 request.Credentials = CredentialCache.DefaultNetworkCredentials;
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     ret = true;
                 }
                 response.Dispose();
                 return ret;
-
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 ShowError("(GlobalVars-CheckConnection)", ex, false);
                 return false;
@@ -839,15 +808,15 @@ namespace HomeCinema.Global
                         {
                             HttpStatusCode status = ((HttpWebResponse)wex.Response).StatusCode;
                             return Convert.ToInt32(status);
-
-                        } catch (Exception exw)
+                        }
+                        catch (Exception exw)
                         {
                             // Log Error and Exit
                             ShowError(errFrom, exw, showAMsg);
                             return 404;
                         }
-
-                    } catch (Exception ex)
+                    }
+                    catch (Exception ex)
                     {
                         ShowError(errFrom, ex, showAMsg);
                     }
