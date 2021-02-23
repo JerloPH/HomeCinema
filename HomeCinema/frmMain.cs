@@ -110,10 +110,6 @@ namespace HomeCinema
             lvSearchResult.AllowDrop = false;
             lvSearchResult.AllowColumnReorder = false;
             lvSearchResult.MultiSelect = false;
-            foreach (ListViewItem lv in lvSearchResult.Items)
-            {
-                lv.Font = GlobalVars.TILE_FONT;
-            }
             lvSearchResult.View = View.Tile;
 
             // Populate Context Menu for ListView item Rightclick
@@ -720,6 +716,9 @@ namespace HomeCinema
                 // Save the ID as Tag, to NOT SHOW it on LIST
                 temp.Name = Convert.ToString(MOVIEID);
                 temp.Tag = GlobalVars.ValidateZero(MOVIEID);
+
+                // Set font
+                temp.Font = GlobalVars.TILE_FONT;
 
             } catch (Exception ex)
             {

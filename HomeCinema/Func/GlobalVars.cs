@@ -99,7 +99,7 @@ namespace HomeCinema.Global
         public static int IMGTILE_HEIGHT = 128;
         public static int IMG_WIDTH = 192;
         public static int IMG_HEIGHT = 256;
-        public static Font TILE_FONT = new Font("Times New Roman", 9f);
+        public static Font TILE_FONT = new Font("Calibri", 10f);
 
         // String arrays for extensions
         public static List<string> MOVIE_EXTENSIONS = new List<string>();
