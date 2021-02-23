@@ -18,9 +18,8 @@
   
 ### Download Counts
 
-**Current:** &nbsp; [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.4.0.0/total.svg)]() <br>
-**Overall:** &nbsp; [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/total.svg)]()
-
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/total.svg)]() &nbsp;
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.4.0.0/total.svg)]()
 ## Requirements
 
 - 4GB or more RAM. <br>
@@ -89,7 +88,6 @@ D:\TV Series\Title of Series and Season\Episode 1.mp4
 [**Microsoft Windows API CodePack Core**](https://www.nuget.org/packages/Microsoft-WindowsAPICodePack-Core/) - For various functions. <br>
 [**Microsoft Windows API CodePack Shell**](https://www.nuget.org/packages/Microsoft-WindowsAPICodePack-Shell/) - For various functions. <br>
 [**Microsoft Universal Windows Platform**](https://www.nuget.org/packages/Microsoft.NETCore.UniversalWindowsPlatform/) - For various functions. <br>
-
 ****
 
 ## Find a bug or want a new feature?
@@ -101,20 +99,16 @@ D:\TV Series\Title of Series and Season\Episode 1.mp4
     - App_DB.log
     - App_ErrorLog.log
   - If possible, include a screenshot.
-  - Explain the details in full. Describe what you are doing or trying to do, on what screen when the error apppeared.
-    NOTE: Strictly **NO GENERIC** *"I get an error"* or *"This app has bugs"*.
+  - Explain the details in full. Describe what you are doing or trying to do, on what form when the error apppeared.
   - Try to replicate the error / bug.
-  - Failure to comply will make your report probably ignored.
 - *When requesting a **new feature / feature update**,*
   - Include how it works.
   - Explain in full details.
-  - State how useful the feature is.
-
 ****
 
 ## License
 
-*** Copyright 2020 © JerloPH *** <br>
+*** Copyright 2020-2021 © JerloPH *** <br>
 *This project is licensed under* **[GPL v3](https://www.gnu.org/licenses/gpl-3.0.html)** <br>
 **[Click HERE to read LICENSE.md](/LICENSE.md)**
 
@@ -122,7 +116,7 @@ D:\TV Series\Title of Series and Season\Episode 1.mp4
 	<summary> <b>View Snippet</b> </summary>
 	
     ** <b>HomeCinema - Organize your Movie Collection</b> **
-    <b>Copyright (C) 2020  JerloPH (https://github.com/JerloPH)</b>
+    <b>Copyright (C) 2021  JerloPH (https://github.com/JerloPH)</b>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
