@@ -32,6 +32,9 @@ namespace HomeCinema
         [JsonProperty("title")]
         public string title { get; set; } = "";
 
+        [JsonProperty("name")]
+        public string name { get; set; } = "";
+
         [JsonProperty("original_title")]
         public string original_title { get; set; } = "";
 
@@ -55,11 +58,20 @@ namespace HomeCinema
 
         [JsonProperty("production_companies")]
         public List<ProdCom> production_companies { get; set; }
+
+        [JsonProperty("external_ids")]
+        public ExternalIds external_ids { get; set; }
     }
 
     public class ProdCom
     {
         [JsonProperty("origin_country")]
         public string origin_country { get; set; }
+    }
+
+    public class ExternalIds
+    {
+        [JsonProperty("imdb_id")]
+        public string imdb_id { get; set; } = "";
     }
 }

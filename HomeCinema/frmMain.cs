@@ -43,8 +43,6 @@ namespace HomeCinema
         string[] FOLDERTOSEARCH = { "" };
         // Objects
         ListViewColumnSorter lvSorter = new ListViewColumnSorter();
-        BackgroundWorker bgWorkInsertMovie = new BackgroundWorker();
-        //BackgroundWorker bgSearchInDB = new BackgroundWorker();
 
         ToolStripItem toolMenuView, toolMenuEdit, toolMenuFileExplorer;
         #region frmMain
@@ -258,7 +256,8 @@ namespace HomeCinema
                         rTitle = list[2];
                         rOrigTitle = list[3];
                         rSummary = list[4];
-                        rYear = list[5].Substring(0, 4);
+                        try { rYear = list[5].Substring(0, 4); }
+                        catch { rYear = ""; }
                         rPosterLink = list[6];
                         rArtist = list[7];
                         rDirector = list[8];
@@ -309,7 +308,7 @@ namespace HomeCinema
                 row[14] = rSummary; // summary
                 row[15] = filePath; // filepath
                 row[16] = GetSubtitleFile(filePath); // file sub
-                row[17] = (String.IsNullOrWhiteSpace(rTrailer) ? "" : GlobalVars.LINK_YT + rTrailer); // trailer
+                row[17] = (!String.IsNullOrWhiteSpace(rTrailer)) ? GlobalVars.LINK_YT + rTrailer : ""; // trailer
                 dt.Rows.Add(row);
                 count += 1; // add to count
                 logInsert += $"{filePath}\n";
@@ -375,6 +374,7 @@ namespace HomeCinema
             else
             {
                 lv.Items.Add(item);
+                //GlobalVars.Log("frmMain-AddItem()", "Added: " + item.Text);
             }
         }
         public static void AfterPopulatingMovieLV(ListView lv, int count)
@@ -924,6 +924,7 @@ namespace HomeCinema
             string qry = SEARCH_QUERY;
             string cols = LVMovieItemsColumns;
             string errFrom = "frmMain-PopulateMovieBG()";
+            string fileNamePath;
             int progress = 0;
             int progressMax = 0;
 
@@ -966,10 +967,24 @@ namespace HomeCinema
                             if (dtGetFile.Rows.Count > 0)
                             {
                                 DataRow rFile = dtGetFile.Rows[0];
-                                if (!File.Exists(rFile[1].ToString()))
+                                fileNamePath = rFile[1].ToString();
+                                FileAttributes attr = File.GetAttributes(fileNamePath);
+                                if (attr.HasFlag(FileAttributes.Directory))
                                 {
-                                    dtGetFile.Clear();
-                                    continue;
+                                    // Non existing directory, skip it
+                                    if (!Directory.Exists(fileNamePath))
+                                    {
+                                        dtGetFile.Clear();
+                                        continue;
+                                    }
+                                }
+                                else
+                                {
+                                    if (!File.Exists(fileNamePath))
+                                    {
+                                        dtGetFile.Clear();
+                                        continue;
+                                    }
                                 }
                             }
 
