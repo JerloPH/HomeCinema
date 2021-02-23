@@ -771,7 +771,7 @@ namespace HomeCinema.Global
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
-                request.Timeout = 2000;
+                request.Timeout = 3000;
                 request.Credentials = CredentialCache.DefaultNetworkCredentials;
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 if (response.StatusCode == HttpStatusCode.OK)
