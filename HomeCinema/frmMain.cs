@@ -608,15 +608,7 @@ namespace HomeCinema
         private void SortItemsInListView(int toggle)
         {
             // Change Sort Order
-            SortOrder Sorting = SortOrder.None;
-            if (cbSortOrder.SelectedIndex > 0)
-            {
-                Sorting = SortOrder.Descending;
-            }
-            else
-            {
-                Sorting = SortOrder.Ascending;
-            }
+            SortOrder Sorting = (cbSortOrder.SelectedIndex > 0) ? SortOrder.Descending : SortOrder.Ascending;
 
             // Peform sort
             switch (toggle)
