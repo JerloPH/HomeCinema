@@ -1117,14 +1117,14 @@ namespace HomeCinema.Global
             string JSONmovieinfo = PATH_TEMP + IMDB_ID + ".json";
             string JSONfindmovie = PATH_TEMP + IMDB_ID + "_info.json";
             string JSONcrewcast = PATH_TEMP + IMDB_ID + "_crewcast.json";
+            string JSONfindtrailer = PATH_TEMP + IMDB_ID + "_videos.json";
             // Links
-            string urlJSONMovieInfo, urlJSONFindMovie, urlJSONcrewcast;
+            string urlJSONMovieInfo, urlJSONFindMovie, urlJSONcrewcast, urlJSONtrailer;
 
             string JSONContents;
 
-            urlJSONMovieInfo = @"https://api.themoviedb.org/3/find/" + $"{ IMDB_ID }?api_key={ TMDB_KEY }&language=en-US&external_source=imdb_id";
-
             // If JSON File DOES not exists, Download it
+            urlJSONMovieInfo = @"https://api.themoviedb.org/3/find/" + $"{ IMDB_ID }?api_key={ TMDB_KEY }&language=en-US&external_source=imdb_id";
             // JSON - MOVIE WITH GIVEN IMDB
             DownloadAndReplace(JSONmovieinfo, urlJSONMovieInfo, errFrom + " [JSONmovieinfo]", showAMsg);
             if (File.Exists(JSONmovieinfo))
@@ -1143,8 +1143,14 @@ namespace HomeCinema.Global
             {
                 // JSON - FIND USING IMDB
                 urlJSONFindMovie = @"https://api.themoviedb.org/3/" + mediatype + "/" + TMDB_MovieID + "?api_key=" + TMDB_KEY;
+                // FETCH TRAILER
+                urlJSONtrailer = @"https://api.themoviedb.org/3/" + mediatype + "/" + TMDB_MovieID + "/videos?api_key=" + TMDB_KEY;
+
                 // Download file, if not existing, to fetch info
                 DownloadAndReplace(JSONfindmovie, urlJSONFindMovie, errFrom, showAMsg);
+
+                // Download file, if not existing, to fetch trailer
+                DownloadAndReplace(JSONfindtrailer, urlJSONtrailer, errFrom, showAMsg);
 
                 // Get contents from JSON File, Deserialize it into MovieInfo class
                 if (File.Exists(JSONfindmovie))
@@ -1182,6 +1188,26 @@ namespace HomeCinema.Global
                         list[10] = tmp.TrimEnd(','); // country
                     }
                 }
+
+                // Get Trailer
+                if (File.Exists(JSONfindtrailer))
+                {
+                    // Get contents of JSON file
+                    string contents = ReadStringFromFile(JSONfindtrailer, errFrom + " [JSONfindtrailer]");
+                    try
+                    {
+                        var objJson = JsonConvert.DeserializeObject<TmdbVideos>(contents);
+                        if (objJson.results[0].site.ToLower() == "youtube")
+                        {
+                            list[1] = objJson.results[0].key;
+                        }
+                    }
+                    catch
+                    {
+                        list[1] = "";
+                    }
+                }
+
                 // Get crew and cast
                 urlJSONcrewcast = @"https://api.themoviedb.org/3/" + mediatype + "/" + TMDB_MovieID + "/credits?api_key=" + TMDB_KEY;
                 DownloadAndReplace(JSONcrewcast, urlJSONcrewcast, errFrom + " [JSONcrewcast]", showAMsg);
