@@ -15,7 +15,7 @@
 - REV: Refactor **frmMovie** Initialization.
 - REV: Increase TimeOut for **CheckConnection()**.
 - REV: Cast all API queries of TMDB to JSON files.
-
+- Code refactors and cleanup.
 
 # Released on v0.3
 ### What's New?
