@@ -1141,14 +1141,7 @@ namespace HomeCinema
         
         private void btnChangeView_Click(object sender, EventArgs e)
         {
-            if (lvSearchResult.View == View.Tile)
-            {
-                lvSearchResult.View = View.LargeIcon;
-            }
-            else
-            {
-                lvSearchResult.View = View.Tile;
-            }
+            lvSearchResult.View = (lvSearchResult.View == View.Tile) ? View.LargeIcon : View.Tile;
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
