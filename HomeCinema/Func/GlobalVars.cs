@@ -42,7 +42,7 @@ namespace HomeCinema.Global
         // Variables ############################################################################################################
         public static string HOMECINEMA_NAME = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyTitleAttribute>().Title;
         public static string HOMECINEMA_VERSION = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-        public static int HOMECINEMA_BUILD = 28;
+        public static int HOMECINEMA_BUILD = 29;
 
         public static string SEARCHBOX_PLACEHOLDER = "Type your Search query here...";
 
