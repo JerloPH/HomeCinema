@@ -1180,11 +1180,8 @@ namespace HomeCinema
                     }
                 }
                 // Genre
-                if (cbGenre.SelectedIndex > 0)
-                {
-                    qry += GlobalVars.QryWhere(qry);
-                    qry += $"[genre] LIKE '%{cbGenre.Text}%'";
-                }
+                qry += (cbGenre.SelectedIndex > 0) ? GlobalVars.QryWhere(qry) + $"[genre] LIKE '%{cbGenre.Text}%'" : "";
+
                 // Category
                 if (cbCategory.SelectedIndex > 0)
                 {
@@ -1193,71 +1190,47 @@ namespace HomeCinema
                     // Search for all
                     if ((index < 1) || (index > 2))
                     {
-                        if (index < 1)
-                        {
-                            index = 0;
-                        }
                         qry += $"[category]={index}";
                     }
                     else
                     {
-                        // Search for All type of Movies
-                        if (index == 1)
-                        {
-                            qry += "([category]=1 OR [category]=3 OR [category]=5)";
-                        }
-                        // Search for All types of Series
-                        else
-                        {
-                            qry += "([category]=2 OR [category]=4 OR [category]=6)";
-                        }
+                        // Search for All type of Movies, if index == 1. Otherwise, Search for All types of Series
+                        qry += (index == 1) ? "([category]=1 OR [category]=3 OR [category]=5)" : "([category]=2 OR [category]=4 OR [category]=6)";
                     }
                 }
                 // Studio
                 if (String.IsNullOrWhiteSpace(txtStudio.Text) == false)
                 {
-                    qry += GlobalVars.QryWhere(qry);
-                    qry += $"[studio] LIKE '%{txtStudio.Text}%'";
+                    qry += GlobalVars.QryWhere(qry) + $"[studio] LIKE '%{txtStudio.Text}%'";
                 }
                 // Cast
                 if (String.IsNullOrWhiteSpace(txtCast.Text) == false)
                 {
-                    qry += GlobalVars.QryWhere(qry);
-                    qry += $"[artist] LIKE '%{txtCast.Text}%'";
+                    qry += GlobalVars.QryWhere(qry) + $"[artist] LIKE '%{txtCast.Text}%'";
                 }
                 // Director
                 if (String.IsNullOrWhiteSpace(txtDirector.Text) == false)
                 {
-                    qry += GlobalVars.QryWhere(qry);
-                    qry += $"[director] LIKE '%{txtDirector.Text}%'";
+                    qry += GlobalVars.QryWhere(qry) + $"[director] LIKE '%{txtDirector.Text}%'";
                 }
                 // Country
                 string CountryText = GlobalVars.RemoveLine(cbCountry.SelectedItem.ToString());
                 if ((String.IsNullOrWhiteSpace(CountryText) == false) && cbCountry.SelectedIndex > 0)
                 {
-                    qry += GlobalVars.QryWhere(qry);
-                    qry += $"[country] LIKE '%{CountryText}%'";
+                    qry += GlobalVars.QryWhere(qry) + $"[country] LIKE '%{CountryText}%'";
                 }
 
-                // Remove Previous Filters and focus on IMDB Code
+                // Override filter string build-up and Use IMDB Code
                 if (String.IsNullOrWhiteSpace(txtIMDB.Text) == false)
                 {
-                    qry = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO} WHERE ";
-                    qry += $"[imdb] = '{txtIMDB.Text}'";
+                    qry = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO} WHERE [imdb] = '{txtIMDB.Text}'";
                 }
 
                 // Filter out all animations
-                if (cbHideAnim.CheckState == CheckState.Checked)
-                {
-                    qry += GlobalVars.QryWhere(qry);
-                    qry += " ([category] <= 2)";
-                }
+                qry += (cbHideAnim.CheckState == CheckState.Checked) ? GlobalVars.QryWhere(qry) + " ([category] <= 2)" : "";
 
                 // Append to end
-                if (GlobalVars.SET_ITEMLIMIT > 0)
-                {
-                    qry += $" LIMIT {GlobalVars.SET_ITEMLIMIT};";
-                }
+                qry += (GlobalVars.SET_ITEMLIMIT > 0) ? $" LIMIT {GlobalVars.SET_ITEMLIMIT};" : "";
 
                 // Set query to perform on search
                 SEARCH_QUERY = qry;
