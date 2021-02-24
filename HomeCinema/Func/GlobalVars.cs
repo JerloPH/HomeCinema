@@ -33,7 +33,7 @@ using Microsoft.VisualBasic.FileIO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Microsoft.WindowsAPICodePack.Shell;
-using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
+using HomeCinema.SQLFunc;
 
 namespace HomeCinema.Global
 {
@@ -1378,6 +1378,14 @@ namespace HomeCinema.Global
             };
             form.ShowDialog();
             return true;
+        }
+        // Delete all covers not in database
+        public static void CleanCoversNotInDb()
+        {
+            SQLHelper dbCon = new SQLHelper("GlobalVars");
+            string calledFrom = "GlobalVars-CleanCoversNotInDb()";
+            List<string> listId = dbCon.DbQrySingle(DB_TNAME_INFO , DB_TABLE_INFO[0].ToString(), calledFrom);
+            List<string> listCover = SearchFilesSingleDir(PATH_IMG, calledFrom, false); 
         }
         // ######################################################################## END - Add code above
     }
