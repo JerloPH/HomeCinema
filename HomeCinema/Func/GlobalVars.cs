@@ -172,18 +172,6 @@ namespace HomeCinema.Global
             }
             catch { }
         }
-        public static void LogLine()
-        {
-            try
-            {
-                // log to text file
-                using (StreamWriter w = File.AppendText(FILE_LOG_APP))
-                {
-                    w.Write("##############################################################################");
-                }
-            }
-            catch { }
-        }
         // LOG Error Message, seperate from main Log
         public static void LogErr(string codefrom, string log)
         {
@@ -206,10 +194,6 @@ namespace HomeCinema.Global
         public static void ShowInfo(string msg)
         {
             ShowMsg(msg, CAPTION_DIALOG, MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        public static void ShowInfo(string msg, string caption)
-        {
-            ShowMsg(msg, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         public static void ShowWarning(string msg)
         {
@@ -399,16 +383,6 @@ namespace HomeCinema.Global
                 ShowError("GlobalVars-WriteArray", ex, false);
             }
             return false;
-        }
-        // Build string array from combobox
-        public static string[] BuildStringArrayFromCB(ComboBox currentComboBox)
-        {
-            string[] items = new string[currentComboBox.Items.Count];
-            for (int i = 0; i < currentComboBox.Items.Count; i++)
-            {
-                items[i] = currentComboBox.Items[i].ToString();
-            }
-            return items;
         }
         // Build directory string array from file
         public static string[] BuildDirArrFromFile(string fileToread, string calledFrom, char sep = '*')
