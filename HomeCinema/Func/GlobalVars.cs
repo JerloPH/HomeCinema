@@ -858,52 +858,6 @@ namespace HomeCinema.Global
             }
             return DownloadLoop(filePath, urlFrom, errFrom, showAMsg);
         }
-        // Read JSON from file and un-parse a specific string from it
-        public static string UnParseJSON(string localFile, string startString, string endString)
-        {
-            if (File.Exists(localFile))
-            {
-                try
-                {
-                    using (StreamReader r = new StreamReader(localFile))
-                    {
-                        string ret = "";
-                        string jsonFile = r.ReadToEnd();
-                        int sLen = startString.Length;
-                        int sLenEnd = endString.Length;
-                        int sFirst = jsonFile.IndexOf(startString);
-                        int sSec = jsonFile.IndexOf(endString);
-                        int sStart = sFirst + sLen;
-                        int sEnd = sSec - (sFirst + sLen);
-                        string debug = "";
-                        debug += "Strings\nSTART: " + startString + "\nEND: " + endString + "\n\n";
-                        debug += $"Lengths:\n" +
-                            $"Starting: {sLen.ToString()}\n" +
-                            $"End: {sLenEnd.ToString()}\n" +
-                            $"\nIndex:\n" +
-                            $"Start: {sFirst.ToString()}\n" +
-                            $"End: {sSec.ToString()}\n" +
-                            $"\nActual Index:\n" +
-                            $"Start: {sStart.ToString()}\n" +
-                            $"End: {sEnd.ToString()}\n";
-                        if ((sStart > -1) && (sEnd > 0))
-                        {
-                            ret = jsonFile.Substring(sStart, sEnd);
-                        }
-                        debug += "\nResult:\n" + ret;
-                        debug += "\n################################\n";
-                        WriteAppend(PATH_TEMP + "_JSONLog.log", debug);
-                        return ret;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // Log Error
-                    ShowError("GlobalVars-UnParseJSON", ex, false);
-                }
-            }
-            return "";
-        }
         // Move file to RecycleBin, instead of permanent delete
         public static bool DeleteMove(string file, string errFrom)
         {
