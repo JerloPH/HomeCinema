@@ -264,6 +264,12 @@ namespace HomeCinema
             dtInfo.Clear();
             dtInfo.Dispose();
 
+            // Disable setting metadata if series
+            if (cbCategory.Text.ToLower().Contains("series"))
+            {
+                cbSaveMetadata.Enabled = false;
+            }
+
             // Set control focus
             txtName.Focus();
         }

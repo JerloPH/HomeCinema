@@ -1338,8 +1338,7 @@ namespace HomeCinema.Global
         }
         public static bool SaveMetadata(string filename, List<string> data)
         {
-            frmLoading form = new frmLoading("Please wait while saving..", "Saving Metadata");
-
+            frmLoading form = new frmLoading("Saving Metadata..", "Loading");
             form.BackgroundWorker.DoWork += (sender1, e1) =>
             {
                 var file = ShellFile.FromFilePath(filename);
