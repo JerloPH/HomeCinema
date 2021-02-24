@@ -1354,10 +1354,6 @@ namespace HomeCinema.Global
 
                 try { file.Properties.System.Video.Director.Value = data[3].Replace(", ", ",").Split(','); }
                 catch { }
-
-                try { file.Properties.System.Media.Producer.Value = data[4].Replace(", ", ",").Split(','); }
-                catch { }
-
             };
             form.ShowDialog();
             return true;
