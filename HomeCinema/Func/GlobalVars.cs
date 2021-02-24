@@ -588,7 +588,7 @@ namespace HomeCinema.Global
             }
         }
         // Get All Files on single FOLDER, include SUBFOLDERS (FULL Path WITHOUT Final BACKSLASH)
-        public static List<String> DirSearch(string sDir, string errFrom)
+        public static List<String> SearchFilesSingleDir(string sDir, string errFrom, bool recursive = true)
         {
             List<String> files = new List<String>();
             try
@@ -597,9 +597,12 @@ namespace HomeCinema.Global
                 {
                     files.Add(f);
                 }
-                foreach (string d in Directory.GetDirectories(sDir))
+                if (recursive)
                 {
-                    files.AddRange(DirSearch(d, errFrom));
+                    foreach (string d in Directory.GetDirectories(sDir))
+                    {
+                        files.AddRange(SearchFilesSingleDir(d, errFrom));
+                    }
                 }
             }
             catch (Exception excpt)
@@ -609,7 +612,7 @@ namespace HomeCinema.Global
             return files;
         }
         // Get All Files on MULTIPLE Directories
-        public static List<String> DirSearch(string[] dirArray, string errFrom)
+        public static List<String> SearchFilesMultipleDir(string[] dirArray, string errFrom)
         {
             List<String> files = new List<String>();
             try
@@ -622,7 +625,7 @@ namespace HomeCinema.Global
                     }
                     foreach (string d in Directory.GetDirectories(sDir.TrimEnd('\\')))
                     {
-                        files.AddRange(DirSearch(d, errFrom));
+                        files.AddRange(SearchFilesSingleDir(d, errFrom));
                     }
                 }
             }
@@ -882,7 +885,7 @@ namespace HomeCinema.Global
         public static bool DeleteFilesExt(string directory, string extension, string calledFrom)
         {
             string errFrom = "GlobalVars-DeleteFilesExt [" + calledFrom + "]";
-            List<String> items = DirSearch(directory, errFrom);
+            List<String> items = SearchFilesSingleDir(directory, errFrom);
             if (items.Count > 0)
             {
                 foreach (string file in items)
@@ -1321,7 +1324,7 @@ namespace HomeCinema.Global
                 if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
                 {
                     // Get all files and add them to length
-                    List<string> files = DirSearch(filename, errFrom);
+                    List<string> files = SearchFilesSingleDir(filename, errFrom);
                     foreach (string file in files)
                     {
                         len += new FileInfo(file).Length;

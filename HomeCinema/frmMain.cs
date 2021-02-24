@@ -783,7 +783,7 @@ namespace HomeCinema
 
             // Declare vars
             frmLoading form = new frmLoading("Getting media files from directories..", "Loading");
-            var DirListFrom = new List<string>();
+            var listMediaFiles = new List<string>();
             var listAlreadyinDB = new List<string>();
             var listToAdd = new List<string>();
             var listSeries = new List<string>();
@@ -792,12 +792,12 @@ namespace HomeCinema
             // Delegate task to frmLoading
             form.BackgroundWorker.DoWork += (sender1, e1) =>
             {
-                // Build a list of Directories from medialocation.hc-data
-                DirListFrom = GlobalVars.DirSearch(FOLDERTOSEARCH, calledFrom + "- DirSearch (Exception)");
+                // Build a list of Files in Directories from medialocation.hc-data
+                listMediaFiles = GlobalVars.SearchFilesMultipleDir(FOLDERTOSEARCH, calledFrom + "- DirSearch (Exception)");
 
                 // Check first if there are directories to search from.
                 // Find all files that match criteria
-                if (DirListFrom.Count > 0)
+                if (listMediaFiles.Count > 0)
                 {
                     // List already in db
                     listAlreadyinDB = DBCON.DbQrySingle(GlobalVars.DB_TNAME_FILEPATH, "[file]", calledFrom + "-listAlreadyinDB");
@@ -809,7 +809,7 @@ namespace HomeCinema
                     bool voided = true; // Check if file can be added to "Voided Files" Log
 
                     // If file is a movie,
-                    foreach (string file in DirListFrom)
+                    foreach (string file in listMediaFiles)
                     {
                         // Reset variable
                         voided = true;
@@ -902,7 +902,7 @@ namespace HomeCinema
                     int insertRes = InsertToDB(listToAdd, calledFrom + "-listToAdd");
                 }
                 // Clear previous lists
-                DirListFrom.Clear();
+                listMediaFiles.Clear();
                 listAlreadyinDB.Clear();
                 listToAdd.Clear();
             };
