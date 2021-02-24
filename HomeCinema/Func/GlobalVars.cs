@@ -905,62 +905,67 @@ namespace HomeCinema.Global
         public static void CheckForUpdate()
         {
             string errFrom = "GlobalVars - CheckForUpdate";
-            if ((SET_OFFLINE == false) && (SET_AUTOUPDATE))
+            frmLoading form = new frmLoading("Checking for Update..", "Loading");
+            form.BackgroundWorker.DoWork += (sender1, e1) =>
             {
-                GlobalVars.Log(errFrom, "Will Check for Updates..");
-                string fileName = PATH_TEMP + "version";
-                string link = @"https://raw.githubusercontent.com/JerloPH/HomeCinema/master/data/version";
-                string linkRelease = @"https://github.com/JerloPH/HomeCinema/releases";
-                int tryCount = 3;
+                if ((SET_OFFLINE == false) && (SET_AUTOUPDATE))
+                {
+                    GlobalVars.Log(errFrom, "Will Check for Updates..");
+                    string fileName = PATH_TEMP + "version";
+                    string link = @"https://raw.githubusercontent.com/JerloPH/HomeCinema/master/data/version";
+                    string linkRelease = @"https://github.com/JerloPH/HomeCinema/releases";
+                    int tryCount = 3;
 
-                if (File.Exists(fileName))
-                {
-                    TryDelete(fileName, errFrom);
-                }
-                // Keep trying to download version file, to check for update
-                while (tryCount > 0)
-                {
-                    GlobalVars.Log(errFrom, $"Fetching update version.. (Tries Left: {tryCount.ToString()})");
-                    DownloadFrom(link, fileName, false);
-                    tryCount -= 1;
                     if (File.Exists(fileName))
                     {
-                        tryCount = 0;
+                        TryDelete(fileName, errFrom);
                     }
-                }
-                // Done downloading version file
-                if (File.Exists(fileName))
-                {
-                    GlobalVars.Log(errFrom, "Compare version..");
-                    string vString = ReadStringFromFile(fileName, "GlobalVars-CheckForUpdate");
-                    int version;
-
-                    try { version = Convert.ToInt32(vString); }
-                    catch { version = 0; }
-
-                    if (version > HOMECINEMA_BUILD)
+                    // Keep trying to download version file, to check for update
+                    while (tryCount > 0)
                     {
-                        GlobalVars.Log(errFrom, "Update found!");
-                        // there is an update, goto page of releases
-                        try
+                        GlobalVars.Log(errFrom, $"Fetching update version.. (Tries Left: {tryCount.ToString()})");
+                        DownloadFrom(link, fileName, false);
+                        tryCount -= 1;
+                        if (File.Exists(fileName))
                         {
-                            if (ShowYesNo("There is an update!\nGo to Download Page?\nNOTE: It will open a Link in your Default Web Browser"))
+                            tryCount = 0;
+                        }
+                    }
+                    // Done downloading version file
+                    if (File.Exists(fileName))
+                    {
+                        GlobalVars.Log(errFrom, "Compare version..");
+                        string vString = ReadStringFromFile(fileName, "GlobalVars-CheckForUpdate");
+                        int version;
+
+                        try { version = Convert.ToInt32(vString); }
+                        catch { version = 0; }
+
+                        if (version > HOMECINEMA_BUILD)
+                        {
+                            GlobalVars.Log(errFrom, "Update found!");
+                            // there is an update, goto page of releases
+                            try
                             {
-                                Process.Start(linkRelease);//Process.Start("chrome.exe", linkRelease);
+                                if (ShowYesNo("There is an update!\nGo to Download Page?\nNOTE: It will open a Link in your Default Web Browser"))
+                                {
+                                    Process.Start(linkRelease);//Process.Start("chrome.exe", linkRelease);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                ShowWarning("Update Error!\nTry Updating Later..");
+                                ShowError(errFrom, ex, false);
                             }
                         }
-                        catch (Exception ex)
-                        {
-                            ShowWarning("Update Error!\nTry Updating Later..");
-                            ShowError(errFrom, ex, false);
-                        }
+                    }
+                    else
+                    {
+                        GlobalVars.Log(errFrom, "Cannot check for update!");
                     }
                 }
-                else
-                {
-                    GlobalVars.Log(errFrom, "Cannot check for update!");
-                }
-            }
+            };
+            form.ShowDialog();
         }
         // Play media file / Open it in default player
         public static void PlayMedia(string MOVIE_FILEPATH)
