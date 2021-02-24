@@ -60,7 +60,6 @@
 	- [x] Year
 	- [x] Genre
 	- [x] Director
-	- [x] Producer
   - [ ] ~~Switch webBrowser to Cefsharp Browser.~~ **Cancelled**
   
 
