@@ -994,10 +994,9 @@ namespace HomeCinema
                             {
                                 if (File.Exists(Imagefile))
                                 {
-                                    Image imgFromFile = Image.FromFile(Imagefile);
                                     this.Invoke(new Action(() =>
                                     {
-                                        GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imgFromFile);
+                                        GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), Image.FromFile(Imagefile));
                                     }));
                                 }
 
