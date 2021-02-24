@@ -652,7 +652,6 @@ namespace HomeCinema
                 GlobalVars.ShowWarning("No File selected!");
             }
         }
-
         private void btnCancel_Click(object sender, EventArgs e)
         {
             Close();

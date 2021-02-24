@@ -238,7 +238,6 @@ namespace HomeCinema
             // Show Message
             GlobalVars.ShowInfo("Done saving Settings!");
         }
-
         private void btnMediaLocAdd_Click(object sender, EventArgs e)
         {
             using (var fbd = new FolderBrowserDialog())
@@ -257,7 +256,6 @@ namespace HomeCinema
                 }
             }
         }
-
         private void btnMediaLocRemove_Click(object sender, EventArgs e)
         {
             // Remove selected from ListBox: BoxMediaLoc
@@ -266,13 +264,11 @@ namespace HomeCinema
                 BoxMediaLoc.Items.RemoveAt(BoxMediaLoc.SelectedIndices[i]);
             }
         }
-
         private void btnMediaLocClear_Click(object sender, EventArgs e)
         {
             // Remove all from ListBox: BoxMediaLoc
             BoxMediaLoc.Items.Clear();
         }
-
         private void btnSeriesLocAdd_Click(object sender, EventArgs e)
         {
             using (var fbd = new FolderBrowserDialog())
@@ -291,7 +287,6 @@ namespace HomeCinema
                 }
             }
         }
-
         private void btnSeriesLocRemove_Click(object sender, EventArgs e)
         {
             // Remove selected from ListBox: BoxSeriesLoc
@@ -300,7 +295,6 @@ namespace HomeCinema
                 BoxSeriesLoc.Items.RemoveAt(BoxSeriesLoc.SelectedIndices[i]);
             }
         }
-
         private void btnSeriesLocClear_Click(object sender, EventArgs e)
         {
             // Remove all from ListBox: BoxSeriesLoc

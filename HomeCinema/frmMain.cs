@@ -1137,12 +1137,10 @@ namespace HomeCinema
             GlobalVars.Log("frmMain-frmMain_FormClosing", logClose);
             Dispose();
         }
-        
         private void btnChangeView_Click(object sender, EventArgs e)
         {
             lvSearchResult.View = (lvSearchResult.View == View.Tile) ? View.LargeIcon : View.Tile;
         }
-
         private void btnSearch_Click(object sender, EventArgs e)
         {
             //string errFrom = "frmMain-btnSearch_Click";
@@ -1320,19 +1318,16 @@ namespace HomeCinema
                 OpenFormPlayMovie();
             }
         }
-
         private void cbHideAnim_CheckedChanged(object sender, EventArgs e)
         {
             // Perform Search
             btnSearch.PerformClick();
         }
-
         private void btnAbout_Click(object sender, EventArgs e)
         {
             //Show About form
             ShowAboutForm();
         }
-
         // Change lvSearchResult Sort by
         private void cbSort_SelectedIndexChanged(object sender, EventArgs e)
         {
