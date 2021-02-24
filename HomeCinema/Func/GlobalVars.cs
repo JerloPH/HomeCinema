@@ -550,25 +550,33 @@ namespace HomeCinema.Global
             key = (key < 1) ? 0 : key;
             return MOVIE_IMGLIST.Images[key];
         }
-        // Delete Image from ImageList
-        public static bool DeleteImageFromList(string movieID, string logFrom)
+        // Delete Image from ImageList, with thread safety
+        private delegate bool DeleteImageFromListDelegate(Form parent, string movieID, string logFrom);
+        public static bool DeleteImageFromList(Form parent, string movieID, string logFrom)
         {
             string errFrom = "GlobalVars-DeleteImageFromList";
-            string image_key = movieID + ".jpg";
-            int index = MOVIE_IMGLIST.Images.IndexOfKey(image_key);
-            if (index > 0)
+            if (parent.InvokeRequired)
             {
-                Image prevImg = MOVIE_IMGLIST.Images[index];
-                if (prevImg != null)
-                {
-                    Log($"{errFrom} - { logFrom } [Delete Image]", image_key);
-                    prevImg.Dispose();
-                    MOVIE_IMGLIST.Images.RemoveByKey(image_key);
-                    return true;
-                }
-                Log($"{errFrom} - { logFrom } [Delete Image]", image_key + " [Index exists but Image object is null]");
+                return (bool)parent.Invoke(new DeleteImageFromListDelegate(DeleteImageFromList), new object[] { parent, movieID, logFrom });
             }
-            Log($"{errFrom} - { logFrom } [Delete Image]", image_key + " [No such Image index on the list]");
+            else
+            {
+                string image_key = movieID + ".jpg";
+                int index = MOVIE_IMGLIST.Images.IndexOfKey(image_key);
+                if (index > 0)
+                {
+                    Image prevImg = MOVIE_IMGLIST.Images[index];
+                    if (prevImg != null)
+                    {
+                        Log($"{errFrom} - { logFrom } [Delete Image]", image_key);
+                        prevImg.Dispose();
+                        MOVIE_IMGLIST.Images.RemoveByKey(image_key);
+                        return true;
+                    }
+                    Log($"{errFrom} - { logFrom } [Delete Image]", image_key + " [Index exists but Image object is null]");
+                }
+                Log($"{errFrom} - { logFrom } [Delete Image]", image_key + " [No such Image index on the list]");
+            }
             return false;
         }
         // Get Category text from Int in DB

@@ -367,9 +367,7 @@ namespace HomeCinema
         {
             if (lv.InvokeRequired)
             {
-                lv.Invoke(new AddItemDelegate
-                (AddItem),
-                new object[] { lv, item });
+                lv.Invoke(new AddItemDelegate(AddItem), new object[]{ lv, item });
             }
             else
             {
