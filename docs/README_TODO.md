@@ -6,8 +6,6 @@
 - Check if file still exists, before loading it into the App. *For now, skips the entry.*
   - Delete entry from database, and cover picture (if existing).
   - Remove ListView item, when the file is not existing. Then, delete the entry from database. *Or archive to another ddatabase*.
-- Warning on entry deletion.
-- Delete Covers not in Database, when **[Clean]** button is pressed.
 - Use **language spoken** from TMDB to get Country, instead of Producing country.
 
 ## Features:
@@ -57,7 +55,12 @@
 	- [x] Producer
 	- [x] Director
 	- [x] Artist
-	
+  - [ ] Save Metadata to movie file. *Only for movies*.
+    - [x] Title
+	- [x] Year
+	- [x] Genre
+	- [x] Director
+	- [x] Producer
   - [ ] ~~Switch webBrowser to Cefsharp Browser.~~ **Cancelled**
   
 
