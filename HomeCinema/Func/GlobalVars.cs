@@ -926,10 +926,7 @@ namespace HomeCinema.Global
                         GlobalVars.Log(errFrom, $"Fetching update version.. (Tries Left: {tryCount.ToString()})");
                         DownloadFrom(link, fileName, false);
                         tryCount -= 1;
-                        if (File.Exists(fileName))
-                        {
-                            tryCount = 0;
-                        }
+                        tryCount = File.Exists(fileName) ? 0 : tryCount;
                     }
                     // Done downloading version file
                     if (File.Exists(fileName))
