@@ -41,6 +41,7 @@ namespace HomeCinema
 
         // Source ListView lvSearch Item index
         public ListViewItem LVITEM = null;
+        bool IsDeleted = false;
 
         // SQLHelper connection
         SQLHelper conn = new SQLHelper("frmMovie");
@@ -398,6 +399,14 @@ namespace HomeCinema
             GlobalVars.Log("Disposing frmMovie (" + Name + ")", "Controls are Disposed");
             // Run GC to clean
             GlobalVars.CleanMemory("frmMovie_FormClosing");
+
+            // Refresh on Main form
+            if (IsDeleted)
+            {
+                frmMain master = (frmMain)Application.OpenForms["frmMain"];
+                master.RefreshMovieList();
+            }
+
             Dispose();
         }
         // Play File on Default Player
@@ -466,12 +475,12 @@ namespace HomeCinema
                     // Delete MovieFile from local disk
                     GlobalVars.DeleteMove(MOVIE_FILEPATH, errFrom);
 
-                    // Refresh movie list
-                    frmMain master = (frmMain)Application.OpenForms["frmMain"];
-                    master.RefreshMovieList();
-
                     // Show message
                     GlobalVars.ShowInfo($"[{Text}] is Deleted!");
+
+                    // Deleted and perform refresh on main form
+                    IsDeleted = true;
+
                     // Dispose
                     Close();
                 }
