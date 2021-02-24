@@ -1386,8 +1386,22 @@ namespace HomeCinema.Global
         {
             SQLHelper dbCon = new SQLHelper("GlobalVars");
             string calledFrom = "GlobalVars-CleanCoversNotInDb()";
+            string filepath;
             List<string> listId = dbCon.DbQrySingle(DB_TNAME_INFO , DB_TABLE_INFO[0].ToString(), calledFrom);
-            List<string> listCover = SearchFilesSingleDir(PATH_IMG, calledFrom, false); 
+            List<string> listCover = SearchFilesSingleDir(PATH_IMG, calledFrom, false);
+            foreach (string i in listId)
+            {
+                // Remove element if its in listId
+                filepath = Path.Combine(PATH_IMG, $"{i}.jpg");
+                listCover.RemoveAt(listCover.IndexOf(filepath));
+            }
+            // Remove 0.jpg
+            filepath = Path.Combine(PATH_IMG, "0.jpg");
+            listCover.RemoveAt(listCover.IndexOf(filepath));
+            foreach (string file in listCover)
+            {
+                DeleteMove(file, calledFrom);
+            }
         }
         // ######################################################################## END - Add code above
     }

@@ -1292,6 +1292,8 @@ namespace HomeCinema
             frmLoading form = new frmLoading("Cleaning App..", "Loading");
             form.BackgroundWorker.DoWork += (sender1, e1) =>
             {
+                form.Message = "Removing images not in database..";
+                GlobalVars.CleanCoversNotInDb();
                 form.Message = "Removing temporary image files..";
                 GlobalVars.DeleteFilesExt(GlobalVars.PATH_TEMP, ".jpg", errFrom);
                 form.Message = "Removing temporary json files..";
