@@ -797,6 +797,7 @@ namespace HomeCinema
                 // Find all files that match criteria
                 if (listMediaFiles.Count > 0)
                 {
+                    form.Message = "Getting movie files from directories..";
                     // List already in db
                     listAlreadyinDB = DBCON.DbQrySingle(GlobalVars.DB_TNAME_FILEPATH, "[file]", calledFrom + "-listAlreadyinDB");
 
@@ -862,6 +863,7 @@ namespace HomeCinema
                         }
                     }
 
+                    form.Message = "Getting series folders from directories..";
                     // Add series' folder paths
                     GlobalVars.Log(calledFrom, "Search for Series Folders in Directory..");
                     listSeries = GlobalVars.GetSeriesLocations();
@@ -899,6 +901,7 @@ namespace HomeCinema
                     // Add now to database
                     int insertRes = InsertToDB(listToAdd, calledFrom + "-listToAdd");
                 }
+                form.Message = "Done fetching new media files!";
                 // Clear previous lists
                 listMediaFiles.Clear();
                 listAlreadyinDB.Clear();
@@ -917,7 +920,7 @@ namespace HomeCinema
             // Clear previous list
             lvSearchResult.Items.Clear();
             // Populate movie listview with new entries, from another form thread
-            frmLoading form = new frmLoading("Please wait while loading", "Loading");
+            frmLoading form = new frmLoading("Searching in database..", "Loading");
             DataTable dt, dtGetFile;
             string qry = SEARCH_QUERY;
             string cols = LVMovieItemsColumns;
