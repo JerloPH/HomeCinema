@@ -5,11 +5,9 @@
 - Improve speed of App load (check background worker and optimize).
 - Check if file still exists, before loading it into the App. *For now, skips the entry.*
   - Delete entry from database, and cover picture (if existing).
+  - Remove ListView item, when the file is not existing. Then, delete the entry from database. *Or archive to another ddatabase*.
 - Warning on entry deletion.
-- Loading screen on Background Worker. [Link](https://stackoverflow.com/questions/29094016/background-worker-loading-screen-in-winforms)
-- Separate background worker for Populating Movie ListView to another class. *Experimental*
 - Delete Covers not in Database, when **[Clean]** button is pressed.
-- Remove ListView item, when the file is not existing. Then, delete the entry from database. *Or archive to another ddatabase*.
 
 ## Features:
 - General
@@ -46,7 +44,7 @@
 	  - Trailer YT Link
 	  - Artist, Director, Producer
 	  - Country
-	  - Cover Image
+	  - Cover Image. *Not working properly as of v0.4*
 	  
 - Movie Information Form
   - [ ] Scrape all info from *TMDB API*.
@@ -63,11 +61,9 @@
   
 
 ## Bugs
-- TV Series search not getting imdb id for new entries.
-- JSON not properly deserialized.
-
 
 ## Others
 
-Github Stats on README.md
+### Github Stats on README.md
+
 <img src="https://github-readme-stats.vercel.app/api?username=JerloPH&&show_icons=true">
