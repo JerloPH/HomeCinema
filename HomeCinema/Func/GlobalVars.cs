@@ -130,15 +130,13 @@ namespace HomeCinema.Global
         {
             try
             {
-                // log to text file
                 using (StreamWriter w = File.AppendText(DB_DBLOGPATH))
                 {
-                    LogFormatted(codefrom, log, w);
+                    w.Write(LogFormatted(codefrom, log));
                 }
             }
             catch (Exception ex)
             {
-                // Log Error
                 ShowError("GlobalVars-LogDb", ex, false);
             }
         }
@@ -146,31 +144,29 @@ namespace HomeCinema.Global
         // Base Log function
         public static void Log(string filePath, string codefrom, string log)
         {
-            // Base
             try
             {
-                // log to text file
                 using (StreamWriter w = File.AppendText(filePath))
                 {
-                    LogFormatted(codefrom, log, w);
+                    w.Write(LogFormatted(codefrom, log));
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                ShowError("GlobalVars-Log", ex, false);
+            }
         }
         public static void Log(string codefrom, string log)
         {
-            // Call other Log
             Log(FILE_LOG_APP, codefrom, log);
         }
-        public static void LogFormatted(string codefrom, string logMessage, TextWriter w)
+        public static string LogFormatted(string codefrom, string logMessage)
         {
             try
             {
-                w.Write($"[{DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss:fff tt")}]: ");
-                w.Write($"'({ codefrom })'\n");
-                w.Write($"{ logMessage }\n");
+                return ($"[{DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss:fff tt")}]: [{ codefrom }] { logMessage }\n");
             }
-            catch { }
+            catch { return $"[Unknown DateTime][{ codefrom }] { logMessage }\n"; }
         }
         // LOG Error Message, seperate from main Log
         public static void LogErr(string codefrom, string log)
