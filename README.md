@@ -8,14 +8,6 @@
 ## Downloads
 
 **Windows 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.4.0.0/HomeCinema-Windows.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
-
-**NOTE: As of v0.3, file in saving media locations is changed.** <br>
-**Follow these steps if you are on v0.2.0.0 or lower :** <br>
-- After updating, open the App and find the folder where your movies are saved.
-- To add additional folders, and TV series location(s), go to **Settings** -> **File**.
-  - Click on **[Add]** and navigate to your directories.
-  
-**NOTE: This does NOT remove all your previous Movies in database, only update where to get new files from.**
   
 ### Download Counts
 
