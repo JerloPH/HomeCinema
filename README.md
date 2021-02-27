@@ -1,4 +1,4 @@
-# HomeCinema
+# HomeCinema - Media Organizer
 
 <img src="/data/v0.4.jpg"></img>
 
@@ -7,22 +7,23 @@
 
 ## Downloads
 
-**Windows 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.4.0.0/HomeCinema-Windows.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
-  
+**Windows 10, 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.4.0.0/HomeCinema-Windows.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
+**Note: Untested on Windows 7 and 8, but might work**
+
 ### Download Counts
 
 [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/total.svg)]() &nbsp;
 [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.4.0.0/total.svg)]()
+
 ## Requirements
 
 - 4GB or more RAM. <br>
 - Microsoft .NET Framework Runtime, version 4.6 or higher. [Download Link](https://dotnet.microsoft.com/download/dotnet-framework/net46) <br>
-
 ****
 
-## What is Home Cinema?
+## What is HomeCinema?
 
-**Home Cinema** is a *"media cataloguing software"*.
+**HomeCinema** is a *"media cataloguing software"*.
 
 Organize your collection of Movies and TV shows with HomeCinema.
 
@@ -36,7 +37,8 @@ Ease the pain of browsing through many folders and finding out which movie is wh
 [View **NSaneForum** post](https://nsaneforums.com/topic/401760-homecinema-0400/?tab=comments#comment-1665808) <br>
 [View **Netfox2** review (French site)](https://www.netfox2.net/modules/wfdownloads/singlefile.php?cid=123&lid=2181) <br>
 [View **Jetelecharge** review (French Site)](https://www.jetelecharge.com/Bureautique/10226.php) <br>
-[View **slunecnice** review (Czech site)](https://www.slunecnice.cz/sw/homecinema/)
+[View **slunecnice** review (Czech site)](https://www.slunecnice.cz/sw/homecinema/) <br>
+[View **Windows Forum** post](https://windowsforum.kr/data/15492689)
 	
 ## List of features:
 	
