@@ -1,10 +1,10 @@
 # HomeCinema - Project History:
 
-## HomeCinema v0.x
+## HomeCinema v0.4.1
 ### ***release 30 - build 02 March 2021 PHT***
 
-**[Windows, 64-bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.x/HomeCinema-Windows.zip "HomeCinema-Windows.zip")** <br>
-[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.x/HomeCinema-Windows.zip)]() <br>
+**[Windows, 64-bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.4.1/HomeCinema-Windows.zip "HomeCinema-Windows.zip")** <br>
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.4.1/HomeCinema-Windows.zip)]() <br>
 
 ### What's New?
 - REV: Delete Covers not in Database, when pressing **[Clean]**.

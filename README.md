@@ -1,13 +1,13 @@
 # HomeCinema - Media Organizer
 
-<img src="/data/v0.4.jpg"></img>
+<img src="/data/v0.4.1.jpg"></img>
 
-**version:**	0.4.0.0 <br>
-**build:**		29
+**version:**	0.4.1.0 <br>
+**build:**		30
 
 ## Downloads
 
-**Windows 10, 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.4.0.0/HomeCinema-Windows.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
+**Windows 10, 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.4.1.0/HomeCinema-Windows.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
 **Note: Untested on Windows 7 and 8, but might work**
 
 ### Download Counts
@@ -104,14 +104,14 @@ D:\TV Series\Title of Series and Season\Episode 1.mp4
 
 ## License
 
-*** Copyright 2020-2021 © JerloPH *** <br>
+**Copyright 2020-2021 © JerloPH** <br>
 *This project is licensed under* **[GPL v3](https://www.gnu.org/licenses/gpl-3.0.html)** <br>
-**[Click HERE to read LICENSE.md](/LICENSE.md)**
+**[Click HERE to read full LICENSE.md](/LICENSE.md)**
 
 <details>
 	<summary> <b>View Snippet</b> </summary>
 	
-    ** <b>HomeCinema - Organize your Movie Collection</b> **
+    <b>HomeCinema - Organize your Movie Collection</b>
     <b>Copyright (C) 2021  JerloPH (https://github.com/JerloPH)</b>
 
     This program is free software: you can redistribute it and/or modify
