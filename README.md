@@ -65,7 +65,7 @@ D:\TV Series\Title of Series and Season\Episode 1.mp4
 ```
   - With this structure, ``D:\TV Series`` is your base folder.
   
-<img src="/data/guide_add_media_paths.jpg"></img>
+<img src="/data/guide_add_mediaseries_paths.jpg"></img>
 
 ****
 
