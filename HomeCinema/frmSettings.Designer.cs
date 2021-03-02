@@ -110,7 +110,7 @@
             // 
             // lblItemDisplayCount
             // 
-            this.lblItemDisplayCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblItemDisplayCount.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblItemDisplayCount.Location = new System.Drawing.Point(5, 274);
             this.lblItemDisplayCount.Name = "lblItemDisplayCount";
             this.lblItemDisplayCount.Size = new System.Drawing.Size(244, 31);
@@ -128,7 +128,7 @@
             // 
             // lblMaxLogFileSize
             // 
-            this.lblMaxLogFileSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMaxLogFileSize.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMaxLogFileSize.Location = new System.Drawing.Point(5, 215);
             this.lblMaxLogFileSize.Name = "lblMaxLogFileSize";
             this.lblMaxLogFileSize.Size = new System.Drawing.Size(244, 31);
@@ -157,7 +157,7 @@
             // 
             // lblPlayMovieClick
             // 
-            this.lblPlayMovieClick.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPlayMovieClick.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPlayMovieClick.Location = new System.Drawing.Point(5, 143);
             this.lblPlayMovieClick.Name = "lblPlayMovieClick";
             this.lblPlayMovieClick.Size = new System.Drawing.Size(249, 23);
@@ -177,7 +177,7 @@
             // 
             // lblOfflineMode
             // 
-            this.lblOfflineMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOfflineMode.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblOfflineMode.Location = new System.Drawing.Point(5, 89);
             this.lblOfflineMode.Name = "lblOfflineMode";
             this.lblOfflineMode.Size = new System.Drawing.Size(244, 23);
@@ -197,7 +197,7 @@
             // 
             // lblAutoUpdate
             // 
-            this.lblAutoUpdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAutoUpdate.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAutoUpdate.Location = new System.Drawing.Point(5, 32);
             this.lblAutoUpdate.Name = "lblAutoUpdate";
             this.lblAutoUpdate.Size = new System.Drawing.Size(244, 23);
@@ -272,7 +272,7 @@
             this.BoxSeriesLoc.FormattingEnabled = true;
             this.BoxSeriesLoc.ItemHeight = 22;
             this.BoxSeriesLoc.Location = new System.Drawing.Point(11, 308);
-            this.BoxSeriesLoc.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BoxSeriesLoc.Margin = new System.Windows.Forms.Padding(4);
             this.BoxSeriesLoc.Name = "BoxSeriesLoc";
             this.BoxSeriesLoc.Size = new System.Drawing.Size(525, 114);
             this.BoxSeriesLoc.TabIndex = 21;
@@ -282,7 +282,7 @@
             this.BoxMediaLoc.FormattingEnabled = true;
             this.BoxMediaLoc.ItemHeight = 22;
             this.BoxMediaLoc.Location = new System.Drawing.Point(11, 139);
-            this.BoxMediaLoc.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BoxMediaLoc.Margin = new System.Windows.Forms.Padding(4);
             this.BoxMediaLoc.Name = "BoxMediaLoc";
             this.BoxMediaLoc.Size = new System.Drawing.Size(525, 114);
             this.BoxMediaLoc.TabIndex = 20;
@@ -421,12 +421,12 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Font = new System.Drawing.Font("Arial", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.btnCancel.Font = new System.Drawing.Font("Calibri", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.btnCancel.ForeColor = System.Drawing.Color.Black;
-            this.btnCancel.Location = new System.Drawing.Point(600, 478);
+            this.btnCancel.Location = new System.Drawing.Point(597, 478);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(205, 59);
+            this.btnCancel.Size = new System.Drawing.Size(208, 59);
             this.btnCancel.TabIndex = 11;
             this.btnCancel.Text = "CANCEL";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -434,12 +434,12 @@
             // 
             // btnSave
             // 
-            this.btnSave.Font = new System.Drawing.Font("Arial", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.btnSave.Font = new System.Drawing.Font("Calibri", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.btnSave.ForeColor = System.Drawing.Color.Black;
-            this.btnSave.Location = new System.Drawing.Point(397, 478);
+            this.btnSave.Location = new System.Drawing.Point(404, 478);
             this.btnSave.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(197, 59);
+            this.btnSave.Size = new System.Drawing.Size(183, 59);
             this.btnSave.TabIndex = 10;
             this.btnSave.Text = "SAVE";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -447,7 +447,7 @@
             // 
             // label9
             // 
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Font = new System.Drawing.Font("Calibri", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.Location = new System.Drawing.Point(5, 475);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(335, 34);

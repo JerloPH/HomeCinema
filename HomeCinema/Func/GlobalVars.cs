@@ -33,7 +33,7 @@ using Microsoft.VisualBasic.FileIO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Microsoft.WindowsAPICodePack.Shell;
-using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
+using HomeCinema.SQLFunc;
 
 namespace HomeCinema.Global
 {
@@ -42,7 +42,7 @@ namespace HomeCinema.Global
         // Variables ############################################################################################################
         public static string HOMECINEMA_NAME = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyTitleAttribute>().Title;
         public static string HOMECINEMA_VERSION = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-        public static int HOMECINEMA_BUILD = 29;
+        public static int HOMECINEMA_BUILD = 30;
 
         public static string SEARCHBOX_PLACEHOLDER = "Type your Search query here...";
 
@@ -130,15 +130,13 @@ namespace HomeCinema.Global
         {
             try
             {
-                // log to text file
                 using (StreamWriter w = File.AppendText(DB_DBLOGPATH))
                 {
-                    LogFormatted(codefrom, log, w);
+                    w.Write(LogFormatted(codefrom, log));
                 }
             }
             catch (Exception ex)
             {
-                // Log Error
                 ShowError("GlobalVars-LogDb", ex, false);
             }
         }
@@ -146,43 +144,29 @@ namespace HomeCinema.Global
         // Base Log function
         public static void Log(string filePath, string codefrom, string log)
         {
-            // Base
             try
             {
-                // log to text file
                 using (StreamWriter w = File.AppendText(filePath))
                 {
-                    LogFormatted(codefrom, log, w);
+                    w.Write(LogFormatted(codefrom, log));
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                ShowError("GlobalVars-Log", ex, false);
+            }
         }
         public static void Log(string codefrom, string log)
         {
-            // Call other Log
             Log(FILE_LOG_APP, codefrom, log);
         }
-        public static void LogFormatted(string codefrom, string logMessage, TextWriter w)
+        public static string LogFormatted(string codefrom, string logMessage)
         {
             try
             {
-                w.Write($"[{DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss:fff tt")}]: ");
-                w.Write($"'({ codefrom })'\n");
-                w.Write($"{ logMessage }\n");
+                return ($"[{DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss:fff tt")}]: [{ codefrom }] { logMessage }\n");
             }
-            catch { }
-        }
-        public static void LogLine()
-        {
-            try
-            {
-                // log to text file
-                using (StreamWriter w = File.AppendText(FILE_LOG_APP))
-                {
-                    w.Write("##############################################################################");
-                }
-            }
-            catch { }
+            catch { return $"[Unknown DateTime][{ codefrom }] { logMessage }\n"; }
         }
         // LOG Error Message, seperate from main Log
         public static void LogErr(string codefrom, string log)
@@ -206,10 +190,6 @@ namespace HomeCinema.Global
         public static void ShowInfo(string msg)
         {
             ShowMsg(msg, CAPTION_DIALOG, MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        public static void ShowInfo(string msg, string caption)
-        {
-            ShowMsg(msg, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         public static void ShowWarning(string msg)
         {
@@ -400,16 +380,6 @@ namespace HomeCinema.Global
             }
             return false;
         }
-        // Build string array from combobox
-        public static string[] BuildStringArrayFromCB(ComboBox currentComboBox)
-        {
-            string[] items = new string[currentComboBox.Items.Count];
-            for (int i = 0; i < currentComboBox.Items.Count; i++)
-            {
-                items[i] = currentComboBox.Items[i].ToString();
-            }
-            return items;
-        }
         // Build directory string array from file
         public static string[] BuildDirArrFromFile(string fileToread, string calledFrom, char sep = '*')
         {
@@ -550,25 +520,33 @@ namespace HomeCinema.Global
             key = (key < 1) ? 0 : key;
             return MOVIE_IMGLIST.Images[key];
         }
-        // Delete Image from ImageList
-        public static bool DeleteImageFromList(string movieID, string logFrom)
+        // Delete Image from ImageList, with thread safety
+        private delegate bool DeleteImageFromListDelegate(Form parent, string movieID, string logFrom);
+        public static bool DeleteImageFromList(Form parent, string movieID, string logFrom)
         {
             string errFrom = "GlobalVars-DeleteImageFromList";
-            string image_key = movieID + ".jpg";
-            int index = MOVIE_IMGLIST.Images.IndexOfKey(image_key);
-            if (index > 0)
+            if (parent.InvokeRequired)
             {
-                Image prevImg = MOVIE_IMGLIST.Images[index];
-                if (prevImg != null)
-                {
-                    Log($"{errFrom} - { logFrom } [Delete Image]", image_key);
-                    prevImg.Dispose();
-                    MOVIE_IMGLIST.Images.RemoveByKey(image_key);
-                    return true;
-                }
-                Log($"{errFrom} - { logFrom } [Delete Image]", image_key + " [Index exists but Image object is null]");
+                return (bool)parent.Invoke(new DeleteImageFromListDelegate(DeleteImageFromList), new object[] { parent, movieID, logFrom });
             }
-            Log($"{errFrom} - { logFrom } [Delete Image]", image_key + " [No such Image index on the list]");
+            else
+            {
+                string image_key = movieID + ".jpg";
+                int index = MOVIE_IMGLIST.Images.IndexOfKey(image_key);
+                if (index > 0)
+                {
+                    Image prevImg = MOVIE_IMGLIST.Images[index];
+                    if (prevImg != null)
+                    {
+                        Log($"{errFrom} - { logFrom } [Delete Image]", image_key);
+                        prevImg.Dispose();
+                        MOVIE_IMGLIST.Images.RemoveByKey(image_key);
+                        return true;
+                    }
+                    Log($"{errFrom} - { logFrom } [Delete Image]", image_key + " [Index exists but Image object is null]");
+                }
+                Log($"{errFrom} - { logFrom } [Delete Image]", image_key + " [No such Image index on the list]");
+            }
             return false;
         }
         // Get Category text from Int in DB
@@ -588,7 +566,7 @@ namespace HomeCinema.Global
             }
         }
         // Get All Files on single FOLDER, include SUBFOLDERS (FULL Path WITHOUT Final BACKSLASH)
-        public static List<String> DirSearch(string sDir, string errFrom)
+        public static List<String> SearchFilesSingleDir(string sDir, string errFrom, bool recursive = true)
         {
             List<String> files = new List<String>();
             try
@@ -597,9 +575,12 @@ namespace HomeCinema.Global
                 {
                     files.Add(f);
                 }
-                foreach (string d in Directory.GetDirectories(sDir))
+                if (recursive)
                 {
-                    files.AddRange(DirSearch(d, errFrom));
+                    foreach (string d in Directory.GetDirectories(sDir))
+                    {
+                        files.AddRange(SearchFilesSingleDir(d, errFrom));
+                    }
                 }
             }
             catch (Exception excpt)
@@ -609,7 +590,7 @@ namespace HomeCinema.Global
             return files;
         }
         // Get All Files on MULTIPLE Directories
-        public static List<String> DirSearch(string[] dirArray, string errFrom)
+        public static List<String> SearchFilesMultipleDir(string[] dirArray, string errFrom)
         {
             List<String> files = new List<String>();
             try
@@ -622,7 +603,7 @@ namespace HomeCinema.Global
                     }
                     foreach (string d in Directory.GetDirectories(sDir.TrimEnd('\\')))
                     {
-                        files.AddRange(DirSearch(d, errFrom));
+                        files.AddRange(SearchFilesSingleDir(d, errFrom));
                     }
                 }
             }
@@ -858,52 +839,6 @@ namespace HomeCinema.Global
             }
             return DownloadLoop(filePath, urlFrom, errFrom, showAMsg);
         }
-        // Read JSON from file and un-parse a specific string from it
-        public static string UnParseJSON(string localFile, string startString, string endString)
-        {
-            if (File.Exists(localFile))
-            {
-                try
-                {
-                    using (StreamReader r = new StreamReader(localFile))
-                    {
-                        string ret = "";
-                        string jsonFile = r.ReadToEnd();
-                        int sLen = startString.Length;
-                        int sLenEnd = endString.Length;
-                        int sFirst = jsonFile.IndexOf(startString);
-                        int sSec = jsonFile.IndexOf(endString);
-                        int sStart = sFirst + sLen;
-                        int sEnd = sSec - (sFirst + sLen);
-                        string debug = "";
-                        debug += "Strings\nSTART: " + startString + "\nEND: " + endString + "\n\n";
-                        debug += $"Lengths:\n" +
-                            $"Starting: {sLen.ToString()}\n" +
-                            $"End: {sLenEnd.ToString()}\n" +
-                            $"\nIndex:\n" +
-                            $"Start: {sFirst.ToString()}\n" +
-                            $"End: {sSec.ToString()}\n" +
-                            $"\nActual Index:\n" +
-                            $"Start: {sStart.ToString()}\n" +
-                            $"End: {sEnd.ToString()}\n";
-                        if ((sStart > -1) && (sEnd > 0))
-                        {
-                            ret = jsonFile.Substring(sStart, sEnd);
-                        }
-                        debug += "\nResult:\n" + ret;
-                        debug += "\n################################\n";
-                        WriteAppend(PATH_TEMP + "_JSONLog.log", debug);
-                        return ret;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // Log Error
-                    ShowError("GlobalVars-UnParseJSON", ex, false);
-                }
-            }
-            return "";
-        }
         // Move file to RecycleBin, instead of permanent delete
         public static bool DeleteMove(string file, string errFrom)
         {
@@ -928,7 +863,7 @@ namespace HomeCinema.Global
         public static bool DeleteFilesExt(string directory, string extension, string calledFrom)
         {
             string errFrom = "GlobalVars-DeleteFilesExt [" + calledFrom + "]";
-            List<String> items = DirSearch(directory, errFrom);
+            List<String> items = SearchFilesSingleDir(directory, errFrom);
             if (items.Count > 0)
             {
                 foreach (string file in items)
@@ -948,62 +883,64 @@ namespace HomeCinema.Global
         public static void CheckForUpdate()
         {
             string errFrom = "GlobalVars - CheckForUpdate";
-            if ((SET_OFFLINE == false) && (SET_AUTOUPDATE))
+            frmLoading form = new frmLoading("Checking for Update..", "Loading");
+            form.BackgroundWorker.DoWork += (sender1, e1) =>
             {
-                GlobalVars.Log(errFrom, "Will Check for Updates..");
-                string fileName = PATH_TEMP + "version";
-                string link = @"https://raw.githubusercontent.com/JerloPH/HomeCinema/master/data/version";
-                string linkRelease = @"https://github.com/JerloPH/HomeCinema/releases";
-                int tryCount = 3;
+                if ((SET_OFFLINE == false) && (SET_AUTOUPDATE))
+                {
+                    GlobalVars.Log(errFrom, "Will Check for Updates..");
+                    string fileName = PATH_TEMP + "version";
+                    string link = @"https://raw.githubusercontent.com/JerloPH/HomeCinema/master/data/version";
+                    string linkRelease = @"https://github.com/JerloPH/HomeCinema/releases";
+                    int tryCount = 3;
 
-                if (File.Exists(fileName))
-                {
-                    TryDelete(fileName, errFrom);
-                }
-                // Keep trying to download version file, to check for update
-                while (tryCount > 0)
-                {
-                    GlobalVars.Log(errFrom, $"Fetching update version.. (Tries Left: {tryCount.ToString()})");
-                    DownloadFrom(link, fileName, false);
-                    tryCount -= 1;
                     if (File.Exists(fileName))
                     {
-                        tryCount = 0;
+                        TryDelete(fileName, errFrom);
                     }
-                }
-                // Done downloading version file
-                if (File.Exists(fileName))
-                {
-                    GlobalVars.Log(errFrom, "Compare version..");
-                    string vString = ReadStringFromFile(fileName, "GlobalVars-CheckForUpdate");
-                    int version;
-
-                    try { version = Convert.ToInt32(vString); }
-                    catch { version = 0; }
-
-                    if (version > HOMECINEMA_BUILD)
+                    // Keep trying to download version file, to check for update
+                    while (tryCount > 0)
                     {
-                        GlobalVars.Log(errFrom, "Update found!");
-                        // there is an update, goto page of releases
-                        try
+                        GlobalVars.Log(errFrom, $"Fetching update version.. (Tries Left: {tryCount.ToString()})");
+                        DownloadFrom(link, fileName, false);
+                        tryCount -= 1;
+                        tryCount = File.Exists(fileName) ? 0 : tryCount;
+                    }
+                    // Done downloading version file
+                    if (File.Exists(fileName))
+                    {
+                        GlobalVars.Log(errFrom, "Compare version..");
+                        string vString = ReadStringFromFile(fileName, "GlobalVars-CheckForUpdate");
+                        int version;
+
+                        try { version = Convert.ToInt32(vString); }
+                        catch { version = 0; }
+
+                        if (version > HOMECINEMA_BUILD)
                         {
-                            if (ShowYesNo("There is an update!\nGo to Download Page?\nNOTE: It will open a Link in your Default Web Browser"))
+                            GlobalVars.Log(errFrom, "Update found!");
+                            // there is an update, goto page of releases
+                            try
                             {
-                                Process.Start(linkRelease);//Process.Start("chrome.exe", linkRelease);
+                                if (ShowYesNo("There is an update!\nGo to Download Page?\nNOTE: It will open a Link in your Default Web Browser"))
+                                {
+                                    Process.Start(linkRelease);//Process.Start("chrome.exe", linkRelease);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                ShowWarning("Update Error!\nTry Updating Later..");
+                                ShowError(errFrom, ex, false);
                             }
                         }
-                        catch (Exception ex)
-                        {
-                            ShowWarning("Update Error!\nTry Updating Later..");
-                            ShowError(errFrom, ex, false);
-                        }
+                    }
+                    else
+                    {
+                        GlobalVars.Log(errFrom, "Cannot check for update!");
                     }
                 }
-                else
-                {
-                    GlobalVars.Log(errFrom, "Cannot check for update!");
-                }
-            }
+            };
+            form.ShowDialog();
         }
         // Play media file / Open it in default player
         public static void PlayMedia(string MOVIE_FILEPATH)
@@ -1367,7 +1304,7 @@ namespace HomeCinema.Global
                 if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
                 {
                     // Get all files and add them to length
-                    List<string> files = DirSearch(filename, errFrom);
+                    List<string> files = SearchFilesSingleDir(filename, errFrom);
                     foreach (string file in files)
                     {
                         len += new FileInfo(file).Length;
@@ -1397,8 +1334,7 @@ namespace HomeCinema.Global
         }
         public static bool SaveMetadata(string filename, List<string> data)
         {
-            frmLoading form = new frmLoading("Please wait while saving..", "Saving Metadata");
-
+            frmLoading form = new frmLoading("Saving Metadata..", "Loading");
             form.BackgroundWorker.DoWork += (sender1, e1) =>
             {
                 var file = ShellFile.FromFilePath(filename);
@@ -1414,13 +1350,31 @@ namespace HomeCinema.Global
 
                 try { file.Properties.System.Video.Director.Value = data[3].Replace(", ", ",").Split(','); }
                 catch { }
-
-                try { file.Properties.System.Media.Producer.Value = data[4].Replace(", ", ",").Split(','); }
-                catch { }
-
             };
             form.ShowDialog();
             return true;
+        }
+        // Delete all covers not in database
+        public static void CleanCoversNotInDb()
+        {
+            SQLHelper dbCon = new SQLHelper("GlobalVars");
+            string calledFrom = "GlobalVars-CleanCoversNotInDb()";
+            string filepath;
+            List<string> listId = dbCon.DbQrySingle(DB_TNAME_INFO , DB_TABLE_INFO[0].ToString(), calledFrom);
+            List<string> listCover = SearchFilesSingleDir(PATH_IMG, calledFrom, false);
+            foreach (string i in listId)
+            {
+                // Remove element if its in listId
+                filepath = Path.Combine(PATH_IMG, $"{i}.jpg");
+                listCover.RemoveAt(listCover.IndexOf(filepath));
+            }
+            // Remove 0.jpg
+            filepath = Path.Combine(PATH_IMG, "0.jpg");
+            listCover.RemoveAt(listCover.IndexOf(filepath));
+            foreach (string file in listCover)
+            {
+                DeleteMove(file, calledFrom);
+            }
         }
         // ######################################################################## END - Add code above
     }

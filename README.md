@@ -1,36 +1,27 @@
-# HomeCinema
+# HomeCinema - Media Organizer
 
-<img src="/data/v0.4.jpg"></img>
+<img src="/data/v0.4.1.jpg"></img>
 
-**version:**	0.4.0.0 <br>
-**build:**		29
+**version:**	0.4.1.0 <br>
+**build:**		30
 
 ## Downloads
 
-**Windows 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.4.0.0/HomeCinema-Windows.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
+**Windows 10, 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.4.1.0/HomeCinema-Windows.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
+**Note: Untested on Windows 7 and 8, but might work**
 
-**NOTE: This update breaks the old way that the App saves directories** <br>
-- After updating, open the App and find the folder where your movies are saved.
-- To add additional folders, and TV series location(s), go to **Settings** -> **File**.
-  - Click on **[Add]** and navigate to your directories.
-  
-**NOTE: This does NOT remove all your previous Movies in database.**
-  
 ### Download Counts
-
-**Current:** &nbsp; [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.4.0.0/total.svg)]() <br>
-**Overall:** &nbsp; [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/total.svg)]()
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/total.svg)]() &nbsp;
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/latest/HomeCinema-Windows.zip)]()
 
 ## Requirements
 
 - 4GB or more RAM. <br>
 - Microsoft .NET Framework Runtime, version 4.6 or higher. [Download Link](https://dotnet.microsoft.com/download/dotnet-framework/net46) <br>
 
-****
+## What is HomeCinema?
 
-## What is Home Cinema?
-
-**Home Cinema** is a *"media cataloguing software"*.
+**HomeCinema** is a *"media cataloguing software"*.
 
 Organize your collection of Movies and TV shows with HomeCinema.
 
@@ -38,10 +29,14 @@ It is like a book catalogue, except it's for Movies and Series located in your L
 
 Ease the pain of browsing through many folders and finding out which movie is which.
 
+## External Links
+**Note: I'm not the user who posted any of them. Visit at your discretion.** <br>
 [View **Softpedia** review here](https://www.softpedia.com/get/Multimedia/Video/Other-VIDEO-Tools/HomeCinema.shtml) <br>
+[View **NSaneForum** post](https://nsaneforums.com/topic/401760-homecinema-0400/?tab=comments#comment-1665808) <br>
 [View **Netfox2** review (French site)](https://www.netfox2.net/modules/wfdownloads/singlefile.php?cid=123&lid=2181) <br>
 [View **Jetelecharge** review (French Site)](https://www.jetelecharge.com/Bureautique/10226.php) <br>
-[View **slunecnice** review (Czech site)](https://www.slunecnice.cz/sw/homecinema/)
+[View **slunecnice** review (Czech site)](https://www.slunecnice.cz/sw/homecinema/) <br>
+[View **Windows Forum** post](https://windowsforum.kr/data/15492689)
 	
 ## List of features:
 	
@@ -89,7 +84,6 @@ D:\TV Series\Title of Series and Season\Episode 1.mp4
 [**Microsoft Windows API CodePack Core**](https://www.nuget.org/packages/Microsoft-WindowsAPICodePack-Core/) - For various functions. <br>
 [**Microsoft Windows API CodePack Shell**](https://www.nuget.org/packages/Microsoft-WindowsAPICodePack-Shell/) - For various functions. <br>
 [**Microsoft Universal Windows Platform**](https://www.nuget.org/packages/Microsoft.NETCore.UniversalWindowsPlatform/) - For various functions. <br>
-
 ****
 
 ## Find a bug or want a new feature?
@@ -101,28 +95,24 @@ D:\TV Series\Title of Series and Season\Episode 1.mp4
     - App_DB.log
     - App_ErrorLog.log
   - If possible, include a screenshot.
-  - Explain the details in full. Describe what you are doing or trying to do, on what screen when the error apppeared.
-    NOTE: Strictly **NO GENERIC** *"I get an error"* or *"This app has bugs"*.
+  - Explain the details in full. Describe what you are doing or trying to do, on what form when the error apppeared.
   - Try to replicate the error / bug.
-  - Failure to comply will make your report probably ignored.
 - *When requesting a **new feature / feature update**,*
   - Include how it works.
   - Explain in full details.
-  - State how useful the feature is.
-
 ****
 
 ## License
 
-*** Copyright 2020 © JerloPH *** <br>
+**Copyright 2020-2021 © JerloPH** <br>
 *This project is licensed under* **[GPL v3](https://www.gnu.org/licenses/gpl-3.0.html)** <br>
-**[Click HERE to read LICENSE.md](/LICENSE.md)**
+**[Click HERE to read full LICENSE.md](/LICENSE.md)**
 
 <details>
 	<summary> <b>View Snippet</b> </summary>
 	
-    ** <b>HomeCinema - Organize your Movie Collection</b> **
-    <b>Copyright (C) 2020  JerloPH (https://github.com/JerloPH)</b>
+    <b>HomeCinema - Organize your Movie Collection</b>
+    <b>Copyright (C) 2021  JerloPH (https://github.com/JerloPH)</b>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

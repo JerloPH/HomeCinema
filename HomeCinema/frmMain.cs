@@ -367,9 +367,7 @@ namespace HomeCinema
         {
             if (lv.InvokeRequired)
             {
-                lv.Invoke(new AddItemDelegate
-                (AddItem),
-                new object[] { lv, item });
+                lv.Invoke(new AddItemDelegate(AddItem), new object[]{ lv, item });
             }
             else
             {
@@ -783,7 +781,7 @@ namespace HomeCinema
 
             // Declare vars
             frmLoading form = new frmLoading("Getting media files from directories..", "Loading");
-            var DirListFrom = new List<string>();
+            var listMediaFiles = new List<string>();
             var listAlreadyinDB = new List<string>();
             var listToAdd = new List<string>();
             var listSeries = new List<string>();
@@ -792,13 +790,14 @@ namespace HomeCinema
             // Delegate task to frmLoading
             form.BackgroundWorker.DoWork += (sender1, e1) =>
             {
-                // Build a list of Directories from medialocation.hc-data
-                DirListFrom = GlobalVars.DirSearch(FOLDERTOSEARCH, calledFrom + "- DirSearch (Exception)");
+                // Build a list of Files in Directories from medialocation.hc-data
+                listMediaFiles = GlobalVars.SearchFilesMultipleDir(FOLDERTOSEARCH, calledFrom + "- DirSearch (Exception)");
 
                 // Check first if there are directories to search from.
                 // Find all files that match criteria
-                if (DirListFrom.Count > 0)
+                if (listMediaFiles.Count > 0)
                 {
+                    form.Message = "Getting movie files from directories..";
                     // List already in db
                     listAlreadyinDB = DBCON.DbQrySingle(GlobalVars.DB_TNAME_FILEPATH, "[file]", calledFrom + "-listAlreadyinDB");
 
@@ -809,7 +808,7 @@ namespace HomeCinema
                     bool voided = true; // Check if file can be added to "Voided Files" Log
 
                     // If file is a movie,
-                    foreach (string file in DirListFrom)
+                    foreach (string file in listMediaFiles)
                     {
                         // Reset variable
                         voided = true;
@@ -864,6 +863,7 @@ namespace HomeCinema
                         }
                     }
 
+                    form.Message = "Getting series folders from directories..";
                     // Add series' folder paths
                     GlobalVars.Log(calledFrom, "Search for Series Folders in Directory..");
                     listSeries = GlobalVars.GetSeriesLocations();
@@ -901,8 +901,9 @@ namespace HomeCinema
                     // Add now to database
                     int insertRes = InsertToDB(listToAdd, calledFrom + "-listToAdd");
                 }
+                form.Message = "Done fetching new media files!";
                 // Clear previous lists
-                DirListFrom.Clear();
+                listMediaFiles.Clear();
                 listAlreadyinDB.Clear();
                 listToAdd.Clear();
             };
@@ -919,7 +920,7 @@ namespace HomeCinema
             // Clear previous list
             lvSearchResult.Items.Clear();
             // Populate movie listview with new entries, from another form thread
-            frmLoading form = new frmLoading("Please wait while loading", "Loading");
+            frmLoading form = new frmLoading("Searching in database..", "Loading");
             DataTable dt, dtGetFile;
             string qry = SEARCH_QUERY;
             string cols = LVMovieItemsColumns;
@@ -994,10 +995,9 @@ namespace HomeCinema
                             {
                                 if (File.Exists(Imagefile))
                                 {
-                                    Image imgFromFile = Image.FromFile(Imagefile);
                                     this.Invoke(new Action(() =>
                                     {
-                                        GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imgFromFile);
+                                        GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), Image.FromFile(Imagefile));
                                     }));
                                 }
 
@@ -1137,12 +1137,10 @@ namespace HomeCinema
             GlobalVars.Log("frmMain-frmMain_FormClosing", logClose);
             Dispose();
         }
-        
         private void btnChangeView_Click(object sender, EventArgs e)
         {
             lvSearchResult.View = (lvSearchResult.View == View.Tile) ? View.LargeIcon : View.Tile;
         }
-
         private void btnSearch_Click(object sender, EventArgs e)
         {
             //string errFrom = "frmMain-btnSearch_Click";
@@ -1293,6 +1291,8 @@ namespace HomeCinema
             frmLoading form = new frmLoading("Cleaning App..", "Loading");
             form.BackgroundWorker.DoWork += (sender1, e1) =>
             {
+                form.Message = "Removing images not in database..";
+                GlobalVars.CleanCoversNotInDb();
                 form.Message = "Removing temporary image files..";
                 GlobalVars.DeleteFilesExt(GlobalVars.PATH_TEMP, ".jpg", errFrom);
                 form.Message = "Removing temporary json files..";
@@ -1318,19 +1318,16 @@ namespace HomeCinema
                 OpenFormPlayMovie();
             }
         }
-
         private void cbHideAnim_CheckedChanged(object sender, EventArgs e)
         {
             // Perform Search
             btnSearch.PerformClick();
         }
-
         private void btnAbout_Click(object sender, EventArgs e)
         {
             //Show About form
             ShowAboutForm();
         }
-
         // Change lvSearchResult Sort by
         private void cbSort_SelectedIndexChanged(object sender, EventArgs e)
         {

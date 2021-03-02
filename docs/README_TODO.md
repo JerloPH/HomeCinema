@@ -5,11 +5,11 @@
 - Improve speed of App load (check background worker and optimize).
 - Check if file still exists, before loading it into the App. *For now, skips the entry.*
   - Delete entry from database, and cover picture (if existing).
-- Warning on entry deletion.
-- Loading screen on Background Worker. [Link](https://stackoverflow.com/questions/29094016/background-worker-loading-screen-in-winforms)
-- Separate background worker for Populating Movie ListView to another class. *Experimental*
-- Delete Covers not in Database, when **[Clean]** button is pressed.
-- Remove ListView item, when the file is not existing. Then, delete the entry from database. *Or archive to another ddatabase*.
+  - Remove ListView item, when the file is not existing. Then, delete the entry from database. *Or archive to another ddatabase*.
+- Use **language spoken** from TMDB to get Country, instead of Producing country.
+- Replace **Episode Title** as **Original Title/Name**, for Movies.
+- Use **Series Name/Title** only **if** category is **Series**, and use as **Original Title/Name**.
+- Make **frmMain** static in **Program.cs**. Update any reference to **frmMain**.
 
 ## Features:
 - General
@@ -35,7 +35,7 @@
   - [ ] Check all Files in DB if Existed. If not, "move to another db / keep".
   - [ ] Open Media Player in 2nd monitor, if existing. **On hold**.
 
-- Main Form
+## Main Form
   - [ ] Add Button to Group Items (Group by: Series Name, if Series) *(Check if season or episode is not empty, and get only episode 1)* **On-HOLD**
   - [x] Automatically get information from IMDB when newly added media (IMDB Scraper). **Ongoing**.
     - Done:
@@ -46,9 +46,9 @@
 	  - Trailer YT Link
 	  - Artist, Director, Producer
 	  - Country
-	  - Cover Image
+	  - Cover Image. *Not working properly as of v0.4*
 	  
-- Movie Information Form
+## Movie Information Form
   - [ ] Scrape all info from *TMDB API*.
     - [x] Cover Image
     - [x] IMDB, Year, Name, Summary, Genre, Trailer YT Link
@@ -58,16 +58,20 @@
 	- [x] Producer
 	- [x] Director
 	- [x] Artist
-	
+  - [ ] Save Metadata to movie file. *Only for movies*.
+    - [x] Title
+	- [x] Year
+	- [x] Genre
+	- [x] Director
   - [ ] ~~Switch webBrowser to Cefsharp Browser.~~ **Cancelled**
   
+## Settings form
+- [ ] Create new TextBox to set TimeOut for connections.
 
 ## Bugs
-- TV Series search not getting imdb id for new entries.
-- JSON not properly deserialized.
-
 
 ## Others
 
-Github Stats on README.md
+### Github Stats on README.md
+
 <img src="https://github-readme-stats.vercel.app/api?username=JerloPH&&show_icons=true">

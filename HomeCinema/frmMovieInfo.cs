@@ -264,6 +264,12 @@ namespace HomeCinema
             dtInfo.Clear();
             dtInfo.Dispose();
 
+            // Disable setting metadata if series
+            if (cbCategory.Text.ToLower().Contains("series"))
+            {
+                cbSaveMetadata.Enabled = false;
+            }
+
             // Set control focus
             txtName.Focus();
         }
@@ -366,7 +372,7 @@ namespace HomeCinema
             // Remove previous image from the ImgList, exit if not succesful and show warning
             if (File.Exists(GlobalVars.ImgFullPath(MOVIE_ID)))
             {
-                if (GlobalVars.DeleteImageFromList(MOVIE_ID, ExceptionFrom + " (Previous Image)") == false)
+                if (GlobalVars.DeleteImageFromList(this, MOVIE_ID, ExceptionFrom + " (Previous Image)") == false)
                 {
                     GlobalVars.ShowWarning("Cannot replace image!\nFile must be NOT in use!");
                     return;
@@ -652,7 +658,6 @@ namespace HomeCinema
                 GlobalVars.ShowWarning("No File selected!");
             }
         }
-
         private void btnCancel_Click(object sender, EventArgs e)
         {
             Close();

@@ -41,6 +41,7 @@ namespace HomeCinema
 
         // Source ListView lvSearch Item index
         public ListViewItem LVITEM = null;
+        bool IsDeleted = false;
 
         // SQLHelper connection
         SQLHelper conn = new SQLHelper("frmMovie");
@@ -398,6 +399,14 @@ namespace HomeCinema
             GlobalVars.Log("Disposing frmMovie (" + Name + ")", "Controls are Disposed");
             // Run GC to clean
             GlobalVars.CleanMemory("frmMovie_FormClosing");
+
+            // Refresh on Main form
+            if (IsDeleted)
+            {
+                frmMain master = (frmMain)Application.OpenForms["frmMain"];
+                master.RefreshMovieList();
+            }
+
             Dispose();
         }
         // Play File on Default Player
@@ -451,30 +460,34 @@ namespace HomeCinema
         private void btnDeleteMovie_Click(object sender, EventArgs e)
         {
             string errFrom = $"frmMovie ({Name})-btnDeleteMovie_Click";
+            frmLoading form = new frmLoading("Deleting media from disk..", "Loading");
             // Delete Movie WIP
             if (GlobalVars.ShowYesNo($"Are you sure you want to Delete [{Text}]?"))
             {
-                if (conn.DbDeleteMovie(MOVIE_ID, errFrom))
+                form.BackgroundWorker.DoWork += (sender1, e1) =>
                 {
-                    // Dispose and Delete image
-                    if (MOVIE_COVER != null)
+                    if (conn.DbDeleteMovie(MOVIE_ID, errFrom))
                     {
-                        DisposePoster("");
-                        GlobalVars.DeleteImageFromList(MOVIE_ID, errFrom);
-                        GlobalVars.DeleteMove(GlobalVars.ImgFullPath(MOVIE_ID), errFrom);
+                        // Dispose and Delete image
+                        if (MOVIE_COVER != null)
+                        {
+                            DisposePoster("");
+                            GlobalVars.DeleteImageFromList(this, MOVIE_ID, errFrom);
+                            GlobalVars.DeleteMove(GlobalVars.ImgFullPath(MOVIE_ID), errFrom);
+                        }
+                        // Delete MovieFile from local disk
+                        GlobalVars.DeleteMove(MOVIE_FILEPATH, errFrom);
+
+                        // Show message
+                        GlobalVars.ShowInfo($"[{Text}] is Deleted!");
+
+                        // Deleted and perform refresh on main form
+                        IsDeleted = true;
                     }
-                    // Delete MovieFile from local disk
-                    GlobalVars.DeleteMove(MOVIE_FILEPATH, errFrom);
-
-                    // Refresh movie list
-                    frmMain master = (frmMain)Application.OpenForms["frmMain"];
-                    master.RefreshMovieList();
-
-                    // Show message
-                    GlobalVars.ShowInfo($"[{Text}] is Deleted!");
-                    // Dispose
-                    Close();
-                }
+                };
+                form.ShowDialog(this);
+                // Dispose
+                Close();
             }
         }
         // Open IMDB link using default browser

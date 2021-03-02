@@ -1,11 +1,31 @@
 # HomeCinema - Project History:
 
+## HomeCinema v0.4.1
+### ***release 30 - build 02 March 2021 PHT***
+
+**[Windows, 64-bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.4.1/HomeCinema-Windows.zip "HomeCinema-Windows.zip")** <br>
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.4.1/HomeCinema-Windows.zip)]() <br>
+
+### What's New?
+- REV: Delete Covers not in Database, when pressing **[Clean]**.
+- FIX: Changing metadata should not work on **'series'**.
+- FIX: Removed producer to stop looping on *saving metadata*.
+- GUI: Changed Font for **Movie Summary**, and **Settings** form.
+- GUI: Updated main form caption.
+### Dev changes
+- REV: Show *loading form* when checking for update.
+- MINOR: Include additional message for loading forms.
+- DOCS: Updated Markdown docs **README, LICENSE, README_TODO**.
+- DOC: Added **docs/VERSION_HISTORY_DETAILED.md** and **docs/links.md**.
+- Code refactors, and improvements.
+****
+
 ## v0.4.0.0 ***build 29 - (23 February 2021 PHT)***
 ### Major Fixes and Improvements
 
 **[Windows 64-bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.4.0.0/HomeCinema-Windows.zip "HomeCinema-Windows.zip")**
 
-[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.4.0.0/total.svg)]() <br>
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.4.0.0/HomeCinema-Windows.zip)]() <br>
 
 ### What's New?
 - REV: Add loading form to **[Clean]** button.
@@ -28,7 +48,7 @@
 
 **[Windows 64-bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.3.0.0/HomeCinema-Windows.zip "HomeCinema-Windows.zip")**
 
-[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.3.0.0/total.svg)]() <br>
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.3.0.0/HomeCinema-Windows.zip)]() <br>
 
 ### What's New?
 - REV: New Loading form.
@@ -51,7 +71,7 @@
 
 **[Windows 64-bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.2.0.0/HomeCinema-Windows.zip "HomeCinema-Windows.zip")**
 
-[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.2.0.0/total.svg)]() <br>
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.2.0.0/HomeCinema-Windows.zip)]() <br>
 
 **NOTE: This update breaks the old way that the App saves directories** <br>
 - After updating, open the App and find the folder where your movies are saved.
@@ -74,7 +94,7 @@
 
 **[Windows 64-bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.1.0.0/HomeCinema-Windows_v0.1.0.0.zip "HomeCinema-Windows_v0.1.0.0.zip")**
 
-[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.1.0.0/total.svg)]() <br>
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.1.0.0/HomeCinema-Windows_v0.1.0.0.zip)]() <br>
 
 **What's New?**
 - REV: Automatically refresh Media List, when checkbox **Hide Animation** is checked/unchecked.
@@ -99,7 +119,7 @@
 
 **[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.9.0/HomeCinema-Windows_v0.0.9.0.zip "HomeCinema-Windows_v0.0.9.0.zip")**
 
-[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.9.0/total.svg)]() <br>
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.9.0/HomeCinema-Windows_v0.0.9.0.zip)]() <br>
 
 **What's New?**
 - FT: Show **'File'** or **'Folder'** **size**, on **'Movie Title'**, in **'Movie Details'** form.
@@ -121,7 +141,7 @@ Build from latest commit: [2070c18](https://github.com/JerloPH/HomeCinema/commit
 
 **[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.8.0/HomeCinema-Windows_v0.0.8.0.zip "HomeCinema-Windows_v0.0.8.0.zip")**
 
-[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.8.0/total.svg)]() <br>
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.8.0/HomeCinema-Windows_v0.0.8.0.zip)]() <br>
 
 **What's New?**
 - REV: Add your "**Series**" top-folder into the App!
@@ -141,7 +161,7 @@ Build from latest commit: [e1c4a97](https://github.com/JerloPH/HomeCinema/commit
 
 **[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.7.0/HomeCinema-Windows_v0.0.7.0.zip "HomeCinema-Windows_v0.0.7.0.zip")**
 
-[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.7.0/total.svg)]() <br>
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.7.0/HomeCinema-Windows_v0.0.7.0.zip)]() <br>
 
 **What's New?**
 - FT: Automatically Download cover image from [TMDB](https://www.themoviedb.org/), when online, during insert of new media.

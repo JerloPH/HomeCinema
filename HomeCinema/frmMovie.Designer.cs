@@ -222,7 +222,7 @@
             // 
             this.lblSummary.BackColor = System.Drawing.Color.Black;
             this.lblSummary.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lblSummary.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSummary.Font = new System.Drawing.Font("Calibri", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSummary.ForeColor = System.Drawing.Color.Goldenrod;
             this.lblSummary.Location = new System.Drawing.Point(189, 280);
             this.lblSummary.Multiline = true;
