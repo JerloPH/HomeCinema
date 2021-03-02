@@ -11,15 +11,13 @@
 **Note: Untested on Windows 7 and 8, but might work**
 
 ### Download Counts
-
 [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/total.svg)]() &nbsp;
-[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.4.0.0/total.svg)]()
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/latest/HomeCinema-Windows.zip)]()
 
 ## Requirements
 
 - 4GB or more RAM. <br>
 - Microsoft .NET Framework Runtime, version 4.6 or higher. [Download Link](https://dotnet.microsoft.com/download/dotnet-framework/net46) <br>
-****
 
 ## What is HomeCinema?
 
