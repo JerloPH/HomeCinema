@@ -53,20 +53,17 @@ namespace HomeCinema
         [JsonProperty("poster_path")]
         public string poster_path { get; set; } = "";
 
-        [JsonProperty("backdrop_path")]
-        public string backdrop_path { get; set; } = "";
-
-        [JsonProperty("production_companies")]
-        public List<ProdCom> production_companies { get; set; }
+        [JsonProperty("production_countries")]
+        public List<ProdCountry> production_countries { get; set; }
 
         [JsonProperty("external_ids")]
         public ExternalIds external_ids { get; set; }
     }
 
-    public class ProdCom
+    public class ProdCountry
     {
-        [JsonProperty("origin_country")]
-        public string origin_country { get; set; }
+        [JsonProperty("name")]
+        public string name { get; set; }
     }
 
     public class ExternalIds

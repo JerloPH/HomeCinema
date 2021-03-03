@@ -1121,9 +1121,9 @@ namespace HomeCinema.Global
                         list[6] = movie.poster_path; // poster_path
 
                         string tmp = "";
-                        foreach (ProdCom c in movie.production_companies)
+                        foreach (ProdCountry c in movie.production_countries)
                         {
-                            tmp += c.origin_country += ",";
+                            tmp += c.name + ",";
                         }
                         list[10] = tmp.TrimEnd(','); // country
                     }
