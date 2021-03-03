@@ -485,11 +485,7 @@ namespace HomeCinema.Global
         // Return [none] if string is Empty
         public static String ValidateAndReturn(String param)
         {
-            if (String.IsNullOrWhiteSpace(param))
-            {
-                return " (None)";
-            }
-            return param.Trim();
+            return (String.IsNullOrWhiteSpace(param)) ? " (None)" : param.Trim();
         }
         // Get string formatted on picture filepath
         public static string ImgFullPath(string movieID)
