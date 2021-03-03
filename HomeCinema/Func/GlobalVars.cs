@@ -476,11 +476,7 @@ namespace HomeCinema.Global
         }
         public static String ValidateEmptyOrNull(String param)
         {
-            if (String.IsNullOrWhiteSpace(param))
-            {
-                return "";
-            }
-            return param.Replace("'", "''");
+            return (String.IsNullOrWhiteSpace(param)) ? "" : param.Replace("'", "''");
         }
         // Return [none] if string is Empty
         public static String ValidateAndReturn(String param)
