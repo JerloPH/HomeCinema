@@ -25,7 +25,6 @@ using System.Windows.Forms;
 using System.Drawing;
 using HomeCinema.SQLFunc;
 using HomeCinema.Global;
-using System.ComponentModel;
 using System.Linq;
 using System.Collections.Generic;
 using Newtonsoft.Json;
