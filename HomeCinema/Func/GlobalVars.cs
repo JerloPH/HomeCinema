@@ -65,16 +65,18 @@ namespace HomeCinema.Global
         public static string PATH_GETVIDEO { get; set; } = "";
         public static string PATH_GETCOVER { get; set; } = "";
 
-        public static string FILE_ICON = PATH_RES + @"HomeCinema.ico"; // Icon
-        public static string FILE_DEFIMG = PATH_IMG + @"0.jpg"; // default cover image
+        public static string FILE_ICON = PATH_RES + "HomeCinema.ico"; // Icon
+        public static string FILE_DEFIMG = PATH_IMG + "0.jpg"; // default cover image
 
-        public static string FILE_LOG_APP = PATH_START + @"App_Log.log"; // Log all messages and actions
-        public static string FILE_LOG_ERROR = PATH_START + @"App_ErrorLog.log"; // Contains only error Messages
-        public static string FILE_SETTINGS = PATH_DATA + @"settings.json"; // settings used in App
-        public static string FILE_COUNTRY = PATH_DATA + @"country.hc_data"; // list of countries
-        public static string FILE_GENRE = PATH_DATA + @"genre.hc_data"; // List of genres
-        public static string FILE_NOTRAILER = PATH_DATA + @"NoTrailer.jpg"; // default picture if no trailer link
-        public static string FILE_MEDIALOC = PATH_DATA + @"medialocation.hc_data"; // For movies, folder locations
+        public static string FILE_LOG_APP = PATH_LOG + "App_Log.log"; // Log all messages and actions
+        public static string FILE_LOG_ERROR = PATH_LOG + "App_ErrorLog.log"; // Contains only error Messages
+
+        // Data
+        public static string FILE_SETTINGS = PATH_DATA + "settings.json"; // settings used in App
+        public static string FILE_COUNTRY = PATH_DATA + "country.hc_data"; // list of countries
+        public static string FILE_GENRE = PATH_DATA + "genre.hc_data"; // List of genres
+        public static string FILE_NOTRAILER = PATH_DATA + "NoTrailer.jpg"; // default picture if no trailer link
+        public static string FILE_MEDIALOC = PATH_DATA + "medialocation.hc_data"; // For movies, folder locations
         public static string FILE_MEDIA_EXT = PATH_DATA + "media_ext.hc_data"; // Extensions to check for movies
         public static string FILE_SERIESLOC = PATH_DATA + "serieslocation.hc_data"; // For series, root folder.
 
@@ -84,8 +86,8 @@ namespace HomeCinema.Global
         // Database Vars
         public static string DB_NAME = "HomeCinemaDB.db";
         public static string DB_PATH = PATH_START + DB_NAME;
-        public static string DB_DATAPATH =  @"URI=file:" + DB_PATH;
-        public static string DB_DBLOGPATH = PATH_START + @"App_DB.log"; // Log all messages and actions
+        public static string DB_DATAPATH =  "URI=file:" + DB_PATH;
+        public static string DB_DBLOGPATH = PATH_LOG + "App_DB.log"; // Log all messages and actions
 
         public static string DB_TNAME_INFO = "info";
         public static string DB_TNAME_FILEPATH = "filepath";
