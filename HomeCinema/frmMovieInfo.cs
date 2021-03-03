@@ -774,7 +774,11 @@ namespace HomeCinema
                 }
             }
             // Set Genres
-            CheckGenreFromTMDB(GlobalVars.GetGenresByJsonFile(jsonMainFullPath, errFrom + " (JSONfindmovie)"));
+            var genreList = GlobalVars.GetGenresByJsonFile(jsonMainFullPath, errFrom + " (JSONfindmovie)");
+            CheckGenreFromTMDB(genreList);
+
+            // Set mediatype, after getting info from TMDB
+            cbCategory.SelectedIndex = GlobalVars.GetCategoryByFilter(genreList.Aggregate((a,b) => a + "," + b), r9, mediatype);
         }
         // Get IMDB ID using Movie Name
         private void btnGetImdb_Click(object sender, EventArgs e)
