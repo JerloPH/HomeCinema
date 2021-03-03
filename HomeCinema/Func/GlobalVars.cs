@@ -61,6 +61,7 @@ namespace HomeCinema.Global
         public static string PATH_IMG = PATH_START + @"covers\";
         public static string PATH_DATA = PATH_START + @"data\";
         public static string PATH_TEMP = PATH_START + @"temp\";
+        public static string PATH_LOG = PATH_START + @"logs\";
         public static string PATH_GETVIDEO { get; set; } = "";
         public static string PATH_GETCOVER { get; set; } = "";
 

@@ -51,6 +51,7 @@ namespace HomeCinema
             GlobalVars.CreateDir(GlobalVars.PATH_IMG);
             GlobalVars.CreateDir(GlobalVars.PATH_DATA);
             GlobalVars.CreateDir(GlobalVars.PATH_TEMP);
+            GlobalVars.CreateDir(GlobalVars.PATH_LOG);
 
             // Check files first
             GlobalVars.CheckAllFiles();
@@ -339,7 +340,7 @@ namespace HomeCinema
                     }
                 }
             }
-            GlobalVars.WriteAppend(GlobalVars.PATH_START + "MovieResult_DoneInsert.Log", logInsert);
+            GlobalVars.WriteAppend(GlobalVars.PATH_LOG + "MovieResult_DoneInsert.Log", logInsert);
             return count;
         }
         // return filepath from DB
@@ -895,7 +896,7 @@ namespace HomeCinema
                         }
                     }
 
-                    GlobalVars.WriteToFile(GlobalVars.PATH_START + "MovieResult_Skipped.Log", nonres);
+                    GlobalVars.WriteToFile(GlobalVars.PATH_LOG + "MovieResult_Skipped.Log", nonres);
 
                     // Add now to database
                     int insertRes = InsertToDB(listToAdd, calledFrom + "-listToAdd");

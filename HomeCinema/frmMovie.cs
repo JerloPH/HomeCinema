@@ -291,8 +291,8 @@ namespace HomeCinema
         private void LogWebDoc(string Youtube_ID)
         {
             // Log to file
-            GlobalVars.WriteToFile(GlobalVars.PATH_START + "WebTrailerDocText.log", webTrailer.DocumentText);
-            GlobalVars.WriteToFile(GlobalVars.PATH_START + "WebTrailer.log", YoutubeEmbed(Youtube_ID));
+            GlobalVars.WriteToFile(GlobalVars.PATH_LOG + "WebTrailerDocText.log", webTrailer.DocumentText);
+            GlobalVars.WriteToFile(GlobalVars.PATH_LOG + "WebTrailer.log", YoutubeEmbed(Youtube_ID));
         }
         public string YoutubeEmbed(string code)
         {
