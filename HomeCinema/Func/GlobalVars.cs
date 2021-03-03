@@ -70,6 +70,8 @@ namespace HomeCinema.Global
 
         public static string FILE_LOG_APP = PATH_LOG + @"App_Log.log"; // Log all messages and actions
         public static string FILE_LOG_ERROR = PATH_LOG + @"App_ErrorLog.log"; // Contains only error Messages
+
+        // Data
         public static string FILE_SETTINGS = PATH_DATA + @"settings.json"; // settings used in App
         public static string FILE_COUNTRY = PATH_DATA + @"country.hc_data"; // list of countries
         public static string FILE_GENRE = PATH_DATA + @"genre.hc_data"; // List of genres
