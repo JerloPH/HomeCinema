@@ -68,8 +68,8 @@ namespace HomeCinema.Global
         public static string FILE_ICON = PATH_RES + @"HomeCinema.ico"; // Icon
         public static string FILE_DEFIMG = PATH_IMG + @"0.jpg"; // default cover image
 
-        public static string FILE_LOG_APP = PATH_START + @"App_Log.log"; // Log all messages and actions
-        public static string FILE_LOG_ERROR = PATH_START + @"App_ErrorLog.log"; // Contains only error Messages
+        public static string FILE_LOG_APP = PATH_LOG + @"App_Log.log"; // Log all messages and actions
+        public static string FILE_LOG_ERROR = PATH_LOG + @"App_ErrorLog.log"; // Contains only error Messages
         public static string FILE_SETTINGS = PATH_DATA + @"settings.json"; // settings used in App
         public static string FILE_COUNTRY = PATH_DATA + @"country.hc_data"; // list of countries
         public static string FILE_GENRE = PATH_DATA + @"genre.hc_data"; // List of genres
@@ -85,7 +85,7 @@ namespace HomeCinema.Global
         public static string DB_NAME = "HomeCinemaDB.db";
         public static string DB_PATH = PATH_START + DB_NAME;
         public static string DB_DATAPATH =  @"URI=file:" + DB_PATH;
-        public static string DB_DBLOGPATH = PATH_START + @"App_DB.log"; // Log all messages and actions
+        public static string DB_DBLOGPATH = PATH_LOG + @"App_DB.log"; // Log all messages and actions
 
         public static string DB_TNAME_INFO = "info";
         public static string DB_TNAME_FILEPATH = "filepath";
