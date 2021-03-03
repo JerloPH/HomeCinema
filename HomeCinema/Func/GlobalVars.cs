@@ -504,11 +504,7 @@ namespace HomeCinema.Global
             {
                 return path;
             }
-            if (File.Exists(PATH_IMG + "0.jpg"))
-            {
-                return PATH_IMG + "0.jpg";
-            }
-            return PATH_RES + "0.jpg";
+            return (File.Exists(PATH_IMG + "0.jpg")) ? PATH_IMG + "0.jpg" : PATH_RES + "0.jpg";
         }
         // Get Image Key from ImageList
         public static string ImgGetKey(string MovieID)
