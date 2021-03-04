@@ -33,9 +33,9 @@
 
 ### What's New?
 - REV: Add loading form to **[Clean]** button.
-- REV: Search for Trailers in all media.
-- FIX: **'Series Directories'** not showing up on ListView.
-- FIX: Cannot perform **[Clean]** when cover is changed recently.
+- REV: Search for Trailers in all media. **See** [**PR # 4**](https://github.com/JerloPH/HomeCinema/pull/4)
+- FIX: **'Series Directories'** not showing up on ListView. **See** [**PR # 4**](https://github.com/JerloPH/HomeCinema/pull/4)
+- FIX: Cannot perform **[Clean]** when cover is changed recently. **See** [**PR # 4**](https://github.com/JerloPH/HomeCinema/pull/4)
 - GUI: Changed Font of Items.
 
 ### 'Under the Hood' changes
@@ -43,7 +43,7 @@
 - REV: Refactor ListView Item details.
 - REV: Refactor **frmMovie** Initialization.
 - REV: Increase TimeOut for **CheckConnection()**.
-- REV: Cast all API queries of TMDB to JSON files.
+- REV: Cast all API queries of TMDB to JSON files. **See** [**PR # 4**](https://github.com/JerloPH/HomeCinema/pull/4)
 - Code refactors and cleanup.
 
 # Released on v0.3
