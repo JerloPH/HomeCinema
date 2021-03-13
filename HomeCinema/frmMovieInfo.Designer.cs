@@ -696,6 +696,7 @@
             this.btnCountryAdd.TabIndex = 4;
             this.btnCountryAdd.Text = "ADD";
             this.btnCountryAdd.UseVisualStyleBackColor = true;
+            this.btnCountryAdd.Click += new System.EventHandler(this.btnCountryAdd_Click);
             // 
             // btnCountryRemove
             // 
@@ -755,6 +756,7 @@
             this.btnGenreAdd.TabIndex = 59;
             this.btnGenreAdd.Text = "ADD";
             this.btnGenreAdd.UseVisualStyleBackColor = true;
+            this.btnGenreAdd.Click += new System.EventHandler(this.btnGenreAdd_Click);
             // 
             // frmMovieInfo
             // 

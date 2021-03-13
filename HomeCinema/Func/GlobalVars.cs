@@ -29,6 +29,7 @@ using System.Reflection;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
+using Microsoft.VisualBasic;
 using Microsoft.VisualBasic.FileIO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -838,7 +839,7 @@ namespace HomeCinema.Global
                 // Send to Recycle Bin
                 if (File.Exists(file))
                 {
-                    FileSystem.DeleteFile(file, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+                    Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(file, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
                     return true;
                 }
                 return false;
@@ -1366,6 +1367,12 @@ namespace HomeCinema.Global
             {
                 DeleteMove(file, calledFrom);
             }
+        }
+        // Get string from InputBox
+        public static string GetStringInputBox(string caption = "Input string")
+        {
+            string input = Interaction.InputBox(caption, HOMECINEMA_NAME, "");
+            return (!String.IsNullOrWhiteSpace(input)) ? input : String.Empty;
         }
         // ######################################################################## END - Add code above
     }

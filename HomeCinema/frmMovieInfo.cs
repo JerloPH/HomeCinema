@@ -745,5 +745,23 @@ namespace HomeCinema
                 listboxGenre.Items.RemoveAt(item);
             }
         }
+
+        private void btnCountryAdd_Click(object sender, EventArgs e)
+        {
+            string country = GlobalVars.GetStringInputBox("Type country to add");
+            if (CanBeAddedToListBox(listboxCountry, country))
+            {
+                listboxCountry.Items.Add(country);
+            }
+        }
+
+        private void btnGenreAdd_Click(object sender, EventArgs e)
+        {
+            string genre = GlobalVars.GetStringInputBox("Type genre to add");
+            if (CanBeAddedToListBox(listboxGenre, genre))
+            {
+                listboxGenre.Items.Add(genre);
+            }
+        }
     }
 }
