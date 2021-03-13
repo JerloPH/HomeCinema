@@ -110,14 +110,10 @@ namespace HomeCinema
             return true;
         }
         // ########################## FOR CATEGORY
-        // Get Category INT
+        // Get Category as integer, in string format
         private string GetCategory()
         {
-            if (cbCategory.SelectedIndex < 1)
-            {
-                return "0";
-            }
-            return cbCategory.SelectedIndex.ToString();
+            return (cbCategory.SelectedIndex < 1) ? "0" : cbCategory.SelectedIndex.ToString();
         }
         // ########################## FOR GENRE
         // Return genre [string], from checked checkboxes
