@@ -255,63 +255,6 @@ namespace HomeCinema
             // Set control focus
             txtName.Focus();
         }
-        // Get Checkboxes text from checked controls
-        public string GetChecked(FlowLayoutPanel f)
-        {
-            string ret = "";
-            foreach (CheckBox c in f.Controls)
-            {
-                if (c.Checked)
-                {
-                    ret += GlobalVars.RemoveLine(c.Text) + ",";
-                }
-            }
-            ret = ret.TrimEnd(',');
-            return ret;
-        }
-        public void ActivateCheckbox(FlowLayoutPanel f, string textToSplit)
-        {
-            string[] gSplit = textToSplit.Split(',');
-            foreach (CheckBox c in f.Controls)
-            {
-                foreach (string text in gSplit)
-                {
-                    if (c.Text.ToLower().Contains(text.ToLower()) && (String.IsNullOrWhiteSpace(text) == false))
-                    {
-                        c.Checked = true;
-                        break;
-                    }
-                }
-            }
-        }
-        // GET FlowLayoutPanel inside [tabInfo]
-        public FlowLayoutPanel GetFlowPanel(string panelName, string TABpage)
-        {
-            string tabPage = TABpage;
-            if (string.IsNullOrWhiteSpace(tabPage))
-            {
-                tabPage = "tabPage1";
-            }
-            foreach (TabPage p in tabInfo.TabPages)
-            {
-                if (p.Name == tabPage)
-                {
-                    foreach (Control f in p.Controls)
-                    {
-                        if (f is FlowLayoutPanel)
-                        {
-                            FlowLayoutPanel ff = f as FlowLayoutPanel;
-                            if (ff.Name == panelName)
-                            {
-                                return ff;
-                            }
-                        }
-                    }
-                    break;
-                }
-            }
-            return null;
-        }
         // Set Image to picBox Image
         public static bool SetPicboxImgFromFile(PictureBox picbox, string selectedFilename, string actFrom)
         {
