@@ -72,29 +72,9 @@ namespace HomeCinema
             // Add items to cbCategory
             cbCategory.Items.AddRange(GlobalVars.DB_INFO_CATEGORY);
 
-            // Setup fPanelCountry
-            //fPanelCountry.AutoScrollMinSize = new Size(64,64);
-            fPanelCountry.AutoScroll = true;
-            //fPanelCountry.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-
-            // Populate Country
-            int cW = 105; // (fPanelCountry.Width / 2) - 5;
-            int cH = 17;
-            foreach (string t in GlobalVars.TEXT_COUNTRY)
-            {
-                if (t != "All")
-                {
-                    CheckBox cb = new CheckBox();
-                    cb.Size = new Size(cW, cH);
-                    cb.Text = GlobalVars.RemoveLine(t);
-                    cb.AutoSize = false;
-                    cb.TabIndex = 0;
-                    cb.UseVisualStyleBackColor = true;
-                    fPanelCountry.Controls.Add(cb);
-                }
-            }
-
             // Populate fPanelGenre with Checkbox
+            int cW = 105;
+            int cH = 17;
             fPanelGenre.AutoScroll = true;
             cW = 102;
             cH = 17;
@@ -135,6 +115,20 @@ namespace HomeCinema
         #endregion
         // ############################################################################## Functions
         #region Functions
+        // ########################## LISTBOX Functions
+        private bool CanBeAddedToListBox(ListBox lb, string item)
+        {
+            string itemTrim;
+            if (String.IsNullOrWhiteSpace(item))
+                return false;
+            foreach (string s in lb.Items)
+            {
+                itemTrim = s.Trim();
+                if (itemTrim.Equals(item, StringComparison.CurrentCultureIgnoreCase))
+                    return false;
+            }
+            return true;
+        }
         // ########################## FOR CATEGORY
         // Get Category INT
         private string GetCategory()
@@ -168,8 +162,14 @@ namespace HomeCinema
         // Check [x] the Country for the movie
         public void LoadCountry(string country)
         {
-            FlowLayoutPanel f = GetFlowPanel("fPanelCountry", "tabPage2");
-            ActivateCheckbox(f, country);
+            string[] temp = country.Split(',');
+            foreach (string item in temp)
+            {
+                if (CanBeAddedToListBox(listboxCountry, item))
+                {
+                    listboxCountry.Items.Add(item);
+                }
+            }
         }
         // ########################## OTHER FUNCTIONS
         // REFRESH INFORMATION
