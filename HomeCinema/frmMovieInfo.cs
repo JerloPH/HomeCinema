@@ -120,7 +120,7 @@ namespace HomeCinema
         public string GetGenre()
         {
             var list = listboxGenre.Items.Cast<String>().ToList();
-            return list.Aggregate((a, b) => a + "," + b);
+            return (list.Count > 0) ? list.Aggregate((a, b) => a + "," + b) : "";
         }
         // Add genres to ListBox that are in the media 'genre'
         public void LoadGenre(string genre)
@@ -139,7 +139,7 @@ namespace HomeCinema
         public string GetCountry()
         {
             var list =  listboxCountry.Items.Cast<String>().ToList();
-            return list.Aggregate((a, b) => a + "," + b);
+            return (list.Count > 0) ? list.Aggregate((a, b) => a + "," + b) : "";
         }
         // Add countries to ListBox that are in the media 'country'
         public void LoadCountry(string country)
