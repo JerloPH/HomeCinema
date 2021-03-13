@@ -80,6 +80,12 @@
             this.txtPathFile = new System.Windows.Forms.TextBox();
             this.listboxCountry = new System.Windows.Forms.ListBox();
             this.listboxGenre = new System.Windows.Forms.ListBox();
+            this.btnCountryAdd = new System.Windows.Forms.Button();
+            this.btnCountryRemove = new System.Windows.Forms.Button();
+            this.btnCountryClear = new System.Windows.Forms.Button();
+            this.btnGenreClear = new System.Windows.Forms.Button();
+            this.btnGenreRemove = new System.Windows.Forms.Button();
+            this.btnGenreAdd = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
@@ -449,6 +455,12 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btnGenreClear);
+            this.tabPage2.Controls.Add(this.btnGenreRemove);
+            this.tabPage2.Controls.Add(this.btnGenreAdd);
+            this.tabPage2.Controls.Add(this.btnCountryClear);
+            this.tabPage2.Controls.Add(this.btnCountryRemove);
+            this.tabPage2.Controls.Add(this.btnCountryAdd);
             this.tabPage2.Controls.Add(this.listboxGenre);
             this.tabPage2.Controls.Add(this.listboxCountry);
             this.tabPage2.Controls.Add(this.label14);
@@ -669,8 +681,74 @@
             this.listboxGenre.Location = new System.Drawing.Point(349, 190);
             this.listboxGenre.Margin = new System.Windows.Forms.Padding(4);
             this.listboxGenre.Name = "listboxGenre";
-            this.listboxGenre.Size = new System.Drawing.Size(400, 228);
+            this.listboxGenre.Size = new System.Drawing.Size(314, 228);
             this.listboxGenre.TabIndex = 56;
+            // 
+            // btnCountryAdd
+            // 
+            this.btnCountryAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCountryAdd.Location = new System.Drawing.Point(15, 424);
+            this.btnCountryAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCountryAdd.Name = "btnCountryAdd";
+            this.btnCountryAdd.Size = new System.Drawing.Size(76, 34);
+            this.btnCountryAdd.TabIndex = 4;
+            this.btnCountryAdd.Text = "ADD";
+            this.btnCountryAdd.UseVisualStyleBackColor = true;
+            // 
+            // btnCountryRemove
+            // 
+            this.btnCountryRemove.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCountryRemove.Location = new System.Drawing.Point(97, 424);
+            this.btnCountryRemove.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCountryRemove.Name = "btnCountryRemove";
+            this.btnCountryRemove.Size = new System.Drawing.Size(120, 34);
+            this.btnCountryRemove.TabIndex = 57;
+            this.btnCountryRemove.Text = "REMOVE";
+            this.btnCountryRemove.UseVisualStyleBackColor = true;
+            // 
+            // btnCountryClear
+            // 
+            this.btnCountryClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCountryClear.Location = new System.Drawing.Point(225, 424);
+            this.btnCountryClear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCountryClear.Name = "btnCountryClear";
+            this.btnCountryClear.Size = new System.Drawing.Size(103, 34);
+            this.btnCountryClear.TabIndex = 58;
+            this.btnCountryClear.Text = "CLEAR";
+            this.btnCountryClear.UseVisualStyleBackColor = true;
+            // 
+            // btnGenreClear
+            // 
+            this.btnGenreClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGenreClear.Location = new System.Drawing.Point(560, 424);
+            this.btnGenreClear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnGenreClear.Name = "btnGenreClear";
+            this.btnGenreClear.Size = new System.Drawing.Size(103, 34);
+            this.btnGenreClear.TabIndex = 61;
+            this.btnGenreClear.Text = "CLEAR";
+            this.btnGenreClear.UseVisualStyleBackColor = true;
+            // 
+            // btnGenreRemove
+            // 
+            this.btnGenreRemove.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGenreRemove.Location = new System.Drawing.Point(432, 424);
+            this.btnGenreRemove.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnGenreRemove.Name = "btnGenreRemove";
+            this.btnGenreRemove.Size = new System.Drawing.Size(120, 34);
+            this.btnGenreRemove.TabIndex = 60;
+            this.btnGenreRemove.Text = "REMOVE";
+            this.btnGenreRemove.UseVisualStyleBackColor = true;
+            // 
+            // btnGenreAdd
+            // 
+            this.btnGenreAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGenreAdd.Location = new System.Drawing.Point(350, 424);
+            this.btnGenreAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnGenreAdd.Name = "btnGenreAdd";
+            this.btnGenreAdd.Size = new System.Drawing.Size(76, 34);
+            this.btnGenreAdd.TabIndex = 59;
+            this.btnGenreAdd.Text = "ADD";
+            this.btnGenreAdd.UseVisualStyleBackColor = true;
             // 
             // frmMovieInfo
             // 
@@ -756,5 +834,11 @@
         private System.Windows.Forms.CheckBox cbSaveMetadata;
         private System.Windows.Forms.ListBox listboxCountry;
         private System.Windows.Forms.ListBox listboxGenre;
+        private System.Windows.Forms.Button btnCountryClear;
+        private System.Windows.Forms.Button btnCountryRemove;
+        private System.Windows.Forms.Button btnCountryAdd;
+        private System.Windows.Forms.Button btnGenreClear;
+        private System.Windows.Forms.Button btnGenreRemove;
+        private System.Windows.Forms.Button btnGenreAdd;
     }
 }
