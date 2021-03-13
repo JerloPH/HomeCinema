@@ -62,15 +62,15 @@ namespace HomeCinema.Global
         public static string PATH_IMG = Path.Combine(PATH_START, "covers") + "\\";
         public static string PATH_DATA = Path.Combine(PATH_START, "data") + "\\";
         public static string PATH_TEMP = Path.Combine(PATH_START, "temp") + "\\";
-        public static string PATH_LOG = Path.Combine(PATH_START, "logs") + "\\";
+        public static string PATH_LOG = Path.Combine(PATH_START, "logs");
         public static string PATH_GETVIDEO { get; set; } = "";
         public static string PATH_GETCOVER { get; set; } = "";
 
         public static string FILE_ICON = PATH_RES + @"HomeCinema.ico"; // Icon
         public static string FILE_DEFIMG = PATH_IMG + @"0.jpg"; // default cover image
 
-        public static string FILE_LOG_APP = PATH_LOG + "App_Log.log"; // Log all messages and actions
-        public static string FILE_LOG_ERROR = PATH_LOG + "App_ErrorLog.log"; // Contains only error Messages
+        public static string FILE_LOG_APP = Path.Combine(PATH_LOG, "App_Log.log");// Log all messages and actions
+        public static string FILE_LOG_ERROR = Path.Combine(PATH_LOG, "App_ErrorLog.log"); // Contains only error Messages
 
         // Data
         public static string FILE_SETTINGS = PATH_DATA + @"settings.json"; // settings used in App
@@ -88,7 +88,7 @@ namespace HomeCinema.Global
         public static string DB_NAME = "HomeCinemaDB.db";
         public static string DB_PATH = PATH_START + DB_NAME;
         public static string DB_DATAPATH =  @"URI=file:" + DB_PATH;
-        public static string DB_DBLOGPATH = PATH_LOG + "App_DB.log"; // Log all messages and actions
+        public static string DB_DBLOGPATH = Path.Combine(PATH_LOG, "App_DB.log"); // Log all messages and actions
 
         public static string DB_TNAME_INFO = "info";
         public static string DB_TNAME_FILEPATH = "filepath";
@@ -282,7 +282,10 @@ namespace HomeCinema.Global
             CopyFromRes(FILE_MEDIALOC);
             CopyFromRes(FILE_MEDIA_EXT);
             CopyFromRes(FILE_SERIESLOC);
-
+            // Create empty Logs
+            if (!File.Exists(FILE_LOG_APP)) { File.Create(FILE_LOG_APP); }
+            if (!File.Exists(FILE_LOG_ERROR)) { File.Create(FILE_LOG_ERROR); }
+            if (!File.Exists(DB_DBLOGPATH)) { File.Create(DB_DBLOGPATH); }
         }
         // Create a directory, if not existing
         public static void CreateDir(string fPath)
