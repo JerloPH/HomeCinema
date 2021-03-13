@@ -57,20 +57,20 @@ namespace HomeCinema.Global
         public static string LINK_YT = "https://www.youtube.com/watch?v=";
 
         // Paths for Files and Folders
-        public static string PATH_START = Application.StartupPath + @"\";
-        public static string PATH_RES = PATH_START + @"Resources\";
-        public static string PATH_IMG = PATH_START + @"covers\";
-        public static string PATH_DATA = PATH_START + @"data\";
-        public static string PATH_TEMP = PATH_START + @"temp\";
-        public static string PATH_LOG = PATH_START + @"logs\";
+        public static string PATH_START = AppContext.BaseDirectory;
+        public static string PATH_RES = Path.Combine(PATH_START, "Resources") + "\\";
+        public static string PATH_IMG = Path.Combine(PATH_START, "covers") + "\\";
+        public static string PATH_DATA = Path.Combine(PATH_START, "data") + "\\";
+        public static string PATH_TEMP = Path.Combine(PATH_START, "temp") + "\\";
+        public static string PATH_LOG = Path.Combine(PATH_START, "logs") + "\\";
         public static string PATH_GETVIDEO { get; set; } = "";
         public static string PATH_GETCOVER { get; set; } = "";
 
         public static string FILE_ICON = PATH_RES + @"HomeCinema.ico"; // Icon
         public static string FILE_DEFIMG = PATH_IMG + @"0.jpg"; // default cover image
 
-        public static string FILE_LOG_APP = PATH_LOG + @"App_Log.log"; // Log all messages and actions
-        public static string FILE_LOG_ERROR = PATH_LOG + @"App_ErrorLog.log"; // Contains only error Messages
+        public static string FILE_LOG_APP = PATH_LOG + "App_Log.log"; // Log all messages and actions
+        public static string FILE_LOG_ERROR = PATH_LOG + "App_ErrorLog.log"; // Contains only error Messages
 
         // Data
         public static string FILE_SETTINGS = PATH_DATA + @"settings.json"; // settings used in App
@@ -88,7 +88,7 @@ namespace HomeCinema.Global
         public static string DB_NAME = "HomeCinemaDB.db";
         public static string DB_PATH = PATH_START + DB_NAME;
         public static string DB_DATAPATH =  @"URI=file:" + DB_PATH;
-        public static string DB_DBLOGPATH = PATH_LOG + @"App_DB.log"; // Log all messages and actions
+        public static string DB_DBLOGPATH = PATH_LOG + "App_DB.log"; // Log all messages and actions
 
         public static string DB_TNAME_INFO = "info";
         public static string DB_TNAME_FILEPATH = "filepath";
@@ -132,9 +132,11 @@ namespace HomeCinema.Global
         // Log database-related functions, to text file.
         public static void LogDb(string codefrom, string log)
         {
+            string filePath = DB_DBLOGPATH;
             try
             {
-                using (StreamWriter w = File.AppendText(DB_DBLOGPATH))
+                if (!File.Exists(filePath)) { filePath = AppContext.BaseDirectory + "ErrorLogDB.log"; }
+                using (StreamWriter w = File.AppendText(filePath))
                 {
                     w.Write(LogFormatted(codefrom, log));
                 }
@@ -150,6 +152,7 @@ namespace HomeCinema.Global
         {
             try
             {
+                if (!File.Exists(filePath)) { filePath = AppContext.BaseDirectory + "ErrorLog.log"; }
                 using (StreamWriter w = File.AppendText(filePath))
                 {
                     w.Write(LogFormatted(codefrom, log));
