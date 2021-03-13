@@ -332,7 +332,7 @@ namespace HomeCinema
                     {
                         string movieId = insertResult.ToString();
                         // Download Cover from TMDB
-                        if (GlobalVars.DownloadCoverFromTMDB(movieId, rPosterLink, errFrom))
+                        if (GlobalVars.DownloadCoverFromTMDB(movieId, rPosterLink, errFrom) && (!String.IsNullOrWhiteSpace(rPosterLink)))
                         {
                             try
                             {
