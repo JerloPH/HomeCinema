@@ -31,6 +31,7 @@ Ease the pain of browsing through many folders and finding out which movie is wh
 
 ## External Links
 **Note: I'm not the user who posted any of them. Visit at your discretion.** <br>
+[View **MajorGeek** review here](https://www.majorgeeks.com/files/details/homecinema.html) <br>
 [View **Softpedia** review here](https://www.softpedia.com/get/Multimedia/Video/Other-VIDEO-Tools/HomeCinema.shtml) <br>
 [View **NSaneForum** post](https://nsaneforums.com/topic/401760-homecinema-0400/?tab=comments#comment-1665808) <br>
 [View **Netfox2** review (French site)](https://www.netfox2.net/modules/wfdownloads/singlefile.php?cid=123&lid=2181) <br>
