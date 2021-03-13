@@ -1,15 +1,14 @@
 # HomeCinema - Features to Add / Bugs to Fix
 
 ## Priority List
+- On searching info in IMDB, view dialog for selection, instead of getting only the first result.
 - Scrape Anime info from Anilist/MyAnimeList.
 - Improve speed of App load (check background worker and optimize).
 - Check if file still exists, before loading it into the App. *For now, skips the entry.*
   - Delete entry from database, and cover picture (if existing).
-  - Remove ListView item, when the file is not existing. Then, delete the entry from database. *Or archive to another ddatabase*.
+  - Remove ListView item, when the file is not existing. Then, delete the entry from database. *Or archive to another database*.
 - Use **language spoken** from TMDB to get Country, instead of Producing country.
-- Replace **Episode Title** as **Original Title/Name**, for Movies.
 - Use **Series Name/Title** only **if** category is **Series**, and use as **Original Title/Name**.
-- Make **frmMain** static in **Program.cs**. Update any reference to **frmMain**.
 
 ## Features:
 - General

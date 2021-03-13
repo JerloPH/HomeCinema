@@ -774,7 +774,7 @@ namespace HomeCinema
                 }
             }
             // Set Genres
-            var genreList = GlobalVars.GetGenresByJsonFile(jsonMainFullPath, errFrom + " (JSONfindmovie)");
+            var genreList = GlobalVars.GetGenresByJsonFile(jsonMainFullPath, errFrom + " (jsonMainFullPath)");
             CheckGenreFromTMDB(genreList);
 
             // Set mediatype, after getting info from TMDB
