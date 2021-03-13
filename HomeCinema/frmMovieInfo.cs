@@ -726,7 +726,7 @@ namespace HomeCinema
             }
             if (String.IsNullOrWhiteSpace(r2) == false)
             {
-                if (r2 != txtName.Text)
+                if (!r2.Equals(txtName.Text))
                 {
                     txtEpName.Text = r2;
                 }
