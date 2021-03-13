@@ -717,5 +717,15 @@ namespace HomeCinema
                 txtName.Focus();
             }
         }
+
+        private void btnCountryClear_Click(object sender, EventArgs e)
+        {
+            listboxCountry.Items.Clear();
+        }
+
+        private void btnGenreClear_Click(object sender, EventArgs e)
+        {
+            listboxGenre.Items.Clear();
+        }
     }
 }
