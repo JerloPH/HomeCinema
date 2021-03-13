@@ -221,19 +221,13 @@ namespace HomeCinema
             toWrite = txtCountry.Text.Replace('\r', ' ');
             toWrite = toWrite.Replace('\n', ' ');
             GlobalVars.WriteArray(toWrite.Split(','), GlobalVars.FILE_COUNTRY);
-            if (Application.OpenForms["frmMain"] != null)
-            {
-                (Application.OpenForms["frmMain"] as frmMain).PopulateCountryCB();
-            }
+            Program.FormMain.PopulateCountryCB();
 
             // Replace genre file
             toWrite = txtGenre.Text.Replace('\r', ' ');
             toWrite = toWrite.Replace('\n', ' ');
             GlobalVars.WriteArray(toWrite.Split(','), GlobalVars.FILE_GENRE);
-            if (Application.OpenForms["frmMain"] != null)
-            {
-                (Application.OpenForms["frmMain"] as frmMain).PopulateGenreCB();
-            }
+            Program.FormMain.PopulateGenreCB();
 
             // Show Message
             GlobalVars.ShowInfo("Done saving Settings!");

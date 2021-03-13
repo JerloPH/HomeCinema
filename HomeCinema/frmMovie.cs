@@ -403,8 +403,7 @@ namespace HomeCinema
             // Refresh on Main form
             if (IsDeleted)
             {
-                frmMain master = (frmMain)Application.OpenForms["frmMain"];
-                master.RefreshMovieList();
+                Program.FormMain.RefreshMovieList();
             }
 
             Dispose();

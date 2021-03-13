@@ -509,8 +509,7 @@ namespace HomeCinema
             }
             
             // Refresh Movie List
-            frmMain master = (frmMain)Application.OpenForms["frmMain"];
-            master.UpdateMovieItemOnLV(LVITEM);
+            Program.FormMain.UpdateMovieItemOnLV(LVITEM);
 
             // Save Metadata
             if (cbSaveMetadata.Checked)
