@@ -473,7 +473,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(13, 306);
+            this.label14.Location = new System.Drawing.Point(347, 161);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(66, 25);
             this.label14.TabIndex = 51;
@@ -483,7 +483,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(-3, 0);
+            this.label13.Location = new System.Drawing.Point(10, 161);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(81, 25);
             this.label13.TabIndex = 50;
@@ -492,79 +492,76 @@
             // label12
             // 
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(304, 142);
+            this.label12.Location = new System.Drawing.Point(416, 4);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(109, 25);
+            this.label12.Size = new System.Drawing.Size(74, 25);
             this.label12.TabIndex = 49;
             this.label12.Text = "Artist";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // txtArtist
             // 
             this.txtArtist.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtArtist.Location = new System.Drawing.Point(420, 142);
+            this.txtArtist.Location = new System.Drawing.Point(420, 31);
             this.txtArtist.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtArtist.Multiline = true;
             this.txtArtist.Name = "txtArtist";
             this.txtArtist.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtArtist.Size = new System.Drawing.Size(329, 125);
+            this.txtArtist.Size = new System.Drawing.Size(329, 99);
             this.txtArtist.TabIndex = 46;
             // 
             // label11
             // 
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(304, 101);
+            this.label11.Location = new System.Drawing.Point(10, 100);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(109, 25);
+            this.label11.Size = new System.Drawing.Size(97, 25);
             this.label11.TabIndex = 48;
             this.label11.Text = "Producer";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // txtProducer
             // 
             this.txtProducer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtProducer.Location = new System.Drawing.Point(420, 101);
+            this.txtProducer.Location = new System.Drawing.Point(114, 100);
             this.txtProducer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtProducer.Name = "txtProducer";
-            this.txtProducer.Size = new System.Drawing.Size(329, 30);
+            this.txtProducer.Size = new System.Drawing.Size(299, 30);
             this.txtProducer.TabIndex = 45;
             // 
             // label10
             // 
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(304, 58);
+            this.label10.Location = new System.Drawing.Point(10, 68);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(109, 25);
+            this.label10.Size = new System.Drawing.Size(97, 25);
             this.label10.TabIndex = 47;
             this.label10.Text = "Director";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // txtDirector
             // 
             this.txtDirector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDirector.Location = new System.Drawing.Point(420, 58);
+            this.txtDirector.Location = new System.Drawing.Point(114, 66);
             this.txtDirector.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtDirector.Name = "txtDirector";
-            this.txtDirector.Size = new System.Drawing.Size(329, 30);
+            this.txtDirector.Size = new System.Drawing.Size(299, 30);
             this.txtDirector.TabIndex = 43;
             // 
             // label9
             // 
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(304, 21);
+            this.label9.Location = new System.Drawing.Point(10, 37);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(109, 25);
+            this.label9.Size = new System.Drawing.Size(97, 25);
             this.label9.TabIndex = 44;
             this.label9.Text = "Studio";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // txtStudio
             // 
             this.txtStudio.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtStudio.Location = new System.Drawing.Point(420, 21);
+            this.txtStudio.Location = new System.Drawing.Point(114, 32);
             this.txtStudio.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtStudio.Name = "txtStudio";
-            this.txtStudio.Size = new System.Drawing.Size(329, 30);
+            this.txtStudio.Size = new System.Drawing.Size(299, 30);
             this.txtStudio.TabIndex = 42;
             // 
             // tabPage3
@@ -659,20 +656,20 @@
             // 
             this.listboxCountry.FormattingEnabled = true;
             this.listboxCountry.ItemHeight = 16;
-            this.listboxCountry.Location = new System.Drawing.Point(15, 34);
+            this.listboxCountry.Location = new System.Drawing.Point(14, 190);
             this.listboxCountry.Margin = new System.Windows.Forms.Padding(4);
             this.listboxCountry.Name = "listboxCountry";
-            this.listboxCountry.Size = new System.Drawing.Size(303, 228);
+            this.listboxCountry.Size = new System.Drawing.Size(314, 228);
             this.listboxCountry.TabIndex = 55;
             // 
             // listboxGenre
             // 
             this.listboxGenre.FormattingEnabled = true;
             this.listboxGenre.ItemHeight = 16;
-            this.listboxGenre.Location = new System.Drawing.Point(15, 335);
+            this.listboxGenre.Location = new System.Drawing.Point(349, 190);
             this.listboxGenre.Margin = new System.Windows.Forms.Padding(4);
             this.listboxGenre.Name = "listboxGenre";
-            this.listboxGenre.Size = new System.Drawing.Size(303, 148);
+            this.listboxGenre.Size = new System.Drawing.Size(400, 228);
             this.listboxGenre.TabIndex = 56;
             // 
             // frmMovieInfo
