@@ -30,6 +30,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using System.Threading;
 
 namespace HomeCinema
 {
@@ -349,6 +350,7 @@ namespace HomeCinema
                         }
                     }
                 }
+                Thread.Sleep(10);
             }
             
             GlobalVars.WriteAppend(GlobalVars.PATH_LOG + "MovieResult_DoneInsert.Log", logInsert);
