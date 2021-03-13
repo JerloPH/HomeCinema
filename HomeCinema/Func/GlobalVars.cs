@@ -1107,7 +1107,7 @@ namespace HomeCinema.Global
                             list[5] = movie.first_air_date; // release date
                         }
                         list[4] = movie.overview; // summary / overview
-                        list[6] = movie.poster_path; // poster_path
+                        list[6] = (!String.IsNullOrWhiteSpace(movie.poster_path)) ? movie.poster_path : String.Empty; // poster_path
 
                         string tmp = "";
                         foreach (ProdCountry c in movie.production_countries)
