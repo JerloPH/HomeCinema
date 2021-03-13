@@ -187,12 +187,13 @@ namespace HomeCinema
             Array.Copy(GlobalVars.DB_TABLE_FILEPATH, 1, combined, GlobalVars.DB_TABLE_INFO.Length - 1, 3);
 
             // Create DT
-            DataTable dt = DBCON.InitializeDT(false, combined);
+            DataTable dt;
             foreach (string filePath in listofFiles)
             {
                 // variables
                 string getIMDB = "";
                 string mName = "";
+                dt = DBCON.InitializeDT(false, combined);
 
                 // Get proper name, without the folder paths
                 try
@@ -320,34 +321,36 @@ namespace HomeCinema
                 dt.Rows.Add(row);
                 count += 1; // add to count
                 logInsert += $"{filePath}\n";
-            }
-            dt.AcceptChanges();
 
-            int insertResult = DBCON.DbInsertMovie(dt, callFrom);
-            if (insertResult > 0)
-            {
-                // Download cover, if not OFFLINE_MODE
-                if (GlobalVars.SET_OFFLINE == false)
+                dt.AcceptChanges();
+
+                int insertResult = DBCON.DbInsertMovie(dt, callFrom);
+                if (insertResult > 0)
                 {
-                    string movieId = insertResult.ToString();
-                    // Download Cover from TMDB
-                    if (GlobalVars.DownloadCoverFromTMDB(movieId, rPosterLink, errFrom))
+                    // Download cover, if not OFFLINE_MODE
+                    if (GlobalVars.SET_OFFLINE == false)
                     {
-                        try
+                        string movieId = insertResult.ToString();
+                        // Download Cover from TMDB
+                        if (GlobalVars.DownloadCoverFromTMDB(movieId, rPosterLink, errFrom))
                         {
-                            // Move from temp folder to poster path
-                            string oldFile = GlobalVars.PATH_TEMP + movieId + ".jpg";
-                            string newFile = GlobalVars.ImgFullPath(movieId);
-                            GlobalVars.DeleteMove(newFile, errFrom); // Delete existing cover first
-                            File.Move(oldFile, newFile);
-                        }
-                        catch (Exception ex)
-                        {
-                            GlobalVars.ShowError(errFrom, ex, false);
+                            try
+                            {
+                                // Move from temp folder to poster path
+                                string oldFile = GlobalVars.PATH_TEMP + movieId + ".jpg";
+                                string newFile = GlobalVars.ImgFullPath(movieId);
+                                GlobalVars.DeleteMove(newFile, errFrom); // Delete existing cover first
+                                File.Move(oldFile, newFile);
+                            }
+                            catch (Exception ex)
+                            {
+                                GlobalVars.ShowError(errFrom, ex, false);
+                            }
                         }
                     }
                 }
             }
+            
             GlobalVars.WriteAppend(GlobalVars.PATH_LOG + "MovieResult_DoneInsert.Log", logInsert);
             return count;
         }
