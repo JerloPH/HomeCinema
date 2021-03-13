@@ -123,8 +123,8 @@ namespace HomeCinema
         // Return genre [string], from checked checkboxes
         public string GetGenre()
         {
-            FlowLayoutPanel f = GetFlowPanel("fPanelGenre", "tabPage2");
-            return GetChecked(f);
+            var list = listboxGenre.Items.Cast<String>().ToList();
+            return list.Aggregate((a, b) => a + "," + b);
         }
         // Add genres to ListBox that are in the media 'genre'
         public void LoadGenre(string genre)
@@ -142,8 +142,8 @@ namespace HomeCinema
         // Return country, from checkboxes
         public string GetCountry()
         {
-            FlowLayoutPanel f = GetFlowPanel("fPanelCountry", "tabPage2");
-            return GetChecked(f);
+            var list =  listboxCountry.Items.Cast<String>().ToList();
+            return list.Aggregate((a, b) => a + "," + b);
         }
         // Add countries to ListBox that are in the media 'country'
         public void LoadCountry(string country)
