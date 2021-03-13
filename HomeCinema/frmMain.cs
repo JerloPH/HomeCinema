@@ -210,11 +210,11 @@ namespace HomeCinema
                         // Its a file
                         mName = Path.GetFileNameWithoutExtension(filePath);
                     }
-
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
-                    // Log Error
                     GlobalVars.ShowError(callFrom, ex, false);
+                    continue; // skip when exception thrown
                 }
 
                 // Trim Movie Name
