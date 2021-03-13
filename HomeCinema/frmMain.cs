@@ -910,6 +910,7 @@ namespace HomeCinema
                     GlobalVars.WriteToFile(GlobalVars.PATH_LOG + "MovieResult_Skipped.Log", nonres);
 
                     // Add now to database
+                    form.Message = "Inserting to database..";
                     int insertRes = InsertToDB(listToAdd, calledFrom + "-listToAdd");
                 }
                 form.Message = "Done fetching new media files!";
