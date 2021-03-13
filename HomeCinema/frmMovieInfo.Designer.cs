@@ -60,7 +60,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtID = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.fPanelGenre = new System.Windows.Forms.FlowLayoutPanel();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -80,6 +79,7 @@
             this.label15 = new System.Windows.Forms.Label();
             this.txtPathFile = new System.Windows.Forms.TextBox();
             this.listboxCountry = new System.Windows.Forms.ListBox();
+            this.listboxGenre = new System.Windows.Forms.ListBox();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
@@ -449,8 +449,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.listboxGenre);
             this.tabPage2.Controls.Add(this.listboxCountry);
-            this.tabPage2.Controls.Add(this.fPanelGenre);
             this.tabPage2.Controls.Add(this.label14);
             this.tabPage2.Controls.Add(this.label13);
             this.tabPage2.Controls.Add(this.label12);
@@ -468,15 +468,6 @@
             this.tabPage2.TabIndex = 2;
             this.tabPage2.Text = "Advance";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // fPanelGenre
-            // 
-            this.fPanelGenre.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.fPanelGenre.Location = new System.Drawing.Point(15, 337);
-            this.fPanelGenre.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.fPanelGenre.Name = "fPanelGenre";
-            this.fPanelGenre.Size = new System.Drawing.Size(735, 135);
-            this.fPanelGenre.TabIndex = 54;
             // 
             // label14
             // 
@@ -674,6 +665,16 @@
             this.listboxCountry.Size = new System.Drawing.Size(303, 228);
             this.listboxCountry.TabIndex = 55;
             // 
+            // listboxGenre
+            // 
+            this.listboxGenre.FormattingEnabled = true;
+            this.listboxGenre.ItemHeight = 16;
+            this.listboxGenre.Location = new System.Drawing.Point(15, 335);
+            this.listboxGenre.Margin = new System.Windows.Forms.Padding(4);
+            this.listboxGenre.Name = "listboxGenre";
+            this.listboxGenre.Size = new System.Drawing.Size(303, 148);
+            this.listboxGenre.TabIndex = 56;
+            // 
             // frmMovieInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -748,7 +749,6 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.TextBox txtPathFile;
         private System.Windows.Forms.ComboBox cbCategory;
-        private System.Windows.Forms.FlowLayoutPanel fPanelGenre;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox txtPathTrailer;
@@ -758,5 +758,6 @@
         private System.Windows.Forms.Button btnGetImdb;
         private System.Windows.Forms.CheckBox cbSaveMetadata;
         private System.Windows.Forms.ListBox listboxCountry;
+        private System.Windows.Forms.ListBox listboxGenre;
     }
 }

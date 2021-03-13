@@ -72,26 +72,6 @@ namespace HomeCinema
             // Add items to cbCategory
             cbCategory.Items.AddRange(GlobalVars.DB_INFO_CATEGORY);
 
-            // Populate fPanelGenre with Checkbox
-            int cW = 105;
-            int cH = 17;
-            fPanelGenre.AutoScroll = true;
-            cW = 102;
-            cH = 17;
-            foreach (string t in GlobalVars.TEXT_GENRE)
-            {
-                if (t != "All")
-                {
-                    CheckBox cb = new CheckBox();
-                    cb.Size = new Size(cW, cH);
-                    cb.Text = GlobalVars.RemoveLine(t);
-                    cb.AutoSize = false;
-                    cb.TabIndex = 0;
-                    cb.UseVisualStyleBackColor = true;
-                    fPanelGenre.Controls.Add(cb);
-                }
-            }
-
             // LOAD Information from DATABASE and SET to Controls
             if (Convert.ToInt16(MOVIE_ID) > 0)
             {
@@ -118,14 +98,14 @@ namespace HomeCinema
         // ########################## LISTBOX Functions
         private bool CanBeAddedToListBox(ListBox lb, string item)
         {
-            string itemTrim;
-            if (String.IsNullOrWhiteSpace(item))
-                return false;
-            foreach (string s in lb.Items)
+            if (String.IsNullOrWhiteSpace(item)) { return false; }
+            if (lb.Items.Contains(item)) { return false; }
+            foreach (string sItem in lb.Items)
             {
-                itemTrim = s.Trim();
-                if (itemTrim.Equals(item, StringComparison.CurrentCultureIgnoreCase))
+                if (sItem.Equals(item, StringComparison.CurrentCultureIgnoreCase))
+                {
                     return false;
+                }
             }
             return true;
         }
@@ -146,11 +126,17 @@ namespace HomeCinema
             FlowLayoutPanel f = GetFlowPanel("fPanelGenre", "tabPage2");
             return GetChecked(f);
         }
-        // Check [x] the Genre for the movie
-        public void LoadGenre(string gen)
+        // Add genres to ListBox that are in the media 'genre'
+        public void LoadGenre(string genre)
         {
-            FlowLayoutPanel f = GetFlowPanel("fPanelGenre", "tabPage2");
-            ActivateCheckbox(f, gen);
+            string[] temp = genre.Split(',');
+            foreach (string item in temp)
+            {
+                if (CanBeAddedToListBox(listboxGenre, item.Trim()))
+                {
+                    listboxGenre.Items.Add(item.Trim());
+                }
+            }
         }
         // ########################## FOR COUNTRY
         // Return country, from checkboxes
@@ -159,15 +145,15 @@ namespace HomeCinema
             FlowLayoutPanel f = GetFlowPanel("fPanelCountry", "tabPage2");
             return GetChecked(f);
         }
-        // Check [x] the Country for the movie
+        // Add countries to ListBox that are in the media 'country'
         public void LoadCountry(string country)
         {
             string[] temp = country.Split(',');
             foreach (string item in temp)
             {
-                if (CanBeAddedToListBox(listboxCountry, item))
+                if (CanBeAddedToListBox(listboxCountry, item.Trim()))
                 {
-                    listboxCountry.Items.Add(item);
+                    listboxCountry.Items.Add(item.Trim());
                 }
             }
         }
@@ -427,26 +413,6 @@ namespace HomeCinema
                 // Dispose from Parent
                 string[] Params = { "" };
                 GlobalVars.CallMethod(PARENT_NAME, "DisposePoster", Params, $"frmMovieInfo-DisposeImages ({Name})", "frmMovie PARENT: " + PARENT_NAME);
-            }
-        }
-        // Check Genre textboxes from List of genres
-        private void CheckGenreFromTMDB(List<string> list)
-        {
-            if (list.Count > 0)
-            {
-                foreach (string val in list)
-                {
-                    foreach (CheckBox cb in fPanelGenre.Controls)
-                    {
-                        string string1 = cb.Text.ToLower().Trim();
-                        string string2 = val.ToLower().Trim();
-                        if (string1 == string2)
-                        {
-                            cb.Checked = true;
-                            break;
-                        }
-                    }
-                }
             }
         }
         #endregion
@@ -774,11 +740,11 @@ namespace HomeCinema
                 }
             }
             // Set Genres
-            var genreList = GlobalVars.GetGenresByJsonFile(jsonMainFullPath, errFrom + " (jsonMainFullPath)");
-            CheckGenreFromTMDB(genreList);
+            string genre = GlobalVars.GetGenresByJsonFile(jsonMainFullPath, errFrom + " (jsonMainFullPath)").Aggregate((a, b) => a + "," + b);
+            LoadGenre(genre);
 
             // Set mediatype, after getting info from TMDB
-            cbCategory.SelectedIndex = GlobalVars.GetCategoryByFilter(genreList.Aggregate((a,b) => a + "," + b), r9, mediatype);
+            cbCategory.SelectedIndex = GlobalVars.GetCategoryByFilter(genre, r9, mediatype);
         }
         // Get IMDB ID using Movie Name
         private void btnGetImdb_Click(object sender, EventArgs e)
