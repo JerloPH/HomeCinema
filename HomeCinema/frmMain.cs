@@ -29,6 +29,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace HomeCinema
 {
@@ -55,6 +56,13 @@ namespace HomeCinema
 
             // Check files first
             GlobalVars.CheckAllFiles();
+
+            // Set TMDB Key on DEBUG
+            if (Debugger.IsAttached)
+            {
+                GlobalVars.TMDB_KEY = GlobalVars.ReadStringFromFile(@"..\..\..\ignored\tmdb_API_Key.txt", "frmMain-DEBUG");
+                GlobalVars.ShowWarning(GlobalVars.TMDB_KEY);
+            }
 
             // Start app
             InitializeComponent();
