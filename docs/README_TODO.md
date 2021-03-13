@@ -4,10 +4,9 @@
 - On searching info in IMDB, view dialog for selection, instead of getting only the first result.
 - Scrape Anime info from Anilist/MyAnimeList.
 - Improve speed of App load (check background worker and optimize).
-- Check if file still exists, before loading it into the App. *For now, skips the entry.*
-  - Delete entry from database, and cover picture (if existing).
+- Check if file still exists, before loading it into the App.
+  - Delete entry from database, and cover picture (if existing). *For now, skips the entry.*
   - Remove ListView item, when the file is not existing. Then, delete the entry from database. *Or archive to another database*.
-- Use **language spoken** from TMDB to get Country, instead of Producing country.
 - Use **Series Name/Title** only **if** category is **Series**, and use as **Original Title/Name**.
 
 ## Features:
@@ -35,7 +34,6 @@
   - [ ] Open Media Player in 2nd monitor, if existing. **On hold**.
 
 ## Main Form
-  - [ ] Add Button to Group Items (Group by: Series Name, if Series) *(Check if season or episode is not empty, and get only episode 1)* **On-HOLD**
   - [x] Automatically get information from IMDB when newly added media (IMDB Scraper). **Ongoing**.
     - Done:
 	  - IMDB Id
@@ -62,12 +60,12 @@
 	- [x] Year
 	- [x] Genre
 	- [x] Director
-  - [ ] ~~Switch webBrowser to Cefsharp Browser.~~ **Cancelled**
   
 ## Settings form
 - [ ] Create new TextBox to set TimeOut for connections.
 
 ## Bugs
+- [ ] Cover sometimes does not download from TMDB. API limitation is the probable cause. Pause every 100ms to resolve, but at the cost of App loading speed.
 
 ## Others
 
