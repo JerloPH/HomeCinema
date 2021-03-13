@@ -671,6 +671,7 @@
             this.listboxCountry.Location = new System.Drawing.Point(14, 190);
             this.listboxCountry.Margin = new System.Windows.Forms.Padding(4);
             this.listboxCountry.Name = "listboxCountry";
+            this.listboxCountry.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.listboxCountry.Size = new System.Drawing.Size(314, 228);
             this.listboxCountry.TabIndex = 55;
             // 
@@ -681,6 +682,7 @@
             this.listboxGenre.Location = new System.Drawing.Point(349, 190);
             this.listboxGenre.Margin = new System.Windows.Forms.Padding(4);
             this.listboxGenre.Name = "listboxGenre";
+            this.listboxGenre.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.listboxGenre.Size = new System.Drawing.Size(314, 228);
             this.listboxGenre.TabIndex = 56;
             // 
@@ -705,6 +707,7 @@
             this.btnCountryRemove.TabIndex = 57;
             this.btnCountryRemove.Text = "REMOVE";
             this.btnCountryRemove.UseVisualStyleBackColor = true;
+            this.btnCountryRemove.Click += new System.EventHandler(this.btnCountryRemove_Click);
             // 
             // btnCountryClear
             // 
@@ -740,6 +743,7 @@
             this.btnGenreRemove.TabIndex = 60;
             this.btnGenreRemove.Text = "REMOVE";
             this.btnGenreRemove.UseVisualStyleBackColor = true;
+            this.btnGenreRemove.Click += new System.EventHandler(this.btnGenreRemove_Click);
             // 
             // btnGenreAdd
             // 

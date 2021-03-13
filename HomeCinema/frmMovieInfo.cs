@@ -727,5 +727,23 @@ namespace HomeCinema
         {
             listboxGenre.Items.Clear();
         }
+
+        private void btnCountryRemove_Click(object sender, EventArgs e)
+        {
+            for (int i=listboxCountry.SelectedIndices.Count - 1; i>=0; i--)
+            {
+                int item = listboxCountry.SelectedIndices[i];
+                listboxCountry.Items.RemoveAt(item);
+            }
+        }
+
+        private void btnGenreRemove_Click(object sender, EventArgs e)
+        {
+            for (int i = listboxGenre.SelectedIndices.Count - 1; i >= 0; i--)
+            {
+                int item = listboxGenre.SelectedIndices[i];
+                listboxGenre.Items.RemoveAt(item);
+            }
+        }
     }
 }
