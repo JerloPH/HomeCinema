@@ -73,6 +73,30 @@ namespace HomeCinema
             _stringFlags.LineAlignment = StringAlignment.Center;
             g.DrawString(_tabPage.Text, _tabFont, _textBrush, _tabBounds, new StringFormat(_stringFlags));
         }
+        // ############################################################################################### FUNCTIONS
+        #region Functions
+        private bool CanAddToListBox(ListBox lb, string item)
+        {
+            if (String.IsNullOrWhiteSpace(item)) { return false; }
+            if (lb.Items.Contains(item)) { return false; }
+            foreach (string sItem in lb.Items)
+            {
+                if (sItem.Equals(item, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        private void AddToListBox(ListBox lb, string caption = "Type here")
+        {
+            string item = GlobalVars.GetStringInputBox(caption);
+            if (CanAddToListBox(lb, item))
+            {
+                lb.Items.Add(item);
+            }
+        }
+        #endregion
         // ############################################################################################### EVENTS
         private void frmSettings_Load(object sender, EventArgs e)
         {
@@ -286,6 +310,16 @@ namespace HomeCinema
         {
             // Remove all from ListBox: BoxSeriesLoc
             BoxSeriesLoc.Items.Clear();
+        }
+
+        private void btnGenreAdd_Click(object sender, EventArgs e)
+        {
+            AddToListBox(listboxGenre, "Type genre to add");
+        }
+
+        private void btnCountryAdd_Click(object sender, EventArgs e)
+        {
+            AddToListBox(listboxCountry, "Type country to add");
         }
     }
 }
