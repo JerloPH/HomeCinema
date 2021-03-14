@@ -512,9 +512,15 @@ namespace HomeCinema
             {
                 GlobalVars.WriteAppend(GlobalVars.FILE_COUNTRY, $",{item}");
             }
+            // Add new genre to text file
+            foreach (string item in listboxGenre.Items)
+            {
+                GlobalVars.WriteAppend(GlobalVars.FILE_GENRE, $",{item}");
+            }
             // Refresh main form properties
             Program.FormMain.UpdateMovieItemOnLV(LVITEM); // ListView item of this
             Program.FormMain.PopulateCountryCB(); // Refresh Country list
+            Program.FormMain.PopulateGenreCB(); // Refresh Genre list
 
             // Save Metadata
             if (cbSaveMetadata.Checked)
