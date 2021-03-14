@@ -782,6 +782,19 @@ namespace HomeCinema
                 GlobalVars.formAbout.Focus();
             }
         }
+        private void SaveCountryCB()
+        {
+            // save cbCountry contents to FILE_COUNTRY
+            string toWrite = "";
+            foreach (string item in cbCountry.Items)
+            {
+                if (item.Equals("All"))
+                    continue;
+                toWrite += item + ",";
+            }
+            toWrite = toWrite.TrimEnd(',');
+            GlobalVars.WriteToFile(GlobalVars.FILE_COUNTRY, toWrite);
+        }
         #endregion
         // ####################################################################################### BACKGROUND WORKERS
         #region BG Worker: Get files in folders
@@ -1103,7 +1116,6 @@ namespace HomeCinema
         private void frmMain_Load(object sender, EventArgs e)
         {
             // Startup events
-
             // Delete previous log file, if exceeds file size limit
             GlobalVars.CheckLogFile(GlobalVars.FILE_LOG_APP, "frmMain-(Delete AppLog)", Text + "\n  : Start of LogFile");
             GlobalVars.CheckLogFile(GlobalVars.DB_DBLOGPATH, "frmMain-(Delete App_DB.log)", Text + "\n  : Database Log");
@@ -1111,15 +1123,14 @@ namespace HomeCinema
 
             // Put default Image on ImageList
             GlobalVars.MOVIE_IMGLIST.Images.Clear();
-            string Imagefile = GlobalVars.ImgFullPath("0");
-            Image imgFromFile = Image.FromFile(Imagefile);
-            GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imgFromFile);
+            string imageFilePath = GlobalVars.ImgFullPath("0");
+            string Imagefile = (File.Exists(imageFilePath)) ? imageFilePath : GlobalVars.FILE_DEFIMG;
+            GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), Image.FromFile(Imagefile));
 
             // Perform click on Change View
             btnChangeView.PerformClick();
             // Auto check update
             GlobalVars.CheckForUpdate();
-
             // Start finding files in folder
             GetMediaFromFolders();
         }
@@ -1127,10 +1138,9 @@ namespace HomeCinema
         {
             string logClose = "Exit Log\n";
             // Save settings
-            if (SaveSettings())
-            {
-                logClose += $"\n\tSettings Saved! ({DateTime.Now.TimeOfDay.ToString()})";
-            }
+            logClose += SaveSettings() ? $"\n\tSettings Saved! ({DateTime.Now.TimeOfDay.ToString()})" : "";
+            // Replace Country text file
+            SaveCountryCB();
             // Clean each image 1 by 1
             //GlobalVars.Log("frmMain-frmMain_FormClosing", "Disposing MOVIE_IMGLIST");
             //foreach (Image img in GlobalVars.MOVIE_IMGLIST.Images)
@@ -1142,6 +1152,7 @@ namespace HomeCinema
             //}
             if (GlobalVars.MOVIE_IMGLIST != null)
             {
+                GlobalVars.MOVIE_IMGLIST.Images.Clear();
                 GlobalVars.MOVIE_IMGLIST.Dispose();
             }
             // Run GC to clean
