@@ -517,6 +517,7 @@
             this.btnGenreClear.TabIndex = 22;
             this.btnGenreClear.Text = "CLEAR";
             this.btnGenreClear.UseVisualStyleBackColor = true;
+            this.btnGenreClear.Click += new System.EventHandler(this.btnGenreClear_Click);
             // 
             // btnCountryClear
             // 
@@ -529,6 +530,7 @@
             this.btnCountryClear.TabIndex = 26;
             this.btnCountryClear.Text = "CLEAR";
             this.btnCountryClear.UseVisualStyleBackColor = true;
+            this.btnCountryClear.Click += new System.EventHandler(this.btnCountryClear_Click);
             // 
             // btnCountryRemove
             // 
