@@ -96,7 +96,7 @@ namespace HomeCinema
         // ############################################################################## Functions
         #region Functions
         // ########################## LISTBOX Functions
-        private bool CanBeAddedToListBox(ListBox lb, string item)
+        private bool CanAddToListBox(ListBox lb, string item)
         {
             if (String.IsNullOrWhiteSpace(item)) { return false; }
             if (lb.Items.Contains(item)) { return false; }
@@ -108,6 +108,22 @@ namespace HomeCinema
                 }
             }
             return true;
+        }
+        private void AddToListBox(ListBox lb, string caption = "Type here")
+        {
+            string item = GlobalVars.GetStringInputBox(caption);
+            if (CanAddToListBox(lb, item))
+            {
+                lb.Items.Add(item);
+            }
+        }
+        private void RemoveFromListBox(ListBox lb)
+        {
+            for (int i = lb.SelectedIndices.Count - 1; i >= 0; i--)
+            {
+                int item = lb.SelectedIndices[i];
+                lb.Items.RemoveAt(item);
+            }
         }
         // ########################## FOR CATEGORY
         // Get Category as integer, in string format
@@ -128,7 +144,7 @@ namespace HomeCinema
             string[] temp = genre.Split(',');
             foreach (string item in temp)
             {
-                if (CanBeAddedToListBox(listboxGenre, item.Trim()))
+                if (CanAddToListBox(listboxGenre, item.Trim()))
                 {
                     listboxGenre.Items.Add(item.Trim());
                 }
@@ -147,7 +163,7 @@ namespace HomeCinema
             string[] temp = country.Split(',');
             foreach (string item in temp)
             {
-                if (CanBeAddedToListBox(listboxCountry, item.Trim()))
+                if (CanAddToListBox(listboxCountry, item.Trim()))
                 {
                     listboxCountry.Items.Add(item.Trim());
                 }
@@ -734,38 +750,22 @@ namespace HomeCinema
 
         private void btnCountryRemove_Click(object sender, EventArgs e)
         {
-            for (int i=listboxCountry.SelectedIndices.Count - 1; i>=0; i--)
-            {
-                int item = listboxCountry.SelectedIndices[i];
-                listboxCountry.Items.RemoveAt(item);
-            }
+            RemoveFromListBox(listboxCountry);
         }
 
         private void btnGenreRemove_Click(object sender, EventArgs e)
         {
-            for (int i = listboxGenre.SelectedIndices.Count - 1; i >= 0; i--)
-            {
-                int item = listboxGenre.SelectedIndices[i];
-                listboxGenre.Items.RemoveAt(item);
-            }
+            RemoveFromListBox(listboxGenre);
         }
 
         private void btnCountryAdd_Click(object sender, EventArgs e)
         {
-            string country = GlobalVars.GetStringInputBox("Type country to add");
-            if (CanBeAddedToListBox(listboxCountry, country))
-            {
-                listboxCountry.Items.Add(country);
-            }
+            AddToListBox(listboxCountry, "Type country to add");
         }
 
         private void btnGenreAdd_Click(object sender, EventArgs e)
         {
-            string genre = GlobalVars.GetStringInputBox("Type genre to add");
-            if (CanBeAddedToListBox(listboxGenre, genre))
-            {
-                listboxGenre.Items.Add(genre);
-            }
+            AddToListBox(listboxGenre, "Type genre to add");
         }
     }
 }
