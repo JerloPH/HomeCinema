@@ -374,11 +374,9 @@ namespace HomeCinema
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
-            // Call is from 
-            string callFrom = $"frmMovieInfo ({Name})-btnSave_Click";
-
-            // List for metadata values
-            var metaData = new List<string>();
+            // variables
+            string callFrom = $"frmMovieInfo ({Name})-btnSave_Click"; // called From
+            var metaData = new List<string>(); // List for metadata values
 
             // Exit if Movie Name is empty
             if (String.IsNullOrWhiteSpace(txtName.Text))
@@ -507,9 +505,14 @@ namespace HomeCinema
                 string[] Params = { MOVIE_ID };
                 GlobalVars.CallMethod(PARENT_NAME, "LoadInformation", Params, $"frmMovieInfo-btnSave_Click ({Name})", "frmMovie PARENT: " + PARENT_NAME);
             }
-            
-            // Refresh Movie List
-            Program.FormMain.UpdateMovieItemOnLV(LVITEM);
+            // Add new country to text file
+            foreach (string item in listboxCountry.Items)
+            {
+                GlobalVars.WriteAppend(GlobalVars.FILE_COUNTRY, $",{item}");
+            }
+            // Refresh main form properties
+            Program.FormMain.UpdateMovieItemOnLV(LVITEM); // ListView item of this
+            Program.FormMain.PopulateCountryCB(); // Refresh Country list
 
             // Save Metadata
             if (cbSaveMetadata.Checked)
