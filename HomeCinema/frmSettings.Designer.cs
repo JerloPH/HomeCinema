@@ -492,6 +492,7 @@
             this.btnGenreEdit.TabIndex = 20;
             this.btnGenreEdit.Text = "EDIT";
             this.btnGenreEdit.UseVisualStyleBackColor = true;
+            this.btnGenreEdit.Click += new System.EventHandler(this.btnGenreEdit_Click);
             // 
             // btnGenreRemove
             // 
@@ -556,6 +557,7 @@
             this.btnCountryEdit.TabIndex = 24;
             this.btnCountryEdit.Text = "EDIT";
             this.btnCountryEdit.UseVisualStyleBackColor = true;
+            this.btnCountryEdit.Click += new System.EventHandler(this.btnCountryEdit_Click);
             // 
             // btnCountryAdd
             // 

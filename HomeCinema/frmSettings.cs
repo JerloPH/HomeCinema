@@ -104,6 +104,19 @@ namespace HomeCinema
                 lb.Items.RemoveAt(item);
             }
         }
+        private void EditListBoxItems(ListBox lb)
+        {
+            int item, pos;
+            for (int i = lb.SelectedIndices.Count - 1; i >= 0; i--)
+            {
+                item = lb.SelectedIndices[i];
+                pos = lb.Items.IndexOf(lb.Items[item]);
+                if (pos > -1)
+                {
+                    lb.Items[pos] = GlobalVars.GetStringInputBox($"Change '{lb.Items[item]}' to");
+                }
+            }
+        }
         #endregion
         // ############################################################################################### EVENTS
         private void frmSettings_Load(object sender, EventArgs e)
@@ -348,6 +361,16 @@ namespace HomeCinema
         private void btnCountryClear_Click(object sender, EventArgs e)
         {
             listboxCountry.Items.Clear();
+        }
+
+        private void btnGenreEdit_Click(object sender, EventArgs e)
+        {
+            EditListBoxItems(listboxGenre);
+        }
+
+        private void btnCountryEdit_Click(object sender, EventArgs e)
+        {
+            EditListBoxItems(listboxCountry);
         }
     }
 }
