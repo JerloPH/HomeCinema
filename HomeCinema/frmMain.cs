@@ -1127,7 +1127,9 @@ namespace HomeCinema
             GlobalVars.MOVIE_IMGLIST.Images.Clear();
             string imageFilePath = GlobalVars.ImgFullPath("0");
             string Imagefile = (File.Exists(imageFilePath)) ? imageFilePath : GlobalVars.FILE_DEFIMG;
-            GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), Image.FromFile(Imagefile));
+            Image imgFromFile = Image.FromFile(Imagefile);
+            GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imgFromFile);
+            imgFromFile.Dispose();
 
             // Perform click on Change View
             btnChangeView.PerformClick();

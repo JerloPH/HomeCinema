@@ -319,7 +319,9 @@ namespace HomeCinema
                 File.Copy(sourceFile, destFile, true);
 
                 // Set picBox Image, from File Selected
-                GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(destFile), Image.FromFile(destFile));
+                Image imgFromFile = Image.FromFile(destFile);
+                GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(destFile), imgFromFile);
+                imgFromFile.Dispose();
                 GlobalVars.Log(ExceptionFrom + " [NEW Image File and Name]", sourceFile);
             }
             catch (Exception fex)
