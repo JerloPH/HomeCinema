@@ -504,6 +504,7 @@
             this.btnGenreRemove.TabIndex = 21;
             this.btnGenreRemove.Text = "REMOVE";
             this.btnGenreRemove.UseVisualStyleBackColor = true;
+            this.btnGenreRemove.Click += new System.EventHandler(this.btnGenreRemove_Click);
             // 
             // btnGenreClear
             // 
@@ -540,6 +541,7 @@
             this.btnCountryRemove.TabIndex = 25;
             this.btnCountryRemove.Text = "REMOVE";
             this.btnCountryRemove.UseVisualStyleBackColor = true;
+            this.btnCountryRemove.Click += new System.EventHandler(this.btnCountryRemove_Click);
             // 
             // btnCountryEdit
             // 

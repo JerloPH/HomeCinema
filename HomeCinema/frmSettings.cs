@@ -96,6 +96,14 @@ namespace HomeCinema
                 lb.Items.Add(item);
             }
         }
+        private void RemoveFromListBox(ListBox lb)
+        {
+            for (int i = lb.SelectedIndices.Count - 1; i >= 0; i--)
+            {
+                int item = lb.SelectedIndices[i];
+                lb.Items.RemoveAt(item);
+            }
+        }
         #endregion
         // ############################################################################################### EVENTS
         private void frmSettings_Load(object sender, EventArgs e)
@@ -320,6 +328,16 @@ namespace HomeCinema
         private void btnCountryAdd_Click(object sender, EventArgs e)
         {
             AddToListBox(listboxCountry, "Type country to add");
+        }
+
+        private void btnGenreRemove_Click(object sender, EventArgs e)
+        {
+            RemoveFromListBox(listboxGenre);
+        }
+
+        private void btnCountryRemove_Click(object sender, EventArgs e)
+        {
+            RemoveFromListBox(listboxCountry);
         }
     }
 }
