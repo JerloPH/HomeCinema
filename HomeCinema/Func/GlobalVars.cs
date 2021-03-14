@@ -1378,7 +1378,7 @@ namespace HomeCinema.Global
         public static string GetStringInputBox(string caption = "Input string")
         {
             string input = Interaction.InputBox(caption, HOMECINEMA_NAME, "");
-            return (!String.IsNullOrWhiteSpace(input)) ? input : String.Empty;
+            return (!String.IsNullOrWhiteSpace(input)) ? input.Trim() : String.Empty;
         }
         // ######################################################################## END - Add code above
     }
