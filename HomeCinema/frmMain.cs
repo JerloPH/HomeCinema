@@ -795,6 +795,19 @@ namespace HomeCinema
             toWrite = toWrite.TrimEnd(',');
             GlobalVars.WriteToFile(GlobalVars.FILE_COUNTRY, toWrite);
         }
+        private void SaveGenreCB()
+        {
+            // save cbGenre contents to FILE_GENRE
+            string toWrite = "";
+            foreach (string item in cbGenre.Items)
+            {
+                if (item.Equals("All"))
+                    continue;
+                toWrite += item + ",";
+            }
+            toWrite = toWrite.TrimEnd(',');
+            GlobalVars.WriteToFile(GlobalVars.FILE_GENRE, toWrite);
+        }
         #endregion
         // ####################################################################################### BACKGROUND WORKERS
         #region BG Worker: Get files in folders
@@ -1145,8 +1158,9 @@ namespace HomeCinema
             string logClose = "Exit Log\n";
             // Save settings
             logClose += SaveSettings() ? $"\n\tSettings Saved! ({DateTime.Now.TimeOfDay.ToString()})" : "";
-            // Replace Country text file
-            SaveCountryCB();
+            // Save text files
+            SaveCountryCB(); // Replace Country text file
+            SaveGenreCB(); // Replace Genre text file
             // Clean each image 1 by 1
             //GlobalVars.Log("frmMain-frmMain_FormClosing", "Disposing MOVIE_IMGLIST");
             //foreach (Image img in GlobalVars.MOVIE_IMGLIST.Images)
