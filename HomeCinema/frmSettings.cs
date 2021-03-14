@@ -20,6 +20,7 @@
 #endregion
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using HomeCinema.Global;
 
@@ -125,18 +126,14 @@ namespace HomeCinema
             text = text.TrimEnd(',');
             txtCountry.Text = text;
 
-            // Genre Texts
-            text = "";
-            foreach (string c in GlobalVars.TEXT_GENRE)
+            // Genre items
+            foreach (string genre in GlobalVars.TEXT_GENRE)
             {
-                if ((String.IsNullOrWhiteSpace(c) == false) && c != "All")
+                if ((String.IsNullOrWhiteSpace(genre) == false) && genre != "All")
                 {
-                    text += c.Trim() + ", ";
+                    listboxGenre.Items.Add(genre);
                 }
             }
-            text = text.TrimEnd();
-            text = text.TrimEnd(',');
-            txtGenre.Text = text;
 
             // Media File Format / File Extensions Texts
             text = "";
@@ -224,9 +221,9 @@ namespace HomeCinema
             Program.FormMain.PopulateCountryCB();
 
             // Replace genre file
-            toWrite = txtGenre.Text.Replace('\r', ' ');
-            toWrite = toWrite.Replace('\n', ' ');
-            GlobalVars.WriteArray(toWrite.Split(','), GlobalVars.FILE_GENRE);
+            var list = listboxGenre.Items.Cast<String>().ToList();
+            toWrite = (list.Count > 0) ? list.Aggregate((a, b) => a + "," + b) : "";
+            GlobalVars.WriteToFile(GlobalVars.FILE_GENRE, toWrite);
             Program.FormMain.PopulateGenreCB();
 
             // Show Message

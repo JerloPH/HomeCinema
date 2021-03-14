@@ -57,10 +57,10 @@
             this.label7 = new System.Windows.Forms.Label();
             this.txtCountry = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtGenre = new System.Windows.Forms.TextBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
+            this.listboxGenre = new System.Windows.Forms.ListBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -367,10 +367,10 @@
             // tabPage3
             // 
             this.tabPage3.BackColor = System.Drawing.Color.Black;
+            this.tabPage3.Controls.Add(this.listboxGenre);
             this.tabPage3.Controls.Add(this.label7);
             this.tabPage3.Controls.Add(this.txtCountry);
             this.tabPage3.Controls.Add(this.label6);
-            this.tabPage3.Controls.Add(this.txtGenre);
             this.tabPage3.ForeColor = System.Drawing.Color.White;
             this.tabPage3.Location = new System.Drawing.Point(104, 4);
             this.tabPage3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -382,7 +382,7 @@
             // label7
             // 
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(8, 185);
+            this.label7.Location = new System.Drawing.Point(8, 235);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(116, 31);
             this.label7.TabIndex = 17;
@@ -391,7 +391,7 @@
             // txtCountry
             // 
             this.txtCountry.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCountry.Location = new System.Drawing.Point(13, 219);
+            this.txtCountry.Location = new System.Drawing.Point(13, 269);
             this.txtCountry.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtCountry.Multiline = true;
             this.txtCountry.Name = "txtCountry";
@@ -407,17 +407,6 @@
             this.label6.Size = new System.Drawing.Size(101, 31);
             this.label6.TabIndex = 15;
             this.label6.Text = "Genre :";
-            // 
-            // txtGenre
-            // 
-            this.txtGenre.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtGenre.Location = new System.Drawing.Point(13, 46);
-            this.txtGenre.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtGenre.Multiline = true;
-            this.txtGenre.Name = "txtGenre";
-            this.txtGenre.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtGenre.Size = new System.Drawing.Size(600, 126);
-            this.txtGenre.TabIndex = 14;
             // 
             // btnCancel
             // 
@@ -453,6 +442,16 @@
             this.label9.Size = new System.Drawing.Size(335, 34);
             this.label9.TabIndex = 16;
             this.label9.Text = "* Changes Apply after Restart";
+            // 
+            // listboxGenre
+            // 
+            this.listboxGenre.FormattingEnabled = true;
+            this.listboxGenre.ItemHeight = 22;
+            this.listboxGenre.Location = new System.Drawing.Point(13, 47);
+            this.listboxGenre.Name = "listboxGenre";
+            this.listboxGenre.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.listboxGenre.Size = new System.Drawing.Size(524, 180);
+            this.listboxGenre.TabIndex = 18;
             // 
             // frmSettings
             // 
@@ -509,7 +508,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtCountry;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtGenre;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnMediaLocAdd;
         private System.Windows.Forms.Button btnMediaLocClear;
@@ -519,5 +517,6 @@
         private System.Windows.Forms.Button btnSeriesLocClear;
         private System.Windows.Forms.Button btnSeriesLocRemove;
         private System.Windows.Forms.Button btnSeriesLocAdd;
+        private System.Windows.Forms.ListBox listboxGenre;
     }
 }
