@@ -575,7 +575,7 @@ namespace HomeCinema
         private void btnFetchData_Click(object sender, EventArgs e)
         {
             // Declare vars
-            frmLoading form = new frmLoading("Fetching info from TMDB..", "Loading");
+            frmLoading form = null;
             var list = new List<string>();
 
             string errFrom = "frmMovieInfo-btnFetchData_Click";
@@ -603,6 +603,7 @@ namespace HomeCinema
             }
 
             // Get List of values from TMDB
+            form = new frmLoading("Fetching info from TMDB..", "Loading");
             form.BackgroundWorker.DoWork += (sender1, e1) =>
             {
                 list = GlobalVars.GetMovieInfoByImdb(IMDB_ID, mediatype);
@@ -663,7 +664,7 @@ namespace HomeCinema
                 if (GlobalVars.ShowYesNo("Do you want to change poster image?"))
                 {
                     // Show form loading
-                    form.Message = "Downloading cover from TMDB..";
+                    form = new frmLoading("Downloading cover from TMDB..", "Loading");
                     form.BackgroundWorker.DoWork += (sender1, e1) =>
                     {
                         // Parse image link from JSON and download it
