@@ -2,7 +2,6 @@
 
 ## Priority List
 - Properly dispose form if not modaly shown. *View links.md*.
-- Change Country/Genre on Settings form to ListBox with buttons: **Add, Remove, Clear**.
 - On searching info in IMDB, view dialog for selection, instead of getting only the first result.
 - Scrape Anime info from Anilist/MyAnimeList.
 - Improve speed of App load (check background worker and optimize).
