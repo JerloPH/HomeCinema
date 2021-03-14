@@ -1024,7 +1024,9 @@ namespace HomeCinema
                                 {
                                     this.Invoke(new Action(() =>
                                     {
-                                        GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), Image.FromFile(Imagefile));
+                                        Image imageFromFile = Image.FromFile(Imagefile);
+                                        GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imageFromFile);
+                                        imageFromFile.Dispose();
                                     }));
                                 }
 
