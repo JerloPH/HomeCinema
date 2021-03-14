@@ -577,15 +577,13 @@ namespace HomeCinema
             // Declare vars
             frmLoading form = null;
             var list = new List<string>();
-
             string errFrom = "frmMovieInfo-btnFetchData_Click";
             string IMDB_ID = txtIMDB.Text;
-            string mediatype = "movie";
-            
+            string mediatype;
+            string genre; // genre text 
             string jsonMainFullPath; // json file full path
             string r1, r2, r3, r4, r5, r6, r7, r8, r9; // List Info from TMDB
             string linkPoster, YT_ID;
-
             bool coverDownloaded = false;
 
             // Exit if IMDB id is invalid
@@ -595,12 +593,8 @@ namespace HomeCinema
                 txtIMDB.Focus();
                 return;
             }
-
             // Check if series
-            if (cbCategory.Text.ToLower().Contains("series"))
-            {
-                mediatype = "tv";
-            }
+            mediatype = (cbCategory.Text.ToLower().Contains("series")) ? "tv" : "movie";
 
             // Get List of values from TMDB
             form = new frmLoading("Fetching info from TMDB..", "Loading");
@@ -656,6 +650,11 @@ namespace HomeCinema
 
             // Set Country
             LoadCountry(r9);
+            // Set Genres
+            genre = GlobalVars.GetGenresByJsonFile(jsonMainFullPath, errFrom + " (jsonMainFullPath)").Aggregate((a, b) => a + "," + b);
+            LoadGenre(genre);
+            // Set mediatype, after getting info from TMDB
+            cbCategory.SelectedIndex = GlobalVars.GetCategoryByFilter(genre, r9, mediatype);
 
             // Ask to change cover - poster image
             linkPoster = r5;
@@ -683,12 +682,6 @@ namespace HomeCinema
                     }
                 }
             }
-            // Set Genres
-            string genre = GlobalVars.GetGenresByJsonFile(jsonMainFullPath, errFrom + " (jsonMainFullPath)").Aggregate((a, b) => a + "," + b);
-            LoadGenre(genre);
-
-            // Set mediatype, after getting info from TMDB
-            cbCategory.SelectedIndex = GlobalVars.GetCategoryByFilter(genre, r9, mediatype);
         }
         // Get IMDB ID using Movie Name
         private void btnGetImdb_Click(object sender, EventArgs e)
