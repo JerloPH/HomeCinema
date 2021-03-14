@@ -33,7 +33,7 @@ namespace HomeCinema
             // Form properties
             FormClosing += new FormClosingEventHandler(frmSettings_FormClosing);
             Icon = GlobalVars.HOMECINEMA_ICON;
-            Text = $"[Settings] {GlobalVars.HOMECINEMA_NAME} - Media Organizer (v {GlobalVars.HOMECINEMA_VERSION} r{GlobalVars.HOMECINEMA_BUILD.ToString()})";
+            Text = $"[Settings] {GlobalVars.HOMECINEMA_NAME} - Media Organizer (v{GlobalVars.HOMECINEMA_VERSION} r{GlobalVars.HOMECINEMA_BUILD.ToString()})";
 
             // Controls
             tabControl1.DrawItem += new DrawItemEventHandler(tabControl1_DrawItem);
