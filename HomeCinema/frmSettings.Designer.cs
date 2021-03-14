@@ -90,7 +90,7 @@
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(811, 473);
+            this.tabControl1.Size = new System.Drawing.Size(861, 473);
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 0;
             // 
@@ -391,7 +391,7 @@
             this.tabPage3.Location = new System.Drawing.Point(104, 4);
             this.tabPage3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(703, 465);
+            this.tabPage3.Size = new System.Drawing.Size(753, 465);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Tags";
             // 
@@ -417,7 +417,7 @@
             // 
             this.btnCancel.Font = new System.Drawing.Font("Calibri", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.btnCancel.ForeColor = System.Drawing.Color.Black;
-            this.btnCancel.Location = new System.Drawing.Point(597, 478);
+            this.btnCancel.Location = new System.Drawing.Point(641, 478);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(208, 59);
@@ -430,7 +430,7 @@
             // 
             this.btnSave.Font = new System.Drawing.Font("Calibri", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.btnSave.ForeColor = System.Drawing.Color.Black;
-            this.btnSave.Location = new System.Drawing.Point(404, 478);
+            this.btnSave.Location = new System.Drawing.Point(440, 478);
             this.btnSave.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(183, 59);
@@ -470,7 +470,7 @@
             // 
             // btnGenreAdd
             // 
-            this.btnGenreAdd.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.btnGenreAdd.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.btnGenreAdd.ForeColor = System.Drawing.Color.Black;
             this.btnGenreAdd.Location = new System.Drawing.Point(554, 47);
             this.btnGenreAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -479,10 +479,11 @@
             this.btnGenreAdd.TabIndex = 17;
             this.btnGenreAdd.Text = "ADD";
             this.btnGenreAdd.UseVisualStyleBackColor = true;
+            this.btnGenreAdd.Click += new System.EventHandler(this.btnGenreAdd_Click);
             // 
             // btnGenreEdit
             // 
-            this.btnGenreEdit.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.btnGenreEdit.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.btnGenreEdit.ForeColor = System.Drawing.Color.Black;
             this.btnGenreEdit.Location = new System.Drawing.Point(554, 92);
             this.btnGenreEdit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -494,7 +495,7 @@
             // 
             // btnGenreRemove
             // 
-            this.btnGenreRemove.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.btnGenreRemove.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.btnGenreRemove.ForeColor = System.Drawing.Color.Black;
             this.btnGenreRemove.Location = new System.Drawing.Point(554, 137);
             this.btnGenreRemove.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -506,7 +507,7 @@
             // 
             // btnGenreClear
             // 
-            this.btnGenreClear.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.btnGenreClear.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.btnGenreClear.ForeColor = System.Drawing.Color.Black;
             this.btnGenreClear.Location = new System.Drawing.Point(554, 182);
             this.btnGenreClear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -518,9 +519,9 @@
             // 
             // btnCountryClear
             // 
-            this.btnCountryClear.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.btnCountryClear.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.btnCountryClear.ForeColor = System.Drawing.Color.Black;
-            this.btnCountryClear.Location = new System.Drawing.Point(543, 404);
+            this.btnCountryClear.Location = new System.Drawing.Point(554, 402);
             this.btnCountryClear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnCountryClear.Name = "btnCountryClear";
             this.btnCountryClear.Size = new System.Drawing.Size(141, 41);
@@ -530,9 +531,9 @@
             // 
             // btnCountryRemove
             // 
-            this.btnCountryRemove.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.btnCountryRemove.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.btnCountryRemove.ForeColor = System.Drawing.Color.Black;
-            this.btnCountryRemove.Location = new System.Drawing.Point(543, 359);
+            this.btnCountryRemove.Location = new System.Drawing.Point(554, 357);
             this.btnCountryRemove.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnCountryRemove.Name = "btnCountryRemove";
             this.btnCountryRemove.Size = new System.Drawing.Size(141, 41);
@@ -542,9 +543,9 @@
             // 
             // btnCountryEdit
             // 
-            this.btnCountryEdit.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.btnCountryEdit.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.btnCountryEdit.ForeColor = System.Drawing.Color.Black;
-            this.btnCountryEdit.Location = new System.Drawing.Point(543, 314);
+            this.btnCountryEdit.Location = new System.Drawing.Point(554, 312);
             this.btnCountryEdit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnCountryEdit.Name = "btnCountryEdit";
             this.btnCountryEdit.Size = new System.Drawing.Size(141, 41);
@@ -554,22 +555,23 @@
             // 
             // btnCountryAdd
             // 
-            this.btnCountryAdd.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.btnCountryAdd.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.btnCountryAdd.ForeColor = System.Drawing.Color.Black;
-            this.btnCountryAdd.Location = new System.Drawing.Point(543, 269);
+            this.btnCountryAdd.Location = new System.Drawing.Point(554, 267);
             this.btnCountryAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnCountryAdd.Name = "btnCountryAdd";
             this.btnCountryAdd.Size = new System.Drawing.Size(141, 41);
             this.btnCountryAdd.TabIndex = 23;
             this.btnCountryAdd.Text = "ADD";
             this.btnCountryAdd.UseVisualStyleBackColor = true;
+            this.btnCountryAdd.Click += new System.EventHandler(this.btnCountryAdd_Click);
             // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(811, 546);
+            this.ClientSize = new System.Drawing.Size(861, 546);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
