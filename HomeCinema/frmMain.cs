@@ -521,7 +521,7 @@ namespace HomeCinema
             }
         }
         // Execute the query, by running bgWorker bgSearchInDB
-        public void RefreshMovieList()
+        public void RefreshMovieList(bool AppStart = false)
         {
             // Check if there was prev query
             if (!String.IsNullOrWhiteSpace(SEARCH_QUERY_PREV))
@@ -534,7 +534,7 @@ namespace HomeCinema
                 // Default SELECT Query
                 SEARCH_QUERY = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO}";
             }
-            PopulateMovieBG();
+            PopulateMovieBG(AppStart);
         }
         // Check Settings and Load values to App
         private void LoadSettings()
@@ -935,17 +935,16 @@ namespace HomeCinema
                 listToAdd.Clear();
             };
             form.ShowDialog(this);
-            RefreshMovieList();
+            RefreshMovieList(true);
         }
         #endregion
         #region BG Worker: Populate MOVIE ListView
-        private void PopulateMovieBG()
+        private void PopulateMovieBG(bool AppStart = false)
         {
             // Stop ListView form Drawing
             lvSearchResult.BeginUpdate(); // Pause drawing events on ListView
             lvSearchResult.SuspendLayout();
-            // Clear previous list
-            lvSearchResult.Items.Clear();
+            lvSearchResult.Items.Clear(); // Clear previous list
             // Populate movie listview with new entries, from another form thread
             frmLoading form = new frmLoading("Searching in database..", "Loading");
             DataTable dt, dtGetFile;
@@ -1017,24 +1016,27 @@ namespace HomeCinema
                             }
 
                             // Load 'cover' Image from 'cover' folder
-                            string Imagefile = GlobalVars.ImgFullPath(MOVIEID.ToString());
-                            try
+                            if (AppStart)
                             {
-                                if (File.Exists(Imagefile))
+                                string Imagefile = GlobalVars.ImgFullPath(MOVIEID.ToString());
+                                try
                                 {
-                                    this.Invoke(new Action(() =>
+                                    if (File.Exists(Imagefile))
                                     {
-                                        Image imageFromFile = Image.FromFile(Imagefile);
-                                        GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imageFromFile);
-                                        imageFromFile.Dispose();
-                                    }));
-                                }
+                                        this.Invoke(new Action(() =>
+                                        {
+                                            Image imageFromFile = Image.FromFile(Imagefile);
+                                            GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imageFromFile);
+                                            imageFromFile.Dispose();
+                                        }));
+                                    }
 
-                            }
-                            catch (Exception exImg)
-                            {
-                                // Error Log
-                                GlobalVars.ShowError($"{errFrom}\n\tFile:\n\t{Imagefile}", exImg, false);
+                                }
+                                catch (Exception exImg)
+                                {
+                                    // Error Log
+                                    GlobalVars.ShowError($"{errFrom}\n\tFile:\n\t{Imagefile}", exImg, false);
+                                }
                             }
 
                             // Get all strings from the DataRow, passed by the BG worker
