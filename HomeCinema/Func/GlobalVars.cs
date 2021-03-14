@@ -426,7 +426,7 @@ namespace HomeCinema.Global
                     string[] tmpCat = x.Split(sep);
 
                     // Remove duplicates
-                    tmpCat = new HashSet<string>(tmpCat).ToArray();
+                    tmpCat = new HashSet<string>(tmpCat, StringComparer.OrdinalIgnoreCase).ToArray();
 
                     // Sort Alphabetically
                     string[] ret = tmpCat.OrderBy(item => item, StringComparer.Ordinal).ToArray();
