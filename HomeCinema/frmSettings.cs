@@ -114,17 +114,13 @@ namespace HomeCinema
 
             // ##################### - FILE changes
             // Country Texts
-            text = "";
-            foreach (string c in GlobalVars.TEXT_COUNTRY)
+            foreach (string country in GlobalVars.TEXT_COUNTRY)
             {
-                if ((String.IsNullOrWhiteSpace(c) == false) && c != "All")
+                if ((String.IsNullOrWhiteSpace(country) == false) && country != "All")
                 {
-                    text += c.Trim() + ", ";
+                    listboxCountry.Items.Add(country);
                 }
             }
-            text = text.TrimEnd();
-            text = text.TrimEnd(',');
-            txtCountry.Text = text;
 
             // Genre items
             foreach (string genre in GlobalVars.TEXT_GENRE)
@@ -215,14 +211,14 @@ namespace HomeCinema
             toWrite = "";
 
             // Replace country file
-            toWrite = txtCountry.Text.Replace('\r', ' ');
-            toWrite = toWrite.Replace('\n', ' ');
-            GlobalVars.WriteArray(toWrite.Split(','), GlobalVars.FILE_COUNTRY);
+            var listCountry = listboxCountry.Items.Cast<String>().ToList();
+            toWrite = (listCountry.Count > 0) ? listCountry.Aggregate((a, b) => a + "," + b) : "";
+            GlobalVars.WriteToFile(GlobalVars.FILE_COUNTRY, toWrite);
             Program.FormMain.PopulateCountryCB();
 
             // Replace genre file
-            var list = listboxGenre.Items.Cast<String>().ToList();
-            toWrite = (list.Count > 0) ? list.Aggregate((a, b) => a + "," + b) : "";
+            var listGenre = listboxGenre.Items.Cast<String>().ToList();
+            toWrite = (listGenre.Count > 0) ? listGenre.Aggregate((a, b) => a + "," + b) : "";
             GlobalVars.WriteToFile(GlobalVars.FILE_GENRE, toWrite);
             Program.FormMain.PopulateGenreCB();
 
