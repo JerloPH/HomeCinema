@@ -1,6 +1,8 @@
 # HomeCinema - Features to Add / Bugs to Fix
 
 ## Priority List
+- Properly dispose form if not modaly shown. *View links.md*.
+- Change Country/Genre on Settings form to ListBox with buttons: **Add, Remove, Clear**.
 - On searching info in IMDB, view dialog for selection, instead of getting only the first result.
 - Scrape Anime info from Anilist/MyAnimeList.
 - Improve speed of App load (check background worker and optimize).
@@ -12,21 +14,14 @@
 ## Features:
 - General
   - [ ] Update GUI
-  - [x] Add folders as series into the App. *Done*.
-  - [x] Ctrl + S to OPEN Settings form
   - [ ] Menu Strip (Preferences Button)
     - [ ] File
 	  - [ ] Version Log
 	  - [ ] Exit
 	- [ ] Settings
-	  - [x] Auto-check update option
-	  - [x] Play Movie, instead of Viewing information option
-	  - [x] Log File Size limit
-	  - [x] Edit MediaLocation, Country, Genre, Media Extensions
 	  - [ ] Change Color of ListView. Back/Fore.
 	- [ ] Help
 	  - [ ] How to Use?
-	  - [x] License
 	  - [ ] Credits
 	  - [ ] About
   - [ ] Auto-download update
@@ -47,14 +42,8 @@
 	  
 ## Movie Information Form
   - [ ] Scrape all info from *TMDB API*.
-    - [x] Cover Image
-    - [x] IMDB, Year, Name, Summary, Genre, Trailer YT Link
-	- [x] Country
 	- [ ] Category (Movie, Anime, Series,etc). *Partially done*.
 	- [ ] Studio
-	- [x] Producer
-	- [x] Director
-	- [x] Artist
   - [ ] Save Metadata to movie file. *Only for movies*.
     - [x] Title
 	- [x] Year
