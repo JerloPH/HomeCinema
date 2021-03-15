@@ -225,6 +225,7 @@ namespace HomeCinema
                     msg += $"Key: {lv.ImageKey}\nIndex: {lv.ImageIndex}\nTag: {lv.Tag}\n\n";
                 }
                 GlobalVars.ShowInfo(msg);
+                return;
             }
             if (size > 0)
             {
