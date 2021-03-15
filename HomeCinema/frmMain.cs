@@ -251,6 +251,7 @@ namespace HomeCinema
                 string rDirector = "";
                 string rProducer = "";
                 string rCountry = "";
+                string rStudio = "";
 
                 // Scrape from TMDB, for info and details
                 if (GlobalVars.SET_OFFLINE == false)
@@ -273,6 +274,7 @@ namespace HomeCinema
                         rDirector = list[8];
                         rProducer = list[9];
                         rCountry = list[10];
+                        rStudio = list[11];
 
                         // Get Genres
                         foreach (string s in GlobalVars.GetGenresByJsonFile(rJson, errFrom))
@@ -310,7 +312,7 @@ namespace HomeCinema
                 row[6] = rCountry; // country
                 row[7] = GlobalVars.GetCategoryByFilter(rGenre, rCountry, mediatype); // category
                 row[8] = rGenre; // genre
-                row[9] = ""; // studio
+                row[9] = rStudio; // studio
                 row[10] = rProducer; // producer
                 row[11] = rDirector; // director
                 row[12] = rArtist; // artist

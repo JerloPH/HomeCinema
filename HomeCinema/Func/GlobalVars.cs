@@ -1034,7 +1034,7 @@ namespace HomeCinema.Global
             string errFrom = "GlobalVars-GetMovieInfoByImdb";
             // Setup vars and links
             List<string> list = new List<string>();
-            list.AddRange(new string[] { "", "", "", "", "", "", "", "", "", "", "" });
+            list.AddRange(new string[] { "", "", "", "", "", "", "", "", "", "", "", "" });
             list[0] = ""; // json file full path
             list[1] = ""; // trailer link
             list[2] = ""; // title
@@ -1046,6 +1046,7 @@ namespace HomeCinema.Global
             list[8] = ""; // Director
             list[9] = ""; // Producer
             list[10] = ""; // origin country
+            list[11] = ""; // Studio
 
             string TMDB_MovieID = "";
             // File paths
@@ -1114,13 +1115,15 @@ namespace HomeCinema.Global
                         }
                         list[4] = movie.overview; // summary / overview
                         list[6] = (!String.IsNullOrWhiteSpace(movie.poster_path)) ? movie.poster_path : String.Empty; // poster_path
-
+                        // Country
                         string tmp = "";
                         foreach (ProdCountry c in movie.production_countries)
                         {
                             tmp += c.name + ",";
                         }
                         list[10] = tmp.TrimEnd(','); // country
+                        // Studio
+                        list[11] = movie.production_companies.Select(a => a.name).ToList().Aggregate((b, c) => b + ", " + c);
                     }
                 }
 
@@ -1183,6 +1186,10 @@ namespace HomeCinema.Global
             return list;
         }
         // Get Genres from JSON File
+        public static string GetGenresByJsonFile(string json_fullpath, string calledFrom, string sep = ",")
+        {
+            return GetGenresByJsonFile(json_fullpath, calledFrom).Aggregate((a, b) => a + sep + b).Trim();
+        }
         public static List<string> GetGenresByJsonFile(string json_fullpath, string calledFrom)
         {
             List<string> listGenre = new List<string>();
@@ -1375,10 +1382,100 @@ namespace HomeCinema.Global
             }
         }
         // Get string from InputBox
-        public static string GetStringInputBox(string caption = "Input string")
+        public static string GetStringInputBox(string caption, string defaultVal = "")
         {
-            string input = Interaction.InputBox(caption, HOMECINEMA_NAME, "");
-            return (!String.IsNullOrWhiteSpace(input)) ? input.Trim() : String.Empty;
+            var form = new Form();
+            var label = new Label();
+            var txtBox = new TextBox();
+            var buttonOk = new Button();
+            var buttonCancel = new Button();
+            string value;
+
+            form.Text = HOMECINEMA_NAME;
+            label.Text = caption;
+            txtBox.Text = "";
+
+            buttonOk.Text = "OK";
+            buttonCancel.Text = "Cancel";
+            buttonOk.DialogResult = DialogResult.OK;
+            buttonCancel.DialogResult = DialogResult.Cancel;
+
+            label.SetBounds(9, 20, 372, 13);
+            txtBox.SetBounds(12, 36, 372, 20);
+            buttonOk.SetBounds(228, 72, 75, 23);
+            buttonCancel.SetBounds(309, 72, 75, 23);
+
+            label.AutoSize = true;
+            txtBox.Anchor = txtBox.Anchor | AnchorStyles.Right;
+            buttonOk.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+
+            form.ClientSize = new Size(396, 107);
+            form.Controls.AddRange(new Control[] { label, txtBox, buttonOk, buttonCancel });
+            form.ClientSize = new Size(Math.Max(300, label.Right + 10), form.ClientSize.Height);
+            form.FormBorderStyle = FormBorderStyle.FixedDialog;
+            form.StartPosition = FormStartPosition.CenterScreen;
+            form.MinimizeBox = false;
+            form.MaximizeBox = false;
+            form.AcceptButton = buttonOk;
+            form.CancelButton = buttonCancel;
+
+            DialogResult dialogResult = form.ShowDialog();
+            value = (!String.IsNullOrWhiteSpace(txtBox.Text)) ? txtBox.Text.Trim() : String.Empty;
+            form.Dispose();
+            return (dialogResult == DialogResult.OK) ? value : defaultVal;
+        }
+        public static string GetStringInputBox(List<string> items, string caption = "Input item")
+        {
+            var form = new Form();
+            var label = new Label();
+            var comboBox = new ComboBox();
+            var buttonOk = new Button();
+            var buttonCancel = new Button();
+            string value;
+
+            form.Text = HOMECINEMA_NAME;
+            label.Text = caption;
+            comboBox.Text = "";
+
+            buttonOk.Text = "OK";
+            buttonCancel.Text = "Cancel";
+            buttonOk.DialogResult = DialogResult.OK;
+            buttonCancel.DialogResult = DialogResult.Cancel;
+
+            label.SetBounds(9, 20, 372, 13);
+            comboBox.SetBounds(12, 36, 372, 20);
+            buttonOk.SetBounds(228, 72, 75, 23);
+            buttonCancel.SetBounds(309, 72, 75, 23);
+
+            label.AutoSize = true;
+            comboBox.Anchor = comboBox.Anchor | AnchorStyles.Right;
+            buttonOk.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+
+            // Edit and Populate comboBox
+            comboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
+            comboBox.DropDownStyle = ComboBoxStyle.DropDown;
+            foreach (string item in items)
+            {
+                comboBox.Items.Add(item);
+            }
+
+            form.ClientSize = new Size(396, 107);
+            form.Controls.AddRange(new Control[] { label, comboBox, buttonOk, buttonCancel });
+            form.ClientSize = new Size(Math.Max(300, label.Right + 10), form.ClientSize.Height);
+            form.FormBorderStyle = FormBorderStyle.FixedDialog;
+            form.StartPosition = FormStartPosition.CenterScreen;
+            form.MinimizeBox = false;
+            form.MaximizeBox = false;
+            form.AcceptButton = buttonOk;
+            form.CancelButton = buttonCancel;
+
+            DialogResult dialogResult = form.ShowDialog();
+            value = (!String.IsNullOrWhiteSpace(comboBox.Text)) ? comboBox.Text.Trim() : String.Empty;
+            form.Dispose();
+            return (dialogResult == DialogResult.OK) ? value : String.Empty;
         }
         // ######################################################################## END - Add code above
     }

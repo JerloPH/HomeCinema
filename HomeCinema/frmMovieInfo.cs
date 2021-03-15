@@ -109,9 +109,9 @@ namespace HomeCinema
             }
             return true;
         }
-        private void AddToListBox(ListBox lb, string caption = "Type here")
+        private void AddToListBox(ListBox lb, List<string> list, string caption = "Type here")
         {
-            string item = GlobalVars.GetStringInputBox(caption);
+            string item = GlobalVars.GetStringInputBox(list, caption);
             if (CanAddToListBox(lb, item))
             {
                 lb.Items.Add(item);
@@ -604,7 +604,7 @@ namespace HomeCinema
             string mediatype;
             string genre; // genre text 
             string jsonMainFullPath; // json file full path
-            string r1, r2, r3, r4, r5, r6, r7, r8, r9; // List Info from TMDB
+            string r1, r2, r3, r4, r5, r6, r7, r8, r9, r10; // List Info from TMDB
             string linkPoster, YT_ID;
             bool coverDownloaded = false;
 
@@ -644,6 +644,7 @@ namespace HomeCinema
             r7 = list[8]; // Director
             r8 = list[9]; // Producer
             r9 = list[10]; // country
+            r10 = list[11]; // Studio
 
             // Set to textboxes
             if (String.IsNullOrWhiteSpace(r1)==false)
@@ -669,11 +670,14 @@ namespace HomeCinema
             txtArtist.Text = r6;
             txtDirector.Text = r7;
             txtProducer.Text = r8;
-
+            txtStudio.Text = r10;
+            // Clear country and genre listbox
+            listboxCountry.Items.Clear();
+            listboxGenre.Items.Clear();
             // Set Country
             LoadCountry(r9);
             // Set Genres
-            genre = GlobalVars.GetGenresByJsonFile(jsonMainFullPath, errFrom + " (jsonMainFullPath)").Aggregate((a, b) => a + "," + b);
+            genre = GlobalVars.GetGenresByJsonFile(jsonMainFullPath, errFrom + " (jsonMainFullPath)", ",");
             LoadGenre(genre);
             // Set mediatype, after getting info from TMDB
             cbCategory.SelectedIndex = GlobalVars.GetCategoryByFilter(genre, r9, mediatype);
@@ -760,12 +764,12 @@ namespace HomeCinema
 
         private void btnCountryAdd_Click(object sender, EventArgs e)
         {
-            AddToListBox(listboxCountry, "Type country to add");
+            AddToListBox(listboxCountry, GlobalVars.TEXT_COUNTRY.ToList<string>(), "Type country to add");
         }
 
         private void btnGenreAdd_Click(object sender, EventArgs e)
         {
-            AddToListBox(listboxGenre, "Type genre to add");
+            AddToListBox(listboxGenre, GlobalVars.TEXT_GENRE.ToList<string>(), "Type genre to add");
         }
     }
 }

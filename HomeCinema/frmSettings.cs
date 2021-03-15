@@ -113,7 +113,7 @@ namespace HomeCinema
                 pos = lb.Items.IndexOf(lb.Items[item]);
                 if (pos > -1)
                 {
-                    lb.Items[pos] = GlobalVars.GetStringInputBox($"Change '{lb.Items[item]}' to");
+                    lb.Items[pos] = GlobalVars.GetStringInputBox($"Change '{lb.Items[item]}' to", lb.Items[item].ToString());
                 }
             }
         }

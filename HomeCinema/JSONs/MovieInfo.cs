@@ -56,11 +56,20 @@ namespace HomeCinema
         [JsonProperty("production_countries")]
         public List<ProdCountry> production_countries { get; set; }
 
+        [JsonProperty("production_companies")]
+        public List<ProdCompany> production_companies { get; set; }
+
         [JsonProperty("external_ids")]
         public ExternalIds external_ids { get; set; }
     }
 
     public class ProdCountry
+    {
+        [JsonProperty("name")]
+        public string name { get; set; }
+    }
+
+    public class ProdCompany
     {
         [JsonProperty("name")]
         public string name { get; set; }
