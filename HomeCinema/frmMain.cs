@@ -62,7 +62,10 @@ namespace HomeCinema
             if (Debugger.IsAttached)
             {
                 GlobalVars.TMDB_KEY = GlobalVars.ReadStringFromFile(@"..\..\..\ignored\tmdb_API_Key.txt", "frmMain-DEBUG");
-                GlobalVars.ShowWarning(GlobalVars.TMDB_KEY);
+                if (String.IsNullOrWhiteSpace(GlobalVars.TMDB_KEY))
+                {
+                    GlobalVars.ShowWarning("No TMDB Key!");
+                }
             }
 
             // Start app
@@ -1034,11 +1037,9 @@ namespace HomeCinema
                                             imageFromFile.Dispose();
                                         }));
                                     }
-
                                 }
                                 catch (Exception exImg)
                                 {
-                                    // Error Log
                                     GlobalVars.ShowError($"{errFrom}\n\tFile:\n\t{Imagefile}", exImg, false);
                                 }
                             }
