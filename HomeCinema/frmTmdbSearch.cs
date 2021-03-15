@@ -98,7 +98,7 @@ namespace HomeCinema
             ClearImageList(imageList);
             Image defImg = Image.FromFile(GlobalVars.FILE_DEFIMG);
             imageList.Images.Add("0", defImg);
-            defImg.Dispose();
+            //defImg.Dispose();
             lvResult.View = View.LargeIcon;
             lvResult.Items.Clear();
             lvResult.BeginUpdate(); // Pause drawing events on ListView
@@ -155,6 +155,7 @@ namespace HomeCinema
                             lvItem.Text = mediatype.Equals("movie") ? result.title : result.name;
                             lvItem.Tag = ImdbFromApi;
                             lvItem.ImageIndex = (index > 0) ? index : 0;
+                            lvItem.ImageIndex = 0;
                             AddItem(lvResult, lvItem);
                             ++count;
                             if (count > 2)

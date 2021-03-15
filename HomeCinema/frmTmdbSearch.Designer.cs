@@ -101,6 +101,7 @@ namespace HomeCinema
             this.lvResult.ForeColor = System.Drawing.Color.White;
             this.lvResult.HideSelection = false;
             this.lvResult.Location = new System.Drawing.Point(17, 83);
+            this.lvResult.MultiSelect = false;
             this.lvResult.Name = "lvResult";
             this.lvResult.Size = new System.Drawing.Size(706, 224);
             this.lvResult.TabIndex = 23;
