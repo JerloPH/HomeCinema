@@ -229,14 +229,10 @@ namespace HomeCinema
                 {
                     Match r = Regex.Match(mName, @regExPattern);
                     yearFromFname = r.Groups[r.Groups.Count - 1].Value;
-                    if (String.IsNullOrWhiteSpace(yearFromFname) == false)
-                    {
-                        mName = mName.Substring(0, mName.IndexOf(yearFromFname));
-                    }
-
-                } catch (Exception ex)
+                    mName = (!String.IsNullOrWhiteSpace(yearFromFname)) ? mName.Substring(0, mName.IndexOf(yearFromFname)) : mName;
+                }
+                catch (Exception ex)
                 {
-                    //LogError
                     GlobalVars.ShowError(errFrom, ex, false);
                 }
 
@@ -277,29 +273,19 @@ namespace HomeCinema
                         rStudio = list[11];
 
                         // Get Genres
-                        foreach (string s in GlobalVars.GetGenresByJsonFile(rJson, errFrom))
-                        {
-                            rGenre += s.Trim() + ",";
-                        }
-                        rGenre = rGenre.TrimEnd(',');
+                        rGenre = GlobalVars.GetGenresByJsonFile(rJson, errFrom, ",");
+                    }
+                    else
+                    {
+                        rPosterLink = "";
                     }
                 }
 
                 // If cannot get info online, make use of defaults
-                if (String.IsNullOrWhiteSpace(rTitle))
-                {
-                    rTitle = mName.Trim();
-                }
-                if (String.IsNullOrWhiteSpace(rYear))
-                {
-                    rYear = yearFromFname;
-                }
-                
+                rTitle = (String.IsNullOrWhiteSpace(rTitle)) ? mName.Trim() : rTitle;
+                rYear = (String.IsNullOrWhiteSpace(rYear)) ? yearFromFname : rYear;
                 // If Original title is the same as the main title, ignore it
-                if (rOrigTitle == rTitle)
-                {
-                    rOrigTitle = "";
-                }
+                rOrigTitle = (rOrigTitle.Equals(rTitle)) ? String.Empty : rOrigTitle; 
 
                 // Make the DataRow
                 DataRow row = dt.NewRow();
@@ -542,53 +528,54 @@ namespace HomeCinema
         private void LoadSettings()
         {
             string errorFrom = "frmMain-LoadSettings";
+            Config config;
+            string contents, sLastPathCover, sLastPathVideo;
             // If file does not exist, create it with default values from [Config.cs]
             if (File.Exists(GlobalVars.FILE_SETTINGS) == false)
             {
-                Config newconfig = new Config();
-                string json = JsonConvert.SerializeObject(newconfig, Formatting.Indented);
-                GlobalVars.WriteToFile(GlobalVars.FILE_SETTINGS, json);
+                config = new Config();
+                contents = JsonConvert.SerializeObject(config, Formatting.Indented);
+                GlobalVars.WriteToFile(GlobalVars.FILE_SETTINGS, contents);
             }
-            // Load file contents to Config
-            string contents = GlobalVars.ReadStringFromFile(GlobalVars.FILE_SETTINGS, $"{errorFrom} [FILE_SETTINGS]");
-            Config config = JsonConvert.DeserializeObject<Config>(contents);
+            else
+            {
+                // Load file contents to Config
+                contents = GlobalVars.ReadStringFromFile(GlobalVars.FILE_SETTINGS, $"{errorFrom} [FILE_SETTINGS]");
+                config = JsonConvert.DeserializeObject<Config>(contents);
+            }
 
             // Get Max log file size
             GlobalVars.SET_LOGMAXSIZE = config.logsize * GlobalVars.BYTES;
             // Get last path of poster image
-            string stringVal = config.lastPathCover;
-            if (String.IsNullOrWhiteSpace(stringVal) == false)
+            sLastPathCover = config.lastPathCover;
+            if (String.IsNullOrWhiteSpace(sLastPathCover) == false)
             {
-                GlobalVars.PATH_GETCOVER = stringVal;
+                GlobalVars.PATH_GETCOVER = sLastPathCover;
             }
             else
             {
                 try
                 {
                     GlobalVars.PATH_GETCOVER = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-
                 }
                 catch (Exception ex)
                 {
-                    // Log Error
                     GlobalVars.ShowError($"{errorFrom} [PATH_GETCOVER]", ex, false);
                 }
             }
             // Get last path of media file when adding new one
-            string strGetVideo = config.lastPathVideo;
-            if (String.IsNullOrWhiteSpace(strGetVideo) == false)
+            sLastPathVideo = config.lastPathVideo;
+            if (String.IsNullOrWhiteSpace(sLastPathVideo) == false)
             {
-                GlobalVars.PATH_GETVIDEO = strGetVideo;
+                GlobalVars.PATH_GETVIDEO = sLastPathVideo;
             }
             else
             {
                 try
                 {
                     GlobalVars.PATH_GETVIDEO = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
-
                 } catch (Exception ex)
                 {
-                    // Log Error
                     GlobalVars.ShowError($"{errorFrom} [PATH_GETVIDEO]", ex, false);
                 }
             }
