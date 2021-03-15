@@ -24,7 +24,16 @@ namespace HomeCinema
         [JsonProperty("original_title")]
         public string original_title { get; set; } = "";
 
+        [JsonProperty("name")]
+        public string name { get; set; } = "";
+
+        [JsonProperty("original_name")]
+        public string original_name { get; set; } = "";
+
         [JsonProperty("overview")]
         public string overview { get; set; } = "";
+
+        [JsonProperty("poster_path")]
+        public string poster_path { get; set; } = "";
     }
 }

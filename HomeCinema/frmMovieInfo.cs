@@ -713,9 +713,9 @@ namespace HomeCinema
         private void btnGetImdb_Click(object sender, EventArgs e)
         {
             // Declare vars
-            frmLoading form = new frmLoading("Searching movie..", "Loading");
-            string mediatype, getIMDB = "";
-            //string errFrom = "frmMovieInfo-btnGetImdb_Click";
+            string mediatype = (cbCategory.Text.ToLower().Contains("series") ? "tv" : "movie");
+            string getIMDB = "";
+  
             // Check if txtName is valid
             if (String.IsNullOrWhiteSpace(txtName.Text))
             {
@@ -724,21 +724,15 @@ namespace HomeCinema
                 return;
             }
 
-            // Get imdb id and set it to textbox
-            mediatype = (cbCategory.Text.ToLower().Contains("series") ? "tv" : "movie");
-            form.BackgroundWorker.DoWork += (sender1, e1) =>
-            {
-                getIMDB = GlobalVars.GetIMDBId(txtName.Text, MOVIE_ID, mediatype);
-            };
+            // Show form for tmdb searching
+            var form = new frmTmdbSearch($"Search for {mediatype}", txtName.Text, mediatype, txtID.Text);
             form.ShowDialog(this);
+            getIMDB = form.getResult;
+
+            // Get IMDB from TMDB json info
             if (String.IsNullOrWhiteSpace(getIMDB) == false)
             {
                 txtIMDB.Text = getIMDB;
-            }
-            else
-            {
-                GlobalVars.ShowWarning($"Cannot search for IMDB Id for '{txtName.Text}'!");
-                txtName.Focus();
             }
         }
 

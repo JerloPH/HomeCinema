@@ -1028,6 +1028,35 @@ namespace HomeCinema.Global
             }
             return ret;
         }
+        // Get IMDB from TMDB API Id
+        public static string GetImdbFromAPI(string TmdbId, string mediatype)
+        {
+            string errFrom = $"GlobalVars-GetImdbFromAPI";
+            string urlJSONgetImdb, JSONgetImdb;
+            string JSONContents = "";
+            // Check if MovieID is not empty
+            if (String.IsNullOrWhiteSpace(TmdbId) == false)
+            {
+                // GET IMDB
+                urlJSONgetImdb = @"https://api.themoviedb.org/3/" + mediatype + "/" + TmdbId + "?api_key=" + TMDB_KEY;
+                urlJSONgetImdb += (mediatype != "movie") ? "&append_to_response=external_ids" : ""; // Append external_ids param for non-movie
+                JSONgetImdb = $"{PATH_TEMP}tmdb{TmdbId}_movieInfo.json";
+
+                // Download file if not existing (TO GET IMDB Id)
+                if (DownloadAndReplace(JSONgetImdb, urlJSONgetImdb, errFrom))
+                {
+                    JSONContents = ReadStringFromFile(JSONgetImdb, errFrom);
+                    TryDelete(JSONgetImdb, errFrom);
+                    try
+                    {
+                        var objMovieInfo = JsonConvert.DeserializeObject<MovieInfo>(JSONContents);
+                        return (mediatype == "movie") ? objMovieInfo.imdb_id : objMovieInfo.external_ids.imdb_id;
+                    }
+                    catch { return String.Empty; }
+                }
+            }
+            return String.Empty;
+        }
         // Return a List<string> of informations regarding the Movie, based on IMDB Id
         public static List<string> GetMovieInfoByImdb(string IMDB_ID, string mediatype, bool showAMsg = false)
         {
