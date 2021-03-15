@@ -786,7 +786,8 @@ namespace HomeCinema
         {
             // save cbCountry contents to FILE_COUNTRY
             string toWrite = "";
-            foreach (string item in cbCountry.Items)
+            var list = cbCountry.Items.Cast<string>().OrderBy(s => s);
+            foreach (string item in list)
             {
                 if (item.Equals("All"))
                     continue;
@@ -799,7 +800,8 @@ namespace HomeCinema
         {
             // save cbGenre contents to FILE_GENRE
             string toWrite = "";
-            foreach (string item in cbGenre.Items)
+            var list = cbGenre.Items.Cast<string>().OrderBy(s => s);
+            foreach (string item in list)
             {
                 if (item.Equals("All"))
                     continue;
