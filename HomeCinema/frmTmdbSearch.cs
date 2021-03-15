@@ -42,43 +42,26 @@ namespace HomeCinema
             //btnCancel.DialogResult = DialogResult.Cancel;
             // Set lvResult properties
             lvResult.Columns.Add("colname");
-            lvResult.Columns.Add("colimg");
+            //lvResult.Columns.Add("colimg");
             lvResult.View = View.LargeIcon;
             
             imageList.ImageSize = new Size(48, 64);// Set imageList properties
             imageList.ColorDepth = ColorDepth.Depth32Bit;// Set imageList properties
 
-            lvResult.SmallImageList = imageList;
+            //lvResult.SmallImageList = imageList;
             lvResult.LargeImageList = imageList;
         }
         // ######################################################### FUNCTIONS
         #region Functions
-        private delegate void AddItemDelegate(ListView lv, ListViewItem item, ImageList imageList, string ImdbFromApi, string imgFilePath);
-        public static void AddItem(ListView lv, ListViewItem item, ImageList imageList, string ImdbFromApi, string imgFilePath)
+        private delegate void AddItemDelegate(ListView lv, ListViewItem item);
+        public static void AddItem(ListView lv, ListViewItem item)
         {
             if (lv.InvokeRequired)
             {
-                lv.Invoke(new AddItemDelegate(AddItem), new object[] { lv, item, imageList, ImdbFromApi, imgFilePath });
+                lv.Invoke(new AddItemDelegate(AddItem), new object[] { lv, item });
             }
             else
             {
-                if (File.Exists(imgFilePath))
-                {
-                    try
-                    {
-                        string imgKey = (lv.Items.Count + 1).ToString();
-                        Image img = Image.FromFile(imgFilePath);
-                        imageList.Images.Add(imgKey, img);
-                        img.Dispose();
-                        item.ImageKey = imgKey;
-                        item.ImageIndex = imageList.Images.IndexOfKey(imgKey);
-                        if (Debugger.IsAttached)
-                        {
-                            GlobalVars.ShowInfo("success adding image!");
-                        }
-                    }
-                    catch { item.ImageIndex = 0; item.ImageKey = "0"; }
-                }
                 lv.Items.Add(item);
             }
         }
@@ -116,8 +99,11 @@ namespace HomeCinema
             Image defImg = Image.FromFile(GlobalVars.FILE_DEFIMG);
             imageList.Images.Add("0", defImg);
             defImg.Dispose();
+            lvResult.View = View.LargeIcon;
             lvResult.Items.Clear();
-            lvResult.View = View.Tile;
+            lvResult.BeginUpdate(); // Pause drawing events on ListView
+            lvResult.SuspendLayout();
+            
 
             var form = new frmLoading($"Searching for {txtInput.Text}", GlobalVars.HOMECINEMA_NAME);
             form.BackgroundWorker.DoWork += (sender1, e1) =>
@@ -133,23 +119,45 @@ namespace HomeCinema
                         // Add to ListView
                         foreach (Result result in objPageResult.results)
                         {
-                            var lvItem = new ListViewItem();
                             string ImdbFromApi  = GlobalVars.GetImdbFromAPI(result.id.ToString(), mediatype);
                             string imgFilePath = $"{GlobalVars.PATH_TEMP}{ImdbFromApi}.jpg";
+                            string imgKey = "0";
 
-                            lvItem.Text = mediatype.Equals("movie") ? result.title : result.name;
-                            lvItem.Tag = ImdbFromApi;
-                            //lvItem.ImageKey = ImdbFromApi;
+                            // Add image to ImageList
                             rPosterLink = result.poster_path;
-                            // Add image
                             GlobalVars.TryDelete(imgFilePath, errFrom);
                             if (!String.IsNullOrWhiteSpace(rPosterLink))
                             {
                                 GlobalVars.DownloadCoverFromTMDB(ImdbFromApi, rPosterLink, errFrom);
                             }
-                            AddItem(lvResult, lvItem, imageList, ImdbFromApi, imgFilePath);
+                            if (File.Exists(imgFilePath))
+                            {
+                                imgKey = Path.GetFileNameWithoutExtension(imgFilePath);
+                                try
+                                {
+                                    this.Invoke(new Action(() =>
+                                    { 
+                                        Image img = Image.FromFile(imgFilePath);
+                                        imageList.Images.Add(imgKey, img);
+                                        img.Dispose();
+                                        //GlobalVars.TryDelete(imgFilePath, errFrom);
+                                        if (Debugger.IsAttached)
+                                        {
+                                            //GlobalVars.ShowInfo("success adding image!");
+                                        }
+                                    }));
+                                }
+                                catch { imgKey = "0"; }
+                            }
+                            // Create ListView item
+                            ListViewItem lvItem = new ListViewItem();
+                            int index = imageList.Images.IndexOfKey(imgKey);
+                            lvItem.Text = mediatype.Equals("movie") ? result.title : result.name;
+                            lvItem.Tag = ImdbFromApi;
+                            lvItem.ImageIndex = (index > 0) ? index : 0;
+                            AddItem(lvResult, lvItem);
                             ++count;
-                            if (count > 15)
+                            if (count > 2)
                             {
                                 break;
                             }
@@ -158,15 +166,21 @@ namespace HomeCinema
                 }
             };
             form.ShowDialog(this);
+            lvResult.EndUpdate(); // Draw the ListView
+            lvResult.ResumeLayout();
             lvResult.Refresh();
             //lvResult.RedrawItems(0, lvResult.Items.Count-1, false);
+            if (Debugger.IsAttached)
+            {
+                GlobalVars.ShowInfo($"success adding image! Count: {imageList.Images.Count}");
+            }
         }
         #endregion
         // ######################################################### EVENTS
         private void FrmTmdbSearch_FormClosed(object sender, FormClosedEventArgs e)
         {
             ClearImageList(imageList);
-            Dispose();
+            //Dispose();
         }
 
         private void frmTmdbSearch_Load(object sender, EventArgs e)
@@ -202,14 +216,15 @@ namespace HomeCinema
             int size;
             SearchTmdb();
             size = lvResult.Items.Count;
-            //#if !DEBUG
-            string msg = "";
-            foreach (ListViewItem lv in lvResult.Items)
+            if (Debugger.IsAttached)
             {
-                msg += $"Key: {lv.ImageKey}\nIndex: {lv.ImageIndex}\nTag: {lv.Tag}\n\n";
+                string msg = "";
+                foreach (ListViewItem lv in lvResult.Items)
+                {
+                    msg += $"Key: {lv.ImageKey}\nIndex: {lv.ImageIndex}\nTag: {lv.Tag}\n\n";
+                }
+                GlobalVars.ShowInfo(msg);
             }
-            GlobalVars.ShowInfo(msg);
-            //#endif
             if (size > 0)
             {
                 GlobalVars.ShowInfo($"Found {size} results!");

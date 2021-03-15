@@ -43,7 +43,7 @@ namespace HomeCinema
             this.txtInput.Location = new System.Drawing.Point(17, 34);
             this.txtInput.Margin = new System.Windows.Forms.Padding(4);
             this.txtInput.Name = "txtInput";
-            this.txtInput.Size = new System.Drawing.Size(567, 36);
+            this.txtInput.Size = new System.Drawing.Size(567, 31);
             this.txtInput.TabIndex = 0;
             // 
             // btnSearch
@@ -87,7 +87,7 @@ namespace HomeCinema
             this.lblCaption.AutoSize = true;
             this.lblCaption.Location = new System.Drawing.Point(15, 6);
             this.lblCaption.Name = "lblCaption";
-            this.lblCaption.Size = new System.Drawing.Size(61, 24);
+            this.lblCaption.Size = new System.Drawing.Size(50, 19);
             this.lblCaption.TabIndex = 5;
             this.lblCaption.Text = "label1";
             // 
@@ -108,7 +108,7 @@ namespace HomeCinema
             // 
             // frmTmdbSearch
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 24F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(735, 357);
             this.Controls.Add(this.lvResult);

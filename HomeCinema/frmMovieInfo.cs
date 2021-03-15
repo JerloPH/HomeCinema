@@ -728,6 +728,7 @@ namespace HomeCinema
             var form = new frmTmdbSearch($"Search for {mediatype}", txtName.Text, mediatype, txtID.Text);
             form.ShowDialog(this);
             getIMDB = form.getResult;
+            form.Dispose();
 
             // Get IMDB from TMDB json info
             if (String.IsNullOrWhiteSpace(getIMDB) == false)
