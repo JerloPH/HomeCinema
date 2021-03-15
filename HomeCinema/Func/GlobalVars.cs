@@ -38,7 +38,7 @@ using HomeCinema.SQLFunc;
 
 namespace HomeCinema.Global
 {
-    public class GlobalVars
+    public static class GlobalVars
     {
         // Variables ############################################################################################################
         public static string HOMECINEMA_NAME = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyTitleAttribute>().Title;
