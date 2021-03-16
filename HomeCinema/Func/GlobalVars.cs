@@ -477,9 +477,9 @@ namespace HomeCinema.Global
         {
             return String.Format("{0:0000}", param);
         }
-        public static String ValidateNum(string param)
+        public static String ValidateNum(string param, int pad = 2)
         {
-            return String.Format("{0:00}", param);
+            return param.PadLeft(pad, '0');
         }
         public static String ValidateEmptyOrNull(String param)
         {
