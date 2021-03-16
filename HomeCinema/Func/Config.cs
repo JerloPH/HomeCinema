@@ -32,5 +32,6 @@ namespace HomeCinema
         // Integers
         public int logsize { get; set; } = 1;
         public int itemMaxLimit { get; set; } = 0;
+        public int searchLimit { get; set; } = 5;
     }
 }

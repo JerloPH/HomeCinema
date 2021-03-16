@@ -33,10 +33,10 @@ namespace HomeCinema
     public partial class frmMovieInfo : Form
     {
         // Editable vars
-        public static string PARENT_NAME { get; set; } = "";
-        public static string MOVIE_ID { get; set; } = "";
-        public static Image MOVIE_COVER { get; set; } = null;
-        public static Image tempImage { get; set; } = null;
+        private string PARENT_NAME { get; set; } = "";
+        private string MOVIE_ID { get; set; } = "";
+        private Image MOVIE_COVER { get; set; } = null;
+        private Image tempImage { get; set; } = null;
 
         // Source ListView lvSearch Item index
         public ListViewItem LVITEM = null;
@@ -45,7 +45,7 @@ namespace HomeCinema
         SQLHelper conn = new SQLHelper("frmMovieInfo");
 
         // Fixed vars
-        Form PARENT = null;
+        private Form PARENT = null;
 
         #region Initialize class
         public frmMovieInfo(Form parent,string ID, string text, string formName, ListViewItem lvitem)
@@ -72,46 +72,6 @@ namespace HomeCinema
             // Add items to cbCategory
             cbCategory.Items.AddRange(GlobalVars.DB_INFO_CATEGORY);
 
-            // Setup fPanelCountry
-            //fPanelCountry.AutoScrollMinSize = new Size(64,64);
-            fPanelCountry.AutoScroll = true;
-            //fPanelCountry.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-
-            // Populate Country
-            int cW = 105; // (fPanelCountry.Width / 2) - 5;
-            int cH = 17;
-            foreach (string t in GlobalVars.TEXT_COUNTRY)
-            {
-                if (t != "All")
-                {
-                    CheckBox cb = new CheckBox();
-                    cb.Size = new Size(cW, cH);
-                    cb.Text = GlobalVars.RemoveLine(t);
-                    cb.AutoSize = false;
-                    cb.TabIndex = 0;
-                    cb.UseVisualStyleBackColor = true;
-                    fPanelCountry.Controls.Add(cb);
-                }
-            }
-
-            // Populate fPanelGenre with Checkbox
-            fPanelGenre.AutoScroll = true;
-            cW = 102;
-            cH = 17;
-            foreach (string t in GlobalVars.TEXT_GENRE)
-            {
-                if (t != "All")
-                {
-                    CheckBox cb = new CheckBox();
-                    cb.Size = new Size(cW, cH);
-                    cb.Text = GlobalVars.RemoveLine(t);
-                    cb.AutoSize = false;
-                    cb.TabIndex = 0;
-                    cb.UseVisualStyleBackColor = true;
-                    fPanelGenre.Controls.Add(cb);
-                }
-            }
-
             // LOAD Information from DATABASE and SET to Controls
             if (Convert.ToInt16(MOVIE_ID) > 0)
             {
@@ -135,41 +95,79 @@ namespace HomeCinema
         #endregion
         // ############################################################################## Functions
         #region Functions
+        // ########################## LISTBOX Functions
+        private bool CanAddToListBox(ListBox lb, string item)
+        {
+            if (String.IsNullOrWhiteSpace(item)) { return false; }
+            if (lb.Items.Contains(item)) { return false; }
+            foreach (string sItem in lb.Items)
+            {
+                if (sItem.Equals(item, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        private void AddToListBox(ListBox lb, List<string> list, string caption = "Type here")
+        {
+            string item = GlobalVars.GetStringInputBox(list, caption);
+            if (CanAddToListBox(lb, item))
+            {
+                lb.Items.Add(item);
+            }
+        }
+        private void RemoveFromListBox(ListBox lb)
+        {
+            for (int i = lb.SelectedIndices.Count - 1; i >= 0; i--)
+            {
+                int item = lb.SelectedIndices[i];
+                lb.Items.RemoveAt(item);
+            }
+        }
         // ########################## FOR CATEGORY
-        // Get Category INT
+        // Get Category as integer, in string format
         private string GetCategory()
         {
-            if (cbCategory.SelectedIndex < 1)
-            {
-                return "0";
-            }
-            return cbCategory.SelectedIndex.ToString();
+            return (cbCategory.SelectedIndex < 1) ? "0" : cbCategory.SelectedIndex.ToString();
         }
         // ########################## FOR GENRE
         // Return genre [string], from checked checkboxes
         public string GetGenre()
         {
-            FlowLayoutPanel f = GetFlowPanel("fPanelGenre", "tabPage2");
-            return GetChecked(f);
+            var list = listboxGenre.Items.Cast<String>().ToList();
+            return (list.Count > 0) ? list.Aggregate((a, b) => a + "," + b) : "";
         }
-        // Check [x] the Genre for the movie
-        public void LoadGenre(string gen)
+        // Add genres to ListBox that are in the media 'genre'
+        public void LoadGenre(string genre)
         {
-            FlowLayoutPanel f = GetFlowPanel("fPanelGenre", "tabPage2");
-            ActivateCheckbox(f, gen);
+            string[] temp = genre.Split(',');
+            foreach (string item in temp)
+            {
+                if (CanAddToListBox(listboxGenre, item.Trim()))
+                {
+                    listboxGenre.Items.Add(item.Trim());
+                }
+            }
         }
         // ########################## FOR COUNTRY
         // Return country, from checkboxes
         public string GetCountry()
         {
-            FlowLayoutPanel f = GetFlowPanel("fPanelCountry", "tabPage2");
-            return GetChecked(f);
+            var list =  listboxCountry.Items.Cast<String>().ToList();
+            return (list.Count > 0) ? list.Aggregate((a, b) => a + "," + b) : "";
         }
-        // Check [x] the Country for the movie
+        // Add countries to ListBox that are in the media 'country'
         public void LoadCountry(string country)
         {
-            FlowLayoutPanel f = GetFlowPanel("fPanelCountry", "tabPage2");
-            ActivateCheckbox(f, country);
+            string[] temp = country.Split(',');
+            foreach (string item in temp)
+            {
+                if (CanAddToListBox(listboxCountry, item.Trim()))
+                {
+                    listboxCountry.Items.Add(item.Trim());
+                }
+            }
         }
         // ########################## OTHER FUNCTIONS
         // REFRESH INFORMATION
@@ -273,65 +271,8 @@ namespace HomeCinema
             // Set control focus
             txtName.Focus();
         }
-        // Get Checkboxes text from checked controls
-        public string GetChecked(FlowLayoutPanel f)
-        {
-            string ret = "";
-            foreach (CheckBox c in f.Controls)
-            {
-                if (c.Checked)
-                {
-                    ret += GlobalVars.RemoveLine(c.Text) + ",";
-                }
-            }
-            ret = ret.TrimEnd(',');
-            return ret;
-        }
-        public void ActivateCheckbox(FlowLayoutPanel f, string textToSplit)
-        {
-            string[] gSplit = textToSplit.Split(',');
-            foreach (CheckBox c in f.Controls)
-            {
-                foreach (string text in gSplit)
-                {
-                    if (c.Text.ToLower().Contains(text.ToLower()) && (String.IsNullOrWhiteSpace(text) == false))
-                    {
-                        c.Checked = true;
-                        break;
-                    }
-                }
-            }
-        }
-        // GET FlowLayoutPanel inside [tabInfo]
-        public FlowLayoutPanel GetFlowPanel(string panelName, string TABpage)
-        {
-            string tabPage = TABpage;
-            if (string.IsNullOrWhiteSpace(tabPage))
-            {
-                tabPage = "tabPage1";
-            }
-            foreach (TabPage p in tabInfo.TabPages)
-            {
-                if (p.Name == tabPage)
-                {
-                    foreach (Control f in p.Controls)
-                    {
-                        if (f is FlowLayoutPanel)
-                        {
-                            FlowLayoutPanel ff = f as FlowLayoutPanel;
-                            if (ff.Name == panelName)
-                            {
-                                return ff;
-                            }
-                        }
-                    }
-                    break;
-                }
-            }
-            return null;
-        }
         // Set Image to picBox Image
-        public static bool SetPicboxImgFromFile(PictureBox picbox, string selectedFilename, string actFrom)
+        public bool SetPicboxImgFromFile(PictureBox picbox, string selectedFilename, string actFrom)
         {
             string errFrom = $"frmMovieInfo (SetPicboxImg)-{actFrom}";
             if (File.Exists(selectedFilename))
@@ -394,7 +335,9 @@ namespace HomeCinema
                 File.Copy(sourceFile, destFile, true);
 
                 // Set picBox Image, from File Selected
-                GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(destFile), Image.FromFile(destFile));
+                Image imgFromFile = Image.FromFile(destFile);
+                GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(destFile), imgFromFile);
+                imgFromFile.Dispose();
                 GlobalVars.Log(ExceptionFrom + " [NEW Image File and Name]", sourceFile);
             }
             catch (Exception fex)
@@ -429,26 +372,6 @@ namespace HomeCinema
                 GlobalVars.CallMethod(PARENT_NAME, "DisposePoster", Params, $"frmMovieInfo-DisposeImages ({Name})", "frmMovie PARENT: " + PARENT_NAME);
             }
         }
-        // Check Genre textboxes from List of genres
-        private void CheckGenreFromTMDB(List<string> list)
-        {
-            if (list.Count > 0)
-            {
-                foreach (string val in list)
-                {
-                    foreach (CheckBox cb in fPanelGenre.Controls)
-                    {
-                        string string1 = cb.Text.ToLower().Trim();
-                        string string2 = val.ToLower().Trim();
-                        if (string1 == string2)
-                        {
-                            cb.Checked = true;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
         #endregion
         // ############################################################################## Form Controls methods event
         private void frmMovieInfo_FormClosing(object sender, FormClosingEventArgs e)
@@ -469,11 +392,9 @@ namespace HomeCinema
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
-            // Call is from 
-            string callFrom = $"frmMovieInfo ({Name})-btnSave_Click";
-
-            // List for metadata values
-            var metaData = new List<string>();
+            // variables
+            string callFrom = $"frmMovieInfo ({Name})-btnSave_Click"; // called From
+            var metaData = new List<string>(); // List for metadata values
 
             // Exit if Movie Name is empty
             if (String.IsNullOrWhiteSpace(txtName.Text))
@@ -602,10 +523,20 @@ namespace HomeCinema
                 string[] Params = { MOVIE_ID };
                 GlobalVars.CallMethod(PARENT_NAME, "LoadInformation", Params, $"frmMovieInfo-btnSave_Click ({Name})", "frmMovie PARENT: " + PARENT_NAME);
             }
-            
-            // Refresh Movie List
-            frmMain master = (frmMain)Application.OpenForms["frmMain"];
-            master.UpdateMovieItemOnLV(LVITEM);
+            // Add new country to text file
+            foreach (string item in listboxCountry.Items)
+            {
+                GlobalVars.WriteAppend(GlobalVars.FILE_COUNTRY, $",{item}");
+            }
+            // Add new genre to text file
+            foreach (string item in listboxGenre.Items)
+            {
+                GlobalVars.WriteAppend(GlobalVars.FILE_GENRE, $",{item}");
+            }
+            // Refresh main form properties
+            Program.FormMain.UpdateMovieItemOnLV(LVITEM); // ListView item of this
+            Program.FormMain.PopulateCountryCB(); // Refresh Country list
+            Program.FormMain.PopulateGenreCB(); // Refresh Genre list
 
             // Save Metadata
             if (cbSaveMetadata.Checked)
@@ -666,17 +597,15 @@ namespace HomeCinema
         private void btnFetchData_Click(object sender, EventArgs e)
         {
             // Declare vars
-            frmLoading form = new frmLoading("Fetching info from TMDB..", "Loading");
+            frmLoading form = null;
             var list = new List<string>();
-
             string errFrom = "frmMovieInfo-btnFetchData_Click";
             string IMDB_ID = txtIMDB.Text;
-            string mediatype = "movie";
-            
+            string mediatype;
+            string genre; // genre text 
             string jsonMainFullPath; // json file full path
-            string r1, r2, r3, r4, r5, r6, r7, r8, r9; // List Info from TMDB
+            string r1, r2, r3, r4, r5, r6, r7, r8, r9, r10; // List Info from TMDB
             string linkPoster, YT_ID;
-
             bool coverDownloaded = false;
 
             // Exit if IMDB id is invalid
@@ -686,14 +615,11 @@ namespace HomeCinema
                 txtIMDB.Focus();
                 return;
             }
-
             // Check if series
-            if (cbCategory.Text.ToLower().Contains("series"))
-            {
-                mediatype = "tv";
-            }
+            mediatype = (cbCategory.Text.ToLower().Contains("series")) ? "tv" : "movie";
 
             // Get List of values from TMDB
+            form = new frmLoading("Fetching info from TMDB..", "Loading");
             form.BackgroundWorker.DoWork += (sender1, e1) =>
             {
                 list = GlobalVars.GetMovieInfoByImdb(IMDB_ID, mediatype);
@@ -718,6 +644,7 @@ namespace HomeCinema
             r7 = list[8]; // Director
             r8 = list[9]; // Producer
             r9 = list[10]; // country
+            r10 = list[11]; // Studio
 
             // Set to textboxes
             if (String.IsNullOrWhiteSpace(r1)==false)
@@ -726,7 +653,7 @@ namespace HomeCinema
             }
             if (String.IsNullOrWhiteSpace(r2) == false)
             {
-                if (r2 != txtName.Text)
+                if (!r2.Equals(txtName.Text))
                 {
                     txtEpName.Text = r2;
                 }
@@ -743,9 +670,17 @@ namespace HomeCinema
             txtArtist.Text = r6;
             txtDirector.Text = r7;
             txtProducer.Text = r8;
-
+            txtStudio.Text = r10;
+            // Clear country and genre listbox
+            listboxCountry.Items.Clear();
+            listboxGenre.Items.Clear();
             // Set Country
             LoadCountry(r9);
+            // Set Genres
+            genre = GlobalVars.GetGenresByJsonFile(jsonMainFullPath, errFrom + " (jsonMainFullPath)", ",");
+            LoadGenre(genre);
+            // Set mediatype, after getting info from TMDB
+            cbCategory.SelectedIndex = GlobalVars.GetCategoryByFilter(genre, r9, mediatype);
 
             // Ask to change cover - poster image
             linkPoster = r5;
@@ -754,7 +689,7 @@ namespace HomeCinema
                 if (GlobalVars.ShowYesNo("Do you want to change poster image?"))
                 {
                     // Show form loading
-                    form.Message = "Downloading cover from TMDB..";
+                    form = new frmLoading("Downloading cover from TMDB..", "Loading");
                     form.BackgroundWorker.DoWork += (sender1, e1) =>
                     {
                         // Parse image link from JSON and download it
@@ -773,16 +708,14 @@ namespace HomeCinema
                     }
                 }
             }
-            // Set Genres
-            CheckGenreFromTMDB(GlobalVars.GetGenresByJsonFile(jsonMainFullPath, errFrom + " (JSONfindmovie)"));
         }
         // Get IMDB ID using Movie Name
         private void btnGetImdb_Click(object sender, EventArgs e)
         {
             // Declare vars
-            frmLoading form = new frmLoading("Searching movie..", "Loading");
-            string mediatype, getIMDB = "";
-            //string errFrom = "frmMovieInfo-btnGetImdb_Click";
+            string mediatype = (cbCategory.Text.ToLower().Contains("series") ? "tv" : "movie");
+            string getIMDB = "";
+  
             // Check if txtName is valid
             if (String.IsNullOrWhiteSpace(txtName.Text))
             {
@@ -791,22 +724,48 @@ namespace HomeCinema
                 return;
             }
 
-            // Get imdb id and set it to textbox
-            mediatype = (cbCategory.Text.ToLower().Contains("series") ? "tv" : "movie");
-            form.BackgroundWorker.DoWork += (sender1, e1) =>
-            {
-                getIMDB = GlobalVars.GetIMDBId(txtName.Text, MOVIE_ID, mediatype);
-            };
+            // Show form for tmdb searching
+            var form = new frmTmdbSearch($"Search for {mediatype}", txtName.Text, mediatype, txtID.Text);
             form.ShowDialog(this);
+            getIMDB = form.getResult;
+            form.Dispose();
+
+            // Get IMDB from TMDB json info
             if (String.IsNullOrWhiteSpace(getIMDB) == false)
             {
                 txtIMDB.Text = getIMDB;
+                btnFetchData.PerformClick(); // Automatically search IMDB Id
             }
-            else
-            {
-                GlobalVars.ShowWarning($"Cannot search for IMDB Id for '{txtName.Text}'!");
-                txtName.Focus();
-            }
+        }
+
+        private void btnCountryClear_Click(object sender, EventArgs e)
+        {
+            listboxCountry.Items.Clear();
+        }
+
+        private void btnGenreClear_Click(object sender, EventArgs e)
+        {
+            listboxGenre.Items.Clear();
+        }
+
+        private void btnCountryRemove_Click(object sender, EventArgs e)
+        {
+            RemoveFromListBox(listboxCountry);
+        }
+
+        private void btnGenreRemove_Click(object sender, EventArgs e)
+        {
+            RemoveFromListBox(listboxGenre);
+        }
+
+        private void btnCountryAdd_Click(object sender, EventArgs e)
+        {
+            AddToListBox(listboxCountry, GlobalVars.TEXT_COUNTRY.ToList<string>(), "Type country to add");
+        }
+
+        private void btnGenreAdd_Click(object sender, EventArgs e)
+        {
+            AddToListBox(listboxGenre, GlobalVars.TEXT_GENRE.ToList<string>(), "Type genre to add");
         }
     }
 }

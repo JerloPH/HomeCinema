@@ -17,6 +17,7 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##################################################################################### */
 using System;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace HomeCinema
@@ -24,34 +25,28 @@ namespace HomeCinema
     static class Program
     {
         public static frmMain FormMain;
+        static Mutex mutex = new Mutex(true, "a1f8da5c-12ef-45a5-b4c5-d8fece8e3e32");
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            FormMain = new frmMain();
-            Application.Run(FormMain);
+            if (mutex.WaitOne(TimeSpan.Zero, true))
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                FormMain = new frmMain();
+                Application.Run(FormMain);
+
+                // release mutex after the form is closed.
+                mutex.ReleaseMutex();
+                mutex.Dispose();
+            }
+            else
+            {
+                MessageBox.Show("HomeCinema is already open!", "HomeCinema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }
-/*
-namespace HomeCinema
-{
-    static class Program
-    {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
-        {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmMain());
-        }
-    }
-}
-*/

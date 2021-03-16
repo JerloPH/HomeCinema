@@ -30,21 +30,21 @@ namespace HomeCinema
 {
     public partial class frmMovie : Form
     {
-        private static string childForm { get; set; } = "";
-        private static string MOVIE_ID { get; set; } = "";
-        private static string MOVIE_NAME { get; set; } = "";
-        private static string MOVIE_FILEPATH { get; set; } = "";
-        private static string MOVIE_SUB { get; set; } = "";
-        private static string MOVIE_TRAILER { get; set; } = "";
-        private static Image MOVIE_COVER { get; set; } = null;
-        private static Image MOVIE_COVER_FULL { get; set; } = null;
+        private string childForm { get; set; } = "";
+        private string MOVIE_ID { get; set; } = "";
+        private string MOVIE_NAME { get; set; } = "";
+        private string MOVIE_FILEPATH { get; set; } = "";
+        private string MOVIE_SUB { get; set; } = "";
+        private string MOVIE_TRAILER { get; set; } = "";
+        private Image MOVIE_COVER { get; set; } = null;
+        private Image MOVIE_COVER_FULL { get; set; } = null;
 
         // Source ListView lvSearch Item index
         public ListViewItem LVITEM = null;
-        bool IsDeleted = false;
+        private bool IsDeleted = false;
 
         // SQLHelper connection
-        SQLHelper conn = new SQLHelper("frmMovie");
+        private SQLHelper conn = new SQLHelper("frmMovie");
 
         public frmMovie(Form parent, string ID, string name, ListViewItem lvitem)
         {
@@ -291,8 +291,8 @@ namespace HomeCinema
         private void LogWebDoc(string Youtube_ID)
         {
             // Log to file
-            GlobalVars.WriteToFile(GlobalVars.PATH_START + "WebTrailerDocText.log", webTrailer.DocumentText);
-            GlobalVars.WriteToFile(GlobalVars.PATH_START + "WebTrailer.log", YoutubeEmbed(Youtube_ID));
+            GlobalVars.WriteToFile(Path.Combine(GlobalVars.PATH_LOG, "WebTrailerDocText.log"), webTrailer.DocumentText);
+            GlobalVars.WriteToFile(Path.Combine(GlobalVars.PATH_LOG, "WebTrailer.log"), YoutubeEmbed(Youtube_ID));
         }
         public string YoutubeEmbed(string code)
         {
@@ -403,8 +403,7 @@ namespace HomeCinema
             // Refresh on Main form
             if (IsDeleted)
             {
-                frmMain master = (frmMain)Application.OpenForms["frmMain"];
-                master.RefreshMovieList();
+                Program.FormMain.RefreshMovieList();
             }
 
             Dispose();

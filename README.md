@@ -1,13 +1,13 @@
 # HomeCinema - Media Organizer
 
-<img src="/data/v0.4.1.jpg"></img>
+<img src="/data/v0.5.jpg"></img>
 
-**version:**	0.4.1.0 <br>
-**build:**		30
+**version:**	0.5.0.0 <br>
+**release:**	31
 
 ## Downloads
 
-**Windows 10, 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.4.1.0/HomeCinema-Windows.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
+**Windows 10, 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.5.0.0/HomeCinema-Windows.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
 **Note: Untested on Windows 7 and 8, but might work**
 
 ### Download Counts
@@ -15,31 +15,16 @@
 [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/latest/HomeCinema-Windows.zip)]()
 
 ## Requirements
-
 - 4GB or more RAM. <br>
 - Microsoft .NET Framework Runtime, version 4.6 or higher. [Download Link](https://dotnet.microsoft.com/download/dotnet-framework/net46) <br>
 
 ## What is HomeCinema?
-
-**HomeCinema** is a *"media cataloguing software"*.
-
-Organize your collection of Movies and TV shows with HomeCinema.
-
-It is like a book catalogue, except it's for Movies and Series located in your Local Drive.
-
+**HomeCinema** is a *"media cataloguing software"*. <br>
+Organize your collection of Movies and TV shows with HomeCinema. <br>
+It is like a book catalogue, except it's for Movies and Series located in your Local Drive. <br>
 Ease the pain of browsing through many folders and finding out which movie is which.
-
-## External Links
-**Note: I'm not the user who posted any of them. Visit at your discretion.** <br>
-[View **Softpedia** review here](https://www.softpedia.com/get/Multimedia/Video/Other-VIDEO-Tools/HomeCinema.shtml) <br>
-[View **NSaneForum** post](https://nsaneforums.com/topic/401760-homecinema-0400/?tab=comments#comment-1665808) <br>
-[View **Netfox2** review (French site)](https://www.netfox2.net/modules/wfdownloads/singlefile.php?cid=123&lid=2181) <br>
-[View **Jetelecharge** review (French Site)](https://www.jetelecharge.com/Bureautique/10226.php) <br>
-[View **slunecnice** review (Czech site)](https://www.slunecnice.cz/sw/homecinema/) <br>
-[View **Windows Forum** post](https://windowsforum.kr/data/15492689)
 	
 ## List of features:
-	
 - Automatically scan and add all supported media files from designated folders.
 - Automatically fetch movie information from [The Movie Database](https://www.themoviedb.org/). *Requires Internet Connection.*
 - Directly open the media file, using your default player.
@@ -48,8 +33,17 @@ Ease the pain of browsing through many folders and finding out which movie is wh
 - Allows filter and search.
 - Edit and Save information within the app.
 
-## How to Add Media Locations?
+## External Links
+**Note: I'm not the user who posted any of them. Visit at your discretion.** <br>
+[View **MajorGeek** review here](https://www.majorgeeks.com/files/details/homecinema.html) <br>
+[View **Softpedia** review here](https://www.softpedia.com/get/Multimedia/Video/Other-VIDEO-Tools/HomeCinema.shtml) <br>
+[View **NSaneForum** post](https://nsaneforums.com/topic/402520-homecinema-0410/?tab=comments#comment-1667568) <br>
+[View **Netfox2** review (French site)](https://www.netfox2.net/modules/wfdownloads/singlefile.php?cid=123&lid=2181) <br>
+[View **Jetelecharge** review (older version, v0.1)](https://www.jetelecharge.com/Bureautique/10226.php) <br>
+[View **slunecnice** review (Czech site)](https://www.slunecnice.cz/sw/homecinema/) <br>
+[View **Windows Forum** post](https://windowsforum.kr/data/15547097)
 
+## How to Add Media Locations?
 1. Press **CTRL + S** or click on **[Settings]** button to Open Settings UI.
 2. Go to **File** Tab.
 3. Under **Media Locations**, click on **[Add]** button and navigate to the directory where your movie files are located. <br>

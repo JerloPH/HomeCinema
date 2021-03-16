@@ -20,6 +20,7 @@
 #endregion
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using HomeCinema.Global;
 
@@ -33,7 +34,7 @@ namespace HomeCinema
             // Form properties
             FormClosing += new FormClosingEventHandler(frmSettings_FormClosing);
             Icon = GlobalVars.HOMECINEMA_ICON;
-            Text = $"[Settings] {GlobalVars.HOMECINEMA_NAME} - Media Organizer (v {GlobalVars.HOMECINEMA_VERSION} r{GlobalVars.HOMECINEMA_BUILD.ToString()})";
+            Text = $"[Settings] {GlobalVars.HOMECINEMA_NAME} - Media Organizer (v{GlobalVars.HOMECINEMA_VERSION} r{GlobalVars.HOMECINEMA_BUILD.ToString()})";
 
             // Controls
             tabControl1.DrawItem += new DrawItemEventHandler(tabControl1_DrawItem);
@@ -72,6 +73,51 @@ namespace HomeCinema
             _stringFlags.LineAlignment = StringAlignment.Center;
             g.DrawString(_tabPage.Text, _tabFont, _textBrush, _tabBounds, new StringFormat(_stringFlags));
         }
+        // ############################################################################################### FUNCTIONS
+        #region Functions
+        private bool CanAddToListBox(ListBox lb, string item)
+        {
+            if (String.IsNullOrWhiteSpace(item)) { return false; }
+            if (lb.Items.Contains(item)) { return false; }
+            foreach (string sItem in lb.Items)
+            {
+                if (sItem.Equals(item, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        private void AddToListBox(ListBox lb, string caption = "Type here")
+        {
+            string item = GlobalVars.GetStringInputBox(caption);
+            if (CanAddToListBox(lb, item))
+            {
+                lb.Items.Add(item);
+            }
+        }
+        private void RemoveFromListBox(ListBox lb)
+        {
+            for (int i = lb.SelectedIndices.Count - 1; i >= 0; i--)
+            {
+                int item = lb.SelectedIndices[i];
+                lb.Items.RemoveAt(item);
+            }
+        }
+        private void EditListBoxItems(ListBox lb)
+        {
+            int item, pos;
+            for (int i = lb.SelectedIndices.Count - 1; i >= 0; i--)
+            {
+                item = lb.SelectedIndices[i];
+                pos = lb.Items.IndexOf(lb.Items[item]);
+                if (pos > -1)
+                {
+                    lb.Items[pos] = GlobalVars.GetStringInputBox($"Change '{lb.Items[item]}' to", lb.Items[item].ToString());
+                }
+            }
+        }
+        #endregion
         // ############################################################################################### EVENTS
         private void frmSettings_Load(object sender, EventArgs e)
         {
@@ -86,6 +132,7 @@ namespace HomeCinema
             tooltip.SetToolTip(lblPlayMovieClick, "On double-clicking an item, plays the File, instead of viewing its details.");
             tooltip.SetToolTip(lblMaxLogFileSize, "Maximum file size of log before deleting it.");
             tooltip.SetToolTip(lblItemDisplayCount, "Maximum number of Items displayed for Search results.\n'0' displays all.");
+            tooltip.SetToolTip(lblImdbSearchLimit, "Limit Search results in searching Imdb entry.");
 
             // setup contents
             cbAutoUpdate.Items.AddRange(choice);
@@ -111,32 +158,27 @@ namespace HomeCinema
             try { txtMaxItemCount.Text = GlobalVars.SET_ITEMLIMIT.ToString(); }
             catch { txtMaxItemCount.Text = "0"; }
 
+            try { txtImdbSearchLimit.Text = GlobalVars.SET_SEARCHLIMIT.ToString(); }
+            catch { txtImdbSearchLimit.Text = "5"; }
+
             // ##################### - FILE changes
             // Country Texts
-            text = "";
-            foreach (string c in GlobalVars.TEXT_COUNTRY)
+            foreach (string country in GlobalVars.TEXT_COUNTRY)
             {
-                if ((String.IsNullOrWhiteSpace(c) == false) && c != "All")
+                if ((String.IsNullOrWhiteSpace(country) == false) && country != "All")
                 {
-                    text += c.Trim() + ", ";
+                    listboxCountry.Items.Add(country);
                 }
             }
-            text = text.TrimEnd();
-            text = text.TrimEnd(',');
-            txtCountry.Text = text;
 
-            // Genre Texts
-            text = "";
-            foreach (string c in GlobalVars.TEXT_GENRE)
+            // Genre items
+            foreach (string genre in GlobalVars.TEXT_GENRE)
             {
-                if ((String.IsNullOrWhiteSpace(c) == false) && c != "All")
+                if ((String.IsNullOrWhiteSpace(genre) == false) && genre != "All")
                 {
-                    text += c.Trim() + ", ";
+                    listboxGenre.Items.Add(genre);
                 }
             }
-            text = text.TrimEnd();
-            text = text.TrimEnd(',');
-            txtGenre.Text = text;
 
             // Media File Format / File Extensions Texts
             text = "";
@@ -197,7 +239,12 @@ namespace HomeCinema
             // TextBox
             logsize = (long)Convert.ToDouble(txtLogSize.Text);
             GlobalVars.SET_LOGMAXSIZE = logsize * GlobalVars.BYTES;
-            GlobalVars.SET_ITEMLIMIT = Convert.ToInt32(txtMaxItemCount.Text);
+            
+            try { GlobalVars.SET_ITEMLIMIT = Convert.ToInt32(txtMaxItemCount.Text); }
+            catch { }
+
+            try { GlobalVars.SET_SEARCHLIMIT = Convert.ToInt32(txtImdbSearchLimit.Text); }
+            catch { }
 
             // Write MediaLoc file
             foreach (var x in BoxMediaLoc.Items)
@@ -218,22 +265,16 @@ namespace HomeCinema
             toWrite = "";
 
             // Replace country file
-            toWrite = txtCountry.Text.Replace('\r', ' ');
-            toWrite = toWrite.Replace('\n', ' ');
-            GlobalVars.WriteArray(toWrite.Split(','), GlobalVars.FILE_COUNTRY);
-            if (Application.OpenForms["frmMain"] != null)
-            {
-                (Application.OpenForms["frmMain"] as frmMain).PopulateCountryCB();
-            }
+            var listCountry = listboxCountry.Items.Cast<String>().ToList();
+            toWrite = (listCountry.Count > 0) ? listCountry.Aggregate((a, b) => a + "," + b) : "";
+            GlobalVars.WriteToFile(GlobalVars.FILE_COUNTRY, toWrite);
+            Program.FormMain.PopulateCountryCB();
 
             // Replace genre file
-            toWrite = txtGenre.Text.Replace('\r', ' ');
-            toWrite = toWrite.Replace('\n', ' ');
-            GlobalVars.WriteArray(toWrite.Split(','), GlobalVars.FILE_GENRE);
-            if (Application.OpenForms["frmMain"] != null)
-            {
-                (Application.OpenForms["frmMain"] as frmMain).PopulateGenreCB();
-            }
+            var listGenre = listboxGenre.Items.Cast<String>().ToList();
+            toWrite = (listGenre.Count > 0) ? listGenre.Aggregate((a, b) => a + "," + b) : "";
+            GlobalVars.WriteToFile(GlobalVars.FILE_GENRE, toWrite);
+            Program.FormMain.PopulateGenreCB();
 
             // Show Message
             GlobalVars.ShowInfo("Done saving Settings!");
@@ -299,6 +340,46 @@ namespace HomeCinema
         {
             // Remove all from ListBox: BoxSeriesLoc
             BoxSeriesLoc.Items.Clear();
+        }
+
+        private void btnGenreAdd_Click(object sender, EventArgs e)
+        {
+            AddToListBox(listboxGenre, "Type genre to add");
+        }
+
+        private void btnCountryAdd_Click(object sender, EventArgs e)
+        {
+            AddToListBox(listboxCountry, "Type country to add");
+        }
+
+        private void btnGenreRemove_Click(object sender, EventArgs e)
+        {
+            RemoveFromListBox(listboxGenre);
+        }
+
+        private void btnCountryRemove_Click(object sender, EventArgs e)
+        {
+            RemoveFromListBox(listboxCountry);
+        }
+
+        private void btnGenreClear_Click(object sender, EventArgs e)
+        {
+            listboxGenre.Items.Clear();
+        }
+
+        private void btnCountryClear_Click(object sender, EventArgs e)
+        {
+            listboxCountry.Items.Clear();
+        }
+
+        private void btnGenreEdit_Click(object sender, EventArgs e)
+        {
+            EditListBoxItems(listboxGenre);
+        }
+
+        private void btnCountryEdit_Click(object sender, EventArgs e)
+        {
+            EditListBoxItems(listboxCountry);
         }
     }
 }

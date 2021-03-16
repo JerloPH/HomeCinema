@@ -25,11 +25,12 @@ using System.Windows.Forms;
 using System.Drawing;
 using HomeCinema.SQLFunc;
 using HomeCinema.Global;
-using System.ComponentModel;
 using System.Linq;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
+using System.Threading;
 
 namespace HomeCinema
 {
@@ -52,22 +53,32 @@ namespace HomeCinema
             GlobalVars.CreateDir(GlobalVars.PATH_IMG);
             GlobalVars.CreateDir(GlobalVars.PATH_DATA);
             GlobalVars.CreateDir(GlobalVars.PATH_TEMP);
+            GlobalVars.CreateDir(GlobalVars.PATH_LOG);
 
             // Check files first
             GlobalVars.CheckAllFiles();
+
+            // Set TMDB Key on DEBUG
+            if (Debugger.IsAttached)
+            {
+                GlobalVars.TMDB_KEY = GlobalVars.ReadStringFromFile(@"..\..\..\ignored\tmdb_API_Key.txt", "frmMain-DEBUG");
+                if (String.IsNullOrWhiteSpace(GlobalVars.TMDB_KEY))
+                {
+                    GlobalVars.ShowWarning("No TMDB Key!");
+                }
+            }
 
             // Start app
             InitializeComponent();
 
             // Form properties
-            FormClosing += new FormClosingEventHandler(frmMain_FormClosing);
             Icon = GlobalVars.HOMECINEMA_ICON;
 
             // Change Caption and Title
             Text = $"{GlobalVars.HOMECINEMA_NAME} - Media Organizer (v{GlobalVars.HOMECINEMA_VERSION} r{GlobalVars.HOMECINEMA_BUILD.ToString()})";
 
             // Load App Settings
-            LoadSettings();
+            GlobalVars.LoadSettings();
 
             // Add events to controls
             txtSearch.Text = GlobalVars.SEARCHBOX_PLACEHOLDER;
@@ -179,12 +190,13 @@ namespace HomeCinema
             Array.Copy(GlobalVars.DB_TABLE_FILEPATH, 1, combined, GlobalVars.DB_TABLE_INFO.Length - 1, 3);
 
             // Create DT
-            DataTable dt = DBCON.InitializeDT(false, combined);
+            DataTable dt;
             foreach (string filePath in listofFiles)
             {
                 // variables
                 string getIMDB = "";
                 string mName = "";
+                dt = DBCON.InitializeDT(false, combined);
 
                 // Get proper name, without the folder paths
                 try
@@ -202,11 +214,11 @@ namespace HomeCinema
                         // Its a file
                         mName = Path.GetFileNameWithoutExtension(filePath);
                     }
-
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
-                    // Log Error
                     GlobalVars.ShowError(callFrom, ex, false);
+                    continue; // skip when exception thrown
                 }
 
                 // Trim Movie Name
@@ -219,14 +231,10 @@ namespace HomeCinema
                 {
                     Match r = Regex.Match(mName, @regExPattern);
                     yearFromFname = r.Groups[r.Groups.Count - 1].Value;
-                    if (String.IsNullOrWhiteSpace(yearFromFname) == false)
-                    {
-                        mName = mName.Substring(0, mName.IndexOf(yearFromFname));
-                    }
-
-                } catch (Exception ex)
+                    mName = (!String.IsNullOrWhiteSpace(yearFromFname)) ? mName.Substring(0, mName.IndexOf(yearFromFname)) : mName;
+                }
+                catch (Exception ex)
                 {
-                    //LogError
                     GlobalVars.ShowError(errFrom, ex, false);
                 }
 
@@ -241,6 +249,7 @@ namespace HomeCinema
                 string rDirector = "";
                 string rProducer = "";
                 string rCountry = "";
+                string rStudio = "";
 
                 // Scrape from TMDB, for info and details
                 if (GlobalVars.SET_OFFLINE == false)
@@ -263,31 +272,22 @@ namespace HomeCinema
                         rDirector = list[8];
                         rProducer = list[9];
                         rCountry = list[10];
+                        rStudio = list[11];
 
                         // Get Genres
-                        foreach (string s in GlobalVars.GetGenresByJsonFile(rJson, errFrom))
-                        {
-                            rGenre += s.Trim() + ",";
-                        }
-                        rGenre = rGenre.TrimEnd(',');
+                        rGenre = GlobalVars.GetGenresByJsonFile(rJson, errFrom, ",");
+                    }
+                    else
+                    {
+                        rPosterLink = "";
                     }
                 }
 
                 // If cannot get info online, make use of defaults
-                if (String.IsNullOrWhiteSpace(rTitle))
-                {
-                    rTitle = mName.Trim();
-                }
-                if (String.IsNullOrWhiteSpace(rYear))
-                {
-                    rYear = yearFromFname;
-                }
-                
+                rTitle = (String.IsNullOrWhiteSpace(rTitle)) ? mName.Trim() : rTitle;
+                rYear = (String.IsNullOrWhiteSpace(rYear)) ? yearFromFname : rYear;
                 // If Original title is the same as the main title, ignore it
-                if (rOrigTitle == rTitle)
-                {
-                    rOrigTitle = "";
-                }
+                rOrigTitle = (rOrigTitle.Equals(rTitle)) ? String.Empty : rOrigTitle; 
 
                 // Make the DataRow
                 DataRow row = dt.NewRow();
@@ -300,7 +300,7 @@ namespace HomeCinema
                 row[6] = rCountry; // country
                 row[7] = GlobalVars.GetCategoryByFilter(rGenre, rCountry, mediatype); // category
                 row[8] = rGenre; // genre
-                row[9] = ""; // studio
+                row[9] = rStudio; // studio
                 row[10] = rProducer; // producer
                 row[11] = rDirector; // director
                 row[12] = rArtist; // artist
@@ -312,35 +312,38 @@ namespace HomeCinema
                 dt.Rows.Add(row);
                 count += 1; // add to count
                 logInsert += $"{filePath}\n";
-            }
-            dt.AcceptChanges();
 
-            int insertResult = DBCON.DbInsertMovie(dt, callFrom);
-            if (insertResult > 0)
-            {
-                // Download cover, if not OFFLINE_MODE
-                if (GlobalVars.SET_OFFLINE == false)
+                dt.AcceptChanges();
+
+                int insertResult = DBCON.DbInsertMovie(dt, callFrom);
+                if (insertResult > 0)
                 {
-                    string movieId = insertResult.ToString();
-                    // Download Cover from TMDB
-                    if (GlobalVars.DownloadCoverFromTMDB(movieId, rPosterLink, errFrom))
+                    // Download cover, if not OFFLINE_MODE
+                    if (GlobalVars.SET_OFFLINE == false)
                     {
-                        try
+                        string movieId = insertResult.ToString();
+                        // Download Cover from TMDB
+                        if (GlobalVars.DownloadCoverFromTMDB(movieId, rPosterLink, errFrom) && (!String.IsNullOrWhiteSpace(rPosterLink)))
                         {
-                            // Move from temp folder to poster path
-                            string oldFile = GlobalVars.PATH_TEMP + movieId + ".jpg";
-                            string newFile = GlobalVars.ImgFullPath(movieId);
-                            GlobalVars.DeleteMove(newFile, errFrom); // Delete existing cover first
-                            File.Move(oldFile, newFile);
-                        }
-                        catch (Exception ex)
-                        {
-                            GlobalVars.ShowError(errFrom, ex, false);
+                            try
+                            {
+                                // Move from temp folder to poster path
+                                string oldFile = GlobalVars.PATH_TEMP + movieId + ".jpg";
+                                string newFile = GlobalVars.ImgFullPath(movieId);
+                                GlobalVars.DeleteMove(newFile, errFrom); // Delete existing cover first
+                                File.Move(oldFile, newFile);
+                            }
+                            catch (Exception ex)
+                            {
+                                GlobalVars.ShowError(errFrom, ex, false);
+                            }
                         }
                     }
                 }
+                Thread.Sleep(10);
             }
-            GlobalVars.WriteAppend(GlobalVars.PATH_START + "MovieResult_DoneInsert.Log", logInsert);
+            
+            GlobalVars.WriteAppend(Path.Combine(GlobalVars.PATH_LOG, "MovieResult_DoneInsert.Log"), logInsert);
             return count;
         }
         // return filepath from DB
@@ -495,7 +498,6 @@ namespace HomeCinema
 
                         // Edit Information on ListView Item
                         LVItemSetDetails(lvItem, new string[] { MOVIEID.ToString(), r1, r2, r3, r4, r5, r6, r7, r8 });
-
                         break;
                     }
                 }
@@ -508,7 +510,7 @@ namespace HomeCinema
             }
         }
         // Execute the query, by running bgWorker bgSearchInDB
-        public void RefreshMovieList()
+        public void RefreshMovieList(bool AppStart = false)
         {
             // Check if there was prev query
             if (!String.IsNullOrWhiteSpace(SEARCH_QUERY_PREV))
@@ -521,86 +523,7 @@ namespace HomeCinema
                 // Default SELECT Query
                 SEARCH_QUERY = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO}";
             }
-            PopulateMovieBG();
-        }
-        // Check Settings and Load values to App
-        private void LoadSettings()
-        {
-            string errorFrom = "frmMain-LoadSettings";
-            // If file does not exist, create it with default values from [Config.cs]
-            if (File.Exists(GlobalVars.FILE_SETTINGS) == false)
-            {
-                Config newconfig = new Config();
-                string json = JsonConvert.SerializeObject(newconfig, Formatting.Indented);
-                GlobalVars.WriteToFile(GlobalVars.FILE_SETTINGS, json);
-            }
-            // Load file contents to Config
-            string contents = GlobalVars.ReadStringFromFile(GlobalVars.FILE_SETTINGS, $"{errorFrom} [FILE_SETTINGS]");
-            Config config = JsonConvert.DeserializeObject<Config>(contents);
-
-            // Get Max log file size
-            GlobalVars.SET_LOGMAXSIZE = config.logsize * GlobalVars.BYTES;
-            // Get last path of poster image
-            string stringVal = config.lastPathCover;
-            if (String.IsNullOrWhiteSpace(stringVal) == false)
-            {
-                GlobalVars.PATH_GETCOVER = stringVal;
-            }
-            else
-            {
-                try
-                {
-                    GlobalVars.PATH_GETCOVER = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-
-                }
-                catch (Exception ex)
-                {
-                    // Log Error
-                    GlobalVars.ShowError($"{errorFrom} [PATH_GETCOVER]", ex, false);
-                }
-            }
-            // Get last path of media file when adding new one
-            string strGetVideo = config.lastPathVideo;
-            if (String.IsNullOrWhiteSpace(strGetVideo) == false)
-            {
-                GlobalVars.PATH_GETVIDEO = strGetVideo;
-            }
-            else
-            {
-                try
-                {
-                    GlobalVars.PATH_GETVIDEO = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
-
-                } catch (Exception ex)
-                {
-                    // Log Error
-                    GlobalVars.ShowError($"{errorFrom} [PATH_GETVIDEO]", ex, false);
-                }
-            }
-            // Get Offline Mode
-            GlobalVars.SET_OFFLINE = Convert.ToBoolean(config.offlineMode);
-            // Get auto update
-            GlobalVars.SET_AUTOUPDATE = Convert.ToBoolean(config.autoUpdate);
-            // AutoPlay Movie, instead of Viewing its Info / Details
-            GlobalVars.SET_AUTOPLAY = Convert.ToBoolean(config.instantPlayMovie);
-            // Limit MAX items in query
-            GlobalVars.SET_ITEMLIMIT = config.itemMaxLimit;
-        }
-        // Save settings to replace old
-        private bool SaveSettings()
-        {
-            Config config = new Config();
-            config.logsize = (int)(GlobalVars.SET_LOGMAXSIZE / GlobalVars.BYTES);
-            config.offlineMode = Convert.ToInt16(GlobalVars.SET_OFFLINE);
-            config.lastPathCover = GlobalVars.PATH_GETCOVER;
-            config.lastPathVideo = GlobalVars.PATH_GETVIDEO;
-            config.autoUpdate = Convert.ToInt16(GlobalVars.SET_AUTOUPDATE);
-            config.instantPlayMovie = Convert.ToInt16(GlobalVars.SET_AUTOPLAY);
-            config.itemMaxLimit = GlobalVars.SET_ITEMLIMIT;
-
-            // Seriliaze to JSON
-            string json = JsonConvert.SerializeObject(config, Formatting.Indented);
-            return GlobalVars.WriteToFile(GlobalVars.FILE_SETTINGS, json);
+            PopulateMovieBG(AppStart);
         }
         // Sort Items in lvSearchResult ListView
         private void SortItemsInListView(int toggle)
@@ -689,15 +612,13 @@ namespace HomeCinema
                 else
                 {
                     // Set Series Name
-                    temp.Text = (String.IsNullOrWhiteSpace(resNameSer)) ? resNameSer : temp.Text;
                     temp.SubItems.Add(resNameEp); // Episode Name
                     temp.SubItems.Add("S" + GlobalVars.ValidateNum(resSeason) + " E" + GlobalVars.ValidateNum(resEp));
                 }
-                temp.SubItems.Add(resYear); // Year
-
+                // Year
+                temp.SubItems.Add(resYear);
                 // Display image (From ImageList) based on ImageKey
                 temp.ImageKey = GlobalVars.ImgGetKey(MOVIEID.ToString());
-
                 // Add year to name/title of MOVIE
                 temp.Text = temp.Text + $" ({resYear})";
 
@@ -768,6 +689,34 @@ namespace HomeCinema
             {
                 GlobalVars.formAbout.Focus();
             }
+        }
+        private void SaveCountryCB()
+        {
+            // save cbCountry contents to FILE_COUNTRY
+            string toWrite = "";
+            var list = cbCountry.Items.Cast<string>().OrderBy(s => s);
+            foreach (string item in list)
+            {
+                if (item.Equals("All"))
+                    continue;
+                toWrite += item + ",";
+            }
+            toWrite = toWrite.TrimEnd(',');
+            GlobalVars.WriteToFile(GlobalVars.FILE_COUNTRY, toWrite);
+        }
+        private void SaveGenreCB()
+        {
+            // save cbGenre contents to FILE_GENRE
+            string toWrite = "";
+            var list = cbGenre.Items.Cast<string>().OrderBy(s => s);
+            foreach (string item in list)
+            {
+                if (item.Equals("All"))
+                    continue;
+                toWrite += item + ",";
+            }
+            toWrite = toWrite.TrimEnd(',');
+            GlobalVars.WriteToFile(GlobalVars.FILE_GENRE, toWrite);
         }
         #endregion
         // ####################################################################################### BACKGROUND WORKERS
@@ -896,9 +845,10 @@ namespace HomeCinema
                         }
                     }
 
-                    GlobalVars.WriteToFile(GlobalVars.PATH_START + "MovieResult_Skipped.Log", nonres);
+                    GlobalVars.WriteToFile(Path.Combine(GlobalVars.PATH_LOG, "MovieResult_Skipped.Log"), nonres);
 
                     // Add now to database
+                    form.Message = "Inserting to database..";
                     int insertRes = InsertToDB(listToAdd, calledFrom + "-listToAdd");
                 }
                 form.Message = "Done fetching new media files!";
@@ -908,17 +858,16 @@ namespace HomeCinema
                 listToAdd.Clear();
             };
             form.ShowDialog(this);
-            RefreshMovieList();
+            RefreshMovieList(true);
         }
         #endregion
         #region BG Worker: Populate MOVIE ListView
-        private void PopulateMovieBG()
+        private void PopulateMovieBG(bool AppStart = false)
         {
             // Stop ListView form Drawing
             lvSearchResult.BeginUpdate(); // Pause drawing events on ListView
             lvSearchResult.SuspendLayout();
-            // Clear previous list
-            lvSearchResult.Items.Clear();
+            lvSearchResult.Items.Clear(); // Clear previous list
             // Populate movie listview with new entries, from another form thread
             frmLoading form = new frmLoading("Searching in database..", "Loading");
             DataTable dt, dtGetFile;
@@ -990,22 +939,25 @@ namespace HomeCinema
                             }
 
                             // Load 'cover' Image from 'cover' folder
-                            string Imagefile = GlobalVars.ImgFullPath(MOVIEID.ToString());
-                            try
+                            if (AppStart)
                             {
-                                if (File.Exists(Imagefile))
+                                string Imagefile = GlobalVars.ImgFullPath(MOVIEID.ToString());
+                                try
                                 {
-                                    this.Invoke(new Action(() =>
+                                    if (File.Exists(Imagefile))
                                     {
-                                        GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), Image.FromFile(Imagefile));
-                                    }));
+                                        this.Invoke(new Action(() =>
+                                        {
+                                            Image imageFromFile = Image.FromFile(Imagefile);
+                                            GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imageFromFile);
+                                            imageFromFile.Dispose();
+                                        }));
+                                    }
                                 }
-
-                            }
-                            catch (Exception exImg)
-                            {
-                                // Error Log
-                                GlobalVars.ShowError($"{errFrom}\n\tFile:\n\t{Imagefile}", exImg, false);
+                                catch (Exception exImg)
+                                {
+                                    GlobalVars.ShowError($"{errFrom}\n\tFile:\n\t{Imagefile}", exImg, false);
+                                }
                             }
 
                             // Get all strings from the DataRow, passed by the BG worker
@@ -1089,7 +1041,6 @@ namespace HomeCinema
         private void frmMain_Load(object sender, EventArgs e)
         {
             // Startup events
-
             // Delete previous log file, if exceeds file size limit
             GlobalVars.CheckLogFile(GlobalVars.FILE_LOG_APP, "frmMain-(Delete AppLog)", Text + "\n  : Start of LogFile");
             GlobalVars.CheckLogFile(GlobalVars.DB_DBLOGPATH, "frmMain-(Delete App_DB.log)", Text + "\n  : Database Log");
@@ -1097,15 +1048,16 @@ namespace HomeCinema
 
             // Put default Image on ImageList
             GlobalVars.MOVIE_IMGLIST.Images.Clear();
-            string Imagefile = GlobalVars.ImgFullPath("0");
+            string imageFilePath = GlobalVars.ImgFullPath("0");
+            string Imagefile = (File.Exists(imageFilePath)) ? imageFilePath : GlobalVars.FILE_DEFIMG;
             Image imgFromFile = Image.FromFile(Imagefile);
             GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imgFromFile);
+            imgFromFile.Dispose();
 
             // Perform click on Change View
             btnChangeView.PerformClick();
             // Auto check update
             GlobalVars.CheckForUpdate();
-
             // Start finding files in folder
             GetMediaFromFolders();
         }
@@ -1113,10 +1065,10 @@ namespace HomeCinema
         {
             string logClose = "Exit Log\n";
             // Save settings
-            if (SaveSettings())
-            {
-                logClose += $"\n\tSettings Saved! ({DateTime.Now.TimeOfDay.ToString()})";
-            }
+            logClose += GlobalVars.SaveSettings() ? $"\n\tSettings Saved! ({DateTime.Now.TimeOfDay.ToString()})" : "";
+            // Save text files
+            SaveCountryCB(); // Replace Country text file
+            SaveGenreCB(); // Replace Genre text file
             // Clean each image 1 by 1
             //GlobalVars.Log("frmMain-frmMain_FormClosing", "Disposing MOVIE_IMGLIST");
             //foreach (Image img in GlobalVars.MOVIE_IMGLIST.Images)
@@ -1128,10 +1080,9 @@ namespace HomeCinema
             //}
             if (GlobalVars.MOVIE_IMGLIST != null)
             {
+                GlobalVars.MOVIE_IMGLIST.Images.Clear();
                 GlobalVars.MOVIE_IMGLIST.Dispose();
             }
-            // Run GC to clean
-            GlobalVars.CleanMemory("");
             logClose += $"\n\tDone Garbage Collector ({DateTime.Now.TimeOfDay.ToString()})";
             logClose += "\n\tClosed the program.";
             GlobalVars.Log("frmMain-frmMain_FormClosing", logClose);
@@ -1148,90 +1099,88 @@ namespace HomeCinema
             // Setup columns needed
             string qry = "";
             SEARCH_QUERY = ""; // reset query
-            // If there is NO existing query for search,
-            if (String.IsNullOrWhiteSpace(SEARCH_QUERY))
+
+            // Default SELECT Query
+            qry = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO}";
+
+            // Build Filter for Query
+            // Name Text search
+            if ((txtSearch.Text != GlobalVars.SEARCHBOX_PLACEHOLDER) && (!String.IsNullOrWhiteSpace(txtSearch.Text)))
             {
-                // Default SELECT Query
-                qry = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO}";
-
-                // Build Filter for Query
-                // Name Text search
-                if ((txtSearch.Text != GlobalVars.SEARCHBOX_PLACEHOLDER) && (String.IsNullOrWhiteSpace(txtSearch.Text) ==false))
-                {
-                    qry += " WHERE ";
-                    qry += $"([name] LIKE '%{txtSearch.Text}%' ";
-                    qry += $"OR [name_ep] LIKE '%{txtSearch.Text}%' ";
-                    qry += $"OR [name_series] LIKE '%{txtSearch.Text}%')";
-                }
-                // Year range
-                if (String.IsNullOrEmpty(txtYearFrom.Text) == false)
-                {
-                    qry += GlobalVars.QryWhere(qry);
-                    if (String.IsNullOrEmpty(txtYearTo.Text) == false)
-                    {
-                        qry += $"[year] BETWEEN {txtYearFrom.Text} AND {txtYearTo.Text}";
-                    }
-                    else
-                    {
-                        qry += $"[year] BETWEEN {txtYearFrom.Text} AND {DateTime.Now.Year.ToString()}";
-                    }
-                }
-                // Genre
-                qry += (cbGenre.SelectedIndex > 0) ? GlobalVars.QryWhere(qry) + $"[genre] LIKE '%{cbGenre.Text}%'" : "";
-
-                // Category
-                if (cbCategory.SelectedIndex > 0)
-                {
-                    int index = cbCategory.SelectedIndex;
-                    qry += GlobalVars.QryWhere(qry);
-                    // Search for all
-                    if ((index < 1) || (index > 2))
-                    {
-                        qry += $"[category]={index}";
-                    }
-                    else
-                    {
-                        // Search for All type of Movies, if index == 1. Otherwise, Search for All types of Series
-                        qry += (index == 1) ? "([category]=1 OR [category]=3 OR [category]=5)" : "([category]=2 OR [category]=4 OR [category]=6)";
-                    }
-                }
-                // Studio
-                if (String.IsNullOrWhiteSpace(txtStudio.Text) == false)
-                {
-                    qry += GlobalVars.QryWhere(qry) + $"[studio] LIKE '%{txtStudio.Text}%'";
-                }
-                // Cast
-                if (String.IsNullOrWhiteSpace(txtCast.Text) == false)
-                {
-                    qry += GlobalVars.QryWhere(qry) + $"[artist] LIKE '%{txtCast.Text}%'";
-                }
-                // Director
-                if (String.IsNullOrWhiteSpace(txtDirector.Text) == false)
-                {
-                    qry += GlobalVars.QryWhere(qry) + $"[director] LIKE '%{txtDirector.Text}%'";
-                }
-                // Country
-                string CountryText = GlobalVars.RemoveLine(cbCountry.SelectedItem.ToString());
-                if ((String.IsNullOrWhiteSpace(CountryText) == false) && cbCountry.SelectedIndex > 0)
-                {
-                    qry += GlobalVars.QryWhere(qry) + $"[country] LIKE '%{CountryText}%'";
-                }
-
-                // Override filter string build-up and Use IMDB Code
-                if (String.IsNullOrWhiteSpace(txtIMDB.Text) == false)
-                {
-                    qry = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO} WHERE [imdb] = '{txtIMDB.Text}'";
-                }
-
-                // Filter out all animations
-                qry += (cbHideAnim.CheckState == CheckState.Checked) ? GlobalVars.QryWhere(qry) + " ([category] <= 2)" : "";
-
-                // Append to end
-                qry += (GlobalVars.SET_ITEMLIMIT > 0) ? $" LIMIT {GlobalVars.SET_ITEMLIMIT};" : "";
-
-                // Set query to perform on search
-                SEARCH_QUERY = qry;
+                qry += " WHERE ";
+                qry += $"([name] LIKE '%{txtSearch.Text}%' ";
+                qry += $"OR [name_ep] LIKE '%{txtSearch.Text}%' ";
+                qry += $"OR [name_series] LIKE '%{txtSearch.Text}%')";
             }
+            // Year range
+            if (!String.IsNullOrWhiteSpace(txtYearFrom.Text))
+            {
+                qry += GlobalVars.QryWhere(qry);
+                if (!String.IsNullOrWhiteSpace(txtYearTo.Text))
+                {
+                    qry += $"[year] BETWEEN {txtYearFrom.Text} AND {txtYearTo.Text}";
+                }
+                else
+                {
+                    qry += $"[year] BETWEEN {txtYearFrom.Text} AND {DateTime.Now.Year.ToString()}";
+                }
+            }
+            // Genre
+            qry += (cbGenre.SelectedIndex > 0) ? GlobalVars.QryWhere(qry) + $"[genre] LIKE '%{cbGenre.Text}%'" : "";
+
+            // Category
+            if (cbCategory.SelectedIndex > 0)
+            {
+                int index = cbCategory.SelectedIndex;
+                qry += GlobalVars.QryWhere(qry);
+                // Search for all
+                if ((index < 1) || (index > 2))
+                {
+                    qry += $"[category]={index}";
+                }
+                else
+                {
+                    // Search for All type of Movies, if index == 1. Otherwise, Search for All types of Series
+                    qry += (index == 1) ? "([category]=1 OR [category]=3 OR [category]=5)" : "([category]=2 OR [category]=4 OR [category]=6)";
+                }
+            }
+            // Studio
+            if (String.IsNullOrWhiteSpace(txtStudio.Text) == false)
+            {
+                qry += GlobalVars.QryWhere(qry) + $"[studio] LIKE '%{txtStudio.Text}%'";
+            }
+            // Cast
+            if (String.IsNullOrWhiteSpace(txtCast.Text) == false)
+            {
+                qry += GlobalVars.QryWhere(qry) + $"[artist] LIKE '%{txtCast.Text}%'";
+            }
+            // Director
+            if (String.IsNullOrWhiteSpace(txtDirector.Text) == false)
+            {
+                qry += GlobalVars.QryWhere(qry) + $"[director] LIKE '%{txtDirector.Text}%'";
+            }
+            // Country
+            string CountryText = GlobalVars.RemoveLine(cbCountry.SelectedItem.ToString());
+            if ((String.IsNullOrWhiteSpace(CountryText) == false) && cbCountry.SelectedIndex > 0)
+            {
+                qry += GlobalVars.QryWhere(qry) + $"[country] LIKE '%{CountryText}%'";
+            }
+
+            // Override filter string build-up and Use IMDB Code
+            if (String.IsNullOrWhiteSpace(txtIMDB.Text) == false)
+            {
+                qry = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO} WHERE [imdb] = '{txtIMDB.Text}'";
+            }
+
+            // Filter out all animations
+            qry += (cbHideAnim.CheckState == CheckState.Checked) ? GlobalVars.QryWhere(qry) + " ([category] <= 2)" : "";
+
+            // Append to end
+            qry += (GlobalVars.SET_ITEMLIMIT > 0) ? $" LIMIT {GlobalVars.SET_ITEMLIMIT};" : "";
+
+            // Set query to perform on search
+            SEARCH_QUERY = qry;
+            // Re-populate ListView of movies
             PopulateMovieBG();
         }
         // When double-clicked on an item, open it in new form
@@ -1287,27 +1236,7 @@ namespace HomeCinema
         // Delete files from temp
         private void btnClean_Click(object sender, EventArgs e)
         {
-            string errFrom = "frmMain-btnClean_Click";
-            frmLoading form = new frmLoading("Cleaning App..", "Loading");
-            form.BackgroundWorker.DoWork += (sender1, e1) =>
-            {
-                form.Message = "Removing images not in database..";
-                GlobalVars.CleanCoversNotInDb();
-                form.Message = "Removing temporary image files..";
-                GlobalVars.DeleteFilesExt(GlobalVars.PATH_TEMP, ".jpg", errFrom);
-                form.Message = "Removing temporary json files..";
-                GlobalVars.DeleteFilesExt(GlobalVars.PATH_TEMP, ".json", errFrom);
-                form.Message = "Removing old logs..";
-                GlobalVars.TryDelete(GlobalVars.FILE_LOG_APP, errFrom);
-                GlobalVars.TryDelete(GlobalVars.FILE_LOG_ERROR, errFrom);
-                GlobalVars.TryDelete(GlobalVars.DB_DBLOGPATH, errFrom);
-                GlobalVars.TryDelete(GlobalVars.PATH_TEMP + "_JSONLog.log", errFrom);
-                form.Message = "Removing old version file..";
-                GlobalVars.TryDelete(GlobalVars.PATH_TEMP + "version", errFrom);
-                form.Message = "Done!";
-            };
-            form.ShowDialog();
-            GlobalVars.ShowInfo("Cleanup Done!");
+            GlobalVars.CleanAppDirectory();
         }
         // When ENTER Key is pressed on ListView
         private void lvSearchResult_KeyDown(object sender, KeyEventArgs e)

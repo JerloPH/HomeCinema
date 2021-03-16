@@ -29,6 +29,7 @@ using System.Reflection;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
+using Microsoft.VisualBasic;
 using Microsoft.VisualBasic.FileIO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -37,12 +38,12 @@ using HomeCinema.SQLFunc;
 
 namespace HomeCinema.Global
 {
-    public class GlobalVars
+    public static class GlobalVars
     {
         // Variables ############################################################################################################
         public static string HOMECINEMA_NAME = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyTitleAttribute>().Title;
         public static string HOMECINEMA_VERSION = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-        public static int HOMECINEMA_BUILD = 30;
+        public static int HOMECINEMA_BUILD = 31;
 
         public static string SEARCHBOX_PLACEHOLDER = "Type your Search query here...";
 
@@ -56,19 +57,22 @@ namespace HomeCinema.Global
         public static string LINK_YT = "https://www.youtube.com/watch?v=";
 
         // Paths for Files and Folders
-        public static string PATH_START = Application.StartupPath + @"\";
-        public static string PATH_RES = PATH_START + @"Resources\";
-        public static string PATH_IMG = PATH_START + @"covers\";
-        public static string PATH_DATA = PATH_START + @"data\";
-        public static string PATH_TEMP = PATH_START + @"temp\";
+        public static string PATH_START = AppContext.BaseDirectory;
+        public static string PATH_RES = Path.Combine(PATH_START, "Resources") + "\\";
+        public static string PATH_IMG = Path.Combine(PATH_START, "covers") + "\\";
+        public static string PATH_DATA = Path.Combine(PATH_START, "data") + "\\";
+        public static string PATH_TEMP = Path.Combine(PATH_START, "temp") + "\\";
+        public static string PATH_LOG = Path.Combine(PATH_START, "logs");
         public static string PATH_GETVIDEO { get; set; } = "";
         public static string PATH_GETCOVER { get; set; } = "";
 
         public static string FILE_ICON = PATH_RES + @"HomeCinema.ico"; // Icon
         public static string FILE_DEFIMG = PATH_IMG + @"0.jpg"; // default cover image
 
-        public static string FILE_LOG_APP = PATH_START + @"App_Log.log"; // Log all messages and actions
-        public static string FILE_LOG_ERROR = PATH_START + @"App_ErrorLog.log"; // Contains only error Messages
+        public static string FILE_LOG_APP = Path.Combine(PATH_LOG, "App_Log.log");// Log all messages and actions
+        public static string FILE_LOG_ERROR = Path.Combine(PATH_LOG, "App_ErrorLog.log"); // Contains only error Messages
+
+        // Data
         public static string FILE_SETTINGS = PATH_DATA + @"settings.json"; // settings used in App
         public static string FILE_COUNTRY = PATH_DATA + @"country.hc_data"; // list of countries
         public static string FILE_GENRE = PATH_DATA + @"genre.hc_data"; // List of genres
@@ -84,7 +88,7 @@ namespace HomeCinema.Global
         public static string DB_NAME = "HomeCinemaDB.db";
         public static string DB_PATH = PATH_START + DB_NAME;
         public static string DB_DATAPATH =  @"URI=file:" + DB_PATH;
-        public static string DB_DBLOGPATH = PATH_START + @"App_DB.log"; // Log all messages and actions
+        public static string DB_DBLOGPATH = Path.Combine(PATH_LOG, "App_DB.log"); // Log all messages and actions
 
         public static string DB_TNAME_INFO = "info";
         public static string DB_TNAME_FILEPATH = "filepath";
@@ -119,6 +123,7 @@ namespace HomeCinema.Global
         public static bool SET_AUTOUPDATE { get; set; } = false; // auto check for update
         public static bool SET_AUTOPLAY { get; set; } = false; // auto play movie
         public static int SET_ITEMLIMIT { get; set; } = 0; // limit the max items to query
+        public static int SET_SEARCHLIMIT { get; set; } = 5; // limit for searching on IMDB Id
 
         // FORMS
         public static Form formSetting = null; // Check if settings is already open
@@ -128,9 +133,11 @@ namespace HomeCinema.Global
         // Log database-related functions, to text file.
         public static void LogDb(string codefrom, string log)
         {
+            string filePath = DB_DBLOGPATH;
             try
             {
-                using (StreamWriter w = File.AppendText(DB_DBLOGPATH))
+                if (!File.Exists(filePath)) { filePath = AppContext.BaseDirectory + "ErrorLogDB.log"; }
+                using (StreamWriter w = File.AppendText(filePath))
                 {
                     w.Write(LogFormatted(codefrom, log));
                 }
@@ -146,6 +153,7 @@ namespace HomeCinema.Global
         {
             try
             {
+                if (!File.Exists(filePath)) { filePath = AppContext.BaseDirectory + "ErrorLog.log"; }
                 using (StreamWriter w = File.AppendText(filePath))
                 {
                     w.Write(LogFormatted(codefrom, log));
@@ -231,6 +239,90 @@ namespace HomeCinema.Global
             }
             return false;
         }
+        // Check Settings and Load values to App
+        public static void LoadSettings()
+        {
+            Config config;
+            string errorFrom = "frmMain-LoadSettings";
+            string contents, sLastPathCover, sLastPathVideo;
+            // If file does not exist, create it with default values from [Config.cs]
+            if (File.Exists(FILE_SETTINGS) == false)
+            {
+                config = new Config();
+                contents = JsonConvert.SerializeObject(config, Formatting.Indented);
+                WriteToFile(FILE_SETTINGS, contents);
+            }
+            else
+            {
+                // Load file contents to Config
+                contents = ReadStringFromFile(FILE_SETTINGS, $"{errorFrom} [FILE_SETTINGS]");
+                config = JsonConvert.DeserializeObject<Config>(contents);
+            }
+
+            // Get Max log file size
+            SET_LOGMAXSIZE = config.logsize * BYTES;
+            // Get last path of poster image
+            sLastPathCover = config.lastPathCover;
+            if (String.IsNullOrWhiteSpace(sLastPathCover) == false)
+            {
+                PATH_GETCOVER = sLastPathCover;
+            }
+            else
+            {
+                try
+                {
+                    PATH_GETCOVER = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+                }
+                catch (Exception ex)
+                {
+                    ShowError($"{errorFrom} [PATH_GETCOVER]", ex, false);
+                }
+            }
+            // Get last path of media file when adding new one
+            sLastPathVideo = config.lastPathVideo;
+            if (String.IsNullOrWhiteSpace(sLastPathVideo) == false)
+            {
+                PATH_GETVIDEO = sLastPathVideo;
+            }
+            else
+            {
+                try
+                {
+                    PATH_GETVIDEO = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
+                }
+                catch (Exception ex)
+                {
+                    ShowError($"{errorFrom} [PATH_GETVIDEO]", ex, false);
+                }
+            }
+            // Get Offline Mode
+            SET_OFFLINE = Convert.ToBoolean(config.offlineMode);
+            // Get auto update
+            SET_AUTOUPDATE = Convert.ToBoolean(config.autoUpdate);
+            // AutoPlay Movie, instead of Viewing its Info / Details
+            SET_AUTOPLAY = Convert.ToBoolean(config.instantPlayMovie);
+            // Limit MAX items in query
+            SET_ITEMLIMIT = config.itemMaxLimit;
+            // Limit Item result on IMDB searching
+            SET_SEARCHLIMIT = config.searchLimit;
+        }
+        // Save settings to replace old
+        public static bool SaveSettings()
+        {
+            Config config = new Config();
+            config.logsize = (int)(SET_LOGMAXSIZE / BYTES);
+            config.offlineMode = Convert.ToInt16(SET_OFFLINE);
+            config.lastPathCover = PATH_GETCOVER;
+            config.lastPathVideo = PATH_GETVIDEO;
+            config.autoUpdate = Convert.ToInt16(SET_AUTOUPDATE);
+            config.instantPlayMovie = Convert.ToInt16(SET_AUTOPLAY);
+            config.itemMaxLimit = SET_ITEMLIMIT;
+            config.searchLimit = SET_SEARCHLIMIT;
+
+            // Seriliaze to JSON
+            string json = JsonConvert.SerializeObject(config, Formatting.Indented);
+            return WriteToFile(FILE_SETTINGS, json);
+        }
         // Run GC to Clean Memory and Res
         public static void CleanMemory(string codeFrom)
         {
@@ -275,7 +367,10 @@ namespace HomeCinema.Global
             CopyFromRes(FILE_MEDIALOC);
             CopyFromRes(FILE_MEDIA_EXT);
             CopyFromRes(FILE_SERIESLOC);
-
+            // Create empty Logs
+            if (!File.Exists(FILE_LOG_APP)) { File.Create(FILE_LOG_APP); }
+            if (!File.Exists(FILE_LOG_ERROR)) { File.Create(FILE_LOG_ERROR); }
+            if (!File.Exists(DB_DBLOGPATH)) { File.Create(DB_DBLOGPATH); }
         }
         // Create a directory, if not existing
         public static void CreateDir(string fPath)
@@ -416,7 +511,7 @@ namespace HomeCinema.Global
                     string[] tmpCat = x.Split(sep);
 
                     // Remove duplicates
-                    tmpCat = new HashSet<string>(tmpCat).ToArray();
+                    tmpCat = new HashSet<string>(tmpCat, StringComparer.OrdinalIgnoreCase).ToArray();
 
                     // Sort Alphabetically
                     string[] ret = tmpCat.OrderBy(item => item, StringComparer.Ordinal).ToArray();
@@ -467,26 +562,18 @@ namespace HomeCinema.Global
         {
             return String.Format("{0:0000}", param);
         }
-        public static String ValidateNum(string param)
+        public static String ValidateNum(string param, int pad = 2)
         {
-            return String.Format("{0:00}", param);
+            return param.PadLeft(pad, '0');
         }
         public static String ValidateEmptyOrNull(String param)
         {
-            if (String.IsNullOrWhiteSpace(param))
-            {
-                return "";
-            }
-            return param.Replace("'", "''");
+            return (String.IsNullOrWhiteSpace(param)) ? "" : param.Replace("'", "''");
         }
         // Return [none] if string is Empty
         public static String ValidateAndReturn(String param)
         {
-            if (String.IsNullOrWhiteSpace(param))
-            {
-                return " (None)";
-            }
-            return param.Trim();
+            return (String.IsNullOrWhiteSpace(param)) ? " (None)" : param.Trim();
         }
         // Get string formatted on picture filepath
         public static string ImgFullPath(string movieID)
@@ -501,11 +588,7 @@ namespace HomeCinema.Global
             {
                 return path;
             }
-            if (File.Exists(PATH_IMG + "0.jpg"))
-            {
-                return PATH_IMG + "0.jpg";
-            }
-            return PATH_RES + "0.jpg";
+            return (File.Exists(PATH_IMG + "0.jpg")) ? PATH_IMG + "0.jpg" : PATH_RES + "0.jpg";
         }
         // Get Image Key from ImageList
         public static string ImgGetKey(string MovieID)
@@ -847,7 +930,7 @@ namespace HomeCinema.Global
                 // Send to Recycle Bin
                 if (File.Exists(file))
                 {
-                    FileSystem.DeleteFile(file, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+                    Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(file, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
                     return true;
                 }
                 return false;
@@ -1030,13 +1113,42 @@ namespace HomeCinema.Global
             }
             return ret;
         }
+        // Get IMDB from TMDB API Id
+        public static string GetImdbFromAPI(string TmdbId, string mediatype)
+        {
+            string errFrom = $"GlobalVars-GetImdbFromAPI";
+            string urlJSONgetImdb, JSONgetImdb;
+            string JSONContents = "";
+            // Check if MovieID is not empty
+            if (String.IsNullOrWhiteSpace(TmdbId) == false)
+            {
+                // GET IMDB
+                urlJSONgetImdb = @"https://api.themoviedb.org/3/" + mediatype + "/" + TmdbId + "?api_key=" + TMDB_KEY;
+                urlJSONgetImdb += (mediatype != "movie") ? "&append_to_response=external_ids" : ""; // Append external_ids param for non-movie
+                JSONgetImdb = $"{PATH_TEMP}tmdb{TmdbId}_movieInfo.json";
+
+                // Download file if not existing (TO GET IMDB Id)
+                if (DownloadAndReplace(JSONgetImdb, urlJSONgetImdb, errFrom))
+                {
+                    JSONContents = ReadStringFromFile(JSONgetImdb, errFrom);
+                    TryDelete(JSONgetImdb, errFrom);
+                    try
+                    {
+                        var objMovieInfo = JsonConvert.DeserializeObject<MovieInfo>(JSONContents);
+                        return (mediatype == "movie") ? objMovieInfo.imdb_id : objMovieInfo.external_ids.imdb_id;
+                    }
+                    catch { return String.Empty; }
+                }
+            }
+            return String.Empty;
+        }
         // Return a List<string> of informations regarding the Movie, based on IMDB Id
         public static List<string> GetMovieInfoByImdb(string IMDB_ID, string mediatype, bool showAMsg = false)
         {
             string errFrom = "GlobalVars-GetMovieInfoByImdb";
             // Setup vars and links
             List<string> list = new List<string>();
-            list.AddRange(new string[] { "", "", "", "", "", "", "", "", "", "", "" });
+            list.AddRange(new string[] { "", "", "", "", "", "", "", "", "", "", "", "" });
             list[0] = ""; // json file full path
             list[1] = ""; // trailer link
             list[2] = ""; // title
@@ -1048,6 +1160,7 @@ namespace HomeCinema.Global
             list[8] = ""; // Director
             list[9] = ""; // Producer
             list[10] = ""; // origin country
+            list[11] = ""; // Studio
 
             string TMDB_MovieID = "";
             // File paths
@@ -1115,14 +1228,16 @@ namespace HomeCinema.Global
                             list[5] = movie.first_air_date; // release date
                         }
                         list[4] = movie.overview; // summary / overview
-                        list[6] = movie.poster_path; // poster_path
-
+                        list[6] = (!String.IsNullOrWhiteSpace(movie.poster_path)) ? movie.poster_path : String.Empty; // poster_path
+                        // Country
                         string tmp = "";
-                        foreach (ProdCom c in movie.production_companies)
+                        foreach (ProdCountry c in movie.production_countries)
                         {
-                            tmp += c.origin_country += ",";
+                            tmp += c.name + ",";
                         }
                         list[10] = tmp.TrimEnd(','); // country
+                        // Studio
+                        list[11] = movie.production_companies.Select(a => a.name).ToList().Aggregate((b, c) => b + ", " + c);
                     }
                 }
 
@@ -1185,6 +1300,10 @@ namespace HomeCinema.Global
             return list;
         }
         // Get Genres from JSON File
+        public static string GetGenresByJsonFile(string json_fullpath, string calledFrom, string sep = ",")
+        {
+            return GetGenresByJsonFile(json_fullpath, calledFrom).Aggregate((a, b) => a + sep + b).Trim();
+        }
         public static List<string> GetGenresByJsonFile(string json_fullpath, string calledFrom)
         {
             List<string> listGenre = new List<string>();
@@ -1375,6 +1494,124 @@ namespace HomeCinema.Global
             {
                 DeleteMove(file, calledFrom);
             }
+        }
+        // Get string from InputBox
+        public static string GetStringInputBox(string caption, string defaultVal = "")
+        {
+            var form = new Form();
+            var label = new Label();
+            var txtBox = new TextBox();
+            var buttonOk = new Button();
+            var buttonCancel = new Button();
+            string value;
+
+            form.Text = HOMECINEMA_NAME;
+            label.Text = caption;
+            txtBox.Text = "";
+
+            buttonOk.Text = "OK";
+            buttonCancel.Text = "Cancel";
+            buttonOk.DialogResult = DialogResult.OK;
+            buttonCancel.DialogResult = DialogResult.Cancel;
+
+            label.SetBounds(9, 20, 372, 13);
+            txtBox.SetBounds(12, 36, 372, 20);
+            buttonOk.SetBounds(228, 72, 75, 23);
+            buttonCancel.SetBounds(309, 72, 75, 23);
+
+            label.AutoSize = true;
+            txtBox.Anchor = txtBox.Anchor | AnchorStyles.Right;
+            buttonOk.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+
+            form.ClientSize = new Size(396, 107);
+            form.Controls.AddRange(new Control[] { label, txtBox, buttonOk, buttonCancel });
+            form.ClientSize = new Size(Math.Max(300, label.Right + 10), form.ClientSize.Height);
+            form.FormBorderStyle = FormBorderStyle.FixedDialog;
+            form.StartPosition = FormStartPosition.CenterScreen;
+            form.MinimizeBox = false;
+            form.MaximizeBox = false;
+            form.AcceptButton = buttonOk;
+            form.CancelButton = buttonCancel;
+
+            DialogResult dialogResult = form.ShowDialog();
+            value = (!String.IsNullOrWhiteSpace(txtBox.Text)) ? txtBox.Text.Trim() : String.Empty;
+            form.Dispose();
+            return (dialogResult == DialogResult.OK) ? value : defaultVal;
+        }
+        public static string GetStringInputBox(List<string> items, string caption = "Input item")
+        {
+            var form = new Form();
+            var label = new Label();
+            var comboBox = new ComboBox();
+            var buttonOk = new Button();
+            var buttonCancel = new Button();
+            string value;
+
+            form.Text = HOMECINEMA_NAME;
+            label.Text = caption;
+            comboBox.Text = "";
+
+            buttonOk.Text = "OK";
+            buttonCancel.Text = "Cancel";
+            buttonOk.DialogResult = DialogResult.OK;
+            buttonCancel.DialogResult = DialogResult.Cancel;
+
+            label.SetBounds(9, 20, 372, 13);
+            comboBox.SetBounds(12, 36, 372, 20);
+            buttonOk.SetBounds(228, 72, 75, 23);
+            buttonCancel.SetBounds(309, 72, 75, 23);
+
+            label.AutoSize = true;
+            comboBox.Anchor = comboBox.Anchor | AnchorStyles.Right;
+            buttonOk.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+
+            // Edit and Populate comboBox
+            comboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
+            comboBox.DropDownStyle = ComboBoxStyle.DropDown;
+            foreach (string item in items)
+            {
+                comboBox.Items.Add(item);
+            }
+
+            form.ClientSize = new Size(396, 107);
+            form.Controls.AddRange(new Control[] { label, comboBox, buttonOk, buttonCancel });
+            form.ClientSize = new Size(Math.Max(300, label.Right + 10), form.ClientSize.Height);
+            form.FormBorderStyle = FormBorderStyle.FixedDialog;
+            form.StartPosition = FormStartPosition.CenterScreen;
+            form.MinimizeBox = false;
+            form.MaximizeBox = false;
+            form.AcceptButton = buttonOk;
+            form.CancelButton = buttonCancel;
+
+            DialogResult dialogResult = form.ShowDialog();
+            value = (!String.IsNullOrWhiteSpace(comboBox.Text)) ? comboBox.Text.Trim() : String.Empty;
+            form.Dispose();
+            return (dialogResult == DialogResult.OK) ? value : String.Empty;
+        }
+        public static void CleanAppDirectory(string calledFrom = "GlobalVars-CleanAppDirectory")
+        {
+            frmLoading form = new frmLoading("Cleaning App..", "Loading");
+            form.BackgroundWorker.DoWork += (sender1, e1) =>
+            {
+                form.Message = "Removing images not in database..";
+                CleanCoversNotInDb();
+                form.Message = "Removing temporary image files..";
+                DeleteFilesExt(PATH_TEMP, ".jpg", calledFrom);
+                form.Message = "Removing temporary json files..";
+                DeleteFilesExt(PATH_TEMP, ".json", calledFrom);
+                form.Message = "Removing logs..";
+                DeleteFilesExt(PATH_LOG, ".log", calledFrom);
+                DeleteFilesExt(PATH_TEMP, ".log", calledFrom);
+                form.Message = "Removing old version file..";
+                TryDelete(PATH_TEMP + "version", calledFrom);
+                form.Message = "Done!";
+            };
+            form.ShowDialog();
+            ShowInfo("Cleanup Done!");
+            CleanMemory(calledFrom);
         }
         // ######################################################################## END - Add code above
     }
