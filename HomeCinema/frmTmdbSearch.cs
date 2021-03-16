@@ -20,7 +20,6 @@ namespace HomeCinema
         private string movieId;
         private ImageList imageList = new ImageList();
         private string result;
-        private int searchLimit = GlobalVars.SET_SEARCHLIMIT;
         public string getResult
         {
             get { return result; }
@@ -121,6 +120,7 @@ namespace HomeCinema
                             string imgKey = "0";
                             // Skip entry if there is no Imdb Id associated
                             if (String.IsNullOrWhiteSpace(ImdbFromApi)) { continue; }
+                            if (count > GlobalVars.SET_SEARCHLIMIT) { break; } // Exit when item result count is reached
                             // Add image to ImageList
                             rPosterLink = result.poster_path;
                             GlobalVars.TryDelete(imgFilePath, errFrom);
@@ -151,10 +151,6 @@ namespace HomeCinema
                             lvItem.ImageIndex = (index > 0) ? index : 0;
                             AddItem(lvResult, lvItem);
                             ++count;
-                            if (count > searchLimit)
-                            {
-                                break;
-                            }
                         }
                     }
                 }
