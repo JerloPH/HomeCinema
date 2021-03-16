@@ -1,5 +1,37 @@
 # HomeCinema - Project History:
 
+## HomeCinema v0.5
+### ***release 31 - build 00 March 2021 PHT***
+
+**[Windows, 64-bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.5.0.0/HomeCinema-Windows.zip "HomeCinema-Windows.zip")** <br>
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.5.0.0/HomeCinema-Windows.zip)]() <br>
+
+### What's New?
+- REV: Reduced memory usage by half, by optimizing code structure.
+- REV: Use ListBox for Genre and Country, instead of Checkboxes.
+- REV: Only one instance of App can now run.
+- REV: You can now search for Imdb entry, and select which one to use.
+- REV: Automatically fetch movie info, after searching on Imdb.
+- FIX: Cover image sometimes not downloading properly.
+- FIX: Correctly display Season/Episode count on Items.
+- MINOR: Moved logs to subfolder **'logs'**.
+- MINOR: Movie Country is now based on Production country.
+- MINOR: Country and Genre file is automatically updated when new entry is added, save list in Alphabetical order.
+- MINOR: Automatically fetch 'Studio' from Imdb.
+- MINOR: Clean all logs on button press, instead of only specific files.
+- GUI: Additional message on app loading for inserting new entry to database.
+- GUI: Updated *Settings* form to reflect new changes.
+- GUI: Changed **'Episode name'** to **'Original'** on Movie Info display.
+- GUI: Changed color of Imdb Id on Movie Info display.
+### Dev changes
+- Target x64 on Build.
+- Use **Path.Combine** to create filepaths, making it the standard.
+- Create empty log files, when it doesn't exist.
+- Log to ErrorLog at the same folder, when there's no log existing in logs subfolder.
+- Make building array from text file case-insensitive.
+- Added codes for easy debugging.
+- Major code refactors.
+
 ## HomeCinema v0.4.1
 ### ***release 30 - build 02 March 2021 PHT***
 
