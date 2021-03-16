@@ -72,7 +72,6 @@ namespace HomeCinema
             InitializeComponent();
 
             // Form properties
-            FormClosing += new FormClosingEventHandler(frmMain_FormClosing);
             Icon = GlobalVars.HOMECINEMA_ICON;
 
             // Change Caption and Title

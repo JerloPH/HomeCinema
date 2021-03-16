@@ -494,6 +494,7 @@ namespace HomeCinema
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Home Cinema";
             this.Load += new System.EventHandler(this.frmMain_Load);
+            this.FormClosing += new FormClosingEventHandler(frmMain_FormClosing);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
