@@ -157,6 +157,9 @@ namespace HomeCinema
             try { txtMaxItemCount.Text = GlobalVars.SET_ITEMLIMIT.ToString(); }
             catch { txtMaxItemCount.Text = "0"; }
 
+            try { txtImdbSearchLimit.Text = GlobalVars.SET_SEARCHLIMIT.ToString(); }
+            catch { txtImdbSearchLimit.Text = "5"; }
+
             // ##################### - FILE changes
             // Country Texts
             foreach (string country in GlobalVars.TEXT_COUNTRY)
@@ -235,7 +238,12 @@ namespace HomeCinema
             // TextBox
             logsize = (long)Convert.ToDouble(txtLogSize.Text);
             GlobalVars.SET_LOGMAXSIZE = logsize * GlobalVars.BYTES;
-            GlobalVars.SET_ITEMLIMIT = Convert.ToInt32(txtMaxItemCount.Text);
+            
+            try { GlobalVars.SET_ITEMLIMIT = Convert.ToInt32(txtMaxItemCount.Text); }
+            catch { }
+
+            try { GlobalVars.SET_SEARCHLIMIT = Convert.ToInt32(txtImdbSearchLimit.Text); }
+            catch { }
 
             // Write MediaLoc file
             foreach (var x in BoxMediaLoc.Items)

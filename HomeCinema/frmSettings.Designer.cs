@@ -54,21 +54,23 @@
             this.label5 = new System.Windows.Forms.Label();
             this.txtMediaExt = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.btnCountryClear = new System.Windows.Forms.Button();
+            this.btnCountryRemove = new System.Windows.Forms.Button();
+            this.btnCountryEdit = new System.Windows.Forms.Button();
+            this.btnCountryAdd = new System.Windows.Forms.Button();
+            this.btnGenreClear = new System.Windows.Forms.Button();
+            this.btnGenreRemove = new System.Windows.Forms.Button();
+            this.btnGenreEdit = new System.Windows.Forms.Button();
+            this.btnGenreAdd = new System.Windows.Forms.Button();
+            this.listboxCountry = new System.Windows.Forms.ListBox();
+            this.listboxGenre = new System.Windows.Forms.ListBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
-            this.listboxGenre = new System.Windows.Forms.ListBox();
-            this.listboxCountry = new System.Windows.Forms.ListBox();
-            this.btnGenreAdd = new System.Windows.Forms.Button();
-            this.btnGenreEdit = new System.Windows.Forms.Button();
-            this.btnGenreRemove = new System.Windows.Forms.Button();
-            this.btnGenreClear = new System.Windows.Forms.Button();
-            this.btnCountryClear = new System.Windows.Forms.Button();
-            this.btnCountryRemove = new System.Windows.Forms.Button();
-            this.btnCountryEdit = new System.Windows.Forms.Button();
-            this.btnCountryAdd = new System.Windows.Forms.Button();
+            this.lblImdbSearchLimit = new System.Windows.Forms.Label();
+            this.txtImdbSearchLimit = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -97,6 +99,8 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.Black;
+            this.tabPage1.Controls.Add(this.lblImdbSearchLimit);
+            this.tabPage1.Controls.Add(this.txtImdbSearchLimit);
             this.tabPage1.Controls.Add(this.lblItemDisplayCount);
             this.tabPage1.Controls.Add(this.txtMaxItemCount);
             this.tabPage1.Controls.Add(this.lblMaxLogFileSize);
@@ -112,7 +116,7 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage1.Size = new System.Drawing.Size(703, 465);
+            this.tabPage1.Size = new System.Drawing.Size(753, 465);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "General";
             // 
@@ -232,7 +236,7 @@
             this.tabPage2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage2.Size = new System.Drawing.Size(703, 465);
+            this.tabPage2.Size = new System.Drawing.Size(753, 465);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "File";
             // 
@@ -395,6 +399,130 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Tags";
             // 
+            // btnCountryClear
+            // 
+            this.btnCountryClear.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.btnCountryClear.ForeColor = System.Drawing.Color.Black;
+            this.btnCountryClear.Location = new System.Drawing.Point(554, 402);
+            this.btnCountryClear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCountryClear.Name = "btnCountryClear";
+            this.btnCountryClear.Size = new System.Drawing.Size(141, 41);
+            this.btnCountryClear.TabIndex = 26;
+            this.btnCountryClear.Text = "CLEAR";
+            this.btnCountryClear.UseVisualStyleBackColor = true;
+            this.btnCountryClear.Click += new System.EventHandler(this.btnCountryClear_Click);
+            // 
+            // btnCountryRemove
+            // 
+            this.btnCountryRemove.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.btnCountryRemove.ForeColor = System.Drawing.Color.Black;
+            this.btnCountryRemove.Location = new System.Drawing.Point(554, 357);
+            this.btnCountryRemove.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCountryRemove.Name = "btnCountryRemove";
+            this.btnCountryRemove.Size = new System.Drawing.Size(141, 41);
+            this.btnCountryRemove.TabIndex = 25;
+            this.btnCountryRemove.Text = "REMOVE";
+            this.btnCountryRemove.UseVisualStyleBackColor = true;
+            this.btnCountryRemove.Click += new System.EventHandler(this.btnCountryRemove_Click);
+            // 
+            // btnCountryEdit
+            // 
+            this.btnCountryEdit.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.btnCountryEdit.ForeColor = System.Drawing.Color.Black;
+            this.btnCountryEdit.Location = new System.Drawing.Point(554, 312);
+            this.btnCountryEdit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCountryEdit.Name = "btnCountryEdit";
+            this.btnCountryEdit.Size = new System.Drawing.Size(141, 41);
+            this.btnCountryEdit.TabIndex = 24;
+            this.btnCountryEdit.Text = "EDIT";
+            this.btnCountryEdit.UseVisualStyleBackColor = true;
+            this.btnCountryEdit.Click += new System.EventHandler(this.btnCountryEdit_Click);
+            // 
+            // btnCountryAdd
+            // 
+            this.btnCountryAdd.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.btnCountryAdd.ForeColor = System.Drawing.Color.Black;
+            this.btnCountryAdd.Location = new System.Drawing.Point(554, 267);
+            this.btnCountryAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCountryAdd.Name = "btnCountryAdd";
+            this.btnCountryAdd.Size = new System.Drawing.Size(141, 41);
+            this.btnCountryAdd.TabIndex = 23;
+            this.btnCountryAdd.Text = "ADD";
+            this.btnCountryAdd.UseVisualStyleBackColor = true;
+            this.btnCountryAdd.Click += new System.EventHandler(this.btnCountryAdd_Click);
+            // 
+            // btnGenreClear
+            // 
+            this.btnGenreClear.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.btnGenreClear.ForeColor = System.Drawing.Color.Black;
+            this.btnGenreClear.Location = new System.Drawing.Point(554, 182);
+            this.btnGenreClear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnGenreClear.Name = "btnGenreClear";
+            this.btnGenreClear.Size = new System.Drawing.Size(141, 41);
+            this.btnGenreClear.TabIndex = 22;
+            this.btnGenreClear.Text = "CLEAR";
+            this.btnGenreClear.UseVisualStyleBackColor = true;
+            this.btnGenreClear.Click += new System.EventHandler(this.btnGenreClear_Click);
+            // 
+            // btnGenreRemove
+            // 
+            this.btnGenreRemove.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.btnGenreRemove.ForeColor = System.Drawing.Color.Black;
+            this.btnGenreRemove.Location = new System.Drawing.Point(554, 137);
+            this.btnGenreRemove.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnGenreRemove.Name = "btnGenreRemove";
+            this.btnGenreRemove.Size = new System.Drawing.Size(141, 41);
+            this.btnGenreRemove.TabIndex = 21;
+            this.btnGenreRemove.Text = "REMOVE";
+            this.btnGenreRemove.UseVisualStyleBackColor = true;
+            this.btnGenreRemove.Click += new System.EventHandler(this.btnGenreRemove_Click);
+            // 
+            // btnGenreEdit
+            // 
+            this.btnGenreEdit.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.btnGenreEdit.ForeColor = System.Drawing.Color.Black;
+            this.btnGenreEdit.Location = new System.Drawing.Point(554, 92);
+            this.btnGenreEdit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnGenreEdit.Name = "btnGenreEdit";
+            this.btnGenreEdit.Size = new System.Drawing.Size(141, 41);
+            this.btnGenreEdit.TabIndex = 20;
+            this.btnGenreEdit.Text = "EDIT";
+            this.btnGenreEdit.UseVisualStyleBackColor = true;
+            this.btnGenreEdit.Click += new System.EventHandler(this.btnGenreEdit_Click);
+            // 
+            // btnGenreAdd
+            // 
+            this.btnGenreAdd.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.btnGenreAdd.ForeColor = System.Drawing.Color.Black;
+            this.btnGenreAdd.Location = new System.Drawing.Point(554, 47);
+            this.btnGenreAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnGenreAdd.Name = "btnGenreAdd";
+            this.btnGenreAdd.Size = new System.Drawing.Size(141, 41);
+            this.btnGenreAdd.TabIndex = 17;
+            this.btnGenreAdd.Text = "ADD";
+            this.btnGenreAdd.UseVisualStyleBackColor = true;
+            this.btnGenreAdd.Click += new System.EventHandler(this.btnGenreAdd_Click);
+            // 
+            // listboxCountry
+            // 
+            this.listboxCountry.FormattingEnabled = true;
+            this.listboxCountry.ItemHeight = 22;
+            this.listboxCountry.Location = new System.Drawing.Point(13, 269);
+            this.listboxCountry.Name = "listboxCountry";
+            this.listboxCountry.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.listboxCountry.Size = new System.Drawing.Size(524, 180);
+            this.listboxCountry.TabIndex = 19;
+            // 
+            // listboxGenre
+            // 
+            this.listboxGenre.FormattingEnabled = true;
+            this.listboxGenre.ItemHeight = 22;
+            this.listboxGenre.Location = new System.Drawing.Point(13, 47);
+            this.listboxGenre.Name = "listboxGenre";
+            this.listboxGenre.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.listboxGenre.Size = new System.Drawing.Size(524, 180);
+            this.listboxGenre.TabIndex = 18;
+            // 
             // label7
             // 
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -448,129 +576,23 @@
             this.label9.TabIndex = 16;
             this.label9.Text = "* Changes Apply after Restart";
             // 
-            // listboxGenre
+            // lblImdbSearchLimit
             // 
-            this.listboxGenre.FormattingEnabled = true;
-            this.listboxGenre.ItemHeight = 22;
-            this.listboxGenre.Location = new System.Drawing.Point(13, 47);
-            this.listboxGenre.Name = "listboxGenre";
-            this.listboxGenre.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listboxGenre.Size = new System.Drawing.Size(524, 180);
-            this.listboxGenre.TabIndex = 18;
+            this.lblImdbSearchLimit.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblImdbSearchLimit.Location = new System.Drawing.Point(5, 335);
+            this.lblImdbSearchLimit.Name = "lblImdbSearchLimit";
+            this.lblImdbSearchLimit.Size = new System.Drawing.Size(244, 31);
+            this.lblImdbSearchLimit.TabIndex = 11;
+            this.lblImdbSearchLimit.Text = "IMDB Search Limit";
             // 
-            // listboxCountry
+            // txtImdbSearchLimit
             // 
-            this.listboxCountry.FormattingEnabled = true;
-            this.listboxCountry.ItemHeight = 22;
-            this.listboxCountry.Location = new System.Drawing.Point(13, 269);
-            this.listboxCountry.Name = "listboxCountry";
-            this.listboxCountry.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listboxCountry.Size = new System.Drawing.Size(524, 180);
-            this.listboxCountry.TabIndex = 19;
-            // 
-            // btnGenreAdd
-            // 
-            this.btnGenreAdd.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.btnGenreAdd.ForeColor = System.Drawing.Color.Black;
-            this.btnGenreAdd.Location = new System.Drawing.Point(554, 47);
-            this.btnGenreAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnGenreAdd.Name = "btnGenreAdd";
-            this.btnGenreAdd.Size = new System.Drawing.Size(141, 41);
-            this.btnGenreAdd.TabIndex = 17;
-            this.btnGenreAdd.Text = "ADD";
-            this.btnGenreAdd.UseVisualStyleBackColor = true;
-            this.btnGenreAdd.Click += new System.EventHandler(this.btnGenreAdd_Click);
-            // 
-            // btnGenreEdit
-            // 
-            this.btnGenreEdit.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.btnGenreEdit.ForeColor = System.Drawing.Color.Black;
-            this.btnGenreEdit.Location = new System.Drawing.Point(554, 92);
-            this.btnGenreEdit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnGenreEdit.Name = "btnGenreEdit";
-            this.btnGenreEdit.Size = new System.Drawing.Size(141, 41);
-            this.btnGenreEdit.TabIndex = 20;
-            this.btnGenreEdit.Text = "EDIT";
-            this.btnGenreEdit.UseVisualStyleBackColor = true;
-            this.btnGenreEdit.Click += new System.EventHandler(this.btnGenreEdit_Click);
-            // 
-            // btnGenreRemove
-            // 
-            this.btnGenreRemove.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.btnGenreRemove.ForeColor = System.Drawing.Color.Black;
-            this.btnGenreRemove.Location = new System.Drawing.Point(554, 137);
-            this.btnGenreRemove.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnGenreRemove.Name = "btnGenreRemove";
-            this.btnGenreRemove.Size = new System.Drawing.Size(141, 41);
-            this.btnGenreRemove.TabIndex = 21;
-            this.btnGenreRemove.Text = "REMOVE";
-            this.btnGenreRemove.UseVisualStyleBackColor = true;
-            this.btnGenreRemove.Click += new System.EventHandler(this.btnGenreRemove_Click);
-            // 
-            // btnGenreClear
-            // 
-            this.btnGenreClear.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.btnGenreClear.ForeColor = System.Drawing.Color.Black;
-            this.btnGenreClear.Location = new System.Drawing.Point(554, 182);
-            this.btnGenreClear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnGenreClear.Name = "btnGenreClear";
-            this.btnGenreClear.Size = new System.Drawing.Size(141, 41);
-            this.btnGenreClear.TabIndex = 22;
-            this.btnGenreClear.Text = "CLEAR";
-            this.btnGenreClear.UseVisualStyleBackColor = true;
-            this.btnGenreClear.Click += new System.EventHandler(this.btnGenreClear_Click);
-            // 
-            // btnCountryClear
-            // 
-            this.btnCountryClear.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.btnCountryClear.ForeColor = System.Drawing.Color.Black;
-            this.btnCountryClear.Location = new System.Drawing.Point(554, 402);
-            this.btnCountryClear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnCountryClear.Name = "btnCountryClear";
-            this.btnCountryClear.Size = new System.Drawing.Size(141, 41);
-            this.btnCountryClear.TabIndex = 26;
-            this.btnCountryClear.Text = "CLEAR";
-            this.btnCountryClear.UseVisualStyleBackColor = true;
-            this.btnCountryClear.Click += new System.EventHandler(this.btnCountryClear_Click);
-            // 
-            // btnCountryRemove
-            // 
-            this.btnCountryRemove.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.btnCountryRemove.ForeColor = System.Drawing.Color.Black;
-            this.btnCountryRemove.Location = new System.Drawing.Point(554, 357);
-            this.btnCountryRemove.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnCountryRemove.Name = "btnCountryRemove";
-            this.btnCountryRemove.Size = new System.Drawing.Size(141, 41);
-            this.btnCountryRemove.TabIndex = 25;
-            this.btnCountryRemove.Text = "REMOVE";
-            this.btnCountryRemove.UseVisualStyleBackColor = true;
-            this.btnCountryRemove.Click += new System.EventHandler(this.btnCountryRemove_Click);
-            // 
-            // btnCountryEdit
-            // 
-            this.btnCountryEdit.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.btnCountryEdit.ForeColor = System.Drawing.Color.Black;
-            this.btnCountryEdit.Location = new System.Drawing.Point(554, 312);
-            this.btnCountryEdit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnCountryEdit.Name = "btnCountryEdit";
-            this.btnCountryEdit.Size = new System.Drawing.Size(141, 41);
-            this.btnCountryEdit.TabIndex = 24;
-            this.btnCountryEdit.Text = "EDIT";
-            this.btnCountryEdit.UseVisualStyleBackColor = true;
-            this.btnCountryEdit.Click += new System.EventHandler(this.btnCountryEdit_Click);
-            // 
-            // btnCountryAdd
-            // 
-            this.btnCountryAdd.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.btnCountryAdd.ForeColor = System.Drawing.Color.Black;
-            this.btnCountryAdd.Location = new System.Drawing.Point(554, 267);
-            this.btnCountryAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnCountryAdd.Name = "btnCountryAdd";
-            this.btnCountryAdd.Size = new System.Drawing.Size(141, 41);
-            this.btnCountryAdd.TabIndex = 23;
-            this.btnCountryAdd.Text = "ADD";
-            this.btnCountryAdd.UseVisualStyleBackColor = true;
-            this.btnCountryAdd.Click += new System.EventHandler(this.btnCountryAdd_Click);
+            this.txtImdbSearchLimit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtImdbSearchLimit.Location = new System.Drawing.Point(271, 331);
+            this.txtImdbSearchLimit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtImdbSearchLimit.Name = "txtImdbSearchLimit";
+            this.txtImdbSearchLimit.Size = new System.Drawing.Size(167, 30);
+            this.txtImdbSearchLimit.TabIndex = 10;
             // 
             // frmSettings
             // 
@@ -644,5 +666,7 @@
         private System.Windows.Forms.Button btnCountryRemove;
         private System.Windows.Forms.Button btnCountryEdit;
         private System.Windows.Forms.Button btnCountryAdd;
+        private System.Windows.Forms.Label lblImdbSearchLimit;
+        private System.Windows.Forms.TextBox txtImdbSearchLimit;
     }
 }
