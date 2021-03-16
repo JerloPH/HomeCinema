@@ -1,7 +1,7 @@
 # HomeCinema - Project History:
 
 ## HomeCinema v0.5
-### ***release 31 - build 00 March 2021 PHT***
+### ***release 31 - build 16 March 2021 PHT***
 
 **[Windows, 64-bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.5.0.0/HomeCinema-Windows.zip "HomeCinema-Windows.zip")** <br>
 [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.5.0.0/HomeCinema-Windows.zip)]() <br>
