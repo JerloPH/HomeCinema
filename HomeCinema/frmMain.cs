@@ -1083,8 +1083,6 @@ namespace HomeCinema
                 GlobalVars.MOVIE_IMGLIST.Images.Clear();
                 GlobalVars.MOVIE_IMGLIST.Dispose();
             }
-            // Run GC to clean
-            GlobalVars.CleanMemory("");
             logClose += $"\n\tDone Garbage Collector ({DateTime.Now.TimeOfDay.ToString()})";
             logClose += "\n\tClosed the program.";
             GlobalVars.Log("frmMain-frmMain_FormClosing", logClose);
@@ -1238,25 +1236,7 @@ namespace HomeCinema
         // Delete files from temp
         private void btnClean_Click(object sender, EventArgs e)
         {
-            string errFrom = "frmMain-btnClean_Click";
-            frmLoading form = new frmLoading("Cleaning App..", "Loading");
-            form.BackgroundWorker.DoWork += (sender1, e1) =>
-            {
-                form.Message = "Removing images not in database..";
-                GlobalVars.CleanCoversNotInDb();
-                form.Message = "Removing temporary image files..";
-                GlobalVars.DeleteFilesExt(GlobalVars.PATH_TEMP, ".jpg", errFrom);
-                form.Message = "Removing temporary json files..";
-                GlobalVars.DeleteFilesExt(GlobalVars.PATH_TEMP, ".json", errFrom);
-                form.Message = "Removing logs..";
-                GlobalVars.DeleteFilesExt(GlobalVars.PATH_LOG, ".log", errFrom);
-                GlobalVars.DeleteFilesExt(GlobalVars.PATH_TEMP, ".log", errFrom);
-                form.Message = "Removing old version file..";
-                GlobalVars.TryDelete(GlobalVars.PATH_TEMP + "version", errFrom);
-                form.Message = "Done!";
-            };
-            form.ShowDialog();
-            GlobalVars.ShowInfo("Cleanup Done!");
+            GlobalVars.CleanAppDirectory();
         }
         // When ENTER Key is pressed on ListView
         private void lvSearchResult_KeyDown(object sender, KeyEventArgs e)

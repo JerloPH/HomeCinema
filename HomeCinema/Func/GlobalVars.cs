@@ -1591,6 +1591,28 @@ namespace HomeCinema.Global
             form.Dispose();
             return (dialogResult == DialogResult.OK) ? value : String.Empty;
         }
+        public static void CleanAppDirectory(string calledFrom = "GlobalVars-CleanAppDirectory")
+        {
+            frmLoading form = new frmLoading("Cleaning App..", "Loading");
+            form.BackgroundWorker.DoWork += (sender1, e1) =>
+            {
+                form.Message = "Removing images not in database..";
+                CleanCoversNotInDb();
+                form.Message = "Removing temporary image files..";
+                DeleteFilesExt(PATH_TEMP, ".jpg", calledFrom);
+                form.Message = "Removing temporary json files..";
+                DeleteFilesExt(PATH_TEMP, ".json", calledFrom);
+                form.Message = "Removing logs..";
+                DeleteFilesExt(PATH_LOG, ".log", calledFrom);
+                DeleteFilesExt(PATH_TEMP, ".log", calledFrom);
+                form.Message = "Removing old version file..";
+                TryDelete(PATH_TEMP + "version", calledFrom);
+                form.Message = "Done!";
+            };
+            form.ShowDialog();
+            ShowInfo("Cleanup Done!");
+            CleanMemory(calledFrom);
+        }
         // ######################################################################## END - Add code above
     }
 }
