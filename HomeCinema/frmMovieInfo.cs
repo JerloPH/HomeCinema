@@ -734,6 +734,7 @@ namespace HomeCinema
             if (String.IsNullOrWhiteSpace(getIMDB) == false)
             {
                 txtIMDB.Text = getIMDB;
+                btnFetchData.PerformClick(); // Automatically search IMDB Id
             }
         }
 
