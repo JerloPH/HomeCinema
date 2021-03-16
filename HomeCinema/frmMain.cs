@@ -343,7 +343,7 @@ namespace HomeCinema
                 Thread.Sleep(10);
             }
             
-            GlobalVars.WriteAppend(GlobalVars.PATH_LOG + "\\MovieResult_DoneInsert.Log", logInsert);
+            GlobalVars.WriteAppend(Path.Combine(GlobalVars.PATH_LOG, "MovieResult_DoneInsert.Log"), logInsert);
             return count;
         }
         // return filepath from DB
@@ -845,7 +845,7 @@ namespace HomeCinema
                         }
                     }
 
-                    GlobalVars.WriteToFile(GlobalVars.PATH_LOG + "\\MovieResult_Skipped.Log", nonres);
+                    GlobalVars.WriteToFile(Path.Combine(GlobalVars.PATH_LOG, "MovieResult_Skipped.Log"), nonres);
 
                     // Add now to database
                     form.Message = "Inserting to database..";
