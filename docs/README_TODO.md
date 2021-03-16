@@ -37,12 +37,10 @@
 	  - Trailer YT Link
 	  - Artist, Director, Producer
 	  - Country
-	  - Cover Image. *Not working properly as of v0.4*
+	  - Cover Image.
+	  - Studio.
 	  
 ## Movie Information Form
-  - [ ] Scrape all info from *TMDB API*.
-	- [ ] Category (Movie, Anime, Series,etc). *Partially done*.
-	- [ ] Studio
   - [ ] Save Metadata to movie file. *Only for movies*.
     - [x] Title
 	- [x] Year
@@ -53,10 +51,8 @@
 - [ ] Create new TextBox to set TimeOut for connections.
 
 ## Bugs
-- [ ] Cover sometimes does not download from TMDB. API limitation is the probable cause. Pause every 100ms to resolve, but at the cost of App loading speed.
 
 ## Others
 
-### Github Stats on README.md
-
+### Github Profile stats
 <img src="https://github-readme-stats.vercel.app/api?username=JerloPH&&show_icons=true">

@@ -1,11 +1,9 @@
 # HomeCinema - For Devs [DO NOT EDIT]
 
 ## Project Started:
-
 > March 04, 2020 PHT (Philippine Standard Time)
 
 ## Project History:
-
 **[View Link to read project history](../VERSION_HISTORY.md)**
  
 ## Project specific files
