@@ -239,6 +239,90 @@ namespace HomeCinema.Global
             }
             return false;
         }
+        // Check Settings and Load values to App
+        public static void LoadSettings()
+        {
+            string errorFrom = "frmMain-LoadSettings";
+            Config config;
+            string contents, sLastPathCover, sLastPathVideo;
+            // If file does not exist, create it with default values from [Config.cs]
+            if (File.Exists(GlobalVars.FILE_SETTINGS) == false)
+            {
+                config = new Config();
+                contents = JsonConvert.SerializeObject(config, Formatting.Indented);
+                GlobalVars.WriteToFile(GlobalVars.FILE_SETTINGS, contents);
+            }
+            else
+            {
+                // Load file contents to Config
+                contents = GlobalVars.ReadStringFromFile(GlobalVars.FILE_SETTINGS, $"{errorFrom} [FILE_SETTINGS]");
+                config = JsonConvert.DeserializeObject<Config>(contents);
+            }
+
+            // Get Max log file size
+            GlobalVars.SET_LOGMAXSIZE = config.logsize * GlobalVars.BYTES;
+            // Get last path of poster image
+            sLastPathCover = config.lastPathCover;
+            if (String.IsNullOrWhiteSpace(sLastPathCover) == false)
+            {
+                GlobalVars.PATH_GETCOVER = sLastPathCover;
+            }
+            else
+            {
+                try
+                {
+                    GlobalVars.PATH_GETCOVER = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+                }
+                catch (Exception ex)
+                {
+                    GlobalVars.ShowError($"{errorFrom} [PATH_GETCOVER]", ex, false);
+                }
+            }
+            // Get last path of media file when adding new one
+            sLastPathVideo = config.lastPathVideo;
+            if (String.IsNullOrWhiteSpace(sLastPathVideo) == false)
+            {
+                GlobalVars.PATH_GETVIDEO = sLastPathVideo;
+            }
+            else
+            {
+                try
+                {
+                    GlobalVars.PATH_GETVIDEO = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
+                }
+                catch (Exception ex)
+                {
+                    GlobalVars.ShowError($"{errorFrom} [PATH_GETVIDEO]", ex, false);
+                }
+            }
+            // Get Offline Mode
+            GlobalVars.SET_OFFLINE = Convert.ToBoolean(config.offlineMode);
+            // Get auto update
+            GlobalVars.SET_AUTOUPDATE = Convert.ToBoolean(config.autoUpdate);
+            // AutoPlay Movie, instead of Viewing its Info / Details
+            GlobalVars.SET_AUTOPLAY = Convert.ToBoolean(config.instantPlayMovie);
+            // Limit MAX items in query
+            GlobalVars.SET_ITEMLIMIT = config.itemMaxLimit;
+            // Limit Item result on IMDB searching
+            GlobalVars.SET_SEARCHLIMIT = config.searchLimit;
+        }
+        // Save settings to replace old
+        public static bool SaveSettings()
+        {
+            Config config = new Config();
+            config.logsize = (int)(GlobalVars.SET_LOGMAXSIZE / GlobalVars.BYTES);
+            config.offlineMode = Convert.ToInt16(GlobalVars.SET_OFFLINE);
+            config.lastPathCover = GlobalVars.PATH_GETCOVER;
+            config.lastPathVideo = GlobalVars.PATH_GETVIDEO;
+            config.autoUpdate = Convert.ToInt16(GlobalVars.SET_AUTOUPDATE);
+            config.instantPlayMovie = Convert.ToInt16(GlobalVars.SET_AUTOPLAY);
+            config.itemMaxLimit = GlobalVars.SET_ITEMLIMIT;
+            config.searchLimit = GlobalVars.SET_SEARCHLIMIT;
+
+            // Seriliaze to JSON
+            string json = JsonConvert.SerializeObject(config, Formatting.Indented);
+            return GlobalVars.WriteToFile(GlobalVars.FILE_SETTINGS, json);
+        }
         // Run GC to Clean Memory and Res
         public static void CleanMemory(string codeFrom)
         {
