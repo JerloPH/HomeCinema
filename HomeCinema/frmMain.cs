@@ -589,6 +589,8 @@ namespace HomeCinema
             GlobalVars.SET_AUTOPLAY = Convert.ToBoolean(config.instantPlayMovie);
             // Limit MAX items in query
             GlobalVars.SET_ITEMLIMIT = config.itemMaxLimit;
+            // Limit Item result on IMDB searching
+            GlobalVars.SET_SEARCHLIMIT = config.searchLimit;
         }
         // Save settings to replace old
         private bool SaveSettings()
@@ -601,6 +603,7 @@ namespace HomeCinema
             config.autoUpdate = Convert.ToInt16(GlobalVars.SET_AUTOUPDATE);
             config.instantPlayMovie = Convert.ToInt16(GlobalVars.SET_AUTOPLAY);
             config.itemMaxLimit = GlobalVars.SET_ITEMLIMIT;
+            config.searchLimit = GlobalVars.SET_SEARCHLIMIT;
 
             // Seriliaze to JSON
             string json = JsonConvert.SerializeObject(config, Formatting.Indented);

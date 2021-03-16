@@ -123,6 +123,7 @@ namespace HomeCinema.Global
         public static bool SET_AUTOUPDATE { get; set; } = false; // auto check for update
         public static bool SET_AUTOPLAY { get; set; } = false; // auto play movie
         public static int SET_ITEMLIMIT { get; set; } = 0; // limit the max items to query
+        public static int SET_SEARCHLIMIT { get; set; } = 5; // limit for searching on IMDB Id
 
         // FORMS
         public static Form formSetting = null; // Check if settings is already open

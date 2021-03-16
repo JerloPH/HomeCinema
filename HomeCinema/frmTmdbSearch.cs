@@ -20,7 +20,7 @@ namespace HomeCinema
         private string movieId;
         private ImageList imageList = new ImageList();
         private string result;
-        private int searchLimit = 2;
+        private int searchLimit = GlobalVars.SET_SEARCHLIMIT;
         public string getResult
         {
             get { return result; }
