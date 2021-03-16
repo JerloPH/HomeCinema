@@ -20,6 +20,7 @@ namespace HomeCinema
         private string movieId;
         private ImageList imageList = new ImageList();
         private string result;
+        private int searchLimit = 2;
         public string getResult
         {
             get { return result; }
@@ -42,13 +43,11 @@ namespace HomeCinema
             //btnCancel.DialogResult = DialogResult.Cancel;
             // Set lvResult properties
             lvResult.Columns.Add("colname");
-            //lvResult.Columns.Add("colimg");
             lvResult.View = View.LargeIcon;
-            
-            imageList.ImageSize = new Size(48, 64);// Set imageList properties
-            imageList.ColorDepth = ColorDepth.Depth32Bit;// Set imageList properties
-
-            //lvResult.SmallImageList = imageList;
+            // Set ImageList properties
+            imageList.ImageSize = new Size(100, 150);// Set thumbnail size
+            imageList.ColorDepth = ColorDepth.Depth32Bit;// Set color depth
+            // use imageList in ListView
             lvResult.LargeImageList = imageList;
         }
         // ######################################################### FUNCTIONS
@@ -65,22 +64,21 @@ namespace HomeCinema
                 lv.Items.Add(item);
             }
         }
-        private void ClearImageList(ImageList imglist)
+        private void ClearImageList(bool dispose = false)
         {
-            if (imglist != null)
+            if (imageList != null)
             {
-                try
+                if (imageList.Images.Count > 0)
                 {
-                    if (imglist.Images.Count > 0)
+                    foreach (Image img in imageList.Images)
                     {
-                        foreach (Image img in imglist.Images)
-                        {
-                            img.Dispose();
-                        }
+                        img.Dispose();
                     }
-                    imglist.Dispose();
                 }
-                catch { return; }
+                if (dispose)
+                {
+                    imageList.Dispose();
+                }
             }
         }
         private void SearchTmdb()
@@ -95,15 +93,14 @@ namespace HomeCinema
             string rPosterLink = "";
             int count = 0;
 
-            ClearImageList(imageList);
+            ClearImageList();
             Image defImg = Image.FromFile(GlobalVars.FILE_DEFIMG);
             imageList.Images.Add("0", defImg);
-            //defImg.Dispose();
+            defImg.Dispose();
             lvResult.View = View.LargeIcon;
             lvResult.Items.Clear();
             lvResult.BeginUpdate(); // Pause drawing events on ListView
             lvResult.SuspendLayout();
-            
 
             var form = new frmLoading($"Searching for {txtInput.Text}", GlobalVars.HOMECINEMA_NAME);
             form.BackgroundWorker.DoWork += (sender1, e1) =>
@@ -122,7 +119,8 @@ namespace HomeCinema
                             string ImdbFromApi  = GlobalVars.GetImdbFromAPI(result.id.ToString(), mediatype);
                             string imgFilePath = $"{GlobalVars.PATH_TEMP}{ImdbFromApi}.jpg";
                             string imgKey = "0";
-
+                            // Skip entry if there is no Imdb Id associated
+                            if (String.IsNullOrWhiteSpace(ImdbFromApi)) { continue; }
                             // Add image to ImageList
                             rPosterLink = result.poster_path;
                             GlobalVars.TryDelete(imgFilePath, errFrom);
@@ -140,11 +138,7 @@ namespace HomeCinema
                                         Image img = Image.FromFile(imgFilePath);
                                         imageList.Images.Add(imgKey, img);
                                         img.Dispose();
-                                        //GlobalVars.TryDelete(imgFilePath, errFrom);
-                                        if (Debugger.IsAttached)
-                                        {
-                                            //GlobalVars.ShowInfo("success adding image!");
-                                        }
+                                        GlobalVars.TryDelete(imgFilePath, errFrom);
                                     }));
                                 }
                                 catch { imgKey = "0"; }
@@ -155,10 +149,9 @@ namespace HomeCinema
                             lvItem.Text = mediatype.Equals("movie") ? result.title : result.name;
                             lvItem.Tag = ImdbFromApi;
                             lvItem.ImageIndex = (index > 0) ? index : 0;
-                            lvItem.ImageIndex = 0;
                             AddItem(lvResult, lvItem);
                             ++count;
-                            if (count > 2)
+                            if (count > searchLimit)
                             {
                                 break;
                             }
@@ -170,23 +163,19 @@ namespace HomeCinema
             lvResult.EndUpdate(); // Draw the ListView
             lvResult.ResumeLayout();
             lvResult.Refresh();
-            //lvResult.RedrawItems(0, lvResult.Items.Count-1, false);
-            if (Debugger.IsAttached)
-            {
-                GlobalVars.ShowInfo($"success adding image! Count: {imageList.Images.Count}");
-            }
+            lvResult.LargeImageList = imageList;
         }
         #endregion
         // ######################################################### EVENTS
         private void FrmTmdbSearch_FormClosed(object sender, FormClosedEventArgs e)
         {
-            ClearImageList(imageList);
+            ClearImageList(true);
             //Dispose();
         }
 
         private void frmTmdbSearch_Load(object sender, EventArgs e)
         {
-            SearchTmdb();
+            btnSearch.PerformClick();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -214,8 +203,8 @@ namespace HomeCinema
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            int size;
             SearchTmdb();
+            int size;
             size = lvResult.Items.Count;
             if (Debugger.IsAttached)
             {
@@ -224,12 +213,25 @@ namespace HomeCinema
                 {
                     msg += $"Key: {lv.ImageKey}\nIndex: {lv.ImageIndex}\nTag: {lv.Tag}\n\n";
                 }
-                GlobalVars.ShowInfo(msg);
+                GlobalVars.ShowInfo(msg + "\n\nResults: " + size.ToString());
                 return;
             }
             if (size > 0)
             {
                 GlobalVars.ShowInfo($"Found {size} results!");
+            }
+        }
+
+        private void txtInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+            if (e.KeyCode == Keys.Enter)
+            {
+                // Check if searchbox is empty
+                if (!String.IsNullOrWhiteSpace(txtInput.Text))
+                {
+                    btnSearch.PerformClick();
+                }
             }
         }
     }
