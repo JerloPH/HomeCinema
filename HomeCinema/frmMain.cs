@@ -499,7 +499,6 @@ namespace HomeCinema
 
                         // Edit Information on ListView Item
                         LVItemSetDetails(lvItem, new string[] { MOVIEID.ToString(), r1, r2, r3, r4, r5, r6, r7, r8 });
-
                         break;
                     }
                 }
@@ -694,15 +693,13 @@ namespace HomeCinema
                 else
                 {
                     // Set Series Name
-                    temp.Text = (String.IsNullOrWhiteSpace(resNameSer)) ? resNameSer : temp.Text;
                     temp.SubItems.Add(resNameEp); // Episode Name
                     temp.SubItems.Add("S" + GlobalVars.ValidateNum(resSeason) + " E" + GlobalVars.ValidateNum(resEp));
                 }
-                temp.SubItems.Add(resYear); // Year
-
+                // Year
+                temp.SubItems.Add(resYear);
                 // Display image (From ImageList) based on ImageKey
                 temp.ImageKey = GlobalVars.ImgGetKey(MOVIEID.ToString());
-
                 // Add year to name/title of MOVIE
                 temp.Text = temp.Text + $" ({resYear})";
 
@@ -1332,11 +1329,9 @@ namespace HomeCinema
                 GlobalVars.DeleteFilesExt(GlobalVars.PATH_TEMP, ".jpg", errFrom);
                 form.Message = "Removing temporary json files..";
                 GlobalVars.DeleteFilesExt(GlobalVars.PATH_TEMP, ".json", errFrom);
-                form.Message = "Removing old logs..";
-                GlobalVars.TryDelete(GlobalVars.FILE_LOG_APP, errFrom);
-                GlobalVars.TryDelete(GlobalVars.FILE_LOG_ERROR, errFrom);
-                GlobalVars.TryDelete(GlobalVars.DB_DBLOGPATH, errFrom);
-                GlobalVars.TryDelete(GlobalVars.PATH_TEMP + "_JSONLog.log", errFrom);
+                form.Message = "Removing logs..";
+                GlobalVars.DeleteFilesExt(GlobalVars.PATH_LOG, ".log", errFrom);
+                GlobalVars.DeleteFilesExt(GlobalVars.PATH_TEMP, ".log", errFrom);
                 form.Message = "Removing old version file..";
                 GlobalVars.TryDelete(GlobalVars.PATH_TEMP + "version", errFrom);
                 form.Message = "Done!";
