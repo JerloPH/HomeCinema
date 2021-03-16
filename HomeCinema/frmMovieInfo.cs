@@ -33,10 +33,10 @@ namespace HomeCinema
     public partial class frmMovieInfo : Form
     {
         // Editable vars
-        public static string PARENT_NAME { get; set; } = "";
-        public static string MOVIE_ID { get; set; } = "";
-        public static Image MOVIE_COVER { get; set; } = null;
-        public static Image tempImage { get; set; } = null;
+        private string PARENT_NAME { get; set; } = "";
+        private string MOVIE_ID { get; set; } = "";
+        private Image MOVIE_COVER { get; set; } = null;
+        private Image tempImage { get; set; } = null;
 
         // Source ListView lvSearch Item index
         public ListViewItem LVITEM = null;
@@ -45,7 +45,7 @@ namespace HomeCinema
         SQLHelper conn = new SQLHelper("frmMovieInfo");
 
         // Fixed vars
-        Form PARENT = null;
+        private Form PARENT = null;
 
         #region Initialize class
         public frmMovieInfo(Form parent,string ID, string text, string formName, ListViewItem lvitem)
@@ -272,7 +272,7 @@ namespace HomeCinema
             txtName.Focus();
         }
         // Set Image to picBox Image
-        public static bool SetPicboxImgFromFile(PictureBox picbox, string selectedFilename, string actFrom)
+        public bool SetPicboxImgFromFile(PictureBox picbox, string selectedFilename, string actFrom)
         {
             string errFrom = $"frmMovieInfo (SetPicboxImg)-{actFrom}";
             if (File.Exists(selectedFilename))
