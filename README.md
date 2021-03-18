@@ -37,11 +37,11 @@ Ease the pain of browsing through many folders and finding out which movie is wh
 **Note: I'm not the user who posted any of them. Visit at your discretion.** <br>
 [View **MajorGeek** review here](https://www.majorgeeks.com/files/details/homecinema.html) <br>
 [View **Softpedia** review here](https://www.softpedia.com/get/Multimedia/Video/Other-VIDEO-Tools/HomeCinema.shtml) <br>
-[View **NSaneForum** post](https://nsaneforums.com/topic/402520-homecinema-0410/?tab=comments#comment-1667568) <br>
+[View **NSaneForum** post](https://nsaneforums.com/topic/403937-homecinema-0500/) <br>
 [View **Netfox2** review (French site)](https://www.netfox2.net/modules/wfdownloads/singlefile.php?cid=123&lid=2181) <br>
 [View **Jetelecharge** review (older version, v0.1)](https://www.jetelecharge.com/Bureautique/10226.php) <br>
 [View **slunecnice** review (Czech site)](https://www.slunecnice.cz/sw/homecinema/) <br>
-[View **Windows Forum** post](https://windowsforum.kr/data/15547097)
+[View **Windows Forum** post](https://windowsforum.kr/data/15652587)
 
 ## How to Add Media Locations?
 1. Press **CTRL + S** or click on **[Settings]** button to Open Settings UI.
