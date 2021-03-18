@@ -153,7 +153,6 @@ namespace HomeCinema
             }
             GlobalVars.FILTER_VIDEO = "Supported Media Files|" + tempExtToBrowse;
 
-            // Perform background worker that Automatically inserts all movies from designated folder
             // Check if directory exists first, by readling from file
             GlobalVars.Log("frmMain", "Loading files into App..");
             string[] tempFolder = GlobalVars.BuildDirArrFromFile(GlobalVars.FILE_MEDIALOC, "frmMain", '*'); // Get directory to start search
@@ -378,11 +377,10 @@ namespace HomeCinema
                 //GlobalVars.Log("frmMain-AddItem()", "Added: " + item.Text);
             }
         }
-        public static void AfterPopulatingMovieLV(ListView lv, int count)
+        public static void AfterPopulatingMovieLV(ListView lv, int count = 0)
         {
             // Error log
             string errFrom = "frmMain-bgwMovie_DoneSearchMovie";
-
             // If there are no results, show message
             if (count < 1)
             {
@@ -392,7 +390,6 @@ namespace HomeCinema
                 AddItem(lv, temp);
                 GlobalVars.Log(errFrom, $"ResultSet is null or empty!");
             }
-
             lv.EndUpdate(); // Draw the ListView
             lv.ResumeLayout();
         }
@@ -869,7 +866,7 @@ namespace HomeCinema
             lvSearchResult.SuspendLayout();
             lvSearchResult.Items.Clear(); // Clear previous list
             // Populate movie listview with new entries, from another form thread
-            frmLoading form = new frmLoading("Searching in database..", "Loading");
+            frmLoading form = new frmLoading(AppStart ? "Loading database.." : "Searching..", "Loading");
             DataTable dt, dtGetFile;
             string qry = SEARCH_QUERY;
             string cols = LVMovieItemsColumns;
@@ -882,7 +879,7 @@ namespace HomeCinema
             if (String.IsNullOrWhiteSpace(qry))
             {
                 // Exit
-                AfterPopulatingMovieLV(lvSearchResult, 0);
+                AfterPopulatingMovieLV(lvSearchResult);
                 return;
             }
 
@@ -907,7 +904,7 @@ namespace HomeCinema
                         // Convert ID object to ID int
                         int MOVIEID;
                         try { MOVIEID = Convert.ToInt32(r[0]); }
-                        catch { MOVIEID = 0; }
+                        catch { MOVIEID = 0; GlobalVars.Log(errFrom, $"Invalid MovieID: {r[0].ToString()}"); }
 
                         // Add to listview lvSearchResult
                         if (MOVIEID > 0)
@@ -980,13 +977,8 @@ namespace HomeCinema
 
                             // Add Item to ListView lvSearchResult
                             AddItem(lvSearchResult, temp);
+                            progress += 1;
                         }
-                        else
-                        {
-                            GlobalVars.Log(errFrom, $"Invalid MovieID: {r[0].ToString()}");
-                        }
-
-                        progress += 1;
                     }
                     GlobalVars.Log(errFrom, $"DONE Background worker from: {Name}");
                 };
@@ -994,7 +986,7 @@ namespace HomeCinema
                 AfterPopulatingMovieLV(lvSearchResult, progress);
                 return;
             }
-            AfterPopulatingMovieLV(lvSearchResult, 0);
+            AfterPopulatingMovieLV(lvSearchResult);
         }
         #endregion
         // ####################################################################################### Form CUSTOM events
@@ -1041,6 +1033,11 @@ namespace HomeCinema
         private void frmMain_Load(object sender, EventArgs e)
         {
             // Startup events
+            // Clean temp and log files
+            if (GlobalVars.SET_AUTOCLEAN)
+            {
+                GlobalVars.CleanAppDirectory();
+            }
             // Delete previous log file, if exceeds file size limit
             GlobalVars.CheckLogFile(GlobalVars.FILE_LOG_APP, "frmMain-(Delete AppLog)", Text + "\n  : Start of LogFile");
             GlobalVars.CheckLogFile(GlobalVars.DB_DBLOGPATH, "frmMain-(Delete App_DB.log)", Text + "\n  : Database Log");
@@ -1063,9 +1060,8 @@ namespace HomeCinema
         }
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            string logClose = "Exit Log\n";
             // Save settings
-            logClose += GlobalVars.SaveSettings() ? $"\n\tSettings Saved! ({DateTime.Now.TimeOfDay.ToString()})" : "";
+            GlobalVars.SaveSettings();
             // Save text files
             SaveCountryCB(); // Replace Country text file
             SaveGenreCB(); // Replace Genre text file
@@ -1083,9 +1079,26 @@ namespace HomeCinema
                 GlobalVars.MOVIE_IMGLIST.Images.Clear();
                 GlobalVars.MOVIE_IMGLIST.Dispose();
             }
-            logClose += $"\n\tDone Garbage Collector ({DateTime.Now.TimeOfDay.ToString()})";
-            logClose += "\n\tClosed the program.";
-            GlobalVars.Log("frmMain-frmMain_FormClosing", logClose);
+            if (GlobalVars.HOMECINEMA_ICON != null)
+            {
+                GlobalVars.HOMECINEMA_ICON.Dispose();
+            }
+            if (GlobalVars.TILE_FONT != null)
+            {
+                GlobalVars.TILE_FONT.Dispose();
+            }
+            if (GlobalVars.MOVIE_EXTENSIONS != null)
+            {
+                GlobalVars.MOVIE_EXTENSIONS.Clear();
+            }
+            if (GlobalVars.formAbout != null)
+            {
+                GlobalVars.formAbout.Dispose();
+            }
+            if (GlobalVars.formSetting != null)
+            {
+                GlobalVars.formSetting.Dispose();
+            }
             Dispose();
         }
         private void btnChangeView_Click(object sender, EventArgs e)
@@ -1236,7 +1249,7 @@ namespace HomeCinema
         // Delete files from temp
         private void btnClean_Click(object sender, EventArgs e)
         {
-            GlobalVars.CleanAppDirectory();
+            GlobalVars.CleanAppDirectory(true);
         }
         // When ENTER Key is pressed on ListView
         private void lvSearchResult_KeyDown(object sender, KeyEventArgs e)

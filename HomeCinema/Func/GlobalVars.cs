@@ -97,7 +97,7 @@ namespace HomeCinema.Global
 
         public static string[] DB_INFO_CATEGORY = new string[] { "None", "Movie", "TV Series", "Anime Movie", "Anime Series", "Animated Movie", "Cartoon Series" };
 
-        // For the tiles in frmMain
+        // For the items in frmMain media listview
         public static ImageList MOVIE_IMGLIST = new ImageList();
         public static int IMGTILE_WIDTH = 96;
         public static int IMGTILE_HEIGHT = 128;
@@ -119,11 +119,12 @@ namespace HomeCinema.Global
         // Settings
         public static long BYTES = 1000000;
         public static long SET_LOGMAXSIZE { get; set; } = 1 * BYTES; // Maximum file size of Logfile. (in MB Mega Bytes).
-        public static bool SET_OFFLINE { get; set; } = true; // Use [automatic online functionalities] or not.
-        public static bool SET_AUTOUPDATE { get; set; } = false; // auto check for update
+        public static bool SET_OFFLINE { get; set; } = false; // Use [automatic online functionalities] or not.
+        public static bool SET_AUTOUPDATE { get; set; } = true; // auto check for update
         public static bool SET_AUTOPLAY { get; set; } = false; // auto play movie
         public static int SET_ITEMLIMIT { get; set; } = 0; // limit the max items to query
         public static int SET_SEARCHLIMIT { get; set; } = 5; // limit for searching on IMDB Id
+        public static bool SET_AUTOCLEAN { get; set; } = true; // Automatically clean temp and logs on App Load
 
         // FORMS
         public static Form formSetting = null; // Check if settings is already open
@@ -136,7 +137,7 @@ namespace HomeCinema.Global
             string filePath = DB_DBLOGPATH;
             try
             {
-                if (!File.Exists(filePath)) { filePath = AppContext.BaseDirectory + "ErrorLogDB.log"; }
+                if (!File.Exists(filePath)) { WriteToFile(filePath, ""); }
                 using (StreamWriter w = File.AppendText(filePath))
                 {
                     w.Write(LogFormatted(codefrom, log));
@@ -153,7 +154,7 @@ namespace HomeCinema.Global
         {
             try
             {
-                if (!File.Exists(filePath)) { filePath = AppContext.BaseDirectory + "ErrorLog.log"; }
+                if (!File.Exists(filePath)) { WriteToFile(filePath, ""); }
                 using (StreamWriter w = File.AppendText(filePath))
                 {
                     w.Write(LogFormatted(codefrom, log));
@@ -368,9 +369,9 @@ namespace HomeCinema.Global
             CopyFromRes(FILE_MEDIA_EXT);
             CopyFromRes(FILE_SERIESLOC);
             // Create empty Logs
-            if (!File.Exists(FILE_LOG_APP)) { File.Create(FILE_LOG_APP); }
-            if (!File.Exists(FILE_LOG_ERROR)) { File.Create(FILE_LOG_ERROR); }
-            if (!File.Exists(DB_DBLOGPATH)) { File.Create(DB_DBLOGPATH); }
+            if (!File.Exists(FILE_LOG_APP)) { WriteToFile(FILE_LOG_APP, ""); }
+            if (!File.Exists(FILE_LOG_ERROR)) { WriteToFile(FILE_LOG_ERROR, ""); }
+            if (!File.Exists(DB_DBLOGPATH)) { WriteToFile(DB_DBLOGPATH, ""); }
         }
         // Create a directory, if not existing
         public static void CreateDir(string fPath)
@@ -397,7 +398,7 @@ namespace HomeCinema.Global
                 }
                 catch (Exception ex)
                 {
-                    ShowError("(GlobalVars-CopyFromRes) Copying required files error. File: " + fName, ex);
+                    ShowError("(GlobalVars-CopyFromRes) Copying required files error. File: " + fName, ex, true);
                 }
             }
         }
@@ -992,7 +993,6 @@ namespace HomeCinema.Global
                     // Done downloading version file
                     if (File.Exists(fileName))
                     {
-                        GlobalVars.Log(errFrom, "Compare version..");
                         string vString = ReadStringFromFile(fileName, "GlobalVars-CheckForUpdate");
                         int version;
 
@@ -1001,7 +1001,7 @@ namespace HomeCinema.Global
 
                         if (version > HOMECINEMA_BUILD)
                         {
-                            GlobalVars.Log(errFrom, "Update found!");
+                            Log(errFrom, "Update found!");
                             // there is an update, goto page of releases
                             try
                             {
@@ -1019,7 +1019,7 @@ namespace HomeCinema.Global
                     }
                     else
                     {
-                        GlobalVars.Log(errFrom, "Cannot check for update!");
+                        Log(errFrom, "Cannot check for update!");
                     }
                 }
             };
@@ -1591,8 +1591,9 @@ namespace HomeCinema.Global
             form.Dispose();
             return (dialogResult == DialogResult.OK) ? value : String.Empty;
         }
-        public static void CleanAppDirectory(string calledFrom = "GlobalVars-CleanAppDirectory")
+        public static void CleanAppDirectory(bool showMsg = false)
         {
+            string calledFrom = "GlobalVars-CleanAppDirectory";
             frmLoading form = new frmLoading("Cleaning App..", "Loading");
             form.BackgroundWorker.DoWork += (sender1, e1) =>
             {
@@ -1610,8 +1611,12 @@ namespace HomeCinema.Global
                 form.Message = "Done!";
             };
             form.ShowDialog();
-            ShowInfo("Cleanup Done!");
             CleanMemory(calledFrom);
+            CheckAllFiles(); // re-check files if some are missing
+            if (showMsg)
+            {
+                ShowInfo("Cleanup Done!");
+            }
         }
         // ######################################################################## END - Add code above
     }
