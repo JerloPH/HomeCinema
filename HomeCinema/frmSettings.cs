@@ -123,7 +123,7 @@ namespace HomeCinema
         {
             string errFrom = "frmSettings-frmSettings_Load";
             ToolTip tooltip = new ToolTip();
-            string[] choice = { "True", "False" };
+            string[] choice = { "Yes", "No" };
             string text = "";
 
             // Add ToolTips
@@ -215,8 +215,8 @@ namespace HomeCinema
         }
         private void frmSettings_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Closed
             GlobalVars.formSetting = null;
+            Dispose();
         }
         // Exit settings form
         private void btnCancel_Click(object sender, EventArgs e)
@@ -230,6 +230,7 @@ namespace HomeCinema
             long logsize;
             char separator = '*';
             string toWrite = "";
+            bool error = false;
 
             // Booleans
             GlobalVars.SET_AUTOUPDATE = !Convert.ToBoolean(cbAutoUpdate.SelectedIndex);
@@ -237,14 +238,18 @@ namespace HomeCinema
             GlobalVars.SET_AUTOPLAY = !Convert.ToBoolean(cbPlayMovie.SelectedIndex);
 
             // TextBox
-            logsize = (long)Convert.ToDouble(txtLogSize.Text);
-            GlobalVars.SET_LOGMAXSIZE = logsize * GlobalVars.BYTES;
+            try
+            {
+                logsize = (long)Convert.ToDouble(txtLogSize.Text);
+                GlobalVars.SET_LOGMAXSIZE = logsize * GlobalVars.BYTES;
+            }
+            catch { error = true; }
             
             try { GlobalVars.SET_ITEMLIMIT = Convert.ToInt32(txtMaxItemCount.Text); }
-            catch { }
+            catch { error = true; }
 
             try { GlobalVars.SET_SEARCHLIMIT = Convert.ToInt32(txtImdbSearchLimit.Text); }
-            catch { }
+            catch { error = true; }
 
             // Write MediaLoc file
             foreach (var x in BoxMediaLoc.Items)
@@ -277,7 +282,7 @@ namespace HomeCinema
             Program.FormMain.PopulateGenreCB();
 
             // Show Message
-            GlobalVars.ShowInfo("Done saving Settings!");
+            GlobalVars.ShowInfo("Done saving Settings!" + (error ? "\nSome settings are not saved!" : ""));
         }
         private void btnMediaLocAdd_Click(object sender, EventArgs e)
         {
