@@ -216,6 +216,7 @@ namespace HomeCinema
         private void frmSettings_FormClosing(object sender, FormClosingEventArgs e)
         {
             GlobalVars.formSetting = null;
+            GlobalVars.SaveSettings();
             Dispose();
         }
         // Exit settings form
