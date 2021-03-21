@@ -2,12 +2,12 @@
 
 <img src="/data/v0.5.jpg"></img>
 
-**version:**	0.5.0.0 <br>
-**release:**	31
+**version:**	0.5.1.0 <br>
+**release:**	32
 
 ## Downloads
 
-**Windows 10, 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.5.0.0/HomeCinema-Windows.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
+**Windows 10, 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.5.1.0/HomeCinema-Windows.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
 **Note: Untested on Windows 7 and 8, but might work**
 
 ### Download Counts

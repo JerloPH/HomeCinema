@@ -1,5 +1,16 @@
 # HomeCinema - Project History:
 
+## HomeCinema v0.5.1
+### ***release 32 - build 21 March 2021 PHT***
+
+**[Windows, 64-bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.5.1.0/HomeCinema-Windows.zip "HomeCinema-Windows.zip")** <br>
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.5.1.0/HomeCinema-Windows.zip)]() <br>
+
+### What's New?
+- FIX: App doesn't get new media files.
+- MINOR: Clean App folder and logs upon app load.
+- MINOR: Instantly save setings file, after changing settings.
+
 ## HomeCinema v0.5
 ### ***release 31 - build 16 March 2021 PHT***
 
