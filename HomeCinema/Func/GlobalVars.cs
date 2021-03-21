@@ -1235,9 +1235,10 @@ namespace HomeCinema.Global
                         {
                             tmp += c.name + ",";
                         }
-                        list[10] = tmp.TrimEnd(','); // country
+                        list[10] = (!String.IsNullOrWhiteSpace(tmp)) ? tmp.TrimEnd(',') : ""; // country
                         // Studio
-                        list[11] = movie.production_companies.Select(a => a.name).ToList().Aggregate((b, c) => b + ", " + c);
+                        try { list[11] = movie.production_companies.Select(a => a.name).ToList().Aggregate((b, c) => b + ", " + c); }
+                        catch { list[11] = ""; }
                     }
                 }
 
@@ -1302,7 +1303,13 @@ namespace HomeCinema.Global
         // Get Genres from JSON File
         public static string GetGenresByJsonFile(string json_fullpath, string calledFrom, string sep = ",")
         {
-            return GetGenresByJsonFile(json_fullpath, calledFrom).Aggregate((a, b) => a + sep + b).Trim();
+            string ret;
+            try
+            {
+                ret = GetGenresByJsonFile(json_fullpath, calledFrom).Aggregate((a, b) => a + sep + b).Trim();
+            }
+            catch { ret = ""; }
+            return ret;
         }
         public static List<string> GetGenresByJsonFile(string json_fullpath, string calledFrom)
         {
