@@ -3,9 +3,6 @@
 ## HomeCinema v0.5.1
 ### ***release 32 - build 21 March 2021 PHT***
 
-**[Windows, 64-bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.5.1.0/HomeCinema-Windows.zip "HomeCinema-Windows.zip")** <br>
-[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.5.1.0/HomeCinema-Windows.zip)]() <br>
-
 ### What's New?
 - FIX: App doesn't get new media files.
 - MINOR: Clean App folder and logs upon app load.
@@ -13,9 +10,6 @@
 
 ## HomeCinema v0.5
 ### ***release 31 - build 16 March 2021 PHT***
-
-**[Windows, 64-bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.5.0.0/HomeCinema-Windows.zip "HomeCinema-Windows.zip")** <br>
-[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.5.0.0/HomeCinema-Windows.zip)]() <br>
 
 ### What's New?
 - REV: Reduced memory usage by half, by optimizing code structure.
@@ -46,9 +40,6 @@
 ## HomeCinema v0.4.1
 ### ***release 30 - build 02 March 2021 PHT***
 
-**[Windows, 64-bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.4.1.0/HomeCinema-Windows.zip "HomeCinema-Windows.zip")** <br>
-[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.4.1.0/HomeCinema-Windows.zip)]() <br>
-
 ### What's New?
 - REV: Delete Covers not in Database, when pressing **[Clean]**.
 - FIX: Changing metadata should not work on **'series'**.
@@ -65,10 +56,6 @@
 
 ## v0.4.0.0 ***build 29 - (23 February 2021 PHT)***
 ### Major Fixes and Improvements
-
-**[Windows 64-bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.4.0.0/HomeCinema-Windows.zip "HomeCinema-Windows.zip")**
-
-[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.4.0.0/HomeCinema-Windows.zip)]() <br>
 
 ### What's New?
 - REV: Add loading form to **[Clean]** button.
@@ -89,10 +76,6 @@
 ## v0.3.0.0 ***build 28 - (22 February 2021 PHT)***
 ### New Loading Form, and Improvements
 
-**[Windows 64-bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.3.0.0/HomeCinema-Windows.zip "HomeCinema-Windows.zip")**
-
-[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.3.0.0/HomeCinema-Windows.zip)]() <br>
-
 ### What's New?
 - REV: New Loading form.
 - REV: Show Loading form on Fetching data from TMDB, and Saving Metadata.
@@ -112,10 +95,6 @@
 ## v0.2.0.0 ***build 27 - (30 January 2021 PHT)***
 ### Breaking Changes!
 
-**[Windows 64-bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.2.0.0/HomeCinema-Windows.zip "HomeCinema-Windows.zip")**
-
-[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.2.0.0/HomeCinema-Windows.zip)]() <br>
-
 **NOTE: This update breaks the old way that the App saves directories** <br>
 - After updating, open the App and find the folder where your movies are saved.
 - To add additional folders, and TV series location(s), go to **Settings** -> **File**.
@@ -134,10 +113,6 @@
 
 ## v0.1.0.0 ***build 26 - (12 January 2021 PHT)***
 ### Major Improvements.
-
-**[Windows 64-bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.1.0.0/HomeCinema-Windows_v0.1.0.0.zip "HomeCinema-Windows_v0.1.0.0.zip")**
-
-[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.1.0.0/HomeCinema-Windows_v0.1.0.0.zip)]() <br>
 
 **What's New?**
 - REV: Automatically refresh Media List, when checkbox **Hide Animation** is checked/unchecked.
@@ -160,10 +135,6 @@
 ## v0.0.9.0 ***build 25 - (28 December 2020 PHT)***
 ### Various Fixes and Improvements.
 
-**[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.9.0/HomeCinema-Windows_v0.0.9.0.zip "HomeCinema-Windows_v0.0.9.0.zip")**
-
-[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.9.0/HomeCinema-Windows_v0.0.9.0.zip)]() <br>
-
 **What's New?**
 - FT: Show **'File'** or **'Folder'** **size**, on **'Movie Title'**, in **'Movie Details'** form.
 - FIX: If Media type is 'Series', open Folder location in Explorer.
@@ -180,12 +151,6 @@
 ## v0.0.8.0 ***build 24 - (22 September 2020 PHT)***
 ### [Series] can now be Added!
 
-Build from latest commit: [2070c18](https://github.com/JerloPH/HomeCinema/commit/2070c18938bde878abeb19c2c3fd3e2dd6b84f41)
-
-**[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.8.0/HomeCinema-Windows_v0.0.8.0.zip "HomeCinema-Windows_v0.0.8.0.zip")**
-
-[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.8.0/HomeCinema-Windows_v0.0.8.0.zip)]() <br>
-
 **What's New?**
 - REV: Add your "**Series**" top-folder into the App!
 - REV: Removed **[Add Movie]** Button.
@@ -199,12 +164,6 @@ Build from latest commit: [2070c18](https://github.com/JerloPH/HomeCinema/commit
 
 ## v0.0.7.0 ***build 23 - (17 September 2020 PHT)***
 ### More Features and Fixes
-
-Build from latest commit: [e1c4a97](https://github.com/JerloPH/HomeCinema/commit/e1c4a97bb763b8df0f8ad840db507501e250b72a)
-
-**[Download link for Windows 64 bit](https://github.com/JerloPH/HomeCinema/releases/download/v0.0.7.0/HomeCinema-Windows_v0.0.7.0.zip "HomeCinema-Windows_v0.0.7.0.zip")**
-
-[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.0.7.0/HomeCinema-Windows_v0.0.7.0.zip)]() <br>
 
 **What's New?**
 - FT: Automatically Download cover image from [TMDB](https://www.themoviedb.org/), when online, during insert of new media.
