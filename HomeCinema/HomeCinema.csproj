@@ -214,6 +214,8 @@
     <Content Include="Resources\0.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\IconCheckmark.png" />
+    <None Include="Resources\IconWarning.png" />
     <Content Include="Resources\Loading.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
