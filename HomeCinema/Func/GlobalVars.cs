@@ -964,7 +964,7 @@ namespace HomeCinema.Global
             return false;
         }
         // Auto-check for updates
-        public static void CheckForUpdate()
+        public static void CheckForUpdate(bool showMsg = false)
         {
             string errFrom = "GlobalVars - CheckForUpdate";
             frmLoading form = new frmLoading("Checking for Update..", "Loading");
@@ -1010,14 +1010,28 @@ namespace HomeCinema.Global
                         }
                         catch (Exception ex)
                         {
+                            form.Message = "Error on checking update!";
                             ShowWarning("Update Error!\nTry Updating Later..");
                             ShowError(errFrom, ex, false);
+                        }
+                    }
+                    else
+                    {
+                        form.Message = "No updates available!";
+                        if (showMsg)
+                        {
+                            ShowInfo("You are using the latest version!");
                         }
                     }
                 }
                 else
                 {
+                    form.Message = "Error on checking update!";
                     Log(errFrom, "Cannot check for update!");
+                    if (showMsg)
+                    {
+                        ShowWarning("Cannot check for update!\nTry again later");
+                    }
                 }
             };
             form.ShowDialog();

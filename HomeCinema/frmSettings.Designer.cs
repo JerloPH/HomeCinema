@@ -30,6 +30,8 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.lblImdbSearchLimit = new System.Windows.Forms.Label();
+            this.txtImdbSearchLimit = new System.Windows.Forms.TextBox();
             this.lblItemDisplayCount = new System.Windows.Forms.Label();
             this.txtMaxItemCount = new System.Windows.Forms.TextBox();
             this.lblMaxLogFileSize = new System.Windows.Forms.Label();
@@ -69,8 +71,7 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
-            this.lblImdbSearchLimit = new System.Windows.Forms.Label();
-            this.txtImdbSearchLimit = new System.Windows.Forms.TextBox();
+            this.btnCheckUpdate = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -99,6 +100,7 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.Black;
+            this.tabPage1.Controls.Add(this.btnCheckUpdate);
             this.tabPage1.Controls.Add(this.lblImdbSearchLimit);
             this.tabPage1.Controls.Add(this.txtImdbSearchLimit);
             this.tabPage1.Controls.Add(this.lblItemDisplayCount);
@@ -119,6 +121,24 @@
             this.tabPage1.Size = new System.Drawing.Size(753, 465);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "General";
+            // 
+            // lblImdbSearchLimit
+            // 
+            this.lblImdbSearchLimit.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblImdbSearchLimit.Location = new System.Drawing.Point(5, 335);
+            this.lblImdbSearchLimit.Name = "lblImdbSearchLimit";
+            this.lblImdbSearchLimit.Size = new System.Drawing.Size(244, 31);
+            this.lblImdbSearchLimit.TabIndex = 11;
+            this.lblImdbSearchLimit.Text = "IMDB Search Limit";
+            // 
+            // txtImdbSearchLimit
+            // 
+            this.txtImdbSearchLimit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtImdbSearchLimit.Location = new System.Drawing.Point(271, 331);
+            this.txtImdbSearchLimit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtImdbSearchLimit.Name = "txtImdbSearchLimit";
+            this.txtImdbSearchLimit.Size = new System.Drawing.Size(167, 30);
+            this.txtImdbSearchLimit.TabIndex = 10;
             // 
             // lblItemDisplayCount
             // 
@@ -576,23 +596,18 @@
             this.label9.TabIndex = 16;
             this.label9.Text = "* Changes Apply after Restart";
             // 
-            // lblImdbSearchLimit
+            // btnCheckUpdate
             // 
-            this.lblImdbSearchLimit.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblImdbSearchLimit.Location = new System.Drawing.Point(5, 335);
-            this.lblImdbSearchLimit.Name = "lblImdbSearchLimit";
-            this.lblImdbSearchLimit.Size = new System.Drawing.Size(244, 31);
-            this.lblImdbSearchLimit.TabIndex = 11;
-            this.lblImdbSearchLimit.Text = "IMDB Search Limit";
-            // 
-            // txtImdbSearchLimit
-            // 
-            this.txtImdbSearchLimit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtImdbSearchLimit.Location = new System.Drawing.Point(271, 331);
-            this.txtImdbSearchLimit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtImdbSearchLimit.Name = "txtImdbSearchLimit";
-            this.txtImdbSearchLimit.Size = new System.Drawing.Size(167, 30);
-            this.txtImdbSearchLimit.TabIndex = 10;
+            this.btnCheckUpdate.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.btnCheckUpdate.ForeColor = System.Drawing.Color.Black;
+            this.btnCheckUpdate.Location = new System.Drawing.Point(9, 406);
+            this.btnCheckUpdate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCheckUpdate.Name = "btnCheckUpdate";
+            this.btnCheckUpdate.Size = new System.Drawing.Size(195, 42);
+            this.btnCheckUpdate.TabIndex = 17;
+            this.btnCheckUpdate.Text = "Check for Update";
+            this.btnCheckUpdate.UseVisualStyleBackColor = true;
+            this.btnCheckUpdate.Click += new System.EventHandler(this.btnCheckUpdate_Click);
             // 
             // frmSettings
             // 
@@ -668,5 +683,6 @@
         private System.Windows.Forms.Button btnCountryAdd;
         private System.Windows.Forms.Label lblImdbSearchLimit;
         private System.Windows.Forms.TextBox txtImdbSearchLimit;
+        private System.Windows.Forms.Button btnCheckUpdate;
     }
 }

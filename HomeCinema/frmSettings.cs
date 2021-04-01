@@ -133,6 +133,7 @@ namespace HomeCinema
             tooltip.SetToolTip(lblMaxLogFileSize, "Maximum file size of log before deleting it.");
             tooltip.SetToolTip(lblItemDisplayCount, "Maximum number of Items displayed for Search results.\n'0' displays all.");
             tooltip.SetToolTip(lblImdbSearchLimit, "Limit Search results in searching Imdb entry.");
+            tooltip.SetToolTip(btnCheckUpdate, "Manually check for updates.");
 
             // setup contents
             cbAutoUpdate.Items.AddRange(choice);
@@ -386,6 +387,11 @@ namespace HomeCinema
         private void btnCountryEdit_Click(object sender, EventArgs e)
         {
             EditListBoxItems(listboxCountry);
+        }
+
+        private void btnCheckUpdate_Click(object sender, EventArgs e)
+        {
+            GlobalVars.CheckForUpdate(true);
         }
     }
 }
