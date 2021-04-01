@@ -1,7 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
 using HomeCinema.Global;
+using HomeCinema.Properties;
 
 namespace HomeCinema
 {
@@ -39,6 +41,29 @@ namespace HomeCinema
             CenterToParent();
         }
 
+        public void SetIcon(int IconIndex = 0)
+        {
+            Bitmap image = null;
+            try
+            {
+                switch (IconIndex)
+                {
+                    case (int)GlobalVars.Icons.Check:
+                        image = Resources.IconCheckmark;
+                        break;
+                    case (int)GlobalVars.Icons.Warning:
+                        image = Resources.IconWarning;
+                        break;
+                    default:
+                        image = Resources.LoadingColored;
+                        break;
+                }
+                pictureBox1.Image.Dispose();
+                pictureBox1.Image = image;
+            }
+            catch { }
+        }
+
         private void frmPopulateMovie_Shown(object sender, EventArgs e)
         {
             if (BackgroundWorker.IsBusy)
@@ -52,6 +77,8 @@ namespace HomeCinema
         {
             if (BackgroundWorker.IsBusy)
                 e.Cancel = true;
+
+            pictureBox1.Image.Dispose();
         }
 
         private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

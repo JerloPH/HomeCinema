@@ -40,6 +40,14 @@ namespace HomeCinema.Global
 {
     public static class GlobalVars
     {
+        // Enums
+        public enum Icons
+        {
+            Loading = 0,
+            Check = 1,
+            Warning = 2
+        }
+
         // Variables ############################################################################################################
         public static string HOMECINEMA_NAME = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyTitleAttribute>().Title;
         public static string HOMECINEMA_VERSION = Assembly.GetExecutingAssembly().GetName().Version.ToString();
@@ -999,6 +1007,8 @@ namespace HomeCinema.Global
 
                     if (version > HOMECINEMA_BUILD)
                     {
+                        form.SetIcon((int)Icons.Check);
+                        form.Message = "Update available!";
                         Log(errFrom, "Update found!");
                         // there is an update, goto page of releases
                         try
@@ -1010,6 +1020,7 @@ namespace HomeCinema.Global
                         }
                         catch (Exception ex)
                         {
+                            form.SetIcon((int)Icons.Warning);
                             form.Message = "Error on checking update!";
                             ShowWarning("Update Error!\nTry Updating Later..");
                             ShowError(errFrom, ex, false);
@@ -1017,6 +1028,7 @@ namespace HomeCinema.Global
                     }
                     else
                     {
+                        form.SetIcon((int)Icons.Check);
                         form.Message = "No updates available!";
                         if (showMsg)
                         {
@@ -1026,6 +1038,7 @@ namespace HomeCinema.Global
                 }
                 else
                 {
+                    form.SetIcon((int)Icons.Warning);
                     form.Message = "Error on checking update!";
                     Log(errFrom, "Cannot check for update!");
                     if (showMsg)
