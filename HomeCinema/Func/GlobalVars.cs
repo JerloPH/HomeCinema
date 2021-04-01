@@ -710,7 +710,7 @@ namespace HomeCinema.Global
         {
             string errFrom = "GlobalVars-GetSeriesLocations";
             List<string> list = new List<string>();
-            string[] arr = GlobalVars.BuildDirArrFromFile(FILE_SERIESLOC, errFrom, '*');
+            string[] arr = BuildDirArrFromFile(FILE_SERIESLOC, errFrom, '*');
             string directory;
             try
             {
@@ -978,7 +978,7 @@ namespace HomeCinema.Global
             frmLoading form = new frmLoading("Checking for Update..", "Loading");
             form.BackgroundWorker.DoWork += (sender1, e1) =>
             {
-                GlobalVars.Log(errFrom, "Will Check for Updates..");
+                Log(errFrom, "Will Check for Updates..");
                 string fileName = PATH_TEMP + "version";
                 string link = @"https://raw.githubusercontent.com/JerloPH/HomeCinema/master/data/version";
                 string linkRelease = @"https://github.com/JerloPH/HomeCinema/releases";
@@ -991,7 +991,7 @@ namespace HomeCinema.Global
                 // Keep trying to download version file, to check for update
                 while (tryCount > 0)
                 {
-                    GlobalVars.Log(errFrom, $"Fetching update version.. (Tries Left: {tryCount.ToString()})");
+                    Log(errFrom, $"Fetching update version.. (Tries Left: {tryCount.ToString()})");
                     DownloadFrom(link, fileName, false);
                     tryCount -= 1;
                     tryCount = File.Exists(fileName) ? 0 : tryCount;
@@ -1068,7 +1068,7 @@ namespace HomeCinema.Global
             catch (Exception ex)
             {
                 ShowError(errFrom, ex, false);
-                GlobalVars.ShowWarning("File or folder not Found! \nIt may have been Moved or Deleted!", "File not Found!");
+                ShowWarning("File or folder not Found! \nIt may have been Moved or Deleted!", "File not Found!");
             }
         }
         // Return a string with Limited characters
