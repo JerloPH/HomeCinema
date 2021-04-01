@@ -845,7 +845,7 @@ namespace HomeCinema
                     GlobalVars.WriteToFile(Path.Combine(GlobalVars.PATH_LOG, "MovieResult_Skipped.Log"), nonres);
 
                     // Add now to database
-                    form.Message = "Inserting to database..";
+                    form.Message = "Inserting new entries..";
                     int insertRes = InsertToDB(listToAdd, calledFrom + "-listToAdd");
                 }
                 form.Message = "Done fetching new media files!";
@@ -866,7 +866,7 @@ namespace HomeCinema
             lvSearchResult.SuspendLayout();
             lvSearchResult.Items.Clear(); // Clear previous list
             // Populate movie listview with new entries, from another form thread
-            frmLoading form = new frmLoading(AppStart ? "Loading database.." : "Searching..", "Loading");
+            frmLoading form = new frmLoading(AppStart ? "Loading collection.." : "Searching..", "Loading");
             DataTable dt, dtGetFile;
             string qry = SEARCH_QUERY;
             string cols = LVMovieItemsColumns;
