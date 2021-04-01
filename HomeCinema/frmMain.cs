@@ -1054,7 +1054,10 @@ namespace HomeCinema
             // Perform click on Change View
             btnChangeView.PerformClick();
             // Auto check update
-            GlobalVars.CheckForUpdate();
+            if ((GlobalVars.SET_OFFLINE == false) && (GlobalVars.SET_AUTOUPDATE))
+            {
+                GlobalVars.CheckForUpdate();
+            }
             // Start finding files in folder
             GetMediaFromFolders();
         }
