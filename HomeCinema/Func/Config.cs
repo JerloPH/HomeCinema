@@ -33,5 +33,8 @@ namespace HomeCinema
         public int logsize { get; set; } = 1;
         public int itemMaxLimit { get; set; } = 0;
         public int searchLimit { get; set; } = 5;
+
+        // Theme
+        public string BackgroundColor { get; set; } = System.Drawing.ColorTranslator.ToHtml(System.Drawing.Color.Black);
     }
 }

@@ -133,6 +133,7 @@ namespace HomeCinema.Global
         public static int SET_ITEMLIMIT { get; set; } = 0; // limit the max items to query
         public static int SET_SEARCHLIMIT { get; set; } = 5; // limit for searching on IMDB Id
         public static bool SET_AUTOCLEAN { get; set; } = true; // Automatically clean temp and logs on App Load
+        public static Color SET_COLOR_BG { get; set; } = Color.Black; // default color
 
         // FORMS
         public static Form formSetting = null; // Check if settings is already open
@@ -314,6 +315,13 @@ namespace HomeCinema.Global
             SET_ITEMLIMIT = config.itemMaxLimit;
             // Limit Item result on IMDB searching
             SET_SEARCHLIMIT = config.searchLimit;
+
+            // Set Background color for forms
+            try
+            {
+                SET_COLOR_BG = ColorTranslator.FromHtml($"#{config.BackgroundColor}");
+            }
+            catch { SET_COLOR_BG = Color.Black; }
         }
         // Save settings to replace old
         public static bool SaveSettings()
@@ -327,6 +335,7 @@ namespace HomeCinema.Global
             config.instantPlayMovie = Convert.ToInt16(SET_AUTOPLAY);
             config.itemMaxLimit = SET_ITEMLIMIT;
             config.searchLimit = SET_SEARCHLIMIT;
+            config.BackgroundColor = SET_COLOR_BG.ToArgb().ToString("x");
 
             // Seriliaze to JSON
             string json = JsonConvert.SerializeObject(config, Formatting.Indented);
