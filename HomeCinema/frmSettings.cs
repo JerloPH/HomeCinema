@@ -223,7 +223,6 @@ namespace HomeCinema
         {
             GlobalVars.formSetting = null;
             Program.FormMain.lvSearchResult.BackColor = GlobalVars.SET_COLOR_BG;
-            GlobalVars.SaveSettings();
             
             Dispose();
         }
@@ -293,7 +292,8 @@ namespace HomeCinema
             // Theme Settings
             GlobalVars.SET_COLOR_BG = BackgroundColor;
 
-            // Show Message
+            // Save settings and Show Message
+            GlobalVars.SaveSettings();
             GlobalVars.ShowInfo("Done saving Settings!" + (error ? "\nSome settings are not saved!" : ""));
         }
         private void btnMediaLocAdd_Click(object sender, EventArgs e)
