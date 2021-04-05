@@ -166,8 +166,9 @@ namespace HomeCinema
                 FOLDERTOSEARCH = tempFolder; // Load existing dir from file
             }
 
-            // Add events to FORM
+            // Add events to FORM, other form properties
             KeyDown += new KeyEventHandler(Form_KeyDown);
+            lvSearchResult.BackColor = GlobalVars.SET_COLOR_BG;
 
             GlobalVars.Log("frmMain", "Initialize BackgroundWorkers..");
         }

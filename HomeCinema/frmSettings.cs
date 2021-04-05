@@ -28,6 +28,7 @@ namespace HomeCinema
 {
     public partial class frmSettings : Form
     {
+        private Color BackgroundColor;
         public frmSettings()
         {
             InitializeComponent();
@@ -40,7 +41,7 @@ namespace HomeCinema
             tabControl1.DrawItem += new DrawItemEventHandler(tabControl1_DrawItem);
         }
         // ############################################################################################### CUSTOM EVENTS
-        private void tabControl1_DrawItem(Object sender, System.Windows.Forms.DrawItemEventArgs e)
+        private void tabControl1_DrawItem(Object sender, DrawItemEventArgs e)
         {
             Graphics g = e.Graphics;
             Brush _textBrush;
@@ -213,11 +214,17 @@ namespace HomeCinema
                     BoxSeriesLoc.Items.Add(c);
                 }
             }
+
+            // Theme-related
+            BackgroundColor = GlobalVars.SET_COLOR_BG;
+            btnColorBG.BackColor = BackgroundColor;
         }
         private void frmSettings_FormClosing(object sender, FormClosingEventArgs e)
         {
             GlobalVars.formSetting = null;
+            Program.FormMain.lvSearchResult.BackColor = GlobalVars.SET_COLOR_BG;
             GlobalVars.SaveSettings();
+            
             Dispose();
         }
         // Exit settings form
@@ -282,6 +289,9 @@ namespace HomeCinema
             toWrite = (listGenre.Count > 0) ? listGenre.Aggregate((a, b) => a + "," + b) : "";
             GlobalVars.WriteToFile(GlobalVars.FILE_GENRE, toWrite);
             Program.FormMain.PopulateGenreCB();
+
+            // Theme Settings
+            GlobalVars.SET_COLOR_BG = BackgroundColor;
 
             // Show Message
             GlobalVars.ShowInfo("Done saving Settings!" + (error ? "\nSome settings are not saved!" : ""));
@@ -392,6 +402,16 @@ namespace HomeCinema
         private void btnCheckUpdate_Click(object sender, EventArgs e)
         {
             GlobalVars.CheckForUpdate(true);
+        }
+
+        private void btnChangeColorBG_Click(object sender, EventArgs e)
+        {
+            var col = new ColorDialog();
+            col.ShowDialog();
+            Program.FormMain.lvSearchResult.BackColor = col.Color;
+            BackgroundColor = col.Color;
+            btnColorBG.BackColor = col.Color;
+            col.Dispose();
         }
     }
 }
