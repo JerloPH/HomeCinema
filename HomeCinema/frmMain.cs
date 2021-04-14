@@ -916,23 +916,32 @@ namespace HomeCinema
                             {
                                 DataRow rFile = dtGetFile.Rows[0];
                                 fileNamePath = rFile[1].ToString();
-                                FileAttributes attr = File.GetAttributes(fileNamePath);
-                                if (attr.HasFlag(FileAttributes.Directory))
+                                try
                                 {
-                                    // Non existing directory, skip it
-                                    if (!Directory.Exists(fileNamePath))
+                                    FileAttributes attr = File.GetAttributes(fileNamePath);
+                                    if (attr.HasFlag(FileAttributes.Directory))
                                     {
-                                        dtGetFile.Clear();
-                                        continue;
+                                        // Non existing directory, skip it
+                                        if (!Directory.Exists(fileNamePath))
+                                        {
+                                            dtGetFile.Dispose();
+                                            continue;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (!File.Exists(fileNamePath))
+                                        {
+                                            dtGetFile.Dispose();
+                                            continue;
+                                        }
                                     }
                                 }
-                                else
+                                catch (Exception ex)
                                 {
-                                    if (!File.Exists(fileNamePath))
-                                    {
-                                        dtGetFile.Clear();
-                                        continue;
-                                    }
+                                    GlobalVars.ShowError(errFrom, ex, false);
+                                    dtGetFile.Dispose();
+                                    continue;
                                 }
                             }
 
@@ -984,10 +993,9 @@ namespace HomeCinema
                     GlobalVars.Log(errFrom, $"DONE Background worker from: {Name}");
                 };
                 form.ShowDialog();
-                AfterPopulatingMovieLV(lvSearchResult, progress);
-                return;
             }
-            AfterPopulatingMovieLV(lvSearchResult);
+            dt.Dispose();
+            AfterPopulatingMovieLV(lvSearchResult, progress);
         }
         #endregion
         // ####################################################################################### Form CUSTOM events
