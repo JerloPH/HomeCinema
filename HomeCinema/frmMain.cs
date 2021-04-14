@@ -1091,26 +1091,11 @@ namespace HomeCinema
                 GlobalVars.MOVIE_IMGLIST.Images.Clear();
                 GlobalVars.MOVIE_IMGLIST.Dispose();
             }
-            if (GlobalVars.HOMECINEMA_ICON != null)
-            {
-                GlobalVars.HOMECINEMA_ICON.Dispose();
-            }
-            if (GlobalVars.TILE_FONT != null)
-            {
-                GlobalVars.TILE_FONT.Dispose();
-            }
-            if (GlobalVars.MOVIE_EXTENSIONS != null)
-            {
-                GlobalVars.MOVIE_EXTENSIONS.Clear();
-            }
-            if (GlobalVars.formAbout != null)
-            {
-                GlobalVars.formAbout.Dispose();
-            }
-            if (GlobalVars.formSetting != null)
-            {
-                GlobalVars.formSetting.Dispose();
-            }
+            GlobalVars.HOMECINEMA_ICON?.Dispose();
+            GlobalVars.TILE_FONT?.Dispose();
+            GlobalVars.MOVIE_EXTENSIONS?.Clear();
+            GlobalVars.formAbout?.Dispose();
+            GlobalVars.formSetting?.Dispose();
             Dispose();
         }
         private void btnChangeView_Click(object sender, EventArgs e)
