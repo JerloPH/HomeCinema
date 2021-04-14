@@ -83,7 +83,7 @@ namespace HomeCinema
 
         private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            Dispose();
+            Close();
         }
     }
 }
