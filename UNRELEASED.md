@@ -8,9 +8,10 @@
 
 ### What's New?
 - REV: Added [**Check for Update**] button to Manually check update in Settings -> General window.
-- REV: Added new category in Settings window, **Appearance**. 
-  - Contains settings to modify GUI elements, like window background color, font color.
+- REV: Added new category in *Settings* window, **Appearance**. 
+  - Contains settings to modify GUI elements, like window background color and font color.
 - FIX: Entries stop loading after a file missing is reached.
+- MINOR: Close Settings window after Saving changes.
 - GUI: Minor change to some messages on forms.
 - GUI: Added Icons for Loading form, indicating success or failure when checking for updates.
 
