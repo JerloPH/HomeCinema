@@ -74,6 +74,7 @@ namespace HomeCinema
             _stringFlags.Alignment = StringAlignment.Center;
             _stringFlags.LineAlignment = StringAlignment.Center;
             g.DrawString(_tabPage.Text, _tabFont, _textBrush, _tabBounds, new StringFormat(_stringFlags));
+            _stringFlags.Dispose();
         }
         // ############################################################################################### FUNCTIONS
         #region Functions
