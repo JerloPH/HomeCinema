@@ -754,7 +754,6 @@ namespace HomeCinema
                     // List of files valid to add
                     listToAdd = new List<string>();
 
-                    string nonres = ""; // List of "Voided Files" filepaths, not media files
                     bool voided = true; // Check if file can be added to "Voided Files" Log
 
                     // If file is a movie,
@@ -808,7 +807,7 @@ namespace HomeCinema
                         }
                         if (voided)
                         {
-                            nonres += file + "\n";
+                            GlobalVars.WriteAppend(Path.Combine(GlobalVars.PATH_LOG, "MovieResult_Skipped.Log"), file + Environment.NewLine);
                             countVoid += 1;
                         }
                     }
@@ -849,8 +848,6 @@ namespace HomeCinema
                             }
                         }
                     }
-
-                    GlobalVars.WriteToFile(Path.Combine(GlobalVars.PATH_LOG, "MovieResult_Skipped.Log"), nonres);
 
                     // Add now to database
                     form.Message = "Inserting new entries..";
