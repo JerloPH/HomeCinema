@@ -298,6 +298,10 @@ namespace HomeCinema
             // Save settings and Show Message
             GlobalVars.SaveSettings();
             GlobalVars.ShowInfo("Done saving Settings!" + (error ? "\nSome settings are not saved!" : ""));
+            if (!error)
+            {
+                Close();
+            }
         }
         private void btnMediaLocAdd_Click(object sender, EventArgs e)
         {
