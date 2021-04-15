@@ -69,12 +69,15 @@
             this.listboxGenre = new System.Windows.Forms.ListBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.btnChangeColorBG = new System.Windows.Forms.Button();
+            this.btnColorBG = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.btnColorBG = new System.Windows.Forms.Button();
-            this.btnChangeColorBG = new System.Windows.Forms.Button();
+            this.btnChangeColorFont = new System.Windows.Forms.Button();
+            this.btnColorFont = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -94,7 +97,7 @@
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.ItemSize = new System.Drawing.Size(30, 100);
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -120,9 +123,9 @@
             this.tabPage1.Controls.Add(this.lblAutoUpdate);
             this.tabPage1.ForeColor = System.Drawing.Color.White;
             this.tabPage1.Location = new System.Drawing.Point(104, 4);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(2);
             this.tabPage1.Size = new System.Drawing.Size(538, 376);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "General";
@@ -132,7 +135,7 @@
             this.btnCheckUpdate.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.btnCheckUpdate.ForeColor = System.Drawing.Color.Black;
             this.btnCheckUpdate.Location = new System.Drawing.Point(7, 330);
-            this.btnCheckUpdate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCheckUpdate.Margin = new System.Windows.Forms.Padding(2);
             this.btnCheckUpdate.Name = "btnCheckUpdate";
             this.btnCheckUpdate.Size = new System.Drawing.Size(146, 34);
             this.btnCheckUpdate.TabIndex = 17;
@@ -154,7 +157,7 @@
             // 
             this.txtImdbSearchLimit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtImdbSearchLimit.Location = new System.Drawing.Point(203, 269);
-            this.txtImdbSearchLimit.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtImdbSearchLimit.Margin = new System.Windows.Forms.Padding(2);
             this.txtImdbSearchLimit.Name = "txtImdbSearchLimit";
             this.txtImdbSearchLimit.Size = new System.Drawing.Size(126, 26);
             this.txtImdbSearchLimit.TabIndex = 10;
@@ -173,7 +176,7 @@
             // 
             this.txtMaxItemCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMaxItemCount.Location = new System.Drawing.Point(203, 219);
-            this.txtMaxItemCount.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtMaxItemCount.Margin = new System.Windows.Forms.Padding(2);
             this.txtMaxItemCount.Name = "txtMaxItemCount";
             this.txtMaxItemCount.Size = new System.Drawing.Size(126, 26);
             this.txtMaxItemCount.TabIndex = 8;
@@ -192,7 +195,7 @@
             // 
             this.txtLogSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtLogSize.Location = new System.Drawing.Point(203, 170);
-            this.txtLogSize.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtLogSize.Margin = new System.Windows.Forms.Padding(2);
             this.txtLogSize.Name = "txtLogSize";
             this.txtLogSize.Size = new System.Drawing.Size(126, 26);
             this.txtLogSize.TabIndex = 6;
@@ -203,7 +206,7 @@
             this.cbPlayMovie.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbPlayMovie.FormattingEnabled = true;
             this.cbPlayMovie.Location = new System.Drawing.Point(203, 114);
-            this.cbPlayMovie.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbPlayMovie.Margin = new System.Windows.Forms.Padding(2);
             this.cbPlayMovie.Name = "cbPlayMovie";
             this.cbPlayMovie.Size = new System.Drawing.Size(126, 28);
             this.cbPlayMovie.TabIndex = 5;
@@ -224,7 +227,7 @@
             this.cbOffline.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbOffline.FormattingEnabled = true;
             this.cbOffline.Location = new System.Drawing.Point(203, 70);
-            this.cbOffline.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbOffline.Margin = new System.Windows.Forms.Padding(2);
             this.cbOffline.Name = "cbOffline";
             this.cbOffline.Size = new System.Drawing.Size(126, 28);
             this.cbOffline.TabIndex = 3;
@@ -245,7 +248,7 @@
             this.cbAutoUpdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbAutoUpdate.FormattingEnabled = true;
             this.cbAutoUpdate.Location = new System.Drawing.Point(203, 24);
-            this.cbAutoUpdate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbAutoUpdate.Margin = new System.Windows.Forms.Padding(2);
             this.cbAutoUpdate.Name = "cbAutoUpdate";
             this.cbAutoUpdate.Size = new System.Drawing.Size(126, 28);
             this.cbAutoUpdate.TabIndex = 1;
@@ -277,9 +280,9 @@
             this.tabPage2.Controls.Add(this.txtMediaExt);
             this.tabPage2.ForeColor = System.Drawing.Color.White;
             this.tabPage2.Location = new System.Drawing.Point(104, 4);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(2);
             this.tabPage2.Size = new System.Drawing.Size(538, 376);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "File";
@@ -289,7 +292,7 @@
             this.btnSeriesLocClear.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSeriesLocClear.ForeColor = System.Drawing.Color.Black;
             this.btnSeriesLocClear.Location = new System.Drawing.Point(406, 318);
-            this.btnSeriesLocClear.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSeriesLocClear.Margin = new System.Windows.Forms.Padding(2);
             this.btnSeriesLocClear.Name = "btnSeriesLocClear";
             this.btnSeriesLocClear.Size = new System.Drawing.Size(88, 30);
             this.btnSeriesLocClear.TabIndex = 24;
@@ -302,7 +305,7 @@
             this.btnSeriesLocRemove.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSeriesLocRemove.ForeColor = System.Drawing.Color.Black;
             this.btnSeriesLocRemove.Location = new System.Drawing.Point(406, 284);
-            this.btnSeriesLocRemove.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSeriesLocRemove.Margin = new System.Windows.Forms.Padding(2);
             this.btnSeriesLocRemove.Name = "btnSeriesLocRemove";
             this.btnSeriesLocRemove.Size = new System.Drawing.Size(88, 30);
             this.btnSeriesLocRemove.TabIndex = 23;
@@ -315,7 +318,7 @@
             this.btnSeriesLocAdd.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSeriesLocAdd.ForeColor = System.Drawing.Color.Black;
             this.btnSeriesLocAdd.Location = new System.Drawing.Point(406, 250);
-            this.btnSeriesLocAdd.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSeriesLocAdd.Margin = new System.Windows.Forms.Padding(2);
             this.btnSeriesLocAdd.Name = "btnSeriesLocAdd";
             this.btnSeriesLocAdd.Size = new System.Drawing.Size(87, 30);
             this.btnSeriesLocAdd.TabIndex = 22;
@@ -346,7 +349,7 @@
             this.btnMediaLocClear.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMediaLocClear.ForeColor = System.Drawing.Color.Black;
             this.btnMediaLocClear.Location = new System.Drawing.Point(408, 180);
-            this.btnMediaLocClear.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnMediaLocClear.Margin = new System.Windows.Forms.Padding(2);
             this.btnMediaLocClear.Name = "btnMediaLocClear";
             this.btnMediaLocClear.Size = new System.Drawing.Size(88, 30);
             this.btnMediaLocClear.TabIndex = 19;
@@ -359,7 +362,7 @@
             this.btnMediaLocRemove.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMediaLocRemove.ForeColor = System.Drawing.Color.Black;
             this.btnMediaLocRemove.Location = new System.Drawing.Point(408, 146);
-            this.btnMediaLocRemove.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnMediaLocRemove.Margin = new System.Windows.Forms.Padding(2);
             this.btnMediaLocRemove.Name = "btnMediaLocRemove";
             this.btnMediaLocRemove.Size = new System.Drawing.Size(88, 30);
             this.btnMediaLocRemove.TabIndex = 18;
@@ -372,7 +375,7 @@
             this.btnMediaLocAdd.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMediaLocAdd.ForeColor = System.Drawing.Color.Black;
             this.btnMediaLocAdd.Location = new System.Drawing.Point(408, 112);
-            this.btnMediaLocAdd.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnMediaLocAdd.Margin = new System.Windows.Forms.Padding(2);
             this.btnMediaLocAdd.Name = "btnMediaLocAdd";
             this.btnMediaLocAdd.Size = new System.Drawing.Size(87, 30);
             this.btnMediaLocAdd.TabIndex = 17;
@@ -414,7 +417,7 @@
             // 
             this.txtMediaExt.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMediaExt.Location = new System.Drawing.Point(6, 32);
-            this.txtMediaExt.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtMediaExt.Margin = new System.Windows.Forms.Padding(2);
             this.txtMediaExt.Multiline = true;
             this.txtMediaExt.Name = "txtMediaExt";
             this.txtMediaExt.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -438,7 +441,7 @@
             this.tabPage3.Controls.Add(this.label6);
             this.tabPage3.ForeColor = System.Drawing.Color.White;
             this.tabPage3.Location = new System.Drawing.Point(104, 4);
-            this.tabPage3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage3.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(538, 376);
             this.tabPage3.TabIndex = 2;
@@ -449,7 +452,7 @@
             this.btnCountryClear.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.btnCountryClear.ForeColor = System.Drawing.Color.Black;
             this.btnCountryClear.Location = new System.Drawing.Point(416, 327);
-            this.btnCountryClear.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCountryClear.Margin = new System.Windows.Forms.Padding(2);
             this.btnCountryClear.Name = "btnCountryClear";
             this.btnCountryClear.Size = new System.Drawing.Size(106, 33);
             this.btnCountryClear.TabIndex = 26;
@@ -462,7 +465,7 @@
             this.btnCountryRemove.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.btnCountryRemove.ForeColor = System.Drawing.Color.Black;
             this.btnCountryRemove.Location = new System.Drawing.Point(416, 290);
-            this.btnCountryRemove.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCountryRemove.Margin = new System.Windows.Forms.Padding(2);
             this.btnCountryRemove.Name = "btnCountryRemove";
             this.btnCountryRemove.Size = new System.Drawing.Size(106, 33);
             this.btnCountryRemove.TabIndex = 25;
@@ -475,7 +478,7 @@
             this.btnCountryEdit.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.btnCountryEdit.ForeColor = System.Drawing.Color.Black;
             this.btnCountryEdit.Location = new System.Drawing.Point(416, 254);
-            this.btnCountryEdit.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCountryEdit.Margin = new System.Windows.Forms.Padding(2);
             this.btnCountryEdit.Name = "btnCountryEdit";
             this.btnCountryEdit.Size = new System.Drawing.Size(106, 33);
             this.btnCountryEdit.TabIndex = 24;
@@ -488,7 +491,7 @@
             this.btnCountryAdd.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.btnCountryAdd.ForeColor = System.Drawing.Color.Black;
             this.btnCountryAdd.Location = new System.Drawing.Point(416, 217);
-            this.btnCountryAdd.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCountryAdd.Margin = new System.Windows.Forms.Padding(2);
             this.btnCountryAdd.Name = "btnCountryAdd";
             this.btnCountryAdd.Size = new System.Drawing.Size(106, 33);
             this.btnCountryAdd.TabIndex = 23;
@@ -501,7 +504,7 @@
             this.btnGenreClear.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.btnGenreClear.ForeColor = System.Drawing.Color.Black;
             this.btnGenreClear.Location = new System.Drawing.Point(416, 148);
-            this.btnGenreClear.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnGenreClear.Margin = new System.Windows.Forms.Padding(2);
             this.btnGenreClear.Name = "btnGenreClear";
             this.btnGenreClear.Size = new System.Drawing.Size(106, 33);
             this.btnGenreClear.TabIndex = 22;
@@ -514,7 +517,7 @@
             this.btnGenreRemove.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.btnGenreRemove.ForeColor = System.Drawing.Color.Black;
             this.btnGenreRemove.Location = new System.Drawing.Point(416, 111);
-            this.btnGenreRemove.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnGenreRemove.Margin = new System.Windows.Forms.Padding(2);
             this.btnGenreRemove.Name = "btnGenreRemove";
             this.btnGenreRemove.Size = new System.Drawing.Size(106, 33);
             this.btnGenreRemove.TabIndex = 21;
@@ -527,7 +530,7 @@
             this.btnGenreEdit.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.btnGenreEdit.ForeColor = System.Drawing.Color.Black;
             this.btnGenreEdit.Location = new System.Drawing.Point(416, 75);
-            this.btnGenreEdit.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnGenreEdit.Margin = new System.Windows.Forms.Padding(2);
             this.btnGenreEdit.Name = "btnGenreEdit";
             this.btnGenreEdit.Size = new System.Drawing.Size(106, 33);
             this.btnGenreEdit.TabIndex = 20;
@@ -540,7 +543,7 @@
             this.btnGenreAdd.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.btnGenreAdd.ForeColor = System.Drawing.Color.Black;
             this.btnGenreAdd.Location = new System.Drawing.Point(416, 38);
-            this.btnGenreAdd.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnGenreAdd.Margin = new System.Windows.Forms.Padding(2);
             this.btnGenreAdd.Name = "btnGenreAdd";
             this.btnGenreAdd.Size = new System.Drawing.Size(106, 33);
             this.btnGenreAdd.TabIndex = 17;
@@ -553,7 +556,7 @@
             this.listboxCountry.FormattingEnabled = true;
             this.listboxCountry.ItemHeight = 17;
             this.listboxCountry.Location = new System.Drawing.Point(10, 219);
-            this.listboxCountry.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.listboxCountry.Margin = new System.Windows.Forms.Padding(2);
             this.listboxCountry.Name = "listboxCountry";
             this.listboxCountry.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.listboxCountry.Size = new System.Drawing.Size(394, 140);
@@ -564,7 +567,7 @@
             this.listboxGenre.FormattingEnabled = true;
             this.listboxGenre.ItemHeight = 17;
             this.listboxGenre.Location = new System.Drawing.Point(10, 38);
-            this.listboxGenre.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.listboxGenre.Margin = new System.Windows.Forms.Padding(2);
             this.listboxGenre.Name = "listboxGenre";
             this.listboxGenre.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.listboxGenre.Size = new System.Drawing.Size(394, 140);
@@ -590,12 +593,46 @@
             this.label6.TabIndex = 15;
             this.label6.Text = "Genre :";
             // 
+            // tabPage4
+            // 
+            this.tabPage4.BackColor = System.Drawing.Color.Black;
+            this.tabPage4.Controls.Add(this.label2);
+            this.tabPage4.Controls.Add(this.btnChangeColorFont);
+            this.tabPage4.Controls.Add(this.btnColorFont);
+            this.tabPage4.Controls.Add(this.btnChangeColorBG);
+            this.tabPage4.Controls.Add(this.btnColorBG);
+            this.tabPage4.Location = new System.Drawing.Point(104, 4);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(538, 376);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Appearance";
+            // 
+            // btnChangeColorBG
+            // 
+            this.btnChangeColorBG.BackColor = System.Drawing.Color.Black;
+            this.btnChangeColorBG.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnChangeColorBG.Location = new System.Drawing.Point(76, 24);
+            this.btnChangeColorBG.Name = "btnChangeColorBG";
+            this.btnChangeColorBG.Size = new System.Drawing.Size(204, 38);
+            this.btnChangeColorBG.TabIndex = 1;
+            this.btnChangeColorBG.Text = "Change Background Color";
+            this.btnChangeColorBG.UseVisualStyleBackColor = false;
+            this.btnChangeColorBG.Click += new System.EventHandler(this.btnChangeColorBG_Click);
+            // 
+            // btnColorBG
+            // 
+            this.btnColorBG.Location = new System.Drawing.Point(24, 24);
+            this.btnColorBG.Name = "btnColorBG";
+            this.btnColorBG.Size = new System.Drawing.Size(46, 38);
+            this.btnColorBG.TabIndex = 0;
+            this.btnColorBG.UseVisualStyleBackColor = true;
+            // 
             // btnCancel
             // 
             this.btnCancel.Font = new System.Drawing.Font("Calibri", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.btnCancel.ForeColor = System.Drawing.Color.Black;
             this.btnCancel.Location = new System.Drawing.Point(481, 388);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(156, 48);
             this.btnCancel.TabIndex = 11;
@@ -608,7 +645,7 @@
             this.btnSave.Font = new System.Drawing.Font("Calibri", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.btnSave.ForeColor = System.Drawing.Color.Black;
             this.btnSave.Location = new System.Drawing.Point(330, 388);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(2);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(137, 48);
             this.btnSave.TabIndex = 10;
@@ -626,36 +663,35 @@
             this.label9.TabIndex = 16;
             this.label9.Text = "* Changes Apply after Restart";
             // 
-            // tabPage4
+            // btnChangeColorFont
             // 
-            this.tabPage4.BackColor = System.Drawing.Color.Black;
-            this.tabPage4.Controls.Add(this.btnChangeColorBG);
-            this.tabPage4.Controls.Add(this.btnColorBG);
-            this.tabPage4.Location = new System.Drawing.Point(104, 4);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(538, 376);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "Appearance";
+            this.btnChangeColorFont.BackColor = System.Drawing.Color.Black;
+            this.btnChangeColorFont.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnChangeColorFont.Location = new System.Drawing.Point(76, 80);
+            this.btnChangeColorFont.Name = "btnChangeColorFont";
+            this.btnChangeColorFont.Size = new System.Drawing.Size(204, 38);
+            this.btnChangeColorFont.TabIndex = 3;
+            this.btnChangeColorFont.Text = "Change Font Color";
+            this.btnChangeColorFont.UseVisualStyleBackColor = false;
+            this.btnChangeColorFont.Click += new System.EventHandler(this.btnChangeColorFont_Click);
             // 
-            // btnColorBG
+            // btnColorFont
             // 
-            this.btnColorBG.Location = new System.Drawing.Point(24, 24);
-            this.btnColorBG.Name = "btnColorBG";
-            this.btnColorBG.Size = new System.Drawing.Size(46, 38);
-            this.btnColorBG.TabIndex = 0;
-            this.btnColorBG.UseVisualStyleBackColor = true;
+            this.btnColorFont.Location = new System.Drawing.Point(24, 80);
+            this.btnColorFont.Name = "btnColorFont";
+            this.btnColorFont.Size = new System.Drawing.Size(46, 38);
+            this.btnColorFont.TabIndex = 2;
+            this.btnColorFont.UseVisualStyleBackColor = true;
             // 
-            // btnChangeColorBG
+            // label2
             // 
-            this.btnChangeColorBG.BackColor = System.Drawing.Color.Black;
-            this.btnChangeColorBG.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnChangeColorBG.Location = new System.Drawing.Point(76, 24);
-            this.btnChangeColorBG.Name = "btnChangeColorBG";
-            this.btnChangeColorBG.Size = new System.Drawing.Size(204, 38);
-            this.btnChangeColorBG.TabIndex = 1;
-            this.btnChangeColorBG.Text = "Change Background Color";
-            this.btnChangeColorBG.UseVisualStyleBackColor = false;
-            this.btnChangeColorBG.Click += new System.EventHandler(this.btnChangeColorBG_Click);
+            this.label2.Font = new System.Drawing.Font("Calibri", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(77, 121);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(454, 34);
+            this.label2.TabIndex = 17;
+            this.label2.Text = "Font Color change applies on next \'Search\' button press";
             // 
             // frmSettings
             // 
@@ -669,7 +705,7 @@
             this.Controls.Add(this.tabControl1);
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.Name = "frmSettings";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
@@ -736,5 +772,8 @@
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.Button btnChangeColorBG;
         private System.Windows.Forms.Button btnColorBG;
+        private System.Windows.Forms.Button btnChangeColorFont;
+        private System.Windows.Forms.Button btnColorFont;
+        private System.Windows.Forms.Label label2;
     }
 }

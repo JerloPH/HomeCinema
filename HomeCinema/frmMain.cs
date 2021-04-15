@@ -626,6 +626,7 @@ namespace HomeCinema
 
                 // Set font
                 temp.Font = GlobalVars.TILE_FONT;
+                temp.ForeColor = GlobalVars.SET_COLOR_FONT;
             }
         }
         // Populate combobox cbCountry, from file

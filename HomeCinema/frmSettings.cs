@@ -28,7 +28,8 @@ namespace HomeCinema
 {
     public partial class frmSettings : Form
     {
-        private Color BackgroundColor;
+        private Color BackgroundColor = GlobalVars.SET_COLOR_BG;
+        private Color FontColor = GlobalVars.SET_COLOR_FONT;
         public frmSettings()
         {
             InitializeComponent();
@@ -216,8 +217,8 @@ namespace HomeCinema
             }
 
             // Theme-related
-            BackgroundColor = GlobalVars.SET_COLOR_BG;
             btnColorBG.BackColor = BackgroundColor;
+            btnColorFont.BackColor = FontColor;
         }
         private void frmSettings_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -291,6 +292,7 @@ namespace HomeCinema
 
             // Theme Settings
             GlobalVars.SET_COLOR_BG = BackgroundColor;
+            GlobalVars.SET_COLOR_FONT = FontColor;
 
             // Save settings and Show Message
             GlobalVars.SaveSettings();
@@ -411,6 +413,15 @@ namespace HomeCinema
             Program.FormMain.lvSearchResult.BackColor = col.Color;
             BackgroundColor = col.Color;
             btnColorBG.BackColor = col.Color;
+            col.Dispose();
+        }
+
+        private void btnChangeColorFont_Click(object sender, EventArgs e)
+        {
+            var col = new ColorDialog();
+            col.ShowDialog();
+            FontColor = col.Color;
+            btnColorFont.BackColor = col.Color;
             col.Dispose();
         }
     }
