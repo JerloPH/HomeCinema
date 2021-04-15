@@ -8,6 +8,7 @@
 - REV: Added new category in *Settings* window, **Appearance**. 
   - Contains settings to modify GUI elements, like window background color and font color.
 - FIX: Entries stop loading after a file missing is reached.
+- FIX: New series cannot be added.
 - MINOR: Close *Settings* window after Saving changes.
 - GUI: Minor change to some messages on forms.
 - GUI: Added Icons for Loading form, indicating success or failure when checking for updates.
@@ -16,6 +17,7 @@
 - REFACTOR: Reduced code lines, and improved disposing of resources.
 - MINOR: Moved condition for checking update.
 - MINOR: Moved Saving Settings on [**OK**] button pressed, on Settings window.
+- MINOR: Append to Skipped log, instead of rewriting.
 - DOC: Removed download links for old releases.
 ****
 
