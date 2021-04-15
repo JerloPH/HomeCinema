@@ -217,6 +217,7 @@ namespace HomeCinema
                 }
                 catch (Exception ex)
                 {
+                    GlobalVars.WriteAppend(Path.Combine(GlobalVars.PATH_LOG, "MovieResult_Skipped.Log"), filePath);
                     GlobalVars.ShowError(callFrom, ex, false);
                     continue; // skip when exception thrown
                 }
@@ -734,6 +735,7 @@ namespace HomeCinema
             var listToAdd = new List<string>();
             var listSeries = new List<string>();
             int countVoid = 0; // void files, not media
+            string logFile = Path.Combine(GlobalVars.PATH_LOG, "SeriesResult.Log");
 
             // Delegate task to frmLoading
             form.BackgroundWorker.DoWork += (sender1, e1) =>
@@ -819,26 +821,30 @@ namespace HomeCinema
                     {
                         foreach (string folderPath in listSeries)
                         {
+                            GlobalVars.WriteAppend(logFile, "Folder: " + folderPath + Environment.NewLine);
                             // Check if folder already exists in the database
                             if (listAlreadyinDB.Count > 0)
                             {
-                                // Iterate over existing files/folder list
-                                foreach (string pathExist in listAlreadyinDB)
+                                // Remove if it already exists
+                                if (listAlreadyinDB.Any(folderPath.Contains))
                                 {
-                                    // Remove if it already exists
-                                    if (pathExist == folderPath)
-                                    {
-                                        // remove the item from list of already existing
-                                        int index = listAlreadyinDB.IndexOf(folderPath);
-                                        try { listAlreadyinDB.RemoveAt(index); }
-                                        catch (Exception ex) { GlobalVars.ShowError(calledFrom, ex, false); }
-                                        break;
-                                    }
+                                    GlobalVars.WriteAppend(logFile, "Already existing! " + folderPath + Environment.NewLine);
+                                    // remove the item from list of already existing
+                                    int index = listAlreadyinDB.IndexOf(folderPath);
+                                    try { listAlreadyinDB.RemoveAt(index); }
+                                    catch (Exception ex) { GlobalVars.ShowError(calledFrom, ex, false); }
+                                }
+                                else
+                                {
+                                    // Add it to the list of new series to add to DB
+                                    GlobalVars.WriteAppend(logFile, "Will Add: " + folderPath + Environment.NewLine);
+                                    listToAdd.Add(folderPath);
                                 }
                             }
                             else
                             {
                                 // Add it to the list of new series to add to DB
+                                GlobalVars.WriteAppend(logFile, "Will Add: " + folderPath + Environment.NewLine);
                                 listToAdd.Add(folderPath);
                             }
                         }
