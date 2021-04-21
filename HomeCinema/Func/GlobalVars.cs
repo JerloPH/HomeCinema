@@ -1531,9 +1531,13 @@ namespace HomeCinema.Global
             List<string> listCover = SearchFilesSingleDir(PATH_IMG, calledFrom, false);
             foreach (string i in listId)
             {
-                // Remove element if its in listId
-                filepath = Path.Combine(PATH_IMG, $"{i}.jpg");
-                listCover.RemoveAt(listCover.IndexOf(filepath));
+                try
+                {
+                    // Remove element if its in listId
+                    filepath = Path.Combine(PATH_IMG, $"{i}.jpg");
+                    listCover.RemoveAt(listCover.IndexOf(filepath));
+                }
+                catch { }
             }
             // Remove 0.jpg
             filepath = Path.Combine(PATH_IMG, "0.jpg");
