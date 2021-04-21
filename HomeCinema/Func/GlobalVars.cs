@@ -135,6 +135,7 @@ namespace HomeCinema.Global
         public static bool SET_AUTOCLEAN { get; set; } = true; // Automatically clean temp and logs on App Load
         public static Color SET_COLOR_BG { get; set; } = Color.Black; // default color
         public static Color SET_COLOR_FONT { get; set; } = Color.White; // default color
+        public static int SET_TIMEOUT { get; set; } = 3; // TimeOut in seconds (1000 ms)
 
         // FORMS
         public static Form formSetting = null; // Check if settings is already open
@@ -316,6 +317,8 @@ namespace HomeCinema.Global
             SET_ITEMLIMIT = config.itemMaxLimit;
             // Limit Item result on IMDB searching
             SET_SEARCHLIMIT = config.searchLimit;
+            // TimeOut for Internet connections
+            SET_TIMEOUT = config.setTimeOut;
 
             // Set colors
             try
@@ -341,6 +344,7 @@ namespace HomeCinema.Global
             config.instantPlayMovie = Convert.ToInt16(SET_AUTOPLAY);
             config.itemMaxLimit = SET_ITEMLIMIT;
             config.searchLimit = SET_SEARCHLIMIT;
+            config.setTimeOut = SET_TIMEOUT;
             config.BackgroundColor = SET_COLOR_BG.ToArgb().ToString("x");
             config.FontColor = SET_COLOR_FONT.ToArgb().ToString("x");
 
@@ -854,19 +858,16 @@ namespace HomeCinema.Global
             return false;
         }
         // Check if there is an active Internet connection
-        public static bool CheckConnection(String URL)
+        public static bool CheckConnection(String URL, int timeOutSec = 3)
         {
             bool ret = false;
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
-                request.Timeout = 3000;
+                request.Timeout = timeOutSec * 1000;
                 request.Credentials = CredentialCache.DefaultNetworkCredentials;
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                if (response.StatusCode == HttpStatusCode.OK)
-                {
-                    ret = true;
-                }
+                ret = (response.StatusCode == HttpStatusCode.OK);
                 response.Dispose();
                 return ret;
             }
@@ -882,7 +883,7 @@ namespace HomeCinema.Global
             string errFrom = "GlobalVars-DownloadFrom";
             using (var client = new WebClient())
             {
-                if (CheckConnection(link))
+                if (CheckConnection(link, SET_TIMEOUT))
                 {
                     try
                     {
