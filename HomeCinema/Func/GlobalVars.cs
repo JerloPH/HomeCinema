@@ -1540,8 +1540,13 @@ namespace HomeCinema.Global
                 catch { }
             }
             // Remove 0.jpg
-            filepath = Path.Combine(PATH_IMG, "0.jpg");
-            listCover.RemoveAt(listCover.IndexOf(filepath));
+            try
+            {
+                filepath = Path.Combine(PATH_IMG, "0.jpg");
+                listCover.RemoveAt(listCover.IndexOf(filepath));
+            }
+            catch { }
+            // Delete files on the list
             foreach (string file in listCover)
             {
                 DeleteMove(file, calledFrom);
