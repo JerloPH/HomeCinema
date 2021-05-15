@@ -1,8 +1,6 @@
 # HomeCinema - Features to Add / Bugs to Fix
 
 ## Priority List
-- Properly dispose form if not modaly shown. *View links.md*.
-- On searching info in IMDB, view dialog for selection, instead of getting only the first result.
 - Scrape Anime info from Anilist/MyAnimeList.
 - Improve speed of App load (check background worker and optimize).
 - Check if file still exists, before loading it into the App.

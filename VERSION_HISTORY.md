@@ -1,5 +1,14 @@
 # HomeCinema - Project History:
 
+## HomeCinema v0.5.3
+### ***release 34 - build 15 May 2021 PHT***
+
+### What's New?
+- NEW: Json setting to change Time out when connecting to the internet, *for various features*.
+  - See **data\settings.json** file, under **"setTimeOut": [value]**.
+- FIX: When cleaning, app fails to load subsequent entries.
+****
+
 ## HomeCinema v0.5.2
 ### ***release 33 - build 15 April 2021 PHT***
 

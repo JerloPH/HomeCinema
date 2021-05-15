@@ -2,12 +2,12 @@
 
 <img src="/data/v0.5.jpg"></img>
 
-**version:**	0.5.2.0 <br>
-**release:**	33
+**version:**	0.5.3.0 <br>
+**release:**	34
 
 ## Downloads
 
-**Windows 10, 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.5.2.0/HomeCinema-Windows.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
+**Windows 10, 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.5.3.0/HomeCinema-Windows.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
 **Note: Untested on Windows 7 and 8, but might work**
 
 ### Download Counts
@@ -107,8 +107,8 @@ D:\TV Series\Title of Series and Season\Episode 1.mp4
 <details>
 	<summary> <b>View Snippet</b> </summary>
 	
-    <b>HomeCinema - Organize your Movie Collection</b>
-    <b>Copyright (C) 2021  JerloPH (https://github.com/JerloPH)</b>
+    • HomeCinema - Organize your Movie Collection •
+    • Copyright (C) 2021  JerloPH (https://github.com/JerloPH) •
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
