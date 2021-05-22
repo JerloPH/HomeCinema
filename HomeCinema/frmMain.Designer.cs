@@ -32,6 +32,7 @@ namespace HomeCinema
         {
             this.components = new System.ComponentModel.Container();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnAbout = new System.Windows.Forms.Button();
             this.cbHideAnim = new System.Windows.Forms.CheckBox();
             this.cbSortOrder = new System.Windows.Forms.ComboBox();
             this.cbSort = new System.Windows.Forms.ComboBox();
@@ -40,30 +41,29 @@ namespace HomeCinema
             this.btnChangeView = new System.Windows.Forms.Button();
             this.lvSearchResult = new System.Windows.Forms.ListView();
             this.txtSearch = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblImdb = new System.Windows.Forms.Label();
             this.txtIMDB = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblYear = new System.Windows.Forms.Label();
             this.txtYearFrom = new System.Windows.Forms.TextBox();
             this.txtYearTo = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblStudio = new System.Windows.Forms.Label();
             this.txtStudio = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lblCast = new System.Windows.Forms.Label();
             this.txtCast = new System.Windows.Forms.TextBox();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
+            this.lblCountry = new System.Windows.Forms.Label();
             this.cbCountry = new System.Windows.Forms.ComboBox();
-            this.label8 = new System.Windows.Forms.Label();
+            this.lblGenre = new System.Windows.Forms.Label();
             this.cbGenre = new System.Windows.Forms.ComboBox();
             this.cbClearSearch = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtDirector = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
+            this.lblDirector = new System.Windows.Forms.Label();
             this.cbCategory = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.lblCategory = new System.Windows.Forms.Label();
             this.cmLV = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.btnAbout = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -88,6 +88,19 @@ namespace HomeCinema
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Controls";
+            // 
+            // btnAbout
+            // 
+            this.btnAbout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnAbout.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAbout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnAbout.Location = new System.Drawing.Point(645, 16);
+            this.btnAbout.Name = "btnAbout";
+            this.btnAbout.Size = new System.Drawing.Size(161, 40);
+            this.btnAbout.TabIndex = 30;
+            this.btnAbout.Text = "About";
+            this.btnAbout.UseVisualStyleBackColor = false;
+            this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
             // 
             // cbHideAnim
             // 
@@ -198,16 +211,16 @@ namespace HomeCinema
             this.txtSearch.TabIndex = 2;
             this.txtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
             // 
-            // label1
+            // lblImdb
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(2, 61);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 24);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "IMDB : ";
+            this.lblImdb.AutoSize = true;
+            this.lblImdb.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblImdb.ForeColor = System.Drawing.Color.White;
+            this.lblImdb.Location = new System.Drawing.Point(2, 61);
+            this.lblImdb.Name = "lblImdb";
+            this.lblImdb.Size = new System.Drawing.Size(70, 24);
+            this.lblImdb.TabIndex = 3;
+            this.lblImdb.Text = "IMDB : ";
             // 
             // txtIMDB
             // 
@@ -217,16 +230,16 @@ namespace HomeCinema
             this.txtIMDB.Size = new System.Drawing.Size(185, 28);
             this.txtIMDB.TabIndex = 4;
             // 
-            // label2
+            // lblYear
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(3, 94);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(64, 24);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Year : ";
+            this.lblYear.AutoSize = true;
+            this.lblYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblYear.ForeColor = System.Drawing.Color.White;
+            this.lblYear.Location = new System.Drawing.Point(3, 94);
+            this.lblYear.Name = "lblYear";
+            this.lblYear.Size = new System.Drawing.Size(64, 24);
+            this.lblYear.TabIndex = 5;
+            this.lblYear.Text = "Year : ";
             // 
             // txtYearFrom
             // 
@@ -254,16 +267,16 @@ namespace HomeCinema
             this.label3.TabIndex = 8;
             this.label3.Text = "-";
             // 
-            // label4
+            // lblStudio
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(530, 61);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(78, 24);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "Studio : ";
+            this.lblStudio.AutoSize = true;
+            this.lblStudio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStudio.ForeColor = System.Drawing.Color.White;
+            this.lblStudio.Location = new System.Drawing.Point(530, 61);
+            this.lblStudio.Name = "lblStudio";
+            this.lblStudio.Size = new System.Drawing.Size(78, 24);
+            this.lblStudio.TabIndex = 9;
+            this.lblStudio.Text = "Studio : ";
             // 
             // txtStudio
             // 
@@ -273,17 +286,17 @@ namespace HomeCinema
             this.txtStudio.Size = new System.Drawing.Size(158, 28);
             this.txtStudio.TabIndex = 10;
             // 
-            // label5
+            // lblCast
             // 
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(281, 99);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(61, 24);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "Cast : ";
+            this.lblCast.AutoSize = true;
+            this.lblCast.BackColor = System.Drawing.Color.Transparent;
+            this.lblCast.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCast.ForeColor = System.Drawing.Color.White;
+            this.lblCast.Location = new System.Drawing.Point(281, 99);
+            this.lblCast.Name = "lblCast";
+            this.lblCast.Size = new System.Drawing.Size(61, 24);
+            this.lblCast.TabIndex = 11;
+            this.lblCast.Text = "Cast : ";
             // 
             // txtCast
             // 
@@ -320,17 +333,17 @@ namespace HomeCinema
             this.btnSearch.UseVisualStyleBackColor = false;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
-            // label7
+            // lblCountry
             // 
-            this.label7.AutoSize = true;
-            this.label7.BackColor = System.Drawing.Color.Transparent;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(523, 95);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(85, 24);
-            this.label7.TabIndex = 18;
-            this.label7.Text = "Country :";
+            this.lblCountry.AutoSize = true;
+            this.lblCountry.BackColor = System.Drawing.Color.Transparent;
+            this.lblCountry.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCountry.ForeColor = System.Drawing.Color.White;
+            this.lblCountry.Location = new System.Drawing.Point(523, 95);
+            this.lblCountry.Name = "lblCountry";
+            this.lblCountry.Size = new System.Drawing.Size(85, 24);
+            this.lblCountry.TabIndex = 18;
+            this.lblCountry.Text = "Country :";
             // 
             // cbCountry
             // 
@@ -344,17 +357,17 @@ namespace HomeCinema
             this.cbCountry.Size = new System.Drawing.Size(160, 30);
             this.cbCountry.TabIndex = 20;
             // 
-            // label8
+            // lblGenre
             // 
-            this.label8.AutoSize = true;
-            this.label8.BackColor = System.Drawing.Color.Transparent;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Location = new System.Drawing.Point(807, 65);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(73, 24);
-            this.label8.TabIndex = 21;
-            this.label8.Text = "Genre :";
+            this.lblGenre.AutoSize = true;
+            this.lblGenre.BackColor = System.Drawing.Color.Transparent;
+            this.lblGenre.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGenre.ForeColor = System.Drawing.Color.White;
+            this.lblGenre.Location = new System.Drawing.Point(807, 65);
+            this.lblGenre.Name = "lblGenre";
+            this.lblGenre.Size = new System.Drawing.Size(73, 24);
+            this.lblGenre.TabIndex = 21;
+            this.lblGenre.Text = "Genre :";
             // 
             // cbGenre
             // 
@@ -386,26 +399,26 @@ namespace HomeCinema
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.BackColor = System.Drawing.Color.Black;
             this.groupBox1.Controls.Add(this.txtDirector);
-            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.lblDirector);
             this.groupBox1.Controls.Add(this.cbClearSearch);
             this.groupBox1.Controls.Add(this.cbGenre);
-            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.lblGenre);
             this.groupBox1.Controls.Add(this.cbCountry);
             this.groupBox1.Controls.Add(this.cbCategory);
-            this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.lblCountry);
+            this.groupBox1.Controls.Add(this.lblCategory);
             this.groupBox1.Controls.Add(this.btnSearch);
             this.groupBox1.Controls.Add(this.btnClear);
             this.groupBox1.Controls.Add(this.txtCast);
-            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.lblCast);
             this.groupBox1.Controls.Add(this.txtStudio);
-            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.lblStudio);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.txtYearTo);
             this.groupBox1.Controls.Add(this.txtYearFrom);
-            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.lblYear);
             this.groupBox1.Controls.Add(this.txtIMDB);
-            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.lblImdb);
             this.groupBox1.Controls.Add(this.txtSearch);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.ForeColor = System.Drawing.Color.White;
@@ -424,16 +437,16 @@ namespace HomeCinema
             this.txtDirector.Size = new System.Drawing.Size(168, 28);
             this.txtDirector.TabIndex = 25;
             // 
-            // label9
+            // lblDirector
             // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(259, 62);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(90, 24);
-            this.label9.TabIndex = 24;
-            this.label9.Text = "Director : ";
+            this.lblDirector.AutoSize = true;
+            this.lblDirector.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDirector.ForeColor = System.Drawing.Color.White;
+            this.lblDirector.Location = new System.Drawing.Point(259, 62);
+            this.lblDirector.Name = "lblDirector";
+            this.lblDirector.Size = new System.Drawing.Size(90, 24);
+            this.lblDirector.TabIndex = 24;
+            this.lblDirector.Text = "Director : ";
             // 
             // cbCategory
             // 
@@ -447,36 +460,23 @@ namespace HomeCinema
             this.cbCategory.Size = new System.Drawing.Size(162, 30);
             this.cbCategory.TabIndex = 19;
             // 
-            // label6
+            // lblCategory
             // 
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(780, 101);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(100, 24);
-            this.label6.TabIndex = 16;
-            this.label6.Text = "Category : ";
+            this.lblCategory.AutoSize = true;
+            this.lblCategory.BackColor = System.Drawing.Color.Transparent;
+            this.lblCategory.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCategory.ForeColor = System.Drawing.Color.White;
+            this.lblCategory.Location = new System.Drawing.Point(780, 101);
+            this.lblCategory.Name = "lblCategory";
+            this.lblCategory.Size = new System.Drawing.Size(100, 24);
+            this.lblCategory.TabIndex = 16;
+            this.lblCategory.Text = "Category : ";
             // 
             // cmLV
             // 
             this.cmLV.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.cmLV.Name = "cmLV";
             this.cmLV.Size = new System.Drawing.Size(61, 4);
-            // 
-            // btnAbout
-            // 
-            this.btnAbout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnAbout.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAbout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnAbout.Location = new System.Drawing.Point(645, 16);
-            this.btnAbout.Name = "btnAbout";
-            this.btnAbout.Size = new System.Drawing.Size(161, 40);
-            this.btnAbout.TabIndex = 30;
-            this.btnAbout.Text = "About";
-            this.btnAbout.UseVisualStyleBackColor = false;
-            this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
             // 
             // frmMain
             // 
@@ -493,8 +493,9 @@ namespace HomeCinema
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Home Cinema";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
-            this.FormClosing += new FormClosingEventHandler(frmMain_FormClosing);
+            this.Resize += new System.EventHandler(this.frmMain_Resize);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -511,28 +512,28 @@ namespace HomeCinema
         private Button btnClean;
         internal ListView lvSearchResult;
         private TextBox txtSearch;
-        private Label label1;
+        private Label lblImdb;
         private TextBox txtIMDB;
-        private Label label2;
+        private Label lblYear;
         private TextBox txtYearFrom;
         private TextBox txtYearTo;
         private Label label3;
-        private Label label4;
+        private Label lblStudio;
         private TextBox txtStudio;
-        private Label label5;
+        private Label lblCast;
         private TextBox txtCast;
         private Button btnClear;
         internal Button btnSearch;
-        private Label label7;
+        private Label lblCountry;
         private ComboBox cbCountry;
-        private Label label8;
+        private Label lblGenre;
         private ComboBox cbGenre;
         private CheckBox cbClearSearch;
         private GroupBox groupBox1;
         private TextBox txtDirector;
-        private Label label9;
+        private Label lblDirector;
         private ComboBox cbCategory;
-        private Label label6;
+        private Label lblCategory;
         private ContextMenuStrip cmLV;
         private ComboBox cbSortOrder;
         private ComboBox cbSort;
