@@ -718,6 +718,10 @@ namespace HomeCinema
             toWrite = toWrite.TrimEnd(',');
             GlobalVars.WriteToFile(GlobalVars.FILE_GENRE, toWrite);
         }
+        private int ControlLeftFromAttach(Control src, Control attachedTo) // return left property appropriate to control attached to another control
+        {
+            return attachedTo.Left - (src.Width - 4);
+        }
         #endregion
         // ####################################################################################### BACKGROUND WORKERS
         #region BG Worker: Get files in folders
@@ -1046,6 +1050,8 @@ namespace HomeCinema
         private void frmMain_Load(object sender, EventArgs e)
         {
             // Startup events
+            WindowState = FormWindowState.Maximized; // *Required lines to trigger Window Resize event
+            WindowState = FormWindowState.Normal; // *Required lines to trigger Window Resize event
             // Clean temp and log files
             if (GlobalVars.SET_AUTOCLEAN)
             {
@@ -1073,6 +1079,45 @@ namespace HomeCinema
             }
             // Start finding files in folder
             GetMediaFromFolders();
+        }
+        private void frmMain_Resize(object sender, EventArgs e)
+        {
+            // Resize controls
+            int buttonWidth = (int)(this.Width * 0.13);
+            txtIMDB.Width = buttonWidth; // top row
+            txtDirector.Width = buttonWidth;
+            txtStudio.Width = buttonWidth;
+            cbGenre.Width = buttonWidth;
+            txtYearFrom.Width = (int)(buttonWidth * 0.46); // bottom row
+            txtYearTo.Width = (int)(buttonWidth * 0.46);
+            txtCast.Width = buttonWidth;
+            cbCountry.Width = buttonWidth;
+            cbCategory.Width = buttonWidth;
+
+            // Reposition controls
+            txtIMDB.Left = (int)(this.Width * 0.07); // top row
+            txtDirector.Left = (int)(this.Width * 0.27);
+            txtStudio.Left = (int)(this.Width * 0.47);
+            cbGenre.Left = (int)(this.Width * 0.68);
+            txtYearFrom.Left = txtIMDB.Left; // bottom row
+            lblYearDiv.Left = txtYearFrom.Right + 1;
+            txtYearTo.Left = lblYearDiv.Right + 1;
+            txtCast.Left = txtDirector.Left;
+            cbCountry.Left = txtStudio.Left;
+            cbCategory.Left = cbGenre.Left;
+            // Reposition labels
+            lblImdb.Left = ControlLeftFromAttach(lblImdb, txtIMDB); // top row
+            lblDirector.Left = ControlLeftFromAttach(lblDirector, txtDirector);
+            lblStudio.Left = ControlLeftFromAttach(lblStudio, txtStudio);
+            lblGenre.Left = ControlLeftFromAttach(lblGenre, cbGenre);
+            lblYear.Left = ControlLeftFromAttach(lblYear, txtYearFrom); // bottom row
+            lblCast.Left = ControlLeftFromAttach(lblCast, txtCast);
+            lblCountry.Left = ControlLeftFromAttach(lblCountry, cbCountry);
+            lblCategory.Left = ControlLeftFromAttach(lblCategory, cbCategory);
+            
+            // Reposition Clear and 'Search after clear' checkbox
+            btnClear.Left = (int)(this.Width - btnClear.Width) - 32;
+            cbClearSearch.Left = btnClear.Left;
         }
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {

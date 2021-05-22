@@ -46,7 +46,7 @@ namespace HomeCinema
             this.lblYear = new System.Windows.Forms.Label();
             this.txtYearFrom = new System.Windows.Forms.TextBox();
             this.txtYearTo = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblYearDiv = new System.Windows.Forms.Label();
             this.lblStudio = new System.Windows.Forms.Label();
             this.txtStudio = new System.Windows.Forms.TextBox();
             this.lblCast = new System.Windows.Forms.Label();
@@ -214,6 +214,7 @@ namespace HomeCinema
             // lblImdb
             // 
             this.lblImdb.AutoSize = true;
+            this.lblImdb.BackColor = System.Drawing.Color.Transparent;
             this.lblImdb.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblImdb.ForeColor = System.Drawing.Color.White;
             this.lblImdb.Location = new System.Drawing.Point(2, 61);
@@ -221,6 +222,7 @@ namespace HomeCinema
             this.lblImdb.Size = new System.Drawing.Size(70, 24);
             this.lblImdb.TabIndex = 3;
             this.lblImdb.Text = "IMDB : ";
+            this.lblImdb.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // txtIMDB
             // 
@@ -233,6 +235,7 @@ namespace HomeCinema
             // lblYear
             // 
             this.lblYear.AutoSize = true;
+            this.lblYear.BackColor = System.Drawing.Color.Transparent;
             this.lblYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblYear.ForeColor = System.Drawing.Color.White;
             this.lblYear.Location = new System.Drawing.Point(3, 94);
@@ -240,6 +243,7 @@ namespace HomeCinema
             this.lblYear.Size = new System.Drawing.Size(64, 24);
             this.lblYear.TabIndex = 5;
             this.lblYear.Text = "Year : ";
+            this.lblYear.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // txtYearFrom
             // 
@@ -257,19 +261,20 @@ namespace HomeCinema
             this.txtYearTo.Size = new System.Drawing.Size(82, 28);
             this.txtYearTo.TabIndex = 7;
             // 
-            // label3
+            // lblYearDiv
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(152, 97);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(16, 24);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "-";
+            this.lblYearDiv.AutoSize = true;
+            this.lblYearDiv.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblYearDiv.Location = new System.Drawing.Point(152, 97);
+            this.lblYearDiv.Name = "lblYearDiv";
+            this.lblYearDiv.Size = new System.Drawing.Size(16, 24);
+            this.lblYearDiv.TabIndex = 8;
+            this.lblYearDiv.Text = "-";
             // 
             // lblStudio
             // 
             this.lblStudio.AutoSize = true;
+            this.lblStudio.BackColor = System.Drawing.Color.Transparent;
             this.lblStudio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStudio.ForeColor = System.Drawing.Color.White;
             this.lblStudio.Location = new System.Drawing.Point(530, 61);
@@ -277,6 +282,7 @@ namespace HomeCinema
             this.lblStudio.Size = new System.Drawing.Size(78, 24);
             this.lblStudio.TabIndex = 9;
             this.lblStudio.Text = "Studio : ";
+            this.lblStudio.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // txtStudio
             // 
@@ -297,6 +303,7 @@ namespace HomeCinema
             this.lblCast.Size = new System.Drawing.Size(61, 24);
             this.lblCast.TabIndex = 11;
             this.lblCast.Text = "Cast : ";
+            this.lblCast.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // txtCast
             // 
@@ -344,6 +351,7 @@ namespace HomeCinema
             this.lblCountry.Size = new System.Drawing.Size(85, 24);
             this.lblCountry.TabIndex = 18;
             this.lblCountry.Text = "Country :";
+            this.lblCountry.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // cbCountry
             // 
@@ -368,6 +376,7 @@ namespace HomeCinema
             this.lblGenre.Size = new System.Drawing.Size(73, 24);
             this.lblGenre.TabIndex = 21;
             this.lblGenre.Text = "Genre :";
+            this.lblGenre.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // cbGenre
             // 
@@ -413,7 +422,7 @@ namespace HomeCinema
             this.groupBox1.Controls.Add(this.lblCast);
             this.groupBox1.Controls.Add(this.txtStudio);
             this.groupBox1.Controls.Add(this.lblStudio);
-            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.lblYearDiv);
             this.groupBox1.Controls.Add(this.txtYearTo);
             this.groupBox1.Controls.Add(this.txtYearFrom);
             this.groupBox1.Controls.Add(this.lblYear);
@@ -440,6 +449,7 @@ namespace HomeCinema
             // lblDirector
             // 
             this.lblDirector.AutoSize = true;
+            this.lblDirector.BackColor = System.Drawing.Color.Transparent;
             this.lblDirector.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDirector.ForeColor = System.Drawing.Color.White;
             this.lblDirector.Location = new System.Drawing.Point(259, 62);
@@ -447,6 +457,7 @@ namespace HomeCinema
             this.lblDirector.Size = new System.Drawing.Size(90, 24);
             this.lblDirector.TabIndex = 24;
             this.lblDirector.Text = "Director : ";
+            this.lblDirector.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // cbCategory
             // 
@@ -471,6 +482,7 @@ namespace HomeCinema
             this.lblCategory.Size = new System.Drawing.Size(100, 24);
             this.lblCategory.TabIndex = 16;
             this.lblCategory.Text = "Category : ";
+            this.lblCategory.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // cmLV
             // 
@@ -517,7 +529,7 @@ namespace HomeCinema
         private Label lblYear;
         private TextBox txtYearFrom;
         private TextBox txtYearTo;
-        private Label label3;
+        private Label lblYearDiv;
         private Label lblStudio;
         private TextBox txtStudio;
         private Label lblCast;
