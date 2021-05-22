@@ -191,7 +191,7 @@ namespace HomeCinema
             this.lvSearchResult.HideSelection = false;
             this.lvSearchResult.Location = new System.Drawing.Point(4, 216);
             this.lvSearchResult.Name = "lvSearchResult";
-            this.lvSearchResult.Size = new System.Drawing.Size(1262, 450);
+            this.lvSearchResult.Size = new System.Drawing.Size(1262, 480);
             this.lvSearchResult.TabIndex = 22;
             this.lvSearchResult.UseCompatibleStateImageBehavior = false;
             this.lvSearchResult.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvSearchResult_KeyDown);
@@ -495,12 +495,13 @@ namespace HomeCinema
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.ClientSize = new System.Drawing.Size(1271, 673);
+            this.ClientSize = new System.Drawing.Size(1271, 703);
             this.Controls.Add(this.lvSearchResult);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.ForeColor = System.Drawing.Color.Black;
             this.KeyPreview = true;
+            this.MinimumSize = new System.Drawing.Size(1280, 650);
             this.Name = "frmMain";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
