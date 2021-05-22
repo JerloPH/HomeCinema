@@ -1118,6 +1118,7 @@ namespace HomeCinema
             // Reposition Clear and 'Search after clear' checkbox
             btnClear.Left = (int)(this.Width - btnClear.Width) - 32;
             cbClearSearch.Left = btnClear.Left;
+            cbHideAnim.Left = (int)(this.Width - cbHideAnim.Width) - 32; // reposition 'Hide animations' checkbox
         }
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
