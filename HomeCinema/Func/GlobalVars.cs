@@ -215,11 +215,11 @@ namespace HomeCinema.Global
         }
         public static void ShowWarning(string msg)
         {
-            ShowMsg(msg, CAPTION_DIALOG, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            new frmAlert(msg, CAPTION_DIALOG).Show();
         }
         public static void ShowWarning(string msg, string caption)
         {
-            ShowMsg(msg, caption, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            new frmAlert(msg, caption).Show();
         }
         public static void ShowError(string codeFrom, Exception error, bool ShowAMsg = true)
         {
@@ -229,7 +229,7 @@ namespace HomeCinema.Global
 
             if (ShowAMsg)
             {
-                ShowMsg($"An error occured!\nError message: {err}\nError File Location:\n{file}", CAPTION_DIALOG, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowInfo($"An error occured!\nError message: {err}\nError File Location:\n{file}", "Error occured!");
                 // Open file in explorer
                 try
                 {
