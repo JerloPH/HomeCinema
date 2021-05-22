@@ -41,6 +41,8 @@ namespace HomeCinema
             Caption = caption;
             TopPosition = 0;
             CenterToParent();
+            pictureBox1.BackColor = Color.Transparent;
+            pictureBox1.BringToFront();
         }
 
         public void SetIcon(int IconIndex = 0)
