@@ -207,9 +207,11 @@ namespace HomeCinema.Global
                 ShowError("GlobalVars-ShowMsg", ex, false);
             }
         }
-        public static void ShowInfo(string msg)
+        public static void ShowInfo(string msg, string caption = "")
         {
-            ShowMsg(msg, CAPTION_DIALOG, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            var form = new frmAlert(msg, caption);
+            form.Show();
+            //ShowMsg(msg, CAPTION_DIALOG, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         public static void ShowWarning(string msg)
         {
