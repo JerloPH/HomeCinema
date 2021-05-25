@@ -7,7 +7,7 @@
 
 ## Downloads
 
-**Windows 10, 64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.5.3.0/HomeCinema-Windows.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
+**Windows 10, x64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.5.3.0/HomeCinema-Windows.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
 **Note: Untested on Windows 7 and 8, but might work**
 
 ### Download Counts
@@ -22,9 +22,12 @@
 **HomeCinema** is a *"media cataloguing software"*. <br>
 Organize your collection of Movies and TV shows with HomeCinema. <br>
 It is like a book catalogue, except it's for Movies and Series located in your Local Drive. <br>
-Ease the pain of browsing through many folders and finding out which movie is which.
+Ease the pain of browsing through many folders and finding out which movie is which. <br>
+
+View reviews and posts from [**MajorGeek**](https://www.majorgeeks.com/files/details/homecinema.html) • [**Softpedia**](https://www.softpedia.com/get/Multimedia/Video/Other-VIDEO-Tools/HomeCinema.shtml) • [**NSaneForum**](https://nsaneforums.com/topic/411276-homecinema-0530/?tab=comments#comment-1687727) • [**Netfox2** (French)](https://www.netfox2.net/modules/wfdownloads/singlefile.php?cid=123&lid=2181) • [**Jetelecharge** (v0.1)](https://www.jetelecharge.com/Bureautique/10226.php) • [**slunecnice** (Czech)](https://www.slunecnice.cz/sw/homecinema/) • [**Windows Forum** (v0.5)](https://windowsforum.kr/data/15652587). <br>
+**Note: I'm not the user who posted any of them. Visit at your discretion.** <br>
 	
-## List of features:
+## Features:
 - Automatically scan and add all supported media files from designated folders.
 - Automatically fetch movie information from [The Movie Database](https://www.themoviedb.org/). *Requires Internet Connection.*
 - Directly open the media file, using your default player.
@@ -33,22 +36,12 @@ Ease the pain of browsing through many folders and finding out which movie is wh
 - Allows filter and search.
 - Edit and Save information within the app.
 
-## External Links
-**Note: I'm not the user who posted any of them. Visit at your discretion.** <br>
-[View **MajorGeek** review here](https://www.majorgeeks.com/files/details/homecinema.html) <br>
-[View **Softpedia** review here](https://www.softpedia.com/get/Multimedia/Video/Other-VIDEO-Tools/HomeCinema.shtml) <br>
-[View **NSaneForum** post](https://nsaneforums.com/topic/404515-homecinema-0510/) <br>
-[View **Netfox2** review (French site)](https://www.netfox2.net/modules/wfdownloads/singlefile.php?cid=123&lid=2181) <br>
-[View **Jetelecharge** review (older version, v0.1)](https://www.jetelecharge.com/Bureautique/10226.php) <br>
-[View **slunecnice** review (Czech site)](https://www.slunecnice.cz/sw/homecinema/) <br>
-[View **Windows Forum** post](https://windowsforum.kr/data/15652587)
-
-## How to Add Media Locations?
+## Adding Media Locations
 1. Press **CTRL + S** or click on **[Settings]** button to Open Settings UI.
 2. Go to **File** Tab.
 3. Under **Media Locations**, click on **[Add]** button and navigate to the directory where your movie files are located. <br>
 
-**IMPORTANT NOTE:** First-time loading of App takes a while to finish. Even longer if you have a huge collection of media files. <br>
+**IMPORTANT NOTE:** First-time loading of App takes a while to finish. Even longer if you have a huge collection of media files.
 
 ### NOTES for Adding TV Series
   - Located under **Series Locations**.
@@ -84,14 +77,14 @@ D:\TV Series\Title of Series and Season\Episode 1.mp4
 
 ## Find a bug or want a new feature?
 
-**Submit a ticket at *Issues* tab**.
+**Submit a ticket at [*Issues*](https://github.com/JerloPH/HomeCinema/issues) tab**.
 - *When submitting a **bug report**,*
-  - Include the following file (Located at the same folder as the main app):
+  - Include the following file (Located at the **logs** subfolder):
     - App.log
     - App_DB.log
     - App_ErrorLog.log
   - If possible, include a screenshot.
-  - Explain the details in full. Describe what you are doing or trying to do, on what form when the error apppeared.
+  - Explain the details in full. Describe what you are doing or trying to do, on what form when the error appeared.
   - Try to replicate the error / bug.
 - *When requesting a **new feature / feature update**,*
   - Include how it works.
