@@ -17,6 +17,9 @@
   - **[Microsoft Universal Windows Platform](https://www.nuget.org/packages/Microsoft.NETCore.UniversalWindowsPlatform/)**
   - **[Newtonsoft.Json](https://www.nuget.org/packages/Newtonsoft.Json/)**
 
+## Required API credentials
+- Create TMDB Id key to use features of automatically fetching media details.
+
 ## Commit / Pull Request Labels
 
 - **Feature**

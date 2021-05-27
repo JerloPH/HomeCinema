@@ -1,12 +1,15 @@
 # HomeCinema - Features to Add / Bugs to Fix
 
 ## Priority List
+- Save new genre fetched from tmdb, when not existing on genre list. Update Genre dropdown on main form.
+- Faster showing of movie info when clicking **"View details"**.
 - Scrape Anime info from Anilist/MyAnimeList.
 - Improve speed of App load (check background worker and optimize).
 - Check if file still exists, before loading it into the App.
   - Delete entry from database, and cover picture (if existing). *For now, skips the entry.*
   - Remove ListView item, when the file is not existing. Then, delete the entry from database. *Or archive to another database*.
 - Use **Series Name/Title** only **if** category is **Series**, and use as **Original Title/Name**.
+- Prompt user if TMDB key is empty, and that features are limited. (Cannot use auto-fetch features).
 
 ## Features:
 - General
