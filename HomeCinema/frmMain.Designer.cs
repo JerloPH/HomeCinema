@@ -31,6 +31,7 @@ namespace HomeCinema
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnAbout = new System.Windows.Forms.Button();
             this.cbHideAnim = new System.Windows.Forms.CheckBox();
@@ -500,6 +501,7 @@ namespace HomeCinema
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.ForeColor = System.Drawing.Color.Black;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MinimumSize = new System.Drawing.Size(1280, 650);
             this.Name = "frmMain";
