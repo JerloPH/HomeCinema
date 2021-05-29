@@ -76,6 +76,7 @@ namespace HomeCinema
             if (Convert.ToInt16(MOVIE_ID) > 0)
             {
                 LoadInformation(ID, text);
+                RefreshCountryAndGenre();
             }
 
             // Show the form
@@ -363,6 +364,21 @@ namespace HomeCinema
                 GlobalVars.CallMethod(PARENT_NAME, "DisposePoster", Params, $"frmMovieInfo-DisposeImages ({Name})", "frmMovie PARENT: " + PARENT_NAME);
             }
         }
+        private void RefreshCountryAndGenre()
+        {
+            // Add new country to text file
+            foreach (string item in listboxCountry.Items)
+            {
+                GlobalVars.WriteAppend(GlobalVars.FILE_COUNTRY, $",{item}");
+            }
+            // Add new genre to text file
+            foreach (string item in listboxGenre.Items)
+            {
+                GlobalVars.WriteAppend(GlobalVars.FILE_GENRE, $",{item}");
+            }
+            Program.FormMain.PopulateCountryCB(); // Refresh Country list
+            Program.FormMain.PopulateGenreCB(); // Refresh Genre list
+        }
         #endregion
         // ############################################################################## Form Controls methods event
         private void frmMovieInfo_FormClosing(object sender, FormClosingEventArgs e)
@@ -478,20 +494,10 @@ namespace HomeCinema
                 string[] Params = { MOVIE_ID };
                 GlobalVars.CallMethod(PARENT_NAME, "LoadInformation", Params, $"frmMovieInfo-btnSave_Click ({Name})", "frmMovie PARENT: " + PARENT_NAME);
             }
-            // Add new country to text file
-            foreach (string item in listboxCountry.Items)
-            {
-                GlobalVars.WriteAppend(GlobalVars.FILE_COUNTRY, $",{item}");
-            }
-            // Add new genre to text file
-            foreach (string item in listboxGenre.Items)
-            {
-                GlobalVars.WriteAppend(GlobalVars.FILE_GENRE, $",{item}");
-            }
+            RefreshCountryAndGenre(); // Add new country/genre to text files
+
             // Refresh main form properties
             Program.FormMain.UpdateMovieItemOnLV(LVITEM); // ListView item of this
-            Program.FormMain.PopulateCountryCB(); // Refresh Country list
-            Program.FormMain.PopulateGenreCB(); // Refresh Genre list
 
             // Save Metadata
             if (cbSaveMetadata.Checked)
