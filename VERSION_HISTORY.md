@@ -3,6 +3,9 @@
 ## HomeCinema v0.6
 ### ***release 35 - build 30 May 2021 PHT***
 
+### Hotfix
+- FIXED: TMDB Key not recognized during startup.
+
 ### What's New?
 - REV: UI Controls are now scalable! It resizes and reposition based on the form size.
   - Added minimum form size to limit window resizing.
