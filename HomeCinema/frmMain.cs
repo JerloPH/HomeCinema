@@ -310,8 +310,8 @@ namespace HomeCinema
                 int insertResult = DBCON.DbInsertMovie(dt, callFrom);
                 if (insertResult > 0)
                 {
-                    // Download cover, if not OFFLINE_MODE
-                    if (GlobalVars.SET_OFFLINE == false)
+                    // Download cover, if not OFFLINE_MODE and HAS TMDB KEY
+                    if (GlobalVars.SET_OFFLINE == false && GlobalVars.HAS_TMDB_KEY)
                     {
                         string movieId = insertResult.ToString();
                         // Download Cover from TMDB
