@@ -27,7 +27,6 @@ using HomeCinema.SQLFunc;
 using HomeCinema.Global;
 using System.Linq;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Threading;
@@ -49,15 +48,6 @@ namespace HomeCinema
         #region frmMain
         public frmMain()
         {
-            // Create directories
-            GlobalVars.CreateDir(GlobalVars.PATH_IMG);
-            GlobalVars.CreateDir(GlobalVars.PATH_DATA);
-            GlobalVars.CreateDir(GlobalVars.PATH_TEMP);
-            GlobalVars.CreateDir(GlobalVars.PATH_LOG);
-
-            // Check files first
-            GlobalVars.CheckAllFiles();
-
             // Set TMDB Key on DEBUG
             if (Debugger.IsAttached)
             {
