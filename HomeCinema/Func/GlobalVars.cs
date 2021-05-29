@@ -56,6 +56,7 @@ namespace HomeCinema.Global
         public static string PREFIX_MOVIEINFO = "movieInfo";
         public static string CAPTION_DIALOG = HOMECINEMA_NAME + " v" + HOMECINEMA_VERSION;
         public static bool HAS_TMDB_KEY { get; set; } = false;
+        public static string MSG_NO_TMDB = "No TMDB Key!\nSome features are disabled";
 
         // Links for external websites
         public static string TMDB_KEY = "";
@@ -893,7 +894,7 @@ namespace HomeCinema.Global
             }
             catch (Exception ex)
             {
-                ShowError("(GlobalVars-CheckConnection)", ex, false);
+                ShowError($"(GlobalVars-CheckConnection)\nURL: {URL}\n", ex, false);
                 return false;
             }
         }
