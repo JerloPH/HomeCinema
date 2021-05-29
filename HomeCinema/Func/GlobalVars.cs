@@ -213,11 +213,7 @@ namespace HomeCinema.Global
             form.Show();
             //ShowMsg(msg, CAPTION_DIALOG, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-        public static void ShowWarning(string msg)
-        {
-            new frmAlert(msg, CAPTION_DIALOG).Show();
-        }
-        public static void ShowWarning(string msg, string caption)
+        public static void ShowWarning(string msg, string caption = "")
         {
             new frmAlert(msg, caption).Show();
         }

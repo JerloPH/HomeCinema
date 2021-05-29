@@ -49,7 +49,7 @@ namespace HomeCinema
         #region frmMain
         public frmMain()
         {
-             // Create directories
+            // Create directories
             GlobalVars.CreateDir(GlobalVars.PATH_IMG);
             GlobalVars.CreateDir(GlobalVars.PATH_DATA);
             GlobalVars.CreateDir(GlobalVars.PATH_TEMP);
