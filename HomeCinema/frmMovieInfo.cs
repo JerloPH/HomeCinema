@@ -653,7 +653,7 @@ namespace HomeCinema
             linkPoster = r5;
             if (String.IsNullOrWhiteSpace(r5) == false)
             {
-                if (GlobalVars.ShowYesNo("Do you want to change poster image?"))
+                if (GlobalVars.ShowYesNo("Do you want to change poster image?", this))
                 {
                     // Show form loading
                     form = new frmLoading("Downloading cover from TMDB..", "Loading");

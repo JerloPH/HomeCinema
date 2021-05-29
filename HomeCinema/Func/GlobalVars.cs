@@ -251,11 +251,13 @@ namespace HomeCinema.Global
                 }
             }
         }
-        public static bool ShowYesNo(string msg)
+        public static bool ShowYesNo(string msg, Form caller = null)
         {
             try
             {
-                return (MessageBox.Show(msg, CAPTION_DIALOG, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes);
+                if (caller == null) { caller = Program.FormMain; }
+                return (new frmAlert(msg, CAPTION_DIALOG, 1).ShowDialog(caller) == DialogResult.Yes);
+                //return (MessageBox.Show(msg, CAPTION_DIALOG, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes);
             }
             catch (Exception ex)
             {

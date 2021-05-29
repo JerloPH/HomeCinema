@@ -31,6 +31,8 @@ namespace HomeCinema
         {
             this.lblMessage = new System.Windows.Forms.Label();
             this.btnOk = new System.Windows.Forms.Button();
+            this.btnYes = new System.Windows.Forms.Button();
+            this.btnNo = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblMessage
@@ -47,7 +49,7 @@ namespace HomeCinema
             // btnOk
             // 
             this.btnOk.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOk.Location = new System.Drawing.Point(166, 100);
+            this.btnOk.Location = new System.Drawing.Point(5, 102);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(93, 42);
             this.btnOk.TabIndex = 1;
@@ -55,11 +57,33 @@ namespace HomeCinema
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
+            // btnYes
+            // 
+            this.btnYes.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnYes.Location = new System.Drawing.Point(5, 150);
+            this.btnYes.Name = "btnYes";
+            this.btnYes.Size = new System.Drawing.Size(93, 42);
+            this.btnYes.TabIndex = 2;
+            this.btnYes.Text = "YES";
+            this.btnYes.UseVisualStyleBackColor = true;
+            // 
+            // btnNo
+            // 
+            this.btnNo.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNo.Location = new System.Drawing.Point(104, 150);
+            this.btnNo.Name = "btnNo";
+            this.btnNo.Size = new System.Drawing.Size(93, 42);
+            this.btnNo.TabIndex = 3;
+            this.btnNo.Text = "NO";
+            this.btnNo.UseVisualStyleBackColor = true;
+            // 
             // frmAlert
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(446, 146);
+            this.ClientSize = new System.Drawing.Size(446, 200);
+            this.Controls.Add(this.btnNo);
+            this.Controls.Add(this.btnYes);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.lblMessage);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -77,5 +101,7 @@ namespace HomeCinema
 
         private System.Windows.Forms.Label lblMessage;
         private System.Windows.Forms.Button btnOk;
+        private System.Windows.Forms.Button btnYes;
+        private System.Windows.Forms.Button btnNo;
     }
 }
