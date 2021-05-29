@@ -459,6 +459,10 @@ namespace HomeCinema.Global
                     ret = r.ReadToEnd();
                 }
             }
+            catch (FileNotFoundException)
+            {
+                return "";
+            }
             catch (Exception ex)
             {
                 ShowError(errFrom, ex, false);

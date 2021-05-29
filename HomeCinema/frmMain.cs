@@ -915,35 +915,37 @@ namespace HomeCinema
                             {
                                 DataRow rFile = dtGetFile.Rows[0];
                                 fileNamePath = rFile[1].ToString();
-                                if (File.Exists(fileNamePath))
+                                try
                                 {
-                                    try
+                                    FileAttributes attr = File.GetAttributes(fileNamePath);
+                                    if (attr.HasFlag(FileAttributes.Directory))
                                     {
-                                        FileAttributes attr = File.GetAttributes(fileNamePath);
-                                        if (attr.HasFlag(FileAttributes.Directory))
+                                        // Non existing directory, skip it
+                                        if (!Directory.Exists(fileNamePath))
                                         {
-                                            // Non existing directory, skip it
-                                            if (!Directory.Exists(fileNamePath))
-                                            {
-                                                dtGetFile.Dispose();
-                                                continue;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            if (!File.Exists(fileNamePath))
-                                            {
-                                                dtGetFile.Dispose();
-                                                continue;
-                                            }
+                                            dtGetFile.Dispose();
+                                            continue;
                                         }
                                     }
-                                    catch (Exception ex)
+                                    else
                                     {
-                                        GlobalVars.ShowError(errFrom, ex, false);
-                                        dtGetFile.Dispose();
-                                        continue;
+                                        if (!File.Exists(fileNamePath))
+                                        {
+                                            dtGetFile.Dispose();
+                                            continue;
+                                        }
                                     }
+                                }
+                                catch (FileNotFoundException)
+                                {
+                                    dtGetFile.Dispose();
+                                    continue;
+                                }
+                                catch (Exception ex)
+                                {
+                                    GlobalVars.ShowError(errFrom, ex, false);
+                                    dtGetFile.Dispose();
+                                    continue;
                                 }
                             }
 
