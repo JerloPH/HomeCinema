@@ -1032,18 +1032,24 @@ namespace HomeCinema
             }
             else if (item == toolMenuEdit)
             {
-                // Create form for editing Movie information
+                // Create form for editing Movie information, Only if MOVIE_ID is valid
                 string MOVIE_ID = lvSearchResult.SelectedItems[0].Tag.ToString();
-                string MOVIE_NAME = lvSearchResult.SelectedItems[0].Text.ToString();
-                string childForm = GlobalVars.PREFIX_MOVIEINFO + MOVIE_ID;
-                GlobalVars.OpenFormMovieInfo(this, childForm, MOVIE_ID, MOVIE_NAME, $"{errFrom} [toolMenuEdit]", lvSearchResult.SelectedItems[0]);
+                if (MOVIE_ID != "0" && (!String.IsNullOrWhiteSpace(MOVIE_ID)))
+                {
+                    string MOVIE_NAME = lvSearchResult.SelectedItems[0].Text.ToString();
+                    string childForm = GlobalVars.PREFIX_MOVIEINFO + MOVIE_ID;
+                    GlobalVars.OpenFormMovieInfo(this, childForm, MOVIE_ID, MOVIE_NAME, $"{errFrom} [toolMenuEdit]", lvSearchResult.SelectedItems[0]);
+                }
             }
             else if (item == toolMenuFileExplorer)
             {
-                // Open file in Explorer
+                // Open file in Explorer, Only if MOVIE_ID is valid
                 string MOVIE_ID = lvSearchResult.SelectedItems[0].Tag.ToString();
-                string file = GetFilePath(MOVIE_ID, $"{errFrom} [toolMenuFileExplorer]");
-                GlobalVars.FileOpeninExplorer(file, $"{errFrom} [toolMenuFileExplorer]");
+                if (MOVIE_ID != "0" && (!String.IsNullOrWhiteSpace(MOVIE_ID)))
+                {
+                    string file = GetFilePath(MOVIE_ID, $"{errFrom} [toolMenuFileExplorer]");
+                    GlobalVars.FileOpeninExplorer(file, $"{errFrom} [toolMenuFileExplorer]");
+                }
             }
         }
         #endregion
