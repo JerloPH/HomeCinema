@@ -1626,26 +1626,40 @@ namespace HomeCinema.Global
             var comboBox = new ComboBox();
             var buttonOk = new Button();
             var buttonCancel = new Button();
+            var font = new Font(TILE_FONT.FontFamily, 14, FontStyle.Regular);
             string value;
+            int bx, by, bw, bh, formWClient;
+            formWClient = 396;
+            bx = 9;
+            by = 20;
+            bw = 372;
 
             form.Text = HOMECINEMA_NAME;
             label.Text = caption;
             comboBox.Text = "";
 
             buttonOk.Text = "OK";
-            buttonCancel.Text = "Cancel";
+            buttonCancel.Text = "CANCEL";
             buttonOk.DialogResult = DialogResult.OK;
             buttonCancel.DialogResult = DialogResult.Cancel;
 
-            label.SetBounds(9, 20, 372, 13);
-            comboBox.SetBounds(12, 36, 372, 20);
-            buttonOk.SetBounds(228, 72, 75, 23);
-            buttonCancel.SetBounds(309, 72, 75, 23);
+            label.SetBounds(bx, by, bw, 13);
+            comboBox.SetBounds(bx + 3, by + 28, bw, 20);
+            by = comboBox.Bottom + 16;
+            bw = (int)(bw * 0.3);
+            bh = 32;
+            buttonOk.SetBounds((int)(formWClient*0.4), by, bw, bh);
+            buttonCancel.SetBounds(buttonOk.Right + 6, by, bw, bh);
 
             label.AutoSize = true;
             comboBox.Anchor = comboBox.Anchor | AnchorStyles.Right;
             buttonOk.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+
+            label.Font = font;
+            comboBox.Font = font;
+            buttonOk.Font = font;
+            buttonCancel.Font = font;
 
             // Edit and Populate comboBox
             comboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
@@ -1656,7 +1670,7 @@ namespace HomeCinema.Global
                 comboBox.Items.Add(item);
             }
 
-            form.ClientSize = new Size(396, 107);
+            form.ClientSize = new Size(formWClient, buttonOk.Bottom + 16);
             form.Controls.AddRange(new Control[] { label, comboBox, buttonOk, buttonCancel });
             form.ClientSize = new Size(Math.Max(300, label.Right + 10), form.ClientSize.Height);
             form.FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -1665,9 +1679,13 @@ namespace HomeCinema.Global
             form.MaximizeBox = false;
             form.AcceptButton = buttonOk;
             form.CancelButton = buttonCancel;
+            form.ForeColor = SET_COLOR_FONT;
+            form.BackColor = SET_COLOR_BG;
+            form.Font = TILE_FONT;
 
             DialogResult dialogResult = form.ShowDialog();
             value = (!String.IsNullOrWhiteSpace(comboBox.Text)) ? comboBox.Text.Trim() : String.Empty;
+            font?.Dispose();
             form.Dispose();
             return (dialogResult == DialogResult.OK) ? value : String.Empty;
         }
