@@ -332,7 +332,7 @@ namespace HomeCinema
                         }
                     }
                 }
-                Thread.Sleep(10);
+                Thread.Sleep(10); // Prevent continuous request to TMDB, prevents overloading the site.
             }
             
             GlobalVars.WriteAppend(Path.Combine(GlobalVars.PATH_LOG, "MovieResult_DoneInsert.Log"), logInsert);
@@ -345,10 +345,13 @@ namespace HomeCinema
             string errFrom = $"frmMain-GetFilePath [calledFrom: {calledFrom}]";
             string qry = $"SELECT [Id],[file] FROM { GlobalVars.DB_TNAME_FILEPATH } WHERE [Id]={ ID } LIMIT 1";
             DataTable dtFile = DBCON.DbQuery(qry, "[Id],[file]", errFrom);
-            foreach (DataRow r in dtFile.Rows)
+            if (dtFile.Rows.Count > 0)
             {
-                ret = r[GlobalVars.DB_TABLE_FILEPATH[1]].ToString();
-                break;
+                foreach (DataRow r in dtFile.Rows)
+                {
+                    ret = r[GlobalVars.DB_TABLE_FILEPATH[1]].ToString();
+                    break;
+                }
             }
             dtFile.Clear();
             dtFile.Dispose();
