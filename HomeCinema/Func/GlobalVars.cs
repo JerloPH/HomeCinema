@@ -191,7 +191,7 @@ namespace HomeCinema.Global
             // Call Base Log
             Log(FILE_LOG_ERROR, codefrom, log);
         }
-        // SHOW MessageBox with different setttings
+        // SHOW MessageBox with different settings
         public static void ShowMsg(string msg, string caption, MessageBoxButtons mbbtn, MessageBoxIcon mbIcon)
         {
             try
@@ -206,13 +206,29 @@ namespace HomeCinema.Global
         }
         public static void ShowInfo(string msg, string caption = "")
         {
-            var form = new frmAlert(msg, caption);
-            form.Show();
+            if (Program.FormMain == null)
+            {
+                ShowMsg(msg, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            if (Program.FormMain.InvokeRequired)
+            {
+                Program.FormMain.Invoke(new Action(() =>
+                {
+                    var form = new frmAlert(msg, caption);
+                    form.Show(Program.FormMain);
+                }));
+            }
+            else
+            {
+                var form = new frmAlert(msg, caption);
+                form.Show(Program.FormMain);
+            }
             //ShowMsg(msg, CAPTION_DIALOG, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         public static void ShowWarning(string msg, string caption = "")
         {
-            new frmAlert(msg, caption).Show();
+            ShowInfo(msg, caption);
         }
         public static void ShowError(string codeFrom, Exception error, bool ShowAMsg = true)
         {
@@ -409,7 +425,7 @@ namespace HomeCinema.Global
             }
         }
         // Copy from Resources if not on Root
-        public static void CopyFromRes(string fPath)
+        public static bool CopyFromRes(string fPath)
         {
             if (!File.Exists(fPath))
             {
@@ -418,12 +434,14 @@ namespace HomeCinema.Global
                 try
                 {
                     File.Copy(PATH_RES + fName, fPath);
+                    return true;
                 }
                 catch (Exception ex)
                 {
-                    ShowError("(GlobalVars-CopyFromRes) Copying required files error. File: " + fName, ex, true);
+                    ShowError("(GlobalVars-CopyFromRes) Copying required files error. File: " + fName, ex, false);
                 }
             }
+            return false;
         }
         // Read String From File
         public static string ReadStringFromFile(string localFile, string calledFrom)
