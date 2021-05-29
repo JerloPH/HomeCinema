@@ -421,12 +421,11 @@ namespace HomeCinema
         private void OpenNewFormMovie()
         {
             // Validate ID
-            int ID;
+            int ID = 0;
             try { ID = Convert.ToInt32(lvSearchResult.SelectedItems[0].Tag.ToString().TrimStart('0')); }
             catch { return; };
             if (ID < 1) { return; };
 
-            // Otherwise, continue
             if (lvSearchResult.SelectedItems.Count > 0)
             {
                 // Create form to View Movie Details / Info
@@ -441,7 +440,6 @@ namespace HomeCinema
                 {
                     Form form = new frmMovie(this, ID.ToString(), text, lvSearchResult.SelectedItems[0]);
                     form.Name = formName;
-                    GlobalVars.Log(Name + " (OPEN a MOVIE)", "MOVIE formName: " + form.Name);
                 }
             }
         }

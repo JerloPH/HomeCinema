@@ -48,6 +48,7 @@ namespace HomeCinema
 
         public frmMovie(Form parent, string ID, string name, ListViewItem lvitem)
         {
+            GlobalVars.Log(parent.Name + " (OPEN a MOVIE)", "MOVIE formName: " + Name);
             InitializeComponent();
 
             // Form properties
@@ -372,29 +373,20 @@ namespace HomeCinema
         // ############################################################################## Form Control events
         private void frmMovie_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Set focus to main
-            Program.FormMain.Focus();
-
             // Dispose components
-            webTrailer.Dispose();
-            if (picBox.Image != null)
-            {
-                picBox.Image.Dispose();
-            }
-            if (MOVIE_COVER_FULL != null)
-            {
-                MOVIE_COVER_FULL.Dispose();
-            }
+            webTrailer?.Dispose();
+            picBox.Image?.Dispose();
+            MOVIE_COVER_FULL?.Dispose();
             foreach (Control c in groupBox2.Controls)
             {
-                c.Dispose();
+                c?.Dispose();
             }
             foreach (Control cc in Controls)
             {
-                cc.Dispose();
+                cc?.Dispose();
             }
             // Dispose ICON Image
-            Icon.Dispose();
+            Icon?.Dispose();
             // Log to file
             GlobalVars.Log("Disposing frmMovie (" + Name + ")", "Controls are Disposed");
             // Run GC to clean
@@ -405,7 +397,8 @@ namespace HomeCinema
             {
                 Program.FormMain.RefreshMovieList();
             }
-
+            // Set focus to main
+            Program.FormMain.Focus();
             Dispose();
         }
         // Play File on Default Player
