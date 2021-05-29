@@ -596,6 +596,12 @@ namespace HomeCinema
         // Fetch data from TMDB, using IMDB ID
         private void btnFetchData_Click(object sender, EventArgs e)
         {
+            // Exit when no TMDB key
+            if (!GlobalVars.HAS_TMDB_KEY)
+            {
+                GlobalVars.ShowWarning(GlobalVars.MSG_NO_TMDB);
+                return;
+            }
             // Declare vars
             frmLoading form = null;
             var list = new List<string>();
@@ -712,6 +718,13 @@ namespace HomeCinema
         // Get IMDB ID using Movie Name
         private void btnGetImdb_Click(object sender, EventArgs e)
         {
+            // Exit when no TMDB key
+            if (!GlobalVars.HAS_TMDB_KEY)
+            {
+                GlobalVars.ShowWarning(GlobalVars.MSG_NO_TMDB);
+                return;
+            }
+
             // Declare vars
             string mediatype = (cbCategory.Text.ToLower().Contains("series") ? "tv" : "movie");
             string getIMDB = "";

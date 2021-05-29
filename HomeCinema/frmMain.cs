@@ -244,7 +244,7 @@ namespace HomeCinema
                 string rStudio = "";
 
                 // Scrape from TMDB, for info and details
-                if (GlobalVars.SET_OFFLINE == false)
+                if (GlobalVars.SET_OFFLINE == false && GlobalVars.HAS_TMDB_KEY)
                 {
                     // Get imdb id and set it to textbox
                     getIMDB = GlobalVars.GetIMDBId(mName, "dummy", mediatype);
@@ -997,7 +997,7 @@ namespace HomeCinema
                     GlobalVars.Log(errFrom, $"DONE Background worker from: {Name}");
                     if (!GlobalVars.HAS_TMDB_KEY && AppStart)
                     {
-                        GlobalVars.ShowWarning("No TMDB Key!\nSome features are disabled");
+                        GlobalVars.ShowWarning(GlobalVars.MSG_NO_TMDB);
                     }
                 };
                 form.ShowDialog();
