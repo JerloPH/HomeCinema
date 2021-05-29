@@ -55,6 +55,7 @@ namespace HomeCinema.Global
 
         public static string PREFIX_MOVIEINFO = "movieInfo";
         public static string CAPTION_DIALOG = HOMECINEMA_NAME + " v" + HOMECINEMA_VERSION;
+        public static bool HAS_TMDB_KEY { get; set; } = false;
 
         // Links for external websites
         public static string TMDB_KEY = "";
@@ -77,7 +78,7 @@ namespace HomeCinema.Global
         public static string FILE_LOG_APP = Path.Combine(PATH_LOG, "App_Log.log");// Log all messages and actions
         public static string FILE_LOG_ERROR = Path.Combine(PATH_LOG, "App_ErrorLog.log"); // Contains only error Messages
 
-        // Data
+        // Data and files
         public static string FILE_SETTINGS = PATH_DATA + @"settings.json"; // settings used in App
         public static string FILE_COUNTRY = PATH_DATA + @"country.hc_data"; // list of countries
         public static string FILE_GENRE = PATH_DATA + @"genre.hc_data"; // List of genres
@@ -86,7 +87,6 @@ namespace HomeCinema.Global
         public static string FILE_MEDIA_EXT = PATH_DATA + "media_ext.hc_data"; // Extensions to check for movies
         public static string FILE_SERIESLOC = PATH_DATA + "serieslocation.hc_data"; // For series, root folder.
 
-        // Image files loaded from disk
         public static Icon HOMECINEMA_ICON = new Icon(FILE_ICON); // Icon as a resource, used by forms
 
         // Database Vars

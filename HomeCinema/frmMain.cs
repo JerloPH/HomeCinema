@@ -53,9 +53,9 @@ namespace HomeCinema
             if (Debugger.IsAttached)
             {
                 GlobalVars.TMDB_KEY = GlobalVars.ReadStringFromFile(@"..\..\..\ignored\tmdb_API_Key.txt", "frmMain-DEBUG");
-                if (String.IsNullOrWhiteSpace(GlobalVars.TMDB_KEY))
+                if (!String.IsNullOrWhiteSpace(GlobalVars.TMDB_KEY))
                 {
-                    GlobalVars.ShowWarning("No TMDB Key!\nSome features are disabled");
+                    GlobalVars.HAS_TMDB_KEY = true;
                 }
             }
 
@@ -915,32 +915,35 @@ namespace HomeCinema
                             {
                                 DataRow rFile = dtGetFile.Rows[0];
                                 fileNamePath = rFile[1].ToString();
-                                try
+                                if (File.Exists(fileNamePath))
                                 {
-                                    FileAttributes attr = File.GetAttributes(fileNamePath);
-                                    if (attr.HasFlag(FileAttributes.Directory))
+                                    try
                                     {
-                                        // Non existing directory, skip it
-                                        if (!Directory.Exists(fileNamePath))
+                                        FileAttributes attr = File.GetAttributes(fileNamePath);
+                                        if (attr.HasFlag(FileAttributes.Directory))
                                         {
-                                            dtGetFile.Dispose();
-                                            continue;
+                                            // Non existing directory, skip it
+                                            if (!Directory.Exists(fileNamePath))
+                                            {
+                                                dtGetFile.Dispose();
+                                                continue;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (!File.Exists(fileNamePath))
+                                            {
+                                                dtGetFile.Dispose();
+                                                continue;
+                                            }
                                         }
                                     }
-                                    else
+                                    catch (Exception ex)
                                     {
-                                        if (!File.Exists(fileNamePath))
-                                        {
-                                            dtGetFile.Dispose();
-                                            continue;
-                                        }
+                                        GlobalVars.ShowError(errFrom, ex, false);
+                                        dtGetFile.Dispose();
+                                        continue;
                                     }
-                                }
-                                catch (Exception ex)
-                                {
-                                    GlobalVars.ShowError(errFrom, ex, false);
-                                    dtGetFile.Dispose();
-                                    continue;
                                 }
                             }
 
@@ -990,6 +993,10 @@ namespace HomeCinema
                         }
                     }
                     GlobalVars.Log(errFrom, $"DONE Background worker from: {Name}");
+                    if (!GlobalVars.HAS_TMDB_KEY && AppStart)
+                    {
+                        GlobalVars.ShowWarning("No TMDB Key!\nSome features are disabled");
+                    }
                 };
                 form.ShowDialog();
             }
