@@ -495,7 +495,8 @@ namespace HomeCinema
                 }
                 catch (Exception ex)
                 {
-                    GlobalVars.ShowError($"frmMovie({Name})-lblIMDB_Click", ex);
+                    GlobalVars.ShowError($"frmMovie({Name})-lblIMDB_Click", ex, false);
+                    GlobalVars.ShowWarning("Cannot open IMDB link on browser!");
                 }
             }
         }
