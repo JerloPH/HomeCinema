@@ -1,5 +1,31 @@
 # HomeCinema - Project History:
 
+## HomeCinema v0.6
+### ***release 35 - build 30 May 2021 PHT***
+
+### What's New?
+- REV: UI Controls are now scalable! It resizes and reposition based on the form size.
+  - Added minimum form size to limit window resizing.
+- REV: Used customizable alert prompts. (*Background and Foreground color can be set in Settings form*).
+- REV: NEW Setting: **Auto Clean**. Default **'ON'**.
+  - If **'ON'**, cleans logs and temporary files on Startup.
+- MINOR: Prompt user when IMDB link cannot be opened in browser.
+- GUI: Updated the Icon.
+- GUI: Changed Loading Icon.
+- GUI: Reposition controls on **General** tab on **Settings** form.
+- GUI: Alphabetically sort entries on Listbox for **'Country'** and **'Genre'**.
+- GUI: Apply UI customization on prompt when adding entry to **'Country'** and **'Genre'** listbox.
+
+### Dev changes
+- REV: Automatically refresh *Country* and *Genre* whenever **Edit Information** is clicked.
+- REV: Refactored codes.
+- REV: Prompt when there's no TMDB Key, also disable features that uses TMDB.
+- MINOR: Removed overload for method **'GlobalVars.ShowWarning()'**.
+- MINOR: Don't show error message on method **'GlobalVars.ReadStringFromFile()'**.
+- MINOR: Moved all pre-load setup to **'Program.cs'**.
+- MINOR: Use **'MessageBox.Show()'** method if Main Form is not loaded.
+****
+
 ## HomeCinema v0.5.3
 ### ***release 34 - build 15 May 2021 PHT***
 
