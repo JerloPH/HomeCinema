@@ -53,10 +53,7 @@ namespace HomeCinema.Global
         public static string HOMECINEMA_VERSION = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         public static int HOMECINEMA_BUILD = 34;
 
-        public static string SEARCHBOX_PLACEHOLDER = "Type your Search query here...";
-
         public static string PREFIX_MOVIEINFO = "movieInfo";
-
         public static string CAPTION_DIALOG = HOMECINEMA_NAME + " v" + HOMECINEMA_VERSION;
 
         // Links for external websites

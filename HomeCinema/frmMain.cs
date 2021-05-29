@@ -37,6 +37,7 @@ namespace HomeCinema
     {
         SQLHelper DBCON = new SQLHelper("frmMain"); // Make an SQLite helper instance
         // Strings
+        static string SEARCHBOX_PLACEHOLDER = "Type your Search query here...";
         static string LVMovieItemsColumns = "[Id],[name],[name_ep],[name_series],[season],[episode],[year],[summary],[genre]";
         string SEARCH_QUERY = "";
         string SEARCH_QUERY_PREV = "";
@@ -71,7 +72,7 @@ namespace HomeCinema
             GlobalVars.LoadSettings();
 
             // Add events to controls
-            txtSearch.Text = GlobalVars.SEARCHBOX_PLACEHOLDER;
+            txtSearch.Text = SEARCHBOX_PLACEHOLDER;
             txtSearch.GotFocus += new EventHandler(SearchBoxPlaceholderClear);
             txtSearch.LostFocus += new EventHandler(SearchBoxPlaceholder);
 
@@ -445,13 +446,13 @@ namespace HomeCinema
         {
             if (string.IsNullOrWhiteSpace(txtSearch.Text))
             {
-                txtSearch.Text = GlobalVars.SEARCHBOX_PLACEHOLDER;
+                txtSearch.Text = SEARCHBOX_PLACEHOLDER;
                 txtSearch.ForeColor = Color.Black;
             }
         }
         public void SearchBoxPlaceholderClear(object sender, EventArgs e)
         {
-            if (txtSearch.Text == GlobalVars.SEARCHBOX_PLACEHOLDER)
+            if (txtSearch.Text == SEARCHBOX_PLACEHOLDER)
             {
                 txtSearch.Text = "";
                 txtSearch.ForeColor = Color.Black;
@@ -1155,7 +1156,7 @@ namespace HomeCinema
 
             // Build Filter for Query
             // Name Text search
-            if ((txtSearch.Text != GlobalVars.SEARCHBOX_PLACEHOLDER) && (!String.IsNullOrWhiteSpace(txtSearch.Text)))
+            if ((txtSearch.Text != SEARCHBOX_PLACEHOLDER) && (!String.IsNullOrWhiteSpace(txtSearch.Text)))
             {
                 qry += " WHERE ";
                 qry += $"([name] LIKE '%{txtSearch.Text}%' ";
@@ -1244,7 +1245,7 @@ namespace HomeCinema
         {
             // Clear searchbox and Filter
             txtSearch.ForeColor = Color.Black;
-            txtSearch.Text = GlobalVars.SEARCHBOX_PLACEHOLDER;
+            txtSearch.Text = SEARCHBOX_PLACEHOLDER;
             txtIMDB.Text = "";
             txtStudio.Text = "";
             txtDirector.Text = "";
@@ -1271,7 +1272,7 @@ namespace HomeCinema
             if (e.KeyCode == Keys.Enter)
             {
                 // Check if searchbox is empty
-                if ((String.IsNullOrWhiteSpace(txtSearch.Text)==false) && (txtSearch.Text != GlobalVars.SEARCHBOX_PLACEHOLDER))
+                if ((String.IsNullOrWhiteSpace(txtSearch.Text)==false) && (txtSearch.Text != SEARCHBOX_PLACEHOLDER))
                 {
                     // Perform click on search button: btnSearch
                     btnSearch.PerformClick();
