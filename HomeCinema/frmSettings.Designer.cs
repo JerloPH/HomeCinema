@@ -78,6 +78,8 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
+            this.cbAutoClean = new System.Windows.Forms.ComboBox();
+            this.lblAutoClean = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -108,6 +110,8 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.Black;
+            this.tabPage1.Controls.Add(this.cbAutoClean);
+            this.tabPage1.Controls.Add(this.lblAutoClean);
             this.tabPage1.Controls.Add(this.btnCheckUpdate);
             this.tabPage1.Controls.Add(this.lblImdbSearchLimit);
             this.tabPage1.Controls.Add(this.txtImdbSearchLimit);
@@ -687,6 +691,26 @@
             this.label9.TabIndex = 16;
             this.label9.Text = "* Changes Apply after Restart";
             // 
+            // cbAutoClean
+            // 
+            this.cbAutoClean.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbAutoClean.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbAutoClean.FormattingEnabled = true;
+            this.cbAutoClean.Location = new System.Drawing.Point(271, 161);
+            this.cbAutoClean.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cbAutoClean.Name = "cbAutoClean";
+            this.cbAutoClean.Size = new System.Drawing.Size(167, 33);
+            this.cbAutoClean.TabIndex = 19;
+            // 
+            // lblAutoClean
+            // 
+            this.lblAutoClean.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAutoClean.Location = new System.Drawing.Point(5, 164);
+            this.lblAutoClean.Name = "lblAutoClean";
+            this.lblAutoClean.Size = new System.Drawing.Size(249, 30);
+            this.lblAutoClean.TabIndex = 18;
+            this.lblAutoClean.Text = "Clean at Startup";
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -769,5 +793,7 @@
         private System.Windows.Forms.Button btnChangeColorFont;
         private System.Windows.Forms.Button btnColorFont;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox cbAutoClean;
+        private System.Windows.Forms.Label lblAutoClean;
     }
 }

@@ -137,11 +137,13 @@ namespace HomeCinema
             tooltip.SetToolTip(lblItemDisplayCount, "Maximum number of Items displayed for Search results.\n'0' displays all.");
             tooltip.SetToolTip(lblImdbSearchLimit, "Limit Search results in searching Imdb entry.");
             tooltip.SetToolTip(btnCheckUpdate, "Manually check for updates.");
+            tooltip.SetToolTip(lblAutoClean, "Clean logs and temporary files on startup.");
 
             // setup contents
             cbAutoUpdate.Items.AddRange(choice);
             cbOffline.Items.AddRange(choice);
             cbPlayMovie.Items.AddRange(choice);
+            cbAutoClean.Items.AddRange(choice);
 
             // Setting Values Initialization
             // ##################### - GENERAL
@@ -154,6 +156,9 @@ namespace HomeCinema
 
             try { cbPlayMovie.SelectedIndex = Convert.ToInt16(!GlobalVars.SET_AUTOPLAY); }
             catch { cbPlayMovie.SelectedIndex = 0; }
+
+            try { cbAutoClean.SelectedIndex = Convert.ToInt16(!GlobalVars.SET_AUTOCLEAN); }
+            catch { cbAutoClean.SelectedIndex = 1; }
 
             // TextBox
             try { txtLogSize.Text = (GlobalVars.SET_LOGMAXSIZE / GlobalVars.BYTES).ToString(); }
