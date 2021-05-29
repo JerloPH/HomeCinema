@@ -330,6 +330,8 @@ namespace HomeCinema.Global
             SET_SEARCHLIMIT = config.searchLimit;
             // TimeOut for Internet connections
             SET_TIMEOUT = config.setTimeOut;
+            // Auto clean on startup
+            SET_AUTOCLEAN = Convert.ToBoolean(config.autoClean);
 
             // Set colors
             try
@@ -353,6 +355,7 @@ namespace HomeCinema.Global
             config.lastPathVideo = PATH_GETVIDEO;
             config.autoUpdate = Convert.ToInt16(SET_AUTOUPDATE);
             config.instantPlayMovie = Convert.ToInt16(SET_AUTOPLAY);
+            config.autoClean = Convert.ToInt16(SET_AUTOCLEAN);
             config.itemMaxLimit = SET_ITEMLIMIT;
             config.searchLimit = SET_SEARCHLIMIT;
             config.setTimeOut = SET_TIMEOUT;

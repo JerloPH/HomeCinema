@@ -251,6 +251,7 @@ namespace HomeCinema
             GlobalVars.SET_AUTOUPDATE = !Convert.ToBoolean(cbAutoUpdate.SelectedIndex);
             GlobalVars.SET_OFFLINE = !Convert.ToBoolean(cbOffline.SelectedIndex);
             GlobalVars.SET_AUTOPLAY = !Convert.ToBoolean(cbPlayMovie.SelectedIndex);
+            GlobalVars.SET_AUTOCLEAN = !Convert.ToBoolean(cbAutoClean.SelectedIndex);
 
             // TextBox
             try
