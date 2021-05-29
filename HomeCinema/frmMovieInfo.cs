@@ -413,45 +413,9 @@ namespace HomeCinema
             }
 
             // Check MOVIE ID value if Lower than 1 (Not existing)
-            if (Convert.ToInt32(MOVIE_ID) < 1)
+            if (Convert.ToInt32(MOVIE_ID) > 0)
             {
-                // Insert to DB if NEW MOVIE
-                // Build new string[] from [INFO] & [filepath]
-                string[] combined = new string[GlobalVars.DB_TABLE_INFO.Length + GlobalVars.DB_TABLE_FILEPATH.Length - 2];
-                Array.Copy(GlobalVars.DB_TABLE_INFO, 1, combined, 0, GlobalVars.DB_TABLE_INFO.Length - 1);
-                Array.Copy(GlobalVars.DB_TABLE_FILEPATH, 1, combined, GlobalVars.DB_TABLE_INFO.Length - 1, 3);
-
-                // Create DT
-                DataTable dt = conn.InitializeDT(false, combined);
-                DataRow row = dt.NewRow();
-                row[0] = GlobalVars.ValidateEmptyOrNull(txtIMDB.Text);
-                row[1] = GlobalVars.ValidateEmptyOrNull(txtName.Text);
-                row[2] = GlobalVars.ValidateEmptyOrNull(txtEpName.Text);
-                row[3] = GlobalVars.ValidateEmptyOrNull(txtSeriesName.Text);
-                row[4] = GlobalVars.ValidateEmptyOrNull(txtSeasonNum.Text);
-                row[5] = GlobalVars.ValidateEmptyOrNull(txtEpNum.Text);
-                row[6] = GetCountry(); //GlobalVars.ValidateEmptyOrNull(lblCountry.Text);
-                row[7] = cbCategory.SelectedIndex;
-                row[8] = GetGenre();
-                row[9] = GlobalVars.ValidateEmptyOrNull(txtStudio.Text);
-                row[10] = GlobalVars.ValidateEmptyOrNull(txtProducer.Text);
-                row[11] = GlobalVars.ValidateEmptyOrNull(txtDirector.Text);
-                row[12] = GlobalVars.ValidateEmptyOrNull(txtArtist.Text);
-                row[13] = GlobalVars.ValidateEmptyOrNull(txtYear.Text);
-                row[14] = GlobalVars.ValidateEmptyOrNull(txtSummary.Text);
-                row[15] = GlobalVars.ValidateEmptyOrNull(txtPathFile.Text);
-                row[16] = GlobalVars.ValidateEmptyOrNull(txtPathSub.Text);
-                row[17] = GlobalVars.ValidateEmptyOrNull(txtPathTrailer.Text);
-                dt.Rows.Add(row);
-                dt.AcceptChanges();
-
-                MOVIE_ID = conn.DbInsertMovie(dt , callFrom).ToString();
-                txtID.Text = MOVIE_ID;
-
-            }
-            else
-            {
-                // Otherwise, SAVE changes to EXISTING MOVIE
+                // SAVE changes to EXISTING MOVIE
                 // DataTable for INFO
                 DataTable dt = conn.InitializeDT(GlobalVars.DB_TABLE_INFO);
                 // Add row values
