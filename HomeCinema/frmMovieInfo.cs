@@ -76,13 +76,6 @@ namespace HomeCinema
             if (Convert.ToInt16(MOVIE_ID) > 0)
             {
                 LoadInformation(ID, text);
-            } // OR, otherwise, Create a NEW MOVIE INFO
-            else
-            {
-                Text = text + "[Add New Movie]";
-                MOVIE_COVER = GlobalVars.ImgGetImageFromList("0");
-                picBox.Image = MOVIE_COVER;
-                cbCategory.SelectedIndex = 1;
             }
 
             // Show the form
