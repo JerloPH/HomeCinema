@@ -53,10 +53,10 @@ namespace HomeCinema
             if (Debugger.IsAttached)
             {
                 GlobalVars.TMDB_KEY = GlobalVars.ReadStringFromFile(@"..\..\..\ignored\tmdb_API_Key.txt", "frmMain-DEBUG");
-                if (!String.IsNullOrWhiteSpace(GlobalVars.TMDB_KEY))
-                {
-                    GlobalVars.HAS_TMDB_KEY = true;
-                }
+            }
+            if (!String.IsNullOrWhiteSpace(GlobalVars.TMDB_KEY))
+            {
+                GlobalVars.HAS_TMDB_KEY = true;
             }
 
             // Start app
