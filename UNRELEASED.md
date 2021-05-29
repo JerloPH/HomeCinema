@@ -9,6 +9,8 @@
 - GUI: Updated the Icon. [8caeb60]
 - GUI: Changed Loading Icon. [c17d4fd]
 - GUI: Reposition controls on **General** tab on **Settings** form. [79d23da]
+- GUI: Alphabetically sort entries on Listbox for **'Country'** and **'Genre'**. [8fa6a49]
+- GUI: Apply UI customization on prompt when adding entry to **'Country'** and **'Genre'** listbox. [0c8f37c]
 
 # Commits for Dev changes
 
