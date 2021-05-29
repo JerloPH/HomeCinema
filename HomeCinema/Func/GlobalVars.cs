@@ -1696,6 +1696,11 @@ namespace HomeCinema.Global
                 ShowInfo("Cleanup Done!");
             }
         }
+        public static string ConvertListBoxToString(ListBox lb)
+        {
+            var list = lb.Items.Cast<String>().ToList();
+            return (list.Count > 0) ? list.Aggregate((a, b) => a + "," + b) : "";
+        }
         // ######################################################################## END - Add code above
     }
 }

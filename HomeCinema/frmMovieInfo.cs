@@ -125,6 +125,20 @@ namespace HomeCinema
                 lb.Items.RemoveAt(item);
             }
         }
+        // Add items to ListBox
+        public void LoadListBoxItems(string itemsList, ListBox lb)
+        {
+            string[] temp = itemsList.Split(',');
+            string itemAdd = "";
+            foreach (string item in temp)
+            {
+                itemAdd = item.Trim();
+                if (CanAddToListBox(lb, itemAdd))
+                {
+                    lb.Items.Add(itemAdd);
+                }
+            }
+        }
         // ########################## FOR CATEGORY
         // Get Category as integer, in string format
         private string GetCategory()
@@ -135,39 +149,23 @@ namespace HomeCinema
         // Return genre [string], from checked checkboxes
         public string GetGenre()
         {
-            var list = listboxGenre.Items.Cast<String>().ToList();
-            return (list.Count > 0) ? list.Aggregate((a, b) => a + "," + b) : "";
+            return GlobalVars.ConvertListBoxToString(listboxGenre);
         }
         // Add genres to ListBox that are in the media 'genre'
         public void LoadGenre(string genre)
         {
-            string[] temp = genre.Split(',');
-            foreach (string item in temp)
-            {
-                if (CanAddToListBox(listboxGenre, item.Trim()))
-                {
-                    listboxGenre.Items.Add(item.Trim());
-                }
-            }
+            LoadListBoxItems(genre, listboxGenre);
         }
         // ########################## FOR COUNTRY
         // Return country, from checkboxes
         public string GetCountry()
         {
-            var list =  listboxCountry.Items.Cast<String>().ToList();
-            return (list.Count > 0) ? list.Aggregate((a, b) => a + "," + b) : "";
+            return GlobalVars.ConvertListBoxToString(listboxCountry);
         }
         // Add countries to ListBox that are in the media 'country'
         public void LoadCountry(string country)
         {
-            string[] temp = country.Split(',');
-            foreach (string item in temp)
-            {
-                if (CanAddToListBox(listboxCountry, item.Trim()))
-                {
-                    listboxCountry.Items.Add(item.Trim());
-                }
-            }
+            LoadListBoxItems(country, listboxCountry);
         }
         // ########################## OTHER FUNCTIONS
         // REFRESH INFORMATION
