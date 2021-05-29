@@ -443,7 +443,7 @@ namespace HomeCinema.Global
             }
             catch (Exception ex)
             {
-                ShowError(errFrom, ex);
+                ShowError(errFrom, ex, false);
             }
             return ret;
         }

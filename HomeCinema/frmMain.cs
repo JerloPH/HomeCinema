@@ -64,7 +64,7 @@ namespace HomeCinema
                 GlobalVars.TMDB_KEY = GlobalVars.ReadStringFromFile(@"..\..\..\ignored\tmdb_API_Key.txt", "frmMain-DEBUG");
                 if (String.IsNullOrWhiteSpace(GlobalVars.TMDB_KEY))
                 {
-                    GlobalVars.ShowWarning("No TMDB Key!");
+                    GlobalVars.ShowWarning("No TMDB Key!\nSome features are disabled");
                 }
             }
 
