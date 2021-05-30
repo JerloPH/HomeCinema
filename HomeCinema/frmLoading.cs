@@ -31,6 +31,7 @@ namespace HomeCinema
             }
         }
         public int TopPosition { get; set; }
+
         public frmLoading(string message, string caption)
         {
             InitializeComponent();
@@ -62,7 +63,7 @@ namespace HomeCinema
                         image = Resources.LoadingColored;
                         break;
                 }
-                pictureBox1.Image.Dispose();
+                pictureBox1.Image?.Dispose();
                 pictureBox1.Image = image;
             }
             catch { }
@@ -82,12 +83,20 @@ namespace HomeCinema
             if (BackgroundWorker.IsBusy)
                 e.Cancel = true;
 
-            pictureBox1.Image.Dispose();
+            pictureBox1.Image?.Dispose();
         }
 
         private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Close();
+        }
+
+        private void frmLoading_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                Close();
+            }
         }
     }
 }
