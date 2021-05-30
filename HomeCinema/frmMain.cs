@@ -1005,6 +1005,11 @@ namespace HomeCinema
             }
             dt.Dispose();
             AfterPopulatingMovieLV(lvSearchResult, progress);
+            // Auto check update
+            if ((GlobalVars.SET_OFFLINE == false) && (GlobalVars.SET_AUTOUPDATE) && AppStart)
+            {
+                GlobalVars.CheckForUpdate(this, false);
+            }
         }
         #endregion
         // ####################################################################################### Form CUSTOM events
@@ -1079,11 +1084,7 @@ namespace HomeCinema
 
             // Perform click on Change View
             btnChangeView.PerformClick();
-            // Auto check update
-            if ((GlobalVars.SET_OFFLINE == false) && (GlobalVars.SET_AUTOUPDATE))
-            {
-                GlobalVars.CheckForUpdate();
-            }
+
             // Start finding files in folder
             GetMediaFromFolders();
         }
