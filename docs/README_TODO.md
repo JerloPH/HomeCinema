@@ -1,6 +1,8 @@
 # HomeCinema - Features to Add / Bugs to Fix
 
 ## Priority List
+- Marked 'Watched' entry.
+- Load label texts from external files, when using translation.
 - Faster showing of movie info when clicking **"View details"**.
 - Scrape Anime info from Anilist/MyAnimeList.
 - Improve speed of App load (check background worker and optimize).
@@ -40,7 +42,7 @@
 	  - Studio.
 	  
 ## Movie Information Form
-  - [ ] Save Metadata to movie file. *Only for movies*.
+  - [ ] Save Metadata to movie file. *Only for movies*. Save info showing frmLoad.
     - [x] Title
 	- [x] Year
 	- [x] Genre
