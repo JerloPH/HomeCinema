@@ -1,5 +1,18 @@
 # HomeCinema - Project History:
 
+## HomeCinema v0.6.1
+### *release 36 - build 30 May 2021 PHT*
+### Hotfixes on top of v0.6
+- FIXED: Unhandled Exception thrown when clicking **"Edit Information"** on empty result.
+- FIXED: Update checking not working.
+- FIXED: App not working for new users.
+
+### Changes
+- REV: Moved update checking to trigger after collection is loaded.
+- REV: When result from searching IMDB is double-clicked, select it.
+- MINOR: Close frmLoading when ESC key is pressed.
+****
+
 ## HomeCinema v0.6
 ### ***release 35 - build 30 May 2021 PHT***
 
