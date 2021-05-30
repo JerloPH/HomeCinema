@@ -83,6 +83,7 @@ namespace HomeCinema
             this.Text = "frmPopulateMovie";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmPopulateMovie_FormClosing);
             this.Shown += new System.EventHandler(this.frmPopulateMovie_Shown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmLoading_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
