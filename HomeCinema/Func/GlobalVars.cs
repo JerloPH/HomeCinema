@@ -205,8 +205,9 @@ namespace HomeCinema.Global
                 ShowError("GlobalVars-ShowMsg", ex, false);
             }
         }
-        public static void ShowInfo(string msg, string caption = "")
+        public static void ShowInfo(string msg, string caption = "", Form parent = null)
         {
+            Form caller = (parent == null) ? Program.FormMain : parent;
             if (Program.FormMain == null)
             {
                 ShowMsg(msg, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -217,21 +218,21 @@ namespace HomeCinema.Global
                 Program.FormMain.Invoke(new Action(() =>
                 {
                     var form = new frmAlert(msg, caption);
-                    form.Show(Program.FormMain);
+                    form.Show(caller);
                 }));
             }
             else
             {
                 var form = new frmAlert(msg, caption);
-                form.Show(Program.FormMain);
+                form.Show(caller);
             }
             //ShowMsg(msg, CAPTION_DIALOG, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-        public static void ShowWarning(string msg, string caption = "")
+        public static void ShowWarning(string msg, string caption = "", Form parent = null)
         {
-            ShowInfo(msg, caption);
+            ShowInfo(msg, caption, parent);
         }
-        public static void ShowError(string codeFrom, Exception error, bool ShowAMsg = true)
+        public static void ShowError(string codeFrom, Exception error, bool ShowAMsg = true, Form parent = null)
         {
             string err = $"Source: {error.Source.ToString()}\n\tError string:\n\t{error.ToString()}";
             string file = FILE_LOG_ERROR;
@@ -239,7 +240,7 @@ namespace HomeCinema.Global
 
             if (ShowAMsg)
             {
-                ShowInfo($"An error occured!\nError message: {err}\nError File Location:\n{file}", "Error occured!");
+                ShowInfo($"An error occured!\nError message: {err}\nError File Location:\n{file}", "Error occured!", parent);
                 // Open file in explorer
                 try
                 {
@@ -247,7 +248,7 @@ namespace HomeCinema.Global
                 }
                 catch (Exception ex)
                 {
-                    ShowWarning($"Cannot open folder containing error file!\n{ex.ToString()}");
+                    ShowWarning($"Cannot open folder containing error file!\n{ex.ToString()}", "Error occured", parent);
                 }
             }
         }
@@ -1012,17 +1013,20 @@ namespace HomeCinema.Global
             return false;
         }
         // Auto-check for updates
-        public static void CheckForUpdate(bool showMsg = false)
+        public static void CheckForUpdate(Form parent = null, bool showMsg = false)
         {
             string errFrom = "GlobalVars - CheckForUpdate";
-            frmLoading form = new frmLoading("Checking for Update..", "Loading");
+            Form caller = (parent == null) ? Program.FormMain : parent;
+            int UpdateStatus = 0; // 0-default, 1=update, 2=latest ver, 3=error
+            string fileName = PATH_TEMP + "version";
+            string link = @"https://raw.githubusercontent.com/JerloPH/HomeCinema/master/data/version";
+            string linkRelease = @"https://github.com/JerloPH/HomeCinema/releases";
+            int tryCount = 3;
+
+            frmLoading form = new frmLoading("Checking for Update..", "Update check");
             form.BackgroundWorker.DoWork += (sender1, e1) =>
             {
                 Log(errFrom, "Will Check for Updates..");
-                string fileName = PATH_TEMP + "version";
-                string link = @"https://raw.githubusercontent.com/JerloPH/HomeCinema/master/data/version";
-                string linkRelease = @"https://github.com/JerloPH/HomeCinema/releases";
-                int tryCount = 3;
 
                 if (File.Exists(fileName))
                 {
@@ -1039,7 +1043,7 @@ namespace HomeCinema.Global
                 // Done downloading version file
                 if (File.Exists(fileName))
                 {
-                    string vString = ReadStringFromFile(fileName, "GlobalVars-CheckForUpdate");
+                    string vString = ReadStringFromFile(fileName, errFrom);
                     int version;
 
                     try { version = Convert.ToInt32(vString); }
@@ -1050,30 +1054,13 @@ namespace HomeCinema.Global
                         form.SetIcon((int)Icons.Check);
                         form.Message = "Update available!";
                         Log(errFrom, "Update found!");
-                        // there is an update, goto page of releases
-                        try
-                        {
-                            if (ShowYesNo("There is an update!\nGo to Download Page?\nNOTE: It will open a Link in your Default Web Browser"))
-                            {
-                                Process.Start(linkRelease);//Process.Start("chrome.exe", linkRelease);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            form.SetIcon((int)Icons.Warning);
-                            form.Message = "Error on checking update!";
-                            ShowWarning("Update Error!\nTry Updating Later..");
-                            ShowError(errFrom, ex, false);
-                        }
+                        UpdateStatus = 1;
                     }
                     else
                     {
                         form.SetIcon((int)Icons.Check);
                         form.Message = "No updates available!";
-                        if (showMsg)
-                        {
-                            ShowInfo("You are using the latest version!");
-                        }
+                        UpdateStatus = 2;
                     }
                 }
                 else
@@ -1081,13 +1068,40 @@ namespace HomeCinema.Global
                     form.SetIcon((int)Icons.Warning);
                     form.Message = "Error on checking update!";
                     Log(errFrom, "Cannot check for update!");
-                    if (showMsg)
-                    {
-                        ShowWarning("Cannot check for update!\nTry again later");
-                    }
+                    UpdateStatus = 3;
                 }
             };
-            form.ShowDialog();
+            form.ShowDialog(caller);
+            switch (UpdateStatus)
+            {
+                case 1:
+                    // there is an update, goto page of releases
+                    if (ShowYesNo("There is an update!\nGo to Download Page?\nNOTE: It will open a Link in your\nDefault Web Browser", caller))
+                    {
+                        try
+                        {
+                            Process.Start(linkRelease);//Process.Start("chrome.exe", linkRelease);
+                        }
+                        catch (Exception ex)
+                        {
+                            ShowWarning("Update Error!\nTry Updating Later..", "Error occured during update", caller);
+                            ShowError(errFrom, ex, false);
+                        }
+                    }
+                    break;
+                case 2:
+                    if (showMsg)
+                    {
+                        ShowInfo("You are using the latest version!", "Update check", caller);
+                    }
+                    break;
+                default:
+                    if (showMsg)
+                    {
+                        ShowWarning("Cannot check for update!\nTry again later", "Update error", caller);
+                    }
+                    break;
+            }
         }
         // Play media file / Open it in default player
         public static void PlayMedia(string MOVIE_FILEPATH)

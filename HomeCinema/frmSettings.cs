@@ -414,7 +414,7 @@ namespace HomeCinema
 
         private void btnCheckUpdate_Click(object sender, EventArgs e)
         {
-            GlobalVars.CheckForUpdate(true);
+            GlobalVars.CheckForUpdate(this, true);
         }
 
         private void btnChangeColorBG_Click(object sender, EventArgs e)
