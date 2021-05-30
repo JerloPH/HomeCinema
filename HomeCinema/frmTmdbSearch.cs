@@ -230,5 +230,14 @@ namespace HomeCinema
                 }
             }
         }
+
+        private void lvResult_DoubleClick(object sender, EventArgs e)
+        {
+            // Emulate 'OK' button clicked.
+            if (lvResult.SelectedItems.Count > 0)
+            {
+                btnOK.PerformClick();
+            }
+        }
     }
 }

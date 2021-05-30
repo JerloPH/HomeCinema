@@ -107,6 +107,7 @@ namespace HomeCinema
             this.lvResult.Size = new System.Drawing.Size(706, 224);
             this.lvResult.TabIndex = 23;
             this.lvResult.UseCompatibleStateImageBehavior = false;
+            this.lvResult.DoubleClick += new System.EventHandler(this.lvResult_DoubleClick);
             // 
             // frmTmdbSearch
             // 
