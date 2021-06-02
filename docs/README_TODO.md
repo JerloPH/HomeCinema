@@ -2,6 +2,8 @@
 
 ## Priority List
 - Marked 'Watched' entry.
+- Chromecast support.
+- Copy movie/series file to directory.
 - Load label texts from external files, when using translation.
 - Faster showing of movie info when clicking **"View details"**.
 - Scrape Anime info from Anilist/MyAnimeList.
