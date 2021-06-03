@@ -13,6 +13,10 @@ namespace HomeCinema
 {
     public partial class frmAlert : Form
     {
+        public frmAlert()
+        {
+            InitializeComponent();
+        }
         public frmAlert(string message, string caption, int button = 0)
         {
             InitializeComponent();

@@ -33,6 +33,10 @@ namespace HomeCinema
         }
         public int TopPosition { get; set; }
 
+        public frmLoading()
+        {
+            InitializeComponent();
+        }
         public frmLoading(string message, string caption)
         {
             InitializeComponent();
