@@ -174,7 +174,7 @@ namespace HomeCinema
             dtInfo.Dispose();
 
             // Get filesize, Create ToolTip for Movie Title
-            lblName.Tag = "File Size: " + GlobalVars.GetFileSize(MOVIE_FILEPATH);
+            lblName.Tag = $"{(lblCategory.Text.ToLower().Contains("series") ? "Folder" : "File")} Size: {GlobalVars.GetFileSize(MOVIE_FILEPATH)}";
             tp.SetToolTip(lblName, lblName.Tag.ToString());
 
             // Change cover image, if error occurs, Dispose form
