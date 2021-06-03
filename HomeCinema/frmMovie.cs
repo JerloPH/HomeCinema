@@ -95,7 +95,6 @@ namespace HomeCinema
             string qry, Imagefile;
             var dtInfo = new DataTable();
             var tp = new ToolTip();
-            Bitmap thumb;
             frmLoading form = new frmLoading("Opening media info..", "Loading");
 
             // Build query for FilePath, and Movie Info
@@ -169,29 +168,28 @@ namespace HomeCinema
             // Change cover image, if error occurs, Dispose form
             MOVIE_COVER = GlobalVars.ImgGetImageFromList(MOVIE_ID);
             
-            if (MOVIE_COVER is null || MOVIE_COVER == null)
+            if (MOVIE_COVER != null)
             {
-                GlobalVars.Log(errFrom, "Setting Image Cover error");
-                Close();
-            }
-            picBox.Image = MOVIE_COVER;
-            picBox.Refresh();
+                picBox.Image = MOVIE_COVER;
+                picBox.Refresh();
 
-            // Set FORM ICON
-            thumb = (Bitmap)MOVIE_COVER.GetThumbnailImage(64, 64, null, IntPtr.Zero);
-            Icon = Icon.FromHandle(thumb.GetHicon());
-            thumb.Dispose();
+                // Set FORM ICON
+                using (Bitmap thumb = (Bitmap)MOVIE_COVER.GetThumbnailImage(64, 64, null, IntPtr.Zero))
+                {
+                    Icon = Icon.FromHandle(thumb.GetHicon());
+                }
 
-            // Set MOVIE_COVER_FULL | Image from file
-            Imagefile = GlobalVars.ImgFullPathWithDefault(lblID.Text);
-            try
-            {
-                MOVIE_COVER_FULL = Image.FromFile(Imagefile);
-            }
-            catch (Exception exc)
-            {
-                // Error log
-                GlobalVars.ShowError($"{errFrom}\n\tFile:\n\t{ Imagefile }", exc, false);
+                // Set MOVIE_COVER_FULL | Image from file
+                Imagefile = GlobalVars.ImgFullPathWithDefault(lblID.Text);
+                try
+                {
+                    MOVIE_COVER_FULL = Image.FromFile(Imagefile);
+                }
+                catch (Exception exc)
+                {
+                    // Error log
+                    GlobalVars.ShowError($"{errFrom}\n\tFile:\n\t{ Imagefile }", exc, false);
+                }
             }
 
             // Adjust Trailer Frame
