@@ -24,16 +24,17 @@ using System.Data;
 using HomeCinema.Global;
 using Microsoft.WindowsAPICodePack.Shell;
 using System.Drawing;
+using System.Data.Common;
 
 namespace HomeCinema.SQLFunc
 {
-    public class SQLHelper
+    public static class SQLHelper
     {
         /// <summary>
         /// Initialize SQLite database. Create if NOT existing.
         /// </summary>
         /// <param name="InitiatedFrom">Caller of the function.</param>
-        public SQLHelper(string InitiatedFrom)
+        public static void Initiate(string InitiatedFrom)
         {
             string CalledFrom = "SQLHelper (Instance)-" + InitiatedFrom;
             SQLiteConnection conn = DbOpen(); // connect to database
@@ -69,7 +70,7 @@ namespace HomeCinema.SQLFunc
             cmd2.ExecuteNonQuery();
             cmd2.Dispose();
             //GlobalVars.ShowInfo("Database is Created succesfully!");
-            GlobalVars.LogDb(CalledFrom, "Database is Created succesfully!\n " + GlobalVars.DB_PATH);
+            GlobalVars.LogDb(CalledFrom, "Database is loaded succesfully!\n " + GlobalVars.DB_PATH);
             // Dispose (Close) Connection to DB
             DbClose(conn);
         }
@@ -146,7 +147,7 @@ namespace HomeCinema.SQLFunc
         /// </summary>
         /// <param name="cols">String array of column names.</param>
         /// <returns>DataTable ref.</returns>
-        public DataTable InitializeDT(String[] cols)
+        public static DataTable InitializeDT(String[] cols)
         {
             return InitializeDT(true, cols);
         }
@@ -156,7 +157,7 @@ namespace HomeCinema.SQLFunc
         /// <param name="WITH_ID">Include [Id] to DataTable Column.</param>
         /// <param name="cols">Column names.</param>
         /// <returns>DataTable ref</returns>
-        public DataTable InitializeDT(bool WITH_ID, String[] cols)
+        public static DataTable InitializeDT(bool WITH_ID, String[] cols)
         {
             DataTable dt = new DataTable();
             if (WITH_ID)
@@ -213,55 +214,47 @@ namespace HomeCinema.SQLFunc
         /// <param name="cols">Columns for return.</param>
         /// <param name="calledFrom">Method calling this function.</param>
         /// <returns>DataTable, filled with result sets.</returns>
-        public DataTable DbQuery(string qry, string cols, string calledFrom)
+        public static DataTable DbQuery(string qry, string calledFrom)
+        {
+            return DbQuery(qry, "", calledFrom);
+        }
+        public static DataTable DbQuery(string qry, string cols, string calledFrom)
         {
             string errFrom = "SQLHelper-DbQuery";
-            // Create Connection to database
-            SQLiteConnection conn = DbOpen();
-            SQLiteCommand cmd = new SQLiteCommand(conn);
-            cmd.CommandText = qry;
-
-            // Trim the [] from Column names
-            string colsTrim = cols.Replace("[", "");
-            colsTrim = colsTrim.Replace("]", "");
-            string[] cols_qry = colsTrim.Split(',');
-
-            // Create DataTable for results
-            DataTable dt = InitializeDT(cols_qry);
-
-            // Execute query
-            GlobalVars.LogDb($"{errFrom} (START) [Called by: {calledFrom}]", "qry: " + qry);
-            SQLiteDataReader r = cmd.ExecuteReader();
-            
-            // Get all data results
-            while (r.Read())
+            try
             {
-                DataRow row;
-                row = dt.NewRow();
-                int cc = 0;
-                foreach (string text in cols_qry)
+                // Create Connection to database
+                using (SQLiteConnection conn = new SQLiteConnection(GlobalVars.DB_DATAPATH))
                 {
-                    try
+                    conn.Open();
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
                     {
-                        row[cc] = r[text];
-                        //GlobalVars.LogDb("SQLHelper-122", Convert.ToString(cc) + " : " + text + " / " + row[cc] + " // " + r[text]);
-                        cc += 1;
-                    }
-                    catch (Exception ex)
-                    {
-                        GlobalVars.ShowError($"{errFrom} [r.Read() Error]", ex);
+                        cmd.CommandText = qry;
+
+                        // Create DataTable for results
+                        var dt = new DataTable();
+
+                        // Execute query
+                        GlobalVars.LogDb($"{errFrom} (START) [Called by: {calledFrom}]", "qry: " + qry);
+
+                        SQLiteDataAdapter sqlda = new SQLiteDataAdapter(qry, conn);
+                        sqlda.Fill(dt);
+
+                        // Log actions to textfile
+                        GlobalVars.LogDb($"{errFrom} (Finished executing Query)", "Number of Rows returned by query: " + Convert.ToString(dt.Rows.Count));
+
+                        // Apply dt changes and return
+                        //dt.AcceptChanges();
+                        conn.Close();
+                        return dt;
                     }
                 }
-                dt.Rows.Add(row);
             }
-            // Log actions to textfile
-            GlobalVars.LogDb($"{errFrom} (Finished executing Query)", "Number of Rows returned by query: " + Convert.ToString(dt.Rows.Count));
-            // Dispose (Close) Connection to DB
-            cmd.Dispose();
-            DbClose(conn);
-            // Apply dt changes and return
-            dt.AcceptChanges();
-            return dt;
+            catch (Exception ex)
+            {
+                GlobalVars.LogDb($"{errFrom} (Called: {calledFrom})", ex.Message);
+                return null;
+            }
         }
         /// <summary>
         /// Get rows from single column query.
@@ -270,7 +263,7 @@ namespace HomeCinema.SQLFunc
         /// <param name="col">Column name.</param>
         /// <param name="From">Calling method.</param>
         /// <returns>List string of results.</returns>
-        public List<string> DbQrySingle(string tableName, string col, string From)
+        public static List<string> DbQrySingle(string tableName, string col, string From)
         {
             // Create Connection to database
             SQLiteConnection conn = DbOpen();
@@ -307,7 +300,7 @@ namespace HomeCinema.SQLFunc
         /// <param name="dt">DataTable to insert the record to.</param>
         /// <param name="callFrom">Method calling.</param>
         /// <returns>LastID inserted or 0.</returns>
-        public int DbInsertMovie(DataTable dt, string callFrom)
+        public static int DbInsertMovie(DataTable dt, string callFrom)
         {
             // Setups
             string colsInfo = "";
@@ -447,7 +440,7 @@ namespace HomeCinema.SQLFunc
         /// <param name="dt">DataTable which contains the new values.</param>
         /// <param name="from">Method calling.</param>
         /// <returns>True if succesful. Otherwise, false.</returns>
-        public bool DbUpdateInfo(DataTable dt, string from)
+        public static bool DbUpdateInfo(DataTable dt, string from)
         {
             // Set values
             string TableName = GlobalVars.DB_TNAME_INFO;
@@ -492,7 +485,7 @@ namespace HomeCinema.SQLFunc
         /// <param name="dt">DataTable which contains the new values.</param>
         /// <param name="from">Method calling.</param>
         /// <returns>True if succesful. Otherwise, false.</returns>
-        public bool DbUpdateFilepath(DataTable dt, string from)
+        public static bool DbUpdateFilepath(DataTable dt, string from)
         {
             // Set values
             string TableName = GlobalVars.DB_TNAME_FILEPATH;
@@ -530,7 +523,7 @@ namespace HomeCinema.SQLFunc
         /// <param name="ID">Movie ID to delete.</param>
         /// <param name="errFrom">Method calling.</param>
         /// <returns>True if succesful. False if otherwise.</returns>
-        public bool DbDeleteMovie(string ID, string errFrom)
+        public static bool DbDeleteMovie(string ID, string errFrom)
         {
             // Remove info
             string calledFrom = $"SQLHelper-DbDeleteMovie [calledFrom: {errFrom}]";

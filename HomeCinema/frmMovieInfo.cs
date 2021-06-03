@@ -27,6 +27,7 @@ using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Linq;
+using HomeCinema.GlobalEnum;
 
 namespace HomeCinema
 {
@@ -40,9 +41,6 @@ namespace HomeCinema
 
         // Source ListView lvSearch Item index
         public ListViewItem LVITEM = null;
-
-        // Initiate SQLHelper DB Connection
-        SQLHelper conn = new SQLHelper("frmMovieInfo");
 
         // Fixed vars
         private Form PARENT = null;
@@ -177,77 +175,56 @@ namespace HomeCinema
             }
 
             // Set textbox values from Database
-            string cols = null;
-            // Get filepath FROM DB
-            foreach (string s in GlobalVars.DB_TABLE_FILEPATH)
-            {
-                cols += "[" + s + "],";
-            }
-            cols = cols.TrimEnd(',');
             // Build query string
-            string qry = $"SELECT {cols} FROM {GlobalVars.DB_TNAME_FILEPATH} WHERE Id={ID} LIMIT 1;";
-            //GlobalVars.Log($"frmMovieInfo-frmMovieInfo Table({GlobalVars.DB_TNAME_FILEPATH})", $"Query src: {qry}");
+            string qry = $"SELECT * FROM {GlobalVars.DB_TNAME_INFO} A LEFT JOIN {GlobalVars.DB_TNAME_FILEPATH} B ON A.`Id`=B.`Id` WHERE A.`Id`={ID.TrimStart('0')} LIMIT 1;";
 
-            DataTable dtFile = conn.DbQuery(qry, cols, "frmMovie-LoadInformation"); // run the query
-            foreach (DataRow row in dtFile.Rows)
+            using (DataTable dtFile = SQLHelper.DbQuery(qry, "frmMovie-LoadInformation"))
             {
-                txtPathFile.Text = row[GlobalVars.DB_TABLE_FILEPATH[1]].ToString();
-                txtPathSub.Text = row[GlobalVars.DB_TABLE_FILEPATH[2]].ToString();
-                txtPathTrailer.Text = row[GlobalVars.DB_TABLE_FILEPATH[3]].ToString();
-                break;
+                try
+                {
+                    DataRow row = dtFile.Rows[0];
+                    txtPathFile.Text = row[FileColumn.file.ToString()].ToString();
+                    txtPathSub.Text = row[FileColumn.sub.ToString()].ToString();
+                    txtPathTrailer.Text = row[FileColumn.trailer.ToString()].ToString();
+
+                    var r1 = row[InfoColumn.imdb.ToString()]; // imdb
+                    var r2 = row[InfoColumn.name.ToString()]; // name
+                    var r3 = row[InfoColumn.name_ep.ToString()]; // name_ep
+                    var r4 = row[InfoColumn.name_series.ToString()]; // name_series
+                    var r5 = row[InfoColumn.season.ToString()]; // season
+                    var r6 = row[InfoColumn.episode.ToString()]; // episode
+                    var r7 = row[InfoColumn.country.ToString()]; // country
+                    var r8 = row[InfoColumn.category.ToString()]; // category
+                    var r9 = row[InfoColumn.genre.ToString()]; // genre
+                    var r10 = row[InfoColumn.studio.ToString()]; // studio
+                    var r11 = row[InfoColumn.producer.ToString()]; // producer
+                    var r12 = row[InfoColumn.director.ToString()]; // director
+                    var r13 = row[InfoColumn.artist.ToString()]; // artist
+                    var r14 = row[InfoColumn.year.ToString()]; // year
+                    var r15 = row[InfoColumn.summary.ToString()]; // summary  
+                                                                  // Set textboxes
+                    txtIMDB.Text = r1.ToString();
+                    txtName.Text = r2.ToString();
+                    txtEpName.Text = r3.ToString();
+                    txtSeriesName.Text = r4.ToString();
+                    txtSeasonNum.Text = r5.ToString();
+                    txtEpNum.Text = r6.ToString();
+                    LoadCountry(r7.ToString());
+                    cbCategory.SelectedIndex = Convert.ToInt32(r8);
+                    LoadGenre(r9.ToString());
+                    txtStudio.Text = r10.ToString();
+                    txtProducer.Text = r11.ToString();
+                    txtDirector.Text = r12.ToString();
+                    txtArtist.Text = r13.ToString();
+                    txtYear.Text = r14.ToString();
+                    txtSummary.Text = r15.ToString();
+                }
+                catch (Exception ex)
+                {
+                    GlobalVars.LogErr(errFrom, ex.Message);
+                    GlobalVars.ShowWarning("Entry not found!", "", this);
+                }
             }
-            dtFile.Clear();
-            dtFile.Dispose();
-
-            // Get info FROM DB
-            cols = "";
-            foreach (string c in GlobalVars.DB_TABLE_INFO)
-            {
-                cols += "[" + c + "],";
-            }
-            cols = cols.TrimEnd(',');
-            qry = $"SELECT {cols} FROM {GlobalVars.DB_TNAME_INFO} WHERE [Id]={txtID.Text} LIMIT 1;";
-
-            DataTable dtInfo = conn.DbQuery(qry, cols, "frmMovie-LoadInformation");
-
-            foreach (DataRow row in dtInfo.Rows)
-            {
-                var r1 = row[1]; // imdb
-                var r2 = row[2]; // name
-                var r3 = row[3]; // name_ep
-                var r4 = row[4]; // name_series
-                var r5 = row[5]; // season
-                var r6 = row[6]; // episode
-                var r7 = row[7]; // country
-                var r8 = row[8]; // category
-                var r9 = row[9]; // genre
-                var r10 = row[10]; // studio
-                var r11 = row[11]; // producer
-                var r12 = row[12]; // director
-                var r13 = row[13]; // artist
-                var r14 = row[14]; // year
-                var r15 = row[15]; // summary  
-                // Set textboxes
-                txtIMDB.Text = r1.ToString();
-                txtName.Text = r2.ToString();
-                txtEpName.Text = r3.ToString();
-                txtSeriesName.Text = r4.ToString();
-                txtSeasonNum.Text = r5.ToString();
-                txtEpNum.Text = r6.ToString();
-                LoadCountry(r7.ToString());
-                cbCategory.SelectedIndex = Convert.ToInt32(r8);
-                LoadGenre(r9.ToString());
-                txtStudio.Text = r10.ToString();
-                txtProducer.Text = r11.ToString();
-                txtDirector.Text = r12.ToString();
-                txtArtist.Text = r13.ToString();
-                txtYear.Text = r14.ToString();
-                txtSummary.Text = r15.ToString();
-            }
-
-            // Clean dataTable
-            dtInfo.Clear();
-            dtInfo.Dispose();
 
             // Disable setting metadata if series
             if (cbCategory.Text.ToLower().Contains("series"))
@@ -419,7 +396,7 @@ namespace HomeCinema
             {
                 // SAVE changes to EXISTING MOVIE
                 // DataTable for INFO
-                DataTable dt = conn.InitializeDT(GlobalVars.DB_TABLE_INFO);
+                DataTable dt = SQLHelper.InitializeDT(GlobalVars.DB_TABLE_INFO);
                 // Add row values
                 DataRow row = dt.NewRow();
                 row[0] = GlobalVars.ValidateEmptyOrNull(txtID.Text);
@@ -449,7 +426,7 @@ namespace HomeCinema
                 dt.Rows.Add(row);
                 dt.AcceptChanges();
                 // Check if first query successfully executed
-                bool ContAfterQry = conn.DbUpdateInfo(dt, callFrom);
+                bool ContAfterQry = SQLHelper.DbUpdateInfo(dt, callFrom);
 
                 // dispose INFO table
                 dt.Clear();
@@ -459,7 +436,7 @@ namespace HomeCinema
                 if (ContAfterQry)
                 {
                     // DT for Filepath
-                    DataTable dtFile = conn.InitializeDT(true, GlobalVars.DB_TABLE_FILEPATH);
+                    DataTable dtFile = SQLHelper.InitializeDT(true, GlobalVars.DB_TABLE_FILEPATH);
                     // Add row values
                     DataRow rowFile = dtFile.NewRow();
                     rowFile[0] = GlobalVars.ValidateEmptyOrNull(txtID.Text); // ID
@@ -469,7 +446,7 @@ namespace HomeCinema
 
                     dtFile.Rows.Add(rowFile);
                     dtFile.AcceptChanges();
-                    conn.DbUpdateFilepath(dtFile, callFrom);
+                    SQLHelper.DbUpdateFilepath(dtFile, callFrom);
                     // dispose FILEPATH table
                     dtFile.Clear();
                     dtFile.Dispose();

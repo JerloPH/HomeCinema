@@ -30,12 +30,12 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Threading;
+using HomeCinema.GlobalEnum;
 
 namespace HomeCinema
 {
     public partial class frmMain : Form
     {
-        SQLHelper DBCON = new SQLHelper("frmMain"); // Make an SQLite helper instance
         // Strings
         static string SEARCHBOX_PLACEHOLDER = "Type your Search query here...";
         static string LVMovieItemsColumns = "[Id],[name],[name_ep],[name_series],[season],[episode],[year],[summary],[genre]";
@@ -187,7 +187,7 @@ namespace HomeCinema
                 // variables
                 string getIMDB = "";
                 string mName = "";
-                dt = DBCON.InitializeDT(false, combined);
+                dt = SQLHelper.InitializeDT(false, combined);
 
                 // Get proper name, without the folder paths
                 try
@@ -307,7 +307,7 @@ namespace HomeCinema
 
                 dt.AcceptChanges();
 
-                int insertResult = DBCON.DbInsertMovie(dt, callFrom);
+                int insertResult = SQLHelper.DbInsertMovie(dt, callFrom);
                 if (insertResult > 0)
                 {
                     // Download cover, if not OFFLINE_MODE and HAS TMDB KEY
@@ -343,19 +343,19 @@ namespace HomeCinema
         {
             string ret = "";
             string errFrom = $"frmMain-GetFilePath [calledFrom: {calledFrom}]";
-            string qry = $"SELECT [Id],[file] FROM { GlobalVars.DB_TNAME_FILEPATH } WHERE [Id]={ ID } LIMIT 1";
-            DataTable dtFile = DBCON.DbQuery(qry, "[Id],[file]", errFrom);
-            if (dtFile.Rows.Count > 0)
+            string qry = $"SELECT [file] FROM { GlobalVars.DB_TNAME_FILEPATH } WHERE [Id]={ ID } LIMIT 1;";
+            using (DataTable dtFile = SQLHelper.DbQuery(qry, "[file]", errFrom))
             {
-                foreach (DataRow r in dtFile.Rows)
+                if (dtFile.Rows.Count > 0)
                 {
-                    ret = r[GlobalVars.DB_TABLE_FILEPATH[1]].ToString();
-                    break;
+                    foreach (DataRow r in dtFile.Rows)
+                    {
+                        ret = r[GlobalVars.DB_TABLE_FILEPATH[1]].ToString();
+                        break;
+                    }
                 }
+                return ret;
             }
-            dtFile.Clear();
-            dtFile.Dispose();
-            return ret;
         }
         #endregion
         // ####################################################################################### Thread-safe static functions
@@ -470,7 +470,7 @@ namespace HomeCinema
                 // Change info of the item
                 string qry = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO} WHERE [Id]={MOVIEID} LIMIT 1;";
 
-                DataTable dtFile = DBCON.DbQuery(qry, LVMovieItemsColumns, "frmMain-UpdateMovieItemOnLV"); // run the query
+                DataTable dtFile = SQLHelper.DbQuery(qry, LVMovieItemsColumns, "frmMain-UpdateMovieItemOnLV"); // run the query
 
                 // Check if there are results
                 if (dtFile.Rows.Count > 0)
@@ -745,7 +745,7 @@ namespace HomeCinema
                 {
                     form.Message = "Getting movie files from directories..";
                     // List already in db
-                    listAlreadyinDB = DBCON.DbQrySingle(GlobalVars.DB_TNAME_FILEPATH, "[file]", calledFrom + "-listAlreadyinDB");
+                    listAlreadyinDB = SQLHelper.DbQrySingle(GlobalVars.DB_TNAME_FILEPATH, "[file]", calledFrom + "-listAlreadyinDB");
 
                     // List of files valid to add
                     listToAdd = new List<string>();
@@ -868,7 +868,7 @@ namespace HomeCinema
             lvSearchResult.Items.Clear(); // Clear previous list
             // Populate movie listview with new entries, from another form thread
             frmLoading form = new frmLoading(AppStart ? "Loading collection.." : "Searching..", "Loading");
-            DataTable dt, dtGetFile;
+            DataTable dt;
             string qry = SEARCH_QUERY;
             string cols = LVMovieItemsColumns;
             string errFrom = "frmMain-PopulateMovieBG()";
@@ -889,7 +889,7 @@ namespace HomeCinema
 
             // Count progress
             progress = 0;
-            dt = DBCON.DbQuery(qry, cols, errFrom); // Get DataTable from query
+            dt = SQLHelper.DbQuery(qry, cols, errFrom); // Get DataTable from query
 
             // Set Max Progress
             progressMax = dt.Rows.Count;
@@ -904,18 +904,17 @@ namespace HomeCinema
                         // Add Item to ListView
                         // Convert ID object to ID int
                         int MOVIEID;
-                        try { MOVIEID = Convert.ToInt32(r[0]); }
-                        catch { MOVIEID = 0; GlobalVars.Log(errFrom, $"Invalid MovieID: {r[0].ToString()}"); }
+                        var x = InfoColumn.Id.ToString();
+                        try { MOVIEID = Convert.ToInt32(r[x]); }
+                        catch { MOVIEID = 0; GlobalVars.Log(errFrom, $"Invalid MovieID: {r[x].ToString()}"); }
 
                         // Add to listview lvSearchResult
                         if (MOVIEID > 0)
                         {
                             // Break if file does not exist
-                            dtGetFile = DBCON.DbQuery($"SELECT `Id`,`file` FROM {GlobalVars.DB_TNAME_FILEPATH} WHERE `Id` = {MOVIEID}", "Id,file", errFrom);
-                            if (dtGetFile.Rows.Count > 0)
+                            fileNamePath = GetFilePath(MOVIEID.ToString(), errFrom);
+                            if (!String.IsNullOrWhiteSpace(fileNamePath))
                             {
-                                DataRow rFile = dtGetFile.Rows[0];
-                                fileNamePath = rFile[1].ToString();
                                 try
                                 {
                                     FileAttributes attr = File.GetAttributes(fileNamePath);
@@ -924,7 +923,6 @@ namespace HomeCinema
                                         // Non existing directory, skip it
                                         if (!Directory.Exists(fileNamePath))
                                         {
-                                            dtGetFile.Dispose();
                                             continue;
                                         }
                                     }
@@ -932,20 +930,17 @@ namespace HomeCinema
                                     {
                                         if (!File.Exists(fileNamePath))
                                         {
-                                            dtGetFile.Dispose();
                                             continue;
                                         }
                                     }
                                 }
                                 catch (FileNotFoundException)
                                 {
-                                    dtGetFile.Dispose();
                                     continue;
                                 }
                                 catch (Exception ex)
                                 {
                                     GlobalVars.ShowError(errFrom, ex, false);
-                                    dtGetFile.Dispose();
                                     continue;
                                 }
                             }

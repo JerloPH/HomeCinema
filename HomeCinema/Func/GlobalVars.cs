@@ -1567,10 +1567,9 @@ namespace HomeCinema.Global
         // Delete all covers not in database
         public static void CleanCoversNotInDb()
         {
-            SQLHelper dbCon = new SQLHelper("GlobalVars");
             string calledFrom = "GlobalVars-CleanCoversNotInDb()";
             string filepath;
-            List<string> listId = dbCon.DbQrySingle(DB_TNAME_INFO , DB_TABLE_INFO[0].ToString(), calledFrom);
+            List<string> listId = SQLHelper.DbQrySingle(DB_TNAME_INFO , DB_TABLE_INFO[0].ToString(), calledFrom);
             List<string> listCover = SearchFilesSingleDir(PATH_IMG, calledFrom, false);
             foreach (string i in listId)
             {

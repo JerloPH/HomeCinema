@@ -43,9 +43,6 @@ namespace HomeCinema
         public ListViewItem LVITEM = null;
         private bool IsDeleted = false;
 
-        // SQLHelper connection
-        private SQLHelper conn = new SQLHelper("frmMovie");
-
         public frmMovie(Form parent, string ID, string name, ListViewItem lvitem)
         {
             GlobalVars.Log(parent.Name + " (OPEN a MOVIE)", "MOVIE formName: " + Name);
@@ -121,8 +118,8 @@ namespace HomeCinema
                 qry2 = $"SELECT {cols2} FROM {GlobalVars.DB_TNAME_INFO} WHERE Id={ID} LIMIT 1;";
 
                 // Execute queries
-                dtFile = conn.DbQuery(qry1, cols1, errFrom);
-                dtInfo = conn.DbQuery(qry2, cols2, errFrom);
+                dtFile = SQLHelper.DbQuery(qry1, cols1, errFrom);
+                dtInfo = SQLHelper.DbQuery(qry2, cols2, errFrom);
             };
             form.ShowDialog(this);
 
@@ -458,7 +455,7 @@ namespace HomeCinema
             {
                 form.BackgroundWorker.DoWork += (sender1, e1) =>
                 {
-                    if (conn.DbDeleteMovie(MOVIE_ID, errFrom))
+                    if (SQLHelper.DbDeleteMovie(MOVIE_ID, errFrom))
                     {
                         // Dispose and Delete image
                         if (MOVIE_COVER != null)
