@@ -232,6 +232,8 @@ namespace HomeCinema
             Program.FormMain.lvSearchResult.BackColor = GlobalVars.SET_COLOR_BG;
             
             Dispose();
+
+            Program.FormMain.Focus();
         }
         // Exit settings form
         private void btnCancel_Click(object sender, EventArgs e)
