@@ -106,6 +106,7 @@
     <Compile Include="frmTmdbSearch.Designer.cs">
       <DependentUpon>frmTmdbSearch.cs</DependentUpon>
     </Compile>
+    <Compile Include="Enum\GlobalEnum.cs" />
     <Compile Include="JSONs\CastCrew.cs" />
     <Compile Include="frmAbout.cs">
       <SubType>Form</SubType>

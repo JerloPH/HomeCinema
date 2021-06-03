@@ -29,25 +29,17 @@ using System.Reflection;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
-using Microsoft.VisualBasic;
 using Microsoft.VisualBasic.FileIO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Microsoft.WindowsAPICodePack.Shell;
 using HomeCinema.SQLFunc;
+using HomeCinema.GlobalEnum;
 
 namespace HomeCinema.Global
 {
     public static class GlobalVars
     {
-        // Enums
-        public enum Icons
-        {
-            Loading = 0,
-            Check = 1,
-            Warning = 2
-        }
-
         // Variables ############################################################################################################
         public static string HOMECINEMA_NAME = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyTitleAttribute>().Title;
         public static string HOMECINEMA_VERSION = Assembly.GetExecutingAssembly().GetName().Version.ToString();

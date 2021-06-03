@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using HomeCinema.Global;
 using HomeCinema.Properties;
+using HomeCinema.GlobalEnum;
 
 namespace HomeCinema
 {
@@ -53,10 +54,10 @@ namespace HomeCinema
             {
                 switch (IconIndex)
                 {
-                    case (int)GlobalVars.Icons.Check:
+                    case (int)Icons.Check:
                         image = Resources.IconCheckmark;
                         break;
-                    case (int)GlobalVars.Icons.Warning:
+                    case (int)Icons.Warning:
                         image = Resources.IconWarning;
                         break;
                     default:
