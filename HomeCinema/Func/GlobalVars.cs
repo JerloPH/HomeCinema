@@ -654,9 +654,13 @@ namespace HomeCinema.Global
         // Get Image from IMG LIST
         public static Image ImgGetImageFromList(string MOVIE_ID)
         {
-            int key = MOVIE_IMGLIST.Images.IndexOfKey(MOVIE_ID + ".jpg");
-            key = (key < 1) ? 0 : key;
-            return MOVIE_IMGLIST.Images[key];
+            try
+            {
+                int key = MOVIE_IMGLIST.Images.IndexOfKey(MOVIE_ID + ".jpg");
+                key = (key < 1) ? 0 : key;
+                return MOVIE_IMGLIST.Images[key];
+            }
+            catch { return null; }
         }
         // Delete Image from ImageList, with thread safety
         private delegate bool DeleteImageFromListDelegate(Form parent, string movieID, string logFrom);
