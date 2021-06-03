@@ -520,6 +520,16 @@ namespace HomeCinema.Global
             }
             return false;
         }
+        public static bool WriteListBoxToFile(string filepath, ListBox lb = null, string sep = "*")
+        {
+            try
+            {
+                var list = lb.Items.Cast<String>().ToList();
+                var toWrite = (list.Count > 0) ? list.Aggregate((a, b) => a + sep + b) : "";
+                return WriteToFile(filepath, toWrite);
+            }
+            catch { return false; }
+        }
         // Build directory string array from file
         public static string[] BuildDirArrFromFile(string fileToread, string calledFrom, char sep = '*')
         {

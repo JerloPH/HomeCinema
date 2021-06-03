@@ -243,8 +243,6 @@ namespace HomeCinema
         {
             // Try settings values
             long logsize;
-            char separator = '*';
-            string toWrite = "";
             bool error = false;
 
             // Booleans
@@ -267,34 +265,16 @@ namespace HomeCinema
             try { GlobalVars.SET_SEARCHLIMIT = Convert.ToInt32(txtImdbSearchLimit.Text); }
             catch { error = true; }
 
-            // Write MediaLoc file
-            foreach (var x in BoxMediaLoc.Items)
-            {
-                toWrite += x.ToString() + separator;
-            }
-            toWrite = toWrite.TrimEnd(separator);
-            GlobalVars.WriteToFile(GlobalVars.FILE_MEDIALOC, toWrite);
-            toWrite = "";
-
-            // Write SeriesLoc file
-            foreach (var x in BoxSeriesLoc.Items)
-            {
-                toWrite += x.ToString() + separator;
-            }
-            toWrite = toWrite.TrimEnd(separator);
-            GlobalVars.WriteToFile(GlobalVars.FILE_SERIESLOC, toWrite);
-            toWrite = "";
+            // Write MediaLoc and SeriesLoc file
+            GlobalVars.WriteListBoxToFile(GlobalVars.FILE_MEDIALOC, BoxMediaLoc);
+            GlobalVars.WriteListBoxToFile(GlobalVars.FILE_SERIESLOC, BoxSeriesLoc);
 
             // Replace country file
-            var listCountry = listboxCountry.Items.Cast<String>().ToList();
-            toWrite = (listCountry.Count > 0) ? listCountry.Aggregate((a, b) => a + "," + b) : "";
-            GlobalVars.WriteToFile(GlobalVars.FILE_COUNTRY, toWrite);
+            GlobalVars.WriteListBoxToFile(GlobalVars.FILE_COUNTRY, listboxCountry, ",");
             Program.FormMain.PopulateCountryCB();
 
             // Replace genre file
-            var listGenre = listboxGenre.Items.Cast<String>().ToList();
-            toWrite = (listGenre.Count > 0) ? listGenre.Aggregate((a, b) => a + "," + b) : "";
-            GlobalVars.WriteToFile(GlobalVars.FILE_GENRE, toWrite);
+            GlobalVars.WriteListBoxToFile(GlobalVars.FILE_GENRE, listboxGenre, ",");
             Program.FormMain.PopulateGenreCB();
 
             // Theme Settings
