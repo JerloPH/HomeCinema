@@ -641,9 +641,12 @@ namespace HomeCinema
                         string moviePosterDL = GlobalVars.PATH_TEMP + MOVIE_ID + ".jpg";
                         if (SetPicboxImgFromFile(picBox, moviePosterDL, errFrom) == false)
                         {
-                            // Show a Warning
-                            GlobalVars.ShowWarning("Image file cannot be downloaded at the moment!\n Try again later...");
+                            GlobalVars.ShowWarning("Cover cannot be changed! File may be in use..");
                         }
+                    }
+                    else
+                    {
+                        GlobalVars.ShowWarning("Image file cannot be downloaded at the moment!\n Try again later...");
                     }
                 }
             }
