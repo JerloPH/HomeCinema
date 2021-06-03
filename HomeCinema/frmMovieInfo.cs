@@ -165,18 +165,13 @@ namespace HomeCinema
         // REFRESH INFORMATION
         public void LoadInformation(string ID, string text)
         {
+            string errFrom = $"frmMovieInfo-({Name})-LoadInformation";
             // Set Form Properties
             Text = $"[EDIT] {text}";//text + " [Edit Information]";
 
             // Change cover image, if image exists in ImageList
             MOVIE_COVER = GlobalVars.ImgGetImageFromList(MOVIE_ID);
-            if (MOVIE_COVER == null)
-            {
-                GlobalVars.Log($"frmMovieInfo-({Name})-LoadInformation", "MOVIE_COVER = null");
-                GlobalVars.ShowWarning("Poster Image not set!");
-                //Close();
-            }
-            else
+            if (MOVIE_COVER != null)
             {
                 picBox.Image = MOVIE_COVER;
             }
