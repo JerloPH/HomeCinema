@@ -344,16 +344,17 @@ namespace HomeCinema
         {
             string ret = "";
             string errFrom = $"frmMain-GetFilePath [calledFrom: {calledFrom}]";
-            string qry = $"SELECT [file] FROM { GlobalVars.DB_TNAME_FILEPATH } WHERE [Id]={ ID } LIMIT 1;";
-            using (DataTable dtFile = SQLHelper.DbQuery(qry, "[file]", errFrom))
+            string qry = $"SELECT `file` FROM { GlobalVars.DB_TNAME_FILEPATH } WHERE `Id`={ID} LIMIT 1;";
+            using (DataTable dtFile = SQLHelper.DbQuery(qry, errFrom))
             {
                 if (dtFile.Rows.Count > 0)
                 {
-                    foreach (DataRow r in dtFile.Rows)
+                    try
                     {
-                        ret = r[GlobalVars.DB_TABLE_FILEPATH[1]].ToString();
-                        break;
+                        DataRow r = dtFile.Rows[0];
+                        ret = r[FileColumn.file.ToString()].ToString();
                     }
+                    catch { }
                 }
                 return ret;
             }
