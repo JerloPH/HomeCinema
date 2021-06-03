@@ -314,6 +314,7 @@ namespace HomeCinema
                     if (GlobalVars.SET_OFFLINE == false && GlobalVars.HAS_TMDB_KEY)
                     {
                         string movieId = insertResult.ToString();
+                        Thread.Sleep(2); // sleep 2 ms to prevent overloading TMDB
                         // Download Cover from TMDB
                         if (GlobalVars.DownloadCoverFromTMDB(movieId, rPosterLink, errFrom) && (!String.IsNullOrWhiteSpace(rPosterLink)))
                         {

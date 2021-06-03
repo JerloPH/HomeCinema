@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Linq;
 using HomeCinema.GlobalEnum;
+using System.Threading;
 
 namespace HomeCinema
 {
@@ -628,6 +629,7 @@ namespace HomeCinema
                 if (GlobalVars.ShowYesNo("Do you want to change poster image?", this))
                 {
                     // Show form loading
+                    Thread.Sleep(2); // prevent overloading for TMDB
                     form = new frmLoading("Downloading cover from TMDB..", "Loading");
                     form.BackgroundWorker.DoWork += (sender1, e1) =>
                     {
