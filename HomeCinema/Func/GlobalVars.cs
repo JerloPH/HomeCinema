@@ -210,13 +210,13 @@ namespace HomeCinema.Global
                 Program.FormMain.Invoke(new Action(() =>
                 {
                     var form = new frmAlert(msg, caption);
-                    form.Show(caller);
+                    form.ShowDialog(caller);
                 }));
             }
             else
             {
                 var form = new frmAlert(msg, caption);
-                form.Show(caller);
+                form.ShowDialog(caller);
             }
             //ShowMsg(msg, CAPTION_DIALOG, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
