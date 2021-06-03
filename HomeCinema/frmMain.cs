@@ -470,36 +470,34 @@ namespace HomeCinema
                 string MOVIEID = lvItem.Tag.ToString().TrimStart('0');
 
                 // Change info of the item
-                string qry = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO} WHERE [Id]={MOVIEID} LIMIT 1;";
+                string qry = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO} WHERE `Id`={MOVIEID} LIMIT 1;";
 
-                DataTable dtFile = SQLHelper.DbQuery(qry, LVMovieItemsColumns, "frmMain-UpdateMovieItemOnLV"); // run the query
-
-                // Check if there are results
-                if (dtFile.Rows.Count > 0)
+                using (DataTable dtFile = SQLHelper.DbQuery(qry, "frmMain-UpdateMovieItemOnLV")) // run the query
                 {
-                    foreach (DataRow r in dtFile.Rows)
+                    // Check if there are results
+                    if (dtFile.Rows.Count > 0)
                     {
-                        // Get all strings from the DataRow, passed by the BG worker
-                        string r1 = r[1].ToString(); // name
-                        string r2 = r[2].ToString(); // name_ep
-                        string r3 = r[3].ToString(); // name_series
-                        string r4 = r[4].ToString(); // season
-                        string r5 = r[5].ToString(); // episode
-                        string r6 = r[6].ToString(); // year
-                        string r7 = r[7].ToString(); // summary
-                        string r8 = r[8].ToString(); // genre
+                        try
+                        {
+                            DataRow r = dtFile.Rows[0];
+                            // Get all strings from the DataRow, passed by the BG worker
+                            string r1 = r[InfoColumn.name.ToString()].ToString(); // name
+                            string r2 = r[InfoColumn.name_ep.ToString()].ToString(); // name_ep
+                            string r3 = r[InfoColumn.name_series.ToString()].ToString(); // name_series
+                            string r4 = r[InfoColumn.season.ToString()].ToString(); // season
+                            string r5 = r[InfoColumn.episode.ToString()].ToString(); // episode
+                            string r6 = r[InfoColumn.year.ToString()].ToString(); // year
+                            string r7 = r[InfoColumn.summary.ToString()].ToString(); // summary
+                            string r8 = r[InfoColumn.genre.ToString()].ToString(); // genre
 
-                        // Edit Information on ListView Item
-                        LVItemSetDetails(lvItem, new string[] { MOVIEID.ToString(), r1, r2, r3, r4, r5, r6, r7, r8 });
-                        break;
+                            // Edit Information on ListView Item
+                            LVItemSetDetails(lvItem, new string[] { MOVIEID.ToString(), r1, r2, r3, r4, r5, r6, r7, r8 });
+                        }
+                        catch { }
                     }
                 }
-                dtFile.Clear();
-                dtFile.Dispose();
-
-                // Refresh imagelist and lvSearchResult to refelct changes to Image
+                // Refresh imagelist and lvSearchResult to reflect changes to info and Image
                 lvSearchResult.Refresh();
-
             }
         }
         // Execute the query, by running bgWorker bgSearchInDB
