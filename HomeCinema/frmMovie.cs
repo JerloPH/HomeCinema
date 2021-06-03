@@ -25,6 +25,7 @@ using System.Text;
 using System.Windows.Forms;
 using HomeCinema.Global;
 using HomeCinema.SQLFunc;
+using HomeCinema.GlobalEnum;
 
 namespace HomeCinema
 {
@@ -91,66 +92,46 @@ namespace HomeCinema
         {
             // Set textbox values from Database
             string errFrom = "frmMovie-LoadInformation";
-            string qry1, qry2, Imagefile;
-            string cols1 = "", cols2 = "";
-            var dtFile = new DataTable();
+            string qry, Imagefile;
             var dtInfo = new DataTable();
             var tp = new ToolTip();
             Bitmap thumb;
             frmLoading form = new frmLoading("Opening media info..", "Loading");
 
+            // Build query for FilePath, and Movie Info
+            qry = $"SELECT * FROM {GlobalVars.DB_TNAME_INFO} A LEFT JOIN {GlobalVars.DB_TNAME_FILEPATH} B ON A.`Id`=B.`Id` WHERE A.`Id`={ID} LIMIT 1;";
+
             form.BackgroundWorker.DoWork += (sender1, e1) =>
             {
-                // Build columns for query
-                foreach (string s in GlobalVars.DB_TABLE_FILEPATH)
-                {
-                    cols1 += "[" + s + "],";
-                }
-                cols1 = cols1.TrimEnd(',');
-                foreach (string c in GlobalVars.DB_TABLE_INFO)
-                {
-                    cols2 += "[" + c + "],";
-                }
-                cols2 = cols2.TrimEnd(',');
-
-                // Build query for FilePath, and Movie Info
-                qry1 = $"SELECT {cols1} FROM {GlobalVars.DB_TNAME_FILEPATH} WHERE Id={ID} LIMIT 1;";
-                qry2 = $"SELECT {cols2} FROM {GlobalVars.DB_TNAME_INFO} WHERE Id={ID} LIMIT 1;";
-
                 // Execute queries
-                dtFile = SQLHelper.DbQuery(qry1, cols1, errFrom);
-                dtInfo = SQLHelper.DbQuery(qry2, cols2, errFrom);
+                dtInfo = SQLHelper.DbQuery(qry, errFrom);
             };
             form.ShowDialog(this);
 
             // Get ResultSet for FilePaths
-            foreach (DataRow row in dtFile.Rows)
+            try
             {
-                MOVIE_FILEPATH = row[GlobalVars.DB_TABLE_FILEPATH[1]].ToString();
-                MOVIE_SUB = row[GlobalVars.DB_TABLE_FILEPATH[2]].ToString();
-                MOVIE_TRAILER = row[GlobalVars.DB_TABLE_FILEPATH[3]].ToString();
-            }
-            dtFile.Clear();
-            dtFile.Dispose();
-            // Get ResultSet for Movie Info
-            foreach (DataRow row in dtInfo.Rows)
-            {
-                var r0 = row[0]; // ID
-                var r1 = row[1]; // imdb
-                var r2 = row[2]; // name
-                var r3 = row[3]; // name_ep
-                var r4 = row[4]; // name_series
-                var r5 = row[5]; // season
-                var r6 = row[6]; // episode
-                var r7 = row[7]; // country
-                var r8 = row[8]; // category
-                var r9 = row[9]; // genre
-                var r10 = row[10]; // studio
-                var r11 = row[11]; // producer
-                var r12 = row[12]; // director
-                var r13 = row[13]; // artist
-                var r14 = row[14]; // year
-                var r15 = row[15]; // summary
+                DataRow row = dtInfo.Rows[0];
+                MOVIE_FILEPATH = row[FileColumn.file.ToString()].ToString();
+                MOVIE_SUB = row[FileColumn.sub.ToString()].ToString();
+                MOVIE_TRAILER = row[FileColumn.trailer.ToString()].ToString();
+
+                var r0 = row[InfoColumn.Id.ToString()]; // ID
+                var r1 = row[InfoColumn.imdb.ToString()]; // imdb
+                var r2 = row[InfoColumn.name.ToString()]; // name
+                var r3 = row[InfoColumn.name_ep.ToString()]; // name_ep
+                var r4 = row[InfoColumn.name_series.ToString()]; // name_series
+                var r5 = row[InfoColumn.season.ToString()]; // season
+                var r6 = row[InfoColumn.episode.ToString()]; // episode
+                var r7 = row[InfoColumn.country.ToString()]; // country
+                var r8 = row[InfoColumn.category.ToString()]; // category
+                var r9 = row[InfoColumn.genre.ToString()]; // genre
+                var r10 = row[InfoColumn.studio.ToString()]; // studio
+                var r11 = row[InfoColumn.producer.ToString()]; // producer
+                var r12 = row[InfoColumn.director.ToString()]; // director
+                var r13 = row[InfoColumn.artist.ToString()]; // artist
+                var r14 = row[InfoColumn.year.ToString()]; // year
+                var r15 = row[InfoColumn.summary.ToString()]; // summary
                 // Set textboxes
                 lblID.Text = GlobalVars.ValidateAndReturn(r0.ToString());
                 lblIMDB.Text = GlobalVars.ValidateAndReturn(r1.ToString());
@@ -169,9 +150,17 @@ namespace HomeCinema
                 lblYear.Text = GlobalVars.ValidateAndReturn(r14.ToString());
                 lblSummary.Text = GlobalVars.ValidateAndReturn(r15.ToString());
             }
-            // Dispose table
-            dtInfo.Clear();
-            dtInfo.Dispose();
+            catch
+            {
+                GlobalVars.ShowWarning("Cannot load movie info!", "", this);
+                Close();
+                return;
+            }
+            finally
+            {
+                // Dispose table
+                dtInfo?.Dispose();
+            }
 
             // Get filesize, Create ToolTip for Movie Title
             lblName.Tag = $"{(lblCategory.Text.ToLower().Contains("series") ? "Folder" : "File")} Size: {GlobalVars.GetFileSize(MOVIE_FILEPATH)}";
