@@ -869,9 +869,7 @@ namespace HomeCinema
             lvSearchResult.Items.Clear(); // Clear previous list
             // Populate movie listview with new entries, from another form thread
             frmLoading form = new frmLoading(AppStart ? "Loading collection.." : "Searching..", "Loading");
-            DataTable dt;
             string qry = SEARCH_QUERY;
-            string cols = LVMovieItemsColumns;
             string errFrom = "frmMain-PopulateMovieBG()";
             string fileNamePath;
             int progress = 0;
@@ -890,116 +888,116 @@ namespace HomeCinema
 
             // Count progress
             progress = 0;
-            dt = SQLHelper.DbQuery(qry, cols, errFrom); // Get DataTable from query
-
-            // Set Max Progress
-            progressMax = dt.Rows.Count;
-
-            // Iterate thru all DataRows
-            if (progressMax > 0)
+            using (DataTable dt = SQLHelper.DbQuery(qry, errFrom)) // Get DataTable from query
             {
-                form.BackgroundWorker.DoWork += (sender1, e1) =>
-                {
-                    foreach (DataRow r in dt.Rows)
-                    {
-                        // Add Item to ListView
-                        // Convert ID object to ID int
-                        int MOVIEID;
-                        var x = InfoColumn.Id.ToString();
-                        try { MOVIEID = Convert.ToInt32(r[x]); }
-                        catch { MOVIEID = 0; GlobalVars.Log(errFrom, $"Invalid MovieID: {r[x].ToString()}"); }
+                // Set Max Progress
+                progressMax = dt.Rows.Count;
 
-                        // Add to listview lvSearchResult
-                        if (MOVIEID > 0)
+                // Iterate thru all DataRows
+                if (progressMax > 0)
+                {
+                    form.BackgroundWorker.DoWork += (sender1, e1) =>
+                    {
+                        foreach (DataRow r in dt.Rows)
                         {
-                            // Break if file does not exist
-                            fileNamePath = GetFilePath(MOVIEID.ToString(), errFrom);
-                            if (!String.IsNullOrWhiteSpace(fileNamePath))
+                            // Add Item to ListView
+                            // Convert ID object to ID int
+                            int MOVIEID;
+                            var x = InfoColumn.Id.ToString();
+                            try { MOVIEID = Convert.ToInt32(r[x]); }
+                            catch { MOVIEID = 0; GlobalVars.Log(errFrom, $"Invalid MovieID: {r[x].ToString()}"); }
+
+                            // Add to listview lvSearchResult
+                            if (MOVIEID > 0)
                             {
-                                try
+                                // Break if file does not exist
+                                fileNamePath = GetFilePath(MOVIEID.ToString(), errFrom);
+                                if (!String.IsNullOrWhiteSpace(fileNamePath))
                                 {
-                                    FileAttributes attr = File.GetAttributes(fileNamePath);
-                                    if (attr.HasFlag(FileAttributes.Directory))
+                                    try
                                     {
+                                        FileAttributes attr = File.GetAttributes(fileNamePath);
+                                        if (attr.HasFlag(FileAttributes.Directory))
+                                        {
                                         // Non existing directory, skip it
                                         if (!Directory.Exists(fileNamePath))
+                                            {
+                                                continue;
+                                            }
+                                        }
+                                        else
                                         {
-                                            continue;
+                                            if (!File.Exists(fileNamePath))
+                                            {
+                                                continue;
+                                            }
                                         }
                                     }
-                                    else
+                                    catch (FileNotFoundException)
                                     {
-                                        if (!File.Exists(fileNamePath))
+                                        continue;
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        GlobalVars.ShowError(errFrom, ex, false);
+                                        continue;
+                                    }
+                                }
+
+                                // Load 'cover' Image from 'cover' folder
+                                if (AppStart)
+                                {
+                                    string Imagefile = GlobalVars.ImgFullPath(MOVIEID.ToString());
+                                    try
+                                    {
+                                        if (File.Exists(Imagefile))
                                         {
-                                            continue;
+                                            this.Invoke(new Action(() =>
+                                            {
+                                                Image imageFromFile = Image.FromFile(Imagefile);
+                                                GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imageFromFile);
+                                                imageFromFile.Dispose();
+                                            }));
                                         }
                                     }
-                                }
-                                catch (FileNotFoundException)
-                                {
-                                    continue;
-                                }
-                                catch (Exception ex)
-                                {
-                                    GlobalVars.ShowError(errFrom, ex, false);
-                                    continue;
-                                }
-                            }
-
-                            // Load 'cover' Image from 'cover' folder
-                            if (AppStart)
-                            {
-                                string Imagefile = GlobalVars.ImgFullPath(MOVIEID.ToString());
-                                try
-                                {
-                                    if (File.Exists(Imagefile))
+                                    catch (Exception exImg)
                                     {
-                                        this.Invoke(new Action(() =>
-                                        {
-                                            Image imageFromFile = Image.FromFile(Imagefile);
-                                            GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imageFromFile);
-                                            imageFromFile.Dispose();
-                                        }));
+                                        GlobalVars.ShowError($"{errFrom}\n\tFile:\n\t{Imagefile}", exImg, false);
                                     }
                                 }
-                                catch (Exception exImg)
-                                {
-                                    GlobalVars.ShowError($"{errFrom}\n\tFile:\n\t{Imagefile}", exImg, false);
-                                }
+
+                                // Get all strings from the DataRow, passed by the BG worker
+                                string resName = r[InfoColumn.name.ToString()].ToString(); // name
+                                string resNameEp = r[InfoColumn.name_ep.ToString()].ToString(); // name_ep
+                                string resNameSer = r[InfoColumn.name_series.ToString()].ToString(); // name_series
+                                string resSeason = r[InfoColumn.season.ToString()].ToString(); // season
+                                string resEp = r[InfoColumn.episode.ToString()].ToString(); // episode
+                                string resYear = r[InfoColumn.year.ToString()].ToString(); // year
+                                string resSum = r[InfoColumn.summary.ToString()].ToString(); // summary
+                                string resGenre = r[InfoColumn.genre.ToString()].ToString(); // genre
+
+                                // Make new ListView item, and assign properties to it
+                                ListViewItem temp = new ListViewItem() { Text = resName };
+
+                                // Edit Information on ListView Item
+                                LVItemSetDetails(temp, new string[] { MOVIEID.ToString(),
+                                    resName, resNameEp, resNameSer,
+                                    resSeason, resEp, resYear, resSum, resGenre });
+
+                                // Add Item to ListView lvSearchResult
+                                AddItem(lvSearchResult, temp);
+                                progress += 1;
                             }
-
-                            // Get all strings from the DataRow, passed by the BG worker
-                            string resName = r[1].ToString(); // name
-                            string resNameEp = r[2].ToString(); // name_ep
-                            string resNameSer = r[3].ToString(); // name_series
-                            string resSeason = r[4].ToString(); // season
-                            string resEp = r[5].ToString(); // episode
-                            string resYear = r[6].ToString(); // year
-                            string resSum = r[7].ToString(); // summary
-                            string resGenre = r[8].ToString(); // genre
-
-                            // Make new ListView item, and assign properties to it
-                            ListViewItem temp = new ListViewItem() { Text = resName };
-
-                            // Edit Information on ListView Item
-                            LVItemSetDetails(temp, new string[] { MOVIEID.ToString(),
-                            resName, resNameEp, resNameSer,
-                            resSeason, resEp, resYear, resSum, resGenre });
-
-                            // Add Item to ListView lvSearchResult
-                            AddItem(lvSearchResult, temp);
-                            progress += 1;
                         }
-                    }
-                    GlobalVars.Log(errFrom, $"DONE Background worker from: {Name}");
-                    if (!GlobalVars.HAS_TMDB_KEY && AppStart)
-                    {
-                        GlobalVars.ShowWarning(GlobalVars.MSG_NO_TMDB);
-                    }
-                };
-                form.ShowDialog();
+                        GlobalVars.Log(errFrom, $"DONE Background worker from: {Name}");
+                        if (!GlobalVars.HAS_TMDB_KEY && AppStart)
+                        {
+                            GlobalVars.ShowWarning(GlobalVars.MSG_NO_TMDB);
+                        }
+                    };
+                    form.ShowDialog();
+                }
             }
-            dt.Dispose();
             AfterPopulatingMovieLV(lvSearchResult, progress);
             // Auto check update
             if ((GlobalVars.SET_OFFLINE == false) && (GlobalVars.SET_AUTOUPDATE) && AppStart)
