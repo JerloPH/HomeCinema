@@ -216,10 +216,6 @@ namespace HomeCinema.SQLFunc
         /// <returns>DataTable, filled with result sets.</returns>
         public static DataTable DbQuery(string qry, string calledFrom)
         {
-            return DbQuery(qry, "", calledFrom);
-        }
-        public static DataTable DbQuery(string qry, string cols, string calledFrom)
-        {
             string errFrom = "SQLHelper-DbQuery";
             try
             {
