@@ -73,9 +73,6 @@ namespace HomeCinema
                 }
             }
 
-            // Load Information from DB
-            LoadInformation(ID);
-
             // Show this form
             StartPosition = FormStartPosition.CenterParent;
             Show(parent);
@@ -426,6 +423,11 @@ namespace HomeCinema
         }
         #endregion
         // ############################################################################## Form Control events
+        private void frmMovie_Load(object sender, EventArgs e)
+        {
+            // Load Information from DB
+            LoadInformation(MOVIE_ID);
+        }
         private void frmMovie_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Dispose components
