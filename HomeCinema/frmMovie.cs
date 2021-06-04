@@ -511,7 +511,7 @@ namespace HomeCinema
             string errFrom = $"frmMovie ({Name})-btnDeleteMovie_Click";
             frmLoading form = new frmLoading("Deleting media from disk..", "Loading");
             // Delete Movie WIP
-            if (GlobalVars.ShowYesNo($"Are you sure you want to Delete [{Text}]?", this))
+            if (GlobalVars.ShowYesNo($"Are you sure you want to delete\n[{Text}]?", this))
             {
                 form.BackgroundWorker.DoWork += (sender1, e1) =>
                 {
