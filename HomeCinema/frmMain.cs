@@ -155,8 +155,7 @@ namespace HomeCinema
                 FOLDERTOSEARCH = tempFolder; // Load existing dir from file
             }
 
-            // Add events to FORM, other form properties
-            KeyDown += new KeyEventHandler(Form_KeyDown);
+            // Set background color of ListView, from settings 'background color'
             lvSearchResult.BackColor = GlobalVars.SET_COLOR_BG;
 
             GlobalVars.Log("frmMain", "Initialize BackgroundWorkers..");
