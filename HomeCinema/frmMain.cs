@@ -78,11 +78,11 @@ namespace HomeCinema
 
             // Set tooltips for controls
             ToolTip ttShowNew = new ToolTip();
-            ttShowNew.SetToolTip(this.btnSettings, "Show Recently Added Movies");
+            ttShowNew.SetToolTip(this.btnSettings, "Show Settings form");
             ttShowNew.SetToolTip(this.btnClean, "Clean temporary files");
             ttShowNew.SetToolTip(this.cbHideAnim, "Filter out Animations from Search Results");
             ttShowNew.SetToolTip(this.cbSort, "Change Sorting By");
-            ttShowNew.SetToolTip(this.btnChangeView, "Change List view of Items");
+            ttShowNew.SetToolTip(this.btnChangeView, "Change Item view");
 
             // Setup Sort and SortingOrder
             cbSort.Items.AddRange(GlobalVars.TEXT_SORTBY);
