@@ -34,45 +34,50 @@ namespace HomeCinema.SQLFunc
         /// Initialize SQLite database. Create if NOT existing.
         /// </summary>
         /// <param name="InitiatedFrom">Caller of the function.</param>
-        public static void Initiate(string InitiatedFrom)
+        public static bool Initiate(string InitiatedFrom)
         {
             string CalledFrom = "SQLHelper (Instance)-" + InitiatedFrom;
-            SQLiteConnection conn = DbOpen(); // connect to database
+            try
+            {
+                SQLiteConnection conn = DbOpen(); // connect to database
 
-            // Create Table and Schema
-            SQLiteCommand cmd = new SQLiteCommand(conn);
-            cmd.CommandText = $"CREATE TABLE IF NOT EXISTS '{GlobalVars.DB_TNAME_INFO}' (" +
-	        "'Id'	INTEGER PRIMARY KEY AUTOINCREMENT, " +
-	        "'imdb'	TEXT DEFAULT 0, " +
-            "'name'	TEXT, " +
-            "'name_ep'	TEXT, " +
-            "'name_series'	TEXT, " +
-            "'season'	INTEGER, " +
-            "'episode'	INTEGER, " +
-            "'country'	TEXT, " +
-            "'category'	VARCHAR(1) DEFAULT 0, " + // 0-None | 1-MOVIE | 2-TVSERIES | 3-ANIMEMOVIE | 4-ANIME SERIES | 5-ANIMATED MOVIE | 6-CARTOON SERIES
-            "'genre'	TEXT, " +
-            "'studio'	TEXT, " +
-            "'producer'	TEXT, " +
-            "'director'	TEXT, " +
-            "'artist'	TEXT, " +
-            "'year'	VARCHAR(5) DEFAULT 0, " +
-            "'summary'  TEXT DEFAULT 'This has no summary');";
-            cmd.ExecuteNonQuery();
-            cmd.Dispose();
-            // Create filepath Table and Schema
-            SQLiteCommand cmd2 = new SQLiteCommand(conn);
-            cmd2.CommandText = $"CREATE TABLE IF NOT EXISTS '{GlobalVars.DB_TNAME_FILEPATH}' (" +
-            "[Id]	INTEGER  PRIMARY KEY AUTOINCREMENT, " +
-            "[file]	TEXT, " +
-            "[sub]	TEXT, " +
-            "[trailer] TEXT);";
-            cmd2.ExecuteNonQuery();
-            cmd2.Dispose();
-            //GlobalVars.ShowInfo("Database is Created succesfully!");
-            GlobalVars.LogDb(CalledFrom, "Database is loaded succesfully!\n " + GlobalVars.DB_PATH);
-            // Dispose (Close) Connection to DB
-            DbClose(conn);
+                // Create Table and Schema
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = $"CREATE TABLE IF NOT EXISTS '{GlobalVars.DB_TNAME_INFO}' (" +
+                "'Id'	INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "'imdb'	TEXT DEFAULT 0, " +
+                "'name'	TEXT, " +
+                "'name_ep'	TEXT, " +
+                "'name_series'	TEXT, " +
+                "'season'	INTEGER, " +
+                "'episode'	INTEGER, " +
+                "'country'	TEXT, " +
+                "'category'	VARCHAR(1) DEFAULT 0, " + // 0-None | 1-MOVIE | 2-TVSERIES | 3-ANIMEMOVIE | 4-ANIME SERIES | 5-ANIMATED MOVIE | 6-CARTOON SERIES
+                "'genre'	TEXT, " +
+                "'studio'	TEXT, " +
+                "'producer'	TEXT, " +
+                "'director'	TEXT, " +
+                "'artist'	TEXT, " +
+                "'year'	VARCHAR(5) DEFAULT 0, " +
+                "'summary'  TEXT DEFAULT 'This has no summary');";
+                cmd.ExecuteNonQuery();
+                cmd.Dispose();
+                // Create filepath Table and Schema
+                SQLiteCommand cmd2 = new SQLiteCommand(conn);
+                cmd2.CommandText = $"CREATE TABLE IF NOT EXISTS '{GlobalVars.DB_TNAME_FILEPATH}' (" +
+                "[Id]	INTEGER  PRIMARY KEY AUTOINCREMENT, " +
+                "[file]	TEXT, " +
+                "[sub]	TEXT, " +
+                "[trailer] TEXT);";
+                cmd2.ExecuteNonQuery();
+                cmd2.Dispose();
+                //GlobalVars.ShowInfo("Database is Created succesfully!");
+                GlobalVars.LogDb(CalledFrom, "Database is loaded succesfully!\n " + GlobalVars.DB_PATH);
+                // Dispose (Close) Connection to DB
+                DbClose(conn);
+                return true;
+            }
+            catch { return false; }
         }
         /// <summary>
         /// Open connection to SQLite database, using default values.
@@ -274,17 +279,21 @@ namespace HomeCinema.SQLFunc
 
                     // Execute query
                     GlobalVars.LogDb($"SQLHelper-DbQrySingle (START)(From: {From})", "qry: " + qry);
-                    SQLiteDataReader r = cmd.ExecuteReader();
-
-                    // Get results
-                    while (r.Read())
+                    try
                     {
-                        string stringRes = r[0].ToString();
-                        if (String.IsNullOrWhiteSpace(stringRes) == false)
+                        SQLiteDataReader r = cmd.ExecuteReader();
+                        // Get results
+                        while (r.Read())
                         {
-                            list.Add(stringRes);
+                            string stringRes = r[0].ToString();
+                            if (String.IsNullOrWhiteSpace(stringRes) == false)
+                            {
+                                list.Add(stringRes);
+                            }
                         }
                     }
+                    catch { }
+
                     GlobalVars.LogDb($"SQLHelper-DbQrySingle (END)(From: {From})", "Rows returned: " + list.Count.ToString());
                     conn.Close();
 
