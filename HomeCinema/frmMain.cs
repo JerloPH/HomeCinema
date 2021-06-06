@@ -909,7 +909,7 @@ namespace HomeCinema
                             // Add to listview lvSearchResult
                             if (MOVIEID > 0)
                             {
-                                // Break if file does not exist
+                                // Skip entry if file does not exist
                                 fileNamePath = GetFilePath(MOVIEID.ToString(), errFrom);
                                 if (!String.IsNullOrWhiteSpace(fileNamePath))
                                 {
@@ -918,8 +918,8 @@ namespace HomeCinema
                                         FileAttributes attr = File.GetAttributes(fileNamePath);
                                         if (attr.HasFlag(FileAttributes.Directory))
                                         {
-                                        // Non existing directory, skip it
-                                        if (!Directory.Exists(fileNamePath))
+                                            // Non existing directory, skip it
+                                            if (!Directory.Exists(fileNamePath))
                                             {
                                                 continue;
                                             }
