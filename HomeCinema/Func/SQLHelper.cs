@@ -262,33 +262,36 @@ namespace HomeCinema.SQLFunc
         public static List<string> DbQrySingle(string tableName, string col, string From)
         {
             // Create Connection to database
-            SQLiteConnection conn = DbOpen();
-            SQLiteCommand cmd = new SQLiteCommand(conn);
-            string qry = $"SELECT {col} FROM {tableName}";
-            cmd.CommandText = qry;
-
-            // Initiate the list
-            List<string> list = new List<string>();
-            // Execute query
-            GlobalVars.LogDb($"SQLHelper-DbQrySingle (START)(From: {From})", "qry: " + qry);
-            SQLiteDataReader r = cmd.ExecuteReader();
-            
-            // Get results
-            while (r.Read())
+            using (SQLiteConnection conn = DbOpen())
             {
-                string stringRes = r[0].ToString();
-                if (String.IsNullOrWhiteSpace(stringRes) == false)
+                using (SQLiteCommand cmd = new SQLiteCommand(conn))
                 {
-                    list.Add(stringRes);
+                    // Initiate the list
+                    List<string> list = new List<string>();
+
+                    string qry = $"SELECT {col} FROM {tableName}";
+                    cmd.CommandText = qry;
+
+                    // Execute query
+                    GlobalVars.LogDb($"SQLHelper-DbQrySingle (START)(From: {From})", "qry: " + qry);
+                    SQLiteDataReader r = cmd.ExecuteReader();
+
+                    // Get results
+                    while (r.Read())
+                    {
+                        string stringRes = r[0].ToString();
+                        if (String.IsNullOrWhiteSpace(stringRes) == false)
+                        {
+                            list.Add(stringRes);
+                        }
+                    }
+                    GlobalVars.LogDb($"SQLHelper-DbQrySingle (END)(From: {From})", "Rows returned: " + list.Count.ToString());
+                    conn.Close();
+
+                    // Return list of results
+                    return list;
                 }
             }
-            GlobalVars.LogDb($"SQLHelper-DbQrySingle (END)(From: {From})", "Rows returned: " + list.Count.ToString());
-
-            // Dispose res
-            cmd.Dispose();
-            DbClose(conn);
-            // Return list of results
-            return list;
         }
         /// <summary>
         /// // Insert new record, return ID of last insert. Otherwise 0
@@ -303,6 +306,11 @@ namespace HomeCinema.SQLFunc
             string errFrom = $"SQLHelper-DbInsertMovie [calledFrom: {callFrom}]";
             int LastID = 0; // Last ID Inserted succesfully
             int rows = 0; // Number of total rows inserted successfully
+            string vals = ""; // all values stored in row of DT
+            int cc = 0; // counts string[] vals size
+
+            // Vars for filepath
+            string fPathFile = "", fPathSub = "", fPathTrailer = "";
 
             // Get columns from info
             foreach (string s in GlobalVars.DB_TABLE_INFO)
@@ -315,120 +323,111 @@ namespace HomeCinema.SQLFunc
             colsInfo = colsInfo.TrimEnd(',');
 
             // Create Connection to database
-            SQLiteConnection conn = DbOpen();
-            SQLiteCommand cmd = new SQLiteCommand(conn);
-
-            // Make Transaction
-            SQLiteTransaction transaction;
-            transaction = conn.BeginTransaction();
-
-            // Vars
-            string vals = ""; // all values stored in row of DT
-            int cc = 0; // counts string[] vals size
-
-            // Vars for filepath
-            string fPathFile = "", fPathSub = "", fPathTrailer = "";
-
-            // Create a copy of info table
-            List<string> dbTableInfoCopy = new List<string>(GlobalVars.DB_TABLE_INFO);
-            dbTableInfoCopy.RemoveAt(0); // remove [Id] from table info
-            string[] dbTableInfoArr = dbTableInfoCopy.ToArray(); // turn column list to array
-
-            // Get rows from DT
-            foreach (DataRow r in dt.Rows)
+            using (SQLiteConnection conn = DbOpen())
             {
-                vals = ""; // Reset values to add
-                cc = 0; // reset column count
-                // Build query for INFO
-                foreach (string s in dbTableInfoArr)
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+
+                // Make Transaction
+                SQLiteTransaction transaction;
+                transaction = conn.BeginTransaction();
+
+                // Create a copy of info table
+                List<string> dbTableInfoCopy = new List<string>(GlobalVars.DB_TABLE_INFO);
+                dbTableInfoCopy.RemoveAt(0); // remove [Id] from table info
+                string[] dbTableInfoArr = dbTableInfoCopy.ToArray(); // turn column list to array
+
+                // Get rows from DT
+                foreach (DataRow r in dt.Rows)
                 {
-                    if (GlobalVars.QryColNumeric(s))
+                    vals = ""; // Reset values to add
+                    cc = 0; // reset column count
+                            // Build query for INFO
+                    foreach (string s in dbTableInfoArr)
                     {
-                        vals += GlobalVars.QryString(r[cc].ToString(), false) + ",";
+                        if (GlobalVars.QryColNumeric(s))
+                        {
+                            vals += GlobalVars.QryString(r[cc].ToString(), false) + ",";
+                        }
+                        else
+                        {
+                            vals += GlobalVars.QryString(r[cc].ToString().Replace('\'', '"'), true) + ",";
+                        }
+                        cc += 1;
                     }
+                    vals = vals.TrimEnd(',');
+
+                    // Build for FILEPATH
+                    fPathFile = r[dbTableInfoArr.Length].ToString(); // file
+                    fPathSub = r[dbTableInfoArr.Length + 1].ToString(); // sub
+                    fPathTrailer = r[dbTableInfoArr.Length + 2].ToString(); // trailer
+
+                    // Set the command for query
+                    string qry = $"INSERT INTO {GlobalVars.DB_TNAME_INFO} ({colsInfo}) VALUES({vals});";
+                    cmd.CommandText = qry;
+
+                    // Log Insert filePath and query
+                    GlobalVars.LogDb($"{errFrom} (INSERT MOVIE START)", "Inserting: " + fPathFile);
+                    GlobalVars.LogDb($"{errFrom} ({GlobalVars.DB_TNAME_INFO})", $"qry: {qry}");
+
+                    // Execute query for INFO
+                    int affected = cmd.ExecuteNonQuery();
+
+                    // LastID of insert movie ID
+                    LastID = (int)conn.LastInsertRowId;
+
+                    // Try Execute query for FILEPATH
+                    if (affected > 0)
+                    {
+                        // format FilePath with single quotations
+                        string fPathFileFix = fPathFile.Replace("'", "''");
+                        GlobalVars.LogDb($"{errFrom} (FORMAT filepath)", "Formatted: " + fPathFileFix);
+                        string colsFile = $"[{GlobalVars.DB_TABLE_FILEPATH[0]}],[{GlobalVars.DB_TABLE_FILEPATH[1]}],[{GlobalVars.DB_TABLE_FILEPATH[2]}],[{GlobalVars.DB_TABLE_FILEPATH[3]}]";
+                        qry = $"INSERT INTO {GlobalVars.DB_TNAME_FILEPATH} ({colsFile}) VALUES({LastID},'{fPathFileFix}','{fPathSub}','{fPathTrailer}');";
+                        cmd.CommandText = qry;
+                        GlobalVars.LogDb($"{errFrom} ({GlobalVars.DB_TNAME_FILEPATH})", $"qry: {qry}");
+                        cmd.ExecuteNonQuery();
+
+                        rows += 1;
+
+                        // Add cover image by capturing media
+                        string coverFilepath = GlobalVars.PATH_IMG + LastID + ".jpg";
+                        try
+                        {
+                            using (ShellFile shellFile = ShellFile.FromFilePath(fPathFile))
+                            {
+                                using (Bitmap bm = shellFile.Thumbnail.Bitmap)
+                                {
+                                    bm.Save(coverFilepath, System.Drawing.Imaging.ImageFormat.Jpeg);
+                                }
+                            }
+                        }
+                        catch (Exception exShell)
+                        {
+                            GlobalVars.LogDb($"{errFrom} (ShellFile thumbnail Error)({coverFilepath})", exShell.Message);
+                        }
+                    }
+                    // Nothing is inserted
                     else
                     {
-                        vals += GlobalVars.QryString(r[cc].ToString().Replace('\'', '"'), true) + ",";
-                    }
-                    cc += 1;
-                }
-                vals = vals.TrimEnd(',');
-
-                // Build for FILEPATH
-                fPathFile = r[dbTableInfoArr.Length].ToString(); // file
-                fPathSub = r[dbTableInfoArr.Length + 1].ToString(); // sub
-                fPathTrailer = r[dbTableInfoArr.Length + 2].ToString(); // trailer
-
-                // Set the command for query
-                string qry = $"INSERT INTO {GlobalVars.DB_TNAME_INFO} ({colsInfo}) VALUES({vals});";
-                cmd.CommandText = qry;
-
-                // Log Insert filePath and query
-                GlobalVars.LogDb($"{errFrom} (INSERT MOVIE START)", "Inserting: " + fPathFile);
-                GlobalVars.LogDb($"{errFrom} ({GlobalVars.DB_TNAME_INFO})", $"qry: {qry}");
-                
-                // Execute query for INFO
-                int affected = cmd.ExecuteNonQuery();
-
-                // LastID of insert movie ID
-                LastID = (int)conn.LastInsertRowId;
-
-                // Try Execute query for FILEPATH
-                if (affected > 0)
-                {
-                    // format FilePath with single quotations
-                    string fPathFileFix = fPathFile.Replace("'", "''");
-                    GlobalVars.LogDb($"{errFrom} (FORMAT filepath)", "Formatted: " + fPathFileFix);
-                    string colsFile = $"[{GlobalVars.DB_TABLE_FILEPATH[0]}],[{GlobalVars.DB_TABLE_FILEPATH[1]}],[{GlobalVars.DB_TABLE_FILEPATH[2]}],[{GlobalVars.DB_TABLE_FILEPATH[3]}]";
-                    qry = $"INSERT INTO {GlobalVars.DB_TNAME_FILEPATH} ({colsFile}) VALUES({LastID},'{fPathFileFix}','{fPathSub}','{fPathTrailer}');";
-                    cmd.CommandText = qry;
-                    GlobalVars.LogDb($"{errFrom} ({GlobalVars.DB_TNAME_FILEPATH})", $"qry: {qry}");
-                    cmd.ExecuteNonQuery();
-                    
-                    rows += 1;
-
-                    // Add cover image by capturing media
-                    string coverFilepath = GlobalVars.PATH_IMG + LastID + ".jpg";
-                    try
-                    {
-                        ShellFile shellFile = ShellFile.FromFilePath(fPathFile);
-                        Bitmap bm = shellFile.Thumbnail.Bitmap;
-                        bm.Save(coverFilepath, System.Drawing.Imaging.ImageFormat.Jpeg);
-                        bm.Dispose();
-                        shellFile.Dispose();
-                    }
-                    catch (Exception exShell)
-                    {
-                        GlobalVars.LogDb($"{errFrom} (Insert Cover FilePath)({GlobalVars.DB_TNAME_FILEPATH})", coverFilepath);
-                        GlobalVars.LogDb($"{errFrom} (ShellFile thumbnail Error)({GlobalVars.DB_TNAME_FILEPATH})", exShell.Message);
+                        GlobalVars.LogDb($"{errFrom}", "Insert failed with code: " + affected.ToString());
                     }
                 }
-                // Nothing is inserted
-                else
-                {
-                    GlobalVars.LogDb($"{errFrom}", "First INSERT [info] failed!");
-                }
+                // Release memory
+                GlobalVars.LogDb($"{errFrom} (FINISHED INSERT)", $"Rows Inserted: ({rows.ToString()})");
+                dt.Clear();
+                dt.Dispose();
 
-                // Exit foreach
-                //break;
+                // Commit transaction
+                transaction.Commit();
+                transaction.Dispose();
+
+                // Close Connection to DB
+                cmd.Dispose();
+                conn.Close();
+
+                // Return LastID inserted.
+                return LastID;
             }
-            // Release memory
-            GlobalVars.LogDb($"{errFrom} (FINISHED INSERT)", $"Rows Inserted: ({rows.ToString()})");
-            dt.Clear();
-            dt.Dispose();
-
-            // Commit transac
-            transaction.Commit();
-
-            // Dispose (Close) Connection to DB
-            cmd.Dispose();
-            DbClose(conn);
-
-            // Clear list
-            dbTableInfoCopy.Clear();
-
-            // Return LastID inserted.
-            return LastID;
         }
         /// <summary>
         /// Update Table INFO, with new values.
