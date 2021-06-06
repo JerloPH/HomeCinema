@@ -735,6 +735,8 @@ namespace HomeCinema.Global
         public static List<String> SearchFilesMultipleDir(string[] dirArray, string errFrom)
         {
             List<String> files = new List<String>();
+            // Return if null or empty
+            if (dirArray == null || dirArray?.Length < 1) { return files; }
             try
             {
                 foreach (string sDir in dirArray)
