@@ -49,6 +49,14 @@ namespace HomeCinema
                 // Check files first
                 GlobalVars.CheckAllFiles();
 
+                // Initialize connection to database
+                if (!SQLFunc.SQLHelper.Initiate("Program"))
+                {
+                    // Database not loaded!
+                    MessageBox.Show("Database is possibly corrupted!\nDelete HomeCinema.db and try again\nNOTE: This will remove all your entries", "HomeCinema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 FormMain = new frmMain();
                 Application.Run(FormMain);
 
