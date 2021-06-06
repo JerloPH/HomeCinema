@@ -202,16 +202,6 @@ namespace HomeCinema
             SearchTmdb();
             int size;
             size = lvResult.Items.Count;
-            if (Debugger.IsAttached)
-            {
-                string msg = "";
-                foreach (ListViewItem lv in lvResult.Items)
-                {
-                    msg += $"Key: {lv.ImageKey}\nIndex: {lv.ImageIndex}\nTag: {lv.Tag}\n\n";
-                }
-                GlobalVars.ShowInfo(msg + "\n\nResults: " + size.ToString());
-                return;
-            }
             if (size > 0)
             {
                 GlobalVars.ShowInfo($"Found {size} results!");
