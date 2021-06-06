@@ -340,6 +340,8 @@ namespace HomeCinema
             this.btnSearch.Text = "SEARCH";
             this.btnSearch.UseVisualStyleBackColor = false;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            this.txtSearch.GotFocus += new System.EventHandler(SearchBoxPlaceholderClear);
+            this.txtSearch.LostFocus += new System.EventHandler(SearchBoxPlaceholder);
             // 
             // lblCountry
             // 

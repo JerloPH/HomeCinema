@@ -73,8 +73,6 @@ namespace HomeCinema
 
             // Add events to controls
             txtSearch.Text = SEARCHBOX_PLACEHOLDER;
-            txtSearch.GotFocus += new EventHandler(SearchBoxPlaceholderClear);
-            txtSearch.LostFocus += new EventHandler(SearchBoxPlaceholder);
 
             // Set tooltips for controls
             ToolTip ttShowNew = new ToolTip();
