@@ -566,6 +566,12 @@ namespace HomeCinema
             };
             form.ShowDialog(this);
 
+            if (list == null || list?.Count < 1)
+            {
+                GlobalVars.ShowWarning("Entry does not exist on 'The Movie Database'!", "", this);
+                return;
+            }
+
             // Set the values to textboxes
             YT_ID = list[1];
             if ((String.IsNullOrWhiteSpace(txtPathTrailer.Text)) && (string.IsNullOrWhiteSpace(YT_ID) ==false))
