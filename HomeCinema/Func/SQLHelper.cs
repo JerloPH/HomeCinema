@@ -72,6 +72,15 @@ namespace HomeCinema.SQLFunc
                 cmd2.ExecuteNonQuery();
                 cmd2.Dispose();
                 //GlobalVars.ShowInfo("Database is Created succesfully!");
+                // Create 'config' table, and saves db Version
+                using (var sqlcmd = new SQLiteCommand(conn))
+                {
+                    sqlcmd.CommandText = $"CREATE TABLE IF NOT EXISTS 'config' (" +
+                    "[Id]	INTEGER  PRIMARY KEY AUTOINCREMENT, " +
+                    "[appBuild]	INTEGER, " +
+                    "[dbVersion] INTEGER);";
+                    sqlcmd.ExecuteNonQuery();
+                }
                 GlobalVars.LogDb(CalledFrom, "Database is loaded succesfully!\n " + GlobalVars.DB_PATH);
                 // Dispose (Close) Connection to DB
                 DbClose(conn);
