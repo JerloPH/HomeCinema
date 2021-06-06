@@ -654,9 +654,13 @@ namespace HomeCinema
                     }
                     else
                     {
-                        GlobalVars.ShowWarning("Image file cannot be downloaded at the moment!\n Try again later...");
+                        GlobalVars.ShowWarning("Image file cannot be\ndownloaded at the moment!\n Try again later...");
                     }
                 }
+            }
+            else
+            {
+                GlobalVars.ShowWarning("No cover image fetched\nfrom 'The Movie Database'.", "", this);
             }
         }
         // Get IMDB ID using Movie Name
