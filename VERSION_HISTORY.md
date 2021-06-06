@@ -1,5 +1,30 @@
 # HomeCinema - Project History:
 
+## HomeCinema v0.7
+### *release 37 - build 06 June 2021 PHT*
+### Hotfixes on top of v0.6.1
+- FIXED: HomeCinema database is not generated automatically, if not existing.
+- FIXED: Showing **'File'** instead of **'Folder'** when viewing folder size of series on mouse hover of Movie Title.
+
+### Major Changes
+- REV: On **'Edit Information'**, shows nothing on picture box when image cover is null.
+- REV: Revert focus to **Main Form** after closing **Settings** form.
+- REV: Increased delay on fetching TMDB entries, to not overload TMDB server.
+- REV: Added multiple prompts for different scenarios that needed alerts.
+
+### Code-level changes
+- REFACTOR: Updated queries to much simpler and efficient ones.
+- REFACTOR: Convert scope of **'SQLHelper'** class to **static**.
+- REV: Added **'GlobalEnum'** class to store Enums used anywhere.
+- REV: Call **ShowDialog()** instead of **Show()** on **'frmAlert'**.
+- REV: Created method: **'GlobalVas.WriteListBoxToFile()'** to write ListBox items to text file.
+- REV: Added default constructor for **'frmAlert'** and **'frmLoading'**.
+- REV: Refactored various methods to reflect changes on **'SQLHelper'** and **'GlobalEnum'** class.
+- REV: Load information on entries with default values, if it cannot be loaded properly from database.
+- REV: Added **'config'** table on database. Currently WIP as it will be used to compare db version to app version.
+- Various minor refactors and code cleanups.
+****
+
 ## HomeCinema v0.6.1
 ### *release 36 - build 30 May 2021 PHT*
 ### Hotfixes on top of v0.6

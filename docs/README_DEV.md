@@ -18,7 +18,7 @@
   - **[Newtonsoft.Json](https://www.nuget.org/packages/Newtonsoft.Json/)**
 
 ## Required API credentials
-- Create TMDB Id key to use features of automatically fetching media details.
+- Create TMDB Id key to use features of automatically fetching media details. Get one from [**The Movie Database**](https://www.themoviedb.org/).
 
 ## Commit / Pull Request Labels
 
@@ -39,10 +39,10 @@
 
 **1**.**2**.**3**.**4** build **5678**
 
-- **1**: Major *Revisions* and Changes to codes.
-- **2**: Major *Features* and/or *Bugfixes*. *(> 10)*
-- **3**: Multiple *Feature* and/or *Fix*, with at least 1 Major *Feature*/ Minor *Revision* addition/update. *(<= 10)*
-- **4**: Minor *bugfix* and/or *feature* update. Includes *Optimizations, GUI, Resource* and *Documents* changes. *(<= 10)*
+- **1**: Major *Revisions* and Changes to codes. Backwards incompatible.
+- **2**: Major *Features* and/or *Bugfixes*. Includes breaking changes that will not support features from previous releases.
+- **3**: Minor feature release and/or minor bugfix.
+- **4**: Minor changes. Mostly from documents or GUIs.
 - **5678**: Increase by 1 for each release.
 
 ***Sample***: **Release 0.0.0.1 build 1**

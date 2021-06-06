@@ -1,6 +1,7 @@
 # HomeCinema - Features to Add / Bugs to Fix
 
 ## Priority List
+- Store **'app and db'** version on **'config'** table.
 - Marked 'Watched' entry.
 - Chromecast support.
 - Copy movie/series file to directory.
