@@ -778,7 +778,6 @@ namespace HomeCinema
                                             try
                                             {
                                                 listAlreadyinDB.RemoveAt(index);
-
                                             }
                                             catch (Exception ex)
                                             {

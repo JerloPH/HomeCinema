@@ -174,7 +174,7 @@ namespace HomeCinema.Global
         {
             try
             {
-                return ($"[{DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss:fff tt")}]: [{ codefrom }] { logMessage }\n");
+                return ($"[{DateTime.Now.ToString("MM-dd-yyyy hh:mm:ss:fff tt")}]: [{ codefrom }] { logMessage }\n");
             }
             catch { return $"[Unknown DateTime][{ codefrom }] { logMessage }\n"; }
         }
