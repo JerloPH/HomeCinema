@@ -26,6 +26,8 @@ Ease the pain of browsing through many folders and finding out which movie is wh
 
 View reviews and posts from [**MajorGeek**](https://www.majorgeeks.com/files/details/homecinema.html) • [**Softpedia**](https://www.softpedia.com/get/Multimedia/Video/Other-VIDEO-Tools/HomeCinema.shtml) • [**NSaneForum**](https://nsaneforums.com/topic/411276-homecinema-0530/?tab=comments#comment-1687727) • [**Netfox2** (French)](https://www.netfox2.net/modules/wfdownloads/singlefile.php?cid=123&lid=2181) • [**Jetelecharge** (v0.1)](https://www.jetelecharge.com/Bureautique/10226.php) • [**slunecnice** (Czech)](https://www.slunecnice.cz/sw/homecinema/) • [**Windows Forum** (v0.5)](https://windowsforum.kr/data/15652587). <br>
 **Note: I'm not the user who posted any of them. Visit at your discretion.** <br>
+
+• [**Report Issue/Bug/Error/Feature request**](docs/REPORT_ISSUE.md) • | • [**Submit Pull Request**](docs/CONTRIBUTING.md) • | • [**See 'App Version History'**](docs/VERSION_HISTORY.md) •
 	
 ## Features:
 - Automatically scan and add all supported media files from designated folders.
@@ -73,22 +75,6 @@ D:\TV Series\Title of Series and Season\Episode 1.mp4
 [**Microsoft Windows API CodePack Core**](https://www.nuget.org/packages/Microsoft-WindowsAPICodePack-Core/) - For various functions. <br>
 [**Microsoft Windows API CodePack Shell**](https://www.nuget.org/packages/Microsoft-WindowsAPICodePack-Shell/) - For various functions. <br>
 [**Microsoft Universal Windows Platform**](https://www.nuget.org/packages/Microsoft.NETCore.UniversalWindowsPlatform/) - For various functions. <br>
-****
-
-## Find a bug or want a new feature?
-
-**Submit a ticket at [*Issues*](https://github.com/JerloPH/HomeCinema/issues) tab**.
-- *When submitting a **bug report**,*
-  - Include the following file (Located at the **logs** subfolder):
-    - App.log
-    - App_DB.log
-    - App_ErrorLog.log
-  - If possible, include a screenshot.
-  - Explain the details in full. Describe what you are doing or trying to do, on what form when the error appeared.
-  - Try to replicate the error / bug.
-- *When requesting a **new feature / feature update**,*
-  - Include how it works.
-  - Explain in full details.
 ****
 
 ## License
