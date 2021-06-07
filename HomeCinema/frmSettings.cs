@@ -245,7 +245,7 @@ namespace HomeCinema
         {
             // Try settings values
             long logsize;
-            bool error = false;
+            string error = "";
 
             // Booleans
             GlobalVars.SET_AUTOUPDATE = !Convert.ToBoolean(cbAutoUpdate.SelectedIndex);
@@ -259,13 +259,13 @@ namespace HomeCinema
                 logsize = (long)Convert.ToDouble(txtLogSize.Text);
                 GlobalVars.SET_LOGMAXSIZE = logsize * GlobalVars.BYTES;
             }
-            catch { error = true; }
+            catch { error += "\nLog size"; }
             
             try { GlobalVars.SET_ITEMLIMIT = Convert.ToInt32(txtMaxItemCount.Text); }
-            catch { error = true; }
+            catch { error += "\nMax Item Count"; }
 
             try { GlobalVars.SET_SEARCHLIMIT = Convert.ToInt32(txtImdbSearchLimit.Text); }
-            catch { error = true; }
+            catch { error += "\nMax IMDB Item"; }
 
             // Write supported file extensions
             try
@@ -282,7 +282,7 @@ namespace HomeCinema
                 text.TrimEnd(',');
                 GlobalVars.WriteToFile(GlobalVars.FILE_MEDIA_EXT, text);
             }
-            catch { error = true; }
+            catch { error += "Media Extentions"; }
 
             // Write MediaLoc and SeriesLoc file
             GlobalVars.WriteListBoxToFile(GlobalVars.FILE_MEDIALOC, BoxMediaLoc);
@@ -302,8 +302,8 @@ namespace HomeCinema
 
             // Save settings and Show Message
             GlobalVars.SaveSettings();
-            GlobalVars.ShowInfo("Done saving Settings!" + (error ? "\nSome settings are not saved!" : ""));
-            if (!error)
+            GlobalVars.ShowInfo((String.IsNullOrWhiteSpace(error)) ? "Done saving Settings!" : "Some settings are not saved:" + error);
+            if (!String.IsNullOrWhiteSpace(error))
             {
                 Close();
             }
