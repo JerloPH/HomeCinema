@@ -18,5 +18,5 @@
 - App_Log.log
 
 ## Tags
-[FEATURE REQUEST] - When requesting a new feature not in the App.
-[BUG] - When reporting an error or bug found.
+**[FEATURE REQUEST]** - When requesting a new feature not in the App. <br>
+**[BUG]** - When reporting an error or bug found. <br>

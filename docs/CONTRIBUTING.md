@@ -12,6 +12,6 @@
 **Note: Make sure the PR uses the [test case file](TEST_CHECKLIST.md) and passes it before submitting a PR.**
 
 # Tags
-[FEATURE] - When its a new feature to add to the App.
-[BUGFIX] - When PR fixes a bug/error.
-[UI] - If the PR is a change to the UI of the App and/or Icons, default cover, any other media-related changes.
+**[FEATURE]** - When its a new feature to add to the App. <br>
+**[BUGFIX]** - When PR fixes a bug/error. <br>
+**[UI]** - If the PR is a change to the UI of the App and/or Icons, default cover, or any other media-related changes. <br>
