@@ -267,6 +267,23 @@ namespace HomeCinema
             try { GlobalVars.SET_SEARCHLIMIT = Convert.ToInt32(txtImdbSearchLimit.Text); }
             catch { error = true; }
 
+            // Write supported file extensions
+            try
+            {
+                var arryExt = txtMediaExt.Text.Split(',');
+                string text = "";
+                foreach (string c in arryExt)
+                {
+                    if (!String.IsNullOrWhiteSpace(c))
+                    {
+                        text += c.Trim() + ",";
+                    }
+                }
+                text.TrimEnd(',');
+                GlobalVars.WriteToFile(GlobalVars.FILE_MEDIA_EXT, text);
+            }
+            catch { error = true; }
+
             // Write MediaLoc and SeriesLoc file
             GlobalVars.WriteListBoxToFile(GlobalVars.FILE_MEDIALOC, BoxMediaLoc);
             GlobalVars.WriteListBoxToFile(GlobalVars.FILE_SERIESLOC, BoxSeriesLoc);
