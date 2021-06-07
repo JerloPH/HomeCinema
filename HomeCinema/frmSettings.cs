@@ -259,13 +259,13 @@ namespace HomeCinema
                 logsize = (long)Convert.ToDouble(txtLogSize.Text);
                 GlobalVars.SET_LOGMAXSIZE = logsize * GlobalVars.BYTES;
             }
-            catch { error += "\nLog size"; }
+            catch { error += Environment.NewLine + lblMaxLogFileSize.Text.Trim().TrimEnd(':'); }
             
             try { GlobalVars.SET_ITEMLIMIT = Convert.ToInt32(txtMaxItemCount.Text); }
-            catch { error += "\nMax Item Count"; }
+            catch { error += Environment.NewLine + lblItemDisplayCount.Text.Trim().TrimEnd(':'); }
 
             try { GlobalVars.SET_SEARCHLIMIT = Convert.ToInt32(txtImdbSearchLimit.Text); }
-            catch { error += "\nMax IMDB Item"; }
+            catch { error += Environment.NewLine + lblImdbSearchLimit.Text.Trim().TrimEnd(':'); }
 
             // Write supported file extensions
             try
@@ -282,7 +282,7 @@ namespace HomeCinema
                 text.TrimEnd(',');
                 GlobalVars.WriteToFile(GlobalVars.FILE_MEDIA_EXT, text);
             }
-            catch { error += "Media Extentions"; }
+            catch { error += Environment.NewLine + "Media Extentions"; }
 
             // Write MediaLoc and SeriesLoc file
             GlobalVars.WriteListBoxToFile(GlobalVars.FILE_MEDIALOC, BoxMediaLoc);
