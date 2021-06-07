@@ -303,7 +303,7 @@ namespace HomeCinema
             // Save settings and Show Message
             GlobalVars.SaveSettings();
             GlobalVars.ShowInfo((String.IsNullOrWhiteSpace(error)) ? "Done saving Settings!" : "Some settings are not saved:" + error);
-            if (!String.IsNullOrWhiteSpace(error))
+            if (String.IsNullOrWhiteSpace(error))
             {
                 Close();
             }
