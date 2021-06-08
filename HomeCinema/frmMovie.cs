@@ -35,7 +35,6 @@ namespace HomeCinema
         private string MOVIE_ID { get; set; } = "";
         private string MOVIE_NAME { get; set; } = "";
         private string MOVIE_FILEPATH { get; set; } = "";
-        private string MOVIE_SUB { get; set; } = "";
         private string MOVIE_TRAILER { get; set; } = "";
         private Image MOVIE_COVER { get; set; } = null;
         private Image MOVIE_COVER_FULL { get; set; } = null;
@@ -63,15 +62,6 @@ namespace HomeCinema
 
             // Change controls text and properties
             Text = name;
-
-            groupBox2.BackColor = Color.Transparent;
-            foreach (Control control in groupBox2.Controls)
-            {
-                if (control.Name == "groupBox3")
-                {
-                    control.BackColor = Color.Transparent;
-                }
-            }
 
             // Show this form
             StartPosition = FormStartPosition.CenterParent;
@@ -112,9 +102,6 @@ namespace HomeCinema
 
                 var r0 = row[InfoColumn.Id.ToString()]; // ID
                 lblID.Text = GlobalVars.ValidateAndReturn(r0.ToString());
-
-                try { MOVIE_SUB = row[FileColumn.sub.ToString()].ToString(); }
-                catch { MOVIE_SUB = ""; }
 
                 try { MOVIE_TRAILER = row[FileColumn.trailer.ToString()].ToString(); }
                 catch { MOVIE_TRAILER = ""; }
