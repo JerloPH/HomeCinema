@@ -1004,12 +1004,13 @@ namespace HomeCinema.Global
         public static bool DeleteFilesExt(string directory, string extension, string calledFrom)
         {
             string errFrom = "GlobalVars-DeleteFilesExt [" + calledFrom + "]";
-            List<String> items = SearchFilesSingleDir(directory, errFrom);
+            string text = extension.ToCharArray()[0] == '.' ? extension.ToLower() : "." + extension.ToLower();
+            List <String> items = SearchFilesSingleDir(directory, errFrom);
             if (items.Count > 0)
             {
                 foreach (string file in items)
                 {
-                    if (Path.GetExtension(file).ToLower() == extension)
+                    if (Path.GetExtension(file).ToLower() == text)
                     {
                         DeleteMove(file, errFrom);
                     }
