@@ -27,7 +27,7 @@ Ease the pain of browsing through many folders and finding out which movie is wh
 View reviews and posts from [**MajorGeek**](https://www.majorgeeks.com/files/details/homecinema.html) • [**Softpedia**](https://www.softpedia.com/get/Multimedia/Video/Other-VIDEO-Tools/HomeCinema.shtml) • [**NSaneForum**](https://nsaneforums.com/topic/411276-homecinema-0530/?tab=comments#comment-1687727) • [**Netfox2** (French)](https://www.netfox2.net/modules/wfdownloads/singlefile.php?cid=123&lid=2181) • [**Jetelecharge** (v0.1)](https://www.jetelecharge.com/Bureautique/10226.php) • [**slunecnice** (Czech)](https://www.slunecnice.cz/sw/homecinema/) • [**Windows Forum** (v0.5)](https://windowsforum.kr/data/15652587). <br>
 **Note: I'm not the user who posted any of them. Visit at your discretion.** <br>
 
-• [**Report Issue/Bug/Error/Feature request**](docs/REPORT_ISSUE.md) • | • [**Submit Pull Request**](docs/CONTRIBUTING.md) • | • [**See 'App Version History'**](docs/VERSION_HISTORY.md) •
+• [**Report Issue/Bug/Error/Feature request**](docs/REPORT_ISSUE.md) • | • [**Submit Pull Request**](docs/CONTRIBUTING.md) • | • [**See 'App Version History'**](VERSION_HISTORY.md) •
 	
 ## Features:
 - Automatically scan and add all supported media files from designated folders.
