@@ -1151,6 +1151,7 @@ namespace HomeCinema
         }
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            if (!GlobalVars.ShowYesNo("Are you sure you want to reload item?", this)) { return; }
             //string errFrom = "frmMain-btnSearch_Click";
             // Search the db for movie with filters
             // Setup columns needed
