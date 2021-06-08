@@ -152,7 +152,7 @@
     <Compile Include="JSONs\TmdbVideos.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Func\Config.cs" />
+    <Compile Include="JSONs\Config.cs" />
     <Compile Include="Func\SQLHelper.cs" />
     <EmbeddedResource Include="frmAbout.resx">
       <DependentUpon>frmAbout.cs</DependentUpon>
