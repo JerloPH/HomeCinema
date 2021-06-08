@@ -897,9 +897,9 @@ namespace HomeCinema
                         {
                             // Add Item to ListView
                             // Convert ID object to ID int
-                            int MOVIEID;
+                            long MOVIEID;
                             var x = InfoColumn.Id.ToString();
-                            try { MOVIEID = Convert.ToInt32(r[x]); }
+                            try { MOVIEID = Convert.ToInt64(r[x]); }
                             catch { MOVIEID = 0; GlobalVars.Log(errFrom, $"Invalid MovieID: {r[x].ToString()}"); }
 
                             // Add to listview lvSearchResult
