@@ -344,7 +344,7 @@ namespace HomeCinema.Global
         // Save settings to replace old
         public static bool SaveSettings()
         {
-            Config config = new Config();
+            var config = new Config();
             config.logsize = (int)(SET_LOGMAXSIZE / BYTES);
             config.offlineMode = Convert.ToInt16(SET_OFFLINE);
             config.lastPathCover = PATH_GETCOVER;
