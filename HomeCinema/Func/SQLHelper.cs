@@ -39,74 +39,72 @@ namespace HomeCinema.SQLFunc
             string CalledFrom = "SQLHelper (Instance)-" + InitiatedFrom;
             try
             {
-                SQLiteConnection conn = DbOpen(); // connect to database
-
-                // Create Table and Schema
-                SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = $"CREATE TABLE IF NOT EXISTS '{GlobalVars.DB_TNAME_INFO}' (" +
-                "'Id'	INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "'imdb'	TEXT DEFAULT 0, " +
-                "'name'	TEXT, " +
-                "'name_ep'	TEXT, " +
-                "'name_series'	TEXT, " +
-                "'season'	INTEGER, " +
-                "'episode'	INTEGER, " +
-                "'country'	TEXT, " +
-                "'category'	VARCHAR(1) DEFAULT 0, " + // 0-None | 1-MOVIE | 2-TVSERIES | 3-ANIMEMOVIE | 4-ANIME SERIES | 5-ANIMATED MOVIE | 6-CARTOON SERIES
-                "'genre'	TEXT, " +
-                "'studio'	TEXT, " +
-                "'producer'	TEXT, " +
-                "'director'	TEXT, " +
-                "'artist'	TEXT, " +
-                "'year'	VARCHAR(5) DEFAULT 0, " +
-                "'summary'  TEXT DEFAULT 'This has no summary');";
-                cmd.ExecuteNonQuery();
-                cmd.Dispose();
-                // Create filepath Table and Schema
-                SQLiteCommand cmd2 = new SQLiteCommand(conn);
-                cmd2.CommandText = $"CREATE TABLE IF NOT EXISTS '{GlobalVars.DB_TNAME_FILEPATH}' (" +
-                "[Id]	INTEGER  PRIMARY KEY AUTOINCREMENT, " +
-                "[file]	TEXT, " +
-                "[sub]	TEXT, " +
-                "[trailer] TEXT);";
-                cmd2.ExecuteNonQuery();
-                cmd2.Dispose();
-                //GlobalVars.ShowInfo("Database is Created succesfully!");
-                // Create 'config' table, and saves db Version
-                using (var sqlcmd = new SQLiteCommand(conn))
+                using (var conn = DbOpen()) // connect to database
                 {
-                    sqlcmd.CommandText = $"CREATE TABLE IF NOT EXISTS 'config' (" +
-                    "[Id]	INTEGER  PRIMARY KEY AUTOINCREMENT, " +
-                    "[appBuild]	INTEGER, " +
-                    "[dbVersion] INTEGER);";
-                    sqlcmd.ExecuteNonQuery();
+                    if (conn == null) { return false; }
+                    // Create Table and Schema
+                    using (var cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = $"CREATE TABLE IF NOT EXISTS '{GlobalVars.DB_TNAME_INFO}' (" +
+                        "'Id'	INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "'imdb'	TEXT DEFAULT 0, " +
+                        "'name'	TEXT, " +
+                        "'name_ep'	TEXT, " +
+                        "'name_series'	TEXT, " +
+                        "'season'	INTEGER, " +
+                        "'episode'	INTEGER, " +
+                        "'country'	TEXT, " +
+                        "'category'	VARCHAR(1) DEFAULT 0, " + // 0-None | 1-MOVIE | 2-TVSERIES | 3-ANIMEMOVIE | 4-ANIME SERIES | 5-ANIMATED MOVIE | 6-CARTOON SERIES
+                        "'genre'	TEXT, " +
+                        "'studio'	TEXT, " +
+                        "'producer'	TEXT, " +
+                        "'director'	TEXT, " +
+                        "'artist'	TEXT, " +
+                        "'year'	VARCHAR(5) DEFAULT 0, " +
+                        "'summary'  TEXT DEFAULT 'This has no summary');";
+                        cmd.ExecuteNonQuery();
+                    }
+                    // Create filepath Table and Schema
+                    using (var cmd2 = new SQLiteCommand(conn))
+                    {
+                        cmd2.CommandText = $"CREATE TABLE IF NOT EXISTS '{GlobalVars.DB_TNAME_FILEPATH}' (" +
+                        "[Id]	INTEGER  PRIMARY KEY AUTOINCREMENT, " +
+                        "[file]	TEXT, " +
+                        "[sub]	TEXT, " +
+                        "[trailer] TEXT);";
+                        cmd2.ExecuteNonQuery();
+                    }
+                    // Create 'config' table, and saves db Version
+                    using (var sqlcmd = new SQLiteCommand(conn))
+                    {
+                        sqlcmd.CommandText = $"CREATE TABLE IF NOT EXISTS 'config' (" +
+                        "[Id]	INTEGER  PRIMARY KEY AUTOINCREMENT, " +
+                        "[appBuild]	INTEGER, " +
+                        "[dbVersion] INTEGER);";
+                        sqlcmd.ExecuteNonQuery();
+                    }
+                    // Close Connection to DB
+                    conn.Close();
+                    GlobalVars.LogDb(CalledFrom, "Database is loaded succesfully!\n " + GlobalVars.DB_PATH);
+                    return true;
                 }
-                GlobalVars.LogDb(CalledFrom, "Database is loaded succesfully!\n " + GlobalVars.DB_PATH);
-                // Dispose (Close) Connection to DB
-                DbClose(conn);
-                return true;
             }
             catch { return false; }
-        }
-        /// <summary>
-        /// Open connection to SQLite database, using default values.
-        /// </summary>
-        /// <returns>Handle of the SQLite connection.</returns>
-        public static SQLiteConnection DbOpen()
-        {
-            return DbOpen(GlobalVars.DB_DATAPATH);
         }
         /// <summary>
         /// Open connection to SQLite database.
         /// </summary>
         /// <param name="connectionString">Connection string to use.</param>
         /// <returns>Handle of the SQLite connection.</returns>
-        public static SQLiteConnection DbOpen(string connectionString)
+        public static SQLiteConnection DbOpen()
         {
-            SQLiteConnection conn = new SQLiteConnection(connectionString);
-            conn.Open();
-            GlobalVars.LogDb("SQLHelper-DbOpen", "DB Open: " + conn.FileName);
-            return conn;
+            try
+            {
+                SQLiteConnection conn = new SQLiteConnection(GlobalVars.DB_DATAPATH);
+                conn.Open();
+                return conn;
+            }
+            catch { return null; }
         }
         /// <summary>
         /// Close the open SQLite connection.
@@ -127,33 +125,34 @@ namespace HomeCinema.SQLFunc
         public static bool DbExecNonQuery(string qry, string calledFrom)
         {
             bool DONE = false;
-            SQLiteConnection conn = DbOpen();
-            SQLiteCommand cmd = new SQLiteCommand(conn);
-            cmd.CommandText = qry;
-            try 
+            string errFrom = $"SQLHelper-DbExecNonQuery [Called by: {calledFrom}]";
+            using (var conn = DbOpen())
             {
-                GlobalVars.LogDb($"SQLHelper-DbExecNonQuery [Called by: {calledFrom}]", "query is executing");
-                if (cmd.ExecuteNonQuery() > 0)
+                if (conn == null)
                 {
-                    DONE = true;
+                    GlobalVars.LogDb(errFrom, "Cannot establish connection to database (connection is null)!");
+                    return false;
+                }
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = qry;
+                    try
+                    {
+                        GlobalVars.LogDb(errFrom, "query is executing");
+                        DONE = (cmd.ExecuteNonQuery() > 0);
+                    }
+                    catch (SQLiteException ex)
+                    {
+                        GlobalVars.LogDb("SQLHelper-DbExecNonQuery (Query)", qry);
+                        GlobalVars.ShowError("SQLHelper-DbExecNonQuery (SQL Error)", ex);
+                    }
+                    catch (Exception ex)
+                    {
+                        GlobalVars.ShowError("SQLHelper-DbExecNonQuery (Error)", ex);
+                    }
                 }
             }
-            catch (SQLiteException ex)
-            {
-                GlobalVars.LogDb("SQLHelper-DbExecNonQuery (Query)", qry);
-                GlobalVars.ShowError("SQLHelper-DbExecNonQuery (SQL Error)", ex);
-            }
-            catch (Exception ex)
-            {
-                GlobalVars.ShowError("SQLHelper-DbExecNonQuery (Error)", ex);
-            }
-            finally
-            {
-                // Dispose (Close) Connection to DB
-                GlobalVars.LogDb("SQLHelper-DbExecNonQuery", "Finished executing non-query");
-                cmd.Dispose();
-                DbClose(conn);
-            }
+            //GlobalVars.LogDb("SQLHelper-DbExecNonQuery", "Finished executing non-query");
             return DONE;
         }
         /// <summary>
@@ -173,12 +172,12 @@ namespace HomeCinema.SQLFunc
         /// <returns>DataTable ref</returns>
         public static DataTable InitializeDT(bool WITH_ID, String[] cols)
         {
-            DataTable dt = new DataTable();
+            var dt = new DataTable();
             if (WITH_ID)
             {
                 // table initialization for columns with Id as first column
                 DataColumn column = new DataColumn();
-                column.DataType = System.Type.GetType("System.Int32");
+                column.DataType = System.Type.GetType("System.Int64");
                 column.ColumnName = "Id";
                 column.ReadOnly = true;
                 column.Unique = true;
@@ -234,10 +233,10 @@ namespace HomeCinema.SQLFunc
             try
             {
                 // Create Connection to database
-                using (SQLiteConnection conn = new SQLiteConnection(GlobalVars.DB_DATAPATH))
+                using (var conn = new SQLiteConnection(GlobalVars.DB_DATAPATH))
                 {
                     conn.Open();
-                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    using (var cmd = new SQLiteCommand(conn))
                     {
                         cmd.CommandText = qry;
 
@@ -275,14 +274,18 @@ namespace HomeCinema.SQLFunc
         /// <returns>List string of results.</returns>
         public static List<string> DbQrySingle(string tableName, string col, string From)
         {
+            // Initiate the list
+            List<string> list = new List<string>();
             // Create Connection to database
-            using (SQLiteConnection conn = DbOpen())
+            using (var conn = DbOpen())
             {
-                using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                if (conn == null)
                 {
-                    // Initiate the list
-                    List<string> list = new List<string>();
-
+                    GlobalVars.LogDb("SQLHelper-DbQrySingle", "Cannot establish connection to database (connection is null)!");
+                    return list;
+                }
+                using (var cmd = new SQLiteCommand(conn))
+                {
                     string qry = $"SELECT {col} FROM {tableName}";
                     cmd.CommandText = qry;
 
@@ -341,9 +344,14 @@ namespace HomeCinema.SQLFunc
             colsInfo = colsInfo.TrimEnd(',');
 
             // Create Connection to database
-            using (SQLiteConnection conn = DbOpen())
+            using (var conn = DbOpen())
             {
-                SQLiteCommand cmd = new SQLiteCommand(conn);
+                if (conn == null)
+                {
+                    GlobalVars.LogDb("SQLHelper-DbInsertMovie", "Cannot establish connection to database (connection is null)!");
+                    return -1;
+                }
+                var cmd = new SQLiteCommand(conn);
 
                 // Make Transaction
                 SQLiteTransaction transaction;
