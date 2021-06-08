@@ -49,8 +49,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.lblNameEp = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.lblNameSeries = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
             this.lblCategory = new System.Windows.Forms.Label();
             this.lblYear = new System.Windows.Forms.Label();
             this.lblIMDB = new System.Windows.Forms.Label();
@@ -65,6 +63,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
+            this.lblNameSeries = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
@@ -72,6 +72,9 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox2.Controls.Add(this.lblNameSeries);
+            this.groupBox2.Controls.Add(this.label20);
             this.groupBox2.Controls.Add(this.txtArtist);
             this.groupBox2.Controls.Add(this.txtCountry);
             this.groupBox2.Controls.Add(this.txtGenre);
@@ -92,8 +95,6 @@
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.lblNameEp);
             this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.lblNameSeries);
-            this.groupBox2.Controls.Add(this.label20);
             this.groupBox2.Controls.Add(this.lblCategory);
             this.groupBox2.Controls.Add(this.lblYear);
             this.groupBox2.Controls.Add(this.lblIMDB);
@@ -318,7 +319,7 @@
             // 
             this.lblNameEp.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNameEp.ForeColor = System.Drawing.Color.Yellow;
-            this.lblNameEp.Location = new System.Drawing.Point(291, 173);
+            this.lblNameEp.Location = new System.Drawing.Point(291, 81);
             this.lblNameEp.Name = "lblNameEp";
             this.lblNameEp.Size = new System.Drawing.Size(295, 77);
             this.lblNameEp.TabIndex = 13;
@@ -328,31 +329,11 @@
             // 
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(189, 171);
+            this.label5.Location = new System.Drawing.Point(189, 79);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(95, 25);
             this.label5.TabIndex = 12;
             this.label5.Text = "Original";
-            // 
-            // lblNameSeries
-            // 
-            this.lblNameSeries.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNameSeries.ForeColor = System.Drawing.Color.Yellow;
-            this.lblNameSeries.Location = new System.Drawing.Point(291, 80);
-            this.lblNameSeries.Name = "lblNameSeries";
-            this.lblNameSeries.Size = new System.Drawing.Size(295, 72);
-            this.lblNameSeries.TabIndex = 11;
-            this.lblNameSeries.Text = "Series name";
-            // 
-            // label20
-            // 
-            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.ForeColor = System.Drawing.Color.White;
-            this.label20.Location = new System.Drawing.Point(188, 79);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(95, 25);
-            this.label20.TabIndex = 10;
-            this.label20.Text = "Series";
             // 
             // lblCategory
             // 
@@ -418,7 +399,7 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.BackColor = System.Drawing.Color.Black;
+            this.groupBox3.BackColor = System.Drawing.Color.Transparent;
             this.groupBox3.Controls.Add(this.btnDeleteMovie);
             this.groupBox3.Controls.Add(this.btnEdit);
             this.groupBox3.Controls.Add(this.btnPlay);
@@ -507,6 +488,26 @@
             this.lblName.Text = "MOVIE NAME";
             this.lblName.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
+            // lblNameSeries
+            // 
+            this.lblNameSeries.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNameSeries.ForeColor = System.Drawing.Color.Yellow;
+            this.lblNameSeries.Location = new System.Drawing.Point(291, 169);
+            this.lblNameSeries.Name = "lblNameSeries";
+            this.lblNameSeries.Size = new System.Drawing.Size(295, 72);
+            this.lblNameSeries.TabIndex = 48;
+            this.lblNameSeries.Text = "Series name";
+            // 
+            // label20
+            // 
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.ForeColor = System.Drawing.Color.White;
+            this.label20.Location = new System.Drawing.Point(188, 168);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(95, 25);
+            this.label20.TabIndex = 47;
+            this.label20.Text = "Series";
+            // 
             // frmMovie
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -515,6 +516,7 @@
             this.ClientSize = new System.Drawing.Size(950, 653);
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.groupBox2);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "frmMovie";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
@@ -543,8 +545,6 @@
         private System.Windows.Forms.Label lblYear;
         private System.Windows.Forms.Label lblIMDB;
         private System.Windows.Forms.Label lblCategory;
-        private System.Windows.Forms.Label lblNameSeries;
-        private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label lblNameEp;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblEpNum;
@@ -568,5 +568,7 @@
         private System.Windows.Forms.TextBox txtArtist;
         private System.Windows.Forms.Button btnDeleteMovie;
         private System.Windows.Forms.Label lblName;
+        private System.Windows.Forms.Label lblNameSeries;
+        private System.Windows.Forms.Label label20;
     }
 }
