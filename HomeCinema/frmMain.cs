@@ -391,6 +391,97 @@ namespace HomeCinema
         #endregion
         // ####################################################################################### Functions
         #region Functions
+        // Search for Entries filtered
+        private void SearchEntries()
+        {
+            // Search the db for movie with filters
+            // Setup columns needed
+            string qry = "";
+            SEARCH_QUERY = ""; // reset query
+
+            // Default SELECT Query
+            qry = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO}";
+
+            // Build Filter for Query
+            // Name Text search
+            if ((txtSearch.Text != SEARCHBOX_PLACEHOLDER) && (!String.IsNullOrWhiteSpace(txtSearch.Text)))
+            {
+                qry += " WHERE ";
+                qry += $"([name] LIKE '%{txtSearch.Text}%' ";
+                qry += $"OR [name_ep] LIKE '%{txtSearch.Text}%' ";
+                qry += $"OR [name_series] LIKE '%{txtSearch.Text}%')";
+            }
+            // Year range
+            if (!String.IsNullOrWhiteSpace(txtYearFrom.Text))
+            {
+                qry += GlobalVars.QryWhere(qry);
+                if (!String.IsNullOrWhiteSpace(txtYearTo.Text))
+                {
+                    qry += $"[year] BETWEEN {txtYearFrom.Text} AND {txtYearTo.Text}";
+                }
+                else
+                {
+                    qry += $"[year] BETWEEN {txtYearFrom.Text} AND {DateTime.Now.Year.ToString()}";
+                }
+            }
+            // Genre
+            qry += (cbGenre.SelectedIndex > 0) ? GlobalVars.QryWhere(qry) + $"[genre] LIKE '%{cbGenre.Text}%'" : "";
+
+            // Category
+            if (cbCategory.SelectedIndex > 0)
+            {
+                int index = cbCategory.SelectedIndex;
+                qry += GlobalVars.QryWhere(qry);
+                // Search for all
+                if ((index < 1) || (index > 2))
+                {
+                    qry += $"[category]={index}";
+                }
+                else
+                {
+                    // Search for All type of Movies, if index == 1. Otherwise, Search for All types of Series
+                    qry += (index == 1) ? "([category]=1 OR [category]=3 OR [category]=5)" : "([category]=2 OR [category]=4 OR [category]=6)";
+                }
+            }
+            // Studio
+            if (String.IsNullOrWhiteSpace(txtStudio.Text) == false)
+            {
+                qry += GlobalVars.QryWhere(qry) + $"[studio] LIKE '%{txtStudio.Text}%'";
+            }
+            // Cast
+            if (String.IsNullOrWhiteSpace(txtCast.Text) == false)
+            {
+                qry += GlobalVars.QryWhere(qry) + $"[artist] LIKE '%{txtCast.Text}%'";
+            }
+            // Director
+            if (String.IsNullOrWhiteSpace(txtDirector.Text) == false)
+            {
+                qry += GlobalVars.QryWhere(qry) + $"[director] LIKE '%{txtDirector.Text}%'";
+            }
+            // Country
+            string CountryText = GlobalVars.RemoveLine(cbCountry.SelectedItem.ToString());
+            if ((String.IsNullOrWhiteSpace(CountryText) == false) && cbCountry.SelectedIndex > 0)
+            {
+                qry += GlobalVars.QryWhere(qry) + $"[country] LIKE '%{CountryText}%'";
+            }
+
+            // Override filter string build-up and Use IMDB Code
+            if (String.IsNullOrWhiteSpace(txtIMDB.Text) == false)
+            {
+                qry = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO} WHERE [imdb] = '{txtIMDB.Text}'";
+            }
+
+            // Filter out all animations
+            qry += (cbHideAnim.CheckState == CheckState.Checked) ? GlobalVars.QryWhere(qry) + " ([category] <= 2)" : "";
+
+            // Append to end
+            qry += (GlobalVars.SET_ITEMLIMIT > 0) ? $" LIMIT {GlobalVars.SET_ITEMLIMIT};" : "";
+
+            // Set query to perform on search
+            SEARCH_QUERY = qry;
+            // Re-populate ListView of movies
+            PopulateMovieBG();
+        }
         // Play Movie or Open Movie Details
         public void OpenFormPlayMovie()
         {
@@ -1151,95 +1242,8 @@ namespace HomeCinema
         }
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            if (!GlobalVars.ShowYesNo("Are you sure you want to reload item?", this)) { return; }
-            //string errFrom = "frmMain-btnSearch_Click";
-            // Search the db for movie with filters
-            // Setup columns needed
-            string qry = "";
-            SEARCH_QUERY = ""; // reset query
-
-            // Default SELECT Query
-            qry = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO}";
-
-            // Build Filter for Query
-            // Name Text search
-            if ((txtSearch.Text != SEARCHBOX_PLACEHOLDER) && (!String.IsNullOrWhiteSpace(txtSearch.Text)))
-            {
-                qry += " WHERE ";
-                qry += $"([name] LIKE '%{txtSearch.Text}%' ";
-                qry += $"OR [name_ep] LIKE '%{txtSearch.Text}%' ";
-                qry += $"OR [name_series] LIKE '%{txtSearch.Text}%')";
-            }
-            // Year range
-            if (!String.IsNullOrWhiteSpace(txtYearFrom.Text))
-            {
-                qry += GlobalVars.QryWhere(qry);
-                if (!String.IsNullOrWhiteSpace(txtYearTo.Text))
-                {
-                    qry += $"[year] BETWEEN {txtYearFrom.Text} AND {txtYearTo.Text}";
-                }
-                else
-                {
-                    qry += $"[year] BETWEEN {txtYearFrom.Text} AND {DateTime.Now.Year.ToString()}";
-                }
-            }
-            // Genre
-            qry += (cbGenre.SelectedIndex > 0) ? GlobalVars.QryWhere(qry) + $"[genre] LIKE '%{cbGenre.Text}%'" : "";
-
-            // Category
-            if (cbCategory.SelectedIndex > 0)
-            {
-                int index = cbCategory.SelectedIndex;
-                qry += GlobalVars.QryWhere(qry);
-                // Search for all
-                if ((index < 1) || (index > 2))
-                {
-                    qry += $"[category]={index}";
-                }
-                else
-                {
-                    // Search for All type of Movies, if index == 1. Otherwise, Search for All types of Series
-                    qry += (index == 1) ? "([category]=1 OR [category]=3 OR [category]=5)" : "([category]=2 OR [category]=4 OR [category]=6)";
-                }
-            }
-            // Studio
-            if (String.IsNullOrWhiteSpace(txtStudio.Text) == false)
-            {
-                qry += GlobalVars.QryWhere(qry) + $"[studio] LIKE '%{txtStudio.Text}%'";
-            }
-            // Cast
-            if (String.IsNullOrWhiteSpace(txtCast.Text) == false)
-            {
-                qry += GlobalVars.QryWhere(qry) + $"[artist] LIKE '%{txtCast.Text}%'";
-            }
-            // Director
-            if (String.IsNullOrWhiteSpace(txtDirector.Text) == false)
-            {
-                qry += GlobalVars.QryWhere(qry) + $"[director] LIKE '%{txtDirector.Text}%'";
-            }
-            // Country
-            string CountryText = GlobalVars.RemoveLine(cbCountry.SelectedItem.ToString());
-            if ((String.IsNullOrWhiteSpace(CountryText) == false) && cbCountry.SelectedIndex > 0)
-            {
-                qry += GlobalVars.QryWhere(qry) + $"[country] LIKE '%{CountryText}%'";
-            }
-
-            // Override filter string build-up and Use IMDB Code
-            if (String.IsNullOrWhiteSpace(txtIMDB.Text) == false)
-            {
-                qry = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO} WHERE [imdb] = '{txtIMDB.Text}'";
-            }
-
-            // Filter out all animations
-            qry += (cbHideAnim.CheckState == CheckState.Checked) ? GlobalVars.QryWhere(qry) + " ([category] <= 2)" : "";
-
-            // Append to end
-            qry += (GlobalVars.SET_ITEMLIMIT > 0) ? $" LIMIT {GlobalVars.SET_ITEMLIMIT};" : "";
-
-            // Set query to perform on search
-            SEARCH_QUERY = qry;
-            // Re-populate ListView of movies
-            PopulateMovieBG();
+            if (!GlobalVars.ShowYesNo("Are you sure of your search filters?", this)) { return; }
+            SearchEntries();
         }
         // When double-clicked on an item, open it in new form
         private void lvSearchResult_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -1269,7 +1273,11 @@ namespace HomeCinema
             // Perform click on search button: btnSearch
             if (cbClearSearch.CheckState == CheckState.Checked)
             {
-                btnSearch.PerformClick();
+                if (!GlobalVars.ShowYesNo("Reload entries?", this))
+                {
+                    return;
+                }
+                SearchEntries();
             }
         }
         // Auto search if Enter key is pressed
@@ -1282,7 +1290,7 @@ namespace HomeCinema
                 if ((String.IsNullOrWhiteSpace(txtSearch.Text)==false) && (txtSearch.Text != SEARCHBOX_PLACEHOLDER))
                 {
                     // Perform click on search button: btnSearch
-                    btnSearch.PerformClick();
+                    SearchEntries();
                 }
             }
         }
@@ -1308,7 +1316,8 @@ namespace HomeCinema
         private void cbHideAnim_CheckedChanged(object sender, EventArgs e)
         {
             // Perform Search
-            btnSearch.PerformClick();
+            if (!GlobalVars.ShowYesNo("Reload entries?", this)) { return; }
+            SearchEntries();
         }
         private void btnAbout_Click(object sender, EventArgs e)
         {
