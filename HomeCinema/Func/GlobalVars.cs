@@ -1032,55 +1032,60 @@ namespace HomeCinema.Global
             string linkRelease = @"https://github.com/JerloPH/HomeCinema/releases";
             int tryCount = 3;
 
-            frmLoading form = new frmLoading("Checking for Update..", "Update check");
-            form.BackgroundWorker.DoWork += (sender1, e1) =>
+            try
             {
-                Log(errFrom, "Will Check for Updates..");
-
-                if (File.Exists(fileName))
+                frmLoading form = new frmLoading("Checking for Update..", "Update check");
+                form.BackgroundWorker.DoWork += (sender1, e1) =>
                 {
-                    TryDelete(fileName, errFrom);
-                }
-                // Keep trying to download version file, to check for update
-                while (tryCount > 0)
-                {
-                    Log(errFrom, $"Fetching update version.. (Tries Left: {tryCount.ToString()})");
-                    DownloadFrom(link, fileName, false);
-                    tryCount -= 1;
-                    tryCount = File.Exists(fileName) ? 0 : tryCount;
-                }
-                // Done downloading version file
-                if (File.Exists(fileName))
-                {
-                    string vString = ReadStringFromFile(fileName, errFrom);
-                    int version;
+                    Log(errFrom, "Will Check for Updates..");
 
-                    try { version = Convert.ToInt32(vString); }
-                    catch { version = 0; }
-
-                    if (version > HOMECINEMA_BUILD)
+                    if (File.Exists(fileName))
                     {
-                        form.SetIcon((int)Icons.Check);
-                        form.Message = "Update available!";
-                        Log(errFrom, "Update found!");
-                        UpdateStatus = 1;
+                        TryDelete(fileName, errFrom);
+                    }
+                    // Keep trying to download version file, to check for update
+                    while (tryCount > 0)
+                    {
+                        Log(errFrom, $"Fetching update version.. (Tries Left: {tryCount.ToString()})");
+                        DownloadFrom(link, fileName, false);
+                        tryCount -= 1;
+                        tryCount = File.Exists(fileName) ? 0 : tryCount;
+                    }
+                    // Done downloading version file
+                    if (File.Exists(fileName))
+                    {
+                        string vString = ReadStringFromFile(fileName, errFrom);
+                        int version;
+
+                        try { version = Convert.ToInt32(vString); }
+                        catch { version = 0; }
+
+                        if (version > HOMECINEMA_BUILD)
+                        {
+                            form.SetIcon((int)Icons.Check);
+                            form.Message = "Update available!";
+                            Log(errFrom, "Update found!");
+                            UpdateStatus = 1;
+                        }
+                        else
+                        {
+                            form.SetIcon((int)Icons.Check);
+                            form.Message = "No updates available!";
+                            UpdateStatus = 2;
+                        }
                     }
                     else
                     {
-                        form.SetIcon((int)Icons.Check);
-                        form.Message = "No updates available!";
-                        UpdateStatus = 2;
+                        form.SetIcon((int)Icons.Warning);
+                        form.Message = "Error on checking update!";
+                        Log(errFrom, "Cannot check for update!");
+                        UpdateStatus = 3;
                     }
-                }
-                else
-                {
-                    form.SetIcon((int)Icons.Warning);
-                    form.Message = "Error on checking update!";
-                    Log(errFrom, "Cannot check for update!");
-                    UpdateStatus = 3;
-                }
-            };
-            form.ShowDialog(caller);
+                };
+                form.ShowDialog(caller);
+            }
+            catch { UpdateStatus = 0; }
+
             switch (UpdateStatus)
             {
                 case 1:
