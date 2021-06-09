@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using HomeCinema.Global;
 using HomeCinema.Properties;
 using HomeCinema.GlobalEnum;
 

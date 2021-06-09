@@ -24,7 +24,6 @@ using System.IO;
 using System.Windows.Forms;
 using System.Drawing;
 using HomeCinema.SQLFunc;
-using HomeCinema.Global;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;

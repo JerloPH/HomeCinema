@@ -21,7 +21,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Data.SQLite;
 using System.Data;
-using HomeCinema.Global;
 using Microsoft.WindowsAPICodePack.Shell;
 using System.Drawing;
 using System.Data.Common;

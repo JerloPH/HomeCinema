@@ -19,7 +19,6 @@
 using System;
 using System.Threading;
 using System.Windows.Forms;
-using HomeCinema.Global;
 
 namespace HomeCinema
 {

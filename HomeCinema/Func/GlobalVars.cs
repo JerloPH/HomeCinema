@@ -36,7 +36,7 @@ using Microsoft.WindowsAPICodePack.Shell;
 using HomeCinema.SQLFunc;
 using HomeCinema.GlobalEnum;
 
-namespace HomeCinema.Global
+namespace HomeCinema
 {
     public static class GlobalVars
     {
