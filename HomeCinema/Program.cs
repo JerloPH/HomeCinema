@@ -66,7 +66,8 @@ namespace HomeCinema
             }
             else
             {
-                MessageBox.Show("HomeCinema is already open!", "HomeCinema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                var form = new frmAlert("HomeCinema is already open!", "HomeCinema", 0, false);
+                form.ShowDialog();
             }
         }
     }

@@ -17,7 +17,7 @@ namespace HomeCinema
         {
             InitializeComponent();
         }
-        public frmAlert(string message, string caption, int button = 0)
+        public frmAlert(string message, string caption, int button = 0, bool hasParent = true)
         {
             InitializeComponent();
             Icon = GlobalVars.HOMECINEMA_ICON;
@@ -27,7 +27,10 @@ namespace HomeCinema
             TopMost = true;
             //TopLevel = false;
             //Parent = (Form)Program.FormMain;
-            CenterToParent();
+            if (hasParent)
+            {
+                CenterToParent();
+            }
 
             // Adjust form and lblMessage, dynamically
             lblMessage.Text = message;
@@ -59,7 +62,16 @@ namespace HomeCinema
                     btnOk.Enabled = btnOk.Visible = true;
                     btnOk.Top = this.Height - (btnOk.Height + 48);
                     btnOk.Left = centerForm - (btnOk.Width / 2) - 10;
-                    btnOk.ForeColor = Color.Black;
+                    if (hasParent)
+                    {
+                        btnOk.ForeColor = Color.Black;
+                    }
+                    else
+                    {
+                        // For use in Program.cs
+                        btnOk.ForeColor = Color.White;
+                        btnOk.BackColor = Color.Transparent;
+                    }
                     break;
             }
         }
