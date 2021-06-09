@@ -1,5 +1,31 @@
 # HomeCinema - Project History:
 
+## HomeCinema v0.7.1
+### *release 38 - build XX June 2021 PHT*
+### Fixes
+- FIX: Wrong Tooltip for **[Settings]** button.
+- FIX: Media Extensions not saved properly. Closes Issue [#8](https://github.com/JerloPH/HomeCinema/issues/8).
+
+### Changes
+- REV: Add prompt to **[Search]** button to Cancel action. Closes issue [#9](https://github.com/JerloPH/HomeCinema/issues/9)
+- REV: Added multiple prompt to confirm actions.
+- MINOR: Report what setting is not saved.
+- MINOR: Close **'Settings'** form after saving.
+- GUI: Reduced font size on **[Save]** and **[Cancel]** buttons on **'Settings'** form.
+- GUI: Re-positioned controls on Movie Details form.
+
+### Dev-related changes
+- REV: Load Movie ID as datatype **'long'**.
+- REV: Refactored syntax for various **'SQLHelper'** class methods.
+- REV: Refactored **'btnSearch'** click event to be modular.
+- REV: Removed code forcing GC to collect.
+- MINOR: Moved Event methods to designer.
+- MINOR: Returns empty list if string array is empty or null on multiple methods.
+- MINOR: Moved **'Config'** class to subfolder **'JSONs'**.
+- DOCS: Added multiple docs for **'reporting issue'** and **'submitting PRs'**.
+- Various code cleanups and minor refactors.
+****
+
 ## HomeCinema v0.7
 ### *release 37 - build 06 June 2021 PHT*
 ### Hotfixes on top of v0.6.1
