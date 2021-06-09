@@ -131,8 +131,12 @@ namespace HomeCinema.Global
         public static Form formSetting = null; // Check if settings is already open
         public static Form formAbout = null;
 
-//######################################################################################################## Functions 
-        // Log database-related functions, to text file.
+        //######################################################################################################## Functions 
+        /// <summary>
+        /// Log database-related functions, to text file.
+        /// </summary>
+        /// <param name="codefrom">form or method that calls</param>
+        /// <param name="log">string to log</param>
         public static void LogDb(string codefrom, string log)
         {
             string filePath = DB_DBLOGPATH;
@@ -149,8 +153,12 @@ namespace HomeCinema.Global
                 ShowError("GlobalVars-LogDb", ex, false);
             }
         }
-        // Log messages to file
-        // Base Log function
+        /// <summary>
+        /// Log messages to text file
+        /// </summary>
+        /// <param name="filePath">full filepath of log file</param>
+        /// <param name="codefrom">form or method that calls</param>
+        /// <param name="log">string to log</param>
         public static void Log(string filePath, string codefrom, string log)
         {
             try
@@ -166,10 +174,21 @@ namespace HomeCinema.Global
                 ShowError("GlobalVars-Log", ex, false);
             }
         }
+        /// <summary>
+        /// Log text to App_Log.log file
+        /// </summary>
+        /// <param name="codefrom">form or method that calls</param>
+        /// <param name="log">string to log</param>
         public static void Log(string codefrom, string log)
         {
             Log(FILE_LOG_APP, codefrom, log);
         }
+        /// <summary>
+        /// Format string for logging
+        /// </summary>
+        /// <param name="codefrom">form or method that calls</param>
+        /// <param name="logMessage">string to format</param>
+        /// <returns>Formatted message with time/date</returns>
         public static string LogFormatted(string codefrom, string logMessage)
         {
             try
@@ -178,24 +197,26 @@ namespace HomeCinema.Global
             }
             catch { return $"[Unknown DateTime][{ codefrom }] { logMessage }\n"; }
         }
-        // LOG Error Message, seperate from main Log
+        /// <summary>
+        /// LOG Error Message to App_ErrorLog.log
+        /// </summary>
+        /// <param name="codefrom">Method caller</param>
+        /// <param name="log">string to log</param>
         public static void LogErr(string codefrom, string log)
         {
-            // Call Base Log
             Log(FILE_LOG_ERROR, codefrom, log);
         }
-        // SHOW MessageBox with different settings
+        /// <summary>
+        /// Show default message box from Windows
+        /// </summary>
+        /// <param name="msg">Message</param>
+        /// <param name="caption">Caption</param>
+        /// <param name="mbbtn">Buttons</param>
+        /// <param name="mbIcon">Icon</param>
         public static void ShowMsg(string msg, string caption, MessageBoxButtons mbbtn, MessageBoxIcon mbIcon)
         {
-            try
-            {
-                MessageBox.Show(new Form { TopMost = true }, msg, caption, mbbtn, mbIcon);
-            }
-            catch (Exception ex)
-            {
-                // Log Error
-                ShowError("GlobalVars-ShowMsg", ex, false);
-            }
+            try {  MessageBox.Show(new Form { TopMost = true }, msg, caption, mbbtn, mbIcon); }
+            catch (Exception ex) { ShowError("GlobalVars-ShowMsg", ex, false); }
         }
         public static void ShowInfo(string msg, string caption = "", Form parent = null)
         {

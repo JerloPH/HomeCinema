@@ -19,6 +19,7 @@
 - REV: Refactored syntax for various **'SQLHelper'** class methods.
 - REV: Refactored **'btnSearch'** click event to be modular.
 - REV: Removed code forcing GC to collect.
+- MINOR: Added documented comments for some **'GlobalVars'** class methods.
 - MINOR: Moved Event methods to designer.
 - MINOR: Returns empty list if string array is empty or null on multiple methods.
 - MINOR: Moved **'Config'** class to subfolder **'JSONs'**.
