@@ -25,7 +25,7 @@ namespace HomeCinema
     static class Program
     {
         public static frmMain FormMain;
-        static Mutex mutex = new Mutex(true, "a1f8da5c-12ef-45a5-b4c5-d8fece8e3e32");
+        static readonly Mutex mutex = new Mutex(true, "a1f8da5c-12ef-45a5-b4c5-d8fece8e3e32");
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
