@@ -362,15 +362,6 @@ namespace HomeCinema.Global
             string json = JsonConvert.SerializeObject(config, Formatting.Indented);
             return WriteToFile(FILE_SETTINGS, json);
         }
-        // Run GC to Clean Memory and Res
-        public static void CleanMemory(string codeFrom)
-        {
-            if (String.IsNullOrWhiteSpace(codeFrom) == false)
-            {
-                Log(codeFrom, "Forced Runs GC");
-            }
-            GC.Collect();
-        }
         // Check Log File if exceed limit and delete it
         public static void CheckLogFile(string logFile, string calledFrom, string log)
         {
@@ -1736,7 +1727,6 @@ namespace HomeCinema.Global
                 form.Message = "Done!";
             };
             form.ShowDialog();
-            CleanMemory(calledFrom);
             CheckAllFiles(); // re-check files if some are missing
             if (showMsg)
             {
