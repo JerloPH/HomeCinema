@@ -335,20 +335,14 @@ namespace HomeCinema
                     ShowError($"{errorFrom} [PATH_GETVIDEO]", ex, false);
                 }
             }
-            // Get Offline Mode
-            SET_OFFLINE = Convert.ToBoolean(config.offlineMode);
-            // Get auto update
-            SET_AUTOUPDATE = Convert.ToBoolean(config.autoUpdate);
-            // AutoPlay Movie, instead of Viewing its Info / Details
-            SET_AUTOPLAY = Convert.ToBoolean(config.instantPlayMovie);
-            // Limit MAX items in query
-            SET_ITEMLIMIT = config.itemMaxLimit;
-            // Limit Item result on IMDB searching
-            SET_SEARCHLIMIT = config.searchLimit;
-            // TimeOut for Internet connections
-            SET_TIMEOUT = config.setTimeOut;
-            // Auto clean on startup
-            SET_AUTOCLEAN = Convert.ToBoolean(config.autoClean);
+            
+            SET_OFFLINE = Convert.ToBoolean(config.offlineMode); // Get Offline Mode
+            SET_AUTOUPDATE = Convert.ToBoolean(config.autoUpdate); // Get auto update
+            SET_AUTOPLAY = Convert.ToBoolean(config.instantPlayMovie); // AutoPlay Movie, instead of Viewing its Info / Details
+            SET_ITEMLIMIT = config.itemMaxLimit; // Limit MAX items in query 
+            SET_SEARCHLIMIT = config.searchLimit; // Limit Item result on IMDB searching
+            SET_TIMEOUT = config.setTimeOut; // TimeOut for Internet connections
+            SET_AUTOCLEAN = Convert.ToBoolean(config.autoClean); // Auto clean on startup
 
             // Set colors
             try
