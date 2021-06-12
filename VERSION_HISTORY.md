@@ -7,8 +7,8 @@
 - FIX: Media Extensions not saved properly. Closes Issue [#8](https://github.com/JerloPH/HomeCinema/issues/8).
 
 ### Changes
-- REV: Add prompt to **[Search]** button to Cancel action. Closes issue [#9](https://github.com/JerloPH/HomeCinema/issues/9)
-- REV: Added multiple prompt to confirm actions.
+- REV: Add new Setting to confirm whenever **[Search]** button is pressed, or similar actions that reloads the Items. Closes issue [#9](https://github.com/JerloPH/HomeCinema/issues/9)
+- REV: Added multiple prompts to confirm actions.
 - MINOR: Report what setting is not saved.
 - MINOR: Close **'Settings'** form after saving.
 - GUI: Reduced font size on **[Save]** and **[Cancel]** buttons on **'Settings'** form.
@@ -19,6 +19,8 @@
 - REV: Refactored syntax for various **'SQLHelper'** class methods.
 - REV: Refactored **'btnSearch'** click event to be modular.
 - REV: Removed code forcing GC to collect.
+- REV: Renamed **'GlobalVars'** class namespace.
+- MINOR: Changed **Mutex** scope to **readonly**.
 - MINOR: Added documented comments for some **'GlobalVars'** class methods.
 - MINOR: Moved Event methods to designer.
 - MINOR: Returns empty list if string array is empty or null on multiple methods.
