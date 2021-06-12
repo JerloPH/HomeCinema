@@ -1241,7 +1241,10 @@ namespace HomeCinema
         }
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            if (!GlobalVars.ShowYesNo("Are you sure of your search filters?", this)) { return; }
+            if (GlobalVars.SET_CONFIRMSEARCH)
+            {
+                if (!GlobalVars.ShowYesNo("Are you sure of your search filters?", this)) { return; }
+            }
             SearchEntries();
         }
         // When double-clicked on an item, open it in new form
@@ -1272,9 +1275,11 @@ namespace HomeCinema
             // Perform click on search button: btnSearch
             if (cbClearSearch.CheckState == CheckState.Checked)
             {
-                if (!GlobalVars.ShowYesNo("Reload entries?", this))
+                if (GlobalVars.SET_CONFIRMSEARCH)
                 {
-                    return;
+                    if (!GlobalVars.ShowYesNo("Reload entries?", this)) {
+                        return;
+                    }
                 }
                 SearchEntries();
             }
@@ -1315,7 +1320,10 @@ namespace HomeCinema
         private void cbHideAnim_CheckedChanged(object sender, EventArgs e)
         {
             // Perform Search
-            if (!GlobalVars.ShowYesNo("Reload entries?", this)) { return; }
+            if (GlobalVars.SET_CONFIRMSEARCH)
+            {
+                if (!GlobalVars.ShowYesNo("Reload entries?", this)) { return; }
+            }
             SearchEntries();
         }
         private void btnAbout_Click(object sender, EventArgs e)

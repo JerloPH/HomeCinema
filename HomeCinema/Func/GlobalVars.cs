@@ -123,6 +123,7 @@ namespace HomeCinema
         public static int SET_ITEMLIMIT { get; set; } = 0; // limit the max items to query
         public static int SET_SEARCHLIMIT { get; set; } = 5; // limit for searching on IMDB Id
         public static bool SET_AUTOCLEAN { get; set; } = true; // Automatically clean temp and logs on App Load
+        public static bool SET_CONFIRMSEARCH { get; set; } = false; // Confirm prompt for searching / reloading ListView
         public static Color SET_COLOR_BG { get; set; } = Color.Black; // default color
         public static Color SET_COLOR_FONT { get; set; } = Color.White; // default color
         public static int SET_TIMEOUT { get; set; } = 3; // TimeOut in seconds (1000 ms)
@@ -343,6 +344,7 @@ namespace HomeCinema
             SET_SEARCHLIMIT = config.searchLimit; // Limit Item result on IMDB searching
             SET_TIMEOUT = config.setTimeOut; // TimeOut for Internet connections
             SET_AUTOCLEAN = Convert.ToBoolean(config.autoClean); // Auto clean on startup
+            SET_CONFIRMSEARCH = Convert.ToBoolean(config.confirmSearch); // Confirm prompts on search and reload
 
             // Set colors
             try
@@ -372,6 +374,7 @@ namespace HomeCinema
             config.setTimeOut = SET_TIMEOUT;
             config.BackgroundColor = SET_COLOR_BG.ToArgb().ToString("x");
             config.FontColor = SET_COLOR_FONT.ToArgb().ToString("x");
+            config.confirmSearch = Convert.ToInt16(SET_CONFIRMSEARCH);
 
             // Seriliaze to JSON
             string json = JsonConvert.SerializeObject(config, Formatting.Indented);

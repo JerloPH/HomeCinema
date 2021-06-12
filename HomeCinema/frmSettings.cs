@@ -137,12 +137,14 @@ namespace HomeCinema
             tooltip.SetToolTip(lblImdbSearchLimit, "Limit Search results in searching Imdb entry.");
             tooltip.SetToolTip(btnCheckUpdate, "Manually check for updates.");
             tooltip.SetToolTip(lblAutoClean, "Clean logs and temporary files on startup.");
+            tooltip.SetToolTip(lblConfirmSearch, "Prompt when Searching or Reloading Items.");
 
             // setup contents
             cbAutoUpdate.Items.AddRange(choice);
             cbOffline.Items.AddRange(choice);
             cbPlayMovie.Items.AddRange(choice);
             cbAutoClean.Items.AddRange(choice);
+            cbConfirmSearch.Items.AddRange(choice);
 
             // Setting Values Initialization
             // ##################### - GENERAL
@@ -158,6 +160,9 @@ namespace HomeCinema
 
             try { cbAutoClean.SelectedIndex = Convert.ToInt16(!GlobalVars.SET_AUTOCLEAN); }
             catch { cbAutoClean.SelectedIndex = 1; }
+
+            try { cbConfirmSearch.SelectedIndex = Convert.ToInt16(!GlobalVars.SET_CONFIRMSEARCH); }
+            catch { cbConfirmSearch.SelectedIndex = 1; }
 
             // TextBox
             try { txtLogSize.Text = (GlobalVars.SET_LOGMAXSIZE / GlobalVars.BYTES).ToString(); }
@@ -251,6 +256,7 @@ namespace HomeCinema
             GlobalVars.SET_OFFLINE = !Convert.ToBoolean(cbOffline.SelectedIndex);
             GlobalVars.SET_AUTOPLAY = !Convert.ToBoolean(cbPlayMovie.SelectedIndex);
             GlobalVars.SET_AUTOCLEAN = !Convert.ToBoolean(cbAutoClean.SelectedIndex);
+            GlobalVars.SET_CONFIRMSEARCH = !Convert.ToBoolean(cbConfirmSearch.SelectedIndex);
 
             // TextBox
             try
@@ -281,7 +287,7 @@ namespace HomeCinema
                 text.TrimEnd(',');
                 GlobalVars.WriteToFile(GlobalVars.FILE_MEDIA_EXT, text);
             }
-            catch { error += Environment.NewLine + "Media Extentions"; }
+            catch { error += Environment.NewLine + "Media Extensions"; }
 
             // Write MediaLoc and SeriesLoc file
             GlobalVars.WriteListBoxToFile(GlobalVars.FILE_MEDIALOC, BoxMediaLoc);

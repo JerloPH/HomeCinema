@@ -26,7 +26,8 @@ namespace HomeCinema
         public int autoUpdate { get; set; } = 1;
         public int offlineMode { get; set; } = 0;
         public int instantPlayMovie { get; set; } = 1;
-        public int autoClean { get; set; } = 1;
+        public int autoClean { get; set; } = 1; // Auto clean during startup
+        public int confirmSearch { get; set; } = 0; // confirm prompt for searching and/or reloading items
         // Strings PATH
         public string lastPathVideo { get; set; } = "";
         public string lastPathCover { get; set; } = "";
