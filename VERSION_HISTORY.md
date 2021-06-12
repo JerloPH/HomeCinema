@@ -1,7 +1,7 @@
 # HomeCinema - Project History:
 
 ## HomeCinema v0.7.1
-### *release 38 - build XX June 2021 PHT*
+### *release 38 - build 12 June 2021 PHT*
 ### Fixes
 - FIX: Wrong Tooltip for **[Settings]** button.
 - FIX: Media Extensions not saved properly. Closes Issue [#8](https://github.com/JerloPH/HomeCinema/issues/8).

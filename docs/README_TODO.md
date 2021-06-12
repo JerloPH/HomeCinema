@@ -3,6 +3,7 @@
 ## Priority List
 - Store **'app and db'** version on **'config'** table.
 - Marked 'Watched' entry.
+- Change **[About]** button to show form.
 - Chromecast support.
 - Copy movie/series file to directory.
 - Load label texts from external files, when using translation.
