@@ -15,3 +15,5 @@
 **[FEATURE]** - When its a new feature to add to the App. <br>
 **[BUGFIX]** - When PR fixes a bug/error. <br>
 **[UI]** - If the PR is a change to the UI of the App and/or Icons, default cover, or any other media-related changes. <br>
+**[REV]** - If change affects behaviour of feature or method. Includes breaking changes. <br>
+**[REFACTOR]** - For code refactors.
