@@ -3,7 +3,6 @@
 ## Priority List
 - Store **'app and db'** version on **'config'** table.
 - Marked 'Watched' entry.
-- Change **[About]** button to show form.
 - Chromecast support.
 - Copy movie/series file to directory.
 - Load label texts from external files, when using translation.
@@ -14,6 +13,7 @@
   - Delete entry from database, and cover picture (if existing). *For now, skips the entry.*
   - Remove ListView item, when the file is not existing. Then, delete the entry from database. *Or archive to another database*.
 - Use **Series Name/Title** only **if** category is **Series**, and use as **Original Title/Name**.
+- Create new TextBox to set TimeOut for connections.
 
 ## Features:
 - General
@@ -28,8 +28,7 @@
 	  - [ ] How to Use?
 	  - [ ] Credits
 	  - [ ] About
-  - [ ] Auto-download update
-  - [ ] Check all Files in DB if Existed. If not, "move to another db / keep".
+  - [ ] Check all Files in DB if Existed. If not, "move to archive db".
   - [ ] Open Media Player in 2nd monitor, if existing. **On hold**.
 
 ## Main Form
@@ -51,9 +50,6 @@
 	- [x] Year
 	- [x] Genre
 	- [x] Director
-  
-## Settings form
-- [ ] Create new TextBox to set TimeOut for connections.
 
 ## Bugs
 
