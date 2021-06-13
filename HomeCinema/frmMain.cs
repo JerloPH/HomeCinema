@@ -760,7 +760,7 @@ namespace HomeCinema
             // Create Form
             if (GlobalVars.formAbout == null)
             {
-                Form form = new frmAbout();
+                var form = new frmAbout();
                 form.Show(this);
                 GlobalVars.formAbout = form;
             }

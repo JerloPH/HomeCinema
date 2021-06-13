@@ -17,7 +17,6 @@ namespace HomeCinema
             InitializeComponent();
             // Form properties
             Icon = GlobalVars.HOMECINEMA_ICON;
-            FormClosing += new FormClosingEventHandler(frmAbout_FormClosing);
             txtLicense.Text = @"
     HomeCinema - Organize your Movie Collection
     Copyright (C) 2020  JerloPH (https://github.com/JerloPH)
