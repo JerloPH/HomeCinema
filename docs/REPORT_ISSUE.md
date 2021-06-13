@@ -17,6 +17,7 @@
 - App_ErrorLog.log
 - App_Log.log
 
-## Tags
+# Tags
 **[FEATURE REQUEST]** - When requesting a new feature not in the App. <br>
 **[BUG]** - When reporting an error or bug found. <br>
+**[CHANGE]** - Request to change behaviour of feature and/or changes on UI.
