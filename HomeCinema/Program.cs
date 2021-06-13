@@ -53,6 +53,9 @@ namespace HomeCinema
                 {
                     // Database not loaded!
                     MessageBox.Show("Database is possibly corrupted!\nDelete HomeCinema.db and try again\nNOTE: This will remove all your entries", "HomeCinema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    // release mutex after the form is closed.
+                    mutex.ReleaseMutex();
+                    mutex.Dispose();
                     return;
                 }
 
