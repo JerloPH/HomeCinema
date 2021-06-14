@@ -373,7 +373,6 @@ namespace HomeCinema
         {
             // variables
             string callFrom = $"frmMovieInfo ({Name})-btnSave_Click"; // called From
-            var metaData = new List<string>(); // List for metadata values
 
             // Exit if Movie Name is empty
             if (String.IsNullOrWhiteSpace(txtName.Text))
@@ -395,42 +394,27 @@ namespace HomeCinema
             if (Convert.ToInt32(MOVIE_ID) > 0)
             {
                 // SAVE changes to EXISTING MOVIE
-                // DataTable for INFO
-                DataTable dt = SQLHelper.InitializeDT(GlobalVars.DB_TABLE_INFO);
                 // Add row values
-                DataRow row = dt.NewRow();
-                row[0] = GlobalVars.ValidateEmptyOrNull(txtID.Text);
-                row[1] = GlobalVars.ValidateEmptyOrNull(txtIMDB.Text);
-                row[2] = GlobalVars.ValidateEmptyOrNull(txtName.Text);
-                row[3] = GlobalVars.ValidateEmptyOrNull(txtEpName.Text);
-                row[4] = GlobalVars.ValidateEmptyOrNull(txtSeriesName.Text);
-                row[5] = GlobalVars.ValidateEmptyOrNull(txtSeasonNum.Text);
-                row[6] = GlobalVars.ValidateEmptyOrNull(txtEpNum.Text);
-                row[7] = GetCountry(); //GlobalVars.ValidateEmptyOrNull(lblCountry.Text);
-                row[8] = GetCategory();
-                row[9] = GetGenre();
-                row[10] = GlobalVars.ValidateEmptyOrNull(txtStudio.Text);
-                row[11] = GlobalVars.ValidateEmptyOrNull(txtProducer.Text);
-                row[12] = GlobalVars.ValidateEmptyOrNull(txtDirector.Text);
-                row[13] = GlobalVars.ValidateEmptyOrNull(txtArtist.Text);
-                row[14] = GlobalVars.ValidateEmptyOrNull(txtYear.Text);
-                row[15] = GlobalVars.ValidateEmptyOrNull(txtSummary.Text);
+                var entry = new Dictionary<string, string>();
+                entry.Add(InfoColumn.Id.ToString(), GlobalVars.ValidateEmptyOrNull(txtID.Text));
+                entry.Add(InfoColumn.imdb.ToString(), GlobalVars.ValidateEmptyOrNull(txtIMDB.Text));
+                entry.Add(InfoColumn.name.ToString(), GlobalVars.ValidateEmptyOrNull(txtName.Text));
+                entry.Add(InfoColumn.name_ep.ToString(), GlobalVars.ValidateEmptyOrNull(txtEpName.Text));
+                entry.Add(InfoColumn.name_series.ToString(), GlobalVars.ValidateEmptyOrNull(txtSeriesName.Text));
+                entry.Add(InfoColumn.season.ToString(), GlobalVars.ValidateEmptyOrNull(txtSeasonNum.Text));
+                entry.Add(InfoColumn.episode.ToString(), GlobalVars.ValidateEmptyOrNull(txtEpNum.Text));
+                entry.Add(InfoColumn.country.ToString(), GetCountry()); //GlobalVars.ValidateEmptyOrNull(lblCountry.Text);
+                entry.Add(InfoColumn.category.ToString(), GetCategory());
+                entry.Add(InfoColumn.genre.ToString(), GetGenre());
+                entry.Add(InfoColumn.studio.ToString(), GlobalVars.ValidateEmptyOrNull(txtStudio.Text));
+                entry.Add(InfoColumn.producer.ToString(), GlobalVars.ValidateEmptyOrNull(txtProducer.Text));
+                entry.Add(InfoColumn.director.ToString(), GlobalVars.ValidateEmptyOrNull(txtDirector.Text));
+                entry.Add(InfoColumn.artist.ToString(), GlobalVars.ValidateEmptyOrNull(txtArtist.Text));
+                entry.Add(InfoColumn.year.ToString(), GlobalVars.ValidateEmptyOrNull(txtYear.Text));
+                entry.Add(InfoColumn.summary.ToString(), GlobalVars.ValidateEmptyOrNull(txtSummary.Text));
 
-                // Save MetaData details
-                metaData.Add(row[2].ToString()); // title
-                metaData.Add(row[14].ToString()); // year
-                metaData.Add(row[9].ToString()); // genre
-                metaData.Add(row[12].ToString()); // director
-                metaData.Add(row[11].ToString()); // producer
-
-                dt.Rows.Add(row);
-                dt.AcceptChanges();
                 // Check if first query successfully executed
-                bool ContAfterQry = SQLHelper.DbUpdateInfo(dt, callFrom);
-
-                // dispose INFO table
-                dt.Clear();
-                dt.Dispose();
+                bool ContAfterQry = SQLHelper.DbUpdateInfo(entry, callFrom);
 
                 // IF INFO is executed, continue to FILEPATH
                 if (ContAfterQry)
@@ -474,6 +458,13 @@ namespace HomeCinema
             // Save Metadata
             if (cbSaveMetadata.Checked)
             {
+                // Save MetaData details
+                var metaData = new List<string>(); // List for metadata values
+                metaData.Add(GlobalVars.ValidateEmptyOrNull(txtName.Text)); // title
+                metaData.Add(GlobalVars.ValidateEmptyOrNull(txtYear.Text)); // year
+                metaData.Add(GetGenre()); // genre
+                metaData.Add(GlobalVars.ValidateEmptyOrNull(txtDirector.Text)); // director
+                metaData.Add(GlobalVars.ValidateEmptyOrNull(txtProducer.Text)); // producer
                 GlobalVars.SaveMetadata(txtPathFile.Text, metaData);
             }
 

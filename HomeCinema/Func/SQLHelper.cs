@@ -24,6 +24,7 @@ using System.Data;
 using Microsoft.WindowsAPICodePack.Shell;
 using System.Drawing;
 using System.Data.Common;
+using HomeCinema.GlobalEnum;
 
 namespace HomeCinema.SQLFunc
 {
@@ -76,11 +77,42 @@ namespace HomeCinema.SQLFunc
                     // Create 'config' table, and saves db Version
                     using (var sqlcmd = new SQLiteCommand(conn))
                     {
-                        sqlcmd.CommandText = $"CREATE TABLE IF NOT EXISTS 'config' (" +
-                        "[Id]	INTEGER  PRIMARY KEY AUTOINCREMENT, " +
+                        int dbVersion = 1;
+                        sqlcmd.CommandText = $"CREATE TABLE IF NOT EXISTS `config` (" +
+                        "[Id] INTEGER  PRIMARY KEY AUTOINCREMENT, " +
                         "[appBuild]	INTEGER, " +
                         "[dbVersion] INTEGER);";
-                        sqlcmd.ExecuteNonQuery();
+                        var result = sqlcmd.ExecuteNonQuery();
+                        if (result == 0)
+                        {
+                            sqlcmd.CommandText = "INSERT INTO `config` (`Id`, `appBuild`, `dbVersion`)" +
+                                $" VALUES (1, {GlobalVars.HOMECINEMA_BUILD}, 1);";
+                            sqlcmd.ExecuteNonQuery();
+                            dbVersion = 1;
+                        }
+                        else
+                        {
+                            var dt = new DataTable();
+                            var adapter = new SQLiteDataAdapter("SELECT * FROM `config`", conn);
+                            adapter.Fill(dt);
+                            if (dt.Rows.Count > 0)
+                            {
+                                try { dbVersion = Convert.ToInt32(dt.Rows[0]["dbVersion"]); }
+                                catch { dbVersion = 1; };
+                            }
+                            else
+                            {
+                                sqlcmd.CommandText = "INSERT INTO `config` (`Id`, `appBuild`, `dbVersion`)" +
+                                    $" VALUES (1, {GlobalVars.HOMECINEMA_BUILD}, 1);";
+                                sqlcmd.ExecuteNonQuery();
+                                dbVersion = 1;
+                            }
+                            dt.Dispose();
+                        }
+                        if (dbVersion < GlobalVars.HOMECINEMA_DBVER)
+                        {
+                            GlobalVars.ShowInfo("Outdated database!");
+                        }
                     }
                     // Close Connection to DB
                     conn.Close();
@@ -88,7 +120,7 @@ namespace HomeCinema.SQLFunc
                     return true;
                 }
             }
-            catch { return false; }
+            catch (Exception ex) { GlobalVars.ShowError(CalledFrom, ex, false); return false; }
         }
         /// <summary>
         /// Open connection to SQLite database.
@@ -137,12 +169,11 @@ namespace HomeCinema.SQLFunc
                     cmd.CommandText = qry;
                     try
                     {
-                        GlobalVars.LogDb(errFrom, "query is executing");
+                        GlobalVars.LogDb("Executing query..", qry);
                         DONE = (cmd.ExecuteNonQuery() > 0);
                     }
                     catch (SQLiteException ex)
                     {
-                        GlobalVars.LogDb("SQLHelper-DbExecNonQuery (Query)", qry);
                         GlobalVars.ShowError("SQLHelper-DbExecNonQuery (SQL Error)", ex);
                     }
                     catch (Exception ex)
@@ -151,7 +182,6 @@ namespace HomeCinema.SQLFunc
                     }
                 }
             }
-            //GlobalVars.LogDb("SQLHelper-DbExecNonQuery", "Finished executing non-query");
             return DONE;
         }
         /// <summary>
@@ -196,7 +226,6 @@ namespace HomeCinema.SQLFunc
                         dt.Columns.Add(col);
                     }
                 }
-
             }
             else
             {
@@ -457,45 +486,47 @@ namespace HomeCinema.SQLFunc
         /// <summary>
         /// Update Table INFO, with new values.
         /// </summary>
-        /// <param name="dt">DataTable which contains the new values.</param>
+        /// <param name="dt">Dictionary that contains key-pair of column-value.</param>
         /// <param name="from">Method calling.</param>
         /// <returns>True if succesful. Otherwise, false.</returns>
-        public static bool DbUpdateInfo(DataTable dt, string from)
+        public static bool DbUpdateInfo(Dictionary<string, string> dt, string from)
         {
             // Set values
             string TableName = GlobalVars.DB_TNAME_INFO;
             string callFrom = $"SQLHelper-DbUpdateInfo (calledFrom: {from})";
             string valpair = "";
-            string r0 = "";
-            foreach (DataRow r in dt.Rows)
+            string Id = "";
+            try
             {
-                r0 = r[0].ToString();
-                for (int i = 1; i < GlobalVars.DB_TABLE_INFO.Length; i++)
+                dt.TryGetValue(InfoColumn.Id.ToString(), out Id);
+            }
+            catch { Id = ""; }
+            if (String.IsNullOrWhiteSpace(Id))
+            {
+                GlobalVars.LogDb(callFrom, "Cannot Update entry with empty Id!");
+                return false;
+            }
+
+            foreach (var item in dt)
+            {
+                if (item.Key != InfoColumn.Id.ToString())
                 {
-                    if (GlobalVars.QryColNumeric(GlobalVars.DB_TABLE_INFO[i]))
-                    {
-                        valpair += "[" + GlobalVars.DB_TABLE_INFO[i] + "]=" + GlobalVars.QryString(r[i].ToString(), false) + ",";
-                    }
-                    else
-                    {
-                        valpair += "[" + GlobalVars.DB_TABLE_INFO[i] + "]=" + GlobalVars.QryString(r[i].ToString(), true) + ",";
-                    }
+                    valpair += "[" + item.Key + "]=" + GlobalVars.QryString(item.Value, !GlobalVars.QryColNumeric(item.Key)) + ",";
                 }
             }
             valpair = valpair.TrimEnd(',');
 
-            // dispose table
-            dt.Clear();
-            dt.Dispose();
             // Query to db
-            string qry = $"UPDATE {TableName} " +
-                         "SET " + valpair + " " +
-                        $"WHERE [Id] = {r0}";
-            GlobalVars.LogDb(callFrom, $"Update {GlobalVars.DB_TNAME_INFO} ID ({r0}) || Query: {qry}");
-            if (DbExecNonQuery(qry, callFrom))
+            if (!String.IsNullOrWhiteSpace(valpair))
             {
-                GlobalVars.LogDb(callFrom, $"ID ({r0}) is updated Succesfully!");
-                return true;
+                string qry = $"UPDATE {TableName} " +
+                             "SET " + valpair + " " +
+                            $"WHERE [Id] = {Id}";
+                if (DbExecNonQuery(qry, callFrom))
+                {
+                    GlobalVars.LogDb(callFrom, $"Entry with Id({Id}) is updated Succesfully!");
+                    return true;
+                }
             }
             return false;
         }
@@ -529,7 +560,6 @@ namespace HomeCinema.SQLFunc
             string qry = $"UPDATE {TableName} " +
                          "SET " + valpair + " " +
                         $"WHERE [Id] = {r0}";
-            GlobalVars.LogDb(callFrom, $"Update {GlobalVars.DB_TNAME_FILEPATH} ID ({r0}) || Query: {qry}");
             if (DbExecNonQuery(qry, callFrom))
             {
                 GlobalVars.LogDb(callFrom, $"ID ({r0}) is updated Succesfully!");
