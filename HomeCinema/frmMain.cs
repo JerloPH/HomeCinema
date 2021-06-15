@@ -168,22 +168,12 @@ namespace HomeCinema
             string rPosterLink = "";
             string mediatype = "movie";
             int count = 0; // count of inserts, whether success or fail
-            string logInsert = ""; // Log succesfully inserted and failed inserts
+            string logInsert = ""; // Log succesfully inserted
 
-            // Insert to DB if NEW MOVIE
-            // Build new string[] from INFO, FIlepath
-            string[] combined = new string[GlobalVars.DB_TABLE_INFO.Length + GlobalVars.DB_TABLE_FILEPATH.Length - 2];
-            Array.Copy(GlobalVars.DB_TABLE_INFO, 1, combined, 0, GlobalVars.DB_TABLE_INFO.Length - 1);
-            Array.Copy(GlobalVars.DB_TABLE_FILEPATH, 1, combined, GlobalVars.DB_TABLE_INFO.Length - 1, 3);
-
-            // Create DT
-            DataTable dt;
             foreach (string filePath in listofFiles)
             {
-                // variables
                 string getIMDB = "";
                 string mName = "";
-                dt = SQLHelper.InitializeDT(false, combined);
 
                 // Get proper name, without the folder paths
                 try
@@ -204,7 +194,7 @@ namespace HomeCinema
                 }
                 catch (Exception ex)
                 {
-                    GlobalVars.WriteAppend(Path.Combine(GlobalVars.PATH_LOG, "MovieResult_Skipped.Log"), filePath);
+                    GlobalVars.WriteAppend(Path.Combine(GlobalVars.PATH_LOG, "MovieResult_Skipped.Log"), "Error: " + filePath);
                     GlobalVars.ShowError(callFrom, ex, false);
                     continue; // skip when exception thrown
                 }
@@ -213,10 +203,10 @@ namespace HomeCinema
                 mName = GlobalVars.TrimMovieName(mName);
 
                 // Remove "year" and "other strings" from movie file name
-                string regExPattern = @"\b\d{4}\b"; // Match 4-digit number in the title
                 string yearFromFname = "";
                 try
                 {
+                    string regExPattern = @"\b\d{4}\b"; // Match 4-digit number in the title
                     Match r = Regex.Match(mName, @regExPattern);
                     yearFromFname = r.Groups[r.Groups.Count - 1].Value;
                     mName = (!String.IsNullOrWhiteSpace(yearFromFname)) ? mName.Substring(0, mName.IndexOf(yearFromFname)) : mName;
@@ -275,43 +265,41 @@ namespace HomeCinema
                 rTitle = (String.IsNullOrWhiteSpace(rTitle)) ? mName.Trim() : rTitle;
                 rYear = (String.IsNullOrWhiteSpace(rYear)) ? yearFromFname : rYear;
                 // If Original title is the same as the main title, ignore it
-                rOrigTitle = (rOrigTitle.Equals(rTitle)) ? String.Empty : rOrigTitle; 
+                rOrigTitle = (rOrigTitle.Equals(rTitle)) ? String.Empty : rOrigTitle;
 
                 // Make the DataRow
-                DataRow row = dt.NewRow();
-                row[0] = getIMDB; // IMDB
-                row[1] = rTitle.Replace('"', '\''); // name
-                row[2] = rOrigTitle; // episode name
-                row[3] = ""; // series name
-                row[4] = ""; // season number
-                row[5] = ""; // episode num
-                row[6] = rCountry; // country
-                row[7] = GlobalVars.GetCategoryByFilter(rGenre, rCountry, mediatype); // category
-                row[8] = rGenre; // genre
-                row[9] = rStudio; // studio
-                row[10] = rProducer; // producer
-                row[11] = rDirector; // director
-                row[12] = rArtist; // artist
-                row[13] = rYear; // year
-                row[14] = rSummary; // summary
-                row[15] = filePath; // filepath
-                row[16] = GetSubtitleFile(filePath); // file sub
-                row[17] = (!String.IsNullOrWhiteSpace(rTrailer)) ? GlobalVars.LINK_YT + rTrailer : ""; // trailer
-                dt.Rows.Add(row);
+                var dtInfo = new Dictionary<string, string>();
+                var dtFilepath = new Dictionary<string, string>();
+                dtInfo.Add(InfoColumn.imdb.ToString(), getIMDB); // IMDB
+                dtInfo.Add(InfoColumn.name.ToString(), rTitle.Replace('"', '\'')); // name
+                dtInfo.Add(InfoColumn.name_ep.ToString(), rOrigTitle); // episode name
+                dtInfo.Add(InfoColumn.name_series.ToString(), ""); // series name
+                dtInfo.Add(InfoColumn.season.ToString(), ""); // season number
+                dtInfo.Add(InfoColumn.episode.ToString(), ""); // episode num
+                dtInfo.Add(InfoColumn.country.ToString(), rCountry); // country
+                dtInfo.Add(InfoColumn.category.ToString(), GlobalVars.GetCategoryByFilter(rGenre, rCountry, mediatype).ToString()); // category
+                dtInfo.Add(InfoColumn.genre.ToString(), rGenre); // genre
+                dtInfo.Add(InfoColumn.studio.ToString(), rStudio); // studio
+                dtInfo.Add(InfoColumn.producer.ToString(), rProducer); // producer
+                dtInfo.Add(InfoColumn.director.ToString(), rDirector); // director
+                dtInfo.Add(InfoColumn.artist.ToString(), rArtist); // artist
+                dtInfo.Add(InfoColumn.year.ToString(), rYear); // year
+                dtInfo.Add(InfoColumn.summary.ToString(), rSummary); // summary
+
+                dtFilepath.Add(FileColumn.file.ToString(), filePath); // filepath
+                dtFilepath.Add(FileColumn.sub.ToString(), GetSubtitleFile(filePath)); // file sub
+                dtFilepath.Add(FileColumn.trailer.ToString(), (!String.IsNullOrWhiteSpace(rTrailer)) ? GlobalVars.LINK_YT + rTrailer : ""); // trailer
                 count += 1; // add to count
                 logInsert += $"{filePath}\n";
 
-                dt.AcceptChanges();
-
-                int insertResult = SQLHelper.DbInsertMovie(dt, callFrom);
+                int insertResult = SQLHelper.DbInsertMovie(dtInfo, dtFilepath, callFrom);
                 if (insertResult > 0)
                 {
                     // Download cover, if not OFFLINE_MODE and HAS TMDB KEY
                     if (GlobalVars.SET_OFFLINE == false && GlobalVars.HAS_TMDB_KEY)
                     {
                         string movieId = insertResult.ToString();
-                        Thread.Sleep(2); // sleep 2 ms to prevent overloading TMDB
-                        // Download Cover from TMDB
+                        Thread.Sleep(5); // sleep 2 ms to prevent overloading TMDB
                         if (GlobalVars.DownloadCoverFromTMDB(movieId, rPosterLink, errFrom) && (!String.IsNullOrWhiteSpace(rPosterLink)))
                         {
                             try
@@ -902,7 +890,7 @@ namespace HomeCinema
                     {
                         foreach (string folderPath in listSeries)
                         {
-                            GlobalVars.WriteAppend(logFile, "Folder: " + folderPath + Environment.NewLine);
+                            //GlobalVars.WriteAppend(logFile, "Folder: " + folderPath + Environment.NewLine);
                             // Check if folder already exists in the database
                             if (listAlreadyinDB.Count > 0)
                             {
