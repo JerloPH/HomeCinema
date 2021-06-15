@@ -49,8 +49,6 @@
             this.txtEpNum = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txtSeasonNum = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.txtEpName = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txtSeriesName = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -86,6 +84,8 @@
             this.btnChangeFile = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
             this.txtPathFile = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtEpName = new System.Windows.Forms.TextBox();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
@@ -209,6 +209,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.label5);
+            this.tabPage1.Controls.Add(this.txtEpName);
             this.tabPage1.Controls.Add(this.btnGetImdb);
             this.tabPage1.Controls.Add(this.btnFetchData);
             this.tabPage1.Controls.Add(this.label8);
@@ -302,16 +304,14 @@
             this.groupBox4.Controls.Add(this.txtEpNum);
             this.groupBox4.Controls.Add(this.label6);
             this.groupBox4.Controls.Add(this.txtSeasonNum);
-            this.groupBox4.Controls.Add(this.label5);
-            this.groupBox4.Controls.Add(this.txtEpName);
             this.groupBox4.Controls.Add(this.label4);
             this.groupBox4.Controls.Add(this.txtSeriesName);
             this.groupBox4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.groupBox4.Location = new System.Drawing.Point(16, 108);
+            this.groupBox4.Location = new System.Drawing.Point(16, 156);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox4.Size = new System.Drawing.Size(741, 154);
+            this.groupBox4.Size = new System.Drawing.Size(741, 106);
             this.groupBox4.TabIndex = 24;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "For Series";
@@ -320,7 +320,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(288, 111);
+            this.label7.Location = new System.Drawing.Point(288, 65);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(99, 25);
             this.label7.TabIndex = 7;
@@ -330,7 +330,7 @@
             // txtEpNum
             // 
             this.txtEpNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEpNum.Location = new System.Drawing.Point(396, 111);
+            this.txtEpNum.Location = new System.Drawing.Point(396, 65);
             this.txtEpNum.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtEpNum.Name = "txtEpNum";
             this.txtEpNum.Size = new System.Drawing.Size(107, 30);
@@ -340,7 +340,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(67, 111);
+            this.label6.Location = new System.Drawing.Point(67, 65);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(96, 25);
             this.label6.TabIndex = 8;
@@ -350,30 +350,11 @@
             // txtSeasonNum
             // 
             this.txtSeasonNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSeasonNum.Location = new System.Drawing.Point(169, 111);
+            this.txtSeasonNum.Location = new System.Drawing.Point(169, 65);
             this.txtSeasonNum.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtSeasonNum.Name = "txtSeasonNum";
             this.txtSeasonNum.Size = new System.Drawing.Size(100, 30);
             this.txtSeasonNum.TabIndex = 6;
-            // 
-            // label5
-            // 
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(0, 68);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(157, 25);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Episode Name";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // txtEpName
-            // 
-            this.txtEpName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEpName.Location = new System.Drawing.Point(169, 68);
-            this.txtEpName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtEpName.Name = "txtEpName";
-            this.txtEpName.Size = new System.Drawing.Size(516, 30);
-            this.txtEpName.TabIndex = 5;
             // 
             // label4
             // 
@@ -604,7 +585,7 @@
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(74, 25);
             this.label12.TabIndex = 49;
-            this.label12.Text = "Artist";
+            this.label12.Text = "Actors";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // txtArtist
@@ -760,6 +741,25 @@
             this.txtPathFile.TabIndex = 31;
             this.txtPathFile.Text = "Path to file";
             // 
+            // label5
+            // 
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(9, 107);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(130, 25);
+            this.label5.TabIndex = 35;
+            this.label5.Text = "Original Title";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // txtEpName
+            // 
+            this.txtEpName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtEpName.Location = new System.Drawing.Point(162, 104);
+            this.txtEpName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtEpName.Name = "txtEpName";
+            this.txtEpName.Size = new System.Drawing.Size(526, 30);
+            this.txtEpName.TabIndex = 36;
+            // 
             // frmMovieInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -806,8 +806,6 @@
         private System.Windows.Forms.TextBox txtEpNum;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtSeasonNum;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox txtEpName;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtSeriesName;
         private System.Windows.Forms.Label label3;
@@ -850,5 +848,7 @@
         private System.Windows.Forms.Button btnGenreClear;
         private System.Windows.Forms.Button btnGenreRemove;
         private System.Windows.Forms.Button btnGenreAdd;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txtEpName;
     }
 }
