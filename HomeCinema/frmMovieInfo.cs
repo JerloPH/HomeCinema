@@ -385,9 +385,7 @@ namespace HomeCinema
             // Exit if Year is empty
             if (String.IsNullOrWhiteSpace(txtYear.Text))
             {
-                GlobalVars.ShowWarning("Year cannot be Empty!");
-                txtYear.Focus();
-                return;
+                txtYear.Text = "0";
             }
 
             // Check MOVIE ID value if Lower than 1 (Not existing)
