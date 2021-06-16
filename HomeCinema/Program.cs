@@ -52,8 +52,7 @@ namespace HomeCinema
                 if (!SQLFunc.SQLHelper.Initiate("Program"))
                 {
                     // Database not loaded!
-                    var form = new frmAlert("Database is possibly corrupted!\nDelete HomeCinema.db and try again\nNOTE: This will remove all your entries", "HomeCinema", 0, false);
-                    form.ShowDialog();
+                    GlobalVars.ShowNoParent("Database is possibly corrupted!\nDelete HomeCinema.db and try again\nNOTE: This will remove all your entries");
                     // release mutex after the form is closed.
                     mutex.ReleaseMutex();
                     mutex.Dispose();
@@ -69,8 +68,7 @@ namespace HomeCinema
             }
             else
             {
-                var form = new frmAlert("HomeCinema is already open!", "HomeCinema", 0, false);
-                form.ShowDialog();
+                GlobalVars.ShowNoParent("HomeCinema is already open!");
             }
         }
     }

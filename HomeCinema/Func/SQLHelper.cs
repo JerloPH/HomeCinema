@@ -110,7 +110,7 @@ namespace HomeCinema.SQLFunc
                         }
                         if (dbVersion < GlobalVars.HOMECINEMA_DBVER)
                         {
-                            GlobalVars.ShowInfo("Outdated database!");
+                            GlobalVars.ShowNoParent("Outdated database!");
                         }
                     }
                     // Close Connection to DB

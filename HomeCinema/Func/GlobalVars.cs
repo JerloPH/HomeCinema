@@ -219,6 +219,13 @@ namespace HomeCinema
             try {  MessageBox.Show(new Form { TopMost = true }, msg, caption, mbbtn, mbIcon); }
             catch (Exception ex) { ShowError("GlobalVars-ShowMsg", ex, false); }
         }
+        public static void ShowNoParent(string msg)
+        {
+            var form = new frmAlert(msg, "HomeCinema", 0, false);
+            form.TopMost = true;
+            form.ShowDialog();
+            form.Dispose();
+        }
         public static void ShowInfo(string msg, string caption = "", Form parent = null)
         {
             Form caller = (parent == null) ? Program.FormMain : parent;
