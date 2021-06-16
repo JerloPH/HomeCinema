@@ -52,7 +52,8 @@ namespace HomeCinema
                 if (!SQLFunc.SQLHelper.Initiate("Program"))
                 {
                     // Database not loaded!
-                    MessageBox.Show("Database is possibly corrupted!\nDelete HomeCinema.db and try again\nNOTE: This will remove all your entries", "HomeCinema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    var form = new frmAlert("Database is possibly corrupted!\nDelete HomeCinema.db and try again\nNOTE: This will remove all your entries", "HomeCinema", 0, false);
+                    form.ShowDialog();
                     // release mutex after the form is closed.
                     mutex.ReleaseMutex();
                     mutex.Dispose();
