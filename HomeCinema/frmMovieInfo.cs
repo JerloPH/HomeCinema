@@ -182,9 +182,9 @@ namespace HomeCinema
                 try
                 {
                     DataRow row = dtFile.Rows[0];
-                    txtPathFile.Text = row[FileColumn.file.ToString()].ToString();
-                    txtPathSub.Text = row[FileColumn.sub.ToString()].ToString();
-                    txtPathTrailer.Text = row[FileColumn.trailer.ToString()].ToString();
+                    txtPathFile.Text = row[HCFile.file.ToString()].ToString();
+                    txtPathSub.Text = row[HCFile.sub.ToString()].ToString();
+                    txtPathTrailer.Text = row[HCFile.trailer.ToString()].ToString();
 
                     var r1 = row[InfoColumn.imdb.ToString()]; // imdb
                     var r2 = row[InfoColumn.name.ToString()]; // name

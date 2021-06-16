@@ -96,12 +96,12 @@ namespace HomeCinema
             try
             {
                 DataRow row = dtInfo.Rows[0];
-                MOVIE_FILEPATH = row[FileColumn.file.ToString()].ToString(); // Get Filepath
+                MOVIE_FILEPATH = row[HCFile.file.ToString()].ToString(); // Get Filepath
 
                 var r0 = row[InfoColumn.Id.ToString()]; // ID
                 lblID.Text = GlobalVars.ValidateAndReturn(r0.ToString());
 
-                try { MOVIE_TRAILER = row[FileColumn.trailer.ToString()].ToString(); }
+                try { MOVIE_TRAILER = row[HCFile.trailer.ToString()].ToString(); }
                 catch { MOVIE_TRAILER = ""; }
 
                 try

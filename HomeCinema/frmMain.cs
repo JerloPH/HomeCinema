@@ -285,9 +285,9 @@ namespace HomeCinema
                 dtInfo.Add(InfoColumn.year.ToString(), rYear); // year
                 dtInfo.Add(InfoColumn.summary.ToString(), rSummary); // summary
 
-                dtFilepath.Add(FileColumn.file.ToString(), filePath); // filepath
-                dtFilepath.Add(FileColumn.sub.ToString(), GetSubtitleFile(filePath)); // file sub
-                dtFilepath.Add(FileColumn.trailer.ToString(), (!String.IsNullOrWhiteSpace(rTrailer)) ? GlobalVars.LINK_YT + rTrailer : ""); // trailer
+                dtFilepath.Add(HCFile.file.ToString(), filePath); // filepath
+                dtFilepath.Add(HCFile.sub.ToString(), GetSubtitleFile(filePath)); // file sub
+                dtFilepath.Add(HCFile.trailer.ToString(), (!String.IsNullOrWhiteSpace(rTrailer)) ? GlobalVars.LINK_YT + rTrailer : ""); // trailer
                 count += 1; // add to count
                 logInsert += $"{filePath}\n";
 
@@ -335,7 +335,7 @@ namespace HomeCinema
                     try
                     {
                         DataRow r = dtFile.Rows[0];
-                        ret = r[FileColumn.file.ToString()].ToString();
+                        ret = r[HCFile.file.ToString()].ToString();
                     }
                     catch { }
                 }

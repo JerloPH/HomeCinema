@@ -31,7 +31,7 @@ namespace HomeCinema
         year,
         summary
     }
-    public enum FileColumn
+    public enum HCFile
     {
         Id,
         file,
