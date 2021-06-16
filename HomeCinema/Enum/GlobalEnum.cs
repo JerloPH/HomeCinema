@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HomeCinema
 {
-    public enum Icons
+    public enum HCIcons
     {
         Loading = 0,
         Check = 1,

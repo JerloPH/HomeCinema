@@ -56,10 +56,10 @@ namespace HomeCinema
             {
                 switch (IconIndex)
                 {
-                    case (int)Icons.Check:
+                    case (int)HCIcons.Check:
                         image = Resources.IconCheckmark;
                         break;
-                    case (int)Icons.Warning:
+                    case (int)HCIcons.Warning:
                         image = Resources.IconWarning;
                         break;
                     default:

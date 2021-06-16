@@ -1071,21 +1071,21 @@ namespace HomeCinema
 
                         if (version > HOMECINEMA_BUILD)
                         {
-                            form.SetIcon((int)Icons.Check);
+                            form.SetIcon((int)HCIcons.Check);
                             form.Message = "Update available!";
                             Log(errFrom, "Update found!");
                             UpdateStatus = 1;
                         }
                         else
                         {
-                            form.SetIcon((int)Icons.Check);
+                            form.SetIcon((int)HCIcons.Check);
                             form.Message = "No updates available!";
                             UpdateStatus = 2;
                         }
                     }
                     else
                     {
-                        form.SetIcon((int)Icons.Warning);
+                        form.SetIcon((int)HCIcons.Warning);
                         form.Message = "Error on checking update!";
                         Log(errFrom, "Cannot check for update!");
                         UpdateStatus = 3;
