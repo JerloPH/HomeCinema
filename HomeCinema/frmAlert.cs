@@ -69,7 +69,7 @@ namespace HomeCinema
                     {
                         // For use in Program.cs
                         btnOk.ForeColor = Color.White;
-                        btnOk.BackColor = Color.Transparent;
+                        btnOk.BackColor = Color.Black;
                     }
                     break;
             }
