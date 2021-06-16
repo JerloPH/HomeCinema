@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HomeCinema.GlobalEnum
+namespace HomeCinema
 {
     public enum Icons
     {

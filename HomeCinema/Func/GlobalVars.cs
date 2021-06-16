@@ -34,7 +34,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Microsoft.WindowsAPICodePack.Shell;
 using HomeCinema.SQLFunc;
-using HomeCinema.GlobalEnum;
 
 namespace HomeCinema
 {

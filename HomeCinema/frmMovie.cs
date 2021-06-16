@@ -24,7 +24,6 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using HomeCinema.SQLFunc;
-using HomeCinema.GlobalEnum;
 
 namespace HomeCinema
 {

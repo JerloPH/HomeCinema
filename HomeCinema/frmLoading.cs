@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using HomeCinema.Properties;
-using HomeCinema.GlobalEnum;
 
 namespace HomeCinema
 {

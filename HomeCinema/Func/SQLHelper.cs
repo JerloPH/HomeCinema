@@ -24,7 +24,6 @@ using System.Data;
 using Microsoft.WindowsAPICodePack.Shell;
 using System.Drawing;
 using System.Data.Common;
-using HomeCinema.GlobalEnum;
 
 namespace HomeCinema.SQLFunc
 {
