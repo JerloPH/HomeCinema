@@ -186,21 +186,21 @@ namespace HomeCinema
                     txtPathSub.Text = row[HCFile.sub.ToString()].ToString();
                     txtPathTrailer.Text = row[HCFile.trailer.ToString()].ToString();
 
-                    var r1 = row[InfoColumn.imdb.ToString()]; // imdb
-                    var r2 = row[InfoColumn.name.ToString()]; // name
-                    var r3 = row[InfoColumn.name_ep.ToString()]; // name_ep
-                    var r4 = row[InfoColumn.name_series.ToString()]; // name_series
-                    var r5 = row[InfoColumn.season.ToString()]; // season
-                    var r6 = row[InfoColumn.episode.ToString()]; // episode
-                    var r7 = row[InfoColumn.country.ToString()]; // country
-                    var r8 = row[InfoColumn.category.ToString()]; // category
-                    var r9 = row[InfoColumn.genre.ToString()]; // genre
-                    var r10 = row[InfoColumn.studio.ToString()]; // studio
-                    var r11 = row[InfoColumn.producer.ToString()]; // producer
-                    var r12 = row[InfoColumn.director.ToString()]; // director
-                    var r13 = row[InfoColumn.artist.ToString()]; // artist
-                    var r14 = row[InfoColumn.year.ToString()]; // year
-                    var r15 = row[InfoColumn.summary.ToString()]; // summary  
+                    var r1 = row[HCInfo.imdb.ToString()]; // imdb
+                    var r2 = row[HCInfo.name.ToString()]; // name
+                    var r3 = row[HCInfo.name_ep.ToString()]; // name_ep
+                    var r4 = row[HCInfo.name_series.ToString()]; // name_series
+                    var r5 = row[HCInfo.season.ToString()]; // season
+                    var r6 = row[HCInfo.episode.ToString()]; // episode
+                    var r7 = row[HCInfo.country.ToString()]; // country
+                    var r8 = row[HCInfo.category.ToString()]; // category
+                    var r9 = row[HCInfo.genre.ToString()]; // genre
+                    var r10 = row[HCInfo.studio.ToString()]; // studio
+                    var r11 = row[HCInfo.producer.ToString()]; // producer
+                    var r12 = row[HCInfo.director.ToString()]; // director
+                    var r13 = row[HCInfo.artist.ToString()]; // artist
+                    var r14 = row[HCInfo.year.ToString()]; // year
+                    var r15 = row[HCInfo.summary.ToString()]; // summary  
                                                                   // Set textboxes
                     txtIMDB.Text = r1.ToString();
                     txtName.Text = r2.ToString();
@@ -393,22 +393,22 @@ namespace HomeCinema
                 // SAVE changes to EXISTING MOVIE
                 // Add row values
                 var entry = new Dictionary<string, string>();
-                entry.Add(InfoColumn.Id.ToString(), GlobalVars.ValidateEmptyOrNull(txtID.Text));
-                entry.Add(InfoColumn.imdb.ToString(), GlobalVars.ValidateEmptyOrNull(txtIMDB.Text));
-                entry.Add(InfoColumn.name.ToString(), GlobalVars.ValidateEmptyOrNull(txtName.Text));
-                entry.Add(InfoColumn.name_ep.ToString(), GlobalVars.ValidateEmptyOrNull(txtEpName.Text));
-                entry.Add(InfoColumn.name_series.ToString(), GlobalVars.ValidateEmptyOrNull(txtSeriesName.Text));
-                entry.Add(InfoColumn.season.ToString(), GlobalVars.ValidateEmptyOrNull(txtSeasonNum.Text));
-                entry.Add(InfoColumn.episode.ToString(), GlobalVars.ValidateEmptyOrNull(txtEpNum.Text));
-                entry.Add(InfoColumn.country.ToString(), GetCountry()); //GlobalVars.ValidateEmptyOrNull(lblCountry.Text);
-                entry.Add(InfoColumn.category.ToString(), GetCategory());
-                entry.Add(InfoColumn.genre.ToString(), GetGenre());
-                entry.Add(InfoColumn.studio.ToString(), GlobalVars.ValidateEmptyOrNull(txtStudio.Text));
-                entry.Add(InfoColumn.producer.ToString(), GlobalVars.ValidateEmptyOrNull(txtProducer.Text));
-                entry.Add(InfoColumn.director.ToString(), GlobalVars.ValidateEmptyOrNull(txtDirector.Text));
-                entry.Add(InfoColumn.artist.ToString(), GlobalVars.ValidateEmptyOrNull(txtArtist.Text));
-                entry.Add(InfoColumn.year.ToString(), GlobalVars.ValidateEmptyOrNull(txtYear.Text));
-                entry.Add(InfoColumn.summary.ToString(), GlobalVars.ValidateEmptyOrNull(txtSummary.Text));
+                entry.Add(HCInfo.Id.ToString(), GlobalVars.ValidateEmptyOrNull(txtID.Text));
+                entry.Add(HCInfo.imdb.ToString(), GlobalVars.ValidateEmptyOrNull(txtIMDB.Text));
+                entry.Add(HCInfo.name.ToString(), GlobalVars.ValidateEmptyOrNull(txtName.Text));
+                entry.Add(HCInfo.name_ep.ToString(), GlobalVars.ValidateEmptyOrNull(txtEpName.Text));
+                entry.Add(HCInfo.name_series.ToString(), GlobalVars.ValidateEmptyOrNull(txtSeriesName.Text));
+                entry.Add(HCInfo.season.ToString(), GlobalVars.ValidateEmptyOrNull(txtSeasonNum.Text));
+                entry.Add(HCInfo.episode.ToString(), GlobalVars.ValidateEmptyOrNull(txtEpNum.Text));
+                entry.Add(HCInfo.country.ToString(), GetCountry()); //GlobalVars.ValidateEmptyOrNull(lblCountry.Text);
+                entry.Add(HCInfo.category.ToString(), GetCategory());
+                entry.Add(HCInfo.genre.ToString(), GetGenre());
+                entry.Add(HCInfo.studio.ToString(), GlobalVars.ValidateEmptyOrNull(txtStudio.Text));
+                entry.Add(HCInfo.producer.ToString(), GlobalVars.ValidateEmptyOrNull(txtProducer.Text));
+                entry.Add(HCInfo.director.ToString(), GlobalVars.ValidateEmptyOrNull(txtDirector.Text));
+                entry.Add(HCInfo.artist.ToString(), GlobalVars.ValidateEmptyOrNull(txtArtist.Text));
+                entry.Add(HCInfo.year.ToString(), GlobalVars.ValidateEmptyOrNull(txtYear.Text));
+                entry.Add(HCInfo.summary.ToString(), GlobalVars.ValidateEmptyOrNull(txtSummary.Text));
 
                 // Check if first query successfully executed
                 bool ContAfterQry = SQLHelper.DbUpdateInfo(entry, callFrom);

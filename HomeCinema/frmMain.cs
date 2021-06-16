@@ -269,21 +269,21 @@ namespace HomeCinema
                 // Make the DataRow
                 var dtInfo = new Dictionary<string, string>();
                 var dtFilepath = new Dictionary<string, string>();
-                dtInfo.Add(InfoColumn.imdb.ToString(), getIMDB); // IMDB
-                dtInfo.Add(InfoColumn.name.ToString(), rTitle.Replace('"', '\'')); // name
-                dtInfo.Add(InfoColumn.name_ep.ToString(), rOrigTitle); // episode name
-                dtInfo.Add(InfoColumn.name_series.ToString(), ""); // series name
-                dtInfo.Add(InfoColumn.season.ToString(), ""); // season number
-                dtInfo.Add(InfoColumn.episode.ToString(), ""); // episode num
-                dtInfo.Add(InfoColumn.country.ToString(), rCountry); // country
-                dtInfo.Add(InfoColumn.category.ToString(), GlobalVars.GetCategoryByFilter(rGenre, rCountry, mediatype).ToString()); // category
-                dtInfo.Add(InfoColumn.genre.ToString(), rGenre); // genre
-                dtInfo.Add(InfoColumn.studio.ToString(), rStudio); // studio
-                dtInfo.Add(InfoColumn.producer.ToString(), rProducer); // producer
-                dtInfo.Add(InfoColumn.director.ToString(), rDirector); // director
-                dtInfo.Add(InfoColumn.artist.ToString(), rArtist); // artist
-                dtInfo.Add(InfoColumn.year.ToString(), rYear); // year
-                dtInfo.Add(InfoColumn.summary.ToString(), rSummary); // summary
+                dtInfo.Add(HCInfo.imdb.ToString(), getIMDB); // IMDB
+                dtInfo.Add(HCInfo.name.ToString(), rTitle.Replace('"', '\'')); // name
+                dtInfo.Add(HCInfo.name_ep.ToString(), rOrigTitle); // episode name
+                dtInfo.Add(HCInfo.name_series.ToString(), ""); // series name
+                dtInfo.Add(HCInfo.season.ToString(), ""); // season number
+                dtInfo.Add(HCInfo.episode.ToString(), ""); // episode num
+                dtInfo.Add(HCInfo.country.ToString(), rCountry); // country
+                dtInfo.Add(HCInfo.category.ToString(), GlobalVars.GetCategoryByFilter(rGenre, rCountry, mediatype).ToString()); // category
+                dtInfo.Add(HCInfo.genre.ToString(), rGenre); // genre
+                dtInfo.Add(HCInfo.studio.ToString(), rStudio); // studio
+                dtInfo.Add(HCInfo.producer.ToString(), rProducer); // producer
+                dtInfo.Add(HCInfo.director.ToString(), rDirector); // director
+                dtInfo.Add(HCInfo.artist.ToString(), rArtist); // artist
+                dtInfo.Add(HCInfo.year.ToString(), rYear); // year
+                dtInfo.Add(HCInfo.summary.ToString(), rSummary); // summary
 
                 dtFilepath.Add(HCFile.file.ToString(), filePath); // filepath
                 dtFilepath.Add(HCFile.sub.ToString(), GetSubtitleFile(filePath)); // file sub
@@ -555,14 +555,14 @@ namespace HomeCinema
                         {
                             DataRow r = dtFile.Rows[0];
                             // Get all strings from the DataRow, passed by the BG worker
-                            string r1 = r[InfoColumn.name.ToString()].ToString(); // name
-                            string r2 = r[InfoColumn.name_ep.ToString()].ToString(); // name_ep
-                            string r3 = r[InfoColumn.name_series.ToString()].ToString(); // name_series
-                            string r4 = r[InfoColumn.season.ToString()].ToString(); // season
-                            string r5 = r[InfoColumn.episode.ToString()].ToString(); // episode
-                            string r6 = r[InfoColumn.year.ToString()].ToString(); // year
-                            string r7 = r[InfoColumn.summary.ToString()].ToString(); // summary
-                            string r8 = r[InfoColumn.genre.ToString()].ToString(); // genre
+                            string r1 = r[HCInfo.name.ToString()].ToString(); // name
+                            string r2 = r[HCInfo.name_ep.ToString()].ToString(); // name_ep
+                            string r3 = r[HCInfo.name_series.ToString()].ToString(); // name_series
+                            string r4 = r[HCInfo.season.ToString()].ToString(); // season
+                            string r5 = r[HCInfo.episode.ToString()].ToString(); // episode
+                            string r6 = r[HCInfo.year.ToString()].ToString(); // year
+                            string r7 = r[HCInfo.summary.ToString()].ToString(); // summary
+                            string r8 = r[HCInfo.genre.ToString()].ToString(); // genre
 
                             // Edit Information on ListView Item
                             LVItemSetDetails(lvItem, new string[] { MOVIEID.ToString(), r1, r2, r3, r4, r5, r6, r7, r8 });
@@ -975,7 +975,7 @@ namespace HomeCinema
                             // Add Item to ListView
                             // Convert ID object to ID int
                             long MOVIEID;
-                            var x = InfoColumn.Id.ToString();
+                            var x = HCInfo.Id.ToString();
                             try { MOVIEID = Convert.ToInt64(r[x]); }
                             catch { MOVIEID = 0; GlobalVars.Log(errFrom, $"Invalid MovieID: {r[x].ToString()}"); }
 
@@ -1039,14 +1039,14 @@ namespace HomeCinema
                                 }
 
                                 // Get all strings from the DataRow, passed by the BG worker
-                                string resName = r[InfoColumn.name.ToString()].ToString(); // name
-                                string resNameEp = r[InfoColumn.name_ep.ToString()].ToString(); // name_ep
-                                string resNameSer = r[InfoColumn.name_series.ToString()].ToString(); // name_series
-                                string resSeason = r[InfoColumn.season.ToString()].ToString(); // season
-                                string resEp = r[InfoColumn.episode.ToString()].ToString(); // episode
-                                string resYear = r[InfoColumn.year.ToString()].ToString(); // year
-                                string resSum = r[InfoColumn.summary.ToString()].ToString(); // summary
-                                string resGenre = r[InfoColumn.genre.ToString()].ToString(); // genre
+                                string resName = r[HCInfo.name.ToString()].ToString(); // name
+                                string resNameEp = r[HCInfo.name_ep.ToString()].ToString(); // name_ep
+                                string resNameSer = r[HCInfo.name_series.ToString()].ToString(); // name_series
+                                string resSeason = r[HCInfo.season.ToString()].ToString(); // season
+                                string resEp = r[HCInfo.episode.ToString()].ToString(); // episode
+                                string resYear = r[HCInfo.year.ToString()].ToString(); // year
+                                string resSum = r[HCInfo.summary.ToString()].ToString(); // summary
+                                string resGenre = r[HCInfo.genre.ToString()].ToString(); // genre
 
                                 // Make new ListView item, and assign properties to it
                                 ListViewItem temp = new ListViewItem() { Text = resName };

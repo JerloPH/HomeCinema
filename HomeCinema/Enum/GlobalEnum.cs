@@ -12,7 +12,7 @@ namespace HomeCinema
         Check = 1,
         Warning = 2
     }
-    public enum InfoColumn
+    public enum HCInfo
     {
         Id,
         imdb,
