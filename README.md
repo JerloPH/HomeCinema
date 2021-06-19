@@ -28,6 +28,7 @@ View reviews and posts from [**GHacks.net**](https://www.ghacks.net/2021/06/06/h
 **Note: I'm not the user who posted any of them. Visit at your discretion.** <br>
 
 <style>
+
 .heatMap {
     width: 70%;
     text-align: center;
@@ -38,7 +39,9 @@ word-wrap: break-word;
 text-align: center;
 }
 .heatMap a { color: skyblue; }
+
 </style>
+
 <div class="heatMap">
 
 | <a href="docs/REPORT_ISSUE.md">Report Issue/Bug/Error/Feature request</a> | <a href="(docs/CONTRIBUTING.md">Submit Pull Request</a>  | <a href="VERSION_HISTORY.md">See 'App Version History'</a> |
