@@ -36,7 +36,6 @@ namespace HomeCinema
     {
         // Strings and others
         static string SEARCHBOX_PLACEHOLDER = "Type your Search query here...";
-        static string LVMovieItemsColumns = "[Id],[name],[name_ep],[name_series],[season],[episode],[year],[summary],[genre]";
         string SEARCH_QUERY = "";
         string SEARCH_QUERY_PREV = "";
         string[] FOLDERTOSEARCH = { "" };
@@ -381,16 +380,16 @@ namespace HomeCinema
             SEARCH_QUERY = ""; // reset query
 
             // Default SELECT Query
-            qry = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO}";
+            qry = $"SELECT * FROM {GlobalVars.DB_TNAME_INFO}";
 
             // Build Filter for Query
             // Name Text search
             if ((txtSearch.Text != SEARCHBOX_PLACEHOLDER) && (!String.IsNullOrWhiteSpace(txtSearch.Text)))
             {
                 qry += " WHERE ";
-                qry += $"([name] LIKE '%{txtSearch.Text}%' ";
-                qry += $"OR [name_ep] LIKE '%{txtSearch.Text}%' ";
-                qry += $"OR [name_series] LIKE '%{txtSearch.Text}%')";
+                qry += $"(`{HCInfo.name.ToString()}` LIKE '%{txtSearch.Text}%' ";
+                qry += $"OR `{HCInfo.name_orig.ToString()}` LIKE '%{txtSearch.Text}%' ";
+                qry += $"OR `{HCInfo.name_series.ToString()}` LIKE '%{txtSearch.Text}%')";
             }
             // Year range
             if (!String.IsNullOrWhiteSpace(txtYearFrom.Text))
@@ -398,15 +397,15 @@ namespace HomeCinema
                 qry += GlobalVars.QryWhere(qry);
                 if (!String.IsNullOrWhiteSpace(txtYearTo.Text))
                 {
-                    qry += $"[year] BETWEEN {txtYearFrom.Text} AND {txtYearTo.Text}";
+                    qry += $"`{HCInfo.year.ToString()}` BETWEEN {txtYearFrom.Text} AND {txtYearTo.Text}";
                 }
                 else
                 {
-                    qry += $"[year] BETWEEN {txtYearFrom.Text} AND {DateTime.Now.Year.ToString()}";
+                    qry += $"`{HCInfo.year.ToString()}` BETWEEN {txtYearFrom.Text} AND {DateTime.Now.Year.ToString()}";
                 }
             }
             // Genre
-            qry += (cbGenre.SelectedIndex > 0) ? GlobalVars.QryWhere(qry) + $"[genre] LIKE '%{cbGenre.Text}%'" : "";
+            qry += (cbGenre.SelectedIndex > 0) ? GlobalVars.QryWhere(qry) + $"`{HCInfo.genre.ToString()}` LIKE '%{cbGenre.Text}%'" : "";
 
             // Category
             if (cbCategory.SelectedIndex > 0)
@@ -416,44 +415,44 @@ namespace HomeCinema
                 // Search for all
                 if ((index < 1) || (index > 2))
                 {
-                    qry += $"[category]={index}";
+                    qry += $"`{HCInfo.category.ToString()}`={index}";
                 }
                 else
                 {
                     // Search for All type of Movies, if index == 1. Otherwise, Search for All types of Series
-                    qry += (index == 1) ? "([category]=1 OR [category]=3 OR [category]=5)" : "([category]=2 OR [category]=4 OR [category]=6)";
+                    qry += (index == 1) ? $" (`{HCInfo.category.ToString()}`=1 OR `{HCInfo.category.ToString()}`=3 OR `{HCInfo.category.ToString()}`=5)" : $" (`{HCInfo.category.ToString()}`=2 OR `{HCInfo.category.ToString()}`=4 OR `{HCInfo.category.ToString()}`=6)";
                 }
             }
             // Studio
             if (String.IsNullOrWhiteSpace(txtStudio.Text) == false)
             {
-                qry += GlobalVars.QryWhere(qry) + $"[studio] LIKE '%{txtStudio.Text}%'";
+                qry += GlobalVars.QryWhere(qry) + $"`{HCInfo.studio.ToString()}` LIKE '%{txtStudio.Text}%'";
             }
             // Cast
             if (String.IsNullOrWhiteSpace(txtCast.Text) == false)
             {
-                qry += GlobalVars.QryWhere(qry) + $"[artist] LIKE '%{txtCast.Text}%'";
+                qry += GlobalVars.QryWhere(qry) + $"`{HCInfo.artist.ToString()}` LIKE '%{txtCast.Text}%'";
             }
             // Director
             if (String.IsNullOrWhiteSpace(txtDirector.Text) == false)
             {
-                qry += GlobalVars.QryWhere(qry) + $"[director] LIKE '%{txtDirector.Text}%'";
+                qry += GlobalVars.QryWhere(qry) + $"`{HCInfo.director.ToString()}` LIKE '%{txtDirector.Text}%'";
             }
             // Country
             string CountryText = GlobalVars.RemoveLine(cbCountry.SelectedItem.ToString());
             if ((String.IsNullOrWhiteSpace(CountryText) == false) && cbCountry.SelectedIndex > 0)
             {
-                qry += GlobalVars.QryWhere(qry) + $"[country] LIKE '%{CountryText}%'";
+                qry += GlobalVars.QryWhere(qry) + $"`{HCInfo.country.ToString()}` LIKE '%{CountryText}%'";
             }
 
             // Override filter string build-up and Use IMDB Code
             if (String.IsNullOrWhiteSpace(txtIMDB.Text) == false)
             {
-                qry = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO} WHERE [imdb] = '{txtIMDB.Text}'";
+                qry = $"SELECT * FROM {GlobalVars.DB_TNAME_INFO} WHERE `{HCInfo.imdb.ToString()}` = '{txtIMDB.Text}'";
             }
 
             // Filter out all animations
-            qry += (cbHideAnim.CheckState == CheckState.Checked) ? GlobalVars.QryWhere(qry) + " ([category] <= 2)" : "";
+            qry += (cbHideAnim.CheckState == CheckState.Checked) ? GlobalVars.QryWhere(qry) + $" (`{HCInfo.category.ToString()}` <= 2)" : "";
 
             // Append to end
             qry += (GlobalVars.SET_ITEMLIMIT > 0) ? $" LIMIT {GlobalVars.SET_ITEMLIMIT};" : "";
@@ -539,7 +538,7 @@ namespace HomeCinema
                 string MOVIEID = lvItem.Tag.ToString().TrimStart('0');
 
                 // Change info of the item
-                string qry = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO} WHERE `Id`={MOVIEID} LIMIT 1;";
+                string qry = $"SELECT * FROM {GlobalVars.DB_TNAME_INFO} WHERE `Id`={MOVIEID} LIMIT 1;";
 
                 using (DataTable dtFile = SQLHelper.DbQuery(qry, "frmMain-UpdateMovieItemOnLV")) // run the query
                 {
@@ -581,7 +580,7 @@ namespace HomeCinema
             if (String.IsNullOrWhiteSpace(SEARCH_QUERY))
             {
                 // Default SELECT Query
-                SEARCH_QUERY = $"SELECT {LVMovieItemsColumns} FROM {GlobalVars.DB_TNAME_INFO}";
+                SEARCH_QUERY = $"SELECT * FROM {GlobalVars.DB_TNAME_INFO}";
             }
             PopulateMovieBG(AppStart);
         }
@@ -958,7 +957,10 @@ namespace HomeCinema
             using (DataTable dt = SQLHelper.DbQuery(qry, errFrom)) // Get DataTable from query
             {
                 // Set Max Progress
-                progressMax = dt.Rows.Count;
+                if (dt != null)
+                {
+                    progressMax = dt.Rows.Count;
+                }
 
                 // Iterate thru all DataRows
                 if (progressMax > 0)
@@ -1033,27 +1035,31 @@ namespace HomeCinema
                                     }
                                 }
 
-                                // Get all strings from the DataRow, passed by the BG worker
-                                string resName = r[HCInfo.name.ToString()].ToString(); // name
-                                string resNameEp = r[HCInfo.name_orig.ToString()].ToString(); // name_ep
-                                string resNameSer = r[HCInfo.name_series.ToString()].ToString(); // name_series
-                                string resSeason = r[HCInfo.season.ToString()].ToString(); // season
-                                string resEp = r[HCInfo.episode.ToString()].ToString(); // episode
-                                string resYear = r[HCInfo.year.ToString()].ToString(); // year
-                                string resSum = r[HCInfo.summary.ToString()].ToString(); // summary
-                                string resGenre = r[HCInfo.genre.ToString()].ToString(); // genre
+                                try
+                                {
+                                    // Get all strings from the DataRow, passed by the BG worker
+                                    string resName = r[HCInfo.name.ToString()].ToString(); // name
+                                    string resNameEp = r[HCInfo.name_orig.ToString()].ToString(); // name_ep
+                                    string resNameSer = r[HCInfo.name_series.ToString()].ToString(); // name_series
+                                    string resSeason = r[HCInfo.season.ToString()].ToString(); // season
+                                    string resEp = r[HCInfo.episode.ToString()].ToString(); // episode
+                                    string resYear = r[HCInfo.year.ToString()].ToString(); // year
+                                    string resSum = r[HCInfo.summary.ToString()].ToString(); // summary
+                                    string resGenre = r[HCInfo.genre.ToString()].ToString(); // genre
 
-                                // Make new ListView item, and assign properties to it
-                                ListViewItem temp = new ListViewItem() { Text = resName };
+                                    // Make new ListView item, and assign properties to it
+                                    ListViewItem temp = new ListViewItem() { Text = resName };
 
-                                // Edit Information on ListView Item
-                                LVItemSetDetails(temp, new string[] { MOVIEID.ToString(),
+                                    // Edit Information on ListView Item
+                                    LVItemSetDetails(temp, new string[] { MOVIEID.ToString(),
                                     resName, resNameEp, resNameSer,
                                     resSeason, resEp, resYear, resSum, resGenre });
 
-                                // Add Item to ListView lvSearchResult
-                                AddItem(lvSearchResult, temp);
-                                progress += 1;
+                                    // Add Item to ListView lvSearchResult
+                                    AddItem(lvSearchResult, temp);
+                                    progress += 1;
+                                }
+                                catch { }
                             }
                         }
                         GlobalVars.Log(errFrom, $"DONE Background worker from: {Name}");
