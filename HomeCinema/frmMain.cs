@@ -50,15 +50,8 @@ namespace HomeCinema
         public frmMain()
         {
             // Set TMDB Key on DEBUG
-            if (Debugger.IsAttached)
-            {
-                GlobalVars.TMDB_KEY = GlobalVars.ReadStringFromFile(@"..\..\..\ignored\tmdb_API_Key.txt", "frmMain-DEBUG");
-            }
-            if (!String.IsNullOrWhiteSpace(GlobalVars.TMDB_KEY))
-            {
-                GlobalVars.HAS_TMDB_KEY = true;
-            }
-
+            GlobalVars.TMDB_KEY = Debugger.IsAttached ? GlobalVars.ReadStringFromFile(@"..\..\..\ignored\tmdb_API_Key.txt", "frmMain-DEBUG") : GlobalVars.TMDB_KEY;
+            GlobalVars.HAS_TMDB_KEY = !String.IsNullOrWhiteSpace(GlobalVars.TMDB_KEY);
             // Start app
             InitializeComponent();
 
@@ -1226,15 +1219,6 @@ namespace HomeCinema
             // Save text files
             SaveCountryCB(); // Replace Country text file
             SaveGenreCB(); // Replace Genre text file
-            // Clean each image 1 by 1
-            //GlobalVars.Log("frmMain-frmMain_FormClosing", "Disposing MOVIE_IMGLIST");
-            //foreach (Image img in GlobalVars.MOVIE_IMGLIST.Images)
-            //{
-            //    if (img != null)
-            //    {
-            //        img.Dispose();
-            //    }
-            //}
             if (GlobalVars.MOVIE_IMGLIST != null)
             {
                 GlobalVars.MOVIE_IMGLIST.Images.Clear();
