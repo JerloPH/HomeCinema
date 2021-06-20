@@ -266,7 +266,7 @@ namespace HomeCinema
                 var dtFilepath = new Dictionary<string, string>();
                 dtInfo.Add(HCInfo.imdb.ToString(), getIMDB); // IMDB
                 dtInfo.Add(HCInfo.name.ToString(), rTitle.Replace('"', '\'')); // name
-                dtInfo.Add(HCInfo.name_ep.ToString(), rOrigTitle); // episode name
+                dtInfo.Add(HCInfo.name_orig.ToString(), rOrigTitle); // episode name
                 dtInfo.Add(HCInfo.name_series.ToString(), ""); // series name
                 dtInfo.Add(HCInfo.season.ToString(), ""); // season number
                 dtInfo.Add(HCInfo.episode.ToString(), ""); // episode num
@@ -551,7 +551,7 @@ namespace HomeCinema
                             DataRow r = dtFile.Rows[0];
                             // Get all strings from the DataRow, passed by the BG worker
                             string r1 = r[HCInfo.name.ToString()].ToString(); // name
-                            string r2 = r[HCInfo.name_ep.ToString()].ToString(); // name_ep
+                            string r2 = r[HCInfo.name_orig.ToString()].ToString(); // name_ep
                             string r3 = r[HCInfo.name_series.ToString()].ToString(); // name_series
                             string r4 = r[HCInfo.season.ToString()].ToString(); // season
                             string r5 = r[HCInfo.episode.ToString()].ToString(); // episode
@@ -1035,7 +1035,7 @@ namespace HomeCinema
 
                                 // Get all strings from the DataRow, passed by the BG worker
                                 string resName = r[HCInfo.name.ToString()].ToString(); // name
-                                string resNameEp = r[HCInfo.name_ep.ToString()].ToString(); // name_ep
+                                string resNameEp = r[HCInfo.name_orig.ToString()].ToString(); // name_ep
                                 string resNameSer = r[HCInfo.name_series.ToString()].ToString(); // name_series
                                 string resSeason = r[HCInfo.season.ToString()].ToString(); // season
                                 string resEp = r[HCInfo.episode.ToString()].ToString(); // episode

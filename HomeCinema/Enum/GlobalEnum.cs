@@ -17,7 +17,7 @@ namespace HomeCinema
         Id,
         imdb,
         name,
-        name_ep,
+        name_orig,
         name_series,
         season,
         episode,

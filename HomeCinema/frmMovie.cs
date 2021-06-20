@@ -125,7 +125,7 @@ namespace HomeCinema
                 }
                 try
                 {
-                    var r3 = row[HCInfo.name_ep.ToString()]; // name_ep # Original title from country of Origin
+                    var r3 = row[HCInfo.name_orig.ToString()]; // name_ep # Original title from country of Origin
                     lblNameEp.Text = GlobalVars.ValidateAndReturn(r3.ToString());
                 }
                 catch { lblNameEp.Text = ""; }

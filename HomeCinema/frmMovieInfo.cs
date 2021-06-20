@@ -188,7 +188,7 @@ namespace HomeCinema
 
                     var r1 = row[HCInfo.imdb.ToString()]; // imdb
                     var r2 = row[HCInfo.name.ToString()]; // name
-                    var r3 = row[HCInfo.name_ep.ToString()]; // name_ep
+                    var r3 = row[HCInfo.name_orig.ToString()]; // name_ep
                     var r4 = row[HCInfo.name_series.ToString()]; // name_series
                     var r5 = row[HCInfo.season.ToString()]; // season
                     var r6 = row[HCInfo.episode.ToString()]; // episode
@@ -396,7 +396,7 @@ namespace HomeCinema
                 entry.Add(HCInfo.Id.ToString(), GlobalVars.ValidateEmptyOrNull(txtID.Text));
                 entry.Add(HCInfo.imdb.ToString(), GlobalVars.ValidateEmptyOrNull(txtIMDB.Text));
                 entry.Add(HCInfo.name.ToString(), GlobalVars.ValidateEmptyOrNull(txtName.Text));
-                entry.Add(HCInfo.name_ep.ToString(), GlobalVars.ValidateEmptyOrNull(txtEpName.Text));
+                entry.Add(HCInfo.name_orig.ToString(), GlobalVars.ValidateEmptyOrNull(txtEpName.Text));
                 entry.Add(HCInfo.name_series.ToString(), GlobalVars.ValidateEmptyOrNull(txtSeriesName.Text));
                 entry.Add(HCInfo.season.ToString(), GlobalVars.ValidateEmptyOrNull(txtSeasonNum.Text));
                 entry.Add(HCInfo.episode.ToString(), GlobalVars.ValidateEmptyOrNull(txtEpNum.Text));
