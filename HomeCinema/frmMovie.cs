@@ -126,9 +126,9 @@ namespace HomeCinema
                 try
                 {
                     var r3 = row[HCInfo.name_orig.ToString()]; // name_ep # Original title from country of Origin
-                    lblNameEp.Text = GlobalVars.ValidateAndReturn(r3.ToString());
+                    lblNameOrig.Text = GlobalVars.ValidateAndReturn(r3.ToString());
                 }
-                catch { lblNameEp.Text = ""; }
+                catch { lblNameOrig.Text = ""; }
                 try
                 {
                     var r4 = row[HCInfo.name_series.ToString()]; // name_series

@@ -47,7 +47,7 @@
             this.label22 = new System.Windows.Forms.Label();
             this.lblSeasonNum = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.lblNameEp = new System.Windows.Forms.Label();
+            this.lblNameOrig = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.lblCategory = new System.Windows.Forms.Label();
             this.lblYear = new System.Windows.Forms.Label();
@@ -93,7 +93,7 @@
             this.groupBox2.Controls.Add(this.label22);
             this.groupBox2.Controls.Add(this.lblSeasonNum);
             this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Controls.Add(this.lblNameEp);
+            this.groupBox2.Controls.Add(this.lblNameOrig);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.lblCategory);
             this.groupBox2.Controls.Add(this.lblYear);
@@ -315,15 +315,15 @@
             this.label7.TabIndex = 14;
             this.label7.Text = "Season #";
             // 
-            // lblNameEp
+            // lblNameOrig
             // 
-            this.lblNameEp.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNameEp.ForeColor = System.Drawing.Color.Yellow;
-            this.lblNameEp.Location = new System.Drawing.Point(291, 81);
-            this.lblNameEp.Name = "lblNameEp";
-            this.lblNameEp.Size = new System.Drawing.Size(295, 77);
-            this.lblNameEp.TabIndex = 13;
-            this.lblNameEp.Text = "original name/title";
+            this.lblNameOrig.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNameOrig.ForeColor = System.Drawing.Color.Yellow;
+            this.lblNameOrig.Location = new System.Drawing.Point(291, 81);
+            this.lblNameOrig.Name = "lblNameOrig";
+            this.lblNameOrig.Size = new System.Drawing.Size(295, 77);
+            this.lblNameOrig.TabIndex = 13;
+            this.lblNameOrig.Text = "original name/title";
             // 
             // label5
             // 
@@ -545,7 +545,7 @@
         private System.Windows.Forms.Label lblYear;
         private System.Windows.Forms.Label lblIMDB;
         private System.Windows.Forms.Label lblCategory;
-        private System.Windows.Forms.Label lblNameEp;
+        private System.Windows.Forms.Label lblNameOrig;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblEpNum;
         private System.Windows.Forms.Label label22;
