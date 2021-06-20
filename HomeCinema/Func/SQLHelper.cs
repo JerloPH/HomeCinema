@@ -82,12 +82,22 @@ namespace HomeCinema.SQLFunc
                     }
                     if (dbVersion < GlobalVars.HOMECINEMA_DBVER)
                     {
-                        GlobalVars.ShowNoParent("Outdated database!");
+                        //GlobalVars.ShowNoParent("Outdated database!");
+                        DBUpgradeDatabase(dbVersion);
                     }
                 }
             }
             GlobalVars.LogDb(CalledFrom, "Database is loaded succesfully!\n " + GlobalVars.DB_PATH);
             return true;
+        }
+        private static void DBUpgradeDatabase(int dbVersion)
+        {
+            // Upgrade dbVer to match requirements
+            int dbVer = dbVersion;
+            while (dbVer < GlobalVars.HOMECINEMA_DBVER)
+            {
+                //
+            }
         }
         /// <summary>
         /// Open connection to SQLite database.
