@@ -34,16 +34,18 @@ namespace HomeCinema
 {
     public partial class frmMain : Form
     {
-        // Strings
+        // Strings and others
         static string SEARCHBOX_PLACEHOLDER = "Type your Search query here...";
         static string LVMovieItemsColumns = "[Id],[name],[name_ep],[name_series],[season],[episode],[year],[summary],[genre]";
         string SEARCH_QUERY = "";
         string SEARCH_QUERY_PREV = "";
         string[] FOLDERTOSEARCH = { "" };
+        static bool IsLoadedSuccess = true;
+
         // Objects
         ListViewColumnSorter lvSorter = new ListViewColumnSorter();
-
         ToolStripItem toolMenuView, toolMenuEdit, toolMenuFileExplorer;
+
         #region frmMain
         public frmMain()
         {
@@ -1130,6 +1132,7 @@ namespace HomeCinema
             // Startup events
             WindowState = FormWindowState.Maximized; // *Required lines to trigger Window Resize event
             WindowState = FormWindowState.Normal; // *Required lines to trigger Window Resize event
+            TopLevel = true;
             // Clean temp and log files
             if (GlobalVars.SET_AUTOCLEAN)
             {
@@ -1151,8 +1154,30 @@ namespace HomeCinema
             // Perform click on Change View
             btnChangeView.PerformClick();
 
+            // Initialize connection to database
+            var loadForm = new frmLoading("Loading database", "Please wait while loading..");
+            loadForm.BackgroundWorker.DoWork += (sender1, e1) =>
+            {
+                if (!SQLHelper.Initiate("frmMain"))
+                {
+                    // Database not loaded!
+                    GlobalVars.ShowNoParent("Database is possibly corrupted!\nDelete HomeCinema.db and try again\nNOTE: This will remove all your entries");
+                    IsLoadedSuccess = false;
+                }
+            };
+            loadForm.ShowDialog(this);
             // Start finding files in folder
-            GetMediaFromFolders();
+            if (IsLoadedSuccess)
+            {
+                GetMediaFromFolders();
+            }
+            else
+            {
+                AfterPopulatingMovieLV(lvSearchResult, 0);
+                btnSearch.Enabled = false;
+                cbHideAnim.Enabled = false;
+                cbClearSearch.Enabled = false;
+            }
         }
         private void frmMain_Resize(object sender, EventArgs e)
         {

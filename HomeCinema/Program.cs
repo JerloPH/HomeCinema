@@ -48,17 +48,6 @@ namespace HomeCinema
                 // Check files first
                 GlobalVars.CheckAllFiles();
 
-                // Initialize connection to database
-                if (!SQLFunc.SQLHelper.Initiate("Program"))
-                {
-                    // Database not loaded!
-                    GlobalVars.ShowNoParent("Database is possibly corrupted!\nDelete HomeCinema.db and try again\nNOTE: This will remove all your entries");
-                    // release mutex after the form is closed.
-                    mutex.ReleaseMutex();
-                    mutex.Dispose();
-                    return;
-                }
-
                 FormMain = new frmMain();
                 Application.Run(FormMain);
 
