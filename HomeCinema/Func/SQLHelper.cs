@@ -104,16 +104,6 @@ namespace HomeCinema.SQLFunc
             catch { return null; }
         }
         /// <summary>
-        /// Close the open SQLite connection.
-        /// </summary>
-        /// <param name="c">Handle of the SQL connection.</param>
-        public static void DbClose(SQLiteConnection c)
-        {
-            string cFile = c.FileName;
-            c?.Dispose();
-            GlobalVars.LogDb("SQLHelper-DbClose", "DB Closed: " + cFile);
-        }
-        /// <summary>
         /// Execute a query that has no return row.
         /// </summary>
         /// <param name="qry">SQL string query.</param>
