@@ -29,6 +29,7 @@ namespace HomeCinema.SQLFunc
 {
     public static class SQLHelper
     {
+        private static readonly int RetryCount = 5;
         /// <summary>
         /// Initialize SQLite database. Create if NOT existing.
         /// </summary>
@@ -112,42 +113,42 @@ namespace HomeCinema.SQLFunc
         public static bool DbExecNonQuery(string qry, string calledFrom)
         {
             bool DONE = false;
+            int retry = RetryCount;
             string errFrom = $"SQLHelper-DbExecNonQuery [Called by: {calledFrom}]";
-            using (var conn = DbOpen())
+            while (retry > 0)
             {
-                if (conn == null)
+                using (var conn = DbOpen())
                 {
-                    GlobalVars.LogDb(errFrom, "Cannot establish connection to database (connection is null)!");
-                    return false;
+                    if (conn == null)
+                    {
+                        GlobalVars.LogDb(errFrom, "Cannot establish connection to database (connection is null)!");
+                        --retry;
+                        continue;
+                    }
+                    using (var cmd = new SQLiteCommand(conn))
+                    {
+                        cmd.CommandText = qry;
+                        try
+                        {
+                            GlobalVars.LogDb("Executing query..", qry);
+                            DONE = (cmd.ExecuteNonQuery() > 0);
+                            retry = -1;
+                        }
+                        catch (SQLiteException ex)
+                        {
+                            GlobalVars.ShowError("SQLHelper-DbExecNonQuery (SQL Error)", ex);
+                            --retry;
+                        }
+                        catch (Exception ex)
+                        {
+                            GlobalVars.ShowError("SQLHelper-DbExecNonQuery (Error)", ex);
+                            --retry;
+                        }
+                    }
                 }
-                using (var cmd = new SQLiteCommand(conn))
-                {
-                    cmd.CommandText = qry;
-                    try
-                    {
-                        GlobalVars.LogDb("Executing query..", qry);
-                        DONE = (cmd.ExecuteNonQuery() > 0);
-                    }
-                    catch (SQLiteException ex)
-                    {
-                        GlobalVars.ShowError("SQLHelper-DbExecNonQuery (SQL Error)", ex);
-                    }
-                    catch (Exception ex)
-                    {
-                        GlobalVars.ShowError("SQLHelper-DbExecNonQuery (Error)", ex);
-                    }
-                }
+                return DONE;
             }
-            return DONE;
-        }
-        /// <summary>
-        /// Initialize a DataTable, with columns.
-        /// </summary>
-        /// <param name="cols">String array of column names.</param>
-        /// <returns>DataTable ref.</returns>
-        public static DataTable InitializeDT(String[] cols)
-        {
-            return InitializeDT(true, cols);
+            return false;
         }
         /// <summary>
         /// Initialize a DataTable, with COLUMN [Id], and other columns.
@@ -214,40 +215,43 @@ namespace HomeCinema.SQLFunc
         public static DataTable DbQuery(string qry, string calledFrom)
         {
             string errFrom = "SQLHelper-DbQuery";
-            try
+            int retry = RetryCount;
+            while (retry > 0)
             {
-                // Create Connection to database
-                using (var conn = new SQLiteConnection(GlobalVars.DB_DATAPATH))
+                try
                 {
-                    conn.Open();
-                    using (var cmd = new SQLiteCommand(conn))
+                    // Create Connection to database
+                    using (var conn = DbOpen())
                     {
-                        cmd.CommandText = qry;
+                        using (var cmd = new SQLiteCommand(conn))
+                        {
+                            cmd.CommandText = qry;
 
-                        // Create DataTable for results
-                        var dt = new DataTable();
+                            // Create DataTable for results
+                            var dt = new DataTable();
 
-                        // Execute query
-                        GlobalVars.LogDb($"{errFrom} (START) [Called by: {calledFrom}]", "qry: " + qry);
+                            // Execute query
+                            GlobalVars.LogDb($"{errFrom} (START) [Called by: {calledFrom}]", "qry: " + qry);
 
-                        SQLiteDataAdapter sqlda = new SQLiteDataAdapter(qry, conn);
-                        sqlda.Fill(dt);
+                            SQLiteDataAdapter sqlda = new SQLiteDataAdapter(qry, conn);
+                            sqlda.Fill(dt);
 
-                        // Log actions to textfile
-                        GlobalVars.LogDb($"{errFrom} (Finished executing Query)", "Number of Rows returned by query: " + Convert.ToString(dt.Rows.Count));
+                            // Log actions to textfile
+                            GlobalVars.LogDb($"{errFrom} (Finished executing Query)", "Number of Rows returned by query: " + Convert.ToString(dt.Rows.Count));
 
-                        // Apply dt changes and return
-                        //dt.AcceptChanges();
-                        conn.Close();
-                        return dt;
+                            conn.Close();
+                            retry = -1;
+                            return dt;
+                        }
                     }
                 }
+                catch (Exception ex)
+                {
+                    GlobalVars.LogDb($"{errFrom} (Called: {calledFrom})", ex.Message);
+                    --retry;
+                }
             }
-            catch (Exception ex)
-            {
-                GlobalVars.LogDb($"{errFrom} (Called: {calledFrom})", ex.Message);
-                return null;
-            }
+            return null;
         }
         /// <summary>
         /// Get rows from single column query.
@@ -260,43 +264,47 @@ namespace HomeCinema.SQLFunc
         {
             // Initiate the list
             List<string> list = new List<string>();
-            // Create Connection to database
-            using (var conn = DbOpen())
+            int retry = RetryCount;
+            while (retry > 0)
             {
-                if (conn == null)
+                // Create Connection to database
+                using (var conn = DbOpen())
                 {
-                    GlobalVars.LogDb("SQLHelper-DbQrySingle", "Cannot establish connection to database (connection is null)!");
-                    return list;
-                }
-                using (var cmd = new SQLiteCommand(conn))
-                {
-                    string qry = $"SELECT {col} FROM {tableName}";
-                    cmd.CommandText = qry;
-
-                    // Execute query
-                    GlobalVars.LogDb($"SQLHelper-DbQrySingle (START)(From: {From})", "qry: " + qry);
-                    try
+                    if (conn == null)
                     {
-                        SQLiteDataReader r = cmd.ExecuteReader();
-                        // Get results
-                        while (r.Read())
-                        {
-                            string stringRes = r[0].ToString();
-                            if (String.IsNullOrWhiteSpace(stringRes) == false)
-                            {
-                                list.Add(stringRes);
-                            }
-                        }
+                        GlobalVars.LogDb("SQLHelper-DbQrySingle", "Cannot establish connection to database (connection is null)!");
+                        --retry;
+                        continue;
                     }
-                    catch { }
+                    using (var cmd = new SQLiteCommand(conn))
+                    {
+                        string qry = $"SELECT {col} FROM {tableName}";
+                        cmd.CommandText = qry;
 
-                    GlobalVars.LogDb($"SQLHelper-DbQrySingle (END)(From: {From})", "Rows returned: " + list.Count.ToString());
-                    conn.Close();
+                        // Execute query
+                        GlobalVars.LogDb($"SQLHelper-DbQrySingle (START)(From: {From})", "qry: " + qry);
+                        try
+                        {
+                            SQLiteDataReader r = cmd.ExecuteReader();
+                            // Get results
+                            while (r.Read())
+                            {
+                                string stringRes = r[0].ToString();
+                                if (String.IsNullOrWhiteSpace(stringRes) == false)
+                                {
+                                    list.Add(stringRes);
+                                }
+                            }
+                            retry = -1;
+                        }
+                        catch { --retry; }
 
-                    // Return list of results
-                    return list;
+                        GlobalVars.LogDb($"SQLHelper-DbQrySingle (END)(From: {From})", "Rows returned: " + list.Count.ToString());
+                        conn.Close();
+                    }
                 }
             }
+            return list; // Return list of results
         }
         /// <summary>
         /// // Insert new record, return ID of last insert. Otherwise 0
@@ -308,6 +316,7 @@ namespace HomeCinema.SQLFunc
         public static int DbInsertMovie(Dictionary<string, string> dtInfo, Dictionary<string, string> dtFilepath, string callFrom)
         {
             // Setups
+            int retry = RetryCount;
             string errFrom = $"SQLHelper-DbInsertMovie [calledFrom: {callFrom}]";
             int LastID = 0; // Last ID Inserted succesfully
             string infoCols = "", infoVals = ""; // info table
@@ -342,67 +351,75 @@ namespace HomeCinema.SQLFunc
             fileCols = fileCols.TrimEnd(',');
             fileVals = fileVals.TrimEnd(',');
 
-            // Create Connection to database
-            using (var conn = DbOpen())
+            while (retry > 0)
             {
-                if (conn == null)
+                // Create Connection to database
+                using (var conn = DbOpen())
                 {
-                    GlobalVars.LogDb("SQLHelper-DbInsertMovie", "Cannot establish connection to database (connection is null)!");
-                    return -1;
-                }
-                // Make Command and Transaction
-                var cmd = new SQLiteCommand(conn);
-                var transaction = conn.BeginTransaction();
-
-                // Insert entry
-                cmd.CommandText = $"INSERT INTO {GlobalVars.DB_TNAME_INFO} ({infoCols}) VALUES({infoVals});";
-                successCode = cmd.ExecuteNonQuery();
-                LastID = (int)conn.LastInsertRowId;
-
-                if (successCode > 0)
-                {
-                    cmd.CommandText = $"INSERT INTO {GlobalVars.DB_TNAME_FILEPATH} (Id, {fileCols}) VALUES({LastID},{fileVals});";
-                    successCode = cmd.ExecuteNonQuery();
-                    // Add cover image by capturing media
-                    string coverFilepath = GlobalVars.PATH_IMG + LastID + ".jpg";
-                    try
+                    if (conn == null)
                     {
-                        if (File.Exists(fPathFile))
+                        GlobalVars.LogDb("SQLHelper-DbInsertMovie", "Cannot establish connection to database (connection is null)!");
+                        --retry;
+                        continue;
+                    }
+                    // Make Command and Transaction
+                    var cmd = new SQLiteCommand(conn);
+                    var transaction = conn.BeginTransaction();
+
+                    // Insert entry
+                    cmd.CommandText = $"INSERT INTO {GlobalVars.DB_TNAME_INFO} ({infoCols}) VALUES({infoVals});";
+                    successCode = cmd.ExecuteNonQuery();
+                    LastID = (int)conn.LastInsertRowId;
+
+                    if (successCode > 0)
+                    {
+                        cmd.CommandText = $"INSERT INTO {GlobalVars.DB_TNAME_FILEPATH} (Id, {fileCols}) VALUES({LastID},{fileVals});";
+                        successCode = cmd.ExecuteNonQuery();
+                        // Add cover image by capturing media
+                        string coverFilepath = GlobalVars.PATH_IMG + LastID + ".jpg";
+                        try
                         {
-                            using (ShellFile shellFile = ShellFile.FromFilePath(fPathFile))
+                            if (File.Exists(fPathFile))
                             {
-                                using (Bitmap bm = shellFile.Thumbnail.Bitmap)
+                                using (ShellFile shellFile = ShellFile.FromFilePath(fPathFile))
                                 {
-                                    bm.Save(coverFilepath, System.Drawing.Imaging.ImageFormat.Jpeg);
+                                    using (Bitmap bm = shellFile.Thumbnail.Bitmap)
+                                    {
+                                        bm.Save(coverFilepath, System.Drawing.Imaging.ImageFormat.Jpeg);
+                                    }
                                 }
                             }
                         }
+                        catch (Exception exShell)
+                        {
+                            GlobalVars.LogDb($"{errFrom} (ShellFile thumbnail Error)({coverFilepath})", exShell.Message);
+                        }
                     }
-                    catch (Exception exShell)
+                    else
                     {
-                        GlobalVars.LogDb($"{errFrom} (ShellFile thumbnail Error)({coverFilepath})", exShell.Message);
+                        GlobalVars.LogDb($"{errFrom} [Insert failed code: {successCode.ToString()}]", "Query: " + cmd.CommandText);
                     }
-                }
-                else
-                {
-                    GlobalVars.LogDb($"{errFrom} [Insert failed code: {successCode.ToString()}]", "Query: " + cmd.CommandText);
-                }
 
-                // Commit transaction
-                if (successCode > 0)
-                {
-                    transaction.Commit();
-                    GlobalVars.LogDb($"{errFrom} (FINISHED INSERT)", $"Last ID inserted: ({LastID.ToString()})");
+                    // Commit transaction
+                    if (successCode > 0)
+                    {
+                        transaction.Commit();
+                        GlobalVars.LogDb($"{errFrom} (FINISHED INSERT)", $"Last ID inserted: ({LastID.ToString()})");
+                        retry = -1;
+                    }
+                    else
+                    {
+                        transaction.Rollback();
+                        --retry;
+                    }
+                    transaction.Dispose();
+
+                    // Close Connection to DB
+                    cmd.Dispose();
+                    conn.Close();
                 }
-                transaction.Dispose();
-
-                // Close Connection to DB
-                cmd.Dispose();
-                conn.Close();
-
-                // Return LastID inserted.
-                return LastID;
             }
+            return LastID; // Return LastID inserted.
         }
         /// <summary>
         /// Update Table INFO, with new values.
