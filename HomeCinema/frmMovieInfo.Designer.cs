@@ -85,7 +85,7 @@
             this.label15 = new System.Windows.Forms.Label();
             this.txtPathFile = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtEpName = new System.Windows.Forms.TextBox();
+            this.txtNameOrig = new System.Windows.Forms.TextBox();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
@@ -210,7 +210,7 @@
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.label5);
-            this.tabPage1.Controls.Add(this.txtEpName);
+            this.tabPage1.Controls.Add(this.txtNameOrig);
             this.tabPage1.Controls.Add(this.btnGetImdb);
             this.tabPage1.Controls.Add(this.btnFetchData);
             this.tabPage1.Controls.Add(this.label8);
@@ -751,14 +751,14 @@
             this.label5.Text = "Original Title";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // txtEpName
+            // txtNameOrig
             // 
-            this.txtEpName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEpName.Location = new System.Drawing.Point(162, 104);
-            this.txtEpName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtEpName.Name = "txtEpName";
-            this.txtEpName.Size = new System.Drawing.Size(526, 30);
-            this.txtEpName.TabIndex = 36;
+            this.txtNameOrig.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNameOrig.Location = new System.Drawing.Point(162, 104);
+            this.txtNameOrig.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtNameOrig.Name = "txtNameOrig";
+            this.txtNameOrig.Size = new System.Drawing.Size(526, 30);
+            this.txtNameOrig.TabIndex = 36;
             // 
             // frmMovieInfo
             // 
@@ -849,6 +849,6 @@
         private System.Windows.Forms.Button btnGenreRemove;
         private System.Windows.Forms.Button btnGenreAdd;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox txtEpName;
+        private System.Windows.Forms.TextBox txtNameOrig;
     }
 }

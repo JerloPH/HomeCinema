@@ -204,7 +204,7 @@ namespace HomeCinema
                                                                   // Set textboxes
                     txtIMDB.Text = r1.ToString();
                     txtName.Text = r2.ToString();
-                    txtEpName.Text = r3.ToString();
+                    txtNameOrig.Text = r3.ToString();
                     txtSeriesName.Text = r4.ToString();
                     txtSeasonNum.Text = r5.ToString();
                     txtEpNum.Text = r6.ToString();
@@ -396,7 +396,7 @@ namespace HomeCinema
                 entry.Add(HCInfo.Id.ToString(), GlobalVars.ValidateEmptyOrNull(txtID.Text));
                 entry.Add(HCInfo.imdb.ToString(), GlobalVars.ValidateEmptyOrNull(txtIMDB.Text));
                 entry.Add(HCInfo.name.ToString(), GlobalVars.ValidateEmptyOrNull(txtName.Text));
-                entry.Add(HCInfo.name_orig.ToString(), GlobalVars.ValidateEmptyOrNull(txtEpName.Text));
+                entry.Add(HCInfo.name_orig.ToString(), GlobalVars.ValidateEmptyOrNull(txtNameOrig.Text));
                 entry.Add(HCInfo.name_series.ToString(), GlobalVars.ValidateEmptyOrNull(txtSeriesName.Text));
                 entry.Add(HCInfo.season.ToString(), GlobalVars.ValidateEmptyOrNull(txtSeasonNum.Text));
                 entry.Add(HCInfo.episode.ToString(), GlobalVars.ValidateEmptyOrNull(txtEpNum.Text));
@@ -588,7 +588,7 @@ namespace HomeCinema
             {
                 if (!r2.Equals(txtName.Text))
                 {
-                    txtEpName.Text = r2;
+                    txtNameOrig.Text = r2;
                 }
             }
             if (String.IsNullOrWhiteSpace(r3) == false)
