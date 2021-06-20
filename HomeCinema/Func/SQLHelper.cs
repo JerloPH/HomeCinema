@@ -36,90 +36,57 @@ namespace HomeCinema.SQLFunc
         public static bool Initiate(string InitiatedFrom)
         {
             string CalledFrom = "SQLHelper (Instance)-" + InitiatedFrom;
-            try
+            DbExecNonQuery($"CREATE TABLE IF NOT EXISTS '{GlobalVars.DB_TNAME_INFO}' (" +
+                "'Id'	INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "'imdb'	TEXT DEFAULT 0, " +
+                "'name'	TEXT, " +
+                "'name_ep'	TEXT, " +
+                "'name_series'	TEXT, " +
+                "'season'	INTEGER, " +
+                "'episode'	INTEGER, " +
+                "'country'	TEXT, " +
+                "'category'	VARCHAR(1) DEFAULT 0, " + // 0-None | 1-MOVIE | 2-TVSERIES | 3-ANIMEMOVIE | 4-ANIME SERIES | 5-ANIMATED MOVIE | 6-CARTOON SERIES
+                "'genre'	TEXT, " +
+                "'studio'	TEXT, " +
+                "'producer'	TEXT, " +
+                "'director'	TEXT, " +
+                "'artist'	TEXT, " +
+                "'year'	VARCHAR(5) DEFAULT 0, " +
+                "'summary'  TEXT DEFAULT 'This has no summary');", CalledFrom);
+            DbExecNonQuery($"CREATE TABLE IF NOT EXISTS '{GlobalVars.DB_TNAME_FILEPATH}' (" +
+                "[Id]	INTEGER  PRIMARY KEY AUTOINCREMENT, " +
+                "[file]	TEXT, " +
+                "[sub]	TEXT, " +
+                "[trailer] TEXT);", CalledFrom);
+            var success = DbExecNonQuery($"CREATE TABLE IF NOT EXISTS `config` (" +
+                "[Id] INTEGER  PRIMARY KEY AUTOINCREMENT, " +
+                "[appBuild]	INTEGER, " +
+                "[dbVersion] INTEGER);", CalledFrom);
+            if (success)
             {
-                using (var conn = DbOpen()) // connect to database
+                int dbVersion = 1;
+                var result = DbQuery("SELECT * FROM `config`", CalledFrom);
+                if (result != null)
                 {
-                    if (conn == null) { return false; }
-                    // Create Table and Schema
-                    using (var cmd = new SQLiteCommand(conn))
+                    if (result.Rows.Count < 1)
                     {
-                        cmd.CommandText = $"CREATE TABLE IF NOT EXISTS '{GlobalVars.DB_TNAME_INFO}' (" +
-                        "'Id'	INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        "'imdb'	TEXT DEFAULT 0, " +
-                        "'name'	TEXT, " +
-                        "'name_ep'	TEXT, " +
-                        "'name_series'	TEXT, " +
-                        "'season'	INTEGER, " +
-                        "'episode'	INTEGER, " +
-                        "'country'	TEXT, " +
-                        "'category'	VARCHAR(1) DEFAULT 0, " + // 0-None | 1-MOVIE | 2-TVSERIES | 3-ANIMEMOVIE | 4-ANIME SERIES | 5-ANIMATED MOVIE | 6-CARTOON SERIES
-                        "'genre'	TEXT, " +
-                        "'studio'	TEXT, " +
-                        "'producer'	TEXT, " +
-                        "'director'	TEXT, " +
-                        "'artist'	TEXT, " +
-                        "'year'	VARCHAR(5) DEFAULT 0, " +
-                        "'summary'  TEXT DEFAULT 'This has no summary');";
-                        cmd.ExecuteNonQuery();
+                        DbExecNonQuery("INSERT INTO `config` (`Id`, `appBuild`, `dbVersion`)" +
+                            $" VALUES (1, {GlobalVars.HOMECINEMA_BUILD}, 1);", CalledFrom);
+                        dbVersion = 1;
                     }
-                    // Create filepath Table and Schema
-                    using (var cmd2 = new SQLiteCommand(conn))
+                    else
                     {
-                        cmd2.CommandText = $"CREATE TABLE IF NOT EXISTS '{GlobalVars.DB_TNAME_FILEPATH}' (" +
-                        "[Id]	INTEGER  PRIMARY KEY AUTOINCREMENT, " +
-                        "[file]	TEXT, " +
-                        "[sub]	TEXT, " +
-                        "[trailer] TEXT);";
-                        cmd2.ExecuteNonQuery();
+                        try { dbVersion = Convert.ToInt32(result.Rows[0]["dbVersion"]); }
+                        catch { dbVersion = 1; }
                     }
-                    // Create 'config' table, and saves db Version
-                    using (var sqlcmd = new SQLiteCommand(conn))
+                    if (dbVersion < GlobalVars.HOMECINEMA_DBVER)
                     {
-                        int dbVersion = 1;
-                        sqlcmd.CommandText = $"CREATE TABLE IF NOT EXISTS `config` (" +
-                        "[Id] INTEGER  PRIMARY KEY AUTOINCREMENT, " +
-                        "[appBuild]	INTEGER, " +
-                        "[dbVersion] INTEGER);";
-                        var result = sqlcmd.ExecuteNonQuery();
-                        if (result == 0)
-                        {
-                            sqlcmd.CommandText = "INSERT INTO `config` (`Id`, `appBuild`, `dbVersion`)" +
-                                $" VALUES (1, {GlobalVars.HOMECINEMA_BUILD}, 1);";
-                            sqlcmd.ExecuteNonQuery();
-                            dbVersion = 1;
-                        }
-                        else
-                        {
-                            var dt = new DataTable();
-                            var adapter = new SQLiteDataAdapter("SELECT * FROM `config`", conn);
-                            adapter.Fill(dt);
-                            if (dt.Rows.Count > 0)
-                            {
-                                try { dbVersion = Convert.ToInt32(dt.Rows[0]["dbVersion"]); }
-                                catch { dbVersion = 1; };
-                            }
-                            else
-                            {
-                                sqlcmd.CommandText = "INSERT INTO `config` (`Id`, `appBuild`, `dbVersion`)" +
-                                    $" VALUES (1, {GlobalVars.HOMECINEMA_BUILD}, 1);";
-                                sqlcmd.ExecuteNonQuery();
-                                dbVersion = 1;
-                            }
-                            dt.Dispose();
-                        }
-                        if (dbVersion < GlobalVars.HOMECINEMA_DBVER)
-                        {
-                            GlobalVars.ShowNoParent("Outdated database!");
-                        }
+                        GlobalVars.ShowNoParent("Outdated database!");
                     }
-                    // Close Connection to DB
-                    conn.Close();
-                    GlobalVars.LogDb(CalledFrom, "Database is loaded succesfully!\n " + GlobalVars.DB_PATH);
-                    return true;
                 }
             }
-            catch (Exception ex) { GlobalVars.ShowError(CalledFrom, ex, false); return false; }
+            GlobalVars.LogDb(CalledFrom, "Database is loaded succesfully!\n " + GlobalVars.DB_PATH);
+            return true;
         }
         /// <summary>
         /// Open connection to SQLite database.
