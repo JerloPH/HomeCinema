@@ -63,28 +63,26 @@ namespace HomeCinema.SQLFunc
                 "[Id] INTEGER  PRIMARY KEY AUTOINCREMENT, " +
                 "[appBuild]	INTEGER, " +
                 "[dbVersion] INTEGER);", CalledFrom);
-            if (success)
+
+            int dbVersion = 1;
+            var result = DbQuery("SELECT * FROM `config`", CalledFrom);
+            if (result != null)
             {
-                int dbVersion = 1;
-                var result = DbQuery("SELECT * FROM `config`", CalledFrom);
-                if (result != null)
+                if (result.Rows.Count < 1)
                 {
-                    if (result.Rows.Count < 1)
-                    {
-                        DbExecNonQuery("INSERT INTO `config` (`Id`, `appBuild`, `dbVersion`)" +
-                            $" VALUES (1, {GlobalVars.HOMECINEMA_BUILD}, 1);", CalledFrom);
-                        dbVersion = 1;
-                    }
-                    else
-                    {
-                        try { dbVersion = Convert.ToInt32(result.Rows[0]["dbVersion"]); }
-                        catch { dbVersion = 1; }
-                    }
-                    if (dbVersion < GlobalVars.HOMECINEMA_DBVER)
-                    {
-                        //GlobalVars.ShowNoParent("Outdated database!");
-                        DBUpgradeDatabase(dbVersion);
-                    }
+                    DbExecNonQuery("INSERT INTO `config` (`Id`, `appBuild`, `dbVersion`)" +
+                        $" VALUES (1, {GlobalVars.HOMECINEMA_BUILD}, 1);", CalledFrom);
+                    dbVersion = 1;
+                }
+                else
+                {
+                    try { dbVersion = Convert.ToInt32(result.Rows[0]["dbVersion"]); }
+                    catch { dbVersion = 1; }
+                }
+                if (dbVersion < GlobalVars.HOMECINEMA_DBVER)
+                {
+                    //GlobalVars.ShowNoParent("Outdated database!");
+                    DBUpgradeDatabase(dbVersion);
                 }
             }
             GlobalVars.LogDb(CalledFrom, "Database is loaded succesfully!\n " + GlobalVars.DB_PATH);
@@ -94,10 +92,19 @@ namespace HomeCinema.SQLFunc
         {
             // Upgrade dbVer to match requirements
             int dbVer = dbVersion;
+            string calledFrom = "DBUpgradeDatabase";
             while (dbVer < GlobalVars.HOMECINEMA_DBVER)
             {
-                //
+                GlobalVars.LogDb(calledFrom, $"Loaded dbVer: ({dbVersion}), Current dbVer: ({dbVer})");
+                switch (dbVer)
+                {
+                    case 1:
+                        DbExecNonQuery("ALTER TABLE `info` RENAME COLUMN `name_ep` TO `name_orig`", calledFrom);
+                        dbVer += 1;
+                        break;
+                }
             }
+            DbExecNonQuery($"UPDATE `config` SET `dbVersion`={dbVer} WHERE `Id`=1;", calledFrom);
         }
         /// <summary>
         /// Open connection to SQLite database.
@@ -132,7 +139,7 @@ namespace HomeCinema.SQLFunc
                     if (conn == null)
                     {
                         GlobalVars.LogDb(errFrom, "Cannot establish connection to database (connection is null)!");
-                        --retry;
+                        retry -= 1;
                         continue;
                     }
                     using (var cmd = new SQLiteCommand(conn))
@@ -140,25 +147,24 @@ namespace HomeCinema.SQLFunc
                         cmd.CommandText = qry;
                         try
                         {
-                            GlobalVars.LogDb("Executing query..", qry);
+                            GlobalVars.LogDb($"Executing query..Retry left: ({retry})", qry);
                             DONE = (cmd.ExecuteNonQuery() > 0);
                             retry = -1;
                         }
                         catch (SQLiteException ex)
                         {
-                            GlobalVars.ShowError("SQLHelper-DbExecNonQuery (SQL Error)", ex);
-                            --retry;
+                            GlobalVars.ShowError("SQLHelper-DbExecNonQuery (SQL Error)", ex, false);
+                            retry -= 1;
                         }
                         catch (Exception ex)
                         {
-                            GlobalVars.ShowError("SQLHelper-DbExecNonQuery (Error)", ex);
-                            --retry;
+                            GlobalVars.ShowError("SQLHelper-DbExecNonQuery (Error)", ex, false);
+                            retry -= 1;
                         }
                     }
                 }
-                return DONE;
             }
-            return false;
+            return DONE;
         }
         /// <summary>
         /// Initialize a DataTable, with COLUMN [Id], and other columns.
