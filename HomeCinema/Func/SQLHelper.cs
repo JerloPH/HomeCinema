@@ -42,7 +42,7 @@ namespace HomeCinema.SQLFunc
                 "'imdb'	TEXT DEFAULT 0, " +
                 "'name'	TEXT, " +
                 "'name_ep'	TEXT, " +
-                "'name_series'	TEXT, " +
+                "'name_orig'  TEXT, " +
                 "'season'	INTEGER, " +
                 "'episode'	INTEGER, " +
                 "'country'	TEXT, " +
