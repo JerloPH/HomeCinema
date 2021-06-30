@@ -451,16 +451,15 @@ namespace HomeCinema.SQLFunc
             return LastID; // Return LastID inserted.
         }
         /// <summary>
-        /// Update Table INFO, with new values.
+        /// Update specified table wih Dictionary keypair values.
         /// </summary>
+        /// <param name="TableName">Table name to update</param>
         /// <param name="dt">Dictionary that contains key-pair of column-value.</param>
         /// <param name="from">Method calling.</param>
         /// <returns>True if succesful. Otherwise, false.</returns>
-        public static bool DbUpdateInfo(Dictionary<string, string> dt, string from)
+        public static bool DbUpdateTable(string TableName, Dictionary<string, string> dt, string callFrom)
         {
             // Set values
-            string TableName = GlobalVars.DB_TNAME_INFO;
-            string callFrom = $"SQLHelper-DbUpdateInfo (calledFrom: {from})";
             string valpair = "";
             string Id = "";
             try
@@ -498,41 +497,24 @@ namespace HomeCinema.SQLFunc
             return false;
         }
         /// <summary>
-        /// Update Table FILEPATH, with new values.
+        /// Update Table INFO, with new values.
         /// </summary>
-        /// <param name="dt">DataTable which contains the new values.</param>
+        /// <param name="dt">Dictionary that contains key-pair of column-value.</param>
         /// <param name="from">Method calling.</param>
         /// <returns>True if succesful. Otherwise, false.</returns>
-        public static bool DbUpdateFilepath(DataTable dt, string from)
+        public static bool DbUpdateInfo(Dictionary<string, string> dt, string from)
         {
-            // Set values
-            string TableName = GlobalVars.DB_TNAME_FILEPATH;
-            string callFrom = $"SQLHelper-DbUpdateFilepath (CalledFrom: {from})";
-            string valpair = "";
-            string r0 = "";
-            foreach (DataRow r in dt.Rows)
-            {
-                r0 = r[0].ToString();
-                for (int i = 1; i < GlobalVars.DB_TABLE_FILEPATH.Length; i++)
-                {
-                    valpair += "[" + GlobalVars.DB_TABLE_FILEPATH[i] + "]=" + GlobalVars.QryString(r[i].ToString(), true) + ",";
-                }
-            }
-            valpair = valpair.TrimEnd(',');
-
-            // dispose table
-            dt.Clear();
-            dt.Dispose();
-            // Query to db
-            string qry = $"UPDATE {TableName} " +
-                         "SET " + valpair + " " +
-                        $"WHERE [Id] = {r0}";
-            if (DbExecNonQuery(qry, callFrom))
-            {
-                GlobalVars.LogDb(callFrom, $"ID ({r0}) is updated Succesfully!");
-                return true;
-            }
-            return false;
+            return DbUpdateTable(GlobalVars.DB_TNAME_INFO, dt, $"SQLHelper-DbUpdateInfo (calledFrom: {from})");
+        }
+        /// <summary>
+        /// Update Table FILEPATH, with new values.
+        /// </summary>
+        /// <param name="dt">Dictionary which contains the new values.</param>
+        /// <param name="from">Method calling.</param>
+        /// <returns>True if succesful. Otherwise, false.</returns>
+        public static bool DbUpdateFilepath(Dictionary<string, string> dt, string from)
+        {
+            return DbUpdateTable(GlobalVars.DB_TNAME_FILEPATH, dt, $"SQLHelper-DbUpdateFilepath (CalledFrom: {from})");
         }
         /// <summary>
         /// Delete a MOVIE from Database.

@@ -372,6 +372,7 @@ namespace HomeCinema
         {
             // variables
             string callFrom = $"frmMovieInfo ({Name})-btnSave_Click"; // called From
+            bool ContAfterQry = false;
 
             // Exit if Movie Name is empty
             if (String.IsNullOrWhiteSpace(txtName.Text))
@@ -411,26 +412,17 @@ namespace HomeCinema
                 entry.Add(HCInfo.summary.ToString(), GlobalVars.ValidateEmptyOrNull(txtSummary.Text));
 
                 // Check if first query successfully executed
-                bool ContAfterQry = SQLHelper.DbUpdateInfo(entry, callFrom);
+                ContAfterQry = SQLHelper.DbUpdateInfo(entry, callFrom);
 
                 // IF INFO is executed, continue to FILEPATH
                 if (ContAfterQry)
                 {
-                    // DT for Filepath
-                    DataTable dtFile = SQLHelper.InitializeDT(true, GlobalVars.DB_TABLE_FILEPATH);
-                    // Add row values
-                    DataRow rowFile = dtFile.NewRow();
-                    rowFile[0] = GlobalVars.ValidateEmptyOrNull(txtID.Text); // ID
-                    rowFile[1] = GlobalVars.ValidateEmptyOrNull(txtPathFile.Text); // file
-                    rowFile[2] = GlobalVars.ValidateEmptyOrNull(txtPathSub.Text); // sub
-                    rowFile[3] = GlobalVars.ValidateEmptyOrNull(txtPathTrailer.Text); // trailers
-
-                    dtFile.Rows.Add(rowFile);
-                    dtFile.AcceptChanges();
-                    SQLHelper.DbUpdateFilepath(dtFile, callFrom);
-                    // dispose FILEPATH table
-                    dtFile.Clear();
-                    dtFile.Dispose();
+                    var entryFile = new Dictionary<string, string>();
+                    entryFile.Add(HCFile.Id.ToString(), GlobalVars.ValidateEmptyOrNull(txtID.Text)); // ID
+                    entryFile.Add(HCFile.file.ToString(), GlobalVars.ValidateEmptyOrNull(txtPathFile.Text)); // file
+                    entryFile.Add(HCFile.sub.ToString(), GlobalVars.ValidateEmptyOrNull(txtPathSub.Text)); // sub
+                    entryFile.Add(HCFile.trailer.ToString(), GlobalVars.ValidateEmptyOrNull(txtPathTrailer.Text)); // trailers
+                    SQLHelper.DbUpdateFilepath(entryFile, callFrom);
                 }
             }
 
