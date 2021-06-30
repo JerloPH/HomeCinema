@@ -59,7 +59,7 @@ namespace HomeCinema.SQLFunc
                 "[file]	TEXT, " +
                 "[sub]	TEXT, " +
                 "[trailer] TEXT);", CalledFrom);
-            var success = DbExecNonQuery($"CREATE TABLE IF NOT EXISTS `config` (" +
+            DbExecNonQuery($"CREATE TABLE IF NOT EXISTS `config` (" +
                 "[Id] INTEGER  PRIMARY KEY AUTOINCREMENT, " +
                 "[appBuild]	INTEGER, " +
                 "[dbVersion] INTEGER);", CalledFrom);
@@ -126,10 +126,21 @@ namespace HomeCinema.SQLFunc
         /// </summary>
         /// <param name="qry">SQL string query.</param>
         /// <param name="calledFrom">Caller of this function.</param>
-        /// <returns>True, if successful. Otherwise, false</returns>
+        /// <returns>True, if query affected 1 or more rows. Otherwise, false</returns>
         public static bool DbExecNonQuery(string qry, string calledFrom)
         {
-            bool DONE = false;
+            return (DbExecNonQuery(qry, calledFrom, -1) > 0);
+        }
+        /// <summary>
+        /// Execute a query that has no return row.
+        /// </summary>
+        /// <param name="qry">SQL string query.</param>
+        /// <param name="calledFrom">Caller of this function.</param>
+        /// <param name="defaultValue">Default value when query is unsuccessful</param>
+        /// <returns>Returns query result as int</returns>
+        public static int DbExecNonQuery(string qry, string calledFrom, int defaultValue)
+        {
+            int DONE = defaultValue;
             int retry = RetryCount;
             string errFrom = $"SQLHelper-DbExecNonQuery [Called by: {calledFrom}]";
             while (retry > 0)
@@ -148,7 +159,7 @@ namespace HomeCinema.SQLFunc
                         try
                         {
                             GlobalVars.LogDb($"Executing query..Retry left: ({retry})", qry);
-                            DONE = (cmd.ExecuteNonQuery() > 0);
+                            DONE = cmd.ExecuteNonQuery();
                             retry = -1;
                         }
                         catch (SQLiteException ex)
