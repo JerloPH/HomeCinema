@@ -106,7 +106,7 @@ namespace HomeCinema.SQLFunc
                         break;
                 }
             }
-            DbExecNonQuery($"UPDATE `config` SET `dbVersion`={dbVer} WHERE `Id`=1;", calledFrom);
+            DbExecNonQuery($"UPDATE `config` SET `dbVersion`={dbVer}, `appBuild`={GlobalVars.HOMECINEMA_BUILD} WHERE `Id`=1;", calledFrom);
         }
         /// <summary>
         /// Open connection to SQLite database.
