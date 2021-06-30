@@ -99,8 +99,10 @@ namespace HomeCinema.SQLFunc
                 switch (dbVer)
                 {
                     case 1:
-                        DbExecNonQuery("ALTER TABLE `info` RENAME COLUMN `name_ep` TO `name_orig`", calledFrom);
-                        dbVer += 1;
+                        if (DbExecNonQuery("ALTER TABLE `info` RENAME COLUMN `name_ep` TO `name_orig`", calledFrom, -1) == 0)
+                        {
+                            dbVer += 1;
+                        }
                         break;
                 }
             }
