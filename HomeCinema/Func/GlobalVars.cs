@@ -90,7 +90,7 @@ namespace HomeCinema
 
         public static string DB_TNAME_INFO = "info";
         public static string DB_TNAME_FILEPATH = "filepath";
-        public static string[] DB_TABLE_INFO = new string[] { "Id", "imdb", "name", "name_ep", "name_series", "season", "episode", "country", "category", "genre", "studio", "producer", "director", "artist", "year", "summary" };
+        
         public static string[] DB_TABLE_FILEPATH = new string[] { "Id", "file", "sub", "trailer" };
 
         public static string[] DB_INFO_CATEGORY = new string[] { "None", "Movie", "TV Series", "Anime Movie", "Anime Series", "Animated Movie", "Cartoon Series" };
