@@ -130,7 +130,107 @@ namespace HomeCinema
         public static Form formSetting = null; // Check if settings is already open
         public static Form formAbout = null;
 
-        //######################################################################################################## Functions 
+        //######################################################################################################## Functions
+        // Check Settings and Load values to App
+        public static void LoadSettings()
+        {
+            Config config;
+            string errorFrom = "frmMain-LoadSettings";
+            string contents, sLastPathCover, sLastPathVideo;
+            // If file does not exist, create it with default values from [Config.cs]
+            if (File.Exists(FILE_SETTINGS) == false)
+            {
+                config = new Config();
+                contents = JsonConvert.SerializeObject(config, Formatting.Indented);
+                WriteToFile(FILE_SETTINGS, contents);
+            }
+            else
+            {
+                // Load file contents to Config
+                contents = ReadStringFromFile(FILE_SETTINGS, $"{errorFrom} [FILE_SETTINGS]");
+                config = JsonConvert.DeserializeObject<Config>(contents);
+            }
+
+            // Get Max log file size
+            SET_LOGMAXSIZE = config.logsize * BYTES;
+            // Get last path of poster image
+            sLastPathCover = config.lastPathCover;
+            if (String.IsNullOrWhiteSpace(sLastPathCover) == false)
+            {
+                PATH_GETCOVER = sLastPathCover;
+            }
+            else
+            {
+                try
+                {
+                    PATH_GETCOVER = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+                }
+                catch (Exception ex)
+                {
+                    ShowError($"{errorFrom} [PATH_GETCOVER]", ex, false);
+                }
+            }
+            // Get last path of media file when adding new one
+            sLastPathVideo = config.lastPathVideo;
+            if (String.IsNullOrWhiteSpace(sLastPathVideo) == false)
+            {
+                PATH_GETVIDEO = sLastPathVideo;
+            }
+            else
+            {
+                try
+                {
+                    PATH_GETVIDEO = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
+                }
+                catch (Exception ex)
+                {
+                    ShowError($"{errorFrom} [PATH_GETVIDEO]", ex, false);
+                }
+            }
+
+            SET_OFFLINE = Convert.ToBoolean(config.offlineMode); // Get Offline Mode
+            SET_AUTOUPDATE = Convert.ToBoolean(config.autoUpdate); // Get auto update
+            SET_AUTOPLAY = Convert.ToBoolean(config.instantPlayMovie); // AutoPlay Movie, instead of Viewing its Info / Details
+            SET_ITEMLIMIT = config.itemMaxLimit; // Limit MAX items in query 
+            SET_SEARCHLIMIT = config.searchLimit; // Limit Item result on IMDB searching
+            SET_TIMEOUT = config.setTimeOut; // TimeOut for Internet connections
+            SET_AUTOCLEAN = Convert.ToBoolean(config.autoClean); // Auto clean on startup
+            SET_CONFIRMSEARCH = Convert.ToBoolean(config.confirmSearch); // Confirm prompts on search and reload
+
+            // Set colors
+            try
+            {
+                SET_COLOR_BG = ColorTranslator.FromHtml($"#{config.BackgroundColor}");
+            }
+            catch { SET_COLOR_BG = Color.Black; }
+            try
+            {
+                SET_COLOR_FONT = ColorTranslator.FromHtml($"#{config.FontColor}");
+            }
+            catch { SET_COLOR_FONT = Color.White; }
+        }
+        // Save settings to replace old
+        public static bool SaveSettings()
+        {
+            var config = new Config();
+            config.logsize = (int)(SET_LOGMAXSIZE / BYTES);
+            config.offlineMode = Convert.ToInt16(SET_OFFLINE);
+            config.lastPathCover = PATH_GETCOVER;
+            config.lastPathVideo = PATH_GETVIDEO;
+            config.autoUpdate = Convert.ToInt16(SET_AUTOUPDATE);
+            config.instantPlayMovie = Convert.ToInt16(SET_AUTOPLAY);
+            config.autoClean = Convert.ToInt16(SET_AUTOCLEAN);
+            config.itemMaxLimit = SET_ITEMLIMIT;
+            config.searchLimit = SET_SEARCHLIMIT;
+            config.setTimeOut = SET_TIMEOUT;
+            config.BackgroundColor = SET_COLOR_BG.ToArgb().ToString("x");
+            config.FontColor = SET_COLOR_FONT.ToArgb().ToString("x");
+            config.confirmSearch = Convert.ToInt16(SET_CONFIRMSEARCH);
+
+            // Seriliaze to JSON
+            string json = JsonConvert.SerializeObject(config, Formatting.Indented);
+            return WriteToFile(FILE_SETTINGS, json);
+        }
         /// <summary>
         /// Log database-related functions, to text file.
         /// </summary>
@@ -284,106 +384,6 @@ namespace HomeCinema
                 ShowError("GlobalVars-ShowYesNo", ex, false);
             }
             return false;
-        }
-        // Check Settings and Load values to App
-        public static void LoadSettings()
-        {
-            Config config;
-            string errorFrom = "frmMain-LoadSettings";
-            string contents, sLastPathCover, sLastPathVideo;
-            // If file does not exist, create it with default values from [Config.cs]
-            if (File.Exists(FILE_SETTINGS) == false)
-            {
-                config = new Config();
-                contents = JsonConvert.SerializeObject(config, Formatting.Indented);
-                WriteToFile(FILE_SETTINGS, contents);
-            }
-            else
-            {
-                // Load file contents to Config
-                contents = ReadStringFromFile(FILE_SETTINGS, $"{errorFrom} [FILE_SETTINGS]");
-                config = JsonConvert.DeserializeObject<Config>(contents);
-            }
-
-            // Get Max log file size
-            SET_LOGMAXSIZE = config.logsize * BYTES;
-            // Get last path of poster image
-            sLastPathCover = config.lastPathCover;
-            if (String.IsNullOrWhiteSpace(sLastPathCover) == false)
-            {
-                PATH_GETCOVER = sLastPathCover;
-            }
-            else
-            {
-                try
-                {
-                    PATH_GETCOVER = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-                }
-                catch (Exception ex)
-                {
-                    ShowError($"{errorFrom} [PATH_GETCOVER]", ex, false);
-                }
-            }
-            // Get last path of media file when adding new one
-            sLastPathVideo = config.lastPathVideo;
-            if (String.IsNullOrWhiteSpace(sLastPathVideo) == false)
-            {
-                PATH_GETVIDEO = sLastPathVideo;
-            }
-            else
-            {
-                try
-                {
-                    PATH_GETVIDEO = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
-                }
-                catch (Exception ex)
-                {
-                    ShowError($"{errorFrom} [PATH_GETVIDEO]", ex, false);
-                }
-            }
-            
-            SET_OFFLINE = Convert.ToBoolean(config.offlineMode); // Get Offline Mode
-            SET_AUTOUPDATE = Convert.ToBoolean(config.autoUpdate); // Get auto update
-            SET_AUTOPLAY = Convert.ToBoolean(config.instantPlayMovie); // AutoPlay Movie, instead of Viewing its Info / Details
-            SET_ITEMLIMIT = config.itemMaxLimit; // Limit MAX items in query 
-            SET_SEARCHLIMIT = config.searchLimit; // Limit Item result on IMDB searching
-            SET_TIMEOUT = config.setTimeOut; // TimeOut for Internet connections
-            SET_AUTOCLEAN = Convert.ToBoolean(config.autoClean); // Auto clean on startup
-            SET_CONFIRMSEARCH = Convert.ToBoolean(config.confirmSearch); // Confirm prompts on search and reload
-
-            // Set colors
-            try
-            {
-                SET_COLOR_BG = ColorTranslator.FromHtml($"#{config.BackgroundColor}");
-            }
-            catch { SET_COLOR_BG = Color.Black; }
-            try
-            {
-                SET_COLOR_FONT = ColorTranslator.FromHtml($"#{config.FontColor}");
-            }
-            catch { SET_COLOR_FONT = Color.White; }
-        }
-        // Save settings to replace old
-        public static bool SaveSettings()
-        {
-            var config = new Config();
-            config.logsize = (int)(SET_LOGMAXSIZE / BYTES);
-            config.offlineMode = Convert.ToInt16(SET_OFFLINE);
-            config.lastPathCover = PATH_GETCOVER;
-            config.lastPathVideo = PATH_GETVIDEO;
-            config.autoUpdate = Convert.ToInt16(SET_AUTOUPDATE);
-            config.instantPlayMovie = Convert.ToInt16(SET_AUTOPLAY);
-            config.autoClean = Convert.ToInt16(SET_AUTOCLEAN);
-            config.itemMaxLimit = SET_ITEMLIMIT;
-            config.searchLimit = SET_SEARCHLIMIT;
-            config.setTimeOut = SET_TIMEOUT;
-            config.BackgroundColor = SET_COLOR_BG.ToArgb().ToString("x");
-            config.FontColor = SET_COLOR_FONT.ToArgb().ToString("x");
-            config.confirmSearch = Convert.ToInt16(SET_CONFIRMSEARCH);
-
-            // Seriliaze to JSON
-            string json = JsonConvert.SerializeObject(config, Formatting.Indented);
-            return WriteToFile(FILE_SETTINGS, json);
         }
         // Check Log File if exceed limit and delete it
         public static void CheckLogFile(string logFile, string calledFrom, string log)
