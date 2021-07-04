@@ -37,7 +37,8 @@ namespace HomeCinema.SQLFunc
         public static bool Initiate(string InitiatedFrom)
         {
             string CalledFrom = "SQLHelper (Instance)-" + InitiatedFrom;
-            var newDb = DbExecNonQuery($"CREATE TABLE IF NOT EXISTS '{GlobalVars.DB_TNAME_INFO}' (" +
+            int dbVersion = 1;
+            bool IsNewDb = DbExecNonQuery($"CREATE TABLE IF NOT EXISTS '{GlobalVars.DB_TNAME_INFO}' (" +
                 "'Id'	INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "'imdb'	TEXT DEFAULT 0, " +
                 "'name'	TEXT, " +
@@ -53,7 +54,7 @@ namespace HomeCinema.SQLFunc
                 "'director'	TEXT, " +
                 "'artist'	TEXT, " +
                 "'year'	VARCHAR(5) DEFAULT 0, " +
-                "'summary'  TEXT DEFAULT 'This has no summary');", CalledFrom, -1);
+                "'summary'  TEXT DEFAULT 'This has no summary');", CalledFrom, -1) == 0;
             DbExecNonQuery($"CREATE TABLE IF NOT EXISTS '{GlobalVars.DB_TNAME_FILEPATH}' (" +
                 "[Id]	INTEGER  PRIMARY KEY AUTOINCREMENT, " +
                 "[file]	TEXT, " +
@@ -63,8 +64,7 @@ namespace HomeCinema.SQLFunc
                 "[Id] INTEGER  PRIMARY KEY AUTOINCREMENT, " +
                 "[appBuild]	INTEGER, " +
                 "[dbVersion] INTEGER);", CalledFrom);
-
-            int dbVersion = 1;
+            
             var result = DbQuery("SELECT * FROM `config`", CalledFrom);
             if (result != null)
             {
@@ -74,8 +74,8 @@ namespace HomeCinema.SQLFunc
                         $" VALUES (" +
                         $"1," +
                         $" {GlobalVars.HOMECINEMA_BUILD}, " +
-                        $"{(newDb == 0 ? GlobalVars.HOMECINEMA_DBVER.ToString() : "1")});", CalledFrom);
-                    dbVersion = (newDb == 0) ? GlobalVars.HOMECINEMA_DBVER : 1;
+                        $"{(IsNewDb? GlobalVars.HOMECINEMA_DBVER.ToString() : "1")});", CalledFrom);
+                    dbVersion = IsNewDb ? GlobalVars.HOMECINEMA_DBVER : 1;
                 }
                 else
                 {
