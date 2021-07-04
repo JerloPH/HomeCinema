@@ -96,17 +96,27 @@ namespace HomeCinema.SQLFunc
             // Upgrade dbVer to match requirements
             int dbVer = dbVersion;
             string calledFrom = "DBUpgradeDatabase";
+            int retry = 5;
             while (dbVer < GlobalVars.HOMECINEMA_DBVER)
             {
-                GlobalVars.LogDb(calledFrom, $"Loaded dbVer: ({dbVersion}), Current dbVer: ({dbVer})");
-                switch (dbVer)
+                retry -= 1;
+                if (retry > 0)
                 {
-                    case 1:
-                        if (DbExecNonQuery("ALTER TABLE `info` RENAME COLUMN `name_ep` TO `name_orig`", calledFrom, -1) == 0)
-                        {
-                            dbVer += 1;
-                        }
-                        break;
+                    GlobalVars.LogDb(calledFrom, $"Loaded dbVer: ({dbVersion}), Current dbVer: ({dbVer})");
+                    switch (dbVer)
+                    {
+                        case 1:
+                            if (DbExecNonQuery("ALTER TABLE `info` RENAME COLUMN `name_ep` TO `name_orig`", calledFrom, -1) == 0)
+                            {
+                                dbVer += 1;
+                            }
+                            break;
+                    }
+                }
+                else
+                {
+                    GlobalVars.ShowWarning("Database is corrupted! Delete 'HomeCinema.db' to reset data collection.", "Unable to upgrade database");
+                    break;
                 }
             }
             DbExecNonQuery($"UPDATE `config` SET `dbVersion`={dbVer}, `appBuild`={GlobalVars.HOMECINEMA_BUILD} WHERE `Id`=1;", calledFrom);
