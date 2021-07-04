@@ -37,12 +37,12 @@ namespace HomeCinema.SQLFunc
         public static bool Initiate(string InitiatedFrom)
         {
             string CalledFrom = "SQLHelper (Instance)-" + InitiatedFrom;
-            DbExecNonQuery($"CREATE TABLE IF NOT EXISTS '{GlobalVars.DB_TNAME_INFO}' (" +
+            var newDb = DbExecNonQuery($"CREATE TABLE IF NOT EXISTS '{GlobalVars.DB_TNAME_INFO}' (" +
                 "'Id'	INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "'imdb'	TEXT DEFAULT 0, " +
                 "'name'	TEXT, " +
-                "'name_ep'	TEXT, " +
-                "'name_orig'  TEXT, " +
+                "'name_orig'	TEXT, " +
+                "'name_series'  TEXT, " +
                 "'season'	INTEGER, " +
                 "'episode'	INTEGER, " +
                 "'country'	TEXT, " +
@@ -53,7 +53,7 @@ namespace HomeCinema.SQLFunc
                 "'director'	TEXT, " +
                 "'artist'	TEXT, " +
                 "'year'	VARCHAR(5) DEFAULT 0, " +
-                "'summary'  TEXT DEFAULT 'This has no summary');", CalledFrom);
+                "'summary'  TEXT DEFAULT 'This has no summary');", CalledFrom, -1);
             DbExecNonQuery($"CREATE TABLE IF NOT EXISTS '{GlobalVars.DB_TNAME_FILEPATH}' (" +
                 "[Id]	INTEGER  PRIMARY KEY AUTOINCREMENT, " +
                 "[file]	TEXT, " +
@@ -71,8 +71,11 @@ namespace HomeCinema.SQLFunc
                 if (result.Rows.Count < 1)
                 {
                     DbExecNonQuery("INSERT INTO `config` (`Id`, `appBuild`, `dbVersion`)" +
-                        $" VALUES (1, {GlobalVars.HOMECINEMA_BUILD}, 1);", CalledFrom);
-                    dbVersion = 1;
+                        $" VALUES (" +
+                        $"1," +
+                        $" {GlobalVars.HOMECINEMA_BUILD}, " +
+                        $"{(newDb == 0 ? GlobalVars.HOMECINEMA_DBVER.ToString() : "1")});", CalledFrom);
+                    dbVersion = (newDb == 0) ? GlobalVars.HOMECINEMA_DBVER : 1;
                 }
                 else
                 {
