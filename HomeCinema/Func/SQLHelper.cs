@@ -165,16 +165,17 @@ namespace HomeCinema.SQLFunc
                         {
                             GlobalVars.LogDb($"Executing query..Retry left: ({retry})", qry);
                             DONE = cmd.ExecuteNonQuery();
+                            GlobalVars.LogDb($"Query result: ({DONE})", "");
                             retry = -1;
                         }
                         catch (SQLiteException ex)
                         {
-                            GlobalVars.ShowError("SQLHelper-DbExecNonQuery (SQL Error)", ex, false);
+                            GlobalVars.ShowError($"SQLHelper-DbExecNonQuery (SQL Error)({DONE})", ex, false);
                             retry -= 1;
                         }
                         catch (Exception ex)
                         {
-                            GlobalVars.ShowError("SQLHelper-DbExecNonQuery (Error)", ex, false);
+                            GlobalVars.ShowError($"SQLHelper-DbExecNonQuery (Error)({DONE})", ex, false);
                             retry -= 1;
                         }
                     }
@@ -355,14 +356,16 @@ namespace HomeCinema.SQLFunc
             string fileCols = "", fileVals = ""; // filepath table
             int successCode; // code after execute query
             string fPathFile = ""; // full path for file
+            string value = ""; // variable to hold values
 
             // Create pairing of colname and colvals
             foreach (var item in dtInfo)
             {
                 if (item.Key != HCInfo.Id.ToString())
                 {
+                    value = item.Value.Replace("'", "''").Replace("\"", String.Empty);
                     infoCols += item.Key + ",";
-                    infoVals += GlobalVars.QryString(item.Value.Replace("'", "''"), !GlobalVars.QryColNumeric(item.Key)) + ",";
+                    infoVals += GlobalVars.QryString(value, !GlobalVars.QryColNumeric(item.Key)) + ",";
                 }
             }
             infoCols = infoCols.TrimEnd(',');
@@ -400,6 +403,7 @@ namespace HomeCinema.SQLFunc
 
                     // Insert entry
                     cmd.CommandText = $"INSERT INTO {GlobalVars.DB_TNAME_INFO} ({infoCols}) VALUES({infoVals});";
+                    GlobalVars.LogDb($"{errFrom} (Insert query)", cmd.CommandText);
                     successCode = cmd.ExecuteNonQuery();
                     LastID = (int)conn.LastInsertRowId;
 
