@@ -264,7 +264,7 @@ namespace HomeCinema
                 var dtInfo = new Dictionary<string, string>();
                 var dtFilepath = new Dictionary<string, string>();
                 dtInfo.Add(HCInfo.imdb.ToString(), getIMDB); // IMDB
-                dtInfo.Add(HCInfo.name.ToString(), rTitle.Replace('"', '\'')); // name
+                dtInfo.Add(HCInfo.name.ToString(), rTitle); // name
                 dtInfo.Add(HCInfo.name_orig.ToString(), rOrigTitle); // episode name
                 dtInfo.Add(HCInfo.name_series.ToString(), ""); // series name
                 dtInfo.Add(HCInfo.season.ToString(), ""); // season number
