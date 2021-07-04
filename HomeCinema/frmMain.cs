@@ -1002,6 +1002,10 @@ namespace HomeCinema
                                             }
                                         }
                                     }
+                                    catch (DirectoryNotFoundException)
+                                    {
+                                        continue;
+                                    }
                                     catch (FileNotFoundException)
                                     {
                                         continue;
