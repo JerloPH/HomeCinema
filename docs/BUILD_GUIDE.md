@@ -1,4 +1,4 @@
-# Guide
+# My Personal Guide for Building
 
 ## Building the Executable
 1. Update Variable **"HOMECINEMA_BUILD"** in [/HomeCinema/GlobalVars.cs](../HomeCinema/GlobalVars.cs).
