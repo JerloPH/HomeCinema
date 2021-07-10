@@ -1,5 +1,15 @@
 # HomeCinema - Project History:
 
+## HomeCinema v0.7.2
+### *release 39 - build 10 July 2021 PHT*
+### Fixes and Changes
+- FIX: Double apostrophe on entry title. Closes [Issue #11](https://github.com/JerloPH/HomeCinema/issues/11).
+- MINOR: When year is empty, default to "0".
+- GUI: Adjusted 'About' form.
+- GUI: Reposition 'Original Title' on Movie Info editing form.
+- Various **"Under the Hood"** changes.
+****
+
 ## HomeCinema v0.7.1
 ### *release 38 - build 12 June 2021 PHT*
 ### Fixes

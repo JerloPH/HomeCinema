@@ -2,15 +2,15 @@
 
 <img src="/data/v0.7.jpg"></img>
 
-**version:**	0.7.1.0 <br>
-**release:**	38
+**version:**	0.7.2.0 <br>
+**release:**	39
 
 | <a href="docs/REPORT_ISSUE.md">Report Issue/Bug/Error/Feature request</a> | <a href="(docs/CONTRIBUTING.md">Submit Pull Request</a>  | <a href="VERSION_HISTORY.md">See 'App Version History'</a> |
 | -- | -- | -- |
 
 ## Downloads
 
-**Windows 10, x64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.7.1.0/HomeCinema-Windows.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
+**Windows 10, x64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.7.2.0/HomeCinema-Windows.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
 **Note: Untested on Windows 7/8, but it might work**
 
 ### Download Counts
