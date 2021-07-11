@@ -355,7 +355,16 @@ namespace HomeCinema
         }
         public static void ShowError(string codeFrom, Exception error, bool ShowAMsg = true, Form parent = null)
         {
-            string err = $"Source: {error.Source.ToString()}\n\tError string:\n\t{error.ToString()}";
+            if (error == null) { return; }
+            string err = "";
+            try
+            {
+                err = $"Source: {error.Source?.ToString()}\n\tError string:\n\t{error.ToString()}";
+            }
+            catch
+            {
+                err = $"Error string:\n\t{error}";
+            }
             string file = FILE_LOG_ERROR;
             LogErr(codeFrom, err);
 
