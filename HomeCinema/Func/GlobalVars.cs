@@ -1451,33 +1451,6 @@ namespace HomeCinema
             }
             return listGenre;
         }
-        // Return string MOVIE name WITHOUT the special characters
-        public static string TrimMovieName(string movieFileName)
-        {
-            // Exit if movieFileName is null
-            if (String.IsNullOrWhiteSpace(movieFileName))
-            {
-                return "";
-            }
-            // Start to trim
-            string mName;
-            try
-            {
-                mName = movieFileName.Replace('_', ' ').Replace('.', ' ');
-                mName = mName.ToLower();
-                mName = mName.Replace("(", "");
-                mName = mName.Replace(")", "");
-                mName = mName.Replace("-", "");
-            }
-            catch (Exception ex)
-            {
-                // If all the trimming failed, revert back to original
-                mName = movieFileName;
-                // LogError
-                ShowError("GlobalVars-TrimMovieName", ex, false);
-            }
-            return mName;
-        }
         // Open file in explorer, highlighted
         public static bool FileOpeninExplorer(string filePath, string calledFrom)
         {

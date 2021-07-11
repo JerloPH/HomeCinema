@@ -155,50 +155,62 @@ namespace HomeCinema
         #endregion
         // ####################################################################################### Database Functions
         #region Insert to Database
-        int InsertToDB(List<string> listofFiles, string errFrom)
+        int InsertToDB(DataTable dtNewFiles, string errFrom)
         {
             string callFrom = $"frmMain ({Name})-InsertToDB-({errFrom})";
-            string rPosterLink = "";
+            
             string mediatype = "movie";
+            string filePath;
+            string src;
+
+            string rPosterLink = "";
             int count = 0; // count of inserts, whether success or fail
             string logInsert = ""; // Log succesfully inserted
+            // vars used for entries
+            string getIMDB = "";
+            string mName = "";
+            string yearFromFname = "";
 
-            foreach (string filePath in listofFiles)
+            string rJson = "";
+            string rTrailer = "";
+            string rTitle = "";
+            string rOrigTitle = "";
+            string rSummary = "";
+            string rYear = "";
+            string rGenre = "";
+            string rArtist = "";
+            string rDirector = "";
+            string rProducer = "";
+            string rCountry = "";
+            string rStudio = "";
+
+            foreach (DataRow row in dtNewFiles.Rows)
             {
-                string getIMDB = "";
-                string mName = "";
+                filePath = row["path"].ToString();
+                mediatype = row["mediatype"].ToString();
+                src = row["src"].ToString();
 
                 // Get proper name, without the folder paths
                 try
                 {
-                    FileAttributes attr = File.GetAttributes(filePath);
-
-                    if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
-                    {
-                        // Its a series directory
-                        mediatype = "tv";
-                        mName = new DirectoryInfo(filePath).Name;
-                    }
-                    else
-                    {
-                        // Its a file
-                        mName = Path.GetFileNameWithoutExtension(filePath);
-                    }
+                    mName = (mediatype == "tv") ? new DirectoryInfo(filePath).Name : Path.GetFileNameWithoutExtension(filePath);
                 }
                 catch (Exception ex)
                 {
                     GlobalVars.WriteAppend(Path.Combine(GlobalVars.PATH_LOG, "MovieResult_Skipped.Log"), "Error: " + filePath);
-                    GlobalVars.ShowError(callFrom, ex, false);
+                    GlobalVars.ShowError(callFrom, ex, false, this);
                     continue; // skip when exception thrown
                 }
 
                 // Trim Movie Name
-                mName = GlobalVars.TrimMovieName(mName);
-
-                // Remove "year" and "other strings" from movie file name
-                string yearFromFname = "";
                 try
                 {
+                    mName = mName.ToLower();
+                    mName = mName.Replace('_', ' ').Replace('.', ' ');
+                    mName = mName.Replace("(", "");
+                    mName = mName.Replace(")", "");
+                    mName = mName.Replace("-", "");
+                    // Remove "year" and "other strings" from movie file name
                     string regExPattern = @"\b\d{4}\b"; // Match 4-digit number in the title
                     Match r = Regex.Match(mName, @regExPattern);
                     yearFromFname = r.Groups[r.Groups.Count - 1].Value;
@@ -206,51 +218,35 @@ namespace HomeCinema
                 }
                 catch (Exception ex)
                 {
-                    GlobalVars.ShowError(errFrom, ex, false);
+                    GlobalVars.ShowError(errFrom, ex, false, this);
                 }
 
-                string rJson = "";
-                string rTrailer = "";
-                string rTitle = "";
-                string rOrigTitle = "";
-                string rSummary = "";
-                string rYear = "";
-                string rGenre = "";
-                string rArtist = "";
-                string rDirector = "";
-                string rProducer = "";
-                string rCountry = "";
-                string rStudio = "";
-
                 // Scrape from TMDB, for info and details
-                if (GlobalVars.SET_OFFLINE == false && GlobalVars.HAS_TMDB_KEY)
+                if (GlobalVars.SET_OFFLINE == false)
                 {
-                    // Get imdb id and set it to textbox
-                    getIMDB = GlobalVars.GetIMDBId(mName, "dummy", mediatype);
-                    if (String.IsNullOrWhiteSpace(getIMDB) == false)
+                    if (src == "tmdb" && GlobalVars.HAS_TMDB_KEY)
                     {
-                        // Get List of values from TMDB
-                        List<string> list = GlobalVars.GetMovieInfoByImdb(getIMDB, mediatype);
-                        rJson = list[0];
-                        rTrailer = list[1];
-                        rTitle = list[2];
-                        rOrigTitle = list[3];
-                        rSummary = list[4];
-                        try { rYear = list[5].Substring(0, 4); }
-                        catch { rYear = ""; }
-                        rPosterLink = list[6];
-                        rArtist = list[7];
-                        rDirector = list[8];
-                        rProducer = list[9];
-                        rCountry = list[10];
-                        rStudio = list[11];
-
-                        // Get Genres
-                        rGenre = GlobalVars.GetGenresByJsonFile(rJson, errFrom, ",");
-                    }
-                    else
-                    {
-                        rPosterLink = "";
+                        // Get imdb id and set it to textbox
+                        getIMDB = GlobalVars.GetIMDBId(mName, "dummy", mediatype);
+                        if (String.IsNullOrWhiteSpace(getIMDB) == false)
+                        {
+                            // Get List of values from TMDB
+                            List<string> list = GlobalVars.GetMovieInfoByImdb(getIMDB, mediatype);
+                            rJson = list[0];
+                            rTrailer = list[1];
+                            rTitle = list[2];
+                            rOrigTitle = list[3];
+                            rSummary = list[4];
+                            try { rYear = list[5].Substring(0, 4); }
+                            catch { rYear = "0"; }
+                            rPosterLink = list[6];
+                            rArtist = list[7];
+                            rDirector = list[8];
+                            rProducer = list[9];
+                            rCountry = list[10];
+                            rStudio = list[11];
+                            rGenre = GlobalVars.GetGenresByJsonFile(rJson, errFrom, ","); // Get Genres
+                        }
                     }
                 }
 
@@ -282,17 +278,19 @@ namespace HomeCinema
                 dtFilepath.Add(HCFile.file.ToString(), filePath); // filepath
                 dtFilepath.Add(HCFile.sub.ToString(), GetSubtitleFile(filePath)); // file sub
                 dtFilepath.Add(HCFile.trailer.ToString(), (!String.IsNullOrWhiteSpace(rTrailer)) ? GlobalVars.LINK_YT + rTrailer : ""); // trailer
-                count += 1; // add to count
-                logInsert += $"{filePath}\n";
 
                 int insertResult = SQLHelper.DbInsertMovie(dtInfo, dtFilepath, callFrom);
                 if (insertResult > 0)
                 {
+                    // Succesfully inserted
+                    count += 1; // add to count
+                    logInsert += $"{filePath}\n";
+
                     // Download cover, if not OFFLINE_MODE and HAS TMDB KEY
-                    if (GlobalVars.SET_OFFLINE == false && GlobalVars.HAS_TMDB_KEY)
+                    if (GlobalVars.SET_OFFLINE == false && GlobalVars.HAS_TMDB_KEY && src == "tmdb")
                     {
                         string movieId = insertResult.ToString();
-                        Thread.Sleep(5); // sleep 2 ms to prevent overloading TMDB
+                        Thread.Sleep(5); // sleep to prevent overloading TMDB
                         if (GlobalVars.DownloadCoverFromTMDB(movieId, rPosterLink, errFrom) && (!String.IsNullOrWhiteSpace(rPosterLink)))
                         {
                             try
@@ -305,14 +303,14 @@ namespace HomeCinema
                             }
                             catch (Exception ex)
                             {
-                                GlobalVars.ShowError(errFrom, ex, false);
+                                GlobalVars.ShowError(errFrom, ex, false, this);
                             }
                         }
                     }
                 }
                 Thread.Sleep(10); // Prevent continuous request to TMDB, prevents overloading the site.
             }
-            
+            dtNewFiles.Dispose();
             GlobalVars.WriteAppend(Path.Combine(GlobalVars.PATH_LOG, "MovieResult_DoneInsert.Log"), logInsert);
             return count;
         }
@@ -796,10 +794,35 @@ namespace HomeCinema
             frmLoading form = new frmLoading("Getting media files from directories..", "Loading");
             var listMediaFiles = new List<string>();
             var listAlreadyinDB = new List<string>();
-            var listToAdd = new List<string>();
             var listSeries = new List<string>();
+            var dtNewFiles = new DataTable();
             int countVoid = 0; // void files, not media
             string logFile = Path.Combine(GlobalVars.PATH_LOG, "SeriesResult.Log");
+            // Initiate dtNewFiles Columns
+            var col1 = new DataColumn
+            {
+                DataType = System.Type.GetType("System.String"),
+                ColumnName = "path",
+                AutoIncrement = false,
+                Unique = false
+            };
+            var col2 = new DataColumn
+            {
+                DataType = System.Type.GetType("System.String"),
+                ColumnName = "mediatype",
+                AutoIncrement = false,
+                Unique = false
+            };
+            var col3 = new DataColumn
+            {
+                DataType = System.Type.GetType("System.String"),
+                ColumnName = "src",
+                AutoIncrement = false,
+                Unique = false
+            };
+            dtNewFiles.Columns.Add(col1);
+            dtNewFiles.Columns.Add(col2);
+            dtNewFiles.Columns.Add(col3);
 
             // Delegate task to frmLoading
             form.BackgroundWorker.DoWork += (sender1, e1) =>
@@ -814,9 +837,6 @@ namespace HomeCinema
                     form.Message = "Getting movie files from directories..";
                     // List already in db
                     listAlreadyinDB = SQLHelper.DbQrySingle(GlobalVars.DB_TNAME_FILEPATH, "[file]", calledFrom + "-listAlreadyinDB");
-
-                    // List of files valid to add
-                    listToAdd = new List<string>();
 
                     bool voided = true; // Check if file can be added to "Voided Files" Log
 
@@ -858,11 +878,14 @@ namespace HomeCinema
                                         }
                                     }
                                 }
-
                                 // If possible to add, add to list
                                 if (canAdd)
                                 {
-                                    listToAdd.Add(file);
+                                    DataRow row = dtNewFiles.NewRow();
+                                    row["path"] = file;
+                                    row["mediatype"] = "movie";
+                                    row["src"] = "tmdb";
+                                    dtNewFiles.Rows.Add(row);
                                     voided = false;
                                 }
                                 break;
@@ -900,27 +923,34 @@ namespace HomeCinema
                                 {
                                     // Add it to the list of new series to add to DB
                                     GlobalVars.WriteAppend(logFile, "Will Add: " + folderPath + Environment.NewLine);
-                                    listToAdd.Add(folderPath);
+                                    DataRow row = dtNewFiles.NewRow();
+                                    row["path"] = folderPath;
+                                    row["mediatype"] = "tv";
+                                    row["src"] = "tmdb";
+                                    dtNewFiles.Rows.Add(row);
                                 }
                             }
                             else
                             {
                                 // Add it to the list of new series to add to DB
                                 GlobalVars.WriteAppend(logFile, "Will Add: " + folderPath + Environment.NewLine);
-                                listToAdd.Add(folderPath);
+                                DataRow row = dtNewFiles.NewRow();
+                                row["path"] = folderPath;
+                                row["mediatype"] = "tv";
+                                row["src"] = "tmdb";
+                                dtNewFiles.Rows.Add(row);
                             }
                         }
                     }
 
                     // Add now to database
                     form.Message = "Inserting new entries..";
-                    int insertRes = InsertToDB(listToAdd, calledFrom + "-listToAdd");
+                    int insertRes = InsertToDB(dtNewFiles, calledFrom + "-dtNewFiles");
                 }
                 form.Message = "Done fetching new media files!";
                 // Clear previous lists
                 listMediaFiles.Clear();
                 listAlreadyinDB.Clear();
-                listToAdd.Clear();
             };
             form.ShowDialog(this);
             RefreshMovieList(true);
