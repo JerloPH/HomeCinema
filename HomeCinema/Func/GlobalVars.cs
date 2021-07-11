@@ -1481,6 +1481,7 @@ namespace HomeCinema
             if (String.IsNullOrWhiteSpace(linkPoster) == false)
             {
                 string moviePosterDL = PATH_TEMP + MOVIE_ID + ".jpg";
+                DeleteMove(moviePosterDL, errFrom); // Delete prev file, if exists
                 return DownloadLoop(moviePosterDL, "https://image.tmdb.org/t/p/original/" + linkPoster, errFrom, false);
             }
             return false;

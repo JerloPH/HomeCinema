@@ -135,7 +135,6 @@ namespace HomeCinema
             string filePath;
             string src;
 
-            string rPosterLink = "";
             int count = 0; // count of inserts, whether success or fail
             string logInsert = ""; // Log succesfully inserted
 
@@ -162,6 +161,7 @@ namespace HomeCinema
                 string rProducer = "";
                 string rCountry = "";
                 string rStudio = "";
+                string rPosterLink = "";
 
                 // Get proper name, without the folder paths
                 try
@@ -273,6 +273,7 @@ namespace HomeCinema
                                 string newFile = GlobalVars.ImgFullPath(movieId);
                                 GlobalVars.DeleteMove(newFile, errFrom); // Delete existing cover first
                                 File.Move(oldFile, newFile);
+                                GlobalVars.DeleteMove(oldFile, errFrom); // Delete temp cover afterwards
                             }
                             catch (Exception ex)
                             {
