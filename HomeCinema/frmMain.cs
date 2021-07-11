@@ -193,7 +193,7 @@ namespace HomeCinema
                 // Get proper name, without the folder paths
                 try
                 {
-                    mName = (mediatype == "tv") ? new DirectoryInfo(filePath).Name : Path.GetFileNameWithoutExtension(filePath);
+                    mName = (mediatype == "series") ? new DirectoryInfo(filePath).Name : Path.GetFileNameWithoutExtension(filePath);
                 }
                 catch (Exception ex)
                 {
@@ -925,7 +925,7 @@ namespace HomeCinema
                                     GlobalVars.WriteAppend(logFile, "Will Add: " + folderPath + Environment.NewLine);
                                     DataRow row = dtNewFiles.NewRow();
                                     row["path"] = folderPath;
-                                    row["mediatype"] = "tv";
+                                    row["mediatype"] = "series";
                                     row["src"] = "tmdb";
                                     dtNewFiles.Rows.Add(row);
                                 }
@@ -936,7 +936,7 @@ namespace HomeCinema
                                 GlobalVars.WriteAppend(logFile, "Will Add: " + folderPath + Environment.NewLine);
                                 DataRow row = dtNewFiles.NewRow();
                                 row["path"] = folderPath;
-                                row["mediatype"] = "tv";
+                                row["mediatype"] = "series";
                                 row["src"] = "tmdb";
                                 dtNewFiles.Rows.Add(row);
                             }

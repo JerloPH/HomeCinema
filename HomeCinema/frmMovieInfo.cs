@@ -535,7 +535,7 @@ namespace HomeCinema
                 return;
             }
             // Check if series
-            mediatype = (cbCategory.Text.ToLower().Contains("series")) ? "tv" : "movie";
+            mediatype = (cbCategory.Text.ToLower().Contains("series")) ? "series" : "movie";
 
             // Get List of values from TMDB
             form = new frmLoading("Fetching info from TMDB..", "Loading");
@@ -653,7 +653,7 @@ namespace HomeCinema
             }
 
             // Declare vars
-            string mediatype = (cbCategory.Text.ToLower().Contains("series") ? "tv" : "movie");
+            string mediatype = (cbCategory.Text.ToLower().Contains("series") ? "series" : "movie");
             string getIMDB = "";
   
             // Check if txtName is valid
