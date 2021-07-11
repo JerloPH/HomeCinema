@@ -243,6 +243,8 @@ namespace HomeCinema
             // Theme-related
             btnColorBG.BackColor = BackgroundColor;
             btnColorFont.BackColor = FontColor;
+
+            CenterToParent();
         }
         private void dataGridMediaLoc_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
