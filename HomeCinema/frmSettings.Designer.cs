@@ -30,6 +30,8 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.cbConfirmSearch = new System.Windows.Forms.ComboBox();
+            this.lblConfirmSearch = new System.Windows.Forms.Label();
             this.cbAutoClean = new System.Windows.Forms.ComboBox();
             this.lblAutoClean = new System.Windows.Forms.Label();
             this.btnCheckUpdate = new System.Windows.Forms.Button();
@@ -46,15 +48,9 @@
             this.cbAutoUpdate = new System.Windows.Forms.ComboBox();
             this.lblAutoUpdate = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.btnSeriesLocClear = new System.Windows.Forms.Button();
-            this.btnSeriesLocRemove = new System.Windows.Forms.Button();
-            this.btnSeriesLocAdd = new System.Windows.Forms.Button();
-            this.BoxSeriesLoc = new System.Windows.Forms.ListBox();
-            this.BoxMediaLoc = new System.Windows.Forms.ListBox();
             this.btnMediaLocClear = new System.Windows.Forms.Button();
             this.btnMediaLocRemove = new System.Windows.Forms.Button();
             this.btnMediaLocAdd = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.txtMediaExt = new System.Windows.Forms.TextBox();
@@ -80,13 +76,16 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
-            this.cbConfirmSearch = new System.Windows.Forms.ComboBox();
-            this.lblConfirmSearch = new System.Windows.Forms.Label();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.FolderPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MediaType = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Source = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -137,6 +136,27 @@
             this.tabPage1.Size = new System.Drawing.Size(538, 376);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "General";
+            // 
+            // cbConfirmSearch
+            // 
+            this.cbConfirmSearch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbConfirmSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbConfirmSearch.FormattingEnabled = true;
+            this.cbConfirmSearch.Location = new System.Drawing.Point(203, 167);
+            this.cbConfirmSearch.Margin = new System.Windows.Forms.Padding(2);
+            this.cbConfirmSearch.Name = "cbConfirmSearch";
+            this.cbConfirmSearch.Size = new System.Drawing.Size(126, 28);
+            this.cbConfirmSearch.TabIndex = 21;
+            // 
+            // lblConfirmSearch
+            // 
+            this.lblConfirmSearch.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblConfirmSearch.Location = new System.Drawing.Point(4, 169);
+            this.lblConfirmSearch.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblConfirmSearch.Name = "lblConfirmSearch";
+            this.lblConfirmSearch.Size = new System.Drawing.Size(187, 24);
+            this.lblConfirmSearch.TabIndex = 20;
+            this.lblConfirmSearch.Text = "Confirm Search or Reload:";
             // 
             // cbAutoClean
             // 
@@ -295,15 +315,10 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Black;
-            this.tabPage2.Controls.Add(this.btnSeriesLocClear);
-            this.tabPage2.Controls.Add(this.btnSeriesLocRemove);
-            this.tabPage2.Controls.Add(this.btnSeriesLocAdd);
-            this.tabPage2.Controls.Add(this.BoxSeriesLoc);
-            this.tabPage2.Controls.Add(this.BoxMediaLoc);
+            this.tabPage2.Controls.Add(this.dataGridView1);
             this.tabPage2.Controls.Add(this.btnMediaLocClear);
             this.tabPage2.Controls.Add(this.btnMediaLocRemove);
             this.tabPage2.Controls.Add(this.btnMediaLocAdd);
-            this.tabPage2.Controls.Add(this.label1);
             this.tabPage2.Controls.Add(this.label8);
             this.tabPage2.Controls.Add(this.label5);
             this.tabPage2.Controls.Add(this.txtMediaExt);
@@ -316,68 +331,11 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "File";
             // 
-            // btnSeriesLocClear
-            // 
-            this.btnSeriesLocClear.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSeriesLocClear.ForeColor = System.Drawing.Color.Black;
-            this.btnSeriesLocClear.Location = new System.Drawing.Point(406, 318);
-            this.btnSeriesLocClear.Margin = new System.Windows.Forms.Padding(2);
-            this.btnSeriesLocClear.Name = "btnSeriesLocClear";
-            this.btnSeriesLocClear.Size = new System.Drawing.Size(88, 30);
-            this.btnSeriesLocClear.TabIndex = 24;
-            this.btnSeriesLocClear.Text = "CLEAR";
-            this.btnSeriesLocClear.UseVisualStyleBackColor = true;
-            this.btnSeriesLocClear.Click += new System.EventHandler(this.btnSeriesLocClear_Click);
-            // 
-            // btnSeriesLocRemove
-            // 
-            this.btnSeriesLocRemove.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSeriesLocRemove.ForeColor = System.Drawing.Color.Black;
-            this.btnSeriesLocRemove.Location = new System.Drawing.Point(406, 284);
-            this.btnSeriesLocRemove.Margin = new System.Windows.Forms.Padding(2);
-            this.btnSeriesLocRemove.Name = "btnSeriesLocRemove";
-            this.btnSeriesLocRemove.Size = new System.Drawing.Size(88, 30);
-            this.btnSeriesLocRemove.TabIndex = 23;
-            this.btnSeriesLocRemove.Text = "REMOVE";
-            this.btnSeriesLocRemove.UseVisualStyleBackColor = true;
-            this.btnSeriesLocRemove.Click += new System.EventHandler(this.btnSeriesLocRemove_Click);
-            // 
-            // btnSeriesLocAdd
-            // 
-            this.btnSeriesLocAdd.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSeriesLocAdd.ForeColor = System.Drawing.Color.Black;
-            this.btnSeriesLocAdd.Location = new System.Drawing.Point(406, 250);
-            this.btnSeriesLocAdd.Margin = new System.Windows.Forms.Padding(2);
-            this.btnSeriesLocAdd.Name = "btnSeriesLocAdd";
-            this.btnSeriesLocAdd.Size = new System.Drawing.Size(87, 30);
-            this.btnSeriesLocAdd.TabIndex = 22;
-            this.btnSeriesLocAdd.Text = "ADD";
-            this.btnSeriesLocAdd.UseVisualStyleBackColor = true;
-            this.btnSeriesLocAdd.Click += new System.EventHandler(this.btnSeriesLocAdd_Click);
-            // 
-            // BoxSeriesLoc
-            // 
-            this.BoxSeriesLoc.FormattingEnabled = true;
-            this.BoxSeriesLoc.ItemHeight = 17;
-            this.BoxSeriesLoc.Location = new System.Drawing.Point(8, 250);
-            this.BoxSeriesLoc.Name = "BoxSeriesLoc";
-            this.BoxSeriesLoc.Size = new System.Drawing.Size(395, 72);
-            this.BoxSeriesLoc.TabIndex = 21;
-            // 
-            // BoxMediaLoc
-            // 
-            this.BoxMediaLoc.FormattingEnabled = true;
-            this.BoxMediaLoc.ItemHeight = 17;
-            this.BoxMediaLoc.Location = new System.Drawing.Point(8, 113);
-            this.BoxMediaLoc.Name = "BoxMediaLoc";
-            this.BoxMediaLoc.Size = new System.Drawing.Size(395, 72);
-            this.BoxMediaLoc.TabIndex = 20;
-            // 
             // btnMediaLocClear
             // 
             this.btnMediaLocClear.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMediaLocClear.ForeColor = System.Drawing.Color.Black;
-            this.btnMediaLocClear.Location = new System.Drawing.Point(408, 180);
+            this.btnMediaLocClear.Location = new System.Drawing.Point(443, 181);
             this.btnMediaLocClear.Margin = new System.Windows.Forms.Padding(2);
             this.btnMediaLocClear.Name = "btnMediaLocClear";
             this.btnMediaLocClear.Size = new System.Drawing.Size(88, 30);
@@ -390,7 +348,7 @@
             // 
             this.btnMediaLocRemove.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMediaLocRemove.ForeColor = System.Drawing.Color.Black;
-            this.btnMediaLocRemove.Location = new System.Drawing.Point(408, 146);
+            this.btnMediaLocRemove.Location = new System.Drawing.Point(443, 147);
             this.btnMediaLocRemove.Margin = new System.Windows.Forms.Padding(2);
             this.btnMediaLocRemove.Name = "btnMediaLocRemove";
             this.btnMediaLocRemove.Size = new System.Drawing.Size(88, 30);
@@ -403,7 +361,7 @@
             // 
             this.btnMediaLocAdd.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMediaLocAdd.ForeColor = System.Drawing.Color.Black;
-            this.btnMediaLocAdd.Location = new System.Drawing.Point(408, 112);
+            this.btnMediaLocAdd.Location = new System.Drawing.Point(443, 113);
             this.btnMediaLocAdd.Margin = new System.Windows.Forms.Padding(2);
             this.btnMediaLocAdd.Name = "btnMediaLocAdd";
             this.btnMediaLocAdd.Size = new System.Drawing.Size(87, 30);
@@ -412,20 +370,10 @@
             this.btnMediaLocAdd.UseVisualStyleBackColor = true;
             this.btnMediaLocAdd.Click += new System.EventHandler(this.btnMediaLocAdd_Click);
             // 
-            // label1
-            // 
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(2, 222);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(136, 25);
-            this.label1.TabIndex = 17;
-            this.label1.Text = "*Series Locations :";
-            // 
             // label8
             // 
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(4, 84);
+            this.label8.Location = new System.Drawing.Point(4, 90);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(136, 25);
@@ -450,7 +398,7 @@
             this.txtMediaExt.Multiline = true;
             this.txtMediaExt.Name = "txtMediaExt";
             this.txtMediaExt.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtMediaExt.Size = new System.Drawing.Size(460, 51);
+            this.txtMediaExt.Size = new System.Drawing.Size(505, 51);
             this.txtMediaExt.TabIndex = 8;
             // 
             // tabPage3
@@ -722,26 +670,44 @@
             this.label9.TabIndex = 16;
             this.label9.Text = "* Changes Apply after Restart";
             // 
-            // cbConfirmSearch
+            // dataGridView1
             // 
-            this.cbConfirmSearch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbConfirmSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbConfirmSearch.FormattingEnabled = true;
-            this.cbConfirmSearch.Location = new System.Drawing.Point(203, 167);
-            this.cbConfirmSearch.Margin = new System.Windows.Forms.Padding(2);
-            this.cbConfirmSearch.Name = "cbConfirmSearch";
-            this.cbConfirmSearch.Size = new System.Drawing.Size(126, 28);
-            this.cbConfirmSearch.TabIndex = 21;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.FolderPath,
+            this.MediaType,
+            this.Source});
+            this.dataGridView1.Location = new System.Drawing.Point(8, 112);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(430, 259);
+            this.dataGridView1.TabIndex = 20;
             // 
-            // lblConfirmSearch
+            // FolderPath
             // 
-            this.lblConfirmSearch.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblConfirmSearch.Location = new System.Drawing.Point(4, 169);
-            this.lblConfirmSearch.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblConfirmSearch.Name = "lblConfirmSearch";
-            this.lblConfirmSearch.Size = new System.Drawing.Size(187, 24);
-            this.lblConfirmSearch.TabIndex = 20;
-            this.lblConfirmSearch.Text = "Confirm Search or Reload:";
+            this.FolderPath.HeaderText = "Path";
+            this.FolderPath.Name = "FolderPath";
+            this.FolderPath.ToolTipText = "Path to search media files, without the final backslash";
+            this.FolderPath.Width = 194;
+            // 
+            // MediaType
+            // 
+            this.MediaType.HeaderText = "Media";
+            this.MediaType.Items.AddRange(new object[] {
+            "Movie",
+            "Series"});
+            this.MediaType.Name = "MediaType";
+            this.MediaType.ToolTipText = "Type of media, either Movie or Series";
+            this.MediaType.Width = 80;
+            // 
+            // Source
+            // 
+            this.Source.HeaderText = "Source";
+            this.Source.Items.AddRange(new object[] {
+            "TMDB",
+            "Anilist"});
+            this.Source.Name = "Source";
+            this.Source.ToolTipText = "Source to search info";
+            this.Source.Width = 110;
             // 
             // frmSettings
             // 
@@ -769,6 +735,7 @@
             this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -797,15 +764,9 @@
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnMediaLocAdd;
         private System.Windows.Forms.Button btnMediaLocClear;
         private System.Windows.Forms.Button btnMediaLocRemove;
-        private System.Windows.Forms.ListBox BoxMediaLoc;
-        private System.Windows.Forms.ListBox BoxSeriesLoc;
-        private System.Windows.Forms.Button btnSeriesLocClear;
-        private System.Windows.Forms.Button btnSeriesLocRemove;
-        private System.Windows.Forms.Button btnSeriesLocAdd;
         private System.Windows.Forms.ListBox listboxGenre;
         private System.Windows.Forms.ListBox listboxCountry;
         private System.Windows.Forms.Button btnGenreClear;
@@ -829,5 +790,9 @@
         private System.Windows.Forms.Label lblAutoClean;
         private System.Windows.Forms.ComboBox cbConfirmSearch;
         private System.Windows.Forms.Label lblConfirmSearch;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FolderPath;
+        private System.Windows.Forms.DataGridViewComboBoxColumn MediaType;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Source;
     }
 }

@@ -206,25 +206,7 @@ namespace HomeCinema
             text = text.TrimEnd(',');
             txtMediaExt.Text = text;
 
-            // Media LOCATIONS Folders Texts
-            BoxMediaLoc.SelectionMode = SelectionMode.MultiExtended;
-            foreach (string c in GlobalVars.BuildDirArrFromFile(GlobalVars.FILE_MEDIALOC, $"{errFrom}[FILE_MEDIALOC]", '*'))
-            {
-                if (String.IsNullOrWhiteSpace(c) == false)
-                {
-                    BoxMediaLoc.Items.Add(c);
-                }
-            }
-
-            // Series LOCATIONS Folders Texts
-            BoxSeriesLoc.SelectionMode = SelectionMode.MultiExtended;
-            foreach (string c in GlobalVars.BuildDirArrFromFile(GlobalVars.FILE_SERIESLOC, $"{errFrom}[FILE_SERIESLOC]", '*'))
-            {
-                if (String.IsNullOrWhiteSpace(c) == false)
-                {
-                    BoxSeriesLoc.Items.Add(c);
-                }
-            }
+            // Load medialocation.hc_data
 
             // Theme-related
             btnColorBG.BackColor = BackgroundColor;
@@ -289,9 +271,7 @@ namespace HomeCinema
             }
             catch { error += Environment.NewLine + "Media Extensions"; }
 
-            // Write MediaLoc and SeriesLoc file
-            GlobalVars.WriteListBoxToFile(GlobalVars.FILE_MEDIALOC, BoxMediaLoc);
-            GlobalVars.WriteListBoxToFile(GlobalVars.FILE_SERIESLOC, BoxSeriesLoc);
+            // Save medialocation.hc_data file with new contents
 
             // Replace country file
             GlobalVars.WriteListBoxToFile(GlobalVars.FILE_COUNTRY, listboxCountry, ",");
@@ -343,37 +323,6 @@ namespace HomeCinema
         {
             // Remove all from ListBox: BoxMediaLoc
             BoxMediaLoc.Items.Clear();
-        }
-        private void btnSeriesLocAdd_Click(object sender, EventArgs e)
-        {
-            using (var fbd = new FolderBrowserDialog())
-            {
-                fbd.Description = "Select base folder that contains series' folders";
-                DialogResult result = fbd.ShowDialog();
-
-                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
-                {
-                    if (BoxSeriesLoc.Items.Contains(fbd.SelectedPath))
-                    {
-                        GlobalVars.ShowInfo("Path already exists!");
-                        return;
-                    }
-                    BoxSeriesLoc.Items.Add(fbd.SelectedPath);
-                }
-            }
-        }
-        private void btnSeriesLocRemove_Click(object sender, EventArgs e)
-        {
-            // Remove selected from ListBox: BoxSeriesLoc
-            for (int i = BoxSeriesLoc.SelectedIndices.Count - 1; i >= 0; i--)
-            {
-                BoxSeriesLoc.Items.RemoveAt(BoxSeriesLoc.SelectedIndices[i]);
-            }
-        }
-        private void btnSeriesLocClear_Click(object sender, EventArgs e)
-        {
-            // Remove all from ListBox: BoxSeriesLoc
-            BoxSeriesLoc.Items.Clear();
         }
 
         private void btnGenreAdd_Click(object sender, EventArgs e)
