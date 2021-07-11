@@ -19,6 +19,7 @@
 ##################################################################################### */
 #endregion
 using System;
+using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -207,10 +208,39 @@ namespace HomeCinema
             txtMediaExt.Text = text;
 
             // Load medialocation.hc_data
+            dataGridMediaLoc.DataError += new DataGridViewDataErrorEventHandler(dataGridMediaLoc_DataError);
+            dataGridMediaLoc.ForeColor = Color.Black;
+
+            if (GlobalVars.MEDIA_LOC?.Count > 0)
+            {
+                foreach (var item in GlobalVars.MEDIA_LOC)
+                {
+                    string path = item.Path;
+                    int mediatype = item.MediaType == "movie" ? 0 : 1;
+                    int source = item.Source == "tmdb" ? 0 : 1;
+                    try
+                    {
+                        var index = dataGridMediaLoc.Rows.Add();
+                        var row = dataGridMediaLoc.Rows[index];
+                        row.Cells[0].Value = path;
+                        row.Cells[1].Value = (row.Cells[1] as DataGridViewComboBoxCell).Items[mediatype];
+                        row.Cells[2].Value = (row.Cells[2] as DataGridViewComboBoxCell).Items[source];
+                    }
+                    catch (Exception ex)
+                    {
+                        GlobalVars.ShowError("frmSetting", ex, false, this);
+                    }
+                }
+            }
+            dataGridMediaLoc.Refresh();
 
             // Theme-related
             btnColorBG.BackColor = BackgroundColor;
             btnColorFont.BackColor = FontColor;
+        }
+        private void dataGridMediaLoc_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            GlobalVars.ShowError("frmSetting-dataGridMediaLoc_DataError", e.Exception, false, this);
         }
         private void frmSettings_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -297,32 +327,64 @@ namespace HomeCinema
         {
             using (var fbd = new FolderBrowserDialog())
             {
-                fbd.Description = "Select folder that contains movie files";
+                fbd.Description = "Select folder that contains media files";
                 DialogResult result = fbd.ShowDialog();
+                bool canAdd = true;
 
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
-                    if (BoxMediaLoc.Items.Contains(fbd.SelectedPath))
+                    if (dataGridMediaLoc.Rows.Count > 0)
+                    {
+                        foreach (DataGridViewRow row in dataGridMediaLoc.Rows)
+                        {
+                            if (row.Cells["FolderPath"]?.Value.ToString() == fbd.SelectedPath)
+                            {
+                                canAdd = false;
+                                break;
+                            }
+
+                        }
+                    }
+                    if (canAdd == false)
                     {
                         GlobalVars.ShowInfo("Path already exists!");
                         return;
                     }
-                    BoxMediaLoc.Items.Add(fbd.SelectedPath);
+                    var index = dataGridMediaLoc.Rows.Add();
+                    var rowAdd = dataGridMediaLoc.Rows[index];
+                    rowAdd.Cells[0].Value = fbd.SelectedPath;
+                    rowAdd.Cells[1].Value = (rowAdd.Cells[1] as DataGridViewComboBoxCell).Items[0];
+                    rowAdd.Cells[2].Value = (rowAdd.Cells[2] as DataGridViewComboBoxCell).Items[0];
+                    dataGridMediaLoc.Refresh();
                 }
             }
         }
         private void btnMediaLocRemove_Click(object sender, EventArgs e)
         {
-            // Remove selected from ListBox: BoxMediaLoc
-            for (int i = BoxMediaLoc.SelectedIndices.Count - 1; i >= 0; i--)
+            // Remove selected from DataGridView: dataGridMediaLoc
+            int selectedCount = dataGridMediaLoc.SelectedRows.Count;
+            while (selectedCount > 0)
             {
-                BoxMediaLoc.Items.RemoveAt(BoxMediaLoc.SelectedIndices[i]);
+                if (!dataGridMediaLoc.SelectedRows[0].IsNewRow)
+                {
+                    try
+                    {
+                        dataGridMediaLoc.Rows.RemoveAt(dataGridMediaLoc.SelectedRows[0].Index);
+                    }
+                    catch { }
+                }
+                selectedCount--;
             }
+            dataGridMediaLoc.ClearSelection();
         }
         private void btnMediaLocClear_Click(object sender, EventArgs e)
         {
-            // Remove all from ListBox: BoxMediaLoc
-            BoxMediaLoc.Items.Clear();
+            // Remove all from DataGridView: dataGridMediaLoc
+            try
+            {
+                dataGridMediaLoc.Rows.Clear();
+            }
+            catch { }
         }
 
         private void btnGenreAdd_Click(object sender, EventArgs e)

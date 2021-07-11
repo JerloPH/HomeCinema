@@ -76,7 +76,7 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridMediaLoc = new System.Windows.Forms.DataGridView();
             this.FolderPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MediaType = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Source = new System.Windows.Forms.DataGridViewComboBoxColumn();
@@ -85,7 +85,7 @@
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridMediaLoc)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -315,7 +315,7 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Black;
-            this.tabPage2.Controls.Add(this.dataGridView1);
+            this.tabPage2.Controls.Add(this.dataGridMediaLoc);
             this.tabPage2.Controls.Add(this.btnMediaLocClear);
             this.tabPage2.Controls.Add(this.btnMediaLocRemove);
             this.tabPage2.Controls.Add(this.btnMediaLocAdd);
@@ -670,17 +670,21 @@
             this.label9.TabIndex = 16;
             this.label9.Text = "* Changes Apply after Restart";
             // 
-            // dataGridView1
+            // dataGridMediaLoc
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridMediaLoc.AllowUserToAddRows = false;
+            this.dataGridMediaLoc.AllowUserToDeleteRows = false;
+            this.dataGridMediaLoc.BackgroundColor = System.Drawing.Color.DimGray;
+            this.dataGridMediaLoc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridMediaLoc.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.FolderPath,
             this.MediaType,
             this.Source});
-            this.dataGridView1.Location = new System.Drawing.Point(8, 112);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(430, 259);
-            this.dataGridView1.TabIndex = 20;
+            this.dataGridMediaLoc.GridColor = System.Drawing.Color.Black;
+            this.dataGridMediaLoc.Location = new System.Drawing.Point(8, 112);
+            this.dataGridMediaLoc.Name = "dataGridMediaLoc";
+            this.dataGridMediaLoc.Size = new System.Drawing.Size(430, 259);
+            this.dataGridMediaLoc.TabIndex = 20;
             // 
             // FolderPath
             // 
@@ -735,7 +739,7 @@
             this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridMediaLoc)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -790,7 +794,7 @@
         private System.Windows.Forms.Label lblAutoClean;
         private System.Windows.Forms.ComboBox cbConfirmSearch;
         private System.Windows.Forms.Label lblConfirmSearch;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridMediaLoc;
         private System.Windows.Forms.DataGridViewTextBoxColumn FolderPath;
         private System.Windows.Forms.DataGridViewComboBoxColumn MediaType;
         private System.Windows.Forms.DataGridViewComboBoxColumn Source;
