@@ -80,6 +80,10 @@
             this.FolderPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MediaType = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Source = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.lblImgTileWidth = new System.Windows.Forms.Label();
+            this.txtImgTileWidth = new System.Windows.Forms.TextBox();
+            this.lblImgTileHeight = new System.Windows.Forms.Label();
+            this.txtImgTileHeight = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -573,6 +577,10 @@
             // tabPage4
             // 
             this.tabPage4.BackColor = System.Drawing.Color.Black;
+            this.tabPage4.Controls.Add(this.lblImgTileHeight);
+            this.tabPage4.Controls.Add(this.txtImgTileHeight);
+            this.tabPage4.Controls.Add(this.lblImgTileWidth);
+            this.tabPage4.Controls.Add(this.txtImgTileWidth);
             this.tabPage4.Controls.Add(this.label2);
             this.tabPage4.Controls.Add(this.btnChangeColorFont);
             this.tabPage4.Controls.Add(this.btnColorFont);
@@ -587,18 +595,18 @@
             // label2
             // 
             this.label2.Font = new System.Drawing.Font("Calibri", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(77, 121);
+            this.label2.Location = new System.Drawing.Point(11, 7);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(454, 34);
             this.label2.TabIndex = 17;
-            this.label2.Text = "Font Color change applies on next \'Search\' button press";
+            this.label2.Text = "Change applies on next \'Search\' button press";
             // 
             // btnChangeColorFont
             // 
             this.btnChangeColorFont.BackColor = System.Drawing.Color.Black;
             this.btnChangeColorFont.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnChangeColorFont.Location = new System.Drawing.Point(76, 80);
+            this.btnChangeColorFont.Location = new System.Drawing.Point(75, 113);
             this.btnChangeColorFont.Name = "btnChangeColorFont";
             this.btnChangeColorFont.Size = new System.Drawing.Size(204, 38);
             this.btnChangeColorFont.TabIndex = 3;
@@ -608,7 +616,7 @@
             // 
             // btnColorFont
             // 
-            this.btnColorFont.Location = new System.Drawing.Point(24, 80);
+            this.btnColorFont.Location = new System.Drawing.Point(23, 113);
             this.btnColorFont.Name = "btnColorFont";
             this.btnColorFont.Size = new System.Drawing.Size(46, 38);
             this.btnColorFont.TabIndex = 2;
@@ -618,7 +626,7 @@
             // 
             this.btnChangeColorBG.BackColor = System.Drawing.Color.Black;
             this.btnChangeColorBG.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnChangeColorBG.Location = new System.Drawing.Point(76, 24);
+            this.btnChangeColorBG.Location = new System.Drawing.Point(75, 57);
             this.btnChangeColorBG.Name = "btnChangeColorBG";
             this.btnChangeColorBG.Size = new System.Drawing.Size(204, 38);
             this.btnChangeColorBG.TabIndex = 1;
@@ -628,7 +636,7 @@
             // 
             // btnColorBG
             // 
-            this.btnColorBG.Location = new System.Drawing.Point(24, 24);
+            this.btnColorBG.Location = new System.Drawing.Point(23, 57);
             this.btnColorBG.Name = "btnColorBG";
             this.btnColorBG.Size = new System.Drawing.Size(46, 38);
             this.btnColorBG.TabIndex = 0;
@@ -713,6 +721,44 @@
             this.Source.ToolTipText = "Source to search info";
             this.Source.Width = 110;
             // 
+            // lblImgTileWidth
+            // 
+            this.lblImgTileWidth.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblImgTileWidth.Location = new System.Drawing.Point(120, 169);
+            this.lblImgTileWidth.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblImgTileWidth.Name = "lblImgTileWidth";
+            this.lblImgTileWidth.Size = new System.Drawing.Size(183, 25);
+            this.lblImgTileWidth.TabIndex = 19;
+            this.lblImgTileWidth.Text = "*Width of Image covers";
+            // 
+            // txtImgTileWidth
+            // 
+            this.txtImgTileWidth.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtImgTileWidth.Location = new System.Drawing.Point(24, 168);
+            this.txtImgTileWidth.Margin = new System.Windows.Forms.Padding(2);
+            this.txtImgTileWidth.Name = "txtImgTileWidth";
+            this.txtImgTileWidth.Size = new System.Drawing.Size(92, 26);
+            this.txtImgTileWidth.TabIndex = 18;
+            // 
+            // lblImgTileHeight
+            // 
+            this.lblImgTileHeight.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblImgTileHeight.Location = new System.Drawing.Point(120, 211);
+            this.lblImgTileHeight.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblImgTileHeight.Name = "lblImgTileHeight";
+            this.lblImgTileHeight.Size = new System.Drawing.Size(183, 25);
+            this.lblImgTileHeight.TabIndex = 21;
+            this.lblImgTileHeight.Text = "*Height of Image covers";
+            // 
+            // txtImgTileHeight
+            // 
+            this.txtImgTileHeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtImgTileHeight.Location = new System.Drawing.Point(24, 210);
+            this.txtImgTileHeight.Margin = new System.Windows.Forms.Padding(2);
+            this.txtImgTileHeight.Name = "txtImgTileHeight";
+            this.txtImgTileHeight.Size = new System.Drawing.Size(92, 26);
+            this.txtImgTileHeight.TabIndex = 20;
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -739,6 +785,7 @@
             this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridMediaLoc)).EndInit();
             this.ResumeLayout(false);
 
@@ -798,5 +845,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn FolderPath;
         private System.Windows.Forms.DataGridViewComboBoxColumn MediaType;
         private System.Windows.Forms.DataGridViewComboBoxColumn Source;
+        private System.Windows.Forms.Label lblImgTileWidth;
+        private System.Windows.Forms.TextBox txtImgTileWidth;
+        private System.Windows.Forms.Label lblImgTileHeight;
+        private System.Windows.Forms.TextBox txtImgTileHeight;
     }
 }

@@ -175,6 +175,12 @@ namespace HomeCinema
             try { txtImdbSearchLimit.Text = GlobalVars.SET_SEARCHLIMIT.ToString(); }
             catch { txtImdbSearchLimit.Text = "5"; }
 
+            try { txtImgTileWidth.Text = GlobalVars.IMGTILE_WIDTH.ToString(); }
+            catch { txtImgTileWidth.Text = "96"; }
+
+            try { txtImgTileHeight.Text = GlobalVars.IMGTILE_HEIGHT.ToString(); }
+            catch { txtImgTileHeight.Text = "128"; }
+
             // ##################### - FILE changes
             // Country Texts
             foreach (string country in GlobalVars.TEXT_COUNTRY)
@@ -270,7 +276,7 @@ namespace HomeCinema
             GlobalVars.SET_AUTOCLEAN = !Convert.ToBoolean(cbAutoClean.SelectedIndex);
             GlobalVars.SET_CONFIRMSEARCH = !Convert.ToBoolean(cbConfirmSearch.SelectedIndex);
 
-            // TextBox
+            // TextBox changes
             try
             {
                 logsize = (long)Convert.ToDouble(txtLogSize.Text);
@@ -283,6 +289,12 @@ namespace HomeCinema
 
             try { GlobalVars.SET_SEARCHLIMIT = Convert.ToInt32(txtImdbSearchLimit.Text); }
             catch { error += Environment.NewLine + lblImdbSearchLimit.Text.Trim().TrimEnd(':'); }
+
+            try { GlobalVars.IMGTILE_WIDTH = Convert.ToInt32(txtImgTileWidth.Text); }
+            catch { error += Environment.NewLine + lblImgTileWidth.Text.Trim().TrimEnd(':'); }
+
+            try { GlobalVars.IMGTILE_HEIGHT = Convert.ToInt32(txtImgTileHeight.Text); }
+            catch { error += Environment.NewLine + lblImgTileHeight.Text.Trim().TrimEnd(':'); }
 
             // Write supported file extensions
             try

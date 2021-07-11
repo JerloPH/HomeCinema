@@ -198,13 +198,15 @@ namespace HomeCinema
             SET_AUTOCLEAN = Convert.ToBoolean(config.autoClean); // Auto clean on startup
             SET_CONFIRMSEARCH = Convert.ToBoolean(config.confirmSearch); // Confirm prompts on search and reload
 
-            // Set colors
-            try
+            // Set theme
+            IMGTILE_WIDTH = config.ImgTileWidth; // Cover Image width
+            IMGTILE_HEIGHT = config.ImgTileHeight; // Cover Image height
+            try // set background color
             {
                 SET_COLOR_BG = ColorTranslator.FromHtml($"#{config.BackgroundColor}");
             }
             catch { SET_COLOR_BG = Color.Black; }
-            try
+            try // set foreground color
             {
                 SET_COLOR_FONT = ColorTranslator.FromHtml($"#{config.FontColor}");
             }
@@ -227,6 +229,8 @@ namespace HomeCinema
             config.BackgroundColor = SET_COLOR_BG.ToArgb().ToString("x");
             config.FontColor = SET_COLOR_FONT.ToArgb().ToString("x");
             config.confirmSearch = Convert.ToInt16(SET_CONFIRMSEARCH);
+            config.ImgTileWidth = Convert.ToInt32(IMGTILE_WIDTH);
+            config.ImgTileHeight = Convert.ToInt32(IMGTILE_HEIGHT);
 
             // Seriliaze to JSON
             string json = JsonConvert.SerializeObject(config, Formatting.Indented);

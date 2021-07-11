@@ -40,5 +40,7 @@ namespace HomeCinema
         // Theme
         public string BackgroundColor { get; set; } = System.Drawing.ColorTranslator.ToHtml(System.Drawing.Color.Black);
         public string FontColor { get; set; } = System.Drawing.ColorTranslator.ToHtml(System.Drawing.Color.White);
+        public int ImgTileWidth { get; set; } = 96;
+        public int ImgTileHeight { get; set; } = 128;
     }
 }
