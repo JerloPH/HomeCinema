@@ -1161,7 +1161,7 @@ namespace HomeCinema
             string KEY = TMDB_KEY;
             // GET TMDB MOVIE ID
             string MovieTitle = Movie_Title.Replace(" ", "%20");
-            string urlJSONgetId = @"https://api.themoviedb.org/3/search/" + mediatype + "?api_key=" + KEY + "&query=" + MovieTitle;
+            string urlJSONgetId = @"https://api.themoviedb.org/3/search/" + (mediatype == "series" ? "tv" : "movie") + "?api_key=" + KEY + "&query=" + MovieTitle;
             string JSONgetID = PATH_TEMP + MOVIE_ID + "_id.json";
             string JSONgetImdb = "", MovieID = "";
             string JSONContents = "", urlJSONgetImdb;
