@@ -261,6 +261,7 @@ namespace HomeCinema
         /// <param name="log">string to log</param>
         public static void Log(string filePath, string codefrom, string log)
         {
+            if (log.Contains("api.themoviedb.org")) { return; }
             try
             {
                 if (!File.Exists(filePath)) { WriteToFile(filePath, ""); }
