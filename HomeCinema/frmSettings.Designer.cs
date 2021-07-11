@@ -398,7 +398,7 @@
             this.txtMediaExt.Multiline = true;
             this.txtMediaExt.Name = "txtMediaExt";
             this.txtMediaExt.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtMediaExt.Size = new System.Drawing.Size(505, 51);
+            this.txtMediaExt.Size = new System.Drawing.Size(524, 51);
             this.txtMediaExt.TabIndex = 8;
             // 
             // tabPage3
@@ -691,7 +691,7 @@
             this.FolderPath.HeaderText = "Path";
             this.FolderPath.Name = "FolderPath";
             this.FolderPath.ToolTipText = "Path to search media files, without the final backslash";
-            this.FolderPath.Width = 194;
+            this.FolderPath.Width = 195;
             // 
             // MediaType
             // 
