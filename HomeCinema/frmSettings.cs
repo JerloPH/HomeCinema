@@ -302,7 +302,18 @@ namespace HomeCinema
             catch { error += Environment.NewLine + "Media Extensions"; }
 
             // Save medialocation.hc_data file with new contents
-
+            string newMediaLoc = "";
+            foreach (DataGridViewRow item in dataGridMediaLoc.Rows)
+            {
+                string path = item.Cells[0].Value.ToString();
+                string mediatypeFromCell = item.Cells[1].Value.ToString().ToLower();
+                string sourceFromCell = item.Cells[2].Value.ToString().ToLower();
+                string mediatype = mediatypeFromCell;
+                string source = sourceFromCell;
+                newMediaLoc += $"{path}*{mediatype}*{source}|";
+            }
+            newMediaLoc = newMediaLoc.TrimEnd('|');
+            GlobalVars.WriteToFile(GlobalVars.FILE_MEDIALOC, newMediaLoc);
             // Replace country file
             GlobalVars.WriteListBoxToFile(GlobalVars.FILE_COUNTRY, listboxCountry, ",");
             Program.FormMain.PopulateCountryCB();
