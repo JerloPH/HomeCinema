@@ -415,10 +415,10 @@ namespace HomeCinema.SQLFunc
                     cmd.CommandText = $"INSERT INTO {GlobalVars.DB_TNAME_INFO} ({infoCols}) VALUES({infoVals});";
                     GlobalVars.LogDb($"{errFrom} (Insert query)", cmd.CommandText);
                     successCode = cmd.ExecuteNonQuery();
-                    LastID = (int)conn.LastInsertRowId;
 
                     if (successCode > 0)
                     {
+                        LastID = (int)conn.LastInsertRowId;
                         cmd.CommandText = $"INSERT INTO {GlobalVars.DB_TNAME_FILEPATH} (Id, {fileCols}) VALUES({LastID},{fileVals});";
                         successCode = cmd.ExecuteNonQuery();
                         // Add cover image by capturing media
@@ -455,6 +455,7 @@ namespace HomeCinema.SQLFunc
                     }
                     else
                     {
+                        LastID = 0;
                         transaction.Rollback();
                         --retry;
                     }
