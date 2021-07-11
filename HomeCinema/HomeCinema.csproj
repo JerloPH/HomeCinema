@@ -155,6 +155,7 @@
     <Compile Include="JSONs\Config.cs" />
     <Compile Include="Func\SQLHelper.cs" />
     <Compile Include="Structs\MediaLocations.cs" />
+    <Compile Include="Structs\Medias.cs" />
     <EmbeddedResource Include="frmAbout.resx">
       <DependentUpon>frmAbout.cs</DependentUpon>
     </EmbeddedResource>

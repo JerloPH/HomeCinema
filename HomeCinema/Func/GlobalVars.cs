@@ -101,8 +101,9 @@ namespace HomeCinema
         public static int IMG_HEIGHT = 256;
         public static Font TILE_FONT = new Font("Calibri", 10f);
 
-        // String arrays for extensions
-        public static List<string> MOVIE_EXTENSIONS = new List<string>();
+        // List objects
+        public static List<string> MOVIE_EXTENSIONS = new List<string>(); // Supported extensions
+        public static List<MediaLocations> MEDIA_LOC = new List<MediaLocations>(); // Folders to search media files from
 
         // Filter for OpenDialogs
         public static string FILTER_VIDEO = "MP4 Video files (*.mp4)|*.mp4";
@@ -771,35 +772,24 @@ namespace HomeCinema
             }
             return files;
         }
-        // Return List<String> of folder directories, from "seriesloc" File
-        public static List<string> GetSeriesLocations()
+        // Get all folders inside a directory
+        public static List<string> SearchFoldersFromDirectory(string sDir, string errFrom)
         {
-            string errFrom = "GlobalVars-GetSeriesLocations";
             List<string> list = new List<string>();
-            string[] arr = BuildDirArrFromFile(FILE_SERIESLOC, errFrom, '*');
-            string directory;
+            string directory = sDir.TrimEnd('\\');
             try
             {
-                foreach (string path in arr)
+                foreach (string foldertoAdd in Directory.GetDirectories(directory))
                 {
-                    directory = path.TrimEnd('\\');
-                    if (Directory.Exists(directory))
+                    if (Directory.Exists(foldertoAdd))
                     {
-                        foreach (string foldertoAdd in Directory.GetDirectories(directory))
-                        {
-                            if (Directory.Exists(foldertoAdd))
-                            {
-                                // Add to list
-                                list.Add(foldertoAdd);
-                            }
-                        }
+                        list.Add(foldertoAdd); // Add to list
                     }
                 }
             }
             catch (Exception ex)
             {
-                // Log error
-                ShowError(errFrom, ex, false);
+                ShowError($"GlobalVars-SearchFoldersFromDirectory(), called by: {errFrom}", ex, false);
             }
             return list;
         }
@@ -1170,7 +1160,8 @@ namespace HomeCinema
             // Setup vars and links
             string KEY = TMDB_KEY;
             // GET TMDB MOVIE ID
-            string urlJSONgetId = @"https://api.themoviedb.org/3/search/" + mediatype + "?api_key=" + KEY + "&query=" + Movie_Title;
+            string MovieTitle = Movie_Title.Replace(" ", "%20");
+            string urlJSONgetId = @"https://api.themoviedb.org/3/search/" + mediatype + "?api_key=" + KEY + "&query=" + MovieTitle;
             string JSONgetID = PATH_TEMP + MOVIE_ID + "_id.json";
             string JSONgetImdb = "", MovieID = "";
             string JSONContents = "", urlJSONgetImdb;
