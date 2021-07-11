@@ -467,6 +467,24 @@ namespace HomeCinema
             }
             return false;
         }
+        // Load Media Location file
+        public static void LoadMediaLocations()
+        {
+            string medialocContent = GlobalVars.ReadStringFromFile(GlobalVars.FILE_MEDIALOC, "frmMain");
+            if (!String.IsNullOrWhiteSpace(medialocContent))
+            {
+                GlobalVars.MEDIA_LOC?.Clear();
+                var arr = medialocContent.Split('|');
+                foreach (string arrFolder in arr)
+                {
+                    var arr2 = arrFolder.Split('*');
+                    if (arr2.Length > 2)
+                    {
+                        GlobalVars.MEDIA_LOC.Add(new MediaLocations(arr2[0], arr2[1], arr2[2]));
+                    }
+                }
+            }
+        }
         // Read String From File
         public static string ReadStringFromFile(string localFile, string calledFrom)
         {
@@ -1738,6 +1756,7 @@ namespace HomeCinema
             var list = lb.Items.Cast<String>().ToList();
             return (list.Count > 0) ? list.Aggregate((a, b) => a + "," + b) : "";
         }
+        
         // ######################################################################## END - Add code above
     }
 }

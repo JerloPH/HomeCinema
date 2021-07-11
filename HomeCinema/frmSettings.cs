@@ -314,6 +314,7 @@ namespace HomeCinema
             }
             newMediaLoc = newMediaLoc.TrimEnd('|');
             GlobalVars.WriteToFile(GlobalVars.FILE_MEDIALOC, newMediaLoc);
+            GlobalVars.LoadMediaLocations();
             // Replace country file
             GlobalVars.WriteListBoxToFile(GlobalVars.FILE_COUNTRY, listboxCountry, ",");
             Program.FormMain.PopulateCountryCB();

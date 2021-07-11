@@ -813,20 +813,7 @@ namespace HomeCinema
                 GlobalVars.FILTER_VIDEO = "Supported Media Files|" + tempExtToBrowse;
 
                 // Build list of folders to search from
-                string medialocContent = GlobalVars.ReadStringFromFile(GlobalVars.FILE_MEDIALOC, "frmMain");
-                if (!String.IsNullOrWhiteSpace(medialocContent))
-                {
-                    GlobalVars.MEDIA_LOC?.Clear();
-                    var arr = medialocContent.Split('|');
-                    foreach (string arrFolder in arr)
-                    {
-                        var arr2 = arrFolder.Split('*');
-                        if (arr2.Length > 2)
-                        {
-                            GlobalVars.MEDIA_LOC.Add(new MediaLocations(arr2[0], arr2[1], arr2[2]));
-                        }
-                    }
-                }
+                GlobalVars.LoadMediaLocations();
                 if (GlobalVars.MEDIA_LOC?.Count < 1)
                 {
                     var folder = GlobalVars.GetDirectoryFolder("Select folder to search for Movie files"); // Browse for Dir
