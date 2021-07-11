@@ -896,14 +896,13 @@ namespace HomeCinema
         // Check if there is an active Internet connection
         public static bool CheckConnection(String URL, int timeOutSec = 3)
         {
-            bool ret = false;
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
                 request.Timeout = timeOutSec * 1000;
                 request.Credentials = CredentialCache.DefaultNetworkCredentials;
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                ret = (response.StatusCode == HttpStatusCode.OK);
+                bool ret = (response.StatusCode == HttpStatusCode.OK);
                 response.Dispose();
                 return ret;
             }
