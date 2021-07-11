@@ -908,7 +908,10 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                ShowError($"(GlobalVars-CheckConnection)\nURL: {URL}\n", ex, false);
+                if (!URL.Contains("api.themoviedb.org"))
+                {
+                    ShowError($"(GlobalVars-CheckConnection)\nURL: {URL}\n", ex, false);
+                }
                 return false;
             }
         }

@@ -71,6 +71,18 @@ namespace HomeCinema
             }
             catch { }
         }
+        private delegate void UpdateMessageThreadSafeDelegate(string message);
+        public void UpdateMessage(string message)
+        {
+            if (label1.InvokeRequired)
+            {
+                label1.Invoke(new UpdateMessageThreadSafeDelegate(UpdateMessage), new object[] { message });
+            }
+            else
+            {
+                label1.Text = message;
+            }
+        }
 
         private void frmPopulateMovie_Shown(object sender, EventArgs e)
         {

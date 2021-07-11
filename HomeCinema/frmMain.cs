@@ -259,26 +259,46 @@ namespace HomeCinema
                     count += 1; // add to count
                     logInsert += $"{filePath}\n";
 
+                    // Clear prev cover images
+                    string movieId = insertResult.ToString();
+                    string oldFile = GlobalVars.PATH_TEMP + movieId + ".jpg"; // cover path for temporary cover
+                    string newFile = GlobalVars.ImgFullPath(movieId);
+                    if (File.Exists(oldFile))
+                    {
+                        GlobalVars.DeleteMove(oldFile, errFrom); // Delete cover in temp folder
+                    }
+                    if (File.Exists(newFile))
+                    {
+                        GlobalVars.DeleteMove(newFile, errFrom); // Delete existing cover first
+                    }
+
                     // Download cover, if not OFFLINE_MODE and HAS TMDB KEY
                     if (GlobalVars.SET_OFFLINE == false && GlobalVars.HAS_TMDB_KEY && src == "tmdb")
                     {
-                        string movieId = insertResult.ToString();
-                        Thread.Sleep(5); // sleep to prevent overloading TMDB
-                        if (GlobalVars.DownloadCoverFromTMDB(movieId, rPosterLink, errFrom) && (!String.IsNullOrWhiteSpace(rPosterLink)))
+                        if (!String.IsNullOrWhiteSpace(rPosterLink))
                         {
-                            try
+                            Thread.Sleep(5); // sleep to prevent overloading TMDB
+                            if (GlobalVars.DownloadCoverFromTMDB(movieId, rPosterLink, errFrom) && (!String.IsNullOrWhiteSpace(rPosterLink)))
                             {
-                                // Move from temp folder to poster path
-                                string oldFile = GlobalVars.PATH_TEMP + movieId + ".jpg";
-                                string newFile = GlobalVars.ImgFullPath(movieId);
-                                GlobalVars.DeleteMove(newFile, errFrom); // Delete existing cover first
-                                File.Move(oldFile, newFile);
-                                GlobalVars.DeleteMove(oldFile, errFrom); // Delete temp cover afterwards
+                                try
+                                {
+                                    // Move from temp folder to poster path
+                                    File.Move(oldFile, newFile);
+                                    GlobalVars.DeleteMove(oldFile, errFrom); // Delete temp cover afterwards
+                                }
+                                catch (Exception ex)
+                                {
+                                    GlobalVars.ShowError(errFrom, ex, false, this);
+                                }
                             }
-                            catch (Exception ex)
+                        }
+                        else
+                        {
+                            try // Use default image
                             {
-                                GlobalVars.ShowError(errFrom, ex, false, this);
+                                File.Copy(GlobalVars.ImgFullPath("0"), newFile, true); 
                             }
+                            catch { }
                         }
                     }
                 }
@@ -771,6 +791,7 @@ namespace HomeCinema
             int countMediaLoc = 0;
             int countMediaLocMax = 0;
             string logSkipped = Path.Combine(GlobalVars.PATH_LOG, "SkippedEntries.Log");
+            int insertRes = 0;
 
             // Delegate task to frmLoading
             form.BackgroundWorker.DoWork += (sender1, e1) =>
@@ -818,7 +839,7 @@ namespace HomeCinema
                 foreach (MediaLocations mediaLoc in GlobalVars.MEDIA_LOC)
                 {
                     countMediaLoc += 1;
-                    form.Message = $"Loading directories ({countMediaLoc}/{countMediaLocMax})..";
+                    form.UpdateMessage($"Loading directories ({countMediaLoc}/{countMediaLocMax})..");
                     GlobalVars.Log(calledFrom, $"Searching in: ({mediaLoc.Path}), Mediatype: {mediaLoc.MediaType}, Source: {mediaLoc.Source}");
                     if (Directory.Exists(mediaLoc.Path))
                     {
@@ -898,13 +919,16 @@ namespace HomeCinema
                         }
                     }
                 }
-                form.Message = $"Inserting {dtNewFiles?.Count} new found media files..";
-                int insertRes = InsertToDB(dtNewFiles, calledFrom + "-dtNewFiles");
-                form.Message = $"Successfully inserted {insertRes} new entries!";
+                form.UpdateMessage($"Inserting {dtNewFiles?.Count} new found media files..");
+                insertRes = InsertToDB(dtNewFiles, calledFrom + "-dtNewFiles");
                 // Clear previous lists
                 listAlreadyinDB?.Clear();
             };
             form.ShowDialog(this);
+            if (insertRes > 0)
+            {
+                GlobalVars.ShowInfo($"Successfully inserted {insertRes} new entries!");
+            }
             RefreshMovieList(true);
         }
         #endregion
