@@ -15,20 +15,24 @@ namespace HomeCinema
 {
     public partial class frmTmdbSearch : Form
     {
-        private string mediatype;
         private string movieId;
         private ImageList imageList = new ImageList();
         private string result;
+        private string mediatype;
         public string getResult
         {
             get { return result; }
             set { result = value; }
         }
-        public frmTmdbSearch(string caption, string query, string mediaType, string id)
+        public string getResultMedia
+        {
+            get { return mediatype; }
+            set { mediatype = value; }
+        }
+        public frmTmdbSearch(string caption, string query, string id)
         {
             InitializeComponent();
             // Set variables
-            mediatype = (!String.IsNullOrWhiteSpace(mediaType)) ? mediaType : "movie";
             movieId = id;
             result = "";
             // Set textbox and labels
@@ -85,7 +89,7 @@ namespace HomeCinema
             // Setup vars and links
             string KEY = GlobalVars.TMDB_KEY;
             // GET TMDB MOVIE ID
-            string urlJSONgetId = @"https://api.themoviedb.org/3/search/" + mediatype + "?api_key=" + KEY + "&query=" + txtInput.Text;
+            string urlJSONgetId = @"https://api.themoviedb.org/3/search/multi?api_key=" + KEY + "&query=" + txtInput.Text;
             string JSONgetID = GlobalVars.PATH_TEMP + movieId + "_id.json";
             string JSONContents = "";
             string rPosterLink = "";
@@ -114,7 +118,7 @@ namespace HomeCinema
                         // Add to ListView
                         foreach (Result result in objPageResult.results)
                         {
-                            string ImdbFromApi  = GlobalVars.GetImdbFromAPI(result.id.ToString(), mediatype);
+                            string ImdbFromApi  = GlobalVars.GetImdbFromAPI(result.id.ToString(), result.media_type);
                             string imgFilePath = $"{GlobalVars.PATH_TEMP}{ImdbFromApi}.jpg";
                             string imgKey = "0";
                             // Skip entry if there is no Imdb Id associated
@@ -145,8 +149,8 @@ namespace HomeCinema
                             // Create ListView item
                             ListViewItem lvItem = new ListViewItem();
                             int index = imageList.Images.IndexOfKey(imgKey);
-                            lvItem.Text = mediatype.Equals("movie") ? result.title : result.name;
-                            lvItem.Tag = ImdbFromApi;
+                            lvItem.Text = result.media_type.Equals("movie") ? result.title : result.name;
+                            lvItem.Tag = $"{ImdbFromApi}*{result.media_type}";
                             lvItem.ImageIndex = (index > 0) ? index : 0;
                             AddItem(lvResult, lvItem);
                             ++count;
@@ -182,7 +186,9 @@ namespace HomeCinema
         {
             if (lvResult.SelectedItems.Count > 0)
             {
-                result = lvResult.SelectedItems[0].Tag.ToString();
+                string[] resultString = lvResult.SelectedItems[0].Tag.ToString().Split('*');
+                result = resultString[0];
+                mediatype = resultString[1];
                 if (String.IsNullOrWhiteSpace(result))
                 {
                     GlobalVars.ShowWarning("Selected item has invalid IMDB Id!", GlobalVars.HOMECINEMA_NAME);

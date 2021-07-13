@@ -265,13 +265,17 @@ namespace HomeCinema
         /// <param name="log">string to log</param>
         public static void Log(string filePath, string codefrom, string log)
         {
-            if (log.Contains("api.themoviedb.org")) { return; }
+            string toLog = log;
+            if (!String.IsNullOrWhiteSpace(TMDB_KEY))
+            {
+                toLog = toLog.Replace(TMDB_KEY, "TMDB_KEY");
+            }
             try
             {
                 if (!File.Exists(filePath)) { WriteToFile(filePath, ""); }
                 using (StreamWriter w = File.AppendText(filePath))
                 {
-                    w.Write(LogFormatted(codefrom, log));
+                    w.Write(LogFormatted(codefrom, toLog));
                 }
             }
             catch (Exception ex)
@@ -928,6 +932,7 @@ namespace HomeCinema
         // Check if there is an active Internet connection
         public static bool CheckConnection(String URL, int timeOutSec = 3)
         {
+            if (!String.IsNullOrWhiteSpace(URL)) { return false; }
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
@@ -940,10 +945,7 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                if (!URL.Contains("api.themoviedb.org"))
-                {
-                    ShowError($"(GlobalVars-CheckConnection)\nURL: {URL}\n", ex, false);
-                }
+                ShowError($"(GlobalVars-CheckConnection)\nURL: {URL}\n", ex, false);
                 return false;
             }
         }
@@ -959,7 +961,7 @@ namespace HomeCinema
                     {
                         client.DownloadFile(link, saveTo);
                         Thread.Sleep(10);
-                        return 1;
+                        return 200;
                     }
                     catch (WebException wex)
                     {
@@ -973,7 +975,7 @@ namespace HomeCinema
                         {
                             // Log Error and Exit
                             ShowError(errFrom, exw, showAMsg);
-                            return 404;
+                            return -1;
                         }
                     }
                     catch (Exception ex)
@@ -987,25 +989,23 @@ namespace HomeCinema
         // Keep downloading file until successful, except during certain status codes
         public static bool DownloadLoop(string filePath, string urlFrom, string calledFrom, bool showAMsg = false)
         {
-            if (string.IsNullOrWhiteSpace(urlFrom))
-            {
-                return false;
-            }
+            if (string.IsNullOrWhiteSpace(urlFrom)) { return false; }
             // Keep downloading
             string errFrom = $"GlobalVars-DownloadLoop [calledFrom: {calledFrom}]";
-            int DLStatus;
-            while (File.Exists(filePath) == false)
+            int DLStatus = 0;
+            int retry = 5;
+            while (retry > 0)
             {
+                Log(errFrom, $"Downloading file: {urlFrom}, (retry left: {retry})");
                 DLStatus = DownloadFrom(urlFrom, filePath, showAMsg);
-                if ((DLStatus==404)  || (DLStatus == 0))
+                if (File.Exists(filePath) || DLStatus==404) // File download success || File not found on server
                 {
-                    // Error codes and meaning
-                    // 0 Not connected to the internet
-                    // 404 = file not Found on server
-                    return false;
+                    retry = -1;
+                    break;
                 }
+                --retry;
             }
-            return true;
+            return (DLStatus == 200);
         }
         // Download a File, replacing prev file, and Keep trying to download it
         public static bool DownloadAndReplace(string filePath, string urlFrom, string calledFrom, bool showAMsg = false)
@@ -1034,7 +1034,7 @@ namespace HomeCinema
             catch (Exception ex)
             {
                 ShowWarning("File cannot be moved to Recycle Bin!\n" + file);
-                ShowError("GlobalVars-DeleteMove (" + errFrom + ")", ex, false);
+                ShowError($"GlobalVars-DeleteMove ({errFrom})", ex, false);
             }
             return false;
         }
@@ -1189,18 +1189,18 @@ namespace HomeCinema
         // Return IMDB Id of Movie from TMDB, by searching movie title
         public static string GetIMDBId(string Movie_Title, string MOVIE_ID, string mediatype, bool showAMsg = false)
         {
+            mediatype = (String.IsNullOrWhiteSpace(mediatype)) ? "movie" : mediatype;
             string ret = "";
             string errFrom = $"GlobalVars-GetIMDBId";
             // Setup vars and links
             string KEY = TMDB_KEY;
+            string mediatypeUrl = mediatype.ToLower().Equals("movie") ? "movie" : "tv";
             // GET TMDB MOVIE ID
             string MovieTitle = Movie_Title.Replace(" ", "%20");
-            string urlJSONgetId = @"https://api.themoviedb.org/3/search/" + (mediatype == "series" ? "tv" : "movie") + "?api_key=" + KEY + "&query=" + MovieTitle;
+            string urlJSONgetId = @"https://api.themoviedb.org/3/search/" + mediatypeUrl + "?api_key=" + KEY + "&query=" + MovieTitle;
             string JSONgetID = PATH_TEMP + MOVIE_ID + "_id.json";
             string JSONgetImdb = "", MovieID = "";
             string JSONContents = "", urlJSONgetImdb;
-
-            mediatype = (String.IsNullOrWhiteSpace(mediatype)) ? "movie" : mediatype;
 
             // Download file , force overwrite (TO GET TMDB MOVIE ID)
             if (DownloadAndReplace(JSONgetID, urlJSONgetId, errFrom, showAMsg))
@@ -1234,7 +1234,6 @@ namespace HomeCinema
                     }
                 }
             }
-
             // Delete files if MOVIE_ID = dummy
             if (MOVIE_ID == "dummy")
             {
@@ -1250,11 +1249,12 @@ namespace HomeCinema
             string errFrom = $"GlobalVars-GetImdbFromAPI";
             string urlJSONgetImdb, JSONgetImdb;
             string JSONContents = "";
+            string mediaTypeUrl = mediatype.ToLower().Equals("movie") ? "movie" : "tv";
             // Check if MovieID is not empty
             if (String.IsNullOrWhiteSpace(TmdbId) == false)
             {
                 // GET IMDB
-                urlJSONgetImdb = @"https://api.themoviedb.org/3/" + mediatype + "/" + TmdbId + "?api_key=" + TMDB_KEY;
+                urlJSONgetImdb = @"https://api.themoviedb.org/3/" + mediaTypeUrl + "/" + TmdbId + "?api_key=" + TMDB_KEY;
                 urlJSONgetImdb += (mediatype != "movie") ? "&append_to_response=external_ids" : ""; // Append external_ids param for non-movie
                 JSONgetImdb = $"{PATH_TEMP}tmdb{TmdbId}_movieInfo.json";
 
@@ -1277,6 +1277,7 @@ namespace HomeCinema
         public static List<string> GetMovieInfoByImdb(string IMDB_ID, string mediatype, bool showAMsg = false)
         {
             string errFrom = "GlobalVars-GetMovieInfoByImdb";
+            string mediaTypeUrl = mediatype.Equals("movie") ? "movie" : "tv";
             // Setup vars and links
             List<string> list = new List<string>();
             list.AddRange(new string[] { "", "", "", "", "", "", "", "", "", "", "", "" });
@@ -1305,7 +1306,7 @@ namespace HomeCinema
             string JSONContents;
 
             // If JSON File DOES not exists, Download it
-            urlJSONMovieInfo = @"https://api.themoviedb.org/3/find/" + $"{ IMDB_ID }?api_key={ TMDB_KEY }&language=en-US&external_source=imdb_id";
+            urlJSONMovieInfo = @"https://api.themoviedb.org/3/find/" + $"{IMDB_ID}?api_key={TMDB_KEY}&language=en-US&external_source=imdb_id";
             // JSON - MOVIE WITH GIVEN IMDB
             DownloadAndReplace(JSONmovieinfo, urlJSONMovieInfo, errFrom + " [JSONmovieinfo]", showAMsg);
             if (File.Exists(JSONmovieinfo))
@@ -1314,7 +1315,7 @@ namespace HomeCinema
                 {
                     JSONContents = ReadStringFromFile(JSONmovieinfo, errFrom);
                     var objJson = JsonConvert.DeserializeObject<ImdbResult>(JSONContents);
-                    TMDB_MovieID = (mediatype == "movie") ? objJson.movie_results[0].id : objJson.tv_results[0].id;
+                    TMDB_MovieID = mediatype.Equals("movie") ? objJson.movie_results[0].id : objJson.tv_results[0].id;
                 }
                 catch { TMDB_MovieID = ""; }
             }
@@ -1323,9 +1324,9 @@ namespace HomeCinema
             if (!String.IsNullOrWhiteSpace(TMDB_MovieID))
             {
                 // JSON - FIND USING IMDB
-                urlJSONFindMovie = @"https://api.themoviedb.org/3/" + mediatype + "/" + TMDB_MovieID + "?api_key=" + TMDB_KEY;
+                urlJSONFindMovie = @"https://api.themoviedb.org/3/" + mediaTypeUrl + "/" + TMDB_MovieID + "?api_key=" + TMDB_KEY;
                 // FETCH TRAILER
-                urlJSONtrailer = @"https://api.themoviedb.org/3/" + mediatype + "/" + TMDB_MovieID + "/videos?api_key=" + TMDB_KEY;
+                urlJSONtrailer = @"https://api.themoviedb.org/3/" + mediaTypeUrl + "/" + TMDB_MovieID + "/videos?api_key=" + TMDB_KEY;
 
                 // Download file, if not existing, to fetch info
                 DownloadAndReplace(JSONfindmovie, urlJSONFindMovie, errFrom, showAMsg);
@@ -1393,7 +1394,7 @@ namespace HomeCinema
                 }
 
                 // Get crew and cast
-                urlJSONcrewcast = @"https://api.themoviedb.org/3/" + mediatype + "/" + TMDB_MovieID + "/credits?api_key=" + TMDB_KEY;
+                urlJSONcrewcast = @"https://api.themoviedb.org/3/" + mediaTypeUrl + "/" + TMDB_MovieID + "/credits?api_key=" + TMDB_KEY;
                 DownloadAndReplace(JSONcrewcast, urlJSONcrewcast, errFrom + " [JSONcrewcast]", showAMsg);
                 if (File.Exists(JSONcrewcast))
                 {

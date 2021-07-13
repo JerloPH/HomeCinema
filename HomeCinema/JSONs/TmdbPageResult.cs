@@ -18,6 +18,9 @@ namespace HomeCinema
         [JsonProperty("id")]
         public int id { get; set; } = 0;
 
+        [JsonProperty("media_type")]
+        public string media_type { get; set; } = "";
+
         [JsonProperty("title")]
         public string title { get; set; } = "";
 

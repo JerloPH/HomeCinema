@@ -35,6 +35,7 @@ namespace HomeCinema
         // Editable vars
         private string PARENT_NAME { get; set; } = "";
         private string MOVIE_ID { get; set; } = "";
+        private string MEDIA_TYPE { get; set; } = "";
         private Image MOVIE_COVER { get; set; } = null;
         private Image tempImage { get; set; } = null;
 
@@ -201,7 +202,7 @@ namespace HomeCinema
                     var r13 = row[HCInfo.artist.ToString()]; // artist
                     var r14 = row[HCInfo.year.ToString()]; // year
                     var r15 = row[HCInfo.summary.ToString()]; // summary  
-                                                                  // Set textboxes
+                    // Set textboxes
                     txtIMDB.Text = r1.ToString();
                     txtName.Text = r2.ToString();
                     txtNameOrig.Text = r3.ToString();
@@ -520,7 +521,6 @@ namespace HomeCinema
             var list = new List<string>();
             string errFrom = "frmMovieInfo-btnFetchData_Click";
             string IMDB_ID = txtIMDB.Text;
-            string mediatype;
             string genre; // genre text 
             string jsonMainFullPath; // json file full path
             string r1, r2, r3, r4, r5, r6, r7, r8, r9, r10; // List Info from TMDB
@@ -534,14 +534,12 @@ namespace HomeCinema
                 txtIMDB.Focus();
                 return;
             }
-            // Check if series
-            mediatype = (cbCategory.Text.ToLower().Contains("series")) ? "series" : "movie";
 
             // Get List of values from TMDB
             form = new frmLoading("Fetching info from TMDB..", "Loading");
             form.BackgroundWorker.DoWork += (sender1, e1) =>
             {
-                list = GlobalVars.GetMovieInfoByImdb(IMDB_ID, mediatype);
+                list = GlobalVars.GetMovieInfoByImdb(IMDB_ID, MEDIA_TYPE);
             };
             form.ShowDialog(this);
 
@@ -605,7 +603,7 @@ namespace HomeCinema
             genre = GlobalVars.GetGenresByJsonFile(jsonMainFullPath, errFrom + " (jsonMainFullPath)", ",");
             LoadGenre(genre);
             // Set mediatype, after getting info from TMDB
-            cbCategory.SelectedIndex = GlobalVars.GetCategoryByFilter(genre, r9, mediatype);
+            cbCategory.SelectedIndex = GlobalVars.GetCategoryByFilter(genre, r9, MEDIA_TYPE);
 
             // Ask to change cover - poster image
             linkPoster = r5;
@@ -653,7 +651,6 @@ namespace HomeCinema
             }
 
             // Declare vars
-            string mediatype = (cbCategory.Text.ToLower().Contains("series") ? "series" : "movie");
             string getIMDB = "";
   
             // Check if txtName is valid
@@ -665,9 +662,10 @@ namespace HomeCinema
             }
 
             // Show form for tmdb searching
-            var form = new frmTmdbSearch($"Search for {mediatype}", txtName.Text, mediatype, txtID.Text);
+            var form = new frmTmdbSearch($"Search for {txtName.Text}", txtName.Text, txtID.Text);
             form.ShowDialog(this);
             getIMDB = form.getResult;
+            MEDIA_TYPE = form.getResultMedia.Equals("tv") ? "series" : "movie";
             form.Dispose();
 
             // Get IMDB from TMDB json info
