@@ -39,8 +39,8 @@ namespace HomeCinema
         {
             InitializeComponent();
             Icon = GlobalVars.HOMECINEMA_ICON;
-            BackColor = GlobalVars.SET_COLOR_BG;
-            ForeColor = GlobalVars.SET_COLOR_FONT;
+            BackColor = Settings.ColorBg;
+            ForeColor = Settings.ColorFont;
             Message = message;
             Caption = caption;
             TopPosition = 0;

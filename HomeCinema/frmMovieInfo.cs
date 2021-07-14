@@ -465,19 +465,25 @@ namespace HomeCinema
         private void btnChangeCover_Click(object sender, EventArgs e)
         {
             // Get FileName on openDialog
-            string selectedFilename = GlobalVars.GetAFile("Select Image file for Cover", "JPG Files (*.jpg)|*.jpg", GlobalVars.PATH_GETCOVER);
+            string selectedFilename = GlobalVars.GetAFile("Select Image file for Cover", "JPG Files (*.jpg)|*.jpg", Settings.LastPathCover);
             if (selectedFilename != "")
             {
                 // Load image from file
-                SetPicboxImgFromFile(picBox, selectedFilename, "btnChangeCover_Click");
-                GlobalVars.PATH_GETCOVER = Path.GetDirectoryName(selectedFilename);
+                if (SetPicboxImgFromFile(picBox, selectedFilename, "btnChangeCover_Click"))
+                {
+                    try
+                    {
+                        Settings.LastPathCover = Path.GetDirectoryName(selectedFilename);
+                    }
+                    catch { }
+                }
             }
         }
         // Change Movie File path
         private void btnChangeFile_Click(object sender, EventArgs e)
         {
             // Get file
-            string selectedFile = GlobalVars.GetAFile("Select video file....", GlobalVars.FILTER_VIDEO, GlobalVars.PATH_GETVIDEO);
+            string selectedFile = GlobalVars.GetAFile("Select video file....", GlobalVars.FILTER_VIDEO, Settings.LastPathVideo);
 
             // Check fileName from dialog
             if (String.IsNullOrWhiteSpace(selectedFile) == false)

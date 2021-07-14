@@ -266,7 +266,7 @@ namespace HomeCinema
         public void TrailerFrame()
         {
             // Exit if OfflineMOde
-            if (GlobalVars.SET_OFFLINE)
+            if (Settings.IsOffline)
             {
                 ShowImageONWeb(GlobalVars.FILE_NOTRAILER);
                 return;

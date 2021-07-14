@@ -62,8 +62,6 @@ namespace HomeCinema
         public static string PATH_DATA = Path.Combine(PATH_START, "data") + "\\";
         public static string PATH_TEMP = Path.Combine(PATH_START, "temp") + "\\";
         public static string PATH_LOG = Path.Combine(PATH_START, "logs");
-        public static string PATH_GETVIDEO { get; set; } = "";
-        public static string PATH_GETCOVER { get; set; } = "";
 
         public static string FILE_ICON = PATH_RES + @"HomeCinema.ico"; // Icon
         public static string FILE_DEFIMG = PATH_IMG + @"0.jpg"; // default cover image
@@ -95,10 +93,6 @@ namespace HomeCinema
 
         // For the items in frmMain media listview
         public static ImageList MOVIE_IMGLIST = new ImageList();
-        public static int IMGTILE_WIDTH = 96;
-        public static int IMGTILE_HEIGHT = 128;
-        public static int IMG_WIDTH = 192;
-        public static int IMG_HEIGHT = 256;
         public static Font TILE_FONT = new Font("Calibri", 10f);
 
         // List objects
@@ -113,129 +107,11 @@ namespace HomeCinema
         public static string[] TEXT_COUNTRY = { "" };
         public static string[] TEXT_GENRE = { "" };
 
-        // Settings
-        public static long BYTES = 1000000;
-        public static long SET_LOGMAXSIZE { get; set; } = 1 * BYTES; // Maximum file size of Logfile. (in MB Mega Bytes).
-        public static bool SET_OFFLINE { get; set; } = false; // Use [automatic online functionalities] or not.
-        public static bool SET_AUTOUPDATE { get; set; } = true; // auto check for update
-        public static bool SET_AUTOPLAY { get; set; } = false; // auto play movie
-        public static int SET_ITEMLIMIT { get; set; } = 0; // limit the max items to query
-        public static int SET_SEARCHLIMIT { get; set; } = 5; // limit for searching on IMDB Id
-        public static bool SET_AUTOCLEAN { get; set; } = true; // Automatically clean temp and logs on App Load
-        public static bool SET_CONFIRMSEARCH { get; set; } = false; // Confirm prompt for searching / reloading ListView
-        public static Color SET_COLOR_BG { get; set; } = Color.Black; // default color
-        public static Color SET_COLOR_FONT { get; set; } = Color.White; // default color
-        public static int SET_TIMEOUT { get; set; } = 3; // TimeOut in seconds (1000 ms)
-
         // FORMS
         public static Form formSetting = null; // Check if settings is already open
         public static Form formAbout = null;
 
         //######################################################################################################## Functions
-        // Check Settings and Load values to App
-        public static void LoadSettings()
-        {
-            Config config;
-            string errorFrom = "frmMain-LoadSettings";
-            string contents, sLastPathCover, sLastPathVideo;
-            // If file does not exist, create it with default values from [Config.cs]
-            if (File.Exists(FILE_SETTINGS) == false)
-            {
-                config = new Config();
-                contents = JsonConvert.SerializeObject(config, Formatting.Indented);
-                WriteToFile(FILE_SETTINGS, contents);
-            }
-            else
-            {
-                // Load file contents to Config
-                contents = ReadStringFromFile(FILE_SETTINGS, $"{errorFrom} [FILE_SETTINGS]");
-                config = JsonConvert.DeserializeObject<Config>(contents);
-            }
-
-            // Get Max log file size
-            SET_LOGMAXSIZE = config.logsize * BYTES;
-            // Get last path of poster image
-            sLastPathCover = config.lastPathCover;
-            if (String.IsNullOrWhiteSpace(sLastPathCover) == false)
-            {
-                PATH_GETCOVER = sLastPathCover;
-            }
-            else
-            {
-                try
-                {
-                    PATH_GETCOVER = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-                }
-                catch (Exception ex)
-                {
-                    ShowError($"{errorFrom} [PATH_GETCOVER]", ex, false);
-                }
-            }
-            // Get last path of media file when adding new one
-            sLastPathVideo = config.lastPathVideo;
-            if (String.IsNullOrWhiteSpace(sLastPathVideo) == false)
-            {
-                PATH_GETVIDEO = sLastPathVideo;
-            }
-            else
-            {
-                try
-                {
-                    PATH_GETVIDEO = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
-                }
-                catch (Exception ex)
-                {
-                    ShowError($"{errorFrom} [PATH_GETVIDEO]", ex, false);
-                }
-            }
-
-            SET_OFFLINE = Convert.ToBoolean(config.offlineMode); // Get Offline Mode
-            SET_AUTOUPDATE = Convert.ToBoolean(config.autoUpdate); // Get auto update
-            SET_AUTOPLAY = Convert.ToBoolean(config.instantPlayMovie); // AutoPlay Movie, instead of Viewing its Info / Details
-            SET_ITEMLIMIT = config.itemMaxLimit; // Limit MAX items in query 
-            SET_SEARCHLIMIT = config.searchLimit; // Limit Item result on IMDB searching
-            SET_TIMEOUT = config.setTimeOut; // TimeOut for Internet connections
-            SET_AUTOCLEAN = Convert.ToBoolean(config.autoClean); // Auto clean on startup
-            SET_CONFIRMSEARCH = Convert.ToBoolean(config.confirmSearch); // Confirm prompts on search and reload
-
-            // Set theme
-            IMGTILE_WIDTH = config.ImgTileWidth; // Cover Image width
-            IMGTILE_HEIGHT = config.ImgTileHeight; // Cover Image height
-            try // set background color
-            {
-                SET_COLOR_BG = ColorTranslator.FromHtml($"#{config.BackgroundColor}");
-            }
-            catch { SET_COLOR_BG = Color.Black; }
-            try // set foreground color
-            {
-                SET_COLOR_FONT = ColorTranslator.FromHtml($"#{config.FontColor}");
-            }
-            catch { SET_COLOR_FONT = Color.White; }
-        }
-        // Save settings to replace old
-        public static bool SaveSettings()
-        {
-            var config = new Config();
-            config.logsize = (int)(SET_LOGMAXSIZE / BYTES);
-            config.offlineMode = Convert.ToInt16(SET_OFFLINE);
-            config.lastPathCover = PATH_GETCOVER;
-            config.lastPathVideo = PATH_GETVIDEO;
-            config.autoUpdate = Convert.ToInt16(SET_AUTOUPDATE);
-            config.instantPlayMovie = Convert.ToInt16(SET_AUTOPLAY);
-            config.autoClean = Convert.ToInt16(SET_AUTOCLEAN);
-            config.itemMaxLimit = SET_ITEMLIMIT;
-            config.searchLimit = SET_SEARCHLIMIT;
-            config.setTimeOut = SET_TIMEOUT;
-            config.BackgroundColor = SET_COLOR_BG.ToArgb().ToString("x");
-            config.FontColor = SET_COLOR_FONT.ToArgb().ToString("x");
-            config.confirmSearch = Convert.ToInt16(SET_CONFIRMSEARCH);
-            config.ImgTileWidth = Convert.ToInt32(IMGTILE_WIDTH);
-            config.ImgTileHeight = Convert.ToInt32(IMGTILE_HEIGHT);
-
-            // Seriliaze to JSON
-            string json = JsonConvert.SerializeObject(config, Formatting.Indented);
-            return WriteToFile(FILE_SETTINGS, json);
-        }
         /// <summary>
         /// Log database-related functions, to text file.
         /// </summary>
@@ -412,7 +288,7 @@ namespace HomeCinema
                 try
                 {
                     FileInfo f = new FileInfo(logFile);
-                    if (f.Length > SET_LOGMAXSIZE)
+                    if (f.Length > Settings.MaxLogSize)
                     {
                         File.Delete(logFile); // Delete LogFile permanently
                         Log(calledFrom, log);
@@ -955,7 +831,7 @@ namespace HomeCinema
             string errFrom = "GlobalVars-DownloadFrom";
             using (var client = new WebClient())
             {
-                if (CheckConnection(link, SET_TIMEOUT))
+                if (CheckConnection(link, Settings.TimeOut))
                 {
                     try
                     {
@@ -1720,8 +1596,8 @@ namespace HomeCinema
             form.MaximizeBox = false;
             form.AcceptButton = buttonOk;
             form.CancelButton = buttonCancel;
-            form.ForeColor = SET_COLOR_FONT;
-            form.BackColor = SET_COLOR_BG;
+            form.ForeColor = Settings.ColorFont;
+            form.BackColor = Settings.ColorBg;
             form.Font = TILE_FONT;
 
             DialogResult dialogResult = form.ShowDialog();

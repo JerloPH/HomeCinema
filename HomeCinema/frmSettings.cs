@@ -28,8 +28,8 @@ namespace HomeCinema
 {
     public partial class frmSettings : Form
     {
-        private Color BackgroundColor = GlobalVars.SET_COLOR_BG;
-        private Color FontColor = GlobalVars.SET_COLOR_FONT;
+        private Color BackgroundColor = Settings.ColorBg;
+        private Color FontColor = Settings.ColorFont;
         public frmSettings()
         {
             InitializeComponent();
@@ -150,35 +150,35 @@ namespace HomeCinema
             // Setting Values Initialization
             // ##################### - GENERAL
             // Booleans
-            try { cbAutoUpdate.SelectedIndex = Convert.ToInt16(!GlobalVars.SET_AUTOUPDATE); }
+            try { cbAutoUpdate.SelectedIndex = Convert.ToInt16(!Settings.IsAutoUpdate); }
             catch { cbAutoUpdate.SelectedIndex = 0; }
 
-            try { cbOffline.SelectedIndex = Convert.ToInt16(!GlobalVars.SET_OFFLINE); }
+            try { cbOffline.SelectedIndex = Convert.ToInt16(!Settings.IsOffline); }
             catch { cbOffline.SelectedIndex = 1; }
 
-            try { cbPlayMovie.SelectedIndex = Convert.ToInt16(!GlobalVars.SET_AUTOPLAY); }
+            try { cbPlayMovie.SelectedIndex = Convert.ToInt16(!Settings.IsAutoplay); }
             catch { cbPlayMovie.SelectedIndex = 0; }
 
-            try { cbAutoClean.SelectedIndex = Convert.ToInt16(!GlobalVars.SET_AUTOCLEAN); }
+            try { cbAutoClean.SelectedIndex = Convert.ToInt16(!Settings.IsAutoClean); }
             catch { cbAutoClean.SelectedIndex = 1; }
 
-            try { cbConfirmSearch.SelectedIndex = Convert.ToInt16(!GlobalVars.SET_CONFIRMSEARCH); }
+            try { cbConfirmSearch.SelectedIndex = Convert.ToInt16(!Settings.IsConfirmSearch); }
             catch { cbConfirmSearch.SelectedIndex = 1; }
 
             // TextBox
-            try { txtLogSize.Text = (GlobalVars.SET_LOGMAXSIZE / GlobalVars.BYTES).ToString(); }
+            try { txtLogSize.Text = (Settings.MaxLogSize / 1000000).ToString(); }
             catch { txtLogSize.Text = "1"; }
 
-            try { txtMaxItemCount.Text = GlobalVars.SET_ITEMLIMIT.ToString(); }
+            try { txtMaxItemCount.Text = Settings.ItemLimit.ToString(); }
             catch { txtMaxItemCount.Text = "0"; }
 
-            try { txtImdbSearchLimit.Text = GlobalVars.SET_SEARCHLIMIT.ToString(); }
+            try { txtImdbSearchLimit.Text = Settings.SearchLimit.ToString(); }
             catch { txtImdbSearchLimit.Text = "5"; }
 
-            try { txtImgTileWidth.Text = GlobalVars.IMGTILE_WIDTH.ToString(); }
+            try { txtImgTileWidth.Text = Settings.ImgTileWidth.ToString(); }
             catch { txtImgTileWidth.Text = "96"; }
 
-            try { txtImgTileHeight.Text = GlobalVars.IMGTILE_HEIGHT.ToString(); }
+            try { txtImgTileHeight.Text = Settings.ImgTileHeight.ToString(); }
             catch { txtImgTileHeight.Text = "128"; }
 
             // ##################### - FILE changes
@@ -253,7 +253,7 @@ namespace HomeCinema
         private void frmSettings_FormClosing(object sender, FormClosingEventArgs e)
         {
             GlobalVars.formSetting = null;
-            Program.FormMain.lvSearchResult.BackColor = GlobalVars.SET_COLOR_BG;
+            Program.FormMain.lvSearchResult.BackColor = Settings.ColorBg;
             
             Dispose();
 
@@ -268,35 +268,37 @@ namespace HomeCinema
         private void btnSave_Click(object sender, EventArgs e)
         {
             // Try settings values
-            long logsize;
             string error = "";
 
             // Booleans
-            GlobalVars.SET_AUTOUPDATE = !Convert.ToBoolean(cbAutoUpdate.SelectedIndex);
-            GlobalVars.SET_OFFLINE = !Convert.ToBoolean(cbOffline.SelectedIndex);
-            GlobalVars.SET_AUTOPLAY = !Convert.ToBoolean(cbPlayMovie.SelectedIndex);
-            GlobalVars.SET_AUTOCLEAN = !Convert.ToBoolean(cbAutoClean.SelectedIndex);
-            GlobalVars.SET_CONFIRMSEARCH = !Convert.ToBoolean(cbConfirmSearch.SelectedIndex);
+            Settings.IsAutoUpdate = !Convert.ToBoolean(cbAutoUpdate.SelectedIndex);
+            Settings.IsOffline = !Convert.ToBoolean(cbOffline.SelectedIndex);
+            Settings.IsAutoplay = !Convert.ToBoolean(cbPlayMovie.SelectedIndex);
+            Settings.IsAutoClean = !Convert.ToBoolean(cbAutoClean.SelectedIndex);
+            Settings.IsConfirmSearch = !Convert.ToBoolean(cbConfirmSearch.SelectedIndex);
 
             // TextBox changes
-            try
-            {
-                logsize = (long)Convert.ToDouble(txtLogSize.Text);
-                GlobalVars.SET_LOGMAXSIZE = logsize * GlobalVars.BYTES;
-            }
+            try { Settings.MaxLogSize = (int)Convert.ToInt32(txtLogSize.Text); }
             catch { error += Environment.NewLine + lblMaxLogFileSize.Text.Trim().TrimEnd(':'); }
             
-            try { GlobalVars.SET_ITEMLIMIT = Convert.ToInt32(txtMaxItemCount.Text); }
+            try { Settings.ItemLimit = Convert.ToInt32(txtMaxItemCount.Text); }
             catch { error += Environment.NewLine + lblItemDisplayCount.Text.Trim().TrimEnd(':'); }
 
-            try { GlobalVars.SET_SEARCHLIMIT = Convert.ToInt32(txtImdbSearchLimit.Text); }
+            try { Settings.SearchLimit = Convert.ToInt32(txtImdbSearchLimit.Text); }
             catch { error += Environment.NewLine + lblImdbSearchLimit.Text.Trim().TrimEnd(':'); }
 
-            try { GlobalVars.IMGTILE_WIDTH = Convert.ToInt32(txtImgTileWidth.Text); }
+            try { Settings.ImgTileWidth = Convert.ToInt32(txtImgTileWidth.Text); }
             catch { error += Environment.NewLine + lblImgTileWidth.Text.Trim().TrimEnd(':'); }
 
-            try { GlobalVars.IMGTILE_HEIGHT = Convert.ToInt32(txtImgTileHeight.Text); }
+            try { Settings.ImgTileHeight = Convert.ToInt32(txtImgTileHeight.Text); }
             catch { error += Environment.NewLine + lblImgTileHeight.Text.Trim().TrimEnd(':'); }
+
+            // Theme Settings
+            Settings.ColorBg = BackgroundColor;
+            Settings.ColorFont = FontColor;
+
+            // Save settings to file
+            Settings.SaveSettings();
 
             // Write supported file extensions
             try
@@ -327,22 +329,27 @@ namespace HomeCinema
                 newMediaLoc += $"{path}*{mediatype}*{source}|";
             }
             newMediaLoc = newMediaLoc.TrimEnd('|');
-            GlobalVars.WriteToFile(GlobalVars.FILE_MEDIALOC, newMediaLoc);
-            GlobalVars.LoadMediaLocations();
+            if (GlobalVars.WriteToFile(GlobalVars.FILE_MEDIALOC, newMediaLoc))
+            {
+                GlobalVars.LoadMediaLocations();
+            }
+            else { error += Environment.NewLine + "Media Locations"; }
+
             // Replace country file
-            GlobalVars.WriteListBoxToFile(GlobalVars.FILE_COUNTRY, listboxCountry, ",");
-            Program.FormMain.PopulateCountryCB();
+            if (GlobalVars.WriteListBoxToFile(GlobalVars.FILE_COUNTRY, listboxCountry, ","))
+            {
+                Program.FormMain.PopulateCountryCB();
+            }
+            else { error += Environment.NewLine + "Country list"; }
 
             // Replace genre file
-            GlobalVars.WriteListBoxToFile(GlobalVars.FILE_GENRE, listboxGenre, ",");
-            Program.FormMain.PopulateGenreCB();
+            if (GlobalVars.WriteListBoxToFile(GlobalVars.FILE_GENRE, listboxGenre, ","))
+            {
+                Program.FormMain.PopulateGenreCB();
+            }
+            else { error += Environment.NewLine + "Genre list"; }
 
-            // Theme Settings
-            GlobalVars.SET_COLOR_BG = BackgroundColor;
-            GlobalVars.SET_COLOR_FONT = FontColor;
-
-            // Save settings and Show Message
-            GlobalVars.SaveSettings();
+            // Show message
             GlobalVars.ShowInfo((String.IsNullOrWhiteSpace(error)) ? "Done saving Settings!" : "Some settings are not saved:" + error);
             if (String.IsNullOrWhiteSpace(error))
             {

@@ -17,14 +17,14 @@ namespace HomeCinema
             InitializeComponent();
             // Form properties
             Icon = GlobalVars.HOMECINEMA_ICON;
-            BackColor = GlobalVars.SET_COLOR_BG;
-            ForeColor = GlobalVars.SET_COLOR_FONT;
+            BackColor = Settings.ColorBg;
+            ForeColor = Settings.ColorFont;
 
-            txtTitle.BackColor = GlobalVars.SET_COLOR_BG;
-            txtLicense.BackColor = GlobalVars.SET_COLOR_BG;
+            txtTitle.BackColor = Settings.ColorBg;
+            txtLicense.BackColor = Settings.ColorBg;
 
-            txtTitle.ForeColor = GlobalVars.SET_COLOR_FONT;
-            txtLicense.ForeColor = GlobalVars.SET_COLOR_FONT;
+            txtTitle.ForeColor = Settings.ColorFont;
+            txtLicense.ForeColor = Settings.ColorFont;
 
             Focus();
         }

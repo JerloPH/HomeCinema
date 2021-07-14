@@ -20,8 +20,8 @@ namespace HomeCinema
         {
             InitializeComponent();
             Icon = GlobalVars.HOMECINEMA_ICON;
-            BackColor = GlobalVars.SET_COLOR_BG;
-            ForeColor = GlobalVars.SET_COLOR_FONT;
+            BackColor = Settings.ColorBg;
+            ForeColor = Settings.ColorFont;
             Text = String.IsNullOrWhiteSpace(caption) ? GlobalVars.CAPTION_DIALOG : caption;
             TopMost = true;
             //TopLevel = false;

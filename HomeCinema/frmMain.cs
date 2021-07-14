@@ -60,7 +60,7 @@ namespace HomeCinema
             Text = $"{GlobalVars.HOMECINEMA_NAME} - Media Organizer (v{GlobalVars.HOMECINEMA_VERSION} r{GlobalVars.HOMECINEMA_BUILD.ToString()})";
 
             // Load App Settings
-            GlobalVars.LoadSettings();
+            Settings.LoadSettings();
 
             // Add events to controls
             txtSearch.Text = SEARCHBOX_PLACEHOLDER;
@@ -92,9 +92,9 @@ namespace HomeCinema
 
             lvSearchResult.LargeImageList = GlobalVars.MOVIE_IMGLIST;
             lvSearchResult.SmallImageList = GlobalVars.MOVIE_IMGLIST;
-            int sizeW = (lvSearchResult.ClientRectangle.Width / 2) - GlobalVars.IMGTILE_WIDTH;
-            lvSearchResult.TileSize = new Size(sizeW, GlobalVars.IMGTILE_HEIGHT + 2); // lvSearchResult.Width - (GlobalVars.IMGTILE_WIDTH + 120)
-            GlobalVars.MOVIE_IMGLIST.ImageSize = new Size(GlobalVars.IMGTILE_WIDTH, GlobalVars.IMGTILE_HEIGHT);
+            int sizeW = (lvSearchResult.ClientRectangle.Width / 2) - Settings.ImgTileWidth;
+            lvSearchResult.TileSize = new Size(sizeW, Settings.ImgTileHeight + 2); // lvSearchResult.Width - (GlobalVars.IMGTILE_WIDTH + 120)
+            GlobalVars.MOVIE_IMGLIST.ImageSize = new Size(Settings.ImgTileWidth, Settings.ImgTileHeight);
             GlobalVars.MOVIE_IMGLIST.ColorDepth = ColorDepth.Depth32Bit;
             lvSearchResult.AllowDrop = false;
             lvSearchResult.AllowColumnReorder = false;
@@ -119,7 +119,7 @@ namespace HomeCinema
             PopulateGenreCB();
 
             // Set background color of ListView, from settings 'background color'
-            lvSearchResult.BackColor = GlobalVars.SET_COLOR_BG;
+            lvSearchResult.BackColor = Settings.ColorBg;
 
             GlobalVars.Log("frmMain", "All UIs initialized!");
         }
@@ -195,7 +195,7 @@ namespace HomeCinema
                 }
 
                 // Scrape from TMDB, for info and details
-                if (GlobalVars.SET_OFFLINE == false)
+                if (Settings.IsOffline == false)
                 {
                     if (src == "tmdb" && GlobalVars.HAS_TMDB_KEY)
                     {
@@ -273,7 +273,7 @@ namespace HomeCinema
                     }
 
                     // Download cover, if not OFFLINE_MODE and HAS TMDB KEY
-                    if (GlobalVars.SET_OFFLINE == false && GlobalVars.HAS_TMDB_KEY && src == "tmdb")
+                    if (Settings.IsOffline == false && GlobalVars.HAS_TMDB_KEY && src == "tmdb")
                     {
                         if (!String.IsNullOrWhiteSpace(rPosterLink))
                         {
@@ -447,7 +447,7 @@ namespace HomeCinema
             qry += (cbHideAnim.CheckState == CheckState.Checked) ? GlobalVars.QryWhere(qry) + $" (`{HCInfo.category.ToString()}` <= 2)" : "";
 
             // Append to end
-            qry += (GlobalVars.SET_ITEMLIMIT > 0) ? $" LIMIT {GlobalVars.SET_ITEMLIMIT};" : "";
+            qry += (Settings.ItemLimit > 0) ? $" LIMIT {Settings.ItemLimit};" : "";
 
             // Set query to perform on search
             SEARCH_QUERY = qry;
@@ -468,7 +468,7 @@ namespace HomeCinema
                 if (ID < 1) { return;  }; // exit if ID is less than 1
 
                 // Just play the media
-                if (GlobalVars.SET_AUTOPLAY)
+                if (Settings.IsAutoplay)
                 {
                     GlobalVars.PlayMedia(GetFilePath(ID.ToString(), "frmMain-OpenNewFormMovie"));
                     return;
@@ -679,7 +679,7 @@ namespace HomeCinema
 
                 // Set font
                 temp.Font = GlobalVars.TILE_FONT;
-                temp.ForeColor = GlobalVars.SET_COLOR_FONT;
+                temp.ForeColor = Settings.ColorFont;
             }
         }
         // Populate combobox cbCountry, from file
@@ -1070,7 +1070,7 @@ namespace HomeCinema
             }
             AfterPopulatingMovieLV(lvSearchResult, progress);
             // Auto check update
-            if ((GlobalVars.SET_OFFLINE == false) && (GlobalVars.SET_AUTOUPDATE) && AppStart)
+            if ((Settings.IsOffline == false) && (Settings.IsAutoUpdate) && AppStart)
             {
                 GlobalVars.CheckForUpdate(this, false);
             }
@@ -1130,7 +1130,7 @@ namespace HomeCinema
             WindowState = FormWindowState.Normal; // *Required lines to trigger Window Resize event
             TopLevel = true;
             // Clean temp and log files
-            if (GlobalVars.SET_AUTOCLEAN)
+            if (Settings.IsAutoClean)
             {
                 GlobalVars.CleanAppDirectory();
             }
@@ -1218,7 +1218,7 @@ namespace HomeCinema
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Save settings
-            GlobalVars.SaveSettings();
+            Settings.SaveSettings();
             // Save text files
             SaveCountryCB(); // Replace Country text file
             SaveGenreCB(); // Replace Genre text file
@@ -1240,7 +1240,7 @@ namespace HomeCinema
         }
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            if (GlobalVars.SET_CONFIRMSEARCH)
+            if (Settings.IsConfirmSearch)
             {
                 if (!GlobalVars.ShowYesNo("Are you sure of your search filters?", this)) { return; }
             }
@@ -1274,7 +1274,7 @@ namespace HomeCinema
             // Perform click on search button: btnSearch
             if (cbClearSearch.CheckState == CheckState.Checked)
             {
-                if (GlobalVars.SET_CONFIRMSEARCH)
+                if (Settings.IsConfirmSearch)
                 {
                     if (!GlobalVars.ShowYesNo("Reload entries?", this)) {
                         return;
@@ -1319,7 +1319,7 @@ namespace HomeCinema
         private void cbHideAnim_CheckedChanged(object sender, EventArgs e)
         {
             // Perform Search
-            if (GlobalVars.SET_CONFIRMSEARCH)
+            if (Settings.IsConfirmSearch)
             {
                 if (!GlobalVars.ShowYesNo("Reload entries?", this)) { return; }
             }

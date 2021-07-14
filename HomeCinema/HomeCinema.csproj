@@ -94,6 +94,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity\Settings.cs" />
     <Compile Include="frmAlert.cs">
       <SubType>Form</SubType>
     </Compile>

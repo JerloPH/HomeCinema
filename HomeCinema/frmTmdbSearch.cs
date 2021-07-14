@@ -123,7 +123,7 @@ namespace HomeCinema
                             string imgKey = "0";
                             // Skip entry if there is no Imdb Id associated
                             if (String.IsNullOrWhiteSpace(ImdbFromApi)) { continue; }
-                            if (count > GlobalVars.SET_SEARCHLIMIT) { break; } // Exit when item result count is reached
+                            if (count > Settings.SearchLimit) { break; } // Exit when item result count is reached
                             // Add image to ImageList
                             rPosterLink = result.poster_path;
                             GlobalVars.TryDelete(imgFilePath, errFrom);
