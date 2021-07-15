@@ -314,7 +314,6 @@ namespace HomeCinema
             CopyFromRes(FILE_NOTRAILER);
             CopyFromRes(FILE_MEDIALOC);
             CopyFromRes(FILE_MEDIA_EXT);
-            CopyFromRes(FILE_SERIESLOC);
             // Create empty Logs
             if (!File.Exists(FILE_LOG_APP)) { WriteToFile(FILE_LOG_APP, ""); }
             if (!File.Exists(FILE_LOG_ERROR)) { WriteToFile(FILE_LOG_ERROR, ""); }
