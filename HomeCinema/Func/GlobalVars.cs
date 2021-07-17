@@ -42,8 +42,8 @@ namespace HomeCinema
         // Variables ############################################################################################################
         public static string HOMECINEMA_NAME = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyTitleAttribute>().Title;
         public static string HOMECINEMA_VERSION = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-        public static int HOMECINEMA_BUILD = 39;
-        public static int HOMECINEMA_DBVER = 2;
+        public static int HOMECINEMA_BUILD = 39; // build use for updater
+        public static int HOMECINEMA_DBVER = 3; // for database, and data changes
 
         public static string PREFIX_MOVIEINFO = "movieInfo";
         public static string CAPTION_DIALOG = HOMECINEMA_NAME + " v" + HOMECINEMA_VERSION;
@@ -76,7 +76,6 @@ namespace HomeCinema
         public static string FILE_NOTRAILER = PATH_DATA + @"NoTrailer.jpg"; // default picture if no trailer link
         public static string FILE_MEDIALOC = PATH_DATA + @"medialocation.hc_data"; // For movies, folder locations
         public static string FILE_MEDIA_EXT = PATH_DATA + "media_ext.hc_data"; // Extensions to check for movies
-        public static string FILE_SERIESLOC = PATH_DATA + "serieslocation.hc_data"; // For series, root folder.
 
         public static Icon HOMECINEMA_ICON = new Icon(FILE_ICON); // Icon as a resource, used by forms
 
