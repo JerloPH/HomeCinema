@@ -175,11 +175,16 @@ namespace HomeCinema
         /// <returns>Formatted message with time/date</returns>
         public static string LogFormatted(string codefrom, string logMessage)
         {
+            string content = codefrom;
+            if (!String.IsNullOrWhiteSpace(TMDB_KEY))
+            {
+                content = content.Replace(TMDB_KEY, "TMDB_KEY");
+            }
             try
             {
-                return ($"[{DateTime.Now.ToString("MM-dd-yyyy hh:mm:ss:fff tt")}]: [{ codefrom }] { logMessage }\n");
+                return ($"[{DateTime.Now.ToString("MM-dd-yyyy hh:mm:ss:fff tt")}]: [{ content }] { logMessage }\n");
             }
-            catch { return $"[Unknown DateTime][{ codefrom }] { logMessage }\n"; }
+            catch { return $"[Unknown DateTime][{ content }] { logMessage }\n"; }
         }
         /// <summary>
         /// LOG Error Message to App_ErrorLog.log
