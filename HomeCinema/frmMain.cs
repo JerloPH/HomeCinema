@@ -267,17 +267,16 @@ namespace HomeCinema
                     {
                         GlobalVars.DeleteMove(oldFile, errFrom); // Delete cover in temp folder
                     }
-                    if (File.Exists(newFile))
+                    if (File.Exists(newFile) && Settings.IsOffline==false)
                     {
                         GlobalVars.DeleteMove(newFile, errFrom); // Delete existing cover first
                     }
-
-                    // Download cover, if not OFFLINE_MODE and HAS TMDB KEY
-                    if (Settings.IsOffline == false && GlobalVars.HAS_TMDB_KEY && src == "tmdb")
+                    // Download cover, if not OFFLINE_MODE
+                    if (Settings.IsOffline == false && (!String.IsNullOrWhiteSpace(rPosterLink)))
                     {
-                        if (!String.IsNullOrWhiteSpace(rPosterLink))
+                        Thread.Sleep(5); // sleep to prevent overloading API
+                        if (GlobalVars.HAS_TMDB_KEY && src == "tmdb") // Use TMDB API
                         {
-                            Thread.Sleep(5); // sleep to prevent overloading TMDB
                             if (GlobalVars.DownloadCoverFromTMDB(movieId, rPosterLink, errFrom) && (!String.IsNullOrWhiteSpace(rPosterLink)))
                             {
                                 try
@@ -292,14 +291,11 @@ namespace HomeCinema
                                 }
                             }
                         }
-                        else
+                        else if (src == "anilist") // Use ANILIST API
                         {
-                            try // Use default image
-                            {
-                                File.Copy(GlobalVars.ImgFullPath("0"), newFile, true); 
-                            }
-                            catch { }
+                            //
                         }
+                        else { } //do nothing
                     }
                 }
                 Thread.Sleep(10); // Prevent continuous request to TMDB, prevents overloading the site.
