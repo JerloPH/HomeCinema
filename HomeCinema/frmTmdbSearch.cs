@@ -17,8 +17,8 @@ namespace HomeCinema
     {
         private string movieId;
         private ImageList imageList = new ImageList();
-        private string result;
-        private string mediatype;
+        private string result = "";
+        private string mediatype = "";
         public string getResult
         {
             get { return result; }
@@ -74,7 +74,7 @@ namespace HomeCinema
                 {
                     foreach (Image img in imageList.Images)
                     {
-                        img.Dispose();
+                        img?.Dispose();
                     }
                 }
                 if (dispose)
@@ -83,17 +83,16 @@ namespace HomeCinema
                 }
             }
         }
-        private void SearchTmdb()
+        private int SearchTmdb()
         {
             string errFrom = $"frmTmdbSearch-SearchTmdb";
-            // Setup vars and links
-            string KEY = GlobalVars.TMDB_KEY;
-            // GET TMDB MOVIE ID
-            string urlJSONgetId = @"https://api.themoviedb.org/3/search/multi?api_key=" + KEY + "&query=" + txtInput.Text;
+            // Setup var and links
+            string urlJSONgetId = @"https://api.themoviedb.org/3/search/multi?api_key=" + GlobalVars.TMDB_KEY + "&query=" + txtInput.Text.Replace(" ", "%20");
             string JSONgetID = GlobalVars.PATH_TEMP + movieId + "_id.json";
             string JSONContents = "";
             string rPosterLink = "";
             int count = 0;
+            int resultCount = 0;
 
             ClearImageList();
             Image defImg = Image.FromFile(GlobalVars.FILE_DEFIMG);
@@ -110,7 +109,6 @@ namespace HomeCinema
                 // Download json file of search results
                 if (GlobalVars.DownloadAndReplace(JSONgetID, urlJSONgetId, errFrom))
                 {
-
                     JSONContents = GlobalVars.ReadStringFromFile(JSONgetID, errFrom);
                     var objPageResult = JsonConvert.DeserializeObject<TmdbPageResult>(JSONContents);
                     if (objPageResult.results.Count > 0)
@@ -154,6 +152,7 @@ namespace HomeCinema
                             lvItem.ImageIndex = (index > 0) ? index : 0;
                             AddItem(lvResult, lvItem);
                             ++count;
+                            ++resultCount;
                         }
                     }
                 }
@@ -163,6 +162,7 @@ namespace HomeCinema
             lvResult.ResumeLayout();
             lvResult.Refresh();
             lvResult.LargeImageList = imageList;
+            return resultCount;
         }
         #endregion
         // ######################################################### EVENTS
@@ -186,27 +186,33 @@ namespace HomeCinema
         {
             if (lvResult.SelectedItems.Count > 0)
             {
-                string[] resultString = lvResult.SelectedItems[0].Tag.ToString().Split('*');
-                result = resultString[0];
-                mediatype = resultString[1];
-                if (String.IsNullOrWhiteSpace(result))
+                if (lvResult.SelectedItems[0].Tag != null)
                 {
-                    GlobalVars.ShowWarning("Selected item has invalid IMDB Id!", GlobalVars.HOMECINEMA_NAME);
+                    string[] resultString = lvResult.SelectedItems[0].Tag.ToString().Split('*');
+                    result = resultString[0];
+                    mediatype = resultString[1];
+                    if (String.IsNullOrWhiteSpace(result))
+                    {
+                        GlobalVars.ShowWarning("Selected item has invalid IMDB Id!");
+                        return;
+                    }
+                }
+                else
+                {
+                    GlobalVars.ShowWarning("No result found!\nSearch using different query");
                     return;
                 }
                 Close();
             }
             else
             {
-                GlobalVars.ShowWarning("No selected result!", GlobalVars.HOMECINEMA_NAME);
+                GlobalVars.ShowWarning("No selected result!");
             }
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            SearchTmdb();
-            int size;
-            size = lvResult.Items.Count;
+            int size = SearchTmdb();
             if (size > 0)
             {
                 GlobalVars.ShowInfo($"Found {size} results!");
