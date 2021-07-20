@@ -2,7 +2,7 @@
 
 # Fixes
 - FIX: Covers not updating when fetching from TMDB, causing duplicate cover images.
-- FIX: Some covers are not replaced.
+- FIX: Sometimes, covers are not replaced by new cover.
 - FIX: Cannot connect to TMDB API.
 
 # Changes and Additions
