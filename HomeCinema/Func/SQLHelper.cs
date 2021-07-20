@@ -106,12 +106,15 @@ namespace HomeCinema.SQLFunc
                     switch (dbVer)
                     {
                         case 1: // rename column on table 'info' to 'name_orig'
+                        {
                             if (DbExecNonQuery("ALTER TABLE `info` RENAME COLUMN `name_ep` TO `name_orig`", calledFrom, -1) == 0)
                             {
                                 dbVer += 1;
                             }
                             break;
+                        }
                         case 2:
+                        {
                             bool success = false;
                             string content = "";
                             string seriesFile = GlobalVars.PATH_DATA + "serieslocation.hc_data";
@@ -133,6 +136,7 @@ namespace HomeCinema.SQLFunc
                                 dbVer += 1;
                             }
                             break;
+                        }
                     }
                 }
                 else
