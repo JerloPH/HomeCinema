@@ -811,7 +811,7 @@ namespace HomeCinema
         // Check if there is an active Internet connection
         public static bool CheckConnection(String URL, int timeOutSec = 3)
         {
-            if (!String.IsNullOrWhiteSpace(URL)) { return false; }
+            if (String.IsNullOrWhiteSpace(URL)) { return false; }
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
@@ -839,7 +839,7 @@ namespace HomeCinema
                     try
                     {
                         client.DownloadFile(link, saveTo);
-                        Thread.Sleep(10);
+                        Thread.Sleep(5);
                         return 200;
                     }
                     catch (WebException wex)
@@ -875,7 +875,7 @@ namespace HomeCinema
             int retry = 5;
             while (retry > 0)
             {
-                Log(errFrom, $"Downloading file: {urlFrom}, (retry left: {retry})");
+                Log(errFrom, $"Downloading file: {urlFrom}, (retry left: {retry-1})");
                 DLStatus = DownloadFrom(urlFrom, filePath, showAMsg);
                 if (File.Exists(filePath) || DLStatus==404) // File download success || File not found on server
                 {
