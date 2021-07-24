@@ -542,8 +542,8 @@ namespace HomeCinema
             string errFrom = "frmMovieInfo-btnFetchData_Click";
             string IMDB_ID = txtIMDB.Text;
             string AnilistId = txtAnilist.Text;
-            string country; // country text
-            string genre; // genre text 
+            string country = ""; // country text
+            string genre = ""; // genre text 
             bool coverDownloaded = false;
             MediaInfo mediaInfo = null;
 
@@ -610,13 +610,22 @@ namespace HomeCinema
             listboxCountry.Items.Clear();
             listboxGenre.Items.Clear();
             // Set Country
-            country = GlobalVars.ConvertListToString(mediaInfo.Country, ",", errFrom);
-            LoadCountry(country);
+            if (mediaInfo.Country?.Count > 0)
+            {
+                country = GlobalVars.ConvertListToString(mediaInfo.Country, ",", errFrom);
+                LoadCountry(country);
+            }
             // Set Genres
-            genre = GlobalVars.ConvertListToString(mediaInfo.Genre, ",", errFrom);
-            LoadGenre(genre);
-            // Set mediatype, after getting info from TMDB
-            cbCategory.SelectedIndex = GlobalVars.GetCategoryByFilter(genre, country, MEDIA_TYPE);
+            if (mediaInfo.Genre?.Count > 0)
+            {
+                genre = GlobalVars.ConvertListToString(mediaInfo.Genre, ",", errFrom);
+                LoadGenre(genre);
+            }
+            // Set mediatype, after getting info from TMDB or Anilist
+            if (!String.IsNullOrWhiteSpace(genre) && !String.IsNullOrWhiteSpace(country))
+            {
+                cbCategory.SelectedIndex = GlobalVars.GetCategoryByFilter(genre, country, MEDIA_TYPE);
+            }
 
             // Ask to change cover - poster image
             if (String.IsNullOrWhiteSpace(mediaInfo.PosterPath) == false)
