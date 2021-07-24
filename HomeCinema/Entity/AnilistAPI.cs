@@ -28,6 +28,7 @@ namespace HomeCinema
                   format
                   title {
                     romaji
+                    english
                   }
                   coverImage {
                     medium
@@ -36,15 +37,6 @@ namespace HomeCinema
               }
             }";
 
-        private static string BuildSearchPaginated(string text)
-        {
-            string search = text.Replace("\"", string.Empty);
-            string query = "{\"query\":" + 
-                "\"query {\n  Page (perPage: 20, page: 1) {\n    pageInfo {\n      total\n      currentPage\n      lastPage\n      hasNextPage\n      perPage\n    }\n    " + 
-                "media (search: \\\"" + search + "\\\", type: ANIME) {\n      id\n      format\n      episodes\n      title {\n        romaji\n      }\n      coverImage {\n        medium\n      }\n    }\n  }\n}\", " +
-                "\"variables\": null}";
-            return query;
-        }
         public static AnilistPageQuery SearchForAnime(string text)
         {
             try
@@ -58,7 +50,7 @@ namespace HomeCinema
                 request.AddJsonBody(new
                 {
                     query = Query,
-                    variables = "{ search: \"" + text.Replace("\"", string.Empty) + "\"}"
+                    variables = "{ \"search\": \"" + text.Replace("\"", string.Empty) + "\"}"
                 });
 
                 var result = client.Execute(request).Content;
