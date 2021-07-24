@@ -169,7 +169,7 @@ namespace HomeCinema
                 {
                     foreach (var media in Results.Data.Page.MediaList)
                     {
-                        string title = media.Title.Romaji;
+                        string title = (!String.IsNullOrWhiteSpace(media.Title.English)) ? media.Title.English : media.Title.Romaji;
                         string mediaId = media.Id.ToString();
                         string cover = media.CoverImage.Medium;
                         string mediatype = media.Format.ToLower();
