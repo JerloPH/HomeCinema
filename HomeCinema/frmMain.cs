@@ -148,7 +148,6 @@ namespace HomeCinema
                 string mName = "";
                 string yearFromFname = "";
 
-                string rJson = "";
                 string rTrailer = "";
                 string rTitle = "";
                 string rOrigTitle = "";
@@ -204,18 +203,17 @@ namespace HomeCinema
                         {
                             // Get List of values from TMDB
                             var Media = GlobalVars.GetMovieInfoByImdb(getIMDB, mediatype);
-                            rJson = list[0];
-                            rTrailer = list[1];
-                            rTitle = list[2];
-                            rOrigTitle = list[3];
-                            rSummary = list[4];
-                            try { rYear = list[5].Substring(0, 4); }
+                            rTrailer = Media.Trailer;
+                            rTitle = Media.Title;
+                            rOrigTitle = Media.OrigTitle;
+                            rSummary = Media.Summary;
+                            try { rYear = Media.ReleaseDate.Substring(0, 4); }
                             catch { rYear = "0"; }
-                            rPosterLink = list[6];
-                            rArtist = list[7];
-                            rDirector = list[8];
-                            rProducer = list[9];
-                            rStudio = list[11];
+                            rPosterLink = Media.PosterPath;
+                            rArtist = Media.Actor;
+                            rDirector = Media.Director;
+                            rProducer = Media.Producer;
+                            rStudio = Media.Studio;
                             rCountry = GlobalVars.ConvertListToString(Media.Country, ",", callFrom); // Get Country
                             rGenre = GlobalVars.ConvertListToString(Media.Genre, ",", callFrom); // Get Genres
                         }

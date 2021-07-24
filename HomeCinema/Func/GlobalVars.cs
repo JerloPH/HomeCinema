@@ -1060,11 +1060,12 @@ namespace HomeCinema
         {
             try
             {
-                return list.Aggregate((a, b) => a + sep + b).Trim()
+                return list.Aggregate((a, b) => a + sep + b).Trim();
             }
             catch (Exception ex)
             {
                 ShowError($"GlobalVar-ConvertListToString ({calledFrom})", ex, false);
+                return "";
             }
         }
         // Return IMDB Id of Movie from TMDB, by searching movie title
