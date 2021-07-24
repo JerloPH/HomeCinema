@@ -1131,16 +1131,26 @@ namespace HomeCinema
             }
             // Delete previous log file, if exceeds file size limit
             GlobalVars.CheckLogFile(GlobalVars.FILE_LOG_APP, "frmMain-(Delete AppLog)", Text + "\n  : Start of LogFile");
-            GlobalVars.CheckLogFile(GlobalVars.DB_DBLOGPATH, "frmMain-(Delete App_DB.log)", Text + "\n  : Database Log");
+            GlobalVars.CheckLogFile(GlobalVars.FILE_LOG_DB, "frmMain-(Delete App_DB.log)", Text + "\n  : Database Log");
             GlobalVars.CheckLogFile(GlobalVars.FILE_LOG_ERROR, "frmMain-(Delete App_ErrorLog.log)", Text + "\n  : Error Logs");
 
             // Put default Image on ImageList
-            GlobalVars.MOVIE_IMGLIST.Images.Clear();
-            string imageFilePath = GlobalVars.ImgFullPath("0");
-            string Imagefile = (File.Exists(imageFilePath)) ? imageFilePath : GlobalVars.FILE_DEFIMG;
-            Image imgFromFile = Image.FromFile(Imagefile);
-            GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imgFromFile);
-            imgFromFile.Dispose();
+            try
+            {
+                GlobalVars.MOVIE_IMGLIST.Images.Clear();
+                string imageFilePath = GlobalVars.ImgFullPath("0");
+                string Imagefile = (File.Exists(imageFilePath)) ? imageFilePath : GlobalVars.FILE_DEFIMG;
+                using (Image imgFromFile = Image.FromFile(Imagefile))
+                {
+                    GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imgFromFile);
+                }
+            }
+            catch (Exception exc)
+            {
+                GlobalVars.ShowError("frmMain-Load", exc, false, this);
+                GlobalVars.ShowWarning("Default image is missing!\nRestart App", "", this);
+                IsLoadedSuccess = false;
+            }
 
             // Perform click on Change View
             btnChangeView.PerformClick();
@@ -1152,7 +1162,7 @@ namespace HomeCinema
                 if (!SQLHelper.Initiate("frmMain"))
                 {
                     // Database not loaded!
-                    GlobalVars.ShowNoParent("Database is possibly corrupted!\nDelete HomeCinema.db and try again\nNOTE: This will remove all your entries");
+                    GlobalVars.ShowWarning("Database is possibly corrupted!\nDelete HomeCinema.db and try again\nNOTE: This will remove all your entries", "", loadForm);
                     IsLoadedSuccess = false;
                 }
             };

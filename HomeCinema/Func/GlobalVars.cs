@@ -72,12 +72,12 @@ namespace HomeCinema
 
         // Data and files
         public static string FILE_CONFIG = Path.Combine(PATH_DATA, "config.json"); // configuration file to use for APIs
-        public static string FILE_SETTINGS = PATH_DATA + @"settings.json"; // settings used in App
-        public static string FILE_COUNTRY = PATH_DATA + @"country.hc_data"; // list of countries
-        public static string FILE_GENRE = PATH_DATA + @"genre.hc_data"; // List of genres
-        public static string FILE_NOTRAILER = PATH_DATA + @"NoTrailer.jpg"; // default picture if no trailer link
-        public static string FILE_MEDIALOC = PATH_DATA + @"medialocation.hc_data"; // For movies, folder locations
-        public static string FILE_MEDIA_EXT = PATH_DATA + "media_ext.hc_data"; // Extensions to check for movies
+        public static string FILE_SETTINGS = Path.Combine(PATH_DATA, "settings.json"); // settings used in App
+        public static string FILE_COUNTRY = Path.Combine(PATH_DATA, "country.hc_data"); // list of countries
+        public static string FILE_GENRE = Path.Combine(PATH_DATA, "genre.hc_data"); // List of genres
+        public static string FILE_NOTRAILER = Path.Combine(PATH_DATA, "NoTrailer.jpg"); // default picture if no trailer link
+        public static string FILE_MEDIALOC = Path.Combine(PATH_DATA, "medialocation.hc_data"); // For movies, folder locations
+        public static string FILE_MEDIA_EXT = Path.Combine(PATH_DATA, "media_ext.hc_data"); // Extensions to check for movies
 
         public static Icon HOMECINEMA_ICON = new Icon(FILE_ICON); // Icon as a resource, used by forms
 
@@ -323,7 +323,7 @@ namespace HomeCinema
             if (!File.Exists(FILE_LOG_ERROR)) { WriteToFile(FILE_LOG_ERROR, ""); }
             if (!File.Exists(FILE_LOG_DB)) { WriteToFile(FILE_LOG_DB, ""); }
             // Use debugging Tmdb_Key
-            TMDB_KEY = Debugger.IsAttached ? ReadStringFromFile(@"..\..\..\ignored\tmdb_API_Key.txt", "GlobalVar-CheckAllFiles-DEBUG") : TMDB_KEY;
+            //TMDB_KEY = Debugger.IsAttached ? ReadStringFromFile(@"..\..\..\ignored\tmdb_API_Key.txt", "GlobalVar-CheckAllFiles-DEBUG") : TMDB_KEY;
             // Default config
             if (!File.Exists(FILE_CONFIG))
             {
