@@ -1096,20 +1096,6 @@ namespace HomeCinema
             }
             return (mediatype == "series" ? 2 : 1);
         }
-        
-        // Download Movie cover image from Anilist
-        public static bool DownloadCoverFromAnilist(string MOVIE_ID, string linkPoster, string calledFrom)
-        {
-            string errFrom = $"GlobalVars-DownloadCoverFromAnilist [calledFrom: {calledFrom}]";
-            // Parse image link from JSON and download it
-            if (String.IsNullOrWhiteSpace(linkPoster) == false)
-            {
-                string moviePosterDL = PATH_TEMP + MOVIE_ID + ".jpg";
-                DeleteMove(moviePosterDL, errFrom); // Delete prev file, if exists
-                return DownloadLoop(moviePosterDL, linkPoster, errFrom, false);
-            }
-            return false;
-        }
         // Return string File Size abbrev
         public static string GetFileSize(string filename)
         {

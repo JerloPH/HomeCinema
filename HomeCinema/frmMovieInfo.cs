@@ -633,7 +633,7 @@ namespace HomeCinema
                         // Parse image link from JSON and download it
                         if (source.Equals("anilist"))
                         {
-                            coverDownloaded = GlobalVars.DownloadCoverFromAnilist(MOVIE_ID, mediaInfo.PosterPath, errFrom);
+                            coverDownloaded = AnilistAPI.DownloadCoverFromAnilist(MOVIE_ID, mediaInfo.PosterPath, errFrom);
                         }
                         else
                         {
