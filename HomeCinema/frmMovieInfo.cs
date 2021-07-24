@@ -520,7 +520,7 @@ namespace HomeCinema
         private void btnFetchData_Click(object sender, EventArgs e)
         {
             if (!GlobalVars.ShowYesNo("Replace information?", this)) { return; }
-            string source = btnFetchData.Tag?.ToString();
+            string source = cbSource.Text.ToLower();
             if (String.IsNullOrWhiteSpace(source))
             {
                 source = "tmdb";
