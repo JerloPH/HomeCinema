@@ -19,7 +19,7 @@
 
 namespace HomeCinema
 {
-    public class Config
+    public class SettingJson
     {
         // Settings Config
         // Booleans

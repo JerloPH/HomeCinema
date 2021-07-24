@@ -122,13 +122,13 @@ namespace HomeCinema
         // Methods
         public static void LoadSettings()
         {
-            Config config;
+            SettingJson config;
             string errorFrom = "Settings-LoadSettings";
             string contents, sLastPathCover, sLastPathVideo;
             // If file does not exist, create it with default values from [Config.cs]
             if (File.Exists(GlobalVars.FILE_SETTINGS) == false)
             {
-                config = new Config();
+                config = new SettingJson();
                 contents = JsonConvert.SerializeObject(config, Formatting.Indented);
                 GlobalVars.WriteToFile(GlobalVars.FILE_SETTINGS, contents);
             }
@@ -136,7 +136,7 @@ namespace HomeCinema
             {
                 // Load file contents to Config
                 contents = GlobalVars.ReadStringFromFile(GlobalVars.FILE_SETTINGS, $"{errorFrom} [FILE_SETTINGS]");
-                config = JsonConvert.DeserializeObject<Config>(contents);
+                config = JsonConvert.DeserializeObject<SettingJson>(contents);
             }
 
             // Get Max log file size
@@ -202,7 +202,7 @@ namespace HomeCinema
         }
         public static bool SaveSettings()
         {
-            var config = new Config();
+            var config = new SettingJson();
             config.logsize = MaxLogSize_v;
             config.offlineMode = Convert.ToInt16(IsOffline);
             config.lastPathCover = LastPathCover;

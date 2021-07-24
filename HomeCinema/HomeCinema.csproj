@@ -153,7 +153,7 @@
     <Compile Include="JSONs\TmdbVideos.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="JSONs\Config.cs" />
+    <Compile Include="JSONs\SettingJson.cs" />
     <Compile Include="Func\SQLHelper.cs" />
     <Compile Include="Structs\MediaLocations.cs" />
     <Compile Include="Structs\Medias.cs" />
