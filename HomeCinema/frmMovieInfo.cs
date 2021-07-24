@@ -70,6 +70,9 @@ namespace HomeCinema
             // Add items to cbCategory
             cbCategory.Items.AddRange(GlobalVars.DB_INFO_CATEGORY);
 
+            cbSource.Items.AddRange(new string[] { "TMDB", "Anilist" });
+            cbSource.SelectedIndex = 0;
+
             // LOAD Information from DATABASE and SET to Controls
             if (Convert.ToInt16(MOVIE_ID) > 0)
             {
@@ -649,13 +652,20 @@ namespace HomeCinema
         // Get IMDB ID using Movie Name
         private void btnGetImdb_Click(object sender, EventArgs e)
         {
+            string source = cbSource.Text.ToLower();
             // Exit when no TMDB key
-            if (!GlobalVars.HAS_TMDB_KEY)
+            if (!GlobalVars.HAS_TMDB_KEY && source.Equals("tmdb"))
             {
                 GlobalVars.ShowWarning(GlobalVars.MSG_NO_TMDB);
                 return;
             }
-  
+            // Exit when no TMDB key
+            if ((String.IsNullOrWhiteSpace(GlobalVars.ANILIST_ID) || String.IsNullOrWhiteSpace(GlobalVars.ANILIST_SECRET)) && source.Equals("anilist"))
+            {
+                GlobalVars.ShowWarning(GlobalVars.MSG_NO_ANILIST);
+                return;
+            }
+
             // Check if txtName is valid
             if (String.IsNullOrWhiteSpace(txtName.Text))
             {
@@ -665,7 +675,7 @@ namespace HomeCinema
             }
 
             // Show form for tmdb searching
-            var form = new frmSearchMedia($"Search for {txtName.Text}", txtName.Text, txtID.Text, "anilist");
+            var form = new frmSearchMedia($"Search for {txtName.Text}", txtName.Text, txtID.Text, source);
             form.ShowDialog(this);
             var getResult = form.getResult;
             MEDIA_TYPE = form.getResultMedia.Equals("tv") ? "series" : "movie";

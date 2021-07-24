@@ -38,6 +38,8 @@
             this.picBox = new System.Windows.Forms.PictureBox();
             this.tabInfo = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label19 = new System.Windows.Forms.Label();
+            this.txtAnilist = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtNameOrig = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -84,8 +86,6 @@
             this.btnChangeFile = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
             this.txtPathFile = new System.Windows.Forms.TextBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.txtAnilist = new System.Windows.Forms.TextBox();
             this.btnGetImdb = new System.Windows.Forms.Button();
             this.btnFetchData = new System.Windows.Forms.Button();
             this.cbSource = new System.Windows.Forms.ComboBox();
@@ -236,6 +236,25 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Basic";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // label19
+            // 
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(534, 14);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(85, 25);
+            this.label19.TabIndex = 37;
+            this.label19.Text = "Anilist Id";
+            this.label19.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // txtAnilist
+            // 
+            this.txtAnilist.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAnilist.Location = new System.Drawing.Point(625, 14);
+            this.txtAnilist.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtAnilist.Name = "txtAnilist";
+            this.txtAnilist.Size = new System.Drawing.Size(116, 30);
+            this.txtAnilist.TabIndex = 38;
             // 
             // label5
             // 
@@ -454,7 +473,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(764, 494);
+            this.tabPage2.Size = new System.Drawing.Size(764, 462);
             this.tabPage2.TabIndex = 2;
             this.tabPage2.Text = "Advance";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -663,7 +682,7 @@
             this.tabPage3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage3.Size = new System.Drawing.Size(764, 494);
+            this.tabPage3.Size = new System.Drawing.Size(764, 462);
             this.tabPage3.TabIndex = 1;
             this.tabPage3.Text = "File Paths";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -738,25 +757,6 @@
             this.txtPathFile.TabIndex = 31;
             this.txtPathFile.Text = "Path to file";
             // 
-            // label19
-            // 
-            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(534, 14);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(85, 25);
-            this.label19.TabIndex = 37;
-            this.label19.Text = "Anilist Id";
-            this.label19.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // txtAnilist
-            // 
-            this.txtAnilist.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAnilist.Location = new System.Drawing.Point(625, 14);
-            this.txtAnilist.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtAnilist.Name = "txtAnilist";
-            this.txtAnilist.Size = new System.Drawing.Size(116, 30);
-            this.txtAnilist.TabIndex = 38;
-            // 
             // btnGetImdb
             // 
             this.btnGetImdb.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -767,6 +767,7 @@
             this.btnGetImdb.TabIndex = 40;
             this.btnGetImdb.Text = "SEARCH";
             this.btnGetImdb.UseVisualStyleBackColor = true;
+            this.btnGetImdb.Click += new System.EventHandler(this.btnGetImdb_Click);
             // 
             // btnFetchData
             // 
@@ -778,6 +779,7 @@
             this.btnFetchData.TabIndex = 39;
             this.btnFetchData.Text = "FETCH DATA";
             this.btnFetchData.UseVisualStyleBackColor = true;
+            this.btnFetchData.Click += new System.EventHandler(this.btnFetchData_Click);
             // 
             // cbSource
             // 
