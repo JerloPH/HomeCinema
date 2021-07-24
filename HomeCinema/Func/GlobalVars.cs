@@ -1056,6 +1056,17 @@ namespace HomeCinema
             }
             return text;
         }
+        public static string ConvertListToString(List<string> list, string sep, string calledFrom)
+        {
+            try
+            {
+                return list.Aggregate((a, b) => a + sep + b).Trim()
+            }
+            catch (Exception ex)
+            {
+                ShowError($"GlobalVar-ConvertListToString ({calledFrom})", ex, false);
+            }
+        }
         // Return IMDB Id of Movie from TMDB, by searching movie title
         public static string GetIMDBId(string Movie_Title, string MOVIE_ID, string mediatype, bool showAMsg = false)
         {
@@ -1143,27 +1154,13 @@ namespace HomeCinema
             }
             return String.Empty;
         }
-        // Return a List<string> of informations regarding the Movie, based on IMDB Id
-        public static List<string> GetMovieInfoByImdb(string IMDB_ID, string mediatype, bool showAMsg = false)
+        // Return MediaInfo object with info on Movie, based on IMDB Id
+        public static MediaInfo GetMovieInfoByImdb(string IMDB_ID, string mediatype, bool showAMsg = false)
         {
+            // Setup vars
             string errFrom = "GlobalVars-GetMovieInfoByImdb";
             string mediaTypeUrl = mediatype.Equals("movie") ? "movie" : "tv";
-            // Setup vars and links
-            List<string> list = new List<string>();
-            list.AddRange(new string[] { "", "", "", "", "", "", "", "", "", "", "", "" });
-            list[0] = ""; // json file full path
-            list[1] = ""; // trailer link
-            list[2] = ""; // title
-            list[3] = ""; // original title
-            list[4] = ""; // summary / overview
-            list[5] = ""; // release date
-            list[6] = ""; // poster_path
-            list[7] = ""; // Actors/actresses [Artist
-            list[8] = ""; // Director
-            list[9] = ""; // Producer
-            list[10] = ""; // origin country
-            list[11] = ""; // Studio
-
+            var MediaInfo = new MediaInfo();
             string TMDB_MovieID = "";
             // File paths
             string JSONmovieinfo = PATH_TEMP + IMDB_ID + ".json";
@@ -1208,7 +1205,7 @@ namespace HomeCinema
                 if (File.Exists(JSONfindmovie))
                 {
                     // Save to list  the json file  path
-                    list[0] = JSONfindmovie;
+                    MediaInfo.JsonPath = JSONfindmovie;
 
                     // Get contents of JSON file
                     string contents = ReadStringFromFile(JSONfindmovie, errFrom + " [JSONfindmovie]");
@@ -1219,28 +1216,48 @@ namespace HomeCinema
                     {
                         if (mediatype == "movie")
                         {
-                            list[2] = movie.title; // title
-                            list[3] = movie.original_title; // original title
-                            list[5] = movie.release_date; // release date
+                            MediaInfo.Title = movie.title; // title
+                            MediaInfo.OrigTitle = movie.original_title; // original title
+                            MediaInfo.ReleaseDate = movie.release_date; // release date
                         }
                         else
                         {
-                            list[2] = movie.name; // series title
-                            list[3] = movie.original_name;
-                            list[5] = movie.first_air_date; // release date
+                            MediaInfo.Title = movie.name; // series title
+                            MediaInfo.OrigTitle = movie.original_name;
+                            MediaInfo.ReleaseDate = movie.first_air_date; // release date
                         }
-                        list[4] = movie.overview; // summary / overview
-                        list[6] = (!String.IsNullOrWhiteSpace(movie.poster_path)) ? movie.poster_path : String.Empty; // poster_path
+                        MediaInfo.Summary = movie.overview; // summary / overview
+                        MediaInfo.PosterPath = (!String.IsNullOrWhiteSpace(movie.poster_path)) ? movie.poster_path : String.Empty; // poster_path
                         // Country
-                        string tmp = "";
                         foreach (ProdCountry c in movie.production_countries)
                         {
-                            tmp += c.name + ",";
+                            MediaInfo.Country.Add(c.name.Trim());
                         }
-                        list[10] = (!String.IsNullOrWhiteSpace(tmp)) ? tmp.TrimEnd(',') : ""; // country
+                        // Get genres
+                        if (contents.Contains("genres"))
+                        {
+                            var jObj = (JObject)JsonConvert.DeserializeObject(contents);
+                            var result = jObj["genres"]
+                                            .Select(item => new
+                                            {
+                                                name = (string)item["name"],
+                                            })
+                                            .ToList();
+                            if (result.Count > 0)
+                            {
+                                foreach (var valGenre in result)
+                                {
+                                    string valString = valGenre.ToString();
+                                    string valTrim = valString.Substring(valString.IndexOf("name = ") + 7);
+                                    valTrim = valTrim.TrimEnd('}');
+                                    valTrim.Trim();
+                                    MediaInfo.Genre.Add(valTrim);
+                                }
+                            }
+                        }
                         // Studio
-                        try { list[11] = movie.production_companies.Select(a => a.name).ToList().Aggregate((b, c) => b + ", " + c); }
-                        catch { list[11] = ""; }
+                        try { MediaInfo.Studio = movie.production_companies.Select(a => a.name).ToList().Aggregate((b, c) => b + ", " + c); }
+                        catch { MediaInfo.Studio = ""; }
                     }
                 }
 
@@ -1254,15 +1271,15 @@ namespace HomeCinema
                         var objJson = JsonConvert.DeserializeObject<TmdbVideos>(contents);
                         if (objJson.results[0].site.ToLower() == "youtube")
                         {
-                            list[1] = objJson.results[0].key;
+                            MediaInfo.Trailer = objJson.results[0].key;
                         }
                     }
                     catch
                     {
-                        list[1] = "";
+                        MediaInfo.Trailer = "";
                     }
                 }
-
+                
                 // Get crew and cast
                 urlJSONcrewcast = @"https://api.themoviedb.org/3/" + mediaTypeUrl + "/" + TMDB_MovieID + "/credits?api_key=" + TMDB_KEY;
                 DownloadAndReplace(JSONcrewcast, urlJSONcrewcast, errFrom + " [JSONcrewcast]", showAMsg);
@@ -1279,7 +1296,7 @@ namespace HomeCinema
                         tmp += c.name + ", ";
                     }
                     // Save to list as artist
-                    list[7] = tmp.TrimEnd().TrimEnd(',');
+                    MediaInfo.Actor = tmp.TrimEnd().TrimEnd(',');
 
                     // get Director and producer
                     string tmpDir = "", tmpProd = ""; // Use to get director and producer
@@ -1296,56 +1313,11 @@ namespace HomeCinema
                         }
                     }
                     // Save to list as director and producer
-                    list[8] = tmpDir.TrimEnd().TrimEnd(',');
-                    list[9] = tmpProd.TrimEnd().TrimEnd(',');
+                    MediaInfo.Director = tmpDir.TrimEnd().TrimEnd(',');
+                    MediaInfo.Producer = tmpProd.TrimEnd().TrimEnd(',');
                 }
             }
-            return list;
-        }
-        // Get Genres from JSON File
-        public static string GetGenresByJsonFile(string json_fullpath, string calledFrom, string sep = ",")
-        {
-            string ret;
-            try
-            {
-                ret = GetGenresByJsonFile(json_fullpath, calledFrom).Aggregate((a, b) => a + sep + b).Trim();
-            }
-            catch { ret = ""; }
-            return ret;
-        }
-        public static List<string> GetGenresByJsonFile(string json_fullpath, string calledFrom)
-        {
-            List<string> listGenre = new List<string>();
-
-            // Exit if there is no jsonFile
-            if ((String.IsNullOrWhiteSpace(json_fullpath)) || (File.Exists(json_fullpath) ==false))
-            {
-                return listGenre;
-            }
-
-            string contents = ReadStringFromFile(json_fullpath, $"GlobalVars-GetGenresByJsonFile [calledFrom: {calledFrom}]");
-            if (contents.Contains("genres"))
-            {
-                var jObj = (JObject)JsonConvert.DeserializeObject(contents);
-                var result = jObj["genres"]
-                                .Select(item => new
-                                {
-                                    name = (string)item["name"],
-                                })
-                                .ToList();
-                if (result.Count > 0)
-                {
-                    foreach (var valGenre in result)
-                    {
-                        string valString = valGenre.ToString();
-                        string valTrim = valString.Substring(valString.IndexOf("name = ") + 7);
-                        valTrim = valTrim.TrimEnd('}');
-                        valTrim.Trim();
-                        listGenre.Add(valTrim);
-                    }
-                }
-            }
-            return listGenre;
+            return MediaInfo;
         }
         // Open file in explorer, highlighted
         public static bool FileOpeninExplorer(string filePath, string calledFrom)

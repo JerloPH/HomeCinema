@@ -539,15 +539,13 @@ namespace HomeCinema
             }
             // Declare vars
             frmLoading form = null;
-            var list = new List<string>();
             string errFrom = "frmMovieInfo-btnFetchData_Click";
             string IMDB_ID = txtIMDB.Text;
             string AnilistId = txtAnilist.Text;
+            string country; // country text
             string genre; // genre text 
-            string jsonMainFullPath; // json file full path
-            string r1, r2, r3, r4, r5, r6, r7, r8, r9, r10; // List Info from TMDB
-            string linkPoster, YT_ID;
             bool coverDownloaded = false;
+            MediaInfo mediaInfo = null;
 
             // Exit if IMDB id is invalid
             if ((String.IsNullOrWhiteSpace(IMDB_ID) || IMDB_ID=="0" || (IMDB_ID.StartsWith("tt")==false)) && (source.Equals("tmdb")))
@@ -563,80 +561,65 @@ namespace HomeCinema
             {
                 if (source.Equals("anilist"))
                 {
-                    list = GlobalVars.GetMovieInfoByImdb(AnilistId, MEDIA_TYPE);
+                    mediaInfo = GlobalVars.GetMovieInfoByImdb(AnilistId, MEDIA_TYPE);
                 }
                 else
                 {
-                    list = GlobalVars.GetMovieInfoByImdb(IMDB_ID, MEDIA_TYPE);
+                    mediaInfo = GlobalVars.GetMovieInfoByImdb(IMDB_ID, MEDIA_TYPE);
                 }
             };
             form.ShowDialog(this);
 
-            if (list == null || list?.Count < 1)
+            if (mediaInfo == null)
             {
                 GlobalVars.ShowWarning("Title not found!", "", this);
                 return;
             }
 
             // Set the values to textboxes
-            YT_ID = list[1];
-            if ((String.IsNullOrWhiteSpace(txtPathTrailer.Text)) && (string.IsNullOrWhiteSpace(YT_ID) ==false))
+            if ((String.IsNullOrWhiteSpace(txtPathTrailer.Text)) && !string.IsNullOrWhiteSpace(mediaInfo.Trailer))
             {
-                txtPathTrailer.Text = GlobalVars.LINK_YT + YT_ID;
+                txtPathTrailer.Text = GlobalVars.LINK_YT + mediaInfo.Trailer;
             }
-
-            // Get properties and information of movies
-            jsonMainFullPath = list[0]; // json file full path
-            r1 = list[2]; // title
-            r2 = list[3]; // orig title
-            r3 = list[4]; // overview / summary
-            r4 = list[5]; // release date
-            r5 = list[6]; // poster_path
-            r6 = list[7]; // Artist
-            r7 = list[8]; // Director
-            r8 = list[9]; // Producer
-            r9 = list[10]; // country
-            r10 = list[11]; // Studio
-
             // Set to textboxes
-            if (String.IsNullOrWhiteSpace(r1)==false)
+            if (String.IsNullOrWhiteSpace(mediaInfo.Title) ==false)
             {
-                txtName.Text = r1;
+                txtName.Text = mediaInfo.Title;
             }
-            if (String.IsNullOrWhiteSpace(r2) == false)
+            if (String.IsNullOrWhiteSpace(mediaInfo.OrigTitle) == false)
             {
-                if (!r2.Equals(txtName.Text))
+                if (!mediaInfo.OrigTitle.Equals(txtName.Text))
                 {
-                    txtNameOrig.Text = r2;
+                    txtNameOrig.Text = mediaInfo.OrigTitle;
                 }
             }
-            if (String.IsNullOrWhiteSpace(r3) == false)
+            if (String.IsNullOrWhiteSpace(mediaInfo.Summary) == false)
             {
-                txtSummary.Text = r3;
+                txtSummary.Text = mediaInfo.Summary;
             }
-            if (String.IsNullOrWhiteSpace(r4) == false)
+            if (String.IsNullOrWhiteSpace(mediaInfo.ReleaseDate) == false)
             {
-                txtYear.Text = r4.Substring(0, 4);
+                txtYear.Text = mediaInfo.ReleaseDate.Substring(0, 4);
             }
 
-            txtArtist.Text = r6;
-            txtDirector.Text = r7;
-            txtProducer.Text = r8;
-            txtStudio.Text = r10;
+            txtArtist.Text = mediaInfo.Actor;
+            txtDirector.Text = mediaInfo.Director;
+            txtProducer.Text = mediaInfo.Producer;
+            txtStudio.Text = mediaInfo.Studio;
             // Clear country and genre listbox
             listboxCountry.Items.Clear();
             listboxGenre.Items.Clear();
             // Set Country
-            LoadCountry(r9);
+            country = GlobalVars.ConvertListToString(mediaInfo.Country, ",", errFrom);
+            LoadCountry(country);
             // Set Genres
-            genre = GlobalVars.GetGenresByJsonFile(jsonMainFullPath, errFrom + " (jsonMainFullPath)", ",");
+            genre = GlobalVars.ConvertListToString(mediaInfo.Genre, ",", errFrom);
             LoadGenre(genre);
             // Set mediatype, after getting info from TMDB
-            cbCategory.SelectedIndex = GlobalVars.GetCategoryByFilter(genre, r9, MEDIA_TYPE);
+            cbCategory.SelectedIndex = GlobalVars.GetCategoryByFilter(genre, country, MEDIA_TYPE);
 
             // Ask to change cover - poster image
-            linkPoster = r5;
-            if (String.IsNullOrWhiteSpace(r5) == false)
+            if (String.IsNullOrWhiteSpace(mediaInfo.PosterPath) == false)
             {
                 if (GlobalVars.ShowYesNo("Do you want to change poster image?", this))
                 {
@@ -650,11 +633,11 @@ namespace HomeCinema
                         // Parse image link from JSON and download it
                         if (source.Equals("anilist"))
                         {
-                            coverDownloaded = GlobalVars.DownloadCoverFromAnilist(MOVIE_ID, linkPoster, errFrom);
+                            coverDownloaded = GlobalVars.DownloadCoverFromAnilist(MOVIE_ID, mediaInfo.PosterPath, errFrom);
                         }
                         else
                         {
-                            coverDownloaded = GlobalVars.DownloadCoverFromTMDB(MOVIE_ID, linkPoster, errFrom);
+                            coverDownloaded = GlobalVars.DownloadCoverFromTMDB(MOVIE_ID, mediaInfo.PosterPath, errFrom);
                         }
                     };
                     form.ShowDialog(this);

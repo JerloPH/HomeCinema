@@ -203,7 +203,7 @@ namespace HomeCinema
                         if (String.IsNullOrWhiteSpace(getIMDB) == false)
                         {
                             // Get List of values from TMDB
-                            List<string> list = GlobalVars.GetMovieInfoByImdb(getIMDB, mediatype);
+                            var Media = GlobalVars.GetMovieInfoByImdb(getIMDB, mediatype);
                             rJson = list[0];
                             rTrailer = list[1];
                             rTitle = list[2];
@@ -215,9 +215,9 @@ namespace HomeCinema
                             rArtist = list[7];
                             rDirector = list[8];
                             rProducer = list[9];
-                            rCountry = list[10];
                             rStudio = list[11];
-                            rGenre = GlobalVars.GetGenresByJsonFile(rJson, errFrom, ","); // Get Genres
+                            rCountry = GlobalVars.ConvertListToString(Media.Country, ",", callFrom); // Get Country
+                            rGenre = GlobalVars.ConvertListToString(Media.Genre, ",", callFrom); // Get Genres
                         }
                     }
                 }
