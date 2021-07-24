@@ -519,10 +519,22 @@ namespace HomeCinema
         // Fetch data from TMDB, using IMDB ID
         private void btnFetchData_Click(object sender, EventArgs e)
         {
+            if (!GlobalVars.ShowYesNo("Replace information?", this)) { return; }
+            string source = btnFetchData.Tag?.ToString();
+            if (String.IsNullOrWhiteSpace(source))
+            {
+                source = "tmdb";
+            }
             // Exit when no TMDB key
-            if (!GlobalVars.HAS_TMDB_KEY)
+            if (!GlobalVars.HAS_TMDB_KEY && source.Equals("tmdb"))
             {
                 GlobalVars.ShowWarning(GlobalVars.MSG_NO_TMDB);
+                return;
+            }
+            // Exit when no Anilist config
+            if ((String.IsNullOrWhiteSpace(GlobalVars.ANILIST_ID) || String.IsNullOrWhiteSpace(GlobalVars.ANILIST_SECRET)) && source.Equals("anilist"))
+            {
+                GlobalVars.ShowWarning(GlobalVars.MSG_NO_ANILIST);
                 return;
             }
             // Declare vars
@@ -530,6 +542,7 @@ namespace HomeCinema
             var list = new List<string>();
             string errFrom = "frmMovieInfo-btnFetchData_Click";
             string IMDB_ID = txtIMDB.Text;
+            string AnilistId = txtAnilist.Text;
             string genre; // genre text 
             string jsonMainFullPath; // json file full path
             string r1, r2, r3, r4, r5, r6, r7, r8, r9, r10; // List Info from TMDB
@@ -537,24 +550,31 @@ namespace HomeCinema
             bool coverDownloaded = false;
 
             // Exit if IMDB id is invalid
-            if (String.IsNullOrWhiteSpace(IMDB_ID) || IMDB_ID=="0" || (IMDB_ID.StartsWith("tt")==false))
+            if ((String.IsNullOrWhiteSpace(IMDB_ID) || IMDB_ID=="0" || (IMDB_ID.StartsWith("tt")==false)) && (source.Equals("tmdb")))
             {
                 GlobalVars.ShowWarning("Invalid IMDB Id!");
                 txtIMDB.Focus();
                 return;
             }
 
-            // Get List of values from TMDB
-            form = new frmLoading("Fetching info from TMDB..", "Loading");
+            // Get List of values from either TMDB or Anilist
+            form = new frmLoading($"Fetching info from {source.ToUpper()}..", "Loading");
             form.BackgroundWorker.DoWork += (sender1, e1) =>
             {
-                list = GlobalVars.GetMovieInfoByImdb(IMDB_ID, MEDIA_TYPE);
+                if (source.Equals("anilist"))
+                {
+                    list = GlobalVars.GetMovieInfoByImdb(AnilistId, MEDIA_TYPE);
+                }
+                else
+                {
+                    list = GlobalVars.GetMovieInfoByImdb(IMDB_ID, MEDIA_TYPE);
+                }
             };
             form.ShowDialog(this);
 
             if (list == null || list?.Count < 1)
             {
-                GlobalVars.ShowWarning("Entry does not exist on 'The Movie Database'!", "", this);
+                GlobalVars.ShowWarning("Title not found!", "", this);
                 return;
             }
 
@@ -621,18 +641,26 @@ namespace HomeCinema
                 if (GlobalVars.ShowYesNo("Do you want to change poster image?", this))
                 {
                     // Show form loading
-                    Thread.Sleep(2); // prevent overloading for TMDB
-                    form = new frmLoading("Downloading cover from TMDB..", "Loading");
+                    Thread.Sleep(2); // prevent overloading for TMDBor Anilist
+                    string moviePosterDL = GlobalVars.PATH_TEMP + MOVIE_ID + ".jpg";
+
+                    form = new frmLoading($"Downloading cover from {source.ToUpper()}..", "Loading");
                     form.BackgroundWorker.DoWork += (sender1, e1) =>
                     {
                         // Parse image link from JSON and download it
-                        coverDownloaded = GlobalVars.DownloadCoverFromTMDB(MOVIE_ID, linkPoster, errFrom);
+                        if (source.Equals("anilist"))
+                        {
+                            coverDownloaded = GlobalVars.DownloadCoverFromAnilist(MOVIE_ID, linkPoster, errFrom);
+                        }
+                        else
+                        {
+                            coverDownloaded = GlobalVars.DownloadCoverFromTMDB(MOVIE_ID, linkPoster, errFrom);
+                        }
                     };
                     form.ShowDialog(this);
                     // Update Image in PictureBox
                     if (coverDownloaded)
                     {
-                        string moviePosterDL = GlobalVars.PATH_TEMP + MOVIE_ID + ".jpg";
                         if (SetPicboxImgFromFile(picBox, moviePosterDL, errFrom) == false)
                         {
                             GlobalVars.ShowWarning("Cover cannot be changed! File may be in use..");
@@ -646,7 +674,7 @@ namespace HomeCinema
             }
             else
             {
-                GlobalVars.ShowWarning("No cover image fetched\nfrom 'The Movie Database'.", "", this);
+                GlobalVars.ShowWarning($"No cover image fetched!\nSource: {source.ToUpper()}", "", this);
             }
         }
         // Get IMDB ID using Movie Name
@@ -659,7 +687,7 @@ namespace HomeCinema
                 GlobalVars.ShowWarning(GlobalVars.MSG_NO_TMDB);
                 return;
             }
-            // Exit when no TMDB key
+            // Exit when no Anilist config
             if ((String.IsNullOrWhiteSpace(GlobalVars.ANILIST_ID) || String.IsNullOrWhiteSpace(GlobalVars.ANILIST_SECRET)) && source.Equals("anilist"))
             {
                 GlobalVars.ShowWarning(GlobalVars.MSG_NO_ANILIST);
@@ -684,7 +712,15 @@ namespace HomeCinema
             // Get IMDB from TMDB json info
             if (String.IsNullOrWhiteSpace(getResult) == false)
             {
-                txtIMDB.Text = getResult;
+                if (source.Equals("anilist"))
+                {
+                    txtAnilist.Text = getResult;
+                }
+                else
+                {
+                    txtIMDB.Text = getResult;
+                }
+                btnFetchData.Tag = source;
                 btnFetchData.PerformClick(); // Automatically search IMDB Id
             }
         }
