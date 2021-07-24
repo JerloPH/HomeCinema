@@ -70,6 +70,7 @@ namespace HomeCinema
         public static string FILE_LOG_ERROR = Path.Combine(PATH_LOG, "App_ErrorLog.log"); // Contains only error Messages
 
         // Data and files
+        public static string FILE_CONFIG = Path.Combine(PATH_DATA, "config.json"); // configuration file to use for APIs
         public static string FILE_SETTINGS = PATH_DATA + @"settings.json"; // settings used in App
         public static string FILE_COUNTRY = PATH_DATA + @"country.hc_data"; // list of countries
         public static string FILE_GENRE = PATH_DATA + @"genre.hc_data"; // List of genres
@@ -322,6 +323,23 @@ namespace HomeCinema
             if (!File.Exists(FILE_LOG_APP)) { WriteToFile(FILE_LOG_APP, ""); }
             if (!File.Exists(FILE_LOG_ERROR)) { WriteToFile(FILE_LOG_ERROR, ""); }
             if (!File.Exists(DB_DBLOGPATH)) { WriteToFile(DB_DBLOGPATH, ""); }
+            // Use debugging Tmdb_Key
+            TMDB_KEY = Debugger.IsAttached ? ReadStringFromFile(@"..\..\..\ignored\tmdb_API_Key.txt", "GlobalVar-CheckAllFiles-DEBUG") : TMDB_KEY;
+            // Default config
+            if (!File.Exists(FILE_CONFIG))
+            {
+                var json = JsonConvert.SerializeObject(new ConfigJson(), Formatting.Indented);
+                WriteToFile(FILE_CONFIG, json);
+            }
+            else
+            {
+                var jsonContent = ReadStringFromFile(FILE_CONFIG, "GlobalVar-CheckAllFiles");
+                var config = JsonConvert.DeserializeObject<ConfigJson>(jsonContent);
+                if (!String.IsNullOrWhiteSpace(config.TmdbApiKey))
+                {
+                    TMDB_KEY = config.TmdbApiKey;
+                }
+            }
         }
         // Create a directory, if not existing
         public static void CreateDir(string fPath)

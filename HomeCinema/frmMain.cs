@@ -47,8 +47,7 @@ namespace HomeCinema
         #region frmMain
         public frmMain()
         {
-            // Set TMDB Key on DEBUG
-            GlobalVars.TMDB_KEY = Debugger.IsAttached ? GlobalVars.ReadStringFromFile(@"..\..\..\ignored\tmdb_API_Key.txt", "frmMain-DEBUG") : GlobalVars.TMDB_KEY;
+            // Contains TMDB_KEY ?
             GlobalVars.HAS_TMDB_KEY = !String.IsNullOrWhiteSpace(GlobalVars.TMDB_KEY);
             // Start app
             InitializeComponent();
