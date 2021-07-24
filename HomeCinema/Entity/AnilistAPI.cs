@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace HomeCinema.Entity
+namespace HomeCinema
 {
     public static class AnilistAPI
     {
@@ -15,7 +15,12 @@ namespace HomeCinema.Entity
         private static string BuildSearchPaginated(string text)
         {
             string search = text.Replace("\"", string.Empty);
-            string query = @"query {
+            string query = "{\"query\":" + 
+                "\"query {\n  Page (perPage: 20, page: 1) {\n    pageInfo {\n      total\n      currentPage\n      lastPage\n      hasNextPage\n      perPage\n    }\n    " + 
+                "media (search: \\\"" + search + "\\\", type: ANIME) {\n      id\n      format\n      episodes\n      title {\n        romaji\n      }\n      coverImage {\n        medium\n      }\n    }\n  }\n}\", " +
+                "\"variables\": null}";
+            /*
+            string query = "{\"query\":\"" + @"query {
               Page (page: 1, perPage: 20)
               {
                 pageInfo {
@@ -25,8 +30,9 @@ namespace HomeCinema.Entity
                   hasNextPage
                   perPage
                 }
-                media (type: ANIME, search: " + search + @") {
+                media (type: ANIME, search: " + $"\"{search}\"" + @") {
                   id
+                  format
                   title {
                     romaji
                   }
@@ -36,26 +42,31 @@ namespace HomeCinema.Entity
                 }
               }
             }";
+            query += "}\",\"variables\":null}";
+            */
             return query;
         }
 
-        public async static Task<AnilistPageQuery> SearchForAnime(string text)
+        public static AnilistPageQuery SearchForAnime(string text)
         {
             try
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    client.DefaultRequestHeaders.Add("Content-Type", "application/json");
-                    client.DefaultRequestHeaders.Add("Accept", "application/json");
+                    //client.DefaultRequestHeaders.Add("Content-Type", "application/json");
+                    //client.DefaultRequestHeaders.Add("Accept", "application/json");
 
                     var requestContent = new StringContent(BuildSearchPaginated(text), Encoding.UTF8, "application/json");
-                    HttpResponseMessage response = await client.PostAsync(Host, requestContent);
+                    HttpResponseMessage response = client.PostAsync(Host, requestContent).Result;
                     requestContent.Dispose();
-
-                    string contentString = await response.Content.ReadAsStringAsync();
-                    var result = JsonConvert.DeserializeObject<AnilistPageQuery>(contentString);
-                    response.Dispose();
-                    return result;
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        string contentString = response.Content.ToString();
+                        var result = JsonConvert.DeserializeObject<AnilistPageQuery>(contentString);
+                        response.Dispose();
+                        return result;
+                    }
+                    return null;
                 }
             }
             catch

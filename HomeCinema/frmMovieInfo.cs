@@ -655,9 +655,6 @@ namespace HomeCinema
                 GlobalVars.ShowWarning(GlobalVars.MSG_NO_TMDB);
                 return;
             }
-
-            // Declare vars
-            string getIMDB = "";
   
             // Check if txtName is valid
             if (String.IsNullOrWhiteSpace(txtName.Text))
@@ -668,16 +665,16 @@ namespace HomeCinema
             }
 
             // Show form for tmdb searching
-            var form = new frmTmdbSearch($"Search for {txtName.Text}", txtName.Text, txtID.Text);
+            var form = new frmTmdbSearch($"Search for {txtName.Text}", txtName.Text, txtID.Text, "anilist");
             form.ShowDialog(this);
-            getIMDB = form.getResult;
+            var getResult = form.getResult;
             MEDIA_TYPE = form.getResultMedia.Equals("tv") ? "series" : "movie";
             form.Dispose();
 
             // Get IMDB from TMDB json info
-            if (String.IsNullOrWhiteSpace(getIMDB) == false)
+            if (String.IsNullOrWhiteSpace(getResult) == false)
             {
-                txtIMDB.Text = getIMDB;
+                txtIMDB.Text = getResult;
                 btnFetchData.PerformClick(); // Automatically search IMDB Id
             }
         }

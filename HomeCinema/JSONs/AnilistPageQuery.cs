@@ -37,6 +37,10 @@ namespace HomeCinema
     {
         [JsonProperty("id")]
         public int Id { get; set; } = 0;
+        [JsonProperty("format")]
+        public string Format { get; set; } = "";
+        [JsonProperty("episodes")]
+        public int Episodes { get; set; } = 0;
         [JsonProperty("title")]
         public AnilistMediaTitle Title { get; set; }
         [JsonProperty("coverImage")]

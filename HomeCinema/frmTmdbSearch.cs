@@ -19,6 +19,7 @@ namespace HomeCinema
         private ImageList imageList = new ImageList();
         private string result = "";
         private string mediatype = "";
+        private string Source = "tmdb";
         public string getResult
         {
             get { return result; }
@@ -29,12 +30,13 @@ namespace HomeCinema
             get { return mediatype; }
             set { mediatype = value; }
         }
-        public frmTmdbSearch(string caption, string query, string id)
+        public frmTmdbSearch(string caption, string query, string id, string source = "tmdb")
         {
             InitializeComponent();
             // Set variables
             movieId = id;
             result = "";
+            Source = source;
             // Set textbox and labels
             txtInput.Text = query;
             Text = GlobalVars.HOMECINEMA_NAME;
@@ -94,15 +96,6 @@ namespace HomeCinema
             int count = 0;
             int resultCount = 0;
 
-            ClearImageList();
-            Image defImg = Image.FromFile(GlobalVars.FILE_DEFIMG);
-            imageList.Images.Add("0", defImg);
-            defImg.Dispose();
-            lvResult.View = View.LargeIcon;
-            lvResult.Items.Clear();
-            lvResult.BeginUpdate(); // Pause drawing events on ListView
-            lvResult.SuspendLayout();
-
             var form = new frmLoading($"Searching for {txtInput.Text}", GlobalVars.HOMECINEMA_NAME);
             form.BackgroundWorker.DoWork += (sender1, e1) =>
             {
@@ -158,10 +151,68 @@ namespace HomeCinema
                 }
             };
             form.ShowDialog(this);
-            lvResult.EndUpdate(); // Draw the ListView
-            lvResult.ResumeLayout();
-            lvResult.Refresh();
-            lvResult.LargeImageList = imageList;
+            return resultCount;
+        }
+
+        private int SearchAnilist()
+        {
+            string calledFrom = "frmTmdbSearch-SearchAnilist()";
+            int resultCount = 0;
+            string imgKey = "";
+
+            var form = new frmLoading($"Searching for {txtInput.Text}", GlobalVars.HOMECINEMA_NAME);
+            form.BackgroundWorker.DoWork += (sender1, e1) =>
+            {
+                var Results = AnilistAPI.SearchForAnime(txtInput.Text);
+                if (Results != null)
+                {
+                    foreach (var media in Results.Data.Page.MediaList)
+                    {
+                        string title = media.Title.Romaji;
+                        string mediaId = media.Id.ToString();
+                        string cover = media.CoverImage.Medium;
+                        string mediatype = media.Format.ToLower();
+                        string imgFilePath = $"{GlobalVars.PATH_TEMP}{mediaId}.jpg";
+
+                        // Change mediatype
+                        if (mediatype.Equals("movie") || media.Episodes < 2)
+                        {
+                            mediatype = "movie";
+                        }
+                        else { mediatype = "tv"; }
+
+                        GlobalVars.DeleteMove(imgFilePath, calledFrom);
+                        if (!String.IsNullOrWhiteSpace(cover))
+                        {
+                            GlobalVars.DownloadAndReplace(imgFilePath, cover, calledFrom);
+                        }
+                        if (File.Exists(imgFilePath))
+                        {
+                            imgKey = Path.GetFileNameWithoutExtension(imgFilePath);
+                            try
+                            {
+                                this.Invoke(new Action(() =>
+                                {
+                                    using (Image img = Image.FromFile(imgFilePath))
+                                    {
+                                        imageList.Images.Add(imgKey, img);
+                                    }
+                                    GlobalVars.TryDelete(imgFilePath, calledFrom);
+                                }));
+                            }
+                            catch { imgKey = "0"; }
+                        }
+                        // Create ListView item
+                        ListViewItem lvItem = new ListViewItem();
+                        int index = imageList.Images.IndexOfKey(imgKey);
+                        lvItem.Text = title;
+                        lvItem.Tag = $"{mediaId}*{mediatype}";
+                        lvItem.ImageIndex = (index > 0) ? index : 0;
+                        AddItem(lvResult, lvItem);
+                    }
+                }
+            };
+            form.ShowDialog(this);
             return resultCount;
         }
         #endregion
@@ -212,11 +263,25 @@ namespace HomeCinema
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            int size = SearchTmdb();
+            ClearImageList();
+            Image defImg = Image.FromFile(GlobalVars.FILE_DEFIMG);
+            imageList.Images.Add("0", defImg);
+            defImg.Dispose();
+            lvResult.View = View.LargeIcon;
+            lvResult.Items.Clear();
+            lvResult.BeginUpdate(); // Pause drawing events on ListView
+            lvResult.SuspendLayout();
+
+            int size = Source.Equals("tmdb") ? SearchTmdb() : SearchAnilist();
             if (size > 0)
             {
-                GlobalVars.ShowInfo($"Found {size} results!");
+                GlobalVars.ShowInfo($"Found {size} results!", "", this);
             }
+
+            lvResult.EndUpdate(); // Draw the ListView
+            lvResult.ResumeLayout();
+            lvResult.Refresh();
+            lvResult.LargeImageList = imageList;
         }
 
         private void txtInput_KeyDown(object sender, KeyEventArgs e)
