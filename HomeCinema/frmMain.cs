@@ -274,7 +274,7 @@ namespace HomeCinema
                         Thread.Sleep(5); // sleep to prevent overloading API
                         if (GlobalVars.HAS_TMDB_KEY && src == "tmdb") // Use TMDB API
                         {
-                            if (GlobalVars.DownloadCoverFromTMDB(movieId, rPosterLink, errFrom) && (!String.IsNullOrWhiteSpace(rPosterLink)))
+                            if (TmdbAPI.DownloadCoverFromTMDB(movieId, rPosterLink, errFrom) && (!String.IsNullOrWhiteSpace(rPosterLink)))
                             {
                                 try
                                 {

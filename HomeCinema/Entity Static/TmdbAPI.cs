@@ -265,5 +265,18 @@ namespace HomeCinema
             }
             return MediaInfo;
         }
+        // Download Movie cover image from TMB
+        public static bool DownloadCoverFromTMDB(string MOVIE_ID, string linkPoster, string calledFrom)
+        {
+            string errFrom = $"GlobalVars-DownloadCoverFromTMDB [calledFrom: {calledFrom}]";
+            // Parse image link from JSON and download it
+            if (String.IsNullOrWhiteSpace(linkPoster) == false)
+            {
+                string moviePosterDL = GlobalVars.PATH_TEMP + MOVIE_ID + ".jpg";
+                GlobalVars.DeleteMove(moviePosterDL, errFrom); // Delete prev file, if exists
+                return GlobalVars.DownloadLoop(moviePosterDL, "https://image.tmdb.org/t/p/original/" + linkPoster, errFrom, false);
+            }
+            return false;
+        }
     }
 }

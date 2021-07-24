@@ -121,7 +121,7 @@ namespace HomeCinema
                             GlobalVars.TryDelete(imgFilePath, errFrom);
                             if (!String.IsNullOrWhiteSpace(rPosterLink))
                             {
-                                GlobalVars.DownloadCoverFromTMDB(ImdbFromApi, rPosterLink, errFrom);
+                                TmdbAPI.DownloadCoverFromTMDB(ImdbFromApi, rPosterLink, errFrom);
                             }
                             if (File.Exists(imgFilePath))
                             {

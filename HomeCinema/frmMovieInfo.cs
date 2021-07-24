@@ -637,7 +637,7 @@ namespace HomeCinema
                         }
                         else
                         {
-                            coverDownloaded = GlobalVars.DownloadCoverFromTMDB(MOVIE_ID, mediaInfo.PosterPath, errFrom);
+                            coverDownloaded = TmdbAPI.DownloadCoverFromTMDB(MOVIE_ID, mediaInfo.PosterPath, errFrom);
                         }
                     };
                     form.ShowDialog(this);

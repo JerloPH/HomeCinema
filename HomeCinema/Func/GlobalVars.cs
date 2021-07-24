@@ -1096,19 +1096,7 @@ namespace HomeCinema
             }
             return (mediatype == "series" ? 2 : 1);
         }
-        // Download Movie cover image from TMB
-        public static bool DownloadCoverFromTMDB(string MOVIE_ID, string linkPoster, string calledFrom)
-        {
-            string errFrom = $"GlobalVars-DownloadCoverFromTMDB [calledFrom: {calledFrom}]";
-            // Parse image link from JSON and download it
-            if (String.IsNullOrWhiteSpace(linkPoster) == false)
-            {
-                string moviePosterDL = PATH_TEMP + MOVIE_ID + ".jpg";
-                DeleteMove(moviePosterDL, errFrom); // Delete prev file, if exists
-                return DownloadLoop(moviePosterDL, "https://image.tmdb.org/t/p/original/" + linkPoster, errFrom, false);
-            }
-            return false;
-        }
+        
         // Download Movie cover image from Anilist
         public static bool DownloadCoverFromAnilist(string MOVIE_ID, string linkPoster, string calledFrom)
         {
