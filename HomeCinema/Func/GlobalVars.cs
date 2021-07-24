@@ -54,6 +54,8 @@ namespace HomeCinema
         public static string TMDB_KEY = "";
         public static string LINK_IMDB = "https://www.imdb.com/title/";
         public static string LINK_YT = "https://www.youtube.com/watch?v=";
+        public static string ANILIST_ID = "";
+        public static string ANILIST_SECRET = "";
 
         // Paths for Files and Folders
         public static string PATH_START = AppContext.BaseDirectory;
@@ -113,26 +115,6 @@ namespace HomeCinema
 
         //######################################################################################################## Functions
         /// <summary>
-        /// Log database-related functions, to text file.
-        /// </summary>
-        /// <param name="codefrom">form or method that calls</param>
-        /// <param name="log">string to log</param>
-        public static void LogDb(string codefrom, string log)
-        {
-            try
-            {
-                if (!File.Exists(FILE_LOG_DB)) { WriteToFile(FILE_LOG_DB, ""); }
-                using (StreamWriter w = File.AppendText(FILE_LOG_DB))
-                {
-                    w.Write(LogFormatted(codefrom, log));
-                }
-            }
-            catch (Exception ex)
-            {
-                ShowError("GlobalVars-LogDb", ex, false);
-            }
-        }
-        /// <summary>
         /// Log messages to text file
         /// </summary>
         /// <param name="filePath">full filepath of log file</param>
@@ -145,9 +127,14 @@ namespace HomeCinema
             {
                 toLog = toLog.Replace(TMDB_KEY, "TMDB_KEY");
             }
+            if (!String.IsNullOrWhiteSpace(ANILIST_ID) && !String.IsNullOrWhiteSpace(ANILIST_SECRET))
+            {
+                toLog = toLog.Replace(ANILIST_ID, "ANILIST_ID");
+                toLog = toLog.Replace(ANILIST_SECRET, "ANILIST_SECRET");
+            }
+            if (!File.Exists(filePath)) { WriteToFile(filePath, ""); }
             try
             {
-                if (!File.Exists(filePath)) { WriteToFile(filePath, ""); }
                 using (StreamWriter w = File.AppendText(filePath))
                 {
                     w.Write(LogFormatted(codefrom, toLog));
@@ -159,15 +146,6 @@ namespace HomeCinema
             }
         }
         /// <summary>
-        /// Log text to App_Log.log file
-        /// </summary>
-        /// <param name="codefrom">form or method that calls</param>
-        /// <param name="log">string to log</param>
-        public static void Log(string codefrom, string log)
-        {
-            Log(FILE_LOG_APP, codefrom, log);
-        }
-        /// <summary>
         /// Format string for logging
         /// </summary>
         /// <param name="codefrom">form or method that calls</param>
@@ -175,16 +153,29 @@ namespace HomeCinema
         /// <returns>Formatted message with time/date</returns>
         public static string LogFormatted(string codefrom, string logMessage)
         {
-            string content = codefrom;
-            if (!String.IsNullOrWhiteSpace(TMDB_KEY))
-            {
-                content = content.Replace(TMDB_KEY, "TMDB_KEY");
-            }
             try
             {
-                return ($"[{DateTime.Now.ToString("MM-dd-yyyy hh:mm:ss:fff tt")}]: [{ content }] { logMessage }\n");
+                return ($"[{DateTime.Now.ToString("MM-dd-yyyy hh:mm:ss:fff tt")}]: [{ logMessage }] { logMessage }\n");
             }
-            catch { return $"[Unknown DateTime][{ content }] { logMessage }\n"; }
+            catch { return $"[Unknown DateTime][{ logMessage }] { logMessage }\n"; }
+        }
+        /// <summary>
+        /// Log database-related functions, to text file.
+        /// </summary>
+        /// <param name="codefrom">form or method that calls</param>
+        /// <param name="log">string to log</param>
+        public static void LogDb(string codefrom, string log)
+        {
+            Log(FILE_LOG_DB, codefrom, log);
+        }
+        /// <summary>
+        /// Log text to App_Log.log file
+        /// </summary>
+        /// <param name="codefrom">form or method that calls</param>
+        /// <param name="log">string to log</param>
+        public static void Log(string codefrom, string log)
+        {
+            Log(FILE_LOG_APP, codefrom, log);
         }
         /// <summary>
         /// LOG Error Message to App_ErrorLog.log
@@ -337,6 +328,11 @@ namespace HomeCinema
                 if (!String.IsNullOrWhiteSpace(config.TmdbApiKey))
                 {
                     TMDB_KEY = config.TmdbApiKey;
+                }
+                if (!String.IsNullOrWhiteSpace(config.AnilistClientId) && !String.IsNullOrWhiteSpace(config.AnilistClientSecret))
+                {
+                    ANILIST_ID = config.AnilistClientId;
+                    ANILIST_SECRET = config.AnilistClientSecret;
                 }
             }
         }
