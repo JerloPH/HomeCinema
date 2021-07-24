@@ -606,18 +606,18 @@ namespace HomeCinema
             txtDirector.Text = mediaInfo.Director;
             txtProducer.Text = mediaInfo.Producer;
             txtStudio.Text = mediaInfo.Studio;
-            // Clear country and genre listbox
-            listboxCountry.Items.Clear();
-            listboxGenre.Items.Clear();
+            
             // Set Country
             if (mediaInfo.Country?.Count > 0)
             {
+                listboxCountry.Items.Clear();
                 country = GlobalVars.ConvertListToString(mediaInfo.Country, ",", errFrom);
                 LoadCountry(country);
             }
             // Set Genres
             if (mediaInfo.Genre?.Count > 0)
             {
+                listboxGenre.Items.Clear();
                 genre = GlobalVars.ConvertListToString(mediaInfo.Genre, ",", errFrom);
                 LoadGenre(genre);
             }
