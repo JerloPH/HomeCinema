@@ -38,8 +38,8 @@
             this.picBox = new System.Windows.Forms.PictureBox();
             this.tabInfo = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.btnGetImdb = new System.Windows.Forms.Button();
-            this.btnFetchData = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtNameOrig = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.txtYear = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
@@ -84,8 +84,12 @@
             this.btnChangeFile = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
             this.txtPathFile = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.txtNameOrig = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.txtAnilist = new System.Windows.Forms.TextBox();
+            this.btnGetImdb = new System.Windows.Forms.Button();
+            this.btnFetchData = new System.Windows.Forms.Button();
+            this.cbSource = new System.Windows.Forms.ComboBox();
+            this.label20 = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
@@ -200,19 +204,19 @@
             this.tabInfo.Controls.Add(this.tabPage1);
             this.tabInfo.Controls.Add(this.tabPage2);
             this.tabInfo.Controls.Add(this.tabPage3);
-            this.tabInfo.Location = new System.Drawing.Point(211, 12);
+            this.tabInfo.Location = new System.Drawing.Point(211, 44);
             this.tabInfo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabInfo.Name = "tabInfo";
             this.tabInfo.SelectedIndex = 0;
-            this.tabInfo.Size = new System.Drawing.Size(772, 523);
+            this.tabInfo.Size = new System.Drawing.Size(772, 491);
             this.tabInfo.TabIndex = 4;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.label19);
+            this.tabPage1.Controls.Add(this.txtAnilist);
             this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.txtNameOrig);
-            this.tabPage1.Controls.Add(this.btnGetImdb);
-            this.tabPage1.Controls.Add(this.btnFetchData);
             this.tabPage1.Controls.Add(this.label8);
             this.tabPage1.Controls.Add(this.txtYear);
             this.tabPage1.Controls.Add(this.label17);
@@ -228,39 +232,33 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage1.Size = new System.Drawing.Size(764, 494);
+            this.tabPage1.Size = new System.Drawing.Size(764, 462);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Basic";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // btnGetImdb
+            // label5
             // 
-            this.btnGetImdb.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGetImdb.Location = new System.Drawing.Point(587, 57);
-            this.btnGetImdb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnGetImdb.Name = "btnGetImdb";
-            this.btnGetImdb.Size = new System.Drawing.Size(172, 38);
-            this.btnGetImdb.TabIndex = 34;
-            this.btnGetImdb.Text = "SEARCH IMDB";
-            this.btnGetImdb.UseVisualStyleBackColor = true;
-            this.btnGetImdb.Click += new System.EventHandler(this.btnGetImdb_Click);
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(4, 104);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(91, 25);
+            this.label5.TabIndex = 35;
+            this.label5.Text = "Original:";
             // 
-            // btnFetchData
+            // txtNameOrig
             // 
-            this.btnFetchData.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFetchData.Location = new System.Drawing.Point(587, 6);
-            this.btnFetchData.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnFetchData.Name = "btnFetchData";
-            this.btnFetchData.Size = new System.Drawing.Size(172, 41);
-            this.btnFetchData.TabIndex = 4;
-            this.btnFetchData.Text = "FETCH DATA";
-            this.btnFetchData.UseVisualStyleBackColor = true;
-            this.btnFetchData.Click += new System.EventHandler(this.btnFetchData_Click);
+            this.txtNameOrig.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNameOrig.Location = new System.Drawing.Point(101, 101);
+            this.txtNameOrig.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtNameOrig.Name = "txtNameOrig";
+            this.txtNameOrig.Size = new System.Drawing.Size(600, 30);
+            this.txtNameOrig.TabIndex = 36;
             // 
             // label8
             // 
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(157, 14);
+            this.label8.Location = new System.Drawing.Point(151, 14);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(67, 25);
             this.label8.TabIndex = 33;
@@ -270,17 +268,17 @@
             // txtYear
             // 
             this.txtYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtYear.Location = new System.Drawing.Point(229, 7);
+            this.txtYear.Location = new System.Drawing.Point(224, 14);
             this.txtYear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtYear.Name = "txtYear";
-            this.txtYear.Size = new System.Drawing.Size(100, 30);
+            this.txtYear.Size = new System.Drawing.Size(86, 30);
             this.txtYear.TabIndex = 32;
             // 
             // label17
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(4, 263);
+            this.label17.Location = new System.Drawing.Point(4, 252);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(102, 25);
             this.label17.TabIndex = 30;
@@ -290,12 +288,12 @@
             // txtSummary
             // 
             this.txtSummary.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSummary.Location = new System.Drawing.Point(9, 290);
+            this.txtSummary.Location = new System.Drawing.Point(9, 279);
             this.txtSummary.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtSummary.Multiline = true;
             this.txtSummary.Name = "txtSummary";
             this.txtSummary.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtSummary.Size = new System.Drawing.Size(749, 196);
+            this.txtSummary.Size = new System.Drawing.Size(749, 170);
             this.txtSummary.TabIndex = 31;
             // 
             // groupBox4
@@ -307,7 +305,7 @@
             this.groupBox4.Controls.Add(this.label4);
             this.groupBox4.Controls.Add(this.txtSeriesName);
             this.groupBox4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.groupBox4.Location = new System.Drawing.Point(16, 156);
+            this.groupBox4.Location = new System.Drawing.Point(6, 144);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -372,19 +370,18 @@
             this.txtSeriesName.Location = new System.Drawing.Point(169, 27);
             this.txtSeriesName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtSeriesName.Name = "txtSeriesName";
-            this.txtSeriesName.Size = new System.Drawing.Size(516, 30);
+            this.txtSeriesName.Size = new System.Drawing.Size(526, 30);
             this.txtSeriesName.TabIndex = 4;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(9, 57);
+            this.label3.Location = new System.Drawing.Point(4, 57);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(64, 25);
             this.label3.TabIndex = 23;
             this.label3.Text = "Name";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // txtName
             // 
@@ -392,13 +389,13 @@
             this.txtName.Location = new System.Drawing.Point(77, 57);
             this.txtName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(503, 30);
+            this.txtName.Size = new System.Drawing.Size(624, 30);
             this.txtName.TabIndex = 28;
             // 
             // label2
             // 
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(357, 14);
+            this.label2.Location = new System.Drawing.Point(316, 14);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(85, 25);
             this.label2.TabIndex = 22;
@@ -408,10 +405,10 @@
             // txtIMDB
             // 
             this.txtIMDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtIMDB.Location = new System.Drawing.Point(448, 7);
+            this.txtIMDB.Location = new System.Drawing.Point(407, 14);
             this.txtIMDB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtIMDB.Name = "txtIMDB";
-            this.txtIMDB.Size = new System.Drawing.Size(132, 30);
+            this.txtIMDB.Size = new System.Drawing.Size(116, 30);
             this.txtIMDB.TabIndex = 26;
             // 
             // label1
@@ -427,7 +424,7 @@
             // txtID
             // 
             this.txtID.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtID.Location = new System.Drawing.Point(59, 7);
+            this.txtID.Location = new System.Drawing.Point(58, 14);
             this.txtID.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtID.Name = "txtID";
             this.txtID.ReadOnly = true;
@@ -741,30 +738,80 @@
             this.txtPathFile.TabIndex = 31;
             this.txtPathFile.Text = "Path to file";
             // 
-            // label5
+            // label19
             // 
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(9, 107);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(130, 25);
-            this.label5.TabIndex = 35;
-            this.label5.Text = "Original Title";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(534, 14);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(85, 25);
+            this.label19.TabIndex = 37;
+            this.label19.Text = "Anilist Id";
+            this.label19.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // txtNameOrig
+            // txtAnilist
             // 
-            this.txtNameOrig.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNameOrig.Location = new System.Drawing.Point(162, 104);
-            this.txtNameOrig.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtNameOrig.Name = "txtNameOrig";
-            this.txtNameOrig.Size = new System.Drawing.Size(526, 30);
-            this.txtNameOrig.TabIndex = 36;
+            this.txtAnilist.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAnilist.Location = new System.Drawing.Point(625, 14);
+            this.txtAnilist.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtAnilist.Name = "txtAnilist";
+            this.txtAnilist.Size = new System.Drawing.Size(116, 30);
+            this.txtAnilist.TabIndex = 38;
+            // 
+            // btnGetImdb
+            // 
+            this.btnGetImdb.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGetImdb.Location = new System.Drawing.Point(622, 15);
+            this.btnGetImdb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnGetImdb.Name = "btnGetImdb";
+            this.btnGetImdb.Size = new System.Drawing.Size(172, 38);
+            this.btnGetImdb.TabIndex = 40;
+            this.btnGetImdb.Text = "SEARCH";
+            this.btnGetImdb.UseVisualStyleBackColor = true;
+            // 
+            // btnFetchData
+            // 
+            this.btnFetchData.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFetchData.Location = new System.Drawing.Point(811, 14);
+            this.btnFetchData.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnFetchData.Name = "btnFetchData";
+            this.btnFetchData.Size = new System.Drawing.Size(172, 41);
+            this.btnFetchData.TabIndex = 39;
+            this.btnFetchData.Text = "FETCH DATA";
+            this.btnFetchData.UseVisualStyleBackColor = true;
+            // 
+            // cbSource
+            // 
+            this.cbSource.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.cbSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbSource.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.cbSource.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbSource.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.cbSource.FormattingEnabled = true;
+            this.cbSource.Location = new System.Drawing.Point(431, 15);
+            this.cbSource.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cbSource.Name = "cbSource";
+            this.cbSource.Size = new System.Drawing.Size(177, 28);
+            this.cbSource.TabIndex = 41;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.Location = new System.Drawing.Point(344, 14);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(81, 25);
+            this.label20.TabIndex = 39;
+            this.label20.Text = "Source:";
             // 
             // frmMovieInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(991, 543);
+            this.Controls.Add(this.label20);
+            this.Controls.Add(this.cbSource);
+            this.Controls.Add(this.btnGetImdb);
+            this.Controls.Add(this.btnFetchData);
             this.Controls.Add(this.tabInfo);
             this.Controls.Add(this.groupBox2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -787,6 +834,7 @@
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -837,8 +885,6 @@
         private System.Windows.Forms.TextBox txtPathTrailer;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtYear;
-        private System.Windows.Forms.Button btnFetchData;
-        private System.Windows.Forms.Button btnGetImdb;
         private System.Windows.Forms.CheckBox cbSaveMetadata;
         private System.Windows.Forms.ListBox listboxCountry;
         private System.Windows.Forms.ListBox listboxGenre;
@@ -850,5 +896,11 @@
         private System.Windows.Forms.Button btnGenreAdd;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtNameOrig;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.TextBox txtAnilist;
+        private System.Windows.Forms.Button btnGetImdb;
+        private System.Windows.Forms.Button btnFetchData;
+        private System.Windows.Forms.ComboBox cbSource;
+        private System.Windows.Forms.Label label20;
     }
 }
