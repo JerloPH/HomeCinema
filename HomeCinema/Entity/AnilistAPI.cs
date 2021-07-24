@@ -38,5 +38,30 @@ namespace HomeCinema.Entity
             }";
             return query;
         }
+
+        public async static Task<AnilistPageQuery> SearchForAnime(string text)
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Add("Content-Type", "application/json");
+                    client.DefaultRequestHeaders.Add("Accept", "application/json");
+
+                    var requestContent = new StringContent(BuildSearchPaginated(text), Encoding.UTF8, "application/json");
+                    HttpResponseMessage response = await client.PostAsync(Host, requestContent);
+                    requestContent.Dispose();
+
+                    string contentString = await response.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeObject<AnilistPageQuery>(contentString);
+                    response.Dispose();
+                    return result;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }
