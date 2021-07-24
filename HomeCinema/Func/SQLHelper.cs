@@ -30,6 +30,31 @@ namespace HomeCinema.SQLFunc
     public static class SQLHelper
     {
         private static readonly int RetryCount = 5;
+
+        // Methods for querying
+        // Check if the column is a numeric column
+        public static bool QryColNumeric(string colName)
+        {
+            string s = colName.ToLower();
+            return ((s == "category") || (s == "year") || (s == "season") || (s == "episode"));
+        }
+        // Build a query, Use WHERE or AND on Filter
+        public static string QryWhere(string qry)
+        {
+            return (qry.Contains("WHERE") == false) ? " WHERE " : " AND ";
+        }
+        // Build a query, If value is string or not
+        public static string QryString(string text, bool UseSingleQuote)
+        {
+            if (String.IsNullOrWhiteSpace(text))
+            {
+                return (UseSingleQuote ? "''" : "null");
+            }
+            else
+            {
+                return (UseSingleQuote ? $"'{text}'" : $"{text}");
+            }
+        }
         /// <summary>
         /// Initialize SQLite database. Create if NOT existing.
         /// </summary>
@@ -401,7 +426,7 @@ namespace HomeCinema.SQLFunc
                 {
                     value = item.Value.Replace("'", "''").Replace("\"", String.Empty);
                     infoCols += item.Key + ",";
-                    infoVals += GlobalVars.QryString(value, !GlobalVars.QryColNumeric(item.Key)) + ",";
+                    infoVals += QryString(value, !QryColNumeric(item.Key)) + ",";
                 }
             }
             infoCols = infoCols.TrimEnd(',');
@@ -412,7 +437,7 @@ namespace HomeCinema.SQLFunc
                 if (item.Key != HCInfo.Id.ToString())
                 {
                     fileCols += item.Key + ",";
-                    fileVals += GlobalVars.QryString(item.Value.Replace("'", "''"), true) + ",";
+                    fileVals += QryString(item.Value.Replace("'", "''"), true) + ",";
                 }
                 if (item.Key == HCFile.file.ToString())
                 {
@@ -521,7 +546,7 @@ namespace HomeCinema.SQLFunc
             {
                 if (item.Key != HCInfo.Id.ToString())
                 {
-                    valpair += "[" + item.Key + "]=" + GlobalVars.QryString(item.Value, !GlobalVars.QryColNumeric(item.Key)) + ",";
+                    valpair += "[" + item.Key + "]=" + QryString(item.Value, !QryColNumeric(item.Key)) + ",";
                 }
             }
             valpair = valpair.TrimEnd(',');

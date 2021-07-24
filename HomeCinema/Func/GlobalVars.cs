@@ -532,29 +532,6 @@ namespace HomeCinema
             }
             return new string[0];
         }
-        // Check if the column is a numeric column
-        public static bool QryColNumeric(string colName)
-        {
-            string s = colName.ToLower();
-            return ((s == "category") || (s == "year") || (s == "season") || (s == "episode"));
-        }
-        // Build a query, Use WHERE or AND on Filter
-        public static string QryWhere(string qry)
-        {
-            return (qry.Contains("WHERE") == false) ? " WHERE " : " AND ";
-        }
-        // Build a query, If value is string or not
-        public static string QryString(string text, bool UseSingleQuote)
-        {
-            if (String.IsNullOrWhiteSpace(text))
-            {
-                return (UseSingleQuote ? "''" : "null");
-            }
-            else
-            {
-                return (UseSingleQuote ? $"'{text}'" : $"{text}");
-            }
-        }
         // Validation for Strings or Int
         public static string ValidateZero(int param)
         {

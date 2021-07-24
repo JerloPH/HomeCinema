@@ -381,7 +381,7 @@ namespace HomeCinema
             // Year range
             if (!String.IsNullOrWhiteSpace(txtYearFrom.Text))
             {
-                qry += GlobalVars.QryWhere(qry);
+                qry += SQLHelper.QryWhere(qry);
                 if (!String.IsNullOrWhiteSpace(txtYearTo.Text))
                 {
                     qry += $"`{HCInfo.year.ToString()}` BETWEEN {txtYearFrom.Text} AND {txtYearTo.Text}";
@@ -392,13 +392,13 @@ namespace HomeCinema
                 }
             }
             // Genre
-            qry += (cbGenre.SelectedIndex > 0) ? GlobalVars.QryWhere(qry) + $"`{HCInfo.genre.ToString()}` LIKE '%{cbGenre.Text}%'" : "";
+            qry += (cbGenre.SelectedIndex > 0) ? SQLHelper.QryWhere(qry) + $"`{HCInfo.genre.ToString()}` LIKE '%{cbGenre.Text}%'" : "";
 
             // Category
             if (cbCategory.SelectedIndex > 0)
             {
                 int index = cbCategory.SelectedIndex;
-                qry += GlobalVars.QryWhere(qry);
+                qry += SQLHelper.QryWhere(qry);
                 // Search for all
                 if ((index < 1) || (index > 2))
                 {
@@ -413,23 +413,23 @@ namespace HomeCinema
             // Studio
             if (String.IsNullOrWhiteSpace(txtStudio.Text) == false)
             {
-                qry += GlobalVars.QryWhere(qry) + $"`{HCInfo.studio.ToString()}` LIKE '%{txtStudio.Text}%'";
+                qry += SQLHelper.QryWhere(qry) + $"`{HCInfo.studio.ToString()}` LIKE '%{txtStudio.Text}%'";
             }
             // Cast
             if (String.IsNullOrWhiteSpace(txtCast.Text) == false)
             {
-                qry += GlobalVars.QryWhere(qry) + $"`{HCInfo.artist.ToString()}` LIKE '%{txtCast.Text}%'";
+                qry += SQLHelper.QryWhere(qry) + $"`{HCInfo.artist.ToString()}` LIKE '%{txtCast.Text}%'";
             }
             // Director
             if (String.IsNullOrWhiteSpace(txtDirector.Text) == false)
             {
-                qry += GlobalVars.QryWhere(qry) + $"`{HCInfo.director.ToString()}` LIKE '%{txtDirector.Text}%'";
+                qry += SQLHelper.QryWhere(qry) + $"`{HCInfo.director.ToString()}` LIKE '%{txtDirector.Text}%'";
             }
             // Country
             string CountryText = GlobalVars.RemoveLine(cbCountry.SelectedItem.ToString());
             if ((String.IsNullOrWhiteSpace(CountryText) == false) && cbCountry.SelectedIndex > 0)
             {
-                qry += GlobalVars.QryWhere(qry) + $"`{HCInfo.country.ToString()}` LIKE '%{CountryText}%'";
+                qry += SQLHelper.QryWhere(qry) + $"`{HCInfo.country.ToString()}` LIKE '%{CountryText}%'";
             }
 
             // Override filter string build-up and Use IMDB Code
@@ -439,7 +439,7 @@ namespace HomeCinema
             }
 
             // Filter out all animations
-            qry += (cbHideAnim.CheckState == CheckState.Checked) ? GlobalVars.QryWhere(qry) + $" (`{HCInfo.category.ToString()}` <= 2)" : "";
+            qry += (cbHideAnim.CheckState == CheckState.Checked) ? SQLHelper.QryWhere(qry) + $" (`{HCInfo.category.ToString()}` <= 2)" : "";
 
             // Append to end
             qry += (Settings.ItemLimit > 0) ? $" LIMIT {Settings.ItemLimit};" : "";
