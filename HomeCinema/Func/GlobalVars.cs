@@ -825,33 +825,30 @@ namespace HomeCinema
             string errFrom = "GlobalVars-DownloadFrom";
             using (var client = new WebClient())
             {
-                if (CheckConnection(link, Settings.TimeOut))
+                try
                 {
+                    client.DownloadFile(link, saveTo);
+                    Thread.Sleep(5);
+                    return 200;
+                }
+                catch (WebException wex)
+                {
+                    // Return status code error
                     try
                     {
-                        client.DownloadFile(link, saveTo);
-                        Thread.Sleep(5);
-                        return 200;
+                        HttpStatusCode status = ((HttpWebResponse)wex.Response).StatusCode;
+                        return Convert.ToInt32(status);
                     }
-                    catch (WebException wex)
+                    catch (Exception exw)
                     {
-                        // Return status code error
-                        try
-                        {
-                            HttpStatusCode status = ((HttpWebResponse)wex.Response).StatusCode;
-                            return Convert.ToInt32(status);
-                        }
-                        catch (Exception exw)
-                        {
-                            // Log Error and Exit
-                            ShowError(errFrom, exw, showAMsg);
-                            return -1;
-                        }
+                        // Log Error and Exit
+                        ShowError(errFrom, exw, showAMsg);
+                        return -1;
                     }
-                    catch (Exception ex)
-                    {
-                        ShowError(errFrom, ex, showAMsg);
-                    }
+                }
+                catch (Exception ex)
+                {
+                    ShowError(errFrom, ex, showAMsg);
                 }
             }
             return 0;
