@@ -68,6 +68,7 @@ namespace HomeCinema
 
         public static string FILE_LOG_APP = Path.Combine(PATH_LOG, "App_Log.log");// Log all messages and actions
         public static string FILE_LOG_ERROR = Path.Combine(PATH_LOG, "App_ErrorLog.log"); // Contains only error Messages
+        public static string FILE_LOG_DB = Path.Combine(PATH_LOG, "App_DB.log"); // Log all messages and actions for db-related
 
         // Data and files
         public static string FILE_CONFIG = Path.Combine(PATH_DATA, "config.json"); // configuration file to use for APIs
@@ -84,7 +85,6 @@ namespace HomeCinema
         public static string DB_NAME = "HomeCinemaDB.db";
         public static string DB_PATH = PATH_START + DB_NAME;
         public static string DB_DATAPATH =  @"URI=file:" + DB_PATH;
-        public static string DB_DBLOGPATH = Path.Combine(PATH_LOG, "App_DB.log"); // Log all messages and actions
 
         public static string DB_TNAME_INFO = "info";
         public static string DB_TNAME_FILEPATH = "filepath";
@@ -119,11 +119,10 @@ namespace HomeCinema
         /// <param name="log">string to log</param>
         public static void LogDb(string codefrom, string log)
         {
-            string filePath = DB_DBLOGPATH;
             try
             {
-                if (!File.Exists(filePath)) { WriteToFile(filePath, ""); }
-                using (StreamWriter w = File.AppendText(filePath))
+                if (!File.Exists(FILE_LOG_DB)) { WriteToFile(FILE_LOG_DB, ""); }
+                using (StreamWriter w = File.AppendText(FILE_LOG_DB))
                 {
                     w.Write(LogFormatted(codefrom, log));
                 }
@@ -322,7 +321,7 @@ namespace HomeCinema
             // Create empty Logs
             if (!File.Exists(FILE_LOG_APP)) { WriteToFile(FILE_LOG_APP, ""); }
             if (!File.Exists(FILE_LOG_ERROR)) { WriteToFile(FILE_LOG_ERROR, ""); }
-            if (!File.Exists(DB_DBLOGPATH)) { WriteToFile(DB_DBLOGPATH, ""); }
+            if (!File.Exists(FILE_LOG_DB)) { WriteToFile(FILE_LOG_DB, ""); }
             // Use debugging Tmdb_Key
             TMDB_KEY = Debugger.IsAttached ? ReadStringFromFile(@"..\..\..\ignored\tmdb_API_Key.txt", "GlobalVar-CheckAllFiles-DEBUG") : TMDB_KEY;
             // Default config
