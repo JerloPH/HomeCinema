@@ -1,27 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using RestSharp;
 
 namespace HomeCinema
 {
     public static class AnilistAPI
     {
         private static string Host = "https://graphql.anilist.co";
-        
-        private static string BuildSearchPaginated(string text)
-        {
-            string search = text.Replace("\"", string.Empty);
-            string query = "{\"query\":" + 
-                "\"query {\n  Page (perPage: 20, page: 1) {\n    pageInfo {\n      total\n      currentPage\n      lastPage\n      hasNextPage\n      perPage\n    }\n    " + 
-                "media (search: \\\"" + search + "\\\", type: ANIME) {\n      id\n      format\n      episodes\n      title {\n        romaji\n      }\n      coverImage {\n        medium\n      }\n    }\n  }\n}\", " +
-                "\"variables\": null}";
-            /*
-            string query = "{\"query\":\"" + @"query {
-              Page (page: 1, perPage: 20)
+        private static string Query = @"query ($search: String) {
+              Page (page: 1, perPage: 25)
               {
                 pageInfo {
                   total
@@ -30,7 +23,7 @@ namespace HomeCinema
                   hasNextPage
                   perPage
                 }
-                media (type: ANIME, search: " + $"\"{search}\"" + @") {
+                media (type: ANIME, search: $search) {
                   id
                   format
                   title {
@@ -42,12 +35,42 @@ namespace HomeCinema
                 }
               }
             }";
-            query += "}\",\"variables\":null}";
-            */
+
+        private static string BuildSearchPaginated(string text)
+        {
+            string search = text.Replace("\"", string.Empty);
+            string query = "{\"query\":" + 
+                "\"query {\n  Page (perPage: 20, page: 1) {\n    pageInfo {\n      total\n      currentPage\n      lastPage\n      hasNextPage\n      perPage\n    }\n    " + 
+                "media (search: \\\"" + search + "\\\", type: ANIME) {\n      id\n      format\n      episodes\n      title {\n        romaji\n      }\n      coverImage {\n        medium\n      }\n    }\n  }\n}\", " +
+                "\"variables\": null}";
             return query;
         }
-
         public static AnilistPageQuery SearchForAnime(string text)
+        {
+            try
+            {
+                var client = new RestClient(Host);
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+
+                var request = new RestRequest("/", Method.POST);
+                request.Timeout = 0;
+
+                request.AddJsonBody(new
+                {
+                    query = Query,
+                    variables = "{ search: \"" + text.Replace("\"", string.Empty) + "\"}"
+                });
+
+                var result = client.Execute(request).Content;
+                var jsonObj = JsonConvert.DeserializeObject<AnilistPageQuery>(result);
+                return jsonObj;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        public static AnilistPageQuery SearchForAnime(string text, int page)
         {
             try
             {

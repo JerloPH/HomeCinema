@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
@@ -209,6 +210,8 @@ namespace HomeCinema
                         lvItem.Tag = $"{mediaId}*{mediatype}";
                         lvItem.ImageIndex = (index > 0) ? index : 0;
                         AddItem(lvResult, lvItem);
+                        ++resultCount;
+                        Thread.Sleep(10);
                     }
                 }
             };
