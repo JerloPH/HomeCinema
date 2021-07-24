@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace HomeCinema
 {
-    public struct Medias
+    public class MediaLocations
     {
-        public Medias(string filepath, string mediatype, string src)
+        public MediaLocations(string path, string mediatype, string src)
         {
-            FilePath = filepath;
+            Path = path;
             MediaType = mediatype;
             Source = src;
         }
 
-        public string FilePath { get; }
+        public string Path { get; }
         public string MediaType { get; }
         public string Source { get; }
     }

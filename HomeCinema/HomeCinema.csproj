@@ -162,8 +162,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="JSONs\SettingJson.cs" />
     <Compile Include="Func\SQLHelper.cs" />
-    <Compile Include="Structs\MediaLocations.cs" />
-    <Compile Include="Structs\Medias.cs" />
+    <Compile Include="Entity\MediaLocations.cs" />
+    <Compile Include="Entity\Medias.cs" />
     <EmbeddedResource Include="frmAbout.resx">
       <DependentUpon>frmAbout.cs</DependentUpon>
     </EmbeddedResource>
@@ -259,6 +259,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Structs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
