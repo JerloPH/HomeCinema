@@ -50,6 +50,8 @@ namespace HomeCinema
     {
         [JsonProperty("romaji")]
         public string Romaji { get; set; } = "";
+        [JsonProperty("english")]
+        public string English { get; set; } = "";
     }
     public class AnilistMediaCoverImage
     {
