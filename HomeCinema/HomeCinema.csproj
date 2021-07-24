@@ -100,6 +100,7 @@
   <ItemGroup>
     <Compile Include="Entity Static\AnilistAPI.cs" />
     <Compile Include="Entity Static\Settings.cs" />
+    <Compile Include="Entity Static\TmdbAPI.cs" />
     <Compile Include="frmAlert.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -561,11 +561,11 @@ namespace HomeCinema
             {
                 if (source.Equals("anilist"))
                 {
-                    mediaInfo = GlobalVars.GetMovieInfoByImdb(AnilistId, MEDIA_TYPE);
+                    mediaInfo = AnilistAPI.GetMovieInfoFromAnilist(AnilistId, MEDIA_TYPE);
                 }
                 else
                 {
-                    mediaInfo = GlobalVars.GetMovieInfoByImdb(IMDB_ID, MEDIA_TYPE);
+                    mediaInfo = TmdbAPI.GetMovieInfoByImdb(IMDB_ID, MEDIA_TYPE);
                 }
             };
             form.ShowDialog(this);

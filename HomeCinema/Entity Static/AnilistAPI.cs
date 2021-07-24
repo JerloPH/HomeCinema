@@ -62,5 +62,9 @@ namespace HomeCinema
                 return null;
             }
         }
+        public static MediaInfo GetMovieInfoFromAnilist(string Id, string mediaType)
+        {
+            return new MediaInfo();
+        }
     }
 }

@@ -110,7 +110,7 @@ namespace HomeCinema
                         // Add to ListView
                         foreach (Result result in objPageResult.results)
                         {
-                            string ImdbFromApi  = GlobalVars.GetImdbFromAPI(result.id.ToString(), result.media_type);
+                            string ImdbFromApi = TmdbAPI.GetImdbFromAPI(result.id.ToString(), result.media_type);
                             string imgFilePath = $"{GlobalVars.PATH_TEMP}{ImdbFromApi}.jpg";
                             string imgKey = "0";
                             // Skip entry if there is no Imdb Id associated
