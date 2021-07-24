@@ -70,32 +70,5 @@ namespace HomeCinema
                 return null;
             }
         }
-        public static AnilistPageQuery SearchForAnime(string text, int page)
-        {
-            try
-            {
-                using (HttpClient client = new HttpClient())
-                {
-                    //client.DefaultRequestHeaders.Add("Content-Type", "application/json");
-                    //client.DefaultRequestHeaders.Add("Accept", "application/json");
-
-                    var requestContent = new StringContent(BuildSearchPaginated(text), Encoding.UTF8, "application/json");
-                    HttpResponseMessage response = client.PostAsync(Host, requestContent).Result;
-                    requestContent.Dispose();
-                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                    {
-                        string contentString = response.Content.ToString();
-                        var result = JsonConvert.DeserializeObject<AnilistPageQuery>(contentString);
-                        response.Dispose();
-                        return result;
-                    }
-                    return null;
-                }
-            }
-            catch
-            {
-                return null;
-            }
-        }
     }
 }
