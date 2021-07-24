@@ -665,7 +665,7 @@ namespace HomeCinema
             }
 
             // Show form for tmdb searching
-            var form = new frmTmdbSearch($"Search for {txtName.Text}", txtName.Text, txtID.Text, "anilist");
+            var form = new frmSearchMedia($"Search for {txtName.Text}", txtName.Text, txtID.Text, "anilist");
             form.ShowDialog(this);
             var getResult = form.getResult;
             MEDIA_TYPE = form.getResultMedia.Equals("tv") ? "series" : "movie";

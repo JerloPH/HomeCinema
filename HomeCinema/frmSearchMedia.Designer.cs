@@ -1,7 +1,7 @@
 ﻿
 namespace HomeCinema
 {
-    partial class frmTmdbSearch
+    partial class frmSearchMedia
     {
         /// <summary>
         /// Required designer variable.
@@ -109,7 +109,7 @@ namespace HomeCinema
             this.lvResult.UseCompatibleStateImageBehavior = false;
             this.lvResult.DoubleClick += new System.EventHandler(this.lvResult_DoubleClick);
             // 
-            // frmTmdbSearch
+            // frmSearchMedia
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -123,11 +123,11 @@ namespace HomeCinema
             this.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "frmTmdbSearch";
+            this.Name = "frmSearchMedia";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "frmTmdbSearch";
-            this.Load += new System.EventHandler(this.frmTmdbSearch_Load);
+            this.Text = "frmSearchMedia";
+            this.Load += new System.EventHandler(this.frmSearchMedia_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 
 namespace HomeCinema
 {
-    public partial class frmTmdbSearch : Form
+    public partial class frmSearchMedia : Form
     {
         private string movieId;
         private ImageList imageList = new ImageList();
@@ -31,7 +31,7 @@ namespace HomeCinema
             get { return mediatype; }
             set { mediatype = value; }
         }
-        public frmTmdbSearch(string caption, string query, string id, string source = "tmdb")
+        public frmSearchMedia(string caption, string query, string id, string source = "tmdb")
         {
             InitializeComponent();
             // Set variables
@@ -43,7 +43,7 @@ namespace HomeCinema
             Text = GlobalVars.HOMECINEMA_NAME;
             lblCaption.Text = caption;
             // Set control properties
-            FormClosed += FrmTmdbSearch_FormClosed;
+            FormClosed += frmSearchMedia_FormClosed;
             //btnOK.DialogResult = DialogResult.OK;
             //btnCancel.DialogResult = DialogResult.Cancel;
             // Set lvResult properties
@@ -88,7 +88,7 @@ namespace HomeCinema
         }
         private int SearchTmdb()
         {
-            string errFrom = $"frmTmdbSearch-SearchTmdb";
+            string errFrom = $"frmSearchMedia-SearchTmdb";
             // Setup var and links
             string urlJSONgetId = @"https://api.themoviedb.org/3/search/multi?api_key=" + GlobalVars.TMDB_KEY + "&query=" + txtInput.Text.Replace(" ", "%20");
             string JSONgetID = GlobalVars.PATH_TEMP + movieId + "_id.json";
@@ -157,7 +157,7 @@ namespace HomeCinema
 
         private int SearchAnilist()
         {
-            string calledFrom = "frmTmdbSearch-SearchAnilist()";
+            string calledFrom = "frmSearchMedia-SearchAnilist()";
             int resultCount = 0;
             string imgKey = "";
 
@@ -220,13 +220,13 @@ namespace HomeCinema
         }
         #endregion
         // ######################################################### EVENTS
-        private void FrmTmdbSearch_FormClosed(object sender, FormClosedEventArgs e)
+        private void frmSearchMedia_FormClosed(object sender, FormClosedEventArgs e)
         {
             ClearImageList(true);
             //Dispose();
         }
 
-        private void frmTmdbSearch_Load(object sender, EventArgs e)
+        private void frmSearchMedia_Load(object sender, EventArgs e)
         {
             btnSearch.PerformClick();
         }
