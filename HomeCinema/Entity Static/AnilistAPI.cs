@@ -162,7 +162,7 @@ namespace HomeCinema
 
                 try
                 {
-                    media.Trailer = (anime.Trailer.Site.Equals("youtube")) ? anime.Trailer.Id : "";
+                    media.Trailer = (anime.Trailer.Site.ToLower().Contains("youtube")) ? anime.Trailer.Id : "";
                 }
                 catch { }
 
