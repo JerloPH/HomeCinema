@@ -1173,7 +1173,7 @@ namespace HomeCinema
         {
             string calledFrom = "GlobalVars-CleanCoversNotInDb()";
             string filepath;
-            List<string> listId = SQLHelper.DbQrySingle(DB_TNAME_INFO , HCInfo.Id.ToString(), calledFrom);
+            List<string> listId = SQLHelper.DbQrySingle(DB_TNAME_INFO , HCInfo.Id, calledFrom);
             List<string> listCover = SearchFilesSingleDir(PATH_IMG, calledFrom, false);
             foreach (string i in listId)
             {

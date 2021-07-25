@@ -190,21 +190,21 @@ namespace HomeCinema
                     txtPathSub.Text = row[HCFile.Sub].ToString();
                     txtPathTrailer.Text = row[HCFile.Trailer].ToString();
 
-                    var r1 = row[HCInfo.imdb.ToString()]; // imdb
-                    var r2 = row[HCInfo.name.ToString()]; // name
-                    var r3 = row[HCInfo.name_orig.ToString()]; // name_ep
-                    var r4 = row[HCInfo.name_series.ToString()]; // name_series
-                    var r5 = row[HCInfo.season.ToString()]; // season
-                    var r6 = row[HCInfo.episode.ToString()]; // episode
-                    var r7 = row[HCInfo.country.ToString()]; // country
-                    var r8 = row[HCInfo.category.ToString()]; // category
-                    var r9 = row[HCInfo.genre.ToString()]; // genre
-                    var r10 = row[HCInfo.studio.ToString()]; // studio
-                    var r11 = row[HCInfo.producer.ToString()]; // producer
-                    var r12 = row[HCInfo.director.ToString()]; // director
-                    var r13 = row[HCInfo.artist.ToString()]; // artist
-                    var r14 = row[HCInfo.year.ToString()]; // year
-                    var r15 = row[HCInfo.summary.ToString()]; // summary  
+                    var r1 = row[HCInfo.imdb]; // imdb
+                    var r2 = row[HCInfo.name]; // name
+                    var r3 = row[HCInfo.name_orig]; // name_ep
+                    var r4 = row[HCInfo.name_series]; // name_series
+                    var r5 = row[HCInfo.season]; // season
+                    var r6 = row[HCInfo.episode]; // episode
+                    var r7 = row[HCInfo.country]; // country
+                    var r8 = row[HCInfo.category]; // category
+                    var r9 = row[HCInfo.genre]; // genre
+                    var r10 = row[HCInfo.studio]; // studio
+                    var r11 = row[HCInfo.producer]; // producer
+                    var r12 = row[HCInfo.director]; // director
+                    var r13 = row[HCInfo.artist]; // artist
+                    var r14 = row[HCInfo.year]; // year
+                    var r15 = row[HCInfo.summary]; // summary  
                     // Set textboxes
                     txtIMDB.Text = r1.ToString();
                     txtName.Text = r2.ToString();
@@ -398,22 +398,22 @@ namespace HomeCinema
                 // SAVE changes to EXISTING MOVIE
                 // Add row values
                 var entry = new Dictionary<string, string>();
-                entry.Add(HCInfo.Id.ToString(), GlobalVars.ValidateEmptyOrNull(txtID.Text));
-                entry.Add(HCInfo.imdb.ToString(), GlobalVars.ValidateEmptyOrNull(txtIMDB.Text));
-                entry.Add(HCInfo.name.ToString(), GlobalVars.ValidateEmptyOrNull(txtName.Text));
-                entry.Add(HCInfo.name_orig.ToString(), GlobalVars.ValidateEmptyOrNull(txtNameOrig.Text));
-                entry.Add(HCInfo.name_series.ToString(), GlobalVars.ValidateEmptyOrNull(txtSeriesName.Text));
-                entry.Add(HCInfo.season.ToString(), GlobalVars.ValidateEmptyOrNull(txtSeasonNum.Text));
-                entry.Add(HCInfo.episode.ToString(), GlobalVars.ValidateEmptyOrNull(txtEpNum.Text));
-                entry.Add(HCInfo.country.ToString(), GetCountry()); //GlobalVars.ValidateEmptyOrNull(lblCountry.Text);
-                entry.Add(HCInfo.category.ToString(), GetCategory());
-                entry.Add(HCInfo.genre.ToString(), GetGenre());
-                entry.Add(HCInfo.studio.ToString(), GlobalVars.ValidateEmptyOrNull(txtStudio.Text));
-                entry.Add(HCInfo.producer.ToString(), GlobalVars.ValidateEmptyOrNull(txtProducer.Text));
-                entry.Add(HCInfo.director.ToString(), GlobalVars.ValidateEmptyOrNull(txtDirector.Text));
-                entry.Add(HCInfo.artist.ToString(), GlobalVars.ValidateEmptyOrNull(txtArtist.Text));
-                entry.Add(HCInfo.year.ToString(), GlobalVars.ValidateEmptyOrNull(txtYear.Text));
-                entry.Add(HCInfo.summary.ToString(), GlobalVars.ValidateEmptyOrNull(txtSummary.Text));
+                entry.Add(HCInfo.Id, GlobalVars.ValidateEmptyOrNull(txtID.Text));
+                entry.Add(HCInfo.imdb, GlobalVars.ValidateEmptyOrNull(txtIMDB.Text));
+                entry.Add(HCInfo.name, GlobalVars.ValidateEmptyOrNull(txtName.Text));
+                entry.Add(HCInfo.name_orig, GlobalVars.ValidateEmptyOrNull(txtNameOrig.Text));
+                entry.Add(HCInfo.name_series, GlobalVars.ValidateEmptyOrNull(txtSeriesName.Text));
+                entry.Add(HCInfo.season, GlobalVars.ValidateEmptyOrNull(txtSeasonNum.Text));
+                entry.Add(HCInfo.episode, GlobalVars.ValidateEmptyOrNull(txtEpNum.Text));
+                entry.Add(HCInfo.country, GetCountry()); //GlobalVars.ValidateEmptyOrNull(lblCountry.Text);
+                entry.Add(HCInfo.category, GetCategory());
+                entry.Add(HCInfo.genre, GetGenre());
+                entry.Add(HCInfo.studio, GlobalVars.ValidateEmptyOrNull(txtStudio.Text));
+                entry.Add(HCInfo.producer, GlobalVars.ValidateEmptyOrNull(txtProducer.Text));
+                entry.Add(HCInfo.director, GlobalVars.ValidateEmptyOrNull(txtDirector.Text));
+                entry.Add(HCInfo.artist, GlobalVars.ValidateEmptyOrNull(txtArtist.Text));
+                entry.Add(HCInfo.year, GlobalVars.ValidateEmptyOrNull(txtYear.Text));
+                entry.Add(HCInfo.summary, GlobalVars.ValidateEmptyOrNull(txtSummary.Text));
 
                 // Check if first query successfully executed
                 ContAfterQry = SQLHelper.DbUpdateInfo(entry, callFrom);

@@ -229,21 +229,21 @@ namespace HomeCinema
                 // Make the DataRow
                 var dtInfo = new Dictionary<string, string>();
                 var dtFilepath = new Dictionary<string, string>();
-                dtInfo.Add(HCInfo.imdb.ToString(), getIMDB); // IMDB
-                dtInfo.Add(HCInfo.name.ToString(), rTitle); // name
-                dtInfo.Add(HCInfo.name_orig.ToString(), rOrigTitle); // episode name
-                dtInfo.Add(HCInfo.name_series.ToString(), ""); // series name
-                dtInfo.Add(HCInfo.season.ToString(), ""); // season number
-                dtInfo.Add(HCInfo.episode.ToString(), ""); // episode num
-                dtInfo.Add(HCInfo.country.ToString(), rCountry); // country
-                dtInfo.Add(HCInfo.category.ToString(), GlobalVars.GetCategoryByFilter(rGenre, rCountry, mediatype, src).ToString()); // category
-                dtInfo.Add(HCInfo.genre.ToString(), rGenre); // genre
-                dtInfo.Add(HCInfo.studio.ToString(), rStudio); // studio
-                dtInfo.Add(HCInfo.producer.ToString(), rProducer); // producer
-                dtInfo.Add(HCInfo.director.ToString(), rDirector); // director
-                dtInfo.Add(HCInfo.artist.ToString(), rArtist); // artist
-                dtInfo.Add(HCInfo.year.ToString(), rYear); // year
-                dtInfo.Add(HCInfo.summary.ToString(), rSummary); // summary
+                dtInfo.Add(HCInfo.imdb, getIMDB); // IMDB
+                dtInfo.Add(HCInfo.name, rTitle); // name
+                dtInfo.Add(HCInfo.name_orig, rOrigTitle); // episode name
+                dtInfo.Add(HCInfo.name_series, ""); // series name
+                dtInfo.Add(HCInfo.season, ""); // season number
+                dtInfo.Add(HCInfo.episode, ""); // episode num
+                dtInfo.Add(HCInfo.country, rCountry); // country
+                dtInfo.Add(HCInfo.category, GlobalVars.GetCategoryByFilter(rGenre, rCountry, mediatype, src).ToString()); // category
+                dtInfo.Add(HCInfo.genre, rGenre); // genre
+                dtInfo.Add(HCInfo.studio, rStudio); // studio
+                dtInfo.Add(HCInfo.producer, rProducer); // producer
+                dtInfo.Add(HCInfo.director, rDirector); // director
+                dtInfo.Add(HCInfo.artist, rArtist); // artist
+                dtInfo.Add(HCInfo.year, rYear); // year
+                dtInfo.Add(HCInfo.summary, rSummary); // summary
 
                 dtFilepath.Add(HCFile.File, filePath); // filepath
                 dtFilepath.Add(HCFile.Sub, GetSubtitleFile(filePath)); // file sub
@@ -372,9 +372,9 @@ namespace HomeCinema
             if ((txtSearch.Text != SEARCHBOX_PLACEHOLDER) && (!String.IsNullOrWhiteSpace(txtSearch.Text)))
             {
                 qry += " WHERE ";
-                qry += $"(`{HCInfo.name.ToString()}` LIKE '%{txtSearch.Text}%' ";
-                qry += $"OR `{HCInfo.name_orig.ToString()}` LIKE '%{txtSearch.Text}%' ";
-                qry += $"OR `{HCInfo.name_series.ToString()}` LIKE '%{txtSearch.Text}%')";
+                qry += $"(`{HCInfo.name}` LIKE '%{txtSearch.Text}%' ";
+                qry += $"OR `{HCInfo.name_orig}` LIKE '%{txtSearch.Text}%' ";
+                qry += $"OR `{HCInfo.name_series}` LIKE '%{txtSearch.Text}%')";
             }
             // Year range
             if (!String.IsNullOrWhiteSpace(txtYearFrom.Text))
@@ -382,15 +382,15 @@ namespace HomeCinema
                 qry += SQLHelper.QryWhere(qry);
                 if (!String.IsNullOrWhiteSpace(txtYearTo.Text))
                 {
-                    qry += $"`{HCInfo.year.ToString()}` BETWEEN {txtYearFrom.Text} AND {txtYearTo.Text}";
+                    qry += $"`{HCInfo.year}` BETWEEN {txtYearFrom.Text} AND {txtYearTo.Text}";
                 }
                 else
                 {
-                    qry += $"`{HCInfo.year.ToString()}` BETWEEN {txtYearFrom.Text} AND {DateTime.Now.Year.ToString()}";
+                    qry += $"`{HCInfo.year}` BETWEEN {txtYearFrom.Text} AND {DateTime.Now.Year.ToString()}";
                 }
             }
             // Genre
-            qry += (cbGenre.SelectedIndex > 0) ? SQLHelper.QryWhere(qry) + $"`{HCInfo.genre.ToString()}` LIKE '%{cbGenre.Text}%'" : "";
+            qry += (cbGenre.SelectedIndex > 0) ? SQLHelper.QryWhere(qry) + $"`{HCInfo.genre}` LIKE '%{cbGenre.Text}%'" : "";
 
             // Category
             if (cbCategory.SelectedIndex > 0)
@@ -400,44 +400,44 @@ namespace HomeCinema
                 // Search for all
                 if ((index < 1) || (index > 2))
                 {
-                    qry += $"`{HCInfo.category.ToString()}`={index}";
+                    qry += $"`{HCInfo.category}`={index}";
                 }
                 else
                 {
                     // Search for All type of Movies, if index == 1. Otherwise, Search for All types of Series
-                    qry += (index == 1) ? $" (`{HCInfo.category.ToString()}`=1 OR `{HCInfo.category.ToString()}`=3 OR `{HCInfo.category.ToString()}`=5)" : $" (`{HCInfo.category.ToString()}`=2 OR `{HCInfo.category.ToString()}`=4 OR `{HCInfo.category.ToString()}`=6)";
+                    qry += (index == 1) ? $" (`{HCInfo.category}`=1 OR `{HCInfo.category}`=3 OR `{HCInfo.category}`=5)" : $" (`{HCInfo.category}`=2 OR `{HCInfo.category}`=4 OR `{HCInfo.category}`=6)";
                 }
             }
             // Studio
             if (String.IsNullOrWhiteSpace(txtStudio.Text) == false)
             {
-                qry += SQLHelper.QryWhere(qry) + $"`{HCInfo.studio.ToString()}` LIKE '%{txtStudio.Text}%'";
+                qry += SQLHelper.QryWhere(qry) + $"`{HCInfo.studio}` LIKE '%{txtStudio.Text}%'";
             }
             // Cast
             if (String.IsNullOrWhiteSpace(txtCast.Text) == false)
             {
-                qry += SQLHelper.QryWhere(qry) + $"`{HCInfo.artist.ToString()}` LIKE '%{txtCast.Text}%'";
+                qry += SQLHelper.QryWhere(qry) + $"`{HCInfo.artist}` LIKE '%{txtCast.Text}%'";
             }
             // Director
             if (String.IsNullOrWhiteSpace(txtDirector.Text) == false)
             {
-                qry += SQLHelper.QryWhere(qry) + $"`{HCInfo.director.ToString()}` LIKE '%{txtDirector.Text}%'";
+                qry += SQLHelper.QryWhere(qry) + $"`{HCInfo.director}` LIKE '%{txtDirector.Text}%'";
             }
             // Country
             string CountryText = GlobalVars.RemoveLine(cbCountry.SelectedItem.ToString());
             if ((String.IsNullOrWhiteSpace(CountryText) == false) && cbCountry.SelectedIndex > 0)
             {
-                qry += SQLHelper.QryWhere(qry) + $"`{HCInfo.country.ToString()}` LIKE '%{CountryText}%'";
+                qry += SQLHelper.QryWhere(qry) + $"`{HCInfo.country}` LIKE '%{CountryText}%'";
             }
 
             // Override filter string build-up and Use IMDB Code
             if (String.IsNullOrWhiteSpace(txtIMDB.Text) == false)
             {
-                qry = $"SELECT * FROM {GlobalVars.DB_TNAME_INFO} WHERE `{HCInfo.imdb.ToString()}` = '{txtIMDB.Text}'";
+                qry = $"SELECT * FROM {GlobalVars.DB_TNAME_INFO} WHERE `{HCInfo.imdb}` = '{txtIMDB.Text}'";
             }
 
             // Filter out all animations
-            qry += (cbHideAnim.CheckState == CheckState.Checked) ? SQLHelper.QryWhere(qry) + $" (`{HCInfo.category.ToString()}` <= 2)" : "";
+            qry += (cbHideAnim.CheckState == CheckState.Checked) ? SQLHelper.QryWhere(qry) + $" (`{HCInfo.category}` <= 2)" : "";
 
             // Append to end
             qry += (Settings.ItemLimit > 0) ? $" LIMIT {Settings.ItemLimit};" : "";
@@ -534,14 +534,14 @@ namespace HomeCinema
                         {
                             DataRow r = dtFile.Rows[0];
                             // Get all strings from the DataRow, passed by the BG worker
-                            string r1 = r[HCInfo.name.ToString()].ToString(); // name
-                            string r2 = r[HCInfo.name_orig.ToString()].ToString(); // name_ep
-                            string r3 = r[HCInfo.name_series.ToString()].ToString(); // name_series
-                            string r4 = r[HCInfo.season.ToString()].ToString(); // season
-                            string r5 = r[HCInfo.episode.ToString()].ToString(); // episode
-                            string r6 = r[HCInfo.year.ToString()].ToString(); // year
-                            string r7 = r[HCInfo.summary.ToString()].ToString(); // summary
-                            string r8 = r[HCInfo.genre.ToString()].ToString(); // genre
+                            string r1 = r[HCInfo.name].ToString(); // name
+                            string r2 = r[HCInfo.name_orig].ToString(); // name_ep
+                            string r3 = r[HCInfo.name_series].ToString(); // name_series
+                            string r4 = r[HCInfo.season].ToString(); // season
+                            string r5 = r[HCInfo.episode].ToString(); // episode
+                            string r6 = r[HCInfo.year].ToString(); // year
+                            string r7 = r[HCInfo.summary].ToString(); // summary
+                            string r8 = r[HCInfo.genre].ToString(); // genre
 
                             // Edit Information on ListView Item
                             LVItemSetDetails(lvItem, new string[] { MOVIEID.ToString(), r1, r2, r3, r4, r5, r6, r7, r8 });
@@ -958,7 +958,7 @@ namespace HomeCinema
                             // Add Item to ListView
                             // Convert ID object to ID int
                             long MOVIEID;
-                            var x = HCInfo.Id.ToString();
+                            var x = HCInfo.Id;
                             try { MOVIEID = Convert.ToInt64(r[x]); }
                             catch { MOVIEID = 0; GlobalVars.Log(errFrom, $"Invalid MovieID: {r[x].ToString()}"); }
 
@@ -1028,14 +1028,14 @@ namespace HomeCinema
                                 try
                                 {
                                     // Get all strings from the DataRow, passed by the BG worker
-                                    string resName = r[HCInfo.name.ToString()].ToString(); // name
-                                    string resNameEp = r[HCInfo.name_orig.ToString()].ToString(); // name_ep
-                                    string resNameSer = r[HCInfo.name_series.ToString()].ToString(); // name_series
-                                    string resSeason = r[HCInfo.season.ToString()].ToString(); // season
-                                    string resEp = r[HCInfo.episode.ToString()].ToString(); // episode
-                                    string resYear = r[HCInfo.year.ToString()].ToString(); // year
-                                    string resSum = r[HCInfo.summary.ToString()].ToString(); // summary
-                                    string resGenre = r[HCInfo.genre.ToString()].ToString(); // genre
+                                    string resName = r[HCInfo.name].ToString(); // name
+                                    string resNameEp = r[HCInfo.name_orig].ToString(); // name_ep
+                                    string resNameSer = r[HCInfo.name_series].ToString(); // name_series
+                                    string resSeason = r[HCInfo.season].ToString(); // season
+                                    string resEp = r[HCInfo.episode].ToString(); // episode
+                                    string resYear = r[HCInfo.year].ToString(); // year
+                                    string resSum = r[HCInfo.summary].ToString(); // summary
+                                    string resGenre = r[HCInfo.genre].ToString(); // genre
 
                                     // Make new ListView item, and assign properties to it
                                     ListViewItem temp = new ListViewItem() { Text = resName };

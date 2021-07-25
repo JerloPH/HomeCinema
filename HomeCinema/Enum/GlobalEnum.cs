@@ -12,24 +12,24 @@ namespace HomeCinema
         Check = 1,
         Warning = 2
     }
-    public enum HCInfo
+    public static class HCInfo
     {
-        Id,
-        imdb,
-        name,
-        name_orig,
-        name_series,
-        season,
-        episode,
-        country,
-        category,
-        genre,
-        studio,
-        producer,
-        director,
-        artist,
-        year,
-        summary
+        public static string Id = "Id";
+        public static string imdb = "imdb";
+        public static string name = "name";
+        public static string name_orig = "name_orig";
+        public static string name_series = "name_series";
+        public static string season = "season";
+        public static string episode = "episode";
+        public static string country = "country";
+        public static string category = "category";
+        public static string genre = "genre";
+        public static string studio = "studio";
+        public static string producer = "producer";
+        public static string director = "director";
+        public static string artist = "artist";
+        public static string year = "year";
+        public static string summary = "summary";
     }
     public static class HCFile
     {

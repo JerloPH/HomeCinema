@@ -422,7 +422,7 @@ namespace HomeCinema.SQLFunc
             // Create pairing of colname and colvals
             foreach (var item in dtInfo)
             {
-                if (item.Key != HCInfo.Id.ToString())
+                if (item.Key != HCInfo.Id)
                 {
                     value = item.Value.Replace("'", "''").Replace("\"", String.Empty);
                     infoCols += item.Key + ",";
@@ -434,7 +434,7 @@ namespace HomeCinema.SQLFunc
             // Filepath table
             foreach (var item in dtFilepath)
             {
-                if (item.Key != HCInfo.Id.ToString())
+                if (item.Key != HCInfo.Id)
                 {
                     fileCols += item.Key + ",";
                     fileVals += QryString(item.Value.Replace("'", "''"), true) + ",";
@@ -533,7 +533,7 @@ namespace HomeCinema.SQLFunc
             string Id = "";
             try
             {
-                dt.TryGetValue(HCInfo.Id.ToString(), out Id);
+                dt.TryGetValue(HCInfo.Id, out Id);
             }
             catch { Id = ""; }
             if (String.IsNullOrWhiteSpace(Id))
@@ -544,7 +544,7 @@ namespace HomeCinema.SQLFunc
 
             foreach (var item in dt)
             {
-                if (item.Key != HCInfo.Id.ToString())
+                if (item.Key != HCInfo.Id)
                 {
                     valpair += "[" + item.Key + "]=" + QryString(item.Value, !QryColNumeric(item.Key)) + ",";
                 }
