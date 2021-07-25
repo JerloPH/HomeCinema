@@ -156,7 +156,6 @@
     <Compile Include="Func\ListViewColumnSorter.cs" />
     <Compile Include="JSONs\ConfigJson.cs" />
     <Compile Include="JSONs\ImdbResult.cs" />
-    <Compile Include="JSONs\MovieInfo.cs" />
     <Compile Include="JSONs\TmdbPageResult.cs" />
     <Compile Include="JSONs\TmdbSearchResult.cs" />
     <Compile Include="JSONs\TmdbVideos.cs" />
