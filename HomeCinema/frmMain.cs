@@ -133,6 +133,7 @@ namespace HomeCinema
             string mediatype = "movie";
             string filePath;
             string src;
+            bool IsDownloadCover = false;
 
             int count = 0; // count of inserts, whether success or fail
             string logInsert = ""; // Log succesfully inserted
@@ -296,25 +297,26 @@ namespace HomeCinema
                         Thread.Sleep(5); // sleep to prevent overloading API
                         if (GlobalVars.HAS_TMDB_KEY && src == "tmdb") // Use TMDB API
                         {
-                            if (TmdbAPI.DownloadCoverFromTMDB(movieId, rPosterLink, errFrom) && (!String.IsNullOrWhiteSpace(rPosterLink)))
-                            {
-                                try
-                                {
-                                    // Move from temp folder to poster path
-                                    File.Move(oldFile, newFile);
-                                    GlobalVars.DeleteMove(oldFile, errFrom); // Delete temp cover afterwards
-                                }
-                                catch (Exception ex)
-                                {
-                                    GlobalVars.ShowError(errFrom, ex, false, this);
-                                }
-                            }
+                            IsDownloadCover = TmdbAPI.DownloadCoverFromTMDB(movieId, rPosterLink, errFrom) && (!String.IsNullOrWhiteSpace(rPosterLink));
                         }
                         else if (src == "anilist") // Use ANILIST API
                         {
-                            //
+                            IsDownloadCover = AnilistAPI.DownloadCoverFromAnilist(movieId, rPosterLink, errFrom);
                         }
                         else { } //do nothing
+                    }
+                    if (IsDownloadCover)
+                    {
+                        try
+                        {
+                            // Move from temp folder to poster path
+                            File.Move(oldFile, newFile);
+                            GlobalVars.DeleteMove(oldFile, errFrom); // Delete temp cover afterwards
+                        }
+                        catch (Exception ex)
+                        {
+                            GlobalVars.ShowError(errFrom, ex, false, this);
+                        }
                     }
                 }
                 Thread.Sleep(10); // Prevent continuous request to TMDB, prevents overloading the site.
