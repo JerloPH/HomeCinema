@@ -503,7 +503,7 @@ namespace HomeCinema
                         // Dispose and Delete image
                         if (MOVIE_COVER != null)
                         {
-                            DisposePoster("");
+                            DisposePoster();
                             GlobalVars.DeleteImageFromList(this, MOVIE_ID, errFrom);
                             GlobalVars.DeleteMove(GlobalVars.ImgFullPath(MOVIE_ID), errFrom);
                         }

@@ -33,7 +33,6 @@ namespace HomeCinema
     public partial class frmMovieInfo : Form
     {
         // Editable vars
-        private string PARENT_NAME { get; set; } = "";
         private string MOVIE_ID { get; set; } = "";
         private string MEDIA_TYPE { get; set; } = "";
         private Image MOVIE_COVER { get; set; } = null;
@@ -57,7 +56,6 @@ namespace HomeCinema
             // Set vars
             MOVIE_ID = ID.TrimStart('0');
             PARENT = parent;
-            PARENT_NAME = PARENT.Name;
             LVITEM = lvitem;
 
             // Set Controls text and properties
