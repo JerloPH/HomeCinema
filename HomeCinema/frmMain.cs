@@ -200,12 +200,10 @@ namespace HomeCinema
                     MediaInfo Media = null;
                     if (src == "tmdb" && GlobalVars.HAS_TMDB_KEY)
                     {
-                        // Get imdb id and set it to textbox
-                        getIMDB = TmdbAPI.FindMovieOrTV(mName, "dummy", mediatype);
-                        if (String.IsNullOrWhiteSpace(getIMDB) == false)
+                        var movie = TmdbAPI.FindMovieTV(mName, "dummy", mediatype);
+                        if (movie?.TotalResults == 1)
                         {
-                            // Get List of values from TMDB
-                            Media = TmdbAPI.GetMovieInfoByImdb(getIMDB, mediatype);
+                            Media = 0; //WIP
                         }
                     }
                     else if (src == "anilist" && !String.IsNullOrWhiteSpace(GlobalVars.ANILIST_SECRET))

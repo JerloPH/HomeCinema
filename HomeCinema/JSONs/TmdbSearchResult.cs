@@ -22,4 +22,28 @@ namespace HomeCinema
         [JsonProperty("poster_path")]
         public string PosterPath { get; set; } = "";
     }
+    public class TmdbMovieInfo
+    {
+        [JsonProperty("id")]
+        public int Id{ get; set; } = 0;
+        [JsonProperty("title")]
+        public string Title { get; set; } = "";
+        [JsonProperty("original_title")]
+        public string OrigTitle { get; set; } = "";
+        [JsonProperty("poster_path")]
+        public string PosterPath { get; set; } = "";
+        [JsonProperty("genres")]
+        public List<TmdbGenre> Genres { get; set; } = new List<TmdbGenre>();
+    }
+
+    public class TmdbExternalIds
+    {
+        [JsonProperty("imdb_id")]
+        public string Imdb { get; set; } = "";
+    }
+    public class TmdbGenre
+    {
+        [JsonProperty("name")]
+        public string Name { get; set; } = "";
+    }
 }
