@@ -145,6 +145,7 @@ namespace HomeCinema
 
                 // vars used for entries
                 string getIMDB = "";
+                string getAnilist = "";
                 string mName = "";
                 string yearFromFname = "";
 
@@ -180,7 +181,7 @@ namespace HomeCinema
                     mName = mName.Replace('_', ' ').Replace('.', ' ');
                     mName = mName.Replace("(", "");
                     mName = mName.Replace(")", "");
-                    mName = mName.Replace("-", "");
+                    //mName = mName.Replace("-", "");
                     // Remove "year" and "other strings" from movie file name
                     string regExPattern = @"\b\d{4}\b"; // Match 4-digit number in the title
                     Match r = Regex.Match(mName, @regExPattern);
@@ -195,6 +196,7 @@ namespace HomeCinema
                 // Scrape from TMDB, for info and details
                 if (Settings.IsOffline == false)
                 {
+                    MediaInfo Media = null;
                     if (src == "tmdb" && GlobalVars.HAS_TMDB_KEY)
                     {
                         // Get imdb id and set it to textbox
@@ -202,21 +204,40 @@ namespace HomeCinema
                         if (String.IsNullOrWhiteSpace(getIMDB) == false)
                         {
                             // Get List of values from TMDB
-                            var Media = TmdbAPI.GetMovieInfoByImdb(getIMDB, mediatype);
-                            rTrailer = Media.Trailer;
-                            rTitle = Media.Title;
-                            rOrigTitle = Media.OrigTitle;
-                            rSummary = Media.Summary;
-                            try { rYear = Media.ReleaseDate.Substring(0, 4); }
-                            catch { rYear = "0"; }
-                            rPosterLink = Media.PosterPath;
-                            rArtist = Media.Actor;
-                            rDirector = Media.Director;
-                            rProducer = Media.Producer;
-                            rStudio = Media.Studio;
-                            rCountry = GlobalVars.ConvertListToString(Media.Country, ",", callFrom); // Get Country
-                            rGenre = GlobalVars.ConvertListToString(Media.Genre, ",", callFrom); // Get Genres
+                            Media = TmdbAPI.GetMovieInfoByImdb(getIMDB, mediatype);
                         }
+                    }
+                    else if (src == "anilist" && !String.IsNullOrWhiteSpace(GlobalVars.ANILIST_SECRET))
+                    {
+                        var anime = AnilistAPI.SearchForAnime(mName);
+                        if (anime != null)
+                        {
+                            try
+                            {
+                                if (anime.Data.Page.PageInfo.Total == 1)
+                                {
+                                    getAnilist = anime.Data.Page.MediaList[0].Id.ToString();
+                                    Media = AnilistAPI.GetMovieInfoFromAnilist(getAnilist);
+                                }
+                            }
+                            catch { }
+                        }
+                    }
+                    if (Media != null)
+                    {
+                        rTrailer = Media.Trailer;
+                        rTitle = Media.Title;
+                        rOrigTitle = Media.OrigTitle;
+                        rSummary = Media.Summary;
+                        try { rYear = Media.ReleaseDate.Substring(0, 4); }
+                        catch { rYear = "0"; }
+                        rPosterLink = Media.PosterPath;
+                        rArtist = Media.Actor;
+                        rDirector = Media.Director;
+                        rProducer = Media.Producer;
+                        rStudio = Media.Studio;
+                        rCountry = GlobalVars.ConvertListToString(Media.Country, ",", callFrom); // Get Country
+                        rGenre = GlobalVars.ConvertListToString(Media.Genre, ",", callFrom); // Get Genres
                     }
                 }
 
