@@ -185,10 +185,33 @@ namespace HomeCinema
             }
             return String.Empty;
         }
+        public static string GetTmdbFromImdb(string ImdbId, string mediatype)
+        {
+            string errFrom = $"TmdbAPI-GetTmdbFromImdb";
+            string URL = @"https://api.themoviedb.org/3/find/" + $"{ImdbId}?api_key={TMDB_KEY}&language=en-US&external_source=imdb_id";
+            string File = $"{GlobalVars.PATH_TEMP}{ImdbId}_findTmdb.json";
+            if (String.IsNullOrWhiteSpace(ImdbId) == false)
+            {
+                // Download file if not existing (TO GET IMDB Id)
+                if (GlobalVars.DownloadAndReplace(File, URL, errFrom))
+                {
+                    string JSONContents = GlobalVars.ReadStringFromFile(File, errFrom);
+                    GlobalVars.TryDelete(File, errFrom);
+                    try
+                    {
+                        var res = JsonConvert.DeserializeObject<TmdbSearchFromImdb>(JSONContents);
+                        var ret = (mediatype.ToLower().Equals("movie") ? res.MovieResults[0].Id : res.TVResults[0].Id);
+                        return ret.ToString();
+                    }
+                    catch { return String.Empty; }
+                }
+            }
+            return String.Empty;
+        }
         // Download Movie cover image from TMB
         public static bool DownloadCoverFromTMDB(string MOVIE_ID, string linkPoster, string calledFrom)
         {
-            string errFrom = $"GlobalVars-DownloadCoverFromTMDB [calledFrom: {calledFrom}]";
+            string errFrom = $"TmdbAPI-DownloadCoverFromTMDB [calledFrom: {calledFrom}]";
             // Parse image link from JSON and download it
             if (String.IsNullOrWhiteSpace(linkPoster) == false)
             {

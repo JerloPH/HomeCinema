@@ -566,7 +566,7 @@ namespace HomeCinema
                     {
                         tag = txtIMDB.Tag.ToString();
                     }
-                    string TmdbId = (String.IsNullOrWhiteSpace(tag)) ? TmdbAPI.GetTmdbFromImdb(IMDB_ID) : tag;
+                    string TmdbId = (String.IsNullOrWhiteSpace(tag)) ? TmdbAPI.GetTmdbFromImdb(IMDB_ID, MEDIA_TYPE) : tag;
                     mediaInfo = TmdbAPI.GetMovieInfoFromTmdb(TmdbId, MEDIA_TYPE);
                 }
             };

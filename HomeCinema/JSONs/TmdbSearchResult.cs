@@ -20,6 +20,14 @@ namespace HomeCinema
         public List<TmdbResult> results { get; set; }
 
     }
+    public class TmdbSearchFromImdb
+    {
+        [JsonProperty("movie_results")]
+        public List<TmdbResult> MovieResults { get; set; } = new List<TmdbResult>();
+
+        [JsonProperty("tv_results")]
+        public List<TmdbResult> TVResults { get; set; } = new List<TmdbResult>();
+    }
     public class TmdbResult
     {
         [JsonProperty("id")]
@@ -30,9 +38,6 @@ namespace HomeCinema
 
         [JsonProperty("name")]
         public string Name { get; set; } = "";
-
-        [JsonProperty("original_name")]
-        public string OrigName { get; set; } = "";
 
         [JsonProperty("title")]
         public string Title { get; set; } = "";
