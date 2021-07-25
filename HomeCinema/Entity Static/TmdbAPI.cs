@@ -29,67 +29,80 @@ namespace HomeCinema
                 string content = GlobalVars.ReadStringFromFile(FileFindMedia, errFrom);
                 media = JsonConvert.DeserializeObject<TmdbSearchResult>(content);
             }
+            GlobalVars.TryDelete(FileFindMedia, errFrom);
             return media;
         }
-
-
-        // Return IMDB Id of Movie from TMDB, by searching movie title
-        public static string FindMovieOrTV(string Movie_Title, string MOVIE_ID, string mediatype, bool showAMsg = false)
+        public static MediaInfo GetMovieInfoFromTmdb(string Tmdb, string mediatype)
         {
-            mediatype = (String.IsNullOrWhiteSpace(mediatype)) ? "movie" : mediatype;
-            string ret = "";
-            string errFrom = $"GlobalVars-GetIMDBId";
-            // Setup vars and links
-            string KEY = TMDB_KEY;
-            string mediatypeUrl = mediatype.ToLower().Equals("movie") ? "movie" : "tv";
-            // GET TMDB MOVIE ID
-            string MovieTitle = System.Net.WebUtility.UrlEncode(Movie_Title);
-            string urlJSONgetId = @"https://api.themoviedb.org/3/search/" + mediatypeUrl + "?api_key=" + KEY + "&query=" + MovieTitle;
-            string JSONgetID = GlobalVars.PATH_TEMP + MOVIE_ID + "_id.json";
-            string JSONgetImdb = "", MovieID = "";
-            string JSONContents = "", urlJSONgetImdb;
+            MediaInfo media = new MediaInfo();
+            string errFrom = $"TmdbAPI-GetMovieInfoFromTmdb";
+            string mediaTypeUrl = mediatype.ToLower().Equals("movie") ? "movie" : "tv";
+            // URLs
+            string URLFindMovie = @"https://api.themoviedb.org/3/" + $"{mediaTypeUrl}/{Tmdb}?api_key={TMDB_KEY}&append_to_response=external_ids";
+            // File paths
+            string JSONmovieinfo = GlobalVars.PATH_TEMP + Tmdb + "_info.json";
+            string JSONcrewcast = GlobalVars.PATH_TEMP + Tmdb + "_crewcast.json";
+            string JSONfindtrailer = GlobalVars.PATH_TEMP + Tmdb + "_videos.json";
 
-            // Download file , force overwrite (TO GET TMDB MOVIE ID)
-            if (GlobalVars.DownloadAndReplace(JSONgetID, urlJSONgetId, errFrom, showAMsg))
+            if (!String.IsNullOrWhiteSpace(Tmdb) && Tmdb!="0")
             {
-
-                // Get TMDB Movie ID from JSON File (JSONgetID) downloaded
-                JSONContents = GlobalVars.ReadStringFromFile(JSONgetID, errFrom);
-                var objPageResult = JsonConvert.DeserializeObject<TmdbPageResult>(JSONContents);
-                try { MovieID = objPageResult.results[0].id.ToString(); }
-                catch { MovieID = ""; }
-                //ShowInfo("Movie ID: " + MovieID);
-
-                // Check if MovieID is not empty
-                if (String.IsNullOrWhiteSpace(MovieID) == false)
+                if (GlobalVars.DownloadAndReplace(JSONmovieinfo, URLFindMovie, errFrom))
                 {
-                    // GET IMDB
-                    urlJSONgetImdb = @"https://api.themoviedb.org/3/" + mediatypeUrl + "/" + MovieID + "?api_key=" + KEY;
-                    urlJSONgetImdb += (mediatype != "movie") ? "&append_to_response=external_ids" : ""; // Append external_ids param for non-movie
-                    JSONgetImdb = GlobalVars.PATH_TEMP + MOVIE_ID + "_imdb.json";
-
-                    // Download file if not existing (TO GET IMDB Id)
-                    if (GlobalVars.DownloadAndReplace(JSONgetImdb, urlJSONgetImdb, errFrom, showAMsg))
+                    string content = GlobalVars.ReadStringFromFile(JSONmovieinfo, errFrom);
+                    var movie = JsonConvert.DeserializeObject<TmdbMovieInfo>(content);
+                    if (movie != null)
                     {
-                        JSONContents = GlobalVars.ReadStringFromFile(JSONgetImdb, errFrom);
-                        try
+                        if (mediatype == "movie")
                         {
-                            var objMovieInfo = JsonConvert.DeserializeObject<MovieInfo>(JSONContents);
-                            ret = (mediatype == "movie") ? objMovieInfo.imdb_id : objMovieInfo.external_ids.imdb_id;
+                            media.Title = movie.Title; // title
+                            media.OrigTitle = movie.OrigTitle; // original title
+                            media.ReleaseDate = movie.ReleaseDate; // release date
                         }
-                        catch { ret = ""; }
+                        else
+                        {
+                            media.Title = movie.Name; // series title
+                            media.OrigTitle = movie.OrigName;
+                            media.ReleaseDate = movie.FirstAirDate; // release date
+                        }
+                        media.Summary = movie.Summary; // summary / overview
+                        media.PosterPath = (!String.IsNullOrWhiteSpace(movie.PosterPath)) ? movie.PosterPath : String.Empty; // poster_path
+                        // Country
+                        foreach (TmdbProdCountry c in movie.ProdCountries)
+                        {
+                            media.Country.Add(c.Name.Trim());
+                        }
+                        // Get genres
+                        if (content.Contains("genres"))
+                        {
+                            var jObj = (JObject)JsonConvert.DeserializeObject(content);
+                            var result = jObj["genres"]
+                                            .Select(item => new
+                                            {
+                                                name = (string)item["name"],
+                                            })
+                                            .ToList();
+                            if (result.Count > 0)
+                            {
+                                foreach (var valGenre in result)
+                                {
+                                    string valString = valGenre.ToString();
+                                    string valTrim = valString.Substring(valString.IndexOf("name = ") + 7);
+                                    valTrim = valTrim.TrimEnd('}');
+                                    valTrim.Trim();
+                                    media.Genre.Add(valTrim);
+                                }
+                            }
+                        }
+                        // Studio
+                        try { media.Studio = movie.ProdCompanies.Select(a => a.Name).ToList().Aggregate((b, c) => b + ", " + c); }
+                        catch { media.Studio = ""; }
                     }
                 }
             }
-            // Delete files if MOVIE_ID = dummy
-            if (MOVIE_ID == "dummy")
-            {
-                // Clean up
-                GlobalVars.TryDelete(JSONgetID, errFrom);
-                GlobalVars.TryDelete(JSONgetImdb, errFrom);
-            }
-            return ret;
+
+            return media;
         }
+
         // Get IMDB from TMDB API Id
         public static string GetImdbFromAPI(string TmdbId, string mediatype)
         {
