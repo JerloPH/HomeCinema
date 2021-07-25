@@ -146,23 +146,12 @@ namespace HomeCinema
 
                 // vars used for entries
                 MediaInfo Media = null;
-                string getIMDB = "";
-                string getAnilist = "";
                 string mName = "";
                 string yearFromFname = "";
 
-                string rTrailer = "";
-                string rTitle = "";
-                string rOrigTitle = "";
-                string rSummary = "";
-                string rYear = "";
-                string rGenre = "";
-                string rArtist = "";
-                string rDirector = "";
-                string rProducer = "";
                 string rCountry = "";
-                string rStudio = "";
-                string rPosterLink = "";
+                string rGenre = "";
+                string rYear = "";
 
                 // Get proper name, without the folder paths
                 try
@@ -204,7 +193,6 @@ namespace HomeCinema
                         if (movie?.TotalResults == 1)
                         {
                             Media = TmdbAPI.GetMovieInfoFromTmdb(movie?.Results[0].Id.ToString(), mediatype);
-                            getIMDB = Media.Imdb;
                         }
                     }
                     else if (src == "anilist" && !String.IsNullOrWhiteSpace(GlobalVars.ANILIST_SECRET))
@@ -216,7 +204,7 @@ namespace HomeCinema
                             {
                                 if (anime.Data.Page.PageInfo.Total == 1)
                                 {
-                                    getAnilist = anime.Data.Page.MediaList[0].Id.ToString();
+                                    string getAnilist = anime.Data.Page.MediaList[0].Id.ToString();
                                     Media = AnilistAPI.GetMovieInfoFromAnilist(getAnilist);
                                 }
                             }
@@ -225,54 +213,46 @@ namespace HomeCinema
                     }
                     if (Media != null)
                     {
-                        rTrailer = Media.Trailer;
-                        rTitle = Media.Title;
-                        rOrigTitle = Media.OrigTitle;
-                        rSummary = Media.Summary;
                         try { rYear = Media.ReleaseDate.Substring(0, 4); }
-                        catch { rYear = "0"; }
-                        rPosterLink = Media.PosterPath;
-                        rArtist = Media.Actor;
-                        rDirector = Media.Director;
-                        rProducer = Media.Producer;
-                        rStudio = Media.Studio;
+                        catch { rYear = ""; }
                         rCountry = GlobalVars.ConvertListToString(Media.Country, ",", callFrom); // Get Country
                         rGenre = GlobalVars.ConvertListToString(Media.Genre, ",", callFrom); // Get Genres
                     }
                 }
                 if (Media == null)
                 {
-                    Media = new MediaInfo();
                     // If cannot get info online, make use of defaults
+                    Media = new MediaInfo();
                     Media.Title = mName.Trim();
-                    rYear = yearFromFname;
                 }
                 // If Original title is the same as the main title, ignore it
                 Media.OrigTitle = (Media.OrigTitle.Equals(Media.Title)) ? String.Empty : Media.OrigTitle;
+                // If year is empty, use the year from regex
+                rYear = (String.IsNullOrWhiteSpace(rYear)) ? yearFromFname : rYear;
 
                 // Make the DataRow
                 var dtInfo = new Dictionary<string, string>();
                 var dtFilepath = new Dictionary<string, string>();
-                dtInfo.Add(HCInfo.imdb, getIMDB); // IMDB
-                dtInfo.Add(HCInfo.anilist, getAnilist); // Anilist
-                dtInfo.Add(HCInfo.name, rTitle); // name
-                dtInfo.Add(HCInfo.name_orig, rOrigTitle); // episode name
-                dtInfo.Add(HCInfo.name_series, ""); // series name
-                dtInfo.Add(HCInfo.season, ""); // season number
-                dtInfo.Add(HCInfo.episode, ""); // episode num
+                dtInfo.Add(HCInfo.imdb, Media.Imdb); // IMDB
+                dtInfo.Add(HCInfo.anilist, Media.Anilist); // Anilist
+                dtInfo.Add(HCInfo.name, Media.Title); // name
+                dtInfo.Add(HCInfo.name_orig, Media.OrigTitle); // episode name
+                dtInfo.Add(HCInfo.name_series, Media.SeriesName); // series name
+                dtInfo.Add(HCInfo.season, Media.Seasons.ToString()); // season number
+                dtInfo.Add(HCInfo.episode, Media.Episodes.ToString()); // episode num
                 dtInfo.Add(HCInfo.country, rCountry); // country
                 dtInfo.Add(HCInfo.category, GlobalVars.GetCategoryByFilter(rGenre, rCountry, mediatype, src).ToString()); // category
                 dtInfo.Add(HCInfo.genre, rGenre); // genre
-                dtInfo.Add(HCInfo.studio, rStudio); // studio
-                dtInfo.Add(HCInfo.producer, rProducer); // producer
-                dtInfo.Add(HCInfo.director, rDirector); // director
-                dtInfo.Add(HCInfo.artist, rArtist); // artist
+                dtInfo.Add(HCInfo.studio, Media.Studio); // studio
+                dtInfo.Add(HCInfo.producer, Media.Producer); // producer
+                dtInfo.Add(HCInfo.director, Media.Director); // director
+                dtInfo.Add(HCInfo.artist, Media.Actor); // artist
                 dtInfo.Add(HCInfo.year, rYear); // year
-                dtInfo.Add(HCInfo.summary, rSummary); // summary
+                dtInfo.Add(HCInfo.summary, Media.Summary); // summary
 
                 dtFilepath.Add(HCFile.File, filePath); // filepath
                 dtFilepath.Add(HCFile.Sub, GetSubtitleFile(filePath)); // file sub
-                dtFilepath.Add(HCFile.Trailer, (!String.IsNullOrWhiteSpace(rTrailer)) ? GlobalVars.LINK_YT + rTrailer : ""); // trailer
+                dtFilepath.Add(HCFile.Trailer, Media.Trailer); // trailer
 
                 int insertResult = SQLHelper.DbInsertMovie(dtInfo, dtFilepath, callFrom);
                 if (insertResult > 0)
@@ -294,16 +274,16 @@ namespace HomeCinema
                         GlobalVars.DeleteMove(newFile, errFrom); // Delete existing cover first
                     }
                     // Download cover, if not OFFLINE_MODE
-                    if (Settings.IsOffline == false && (!String.IsNullOrWhiteSpace(rPosterLink)))
+                    if (Settings.IsOffline == false && (!String.IsNullOrWhiteSpace(Media.PosterPath)))
                     {
                         Thread.Sleep(5); // sleep to prevent overloading API
                         if (GlobalVars.HAS_TMDB_KEY && src == "tmdb") // Use TMDB API
                         {
-                            IsDownloadCover = TmdbAPI.DownloadCoverFromTMDB(movieId, rPosterLink, errFrom) && (!String.IsNullOrWhiteSpace(rPosterLink));
+                            IsDownloadCover = TmdbAPI.DownloadCoverFromTMDB(movieId, Media.PosterPath, errFrom);
                         }
                         else if (src == "anilist") // Use ANILIST API
                         {
-                            IsDownloadCover = AnilistAPI.DownloadCoverFromAnilist(movieId, rPosterLink, errFrom);
+                            IsDownloadCover = AnilistAPI.DownloadCoverFromAnilist(movieId, Media.PosterPath, errFrom);
                         }
                         else { } //do nothing
                     }
