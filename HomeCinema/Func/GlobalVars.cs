@@ -1081,20 +1081,27 @@ namespace HomeCinema
             return false;
         }
         // Return int category, based on various filters
-        public static int GetCategoryByFilter(string genre, string country, string mediatype)
+        public static int GetCategoryByFilter(string genre, string country, string mediatype, string source)
         {
-            if (genre.ToLower().Contains("animation"))
+            if (source == "anilist")
             {
-                if (country.ToLower().Contains("japan"))
-                {
-                    return (mediatype == "series" ? 4 : 3);
-                }
-                else
-                {
-                    return (mediatype == "series" ? 6 : 5);
-                }
+                return (mediatype == "series" ? 4 : 3);
             }
-            return (mediatype == "series" ? 2 : 1);
+            else
+            {
+                if (genre.ToLower().Contains("animation"))
+                {
+                    if (country.ToLower().Contains("japan"))
+                    {
+                        return (mediatype == "series" ? 4 : 3);
+                    }
+                    else
+                    {
+                        return (mediatype == "series" ? 6 : 5);
+                    }
+                }
+                return (mediatype == "series" ? 2 : 1);
+            }
         }
         // Return string File Size abbrev
         public static string GetFileSize(string filename)

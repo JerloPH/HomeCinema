@@ -236,7 +236,7 @@ namespace HomeCinema
                 dtInfo.Add(HCInfo.season.ToString(), ""); // season number
                 dtInfo.Add(HCInfo.episode.ToString(), ""); // episode num
                 dtInfo.Add(HCInfo.country.ToString(), rCountry); // country
-                dtInfo.Add(HCInfo.category.ToString(), GlobalVars.GetCategoryByFilter(rGenre, rCountry, mediatype).ToString()); // category
+                dtInfo.Add(HCInfo.category.ToString(), GlobalVars.GetCategoryByFilter(rGenre, rCountry, mediatype, src).ToString()); // category
                 dtInfo.Add(HCInfo.genre.ToString(), rGenre); // genre
                 dtInfo.Add(HCInfo.studio.ToString(), rStudio); // studio
                 dtInfo.Add(HCInfo.producer.ToString(), rProducer); // producer
