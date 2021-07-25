@@ -560,7 +560,7 @@ namespace HomeCinema
                 }
                 else
                 {
-                    mediaInfo = TmdbAPI.GetMovieInfoByImdb(IMDB_ID, MEDIA_TYPE);
+                    mediaInfo = TmdbAPI.GetMovieInfoFromTmdb(IMDB_ID, MEDIA_TYPE);
                 }
             };
             form.ShowDialog(this);
