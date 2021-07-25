@@ -192,6 +192,7 @@ namespace HomeCinema
 
                     // Set textboxes
                     txtIMDB.Text = row[HCInfo.imdb].ToString();
+                    txtIMDB.Tag = "";
                     txtAnilist.Text = row[HCInfo.anilist].ToString();
                     txtName.Text = row[HCInfo.name].ToString();
                     txtNameOrig.Text = row[HCInfo.name_orig].ToString();
@@ -560,7 +561,13 @@ namespace HomeCinema
                 }
                 else
                 {
-                    mediaInfo = TmdbAPI.GetMovieInfoFromTmdb(IMDB_ID, MEDIA_TYPE);
+                    string tag = "";
+                    if (txtIMDB.Tag != null)
+                    {
+                        tag = txtIMDB.Tag.ToString();
+                    }
+                    string TmdbId = (String.IsNullOrWhiteSpace(tag)) ? TmdbAPI.GetTmdbFromImdb(IMDB_ID) : tag;
+                    mediaInfo = TmdbAPI.GetMovieInfoFromTmdb(TmdbId, MEDIA_TYPE);
                 }
             };
             form.ShowDialog(this);
@@ -703,6 +710,7 @@ namespace HomeCinema
             var form = new frmSearchMedia($"Search for {txtName.Text}", txtName.Text, txtID.Text, source);
             form.ShowDialog(this);
             var getResult = form.getResult;
+            var getTmdb = form.getResultTmdb;
             MEDIA_TYPE = form.getResultMedia.Equals("tv") ? "series" : "movie";
             form.Dispose();
 
@@ -716,6 +724,7 @@ namespace HomeCinema
                 else
                 {
                     txtIMDB.Text = getResult;
+                    txtIMDB.Tag = getTmdb;
                 }
                 btnFetchData.Tag = source;
                 btnFetchData.PerformClick(); // Automatically search IMDB Id

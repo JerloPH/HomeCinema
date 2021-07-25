@@ -21,6 +21,7 @@ namespace HomeCinema
         private string result = "";
         private string mediatype = "";
         private string Source = "tmdb";
+        private string TmdbId = "";
         public string getResult
         {
             get { return result; }
@@ -30,6 +31,11 @@ namespace HomeCinema
         {
             get { return mediatype; }
             set { mediatype = value; }
+        }
+        public string getResultTmdb
+        {
+            get { return TmdbId; }
+            set { TmdbId = value; }
         }
         public frmSearchMedia(string caption, string query, string id, string source = "tmdb")
         {
@@ -142,7 +148,7 @@ namespace HomeCinema
                             ListViewItem lvItem = new ListViewItem();
                             int index = imageList.Images.IndexOfKey(imgKey);
                             lvItem.Text = result.MediaType.Equals("movie") ? result.Title : result.Name;
-                            lvItem.Tag = $"{ImdbFromApi}*{result.MediaType}";
+                            lvItem.Tag = $"{ImdbFromApi}*{result.MediaType}*{result.Id}";
                             lvItem.ImageIndex = (index > 0) ? index : 0;
                             AddItem(lvResult, lvItem);
                             ++count;
@@ -247,9 +253,13 @@ namespace HomeCinema
                     {
                         result = resultString[0];
                         mediatype = resultString[1];
+                        if (resultString.Length > 2)
+                        {
+                            TmdbId = resultString[2];
+                        }
                         if (String.IsNullOrWhiteSpace(result))
                         {
-                            GlobalVars.ShowWarning("Selected item has no TMDB or Anilist Id!");
+                            GlobalVars.ShowWarning("Selected item has no valid Id!");
                             return;
                         }
                     }
