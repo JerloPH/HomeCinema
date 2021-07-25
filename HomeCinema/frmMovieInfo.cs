@@ -579,7 +579,7 @@ namespace HomeCinema
             }
 
             // Replace values, only when its not empty
-            if ((String.IsNullOrWhiteSpace(txtPathTrailer.Text)) && !string.IsNullOrWhiteSpace(mediaInfo.Trailer))
+            if (!string.IsNullOrWhiteSpace(mediaInfo.Trailer))
             {
                 txtPathTrailer.Text = GlobalVars.LINK_YT + mediaInfo.Trailer; // Youtube trailer
             }
