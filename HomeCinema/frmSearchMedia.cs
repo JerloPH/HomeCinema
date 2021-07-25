@@ -108,16 +108,16 @@ namespace HomeCinema
                     if (objPageResult.results.Count > 0)
                     {
                         // Add to ListView
-                        foreach (Result result in objPageResult.results)
+                        foreach (var result in objPageResult.results)
                         {
-                            string ImdbFromApi = TmdbAPI.GetImdbFromAPI(result.id.ToString(), result.media_type);
+                            string ImdbFromApi = TmdbAPI.GetImdbFromAPI(result.Id.ToString(), result.MediaType);
                             string imgFilePath = $"{GlobalVars.PATH_TEMP}{ImdbFromApi}.jpg";
                             string imgKey = "0";
                             // Skip entry if there is no Imdb Id associated
                             if (String.IsNullOrWhiteSpace(ImdbFromApi)) { continue; }
                             if (count > Settings.SearchLimit) { break; } // Exit when item result count is reached
                             // Add image to ImageList
-                            rPosterLink = result.poster_path;
+                            rPosterLink = result.PosterPath;
                             GlobalVars.TryDelete(imgFilePath, errFrom);
                             if (!String.IsNullOrWhiteSpace(rPosterLink))
                             {
@@ -141,8 +141,8 @@ namespace HomeCinema
                             // Create ListView item
                             ListViewItem lvItem = new ListViewItem();
                             int index = imageList.Images.IndexOfKey(imgKey);
-                            lvItem.Text = result.media_type.Equals("movie") ? result.title : result.name;
-                            lvItem.Tag = $"{ImdbFromApi}*{result.media_type}";
+                            lvItem.Text = result.MediaType.Equals("movie") ? result.Title : result.Name;
+                            lvItem.Tag = $"{ImdbFromApi}*{result.MediaType}";
                             lvItem.ImageIndex = (index > 0) ? index : 0;
                             AddItem(lvResult, lvItem);
                             ++count;

@@ -11,16 +11,31 @@ namespace HomeCinema
         [JsonProperty("results")]
         public List<TmdbResult> Results { get; set; } = new List<TmdbResult>();
     }
+    public class TmdbPageResult
+    {
+        [JsonProperty("page")]
+        public int page { get; set; } = 0;
+
+        [JsonProperty("results")]
+        public List<TmdbResult> results { get; set; }
+
+    }
     public class TmdbResult
     {
         [JsonProperty("id")]
         public int Id { get; set; } = 0;
+
+        [JsonProperty("media_type")]
+        public string MediaType { get; set; } = "";
 
         [JsonProperty("name")]
         public string Name { get; set; } = "";
 
         [JsonProperty("original_name")]
         public string OrigName { get; set; } = "";
+
+        [JsonProperty("title")]
+        public string Title { get; set; } = "";
 
         [JsonProperty("poster_path")]
         public string PosterPath { get; set; } = "";
@@ -128,5 +143,21 @@ namespace HomeCinema
 
         [JsonProperty("name")]
         public string name { get; set; }
+    }
+
+    public class TmdbVideos
+    {
+        [JsonProperty("results")]
+        public List<TmdbResultVid> results { get; set; }
+    }
+
+    public class TmdbResultVid
+    {
+        [JsonProperty("name")]
+        public string name { get; set; } = "";
+        [JsonProperty("key")]
+        public string key { get; set; } = "";
+        [JsonProperty("site")]
+        public string site { get; set; } = "";
     }
 }
