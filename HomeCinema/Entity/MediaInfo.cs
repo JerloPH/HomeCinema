@@ -18,6 +18,7 @@ namespace HomeCinema
         public string Anilist { get; set; } = "";
         public string Title { get; set; } = "";
         public string OrigTitle { get; set; } = "";
+        public string SeriesName { get; set; } = "";
         public string Summary { get; set; } = "";
         public string ReleaseDate { get; set; } = "";
         public string Actor { get; set; } = "";
@@ -28,6 +29,7 @@ namespace HomeCinema
         public List<string> Genre { get; set; }
         public string Trailer { get; set; } = "";
         public string PosterPath { get; set; } = "";
+        public int Seasons { get; set; } = 0;
         public int Episodes { get; set; } = 0;
     }
 }

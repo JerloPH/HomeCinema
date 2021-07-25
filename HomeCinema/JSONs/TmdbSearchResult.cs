@@ -76,4 +76,28 @@ namespace HomeCinema
         [JsonProperty("name")]
         public string Name { get; set; }
     }
+
+    public class TmdbCastCrew
+    {
+        [JsonProperty("cast")]
+        public List<TmdbCast> cast { get; set; } = new List<TmdbCast>();
+
+        [JsonProperty("crew")]
+        public List<TmdbCrew> crew { get; set; } = new List<TmdbCrew>();
+    }
+
+    public class TmdbCast
+    {
+        [JsonProperty("name")]
+        public string name { get; set; }
+    }
+
+    public class TmdbCrew
+    {
+        [JsonProperty("job")]
+        public string job { get; set; }
+
+        [JsonProperty("name")]
+        public string name { get; set; }
+    }
 }

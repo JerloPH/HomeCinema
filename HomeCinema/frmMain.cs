@@ -203,7 +203,8 @@ namespace HomeCinema
                         var movie = TmdbAPI.FindMovieTV(mName, "dummy", mediatype);
                         if (movie?.TotalResults == 1)
                         {
-                            Media = TmdbAPI.GetMovieInfoFromTmdb(movie?.Results[0].Id.ToString(), mediatype); //WIP
+                            Media = TmdbAPI.GetMovieInfoFromTmdb(movie?.Results[0].Id.ToString(), mediatype);
+                            getIMDB = Media.Imdb;
                         }
                     }
                     else if (src == "anilist" && !String.IsNullOrWhiteSpace(GlobalVars.ANILIST_SECRET))

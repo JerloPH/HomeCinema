@@ -158,6 +158,7 @@
     <Compile Include="JSONs\ImdbResult.cs" />
     <Compile Include="JSONs\MovieInfo.cs" />
     <Compile Include="JSONs\TmdbPageResult.cs" />
+    <Compile Include="JSONs\TmdbSearchResult.cs" />
     <Compile Include="JSONs\TmdbVideos.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
