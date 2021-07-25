@@ -13,8 +13,28 @@ namespace HomeCinema
     {
         private static string TMDB_KEY = GlobalVars.TMDB_KEY;
 
+        public static TmdbSearchResult FindMovieTV(string query, string MovieId, string mediatype, bool showAMsg = false)
+        {
+            TmdbSearchResult media = null;
+            string errFrom = $"TmdbAPI-FindMovieTV";
+            string mediatypeUrl = mediatype.ToLower().Equals("movie") ? "movie" : "tv";
+            string Searchquery = System.Net.WebUtility.UrlEncode(query);
+            // URLs
+            string URLFindMedia = @"https://api.themoviedb.org/3/search/" + $"{mediatypeUrl}?api_key={TMDB_KEY}&query={Searchquery}";
+            // Filepaths
+            string FileFindMedia = GlobalVars.PATH_TEMP + MovieId + "_findMedia.json";
+
+            if (GlobalVars.DownloadAndReplace(FileFindMedia, URLFindMedia, errFrom, showAMsg))
+            {
+                string content = GlobalVars.ReadStringFromFile(FileFindMedia, errFrom);
+                media = JsonConvert.DeserializeObject<TmdbSearchResult>(content);
+            }
+            return media;
+        }
+
+
         // Return IMDB Id of Movie from TMDB, by searching movie title
-        public static string FindMovie(string Movie_Title, string MOVIE_ID, string mediatype, bool showAMsg = false)
+        public static string FindMovieOrTV(string Movie_Title, string MOVIE_ID, string mediatype, bool showAMsg = false)
         {
             mediatype = (String.IsNullOrWhiteSpace(mediatype)) ? "movie" : mediatype;
             string ret = "";
