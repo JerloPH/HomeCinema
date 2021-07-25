@@ -15,10 +15,13 @@ namespace HomeCinema
     {
         [JsonProperty("id")]
         public int Id { get; set; } = 0;
+
         [JsonProperty("name")]
         public string Name { get; set; } = "";
+
         [JsonProperty("original_name")]
         public string OrigName { get; set; } = "";
+
         [JsonProperty("poster_path")]
         public string PosterPath { get; set; } = "";
     }
@@ -26,25 +29,43 @@ namespace HomeCinema
     {
         [JsonProperty("id")]
         public int Id{ get; set; } = 0;
+
         [JsonProperty("title")]
         public string Title { get; set; } = "";
+
         [JsonProperty("original_title")]
         public string OrigTitle { get; set; } = "";
+
         [JsonProperty("name")]
         public string Name { get; set; } = "";
+
         [JsonProperty("original_name")]
         public string OrigName { get; set; } = "";
+
         [JsonProperty("overview")]
         public string Summary { get; set; } = "";
+
         [JsonProperty("poster_path")]
         public string PosterPath { get; set; } = "";
+
         [JsonProperty("release_date")]
         public string ReleaseDate { get; set; } = "";
+
         [JsonProperty("first_air_date")]
         public string FirstAirDate { get; set; } = "";
 
+        [JsonProperty("number_of_episodes")]
+        public int EpisodesCount { get; set; } = 0;
+
+        [JsonProperty("number_of_seasons")]
+        public int SeasonsCount { get; set; } = 0;
+
+        [JsonProperty("origin_country")]
+        public List<string> OriginCountry { get; set; } = new List<string>();
+
         [JsonProperty("genres")]
         public List<TmdbGenre> Genres { get; set; } = new List<TmdbGenre>();
+
         [JsonProperty("external_ids")]
         public TmdbExternalIds ExternalIds { get; set; } = new TmdbExternalIds();
 

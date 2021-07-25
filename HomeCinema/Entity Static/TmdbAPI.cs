@@ -67,7 +67,8 @@ namespace HomeCinema
                             media.OrigTitle = movie.OrigName;
                             media.ReleaseDate = movie.FirstAirDate; // release date
                             media.SeriesName = movie.OrigName;
-                            
+                            media.Seasons = movie.SeasonsCount;
+                            media.Episodes = movie.EpisodesCount;
                         }
                         media.Summary = movie.Summary; // summary / overview
                         media.PosterPath = (!String.IsNullOrWhiteSpace(movie.PosterPath)) ? movie.PosterPath : String.Empty; // poster_path
