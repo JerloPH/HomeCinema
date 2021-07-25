@@ -1093,14 +1093,14 @@ namespace HomeCinema
                 {
                     if (country.ToLower().Contains("japan"))
                     {
-                        return (mediatype == "series" ? 4 : 3);
+                        return ((mediatype == "series" || mediatype == "tv") ? 4 : 3);
                     }
                     else
                     {
-                        return (mediatype == "series" ? 6 : 5);
+                        return ((mediatype == "series" || mediatype == "tv") ? 6 : 5);
                     }
                 }
-                return (mediatype == "series" ? 2 : 1);
+                return ((mediatype == "series" || mediatype == "tv") ? 2 : 1);
             }
         }
         // Return string File Size abbrev
