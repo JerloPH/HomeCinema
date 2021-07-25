@@ -670,7 +670,7 @@ namespace HomeCinema
             }
         }
         // Get IMDB ID using Movie Name
-        private void btnGetImdb_Click(object sender, EventArgs e)
+        private void btnSearch_Click(object sender, EventArgs e)
         {
             string source = cbSource.Text.ToLower();
             // Exit when no TMDB key

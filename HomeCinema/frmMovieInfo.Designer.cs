@@ -86,7 +86,7 @@
             this.btnChangeFile = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
             this.txtPathFile = new System.Windows.Forms.TextBox();
-            this.btnGetImdb = new System.Windows.Forms.Button();
+            this.btnSearch = new System.Windows.Forms.Button();
             this.btnFetchData = new System.Windows.Forms.Button();
             this.cbSource = new System.Windows.Forms.ComboBox();
             this.label20 = new System.Windows.Forms.Label();
@@ -757,17 +757,17 @@
             this.txtPathFile.TabIndex = 31;
             this.txtPathFile.Text = "Path to file";
             // 
-            // btnGetImdb
+            // btnSearch
             // 
-            this.btnGetImdb.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGetImdb.Location = new System.Drawing.Point(622, 15);
-            this.btnGetImdb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnGetImdb.Name = "btnGetImdb";
-            this.btnGetImdb.Size = new System.Drawing.Size(172, 38);
-            this.btnGetImdb.TabIndex = 40;
-            this.btnGetImdb.Text = "SEARCH";
-            this.btnGetImdb.UseVisualStyleBackColor = true;
-            this.btnGetImdb.Click += new System.EventHandler(this.btnGetImdb_Click);
+            this.btnSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSearch.Location = new System.Drawing.Point(622, 15);
+            this.btnSearch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(172, 38);
+            this.btnSearch.TabIndex = 40;
+            this.btnSearch.Text = "SEARCH";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // btnFetchData
             // 
@@ -812,7 +812,7 @@
             this.ClientSize = new System.Drawing.Size(991, 543);
             this.Controls.Add(this.label20);
             this.Controls.Add(this.cbSource);
-            this.Controls.Add(this.btnGetImdb);
+            this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.btnFetchData);
             this.Controls.Add(this.tabInfo);
             this.Controls.Add(this.groupBox2);
@@ -900,7 +900,7 @@
         private System.Windows.Forms.TextBox txtNameOrig;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.TextBox txtAnilist;
-        private System.Windows.Forms.Button btnGetImdb;
+        private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.Button btnFetchData;
         private System.Windows.Forms.ComboBox cbSource;
         private System.Windows.Forms.Label label20;
