@@ -251,6 +251,7 @@ namespace HomeCinema
                 var dtInfo = new Dictionary<string, string>();
                 var dtFilepath = new Dictionary<string, string>();
                 dtInfo.Add(HCInfo.imdb, getIMDB); // IMDB
+                dtInfo.Add(HCInfo.anilist, getAnilist); // Anilist
                 dtInfo.Add(HCInfo.name, rTitle); // name
                 dtInfo.Add(HCInfo.name_orig, rOrigTitle); // episode name
                 dtInfo.Add(HCInfo.name_series, ""); // series name
