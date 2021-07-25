@@ -256,7 +256,7 @@ namespace HomeCinema
             btnPlay.Focus();
         }
         // Dispose Image poster
-        public void DisposePoster(string none)
+        public void DisposePoster()
         {
             picBox.Image.Dispose();
             MOVIE_COVER.Dispose();

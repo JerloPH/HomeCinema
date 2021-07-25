@@ -322,8 +322,8 @@ namespace HomeCinema
             if (PARENT is frmMovie)
             {
                 // Dispose from Parent
-                string[] Params = { "" };
-                GlobalVars.CallMethod(PARENT_NAME, "DisposePoster", Params, $"frmMovieInfo-DisposeImages ({Name})", "frmMovie PARENT: " + PARENT_NAME);
+                var form = PARENT as frmMovie;
+                form.DisposePoster();
             }
         }
         private void RefreshCountryAndGenre()
@@ -428,8 +428,8 @@ namespace HomeCinema
             if (PARENT is frmMovie)
             {
                 // Refresh parent form fmMovie
-                string[] Params = { MOVIE_ID };
-                GlobalVars.CallMethod(PARENT_NAME, "LoadInformation", Params, $"frmMovieInfo-btnSave_Click ({Name})", "frmMovie PARENT: " + PARENT_NAME);
+                var form = PARENT as frmMovie;
+                form.LoadInformation(MOVIE_ID);
             }
             RefreshCountryAndGenre(); // Add new country/genre to text files
 
