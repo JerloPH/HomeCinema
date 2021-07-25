@@ -16,6 +16,7 @@ namespace HomeCinema
     {
         public static string Id = "Id";
         public static string imdb = "imdb";
+        public static string anilist = "anilist";
         public static string name = "name";
         public static string name_orig = "name_orig";
         public static string name_series = "name_series";

@@ -66,6 +66,7 @@ namespace HomeCinema.SQLFunc
             bool IsNewDb = DbExecNonQuery($"CREATE TABLE IF NOT EXISTS '{GlobalVars.DB_TNAME_INFO}' (" +
                 "'Id'	INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "'imdb'	TEXT DEFAULT 0, " +
+                "'anilist'	TEXT DEFAULT 0, " +
                 "'name'	TEXT, " +
                 "'name_orig'	TEXT, " +
                 "'name_series'  TEXT, " +
@@ -157,6 +158,14 @@ namespace HomeCinema.SQLFunc
                             GlobalVars.TryDelete(seriesFile, calledFrom);
                             success = GlobalVars.WriteToFile(GlobalVars.FILE_MEDIALOC, content);
                             if (success)
+                            {
+                                dbVer += 1;
+                            }
+                            break;
+                        }
+                        case 3:
+                        {
+                            if (DbExecNonQuery("ALTER TABLE `info` ADD COLUMN `anilist` TEXT;", calledFrom, -1) == 0)
                             {
                                 dbVer += 1;
                             }
