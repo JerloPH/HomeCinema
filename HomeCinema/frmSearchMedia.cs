@@ -243,12 +243,23 @@ namespace HomeCinema
                 if (lvResult.SelectedItems[0].Tag != null)
                 {
                     string[] resultString = lvResult.SelectedItems[0].Tag.ToString().Split('*');
-                    result = resultString[0];
-                    mediatype = resultString[1];
-                    if (String.IsNullOrWhiteSpace(result))
+                    if (resultString.Length > 1)
                     {
-                        GlobalVars.ShowWarning("Selected item has invalid IMDB Id!");
-                        return;
+                        result = resultString[0];
+                        mediatype = resultString[1];
+                        if (String.IsNullOrWhiteSpace(result))
+                        {
+                            GlobalVars.ShowWarning("Selected item has no TMDB or Anilist Id!");
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        if (String.IsNullOrWhiteSpace(result))
+                        {
+                            GlobalVars.ShowWarning("Selected item is invalid!");
+                            return;
+                        }
                     }
                 }
                 else
