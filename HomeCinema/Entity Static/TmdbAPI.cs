@@ -150,9 +150,6 @@ namespace HomeCinema
                 // Get contents from JSON File, Deserialize it into MovieInfo class
                 if (File.Exists(JSONfindmovie))
                 {
-                    // Save to list  the json file  path
-                    MediaInfo.JsonPath = JSONfindmovie;
-
                     // Get contents of JSON file
                     string contents = GlobalVars.ReadStringFromFile(JSONfindmovie, errFrom + " [JSONfindmovie]");
 
