@@ -504,7 +504,7 @@ namespace HomeCinema
                         if (MOVIE_COVER != null)
                         {
                             DisposePoster();
-                            GlobalVars.DeleteImageFromList(this, MOVIE_ID, errFrom);
+                            GlobalVars.DeleteImageFromList(form, MOVIE_ID, errFrom);
                             GlobalVars.DeleteMove(GlobalVars.ImgFullPath(MOVIE_ID), errFrom);
                         }
                         // Delete MovieFile from local disk
