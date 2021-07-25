@@ -190,37 +190,23 @@ namespace HomeCinema
                     txtPathSub.Text = row[HCFile.Sub].ToString();
                     txtPathTrailer.Text = row[HCFile.Trailer].ToString();
 
-                    var r1 = row[HCInfo.imdb]; // imdb
-                    var r2 = row[HCInfo.name]; // name
-                    var r3 = row[HCInfo.name_orig]; // name_ep
-                    var r4 = row[HCInfo.name_series]; // name_series
-                    var r5 = row[HCInfo.season]; // season
-                    var r6 = row[HCInfo.episode]; // episode
-                    var r7 = row[HCInfo.country]; // country
-                    var r8 = row[HCInfo.category]; // category
-                    var r9 = row[HCInfo.genre]; // genre
-                    var r10 = row[HCInfo.studio]; // studio
-                    var r11 = row[HCInfo.producer]; // producer
-                    var r12 = row[HCInfo.director]; // director
-                    var r13 = row[HCInfo.artist]; // artist
-                    var r14 = row[HCInfo.year]; // year
-                    var r15 = row[HCInfo.summary]; // summary  
                     // Set textboxes
-                    txtIMDB.Text = r1.ToString();
-                    txtName.Text = r2.ToString();
-                    txtNameOrig.Text = r3.ToString();
-                    txtSeriesName.Text = r4.ToString();
-                    txtSeasonNum.Text = r5.ToString();
-                    txtEpNum.Text = r6.ToString();
-                    LoadCountry(r7.ToString());
-                    cbCategory.SelectedIndex = Convert.ToInt32(r8);
-                    LoadGenre(r9.ToString());
-                    txtStudio.Text = r10.ToString();
-                    txtProducer.Text = r11.ToString();
-                    txtDirector.Text = r12.ToString();
-                    txtArtist.Text = r13.ToString();
-                    txtYear.Text = r14.ToString();
-                    txtSummary.Text = r15.ToString();
+                    txtIMDB.Text = row[HCInfo.imdb].ToString();
+                    txtAnilist.Text = row[HCInfo.anilist].ToString();
+                    txtName.Text = row[HCInfo.name].ToString();
+                    txtNameOrig.Text = row[HCInfo.name_orig].ToString();
+                    txtSeriesName.Text = row[HCInfo.name_series].ToString();
+                    txtSeasonNum.Text = row[HCInfo.season].ToString();
+                    txtEpNum.Text = row[HCInfo.episode].ToString();
+                    LoadCountry(row[HCInfo.country].ToString());
+                    cbCategory.SelectedIndex = Convert.ToInt32(row[HCInfo.category]);
+                    LoadGenre(row[HCInfo.genre].ToString());
+                    txtStudio.Text = row[HCInfo.studio].ToString();
+                    txtProducer.Text = row[HCInfo.producer].ToString();
+                    txtDirector.Text = row[HCInfo.director].ToString();
+                    txtArtist.Text = row[HCInfo.artist].ToString();
+                    txtYear.Text = row[HCInfo.year].ToString();
+                    txtSummary.Text = row[HCInfo.summary].ToString();
                 }
                 catch (Exception ex)
                 {
@@ -400,6 +386,7 @@ namespace HomeCinema
                 var entry = new Dictionary<string, string>();
                 entry.Add(HCInfo.Id, GlobalVars.ValidateEmptyOrNull(txtID.Text));
                 entry.Add(HCInfo.imdb, GlobalVars.ValidateEmptyOrNull(txtIMDB.Text));
+                entry.Add(HCInfo.anilist, GlobalVars.ValidateEmptyOrNull(txtAnilist.Text));
                 entry.Add(HCInfo.name, GlobalVars.ValidateEmptyOrNull(txtName.Text));
                 entry.Add(HCInfo.name_orig, GlobalVars.ValidateEmptyOrNull(txtNameOrig.Text));
                 entry.Add(HCInfo.name_series, GlobalVars.ValidateEmptyOrNull(txtSeriesName.Text));
