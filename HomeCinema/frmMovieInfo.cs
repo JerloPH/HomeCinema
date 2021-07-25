@@ -559,7 +559,7 @@ namespace HomeCinema
             if ((String.IsNullOrWhiteSpace(AnilistId) || AnilistId == "0" || !int.TryParse(AnilistId, out AniId)) && (source.Equals("anilist")))
             {
                 GlobalVars.ShowWarning("Invalid Anilist Id!");
-                txtIMDB.Focus();
+                txtAnilist.Focus();
                 return;
             }
 
