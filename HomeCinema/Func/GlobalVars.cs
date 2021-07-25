@@ -1085,7 +1085,7 @@ namespace HomeCinema
         {
             if (source == "anilist")
             {
-                return (mediatype == "series" ? 4 : 3);
+                return ((mediatype=="series" || mediatype=="tv") ? 4 : 3);
             }
             else
             {
