@@ -201,7 +201,7 @@ namespace HomeCinema
                     if (src == "tmdb" && GlobalVars.HAS_TMDB_KEY)
                     {
                         // Get imdb id and set it to textbox
-                        getIMDB = TmdbAPI.GetIMDBId(mName, "dummy", mediatype);
+                        getIMDB = TmdbAPI.FindMovie(mName, "dummy", mediatype);
                         if (String.IsNullOrWhiteSpace(getIMDB) == false)
                         {
                             // Get List of values from TMDB

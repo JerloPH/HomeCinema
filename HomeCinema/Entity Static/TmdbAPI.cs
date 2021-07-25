@@ -14,7 +14,7 @@ namespace HomeCinema
         private static string TMDB_KEY = GlobalVars.TMDB_KEY;
 
         // Return IMDB Id of Movie from TMDB, by searching movie title
-        public static string GetIMDBId(string Movie_Title, string MOVIE_ID, string mediatype, bool showAMsg = false)
+        public static string FindMovie(string Movie_Title, string MOVIE_ID, string mediatype, bool showAMsg = false)
         {
             mediatype = (String.IsNullOrWhiteSpace(mediatype)) ? "movie" : mediatype;
             string ret = "";
@@ -44,7 +44,7 @@ namespace HomeCinema
                 if (String.IsNullOrWhiteSpace(MovieID) == false)
                 {
                     // GET IMDB
-                    urlJSONgetImdb = @"https://api.themoviedb.org/3/" + mediatype + "/" + MovieID + "?api_key=" + KEY;
+                    urlJSONgetImdb = @"https://api.themoviedb.org/3/" + mediatypeUrl + "/" + MovieID + "?api_key=" + KEY;
                     urlJSONgetImdb += (mediatype != "movie") ? "&append_to_response=external_ids" : ""; // Append external_ids param for non-movie
                     JSONgetImdb = GlobalVars.PATH_TEMP + MOVIE_ID + "_imdb.json";
 
@@ -128,7 +128,21 @@ namespace HomeCinema
                 {
                     JSONContents = GlobalVars.ReadStringFromFile(JSONmovieinfo, errFrom);
                     var objJson = JsonConvert.DeserializeObject<ImdbResult>(JSONContents);
-                    TMDB_MovieID = mediatype.Equals("movie") ? objJson.movie_results[0].id : objJson.tv_results[0].id;
+                    
+                    if (mediatype.Equals("movie"))
+                    {
+                        if (objJson.movie_results.Count == 1)
+                        {
+                            TMDB_MovieID = objJson.movie_results[0].id;
+                        }
+                    }
+                    else
+                    {
+                        if (objJson.tv_results.Count == 1)
+                        {
+                            TMDB_MovieID = objJson.tv_results[0].id;
+                        }
+                    } 
                 }
                 catch { TMDB_MovieID = ""; }
             }
