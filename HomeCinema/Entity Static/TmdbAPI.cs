@@ -160,31 +160,25 @@ namespace HomeCinema
             }
             return media;
         }
-
         // Get IMDB from TMDB API Id
         public static string GetImdbFromAPI(string TmdbId, string mediatype)
         {
-            string errFrom = $"GlobalVars-GetImdbFromAPI";
-            string urlJSONgetImdb, JSONgetImdb;
-            string JSONContents = "";
+            string errFrom = $"TmdbAPI-GetImdbFromAPI";
             string mediaTypeUrl = mediatype.ToLower().Equals("movie") ? "movie" : "tv";
+            string JSONgetImdb = $"{GlobalVars.PATH_TEMP}tmdb{TmdbId}_movieInfo.json";
+            string urlJSONgetImdb = @"https://api.themoviedb.org/3/" + $"{mediaTypeUrl}/{TmdbId}?api_key={TMDB_KEY}&append_to_response=external_ids";
             // Check if MovieID is not empty
             if (String.IsNullOrWhiteSpace(TmdbId) == false)
             {
-                // GET IMDB
-                urlJSONgetImdb = @"https://api.themoviedb.org/3/" + mediaTypeUrl + "/" + TmdbId + "?api_key=" + TMDB_KEY;
-                urlJSONgetImdb += (mediatype != "movie") ? "&append_to_response=external_ids" : ""; // Append external_ids param for non-movie
-                JSONgetImdb = $"{GlobalVars.PATH_TEMP}tmdb{TmdbId}_movieInfo.json";
-
                 // Download file if not existing (TO GET IMDB Id)
                 if (GlobalVars.DownloadAndReplace(JSONgetImdb, urlJSONgetImdb, errFrom))
                 {
-                    JSONContents = GlobalVars.ReadStringFromFile(JSONgetImdb, errFrom);
+                    string JSONContents = GlobalVars.ReadStringFromFile(JSONgetImdb, errFrom);
                     GlobalVars.TryDelete(JSONgetImdb, errFrom);
                     try
                     {
-                        var objMovieInfo = JsonConvert.DeserializeObject<MovieInfo>(JSONContents);
-                        return (mediatype == "movie") ? objMovieInfo.imdb_id : objMovieInfo.external_ids.imdb_id;
+                        var objMovieInfo = JsonConvert.DeserializeObject<TmdbSearchMovieInfo>(JSONContents);
+                        return (mediatype == "movie") ? objMovieInfo.imdb_id : objMovieInfo.external_ids.Imdb;
                     }
                     catch { return String.Empty; }
                 }

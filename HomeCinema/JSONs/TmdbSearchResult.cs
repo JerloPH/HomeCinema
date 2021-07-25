@@ -25,6 +25,14 @@ namespace HomeCinema
         [JsonProperty("poster_path")]
         public string PosterPath { get; set; } = "";
     }
+    public class TmdbSearchMovieInfo
+    {
+        [JsonProperty("imdb_id")]
+        public string imdb_id { get; set; } = "";
+
+        [JsonProperty("external_ids")]
+        public TmdbExternalIds external_ids { get; set; }
+    }
     public class TmdbMovieInfo
     {
         [JsonProperty("id")]
