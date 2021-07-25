@@ -28,5 +28,6 @@ namespace HomeCinema
         public List<string> Genre { get; set; }
         public string Trailer { get; set; } = "";
         public string PosterPath { get; set; } = "";
+        public int Episodes { get; set; } = 0;
     }
 }

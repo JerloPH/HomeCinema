@@ -561,7 +561,7 @@ namespace HomeCinema
             {
                 if (source.Equals("anilist"))
                 {
-                    mediaInfo = AnilistAPI.GetMovieInfoFromAnilist(AnilistId, MEDIA_TYPE);
+                    mediaInfo = AnilistAPI.GetMovieInfoFromAnilist(AnilistId);
                 }
                 else
                 {
