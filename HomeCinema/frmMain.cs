@@ -245,9 +245,9 @@ namespace HomeCinema
                 dtInfo.Add(HCInfo.year.ToString(), rYear); // year
                 dtInfo.Add(HCInfo.summary.ToString(), rSummary); // summary
 
-                dtFilepath.Add(HCFile.file.ToString(), filePath); // filepath
-                dtFilepath.Add(HCFile.sub.ToString(), GetSubtitleFile(filePath)); // file sub
-                dtFilepath.Add(HCFile.trailer.ToString(), (!String.IsNullOrWhiteSpace(rTrailer)) ? GlobalVars.LINK_YT + rTrailer : ""); // trailer
+                dtFilepath.Add(HCFile.File, filePath); // filepath
+                dtFilepath.Add(HCFile.Sub, GetSubtitleFile(filePath)); // file sub
+                dtFilepath.Add(HCFile.Trailer, (!String.IsNullOrWhiteSpace(rTrailer)) ? GlobalVars.LINK_YT + rTrailer : ""); // trailer
 
                 int insertResult = SQLHelper.DbInsertMovie(dtInfo, dtFilepath, callFrom);
                 if (insertResult > 0)
@@ -314,7 +314,7 @@ namespace HomeCinema
                     try
                     {
                         DataRow r = dtFile.Rows[0];
-                        ret = r[HCFile.file.ToString()].ToString();
+                        ret = r[HCFile.File].ToString();
                     }
                     catch { }
                 }

@@ -439,7 +439,7 @@ namespace HomeCinema.SQLFunc
                     fileCols += item.Key + ",";
                     fileVals += QryString(item.Value.Replace("'", "''"), true) + ",";
                 }
-                if (item.Key == HCFile.file.ToString())
+                if (item.Key == HCFile.File)
                 {
                     fPathFile = item.Value;
                 }

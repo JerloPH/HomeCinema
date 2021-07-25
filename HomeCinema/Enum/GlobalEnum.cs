@@ -31,11 +31,11 @@ namespace HomeCinema
         year,
         summary
     }
-    public enum HCFile
+    public static class HCFile
     {
-        Id,
-        file,
-        sub,
-        trailer
+        public static string Id = "Id";
+        public static string File = "file";
+        public static string Sub = "sub";
+        public static string Trailer = "trailer";
     }
 }

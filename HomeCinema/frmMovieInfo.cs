@@ -186,9 +186,9 @@ namespace HomeCinema
                 try
                 {
                     DataRow row = dtFile.Rows[0];
-                    txtPathFile.Text = row[HCFile.file.ToString()].ToString();
-                    txtPathSub.Text = row[HCFile.sub.ToString()].ToString();
-                    txtPathTrailer.Text = row[HCFile.trailer.ToString()].ToString();
+                    txtPathFile.Text = row[HCFile.File].ToString();
+                    txtPathSub.Text = row[HCFile.Sub].ToString();
+                    txtPathTrailer.Text = row[HCFile.Trailer].ToString();
 
                     var r1 = row[HCInfo.imdb.ToString()]; // imdb
                     var r2 = row[HCInfo.name.ToString()]; // name
@@ -422,10 +422,10 @@ namespace HomeCinema
                 if (ContAfterQry)
                 {
                     var entryFile = new Dictionary<string, string>();
-                    entryFile.Add(HCFile.Id.ToString(), GlobalVars.ValidateEmptyOrNull(txtID.Text)); // ID
-                    entryFile.Add(HCFile.file.ToString(), GlobalVars.ValidateEmptyOrNull(txtPathFile.Text)); // file
-                    entryFile.Add(HCFile.sub.ToString(), GlobalVars.ValidateEmptyOrNull(txtPathSub.Text)); // sub
-                    entryFile.Add(HCFile.trailer.ToString(), GlobalVars.ValidateEmptyOrNull(txtPathTrailer.Text)); // trailers
+                    entryFile.Add(HCFile.Id, GlobalVars.ValidateEmptyOrNull(txtID.Text)); // ID
+                    entryFile.Add(HCFile.File, GlobalVars.ValidateEmptyOrNull(txtPathFile.Text)); // file
+                    entryFile.Add(HCFile.Sub, GlobalVars.ValidateEmptyOrNull(txtPathSub.Text)); // sub
+                    entryFile.Add(HCFile.Trailer, GlobalVars.ValidateEmptyOrNull(txtPathTrailer.Text)); // trailers
                     SQLHelper.DbUpdateFilepath(entryFile, callFrom);
                 }
             }
