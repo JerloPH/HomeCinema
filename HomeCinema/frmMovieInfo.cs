@@ -542,6 +542,7 @@ namespace HomeCinema
             string errFrom = "frmMovieInfo-btnFetchData_Click";
             string IMDB_ID = txtIMDB.Text;
             string AnilistId = txtAnilist.Text;
+            int AniId = 0;
             string country = ""; // country text
             string genre = ""; // genre text 
             bool coverDownloaded = false;
@@ -551,6 +552,13 @@ namespace HomeCinema
             if ((String.IsNullOrWhiteSpace(IMDB_ID) || IMDB_ID=="0" || (IMDB_ID.StartsWith("tt")==false)) && (source.Equals("tmdb")))
             {
                 GlobalVars.ShowWarning("Invalid IMDB Id!");
+                txtIMDB.Focus();
+                return;
+            }
+            // Exit if Anilist id is invalid
+            if ((String.IsNullOrWhiteSpace(AnilistId) || AnilistId == "0" || !int.TryParse(AnilistId, out AniId)) && (source.Equals("anilist")))
+            {
+                GlobalVars.ShowWarning("Invalid Anilist Id!");
                 txtIMDB.Focus();
                 return;
             }
@@ -576,36 +584,46 @@ namespace HomeCinema
                 return;
             }
 
-            // Set the values to textboxes
+            // Replace values, only when its not empty
             if ((String.IsNullOrWhiteSpace(txtPathTrailer.Text)) && !string.IsNullOrWhiteSpace(mediaInfo.Trailer))
             {
-                txtPathTrailer.Text = GlobalVars.LINK_YT + mediaInfo.Trailer;
+                txtPathTrailer.Text = GlobalVars.LINK_YT + mediaInfo.Trailer; // Youtube trailer
             }
-            // Set to textboxes
-            if (String.IsNullOrWhiteSpace(mediaInfo.Title) ==false)
+            if (!String.IsNullOrWhiteSpace(mediaInfo.Title)) // Title
             {
                 txtName.Text = mediaInfo.Title;
             }
-            if (String.IsNullOrWhiteSpace(mediaInfo.OrigTitle) == false)
+            if (!String.IsNullOrWhiteSpace(mediaInfo.OrigTitle)) // Orig Title
             {
                 if (!mediaInfo.OrigTitle.Equals(txtName.Text))
                 {
                     txtNameOrig.Text = mediaInfo.OrigTitle;
                 }
             }
-            if (String.IsNullOrWhiteSpace(mediaInfo.Summary) == false)
+            if (!String.IsNullOrWhiteSpace(mediaInfo.Summary)) // Description / Summary
             {
                 txtSummary.Text = mediaInfo.Summary;
             }
-            if (String.IsNullOrWhiteSpace(mediaInfo.ReleaseDate) == false)
+            if (!String.IsNullOrWhiteSpace(mediaInfo.ReleaseDate)) // Year
             {
                 txtYear.Text = mediaInfo.ReleaseDate.Substring(0, 4);
             }
-
-            txtArtist.Text = mediaInfo.Actor;
-            txtDirector.Text = mediaInfo.Director;
-            txtProducer.Text = mediaInfo.Producer;
-            txtStudio.Text = mediaInfo.Studio;
+            if (!String.IsNullOrWhiteSpace(mediaInfo.Actor)) // Actor/Actress/Artists
+            {
+                txtArtist.Text = mediaInfo.Actor;
+            }
+            if (!String.IsNullOrWhiteSpace(mediaInfo.Director)) // Director
+            {
+                txtDirector.Text = mediaInfo.Director;
+            }
+            if (!String.IsNullOrWhiteSpace(mediaInfo.Producer)) // Producer
+            {
+                txtProducer.Text = mediaInfo.Producer;
+            }
+            if (!String.IsNullOrWhiteSpace(mediaInfo.Studio)) // Studios
+            {
+                txtStudio.Text = mediaInfo.Studio;
+            }
             
             // Set Country
             if (mediaInfo.Country?.Count > 0)
@@ -633,7 +651,7 @@ namespace HomeCinema
                 if (GlobalVars.ShowYesNo("Do you want to change poster image?", this))
                 {
                     // Show form loading
-                    Thread.Sleep(2); // prevent overloading for TMDBor Anilist
+                    Thread.Sleep(2); // prevent overloading for TMDB or Anilist
                     string moviePosterDL = GlobalVars.PATH_TEMP + MOVIE_ID + ".jpg";
 
                     form = new frmLoading($"Downloading cover from {source.ToUpper()}..", "Loading");
