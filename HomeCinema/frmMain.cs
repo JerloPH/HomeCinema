@@ -145,6 +145,7 @@ namespace HomeCinema
                 src = item.Source;
 
                 // vars used for entries
+                MediaInfo Media = null;
                 string getIMDB = "";
                 string getAnilist = "";
                 string mName = "";
@@ -197,7 +198,6 @@ namespace HomeCinema
                 // Scrape from TMDB, for info and details
                 if (Settings.IsOffline == false)
                 {
-                    MediaInfo Media = null;
                     if (src == "tmdb" && GlobalVars.HAS_TMDB_KEY)
                     {
                         var movie = TmdbAPI.FindMovieTV(mName, "dummy", mediatype);
@@ -240,12 +240,15 @@ namespace HomeCinema
                         rGenre = GlobalVars.ConvertListToString(Media.Genre, ",", callFrom); // Get Genres
                     }
                 }
-
-                // If cannot get info online, make use of defaults
-                rTitle = (String.IsNullOrWhiteSpace(rTitle)) ? mName.Trim() : rTitle;
-                rYear = (String.IsNullOrWhiteSpace(rYear)) ? yearFromFname : rYear;
+                if (Media == null)
+                {
+                    Media = new MediaInfo();
+                    // If cannot get info online, make use of defaults
+                    Media.Title = mName.Trim();
+                    rYear = yearFromFname;
+                }
                 // If Original title is the same as the main title, ignore it
-                rOrigTitle = (rOrigTitle.Equals(rTitle)) ? String.Empty : rOrigTitle;
+                Media.OrigTitle = (Media.OrigTitle.Equals(Media.Title)) ? String.Empty : Media.OrigTitle;
 
                 // Make the DataRow
                 var dtInfo = new Dictionary<string, string>();
