@@ -26,6 +26,7 @@ namespace HomeCinema
                 media (type: ANIME, search: $search) {
                   id
                   format
+                  episodes
                   title {
                     romaji
                     english
@@ -36,6 +37,7 @@ namespace HomeCinema
                 }
               }
             }";
+        private static string QueryWithId = @"query ($Id: Int) {";
 
         public static AnilistPageQuery SearchForAnime(string text)
         {
