@@ -61,6 +61,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CustomMarshalers" />
+    <Reference Include="MakarovDev.ExpandCollapsePanel, Version=1.0.7197.27666, Culture=neutral, PublicKeyToken=6cb45db4006534c2, processorArchitecture=MSIL">
+      <HintPath>..\packages\MakarovDev.ExpandCollapsePanel.1.0.0\lib\net40\MakarovDev.ExpandCollapsePanel.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Build" />
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.4.0, Culture=neutral, PublicKeyToken=8985beaab7ea3f04, processorArchitecture=MSIL">

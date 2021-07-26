@@ -771,7 +771,7 @@ namespace HomeCinema
         }
         private int ControlLeftFromAttach(Control src, Control attachedTo) // return left property appropriate to control attached to another control
         {
-            return attachedTo.Left - (src.Width - 4);
+            return attachedTo.Left - (src.Width+1);
         }
         #endregion
         // ####################################################################################### BACKGROUND WORKERS
@@ -1187,7 +1187,11 @@ namespace HomeCinema
         private void frmMain_Resize(object sender, EventArgs e)
         {
             // Resize controls
-            int buttonWidth = (int)(this.Width * 0.13);
+            int ClientW = ClientRectangle.Width;
+            int ClearBtnAdjust = (this.WindowState == FormWindowState.Maximized) ? 40 : 24;
+            int ControlsSize = (this.WindowState == FormWindowState.Maximized) ? (int)(0.12*ClientW) : (int)(0.11*ClientW);
+            double size = (this.WindowState == FormWindowState.Maximized) ? 0.15 : 0.13;
+            int buttonWidth = (int)(this.Width * size);
             txtIMDB.Width = buttonWidth; // top row
             txtDirector.Width = buttonWidth;
             txtStudio.Width = buttonWidth;
@@ -1198,11 +1202,11 @@ namespace HomeCinema
             cbCountry.Width = buttonWidth;
             cbCategory.Width = buttonWidth;
 
-            // Reposition controls
-            txtIMDB.Left = (int)(this.Width * 0.07); // top row
+            // Reposition 'Search' controls
+            txtIMDB.Left = (int)(this.Width * 0.06); // top row
             txtDirector.Left = (int)(this.Width * 0.27);
             txtStudio.Left = (int)(this.Width * 0.47);
-            cbGenre.Left = (int)(this.Width * 0.68);
+            cbGenre.Left = (int)(this.Width * 0.685);
             txtYearFrom.Left = txtIMDB.Left; // bottom row
             lblYearDiv.Left = txtYearFrom.Right + 1;
             txtYearTo.Left = lblYearDiv.Right + 1;
@@ -1218,11 +1222,14 @@ namespace HomeCinema
             lblCast.Left = ControlLeftFromAttach(lblCast, txtCast);
             lblCountry.Left = ControlLeftFromAttach(lblCountry, cbCountry);
             lblCategory.Left = ControlLeftFromAttach(lblCategory, cbCategory);
-            
-            // Reposition Clear and 'Search after clear' checkbox
-            btnClear.Left = (int)(this.Width - btnClear.Width) - 32;
+
+            // Reposition 'Clear' button and 'Search after clear' checkbox
+            btnClear.Left = (int)(this.Width - btnClear.Width) - ClearBtnAdjust;
+            cbHideAnim.Left = (int)(this.Width - cbHideAnim.Width) - ClearBtnAdjust; // reposition 'Hide animations' checkbox
             cbClearSearch.Left = btnClear.Left;
-            cbHideAnim.Left = (int)(this.Width - cbHideAnim.Width) - 32; // reposition 'Hide animations' checkbox
+
+            // 'Controls' buttons
+            cbSort.Width = ControlsSize;
         }
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -1342,18 +1349,24 @@ namespace HomeCinema
         // Change lvSearchResult Sort by
         private void cbSort_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Change lvSearchResult Sort by
             try
             {
                 SortItemsInListView(cbSort.SelectedIndex);
-
-            } catch (Exception ex)
+            }
+            catch (Exception ex)  // Log Error
             {
-                // Log Error
                 SortItemsInListView(0);
                 GlobalVars.ShowError("frmMain-cbSort_SelectedIndexChanged", ex, false);
             }
         }
+
+        private void expSearch_ExpandCollapse(object sender, MakarovDev.ExpandCollapsePanel.ExpandCollapseEventArgs e)
+        {
+            grpControls.Top = expSearch.Bottom + 2;
+            lvSearchResult.Top = grpControls.Bottom + 2;
+            lvSearchResult.Height = (ClientRectangle.Height - lvSearchResult.Top) - 2;
+        }
+
         private void cbSortOrder_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
