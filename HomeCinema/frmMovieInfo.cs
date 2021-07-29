@@ -517,12 +517,6 @@ namespace HomeCinema
                 GlobalVars.ShowWarning(GlobalVars.MSG_NO_TMDB);
                 return;
             }
-            // Exit when no Anilist config
-            if (source.Equals("anilist"))
-            {
-                GlobalVars.ShowWarning(GlobalVars.MSG_NO_ANILIST);
-                return;
-            }
             // Declare vars
             frmLoading form = null;
             string errFrom = "frmMovieInfo-btnFetchData_Click";
@@ -687,12 +681,6 @@ namespace HomeCinema
             if (!GlobalVars.HAS_TMDB_KEY && source.Equals("tmdb"))
             {
                 GlobalVars.ShowWarning(GlobalVars.MSG_NO_TMDB);
-                return;
-            }
-            // Exit when no Anilist config
-            if (source.Equals("anilist"))
-            {
-                GlobalVars.ShowWarning(GlobalVars.MSG_NO_ANILIST);
                 return;
             }
 
