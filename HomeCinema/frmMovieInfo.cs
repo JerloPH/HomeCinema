@@ -518,7 +518,7 @@ namespace HomeCinema
                 return;
             }
             // Exit when no Anilist config
-            if ((String.IsNullOrWhiteSpace(GlobalVars.ANILIST_ID) || String.IsNullOrWhiteSpace(GlobalVars.ANILIST_SECRET)) && source.Equals("anilist"))
+            if (source.Equals("anilist"))
             {
                 GlobalVars.ShowWarning(GlobalVars.MSG_NO_ANILIST);
                 return;
@@ -690,7 +690,7 @@ namespace HomeCinema
                 return;
             }
             // Exit when no Anilist config
-            if ((String.IsNullOrWhiteSpace(GlobalVars.ANILIST_ID) || String.IsNullOrWhiteSpace(GlobalVars.ANILIST_SECRET)) && source.Equals("anilist"))
+            if (source.Equals("anilist"))
             {
                 GlobalVars.ShowWarning(GlobalVars.MSG_NO_ANILIST);
                 return;

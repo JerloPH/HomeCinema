@@ -12,11 +12,5 @@ namespace HomeCinema
         // Config for TMDB API
         [JsonProperty("TmdbApiKey")]
         public string TmdbApiKey { get; set; } = "";
-
-        // Anilist API
-        [JsonProperty("AnilistClientId")]
-        public string AnilistClientId { get; set; } = "";
-        [JsonProperty("AnilistClientSecret")]
-        public string AnilistClientSecret { get; set; } = "";
     }
 }

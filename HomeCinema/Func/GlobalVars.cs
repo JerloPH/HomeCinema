@@ -55,8 +55,6 @@ namespace HomeCinema
         public static string TMDB_KEY = "";
         public static string LINK_IMDB = "https://www.imdb.com/title/";
         public static string LINK_YT = "https://www.youtube.com/watch?v=";
-        public static string ANILIST_ID = "0";
-        public static string ANILIST_SECRET = "0";
 
         // Paths for Files and Folders
         public static string PATH_START = AppContext.BaseDirectory;
@@ -127,11 +125,6 @@ namespace HomeCinema
             if (!String.IsNullOrWhiteSpace(TMDB_KEY))
             {
                 toLog = toLog.Replace(TMDB_KEY, "TMDB_KEY");
-            }
-            if (!String.IsNullOrWhiteSpace(ANILIST_ID) && !String.IsNullOrWhiteSpace(ANILIST_SECRET))
-            {
-                toLog = toLog.Replace(ANILIST_ID, "ANILIST_ID");
-                toLog = toLog.Replace(ANILIST_SECRET, "ANILIST_SECRET");
             }
             if (!File.Exists(filePath)) { WriteToFile(filePath, ""); }
             try
@@ -329,11 +322,6 @@ namespace HomeCinema
                 if (!String.IsNullOrWhiteSpace(config.TmdbApiKey))
                 {
                     TMDB_KEY = config.TmdbApiKey;
-                }
-                if (!String.IsNullOrWhiteSpace(config.AnilistClientId) && !String.IsNullOrWhiteSpace(config.AnilistClientSecret))
-                {
-                    ANILIST_ID = config.AnilistClientId;
-                    ANILIST_SECRET = config.AnilistClientSecret;
                 }
             }
             // Contains TMDB_KEY ?

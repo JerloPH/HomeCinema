@@ -193,7 +193,7 @@ namespace HomeCinema
                             Media = TmdbAPI.GetMovieInfoFromTmdb(movie?.Results[0].Id.ToString(), mediatype);
                         }
                     }
-                    else if (src == "anilist" && !String.IsNullOrWhiteSpace(GlobalVars.ANILIST_SECRET))
+                    else if (src == "anilist")
                     {
                         var anime = AnilistAPI.SearchForAnime(mName);
                         if (anime != null)
