@@ -50,6 +50,7 @@ namespace HomeCinema
         public static bool HAS_TMDB_KEY { get; set; } = false;
         public static string MSG_NO_TMDB = "No TMDB Key!\nSome features are disabled";
         public static string MSG_NO_ANILIST = "Anilist config is not set!\nSearching is disabled.";
+        public static bool DEBUGGING { get; set; } = false;
 
         // Links for external websites
         public static string TMDB_KEY = "";
@@ -149,9 +150,9 @@ namespace HomeCinema
         {
             try
             {
-                return ($"[{DateTime.Now.ToString("MM-dd-yyyy hh:mm:ss:fff tt")}]: [{ logMessage }] { logMessage }\n");
+                return ($"[{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:ffff")}]: [{ codefrom }] { logMessage }\n");
             }
-            catch { return $"[Unknown DateTime][{ logMessage }] { logMessage }\n"; }
+            catch { return $"[Unknown DateTime][{ codefrom }] { logMessage }\n"; }
         }
         /// <summary>
         /// Log database-related functions, to text file.
@@ -179,6 +180,11 @@ namespace HomeCinema
         public static void LogErr(string codefrom, string log)
         {
             Log(FILE_LOG_ERROR, codefrom, log);
+        }
+        public static void LogDebug(string log)
+        {
+            if (!DEBUGGING) { return; }
+            Log(Path.Combine(PATH_LOG, "DEBUG.log"), "", log);
         }
         /// <summary>
         /// Show default message box from Windows
@@ -290,7 +296,7 @@ namespace HomeCinema
                 }
             }
         }
-        // Check all FILEs on Startup
+        // Check all FILES on Startup
         public static void CheckAllFiles()
         {
             // resources
@@ -326,6 +332,7 @@ namespace HomeCinema
             }
             // Contains TMDB_KEY ?
             HAS_TMDB_KEY = !String.IsNullOrWhiteSpace(TMDB_KEY);
+            DEBUGGING = Debugger.IsAttached;
         }
         // Create a directory, if not existing
         public static void CreateDir(string fPath)
