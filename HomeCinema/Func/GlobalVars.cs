@@ -55,8 +55,8 @@ namespace HomeCinema
         public static string TMDB_KEY = "";
         public static string LINK_IMDB = "https://www.imdb.com/title/";
         public static string LINK_YT = "https://www.youtube.com/watch?v=";
-        public static string ANILIST_ID = "";
-        public static string ANILIST_SECRET = "";
+        public static string ANILIST_ID = "0";
+        public static string ANILIST_SECRET = "0";
 
         // Paths for Files and Folders
         public static string PATH_START = AppContext.BaseDirectory;
@@ -336,6 +336,8 @@ namespace HomeCinema
                     ANILIST_SECRET = config.AnilistClientSecret;
                 }
             }
+            // Contains TMDB_KEY ?
+            HAS_TMDB_KEY = !String.IsNullOrWhiteSpace(TMDB_KEY);
         }
         // Create a directory, if not existing
         public static void CreateDir(string fPath)

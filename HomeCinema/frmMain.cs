@@ -47,8 +47,6 @@ namespace HomeCinema
         #region frmMain
         public frmMain()
         {
-            // Contains TMDB_KEY ?
-            GlobalVars.HAS_TMDB_KEY = !String.IsNullOrWhiteSpace(GlobalVars.TMDB_KEY);
             // Start app
             InitializeComponent();
 
