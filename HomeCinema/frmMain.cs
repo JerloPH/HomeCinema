@@ -132,7 +132,7 @@ namespace HomeCinema
             string filePath;
             string src;
             bool IsDownloadCover = false;
-
+            int sleep = 10;
             int count = 0; // count of inserts, whether success or fail
             string logInsert = ""; // Log succesfully inserted
 
@@ -192,6 +192,7 @@ namespace HomeCinema
                         {
                             Media = TmdbAPI.GetMovieInfoFromTmdb(movie?.Results[0].Id.ToString(), mediatype);
                         }
+                        sleep = 10;
                     }
                     else if (src == "anilist")
                     {
@@ -208,6 +209,7 @@ namespace HomeCinema
                             }
                             catch { }
                         }
+                        sleep = 25;
                     }
                     if (Media != null)
                     {
@@ -274,7 +276,7 @@ namespace HomeCinema
                     // Download cover, if not OFFLINE_MODE
                     if (Settings.IsOffline == false && (!String.IsNullOrWhiteSpace(Media.PosterPath)))
                     {
-                        Thread.Sleep(5); // sleep to prevent overloading API
+                        Thread.Sleep((int)(sleep/2)); // sleep to prevent overloading API
                         if (GlobalVars.HAS_TMDB_KEY && src == "tmdb") // Use TMDB API
                         {
                             IsDownloadCover = TmdbAPI.DownloadCoverFromTMDB(movieId, Media.PosterPath, errFrom);
@@ -299,7 +301,7 @@ namespace HomeCinema
                         }
                     }
                 }
-                Thread.Sleep(10); // Prevent continuous request to TMDB, prevents overloading the site.
+                Thread.Sleep(sleep); // Prevent continuous request to TMDB, prevents overloading the site.
             }
             dtNewFiles.Clear();
             GlobalVars.WriteAppend(logFileInsert, logInsert);

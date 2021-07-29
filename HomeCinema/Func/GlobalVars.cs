@@ -49,7 +49,6 @@ namespace HomeCinema
         public static string CAPTION_DIALOG = HOMECINEMA_NAME + " v" + HOMECINEMA_VERSION;
         public static bool HAS_TMDB_KEY { get; set; } = false;
         public static string MSG_NO_TMDB = "No TMDB Key!\nSome features are disabled";
-        public static string MSG_NO_ANILIST = "Anilist config is not set!\nSearching is disabled.";
         public static bool DEBUGGING { get; set; } = false;
 
         // Links for external websites
