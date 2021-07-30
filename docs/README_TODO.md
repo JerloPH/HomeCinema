@@ -1,7 +1,19 @@
 # HomeCinema - Features to Add / Bugs to Fix
 
 ## Priority List
+- Loading form before Main form is shown (On Program.cs, preferably)
+- Refactor database, and break support for old releases.
+  - 'Id' is autoincrementing, and no relevancy to movie info.
+  - 'Uid' is universal Id, to link entries accross tables.
+  - Make Id and Uid "BIG INT", to support a larger collection.
+  - Save deleted Uid to 'uid_free' table. 
 - Refactor how frmMovie stores and access child forms.
+- Portability option
+  - Add toggle in setting
+  - save entries to '_portable' tables
+  - Saving filepath removes the root folder
+  - Add root folder to 'filepath' entry, for portability support
+  - Portable entrues root folder is saved within the App root (divided into 4 subfolders: Movie,Series,AnimeMovie,AnimeSeries)
 - Marked 'Watched' entry.
 - Chromecast support.
 - Copy movie/series file to directory.
