@@ -10,7 +10,7 @@
 
 <br>
 
-[Click to view Pre-Release versions](https://github.com/JerloPH/HomeCinema/releases/tag/v0.7.2.x) <br>
+[**Click to view Pre-Release versions**](https://github.com/JerloPH/HomeCinema/releases/tag/v0.7.2.x) <br>
 [**See here for Pre-release changes and logs**](UNRELEASED.md) <br>
 **NOTE: Expect some bugs from Pre-release versions, and documents not matching the App behaviour since it changes frequently**
 
@@ -18,7 +18,7 @@
 
 **Windows 10, x64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.7.2.0/HomeCinema-Windows.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
 **Note: Untested on Windows 7/8, but it might work** <br>
-**NOTE: Current stable release is broken, use the Pre-release version instead.** <br>
+**NOTE: Current stable release is broken, use the [Pre-Release version](https://github.com/JerloPH/HomeCinema/releases/tag/v0.7.2.x) instead.** <br>
 **NOTE: Next stable release will break support for all previous versions (even pre-release).** <br>
 
 ### Download Counts
