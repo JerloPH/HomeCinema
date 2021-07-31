@@ -192,7 +192,7 @@ namespace HomeCinema
                         {
                             Media = TmdbAPI.GetMovieInfoFromTmdb(movie?.Results[0].Id.ToString(), mediatype);
                         }
-                        sleep = 10;
+                        sleep = 15;
                     }
                     else if (src == "anilist")
                     {
@@ -209,7 +209,7 @@ namespace HomeCinema
                             }
                             catch { }
                         }
-                        sleep = 25;
+                        sleep = 30;
                     }
                     if (Media != null)
                     {
