@@ -24,6 +24,7 @@
 ### Download Counts
 [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/total.svg)]() &nbsp;
 [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/latest/HomeCinema-Windows.zip)]()
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.7.2.x/HomeCinema-v0.7.2.3.zip)]()
 
 ## Requirements
 - 4GB or more RAM. <br>
