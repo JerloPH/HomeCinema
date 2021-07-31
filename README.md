@@ -9,6 +9,7 @@
 | -- | -- | -- |
 
 <br>
+
 [Click to view Pre-Release versions](https://github.com/JerloPH/HomeCinema/releases/tag/v0.7.2.x) <br>
 [**See here for Pre-release changes and logs**](UNRELEASED.md) <br>
 **NOTE: Expect some bugs from Pre-release versions, and documents not matching the App behaviour since it changes frequently**
