@@ -29,6 +29,8 @@ namespace HomeCinema.SQLFunc
 {
     public static class SQLHelper
     {
+        private static string DB_NAME = "HomeCinemaDB.db";
+        private static string DB_PATH = "";
         private static readonly int RetryCount = 5;
 
         // Methods for querying
@@ -61,6 +63,7 @@ namespace HomeCinema.SQLFunc
         /// <param name="InitiatedFrom">Caller of the function.</param>
         public static bool Initiate(string InitiatedFrom)
         {
+            DB_PATH = GlobalVars.PATH_START + DB_NAME;
             string CalledFrom = "SQLHelper (Instance)-" + InitiatedFrom;
             int dbVersion = 1;
             bool IsNewDb = DbExecNonQuery($"CREATE TABLE IF NOT EXISTS '{GlobalVars.DB_TNAME_INFO}' (" +
@@ -114,7 +117,7 @@ namespace HomeCinema.SQLFunc
                     DBUpgradeDatabase(dbVersion);
                 }
             }
-            GlobalVars.LogDb(CalledFrom, "Database is loaded succesfully!\n " + GlobalVars.DB_PATH);
+            GlobalVars.LogDb(CalledFrom, "Database is loaded succesfully!\n " + DB_PATH);
             return true;
         }
         private static void DBUpgradeDatabase(int dbVersion)
@@ -190,7 +193,7 @@ namespace HomeCinema.SQLFunc
         {
             try
             {
-                SQLiteConnection conn = new SQLiteConnection(GlobalVars.DB_DATAPATH);
+                SQLiteConnection conn = new SQLiteConnection(@"URI=file:" + DB_PATH);
                 conn.Open();
                 return conn;
             }

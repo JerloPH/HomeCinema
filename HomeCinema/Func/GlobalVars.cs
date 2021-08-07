@@ -83,10 +83,6 @@ namespace HomeCinema
         public static Icon HOMECINEMA_ICON = new Icon(FILE_ICON); // Icon as a resource, used by forms
 
         // Database Vars
-        public static string DB_NAME = "HomeCinemaDB.db";
-        public static string DB_PATH = PATH_START + DB_NAME;
-        public static string DB_DATAPATH =  @"URI=file:" + DB_PATH;
-
         public static string DB_TNAME_INFO = "info";
         public static string DB_TNAME_FILEPATH = "filepath";
 
