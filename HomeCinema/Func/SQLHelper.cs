@@ -68,6 +68,7 @@ namespace HomeCinema.SQLFunc
             int dbVersion = 1;
             bool IsNewDb = DbExecNonQuery($"CREATE TABLE IF NOT EXISTS '{HCTable.info}' (" +
                 "'Id'	INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                $"'{HCInfo.Id}'	INTEGER, " +
                 $"'{HCInfo.imdb}'  TEXT DEFAULT 0, " +
                 $"'{HCInfo.anilist}'  TEXT DEFAULT 0, " +
                 $"'{HCInfo.name}'  TEXT, " +
@@ -86,6 +87,7 @@ namespace HomeCinema.SQLFunc
                 $"'{HCInfo.summary}'  TEXT DEFAULT 'This has no summary');", CalledFrom, -1) == 0;
             DbExecNonQuery($"CREATE TABLE IF NOT EXISTS '{HCTable.filepath}' (" +
                 "[Id]  INTEGER  PRIMARY KEY AUTOINCREMENT, " +
+                $"'{HCFile.Id}'	INTEGER, " +
                 $"[{HCFile.File}]  TEXT, " +
                 $"[{HCFile.Sub}]  TEXT, " +
                 $"[{HCFile.Trailer}]  TEXT);", CalledFrom);

@@ -19,7 +19,7 @@ namespace HomeCinema
     }
     public static class HCInfo
     {
-        public static string Id = "Id";
+        public static string Id = "UId";
         public static string imdb = "imdb";
         public static string anilist = "anilist";
         public static string name = "name";
