@@ -2,29 +2,24 @@
 
 <img src="/data/v0.7.jpg"></img>
 
-**version:**	0.7.2.0 <br>
-**release:**	39
+**version:**	0.8.0.0 <br>
+**release:**	40
 
 | <a href="docs/REPORT_ISSUE.md">Report Issue/Bug/Error/Feature request</a> | <a href="(docs/CONTRIBUTING.md">Submit Pull Request</a>  | <a href="VERSION_HISTORY.md">See 'App Version History'</a> |
 | -- | -- | -- |
 
 <br>
 
-[**Click to view Pre-Release versions**](https://github.com/JerloPH/HomeCinema/releases/tag/v0.7.2.x) <br>
+## Downloads
+**Windows 10, x64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.8.0.0/HomeCinema-Windows.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
+**Note: Untested on Windows 7/8, but it might work** <br>
+
 [**See here for Pre-release changes and logs**](UNRELEASED.md) <br>
 **NOTE: Expect some bugs from Pre-release versions, and documents not matching the App behaviour since it changes frequently**
-
-## Downloads
-
-**Windows 10, x64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.7.2.0/HomeCinema-Windows.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
-**Note: Untested on Windows 7/8, but it might work** <br>
-**NOTE: Current stable release is broken, use the [Pre-Release version](https://github.com/JerloPH/HomeCinema/releases/tag/v0.7.2.x) instead.** <br>
-**NOTE: Next stable release will break support for all previous versions (even pre-release).** <br>
 
 ### Download Counts
 [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/total.svg)]() &nbsp;
 [![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/latest/HomeCinema-Windows.zip)]()
-[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/v0.7.2.x/HomeCinema-v0.7.2.3.zip)]()
 
 ## Requirements
 - 4GB or more RAM. <br>
@@ -41,30 +36,38 @@ View reviews and posts from [**GHacks.net**](https://www.ghacks.net/2021/06/06/h
 
 ## Features:
 - Automatically scan and add all supported media files from designated folders.
-- Automatically fetch movie information from [The Movie Database](https://www.themoviedb.org/). *Requires Internet Connection.*
+- Automatically fetch movie and series information from [The Movie Database](https://www.themoviedb.org/). *Requires Internet Connection.*
+- Automatically fetch anime information from [Anilist](https://anilist.co/). *Requires Internet Connection.*
 - Directly open the media file, using your default player.
 - Allows easy browsing of media files on your Computer / Local drive.
 - Display a collection from your locally stored files.
 - Allows filter and search.
 - Edit and Save information within the app.
+- Customizable UI (on some areas).
 
 ## Adding Media Locations
 1. Press **CTRL + S** or click on **[Settings]** button to Open Settings UI.
 2. Go to **File** Tab.
-3. Under **Media Locations**, click on **[Add]** button and navigate to the directory where your movie files are located. <br>
+
+<img src="/data/guide_add_mediaseries_paths_1.jpg"></img>
+
+3. Under **Media Locations**, click on **[Add]** button and a new Window will pop-up<br>
+
+<img src="/data/guide_add_mediaseries_paths_2.jpg"></img>
+
+4. Click **[Browse]** button and navigate to the directory where your media files are located.
+5. Select the media type from the **Selection Box** with label **Type**.
+6. Select media source from the **Selection Box** with label **Source**.
 
 **IMPORTANT NOTE:** First-time loading of App takes a while to finish. Even longer if you have a huge collection of media files.
 
 ### NOTES for Adding TV Series
-  - Located under **Series Locations**.
   - The directory **must be** the top-level *base* folder.
   - A sample directory structure:
 ```
-D:\TV Series\Title of Series and Season\Episode 1.mp4
+D:\TV Series\Title of Series\Episode 1.mp4
 ```
-  - With this structure, ``D:\TV Series`` is your base folder.
-  
-<img src="/data/guide_add_mediaseries_paths.jpg"></img>
+  - With this structure, ``D:\TV Series`` is your base folder, and is the path you need to select.
 
 ****
 
@@ -79,12 +82,14 @@ D:\TV Series\Title of Series and Season\Episode 1.mp4
 [**The Movie Database**](https://www.themoviedb.org/) - Used to fetch movie details from the web. <br>
 
 ### NuGet Packages Used
-[**Newtonsoft.Json**](https://www.newtonsoft.com/json) - Parse JSON file that contains Movie Information. <br>
-[**SQLite**](https://www.nuget.org/packages/System.Data.SQLite.Core/) - Used to connect to a Local Database.<br>
+[**Newtonsoft.Json**](https://www.newtonsoft.com/json) - JSON Parser.<br>
+[**SQLite**](https://www.nuget.org/packages/System.Data.SQLite.Core/) - Local Database setup.<br>
 [**SQLite Stub**](https://packages.nuget.org/packages/Stub.System.Data.SQLite.Core.NetFramework/) - Used to connect to a Local Database. <br>
 [**Microsoft Windows API CodePack Core**](https://www.nuget.org/packages/Microsoft-WindowsAPICodePack-Core/) - For various functions. <br>
 [**Microsoft Windows API CodePack Shell**](https://www.nuget.org/packages/Microsoft-WindowsAPICodePack-Shell/) - For various functions. <br>
 [**Microsoft Universal Windows Platform**](https://www.nuget.org/packages/Microsoft.NETCore.UniversalWindowsPlatform/) - For various functions. <br>
+[**RestSharp**](https://github.com/restsharp/RestSharp) - Wrapper for easy RESTful queries on APIs. <br>
+[**MakarovDev.ExpandCollapsePanel**](https://github.com/alexander-makarov/ExpandCollapsePanel) - Expandable and Collapsible Panel. <br>
 ****
 
 ## License
