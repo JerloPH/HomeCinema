@@ -136,49 +136,6 @@ namespace HomeCinema.SQLFunc
                 if (retry > 0)
                 {
                     GlobalVars.LogDb(calledFrom, $"Loaded dbVer: ({dbVersion}), Current dbVer: ({dbVer})");
-                    switch (dbVer)
-                    {
-                        case 1: // rename column on table 'info' to 'name_orig'
-                        {
-                            if (DbExecNonQuery("ALTER TABLE `info` RENAME COLUMN `name_ep` TO `name_orig`", calledFrom, -1) == 0)
-                            {
-                                dbVer += 1;
-                            }
-                            break;
-                        }
-                        case 2:
-                        {
-                            bool success = false;
-                            string content = "";
-                            string seriesFile = GlobalVars.PATH_DATA + "serieslocation.hc_data";
-                            var arr1 = GlobalVars.BuildArrFromFile(GlobalVars.FILE_MEDIALOC, calledFrom, '*');
-                            var arr2 = GlobalVars.BuildArrFromFile(seriesFile, calledFrom, '*');
-                            foreach (string item1 in arr1)
-                            {
-                                content += $"{item1}*movie*tmdb|";
-                            }
-                            foreach (string item2 in arr2)
-                            {
-                                content += $"{item2}*series*tmdb|";
-                            }
-                            content = content.TrimEnd('|');
-                            GlobalVars.TryDelete(seriesFile, calledFrom);
-                            success = GlobalVars.WriteToFile(GlobalVars.FILE_MEDIALOC, content);
-                            if (success)
-                            {
-                                dbVer += 1;
-                            }
-                            break;
-                        }
-                        case 3:
-                        {
-                            if (DbExecNonQuery("ALTER TABLE `info` ADD COLUMN `anilist` TEXT;", calledFrom, -1) == 0)
-                            {
-                                dbVer += 1;
-                            }
-                            break;
-                        }
-                    }
                 }
                 else
                 {
