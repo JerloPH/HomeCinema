@@ -633,7 +633,7 @@ namespace HomeCinema
             int MOVIEID;
             string MovieId = InfoString[0]; // ID
             string resName = InfoString[1]; // name
-            string resNameEp = InfoString[2]; // name_ep
+            string resNameOrig = InfoString[2]; // name_orig
             string resNameSer = InfoString[3]; // name_series
             string resSeason = InfoString[4]; // season
             string resEp = InfoString[5]; // episode
@@ -657,13 +657,17 @@ namespace HomeCinema
                 if (String.IsNullOrWhiteSpace(resSeason))
                 {
                     temp.SubItems.Add(resNameSer); // Series Name
-                    temp.SubItems.Add(resNameEp); // Episode Name
+                    temp.SubItems.Add(resNameOrig); // Original Name
                 }
                 else
                 {
                     // Set Series Name
-                    temp.SubItems.Add(resNameEp); // Episode Name
-                    temp.SubItems.Add("S" + GlobalVars.ValidateNum(resSeason) + " E" + GlobalVars.ValidateNum(resEp));
+                    string seasonNum = GlobalVars.ValidateNum(resSeason);
+                    temp.SubItems.Add(resNameOrig); // Original Name
+                    if (!seasonNum.Equals("00"))
+                    {
+                        temp.SubItems.Add($"S{seasonNum} E{GlobalVars.ValidateNum(resEp)}");
+                    }
                 }
                 // Year
                 temp.SubItems.Add(resYear);
