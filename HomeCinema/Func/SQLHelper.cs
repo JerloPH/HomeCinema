@@ -565,8 +565,8 @@ namespace HomeCinema.SQLFunc
             if (!String.IsNullOrWhiteSpace(valpair))
             {
                 string qry = $"UPDATE {TableName} " +
-                             "SET " + valpair + " " +
-                            $"WHERE [Id] = {Id}";
+                             $"SET {valpair} " +
+                             $"WHERE `{HCInfo.Id}`={Id}";
                 if (DbExecNonQuery(qry, callFrom))
                 {
                     GlobalVars.LogDb(callFrom, $"Entry with Id({Id}) is updated Succesfully!");
@@ -605,12 +605,12 @@ namespace HomeCinema.SQLFunc
         {
             // Remove info
             string calledFrom = $"SQLHelper-DbDeleteMovie [calledFrom: {errFrom}]";
-            string qry = $"DELETE FROM {HCTable.info} WHERE [Id] = {ID};";
+            string qry = $"DELETE FROM {HCTable.info} WHERE `{HCInfo.Id}`={ID};";
             if (DbExecNonQuery(qry, calledFrom))
             {
                 GlobalVars.LogDb(errFrom, $"ID ({ID}) is removed from database! Table: ({HCTable.info})");
                 // Remove filepath
-                qry = $"DELETE FROM {HCTable.filepath} WHERE [Id] = {ID};";
+                qry = $"DELETE FROM {HCTable.filepath} WHERE `{HCFile.Id}`={ID};";
                 if (DbExecNonQuery(qry, calledFrom))
                 {
                     GlobalVars.LogDb(errFrom, $"ID ({ID}) is removed from database! Table: ({HCTable.filepath})");
