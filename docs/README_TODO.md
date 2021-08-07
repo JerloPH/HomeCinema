@@ -2,10 +2,7 @@
 
 ## Priority List
 - Loading form before Main form is shown (On Program.cs, preferably)
-- Refactor database, and break support for old releases.
-  - 'Id' is autoincrementing, and no relevancy to movie info.
-  - 'Uid' is universal Id, to link entries accross tables.
-  - Make Id and Uid "BIG INT", to support a larger collection.
+- Refactor database.
   - Save deleted Uid to 'uid_free' table. 
 - Refactor how frmMovie stores and access child forms.
 - Portability option
@@ -23,7 +20,6 @@
 - Check if file still exists, before loading it into the App.
   - Delete entry from database, and cover picture (if existing). *For now, skips the entry.*
   - Remove ListView item, when the file is not existing. Then, delete the entry from database. *Or archive to another database*.
-- Use **Series Name/Title** only **if** category is **Series**, and use as **Original Title/Name**.
 - Create new TextBox Setting to set TimeOut for connections.
 
 ## Features:
@@ -45,22 +41,22 @@
 ## Main Form
   - [x] Automatically get information from IMDB when newly added media (IMDB Scraper). **Ongoing**.
     - Done:
-	  - IMDB Id
-	  - Year, Title
-	  - Summary
-	  - Genre
-	  - Trailer YT Link
-	  - Artist, Director, Producer
-	  - Country
-	  - Cover Image.
-	  - Studio.
+      - IMDB Id
+      - Year, Title
+      - Summary
+      - Genre
+      - Trailer YT Link
+      - Artist, Director, Producer
+      - Country
+      - Cover Image.
+      - Studio.
 	  
 ## Movie Information Form
   - [ ] Save Metadata to movie file. *Only for movies*. Save info showing frmLoad.
     - [x] Title
-	- [x] Year
-	- [x] Genre
-	- [x] Director
+	  - [x] Year
+  	- [x] Genre
+	  - [x] Director
 
 ## Bugs
 
