@@ -312,7 +312,7 @@ namespace HomeCinema
         {
             string ret = "";
             string errFrom = $"frmMain-GetFilePath [calledFrom: {calledFrom}]";
-            string qry = $"SELECT `file` FROM { GlobalVars.DB_TNAME_FILEPATH } WHERE `Id`={ID} LIMIT 1;";
+            string qry = $"SELECT `file` FROM { HCTable.filepath } WHERE `Id`={ID} LIMIT 1;";
             using (DataTable dtFile = SQLHelper.DbQuery(qry, errFrom))
             {
                 if (dtFile.Rows.Count > 0)
@@ -371,7 +371,7 @@ namespace HomeCinema
             SEARCH_QUERY = ""; // reset query
 
             // Default SELECT Query
-            qry = $"SELECT * FROM {GlobalVars.DB_TNAME_INFO}";
+            qry = $"SELECT * FROM {HCTable.info}";
 
             // Build Filter for Query
             // Name Text search
@@ -439,7 +439,7 @@ namespace HomeCinema
             // Override filter string build-up and Use IMDB Code
             if (String.IsNullOrWhiteSpace(txtIMDB.Text) == false)
             {
-                qry = $"SELECT * FROM {GlobalVars.DB_TNAME_INFO} WHERE `{HCInfo.imdb}` = '{txtIMDB.Text}'";
+                qry = $"SELECT * FROM {HCTable.info} WHERE `{HCInfo.imdb}` = '{txtIMDB.Text}'";
             }
 
             // Filter out all animations
@@ -529,7 +529,7 @@ namespace HomeCinema
                 string MOVIEID = lvItem.Tag.ToString().TrimStart('0');
 
                 // Change info of the item
-                string qry = $"SELECT * FROM {GlobalVars.DB_TNAME_INFO} WHERE `Id`={MOVIEID} LIMIT 1;";
+                string qry = $"SELECT * FROM {HCTable.info} WHERE `Id`={MOVIEID} LIMIT 1;";
 
                 using (DataTable dtFile = SQLHelper.DbQuery(qry, "frmMain-UpdateMovieItemOnLV")) // run the query
                 {
@@ -571,7 +571,7 @@ namespace HomeCinema
             if (String.IsNullOrWhiteSpace(SEARCH_QUERY))
             {
                 // Default SELECT Query
-                SEARCH_QUERY = $"SELECT * FROM {GlobalVars.DB_TNAME_INFO}";
+                SEARCH_QUERY = $"SELECT * FROM {HCTable.info}";
             }
             PopulateMovieBG(AppStart);
         }
@@ -820,7 +820,7 @@ namespace HomeCinema
                     // Save MEDIA_LOC list to file
                 }
 
-                listAlreadyinDB = SQLHelper.DbQrySingle(GlobalVars.DB_TNAME_FILEPATH, "[file]", calledFrom + "-listAlreadyinDB");
+                listAlreadyinDB = SQLHelper.DbQrySingle(HCTable.filepath, "[file]", calledFrom + "-listAlreadyinDB");
                 countMediaLocMax = GlobalVars.MEDIA_LOC.Count;
                 foreach (MediaLocations mediaLoc in GlobalVars.MEDIA_LOC)
                 {

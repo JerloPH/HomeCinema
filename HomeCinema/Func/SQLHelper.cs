@@ -66,7 +66,7 @@ namespace HomeCinema.SQLFunc
             DB_PATH = GlobalVars.PATH_START + DB_NAME;
             string CalledFrom = "SQLHelper (Instance)-" + InitiatedFrom;
             int dbVersion = 1;
-            bool IsNewDb = DbExecNonQuery($"CREATE TABLE IF NOT EXISTS '{GlobalVars.DB_TNAME_INFO}' (" +
+            bool IsNewDb = DbExecNonQuery($"CREATE TABLE IF NOT EXISTS '{HCTable.info}' (" +
                 "'Id'	INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "'imdb'	TEXT DEFAULT 0, " +
                 "'anilist'	TEXT DEFAULT 0, " +
@@ -84,7 +84,7 @@ namespace HomeCinema.SQLFunc
                 "'artist'	TEXT, " +
                 "'year'	VARCHAR(5) DEFAULT 0, " +
                 "'summary'  TEXT DEFAULT 'This has no summary');", CalledFrom, -1) == 0;
-            DbExecNonQuery($"CREATE TABLE IF NOT EXISTS '{GlobalVars.DB_TNAME_FILEPATH}' (" +
+            DbExecNonQuery($"CREATE TABLE IF NOT EXISTS '{HCTable.filepath}' (" +
                 "[Id]	INTEGER  PRIMARY KEY AUTOINCREMENT, " +
                 "[file]	TEXT, " +
                 "[sub]	TEXT, " +
@@ -475,14 +475,14 @@ namespace HomeCinema.SQLFunc
                     var transaction = conn.BeginTransaction();
 
                     // Insert entry
-                    cmd.CommandText = $"INSERT INTO {GlobalVars.DB_TNAME_INFO} ({infoCols}) VALUES({infoVals});";
+                    cmd.CommandText = $"INSERT INTO {HCTable.info} ({infoCols}) VALUES({infoVals});";
                     GlobalVars.LogDb($"{errFrom} (Insert query)", cmd.CommandText);
                     successCode = cmd.ExecuteNonQuery();
 
                     if (successCode > 0)
                     {
                         LastID = (int)conn.LastInsertRowId;
-                        cmd.CommandText = $"INSERT INTO {GlobalVars.DB_TNAME_FILEPATH} (Id, {fileCols}) VALUES({LastID},{fileVals});";
+                        cmd.CommandText = $"INSERT INTO {HCTable.filepath} (Id, {fileCols}) VALUES({LastID},{fileVals});";
                         successCode = cmd.ExecuteNonQuery();
                         // Add cover image by capturing media
                         string coverFilepath = GlobalVars.PATH_IMG + LastID + ".jpg";
@@ -585,7 +585,7 @@ namespace HomeCinema.SQLFunc
         /// <returns>True if succesful. Otherwise, false.</returns>
         public static bool DbUpdateInfo(Dictionary<string, string> dt, string from)
         {
-            return DbUpdateTable(GlobalVars.DB_TNAME_INFO, dt, $"SQLHelper-DbUpdateInfo (calledFrom: {from})");
+            return DbUpdateTable(HCTable.info, dt, $"SQLHelper-DbUpdateInfo (calledFrom: {from})");
         }
         /// <summary>
         /// Update Table FILEPATH, with new values.
@@ -595,7 +595,7 @@ namespace HomeCinema.SQLFunc
         /// <returns>True if succesful. Otherwise, false.</returns>
         public static bool DbUpdateFilepath(Dictionary<string, string> dt, string from)
         {
-            return DbUpdateTable(GlobalVars.DB_TNAME_FILEPATH, dt, $"SQLHelper-DbUpdateFilepath (CalledFrom: {from})");
+            return DbUpdateTable(HCTable.filepath, dt, $"SQLHelper-DbUpdateFilepath (CalledFrom: {from})");
         }
         /// <summary>
         /// Delete a MOVIE from Database.
@@ -607,15 +607,15 @@ namespace HomeCinema.SQLFunc
         {
             // Remove info
             string calledFrom = $"SQLHelper-DbDeleteMovie [calledFrom: {errFrom}]";
-            string qry = $"DELETE FROM {GlobalVars.DB_TNAME_INFO} WHERE [Id] = {ID};";
+            string qry = $"DELETE FROM {HCTable.info} WHERE [Id] = {ID};";
             if (DbExecNonQuery(qry, calledFrom))
             {
-                GlobalVars.LogDb(errFrom, $"ID ({ID}) is removed from database! Table: ({GlobalVars.DB_TNAME_INFO})");
+                GlobalVars.LogDb(errFrom, $"ID ({ID}) is removed from database! Table: ({HCTable.info})");
                 // Remove filepath
-                qry = $"DELETE FROM {GlobalVars.DB_TNAME_FILEPATH} WHERE [Id] = {ID};";
+                qry = $"DELETE FROM {HCTable.filepath} WHERE [Id] = {ID};";
                 if (DbExecNonQuery(qry, calledFrom))
                 {
-                    GlobalVars.LogDb(errFrom, $"ID ({ID}) is removed from database! Table: ({GlobalVars.DB_TNAME_FILEPATH})");
+                    GlobalVars.LogDb(errFrom, $"ID ({ID}) is removed from database! Table: ({HCTable.filepath})");
                     return true;
                 }
             }

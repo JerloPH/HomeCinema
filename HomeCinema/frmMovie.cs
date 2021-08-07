@@ -83,7 +83,7 @@ namespace HomeCinema
             frmLoading form = new frmLoading("Opening media info..", "Loading");
 
             // Build query for FilePath, and Movie Info
-            qry = $"SELECT * FROM {GlobalVars.DB_TNAME_INFO} A LEFT JOIN {GlobalVars.DB_TNAME_FILEPATH} B ON A.`Id`=B.`Id` WHERE A.`Id`={ID} LIMIT 1;";
+            qry = $"SELECT * FROM {HCTable.info} A LEFT JOIN {HCTable.filepath} B ON A.`Id`=B.`Id` WHERE A.`Id`={ID} LIMIT 1;";
 
             form.BackgroundWorker.DoWork += (sender1, e1) =>
             {

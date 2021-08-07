@@ -12,6 +12,11 @@ namespace HomeCinema
         Check = 1,
         Warning = 2
     }
+    public static class HCTable
+    {
+        public static string info = "info";
+        public static string filepath = "filepath";
+    }
     public static class HCInfo
     {
         public static string Id = "Id";

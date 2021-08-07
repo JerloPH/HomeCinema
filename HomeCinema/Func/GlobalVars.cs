@@ -83,9 +83,6 @@ namespace HomeCinema
         public static Icon HOMECINEMA_ICON = new Icon(FILE_ICON); // Icon as a resource, used by forms
 
         // Database Vars
-        public static string DB_TNAME_INFO = "info";
-        public static string DB_TNAME_FILEPATH = "filepath";
-
         public static string[] DB_INFO_CATEGORY = new string[] { "None", "Movie", "TV Series", "Anime Movie", "Anime Series", "Animated Movie", "Cartoon Series" };
 
         // For the items in frmMain media listview
@@ -1165,7 +1162,7 @@ namespace HomeCinema
         {
             string calledFrom = "GlobalVars-CleanCoversNotInDb()";
             string filepath;
-            List<string> listId = SQLHelper.DbQrySingle(DB_TNAME_INFO , HCInfo.Id, calledFrom);
+            List<string> listId = SQLHelper.DbQrySingle(HCTable.info, HCInfo.Id, calledFrom);
             List<string> listCover = SearchFilesSingleDir(PATH_IMG, calledFrom, false);
             foreach (string i in listId)
             {
