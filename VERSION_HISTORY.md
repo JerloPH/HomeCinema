@@ -33,7 +33,7 @@
 - Better Robocopy script on Post-Build event.
 - Various code cleanups; Removed unused methods, functions, and variables.
 
-*Full and detailed changes on* [**'VERSION_HISTORY_DETAILED.md'**](docs/VERSION_HISTORY_DETAILED.md).
+*Full and detailed changes on* [**'VERSION_HISTORY_DETAILED.md'**](https://github.com/JerloPH/HomeCinema/blob/master/docs/VERSION_HISTORY_DETAILED.md#released-on-v08).
 ****
 
 ## HomeCinema v0.7.2
