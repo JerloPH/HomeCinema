@@ -11,7 +11,7 @@
 <br>
 
 ## Downloads
-**Windows 10, x64 bit [Compressed ZIP]**: [Click to Download latest version](https://github.com/JerloPH/HomeCinema/releases/download/v0.8.0.0/HomeCinema-Windows.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
+**Windows 10, x64 bit [Compressed ZIP]**: [Click to Download latest 'Stable' version](https://github.com/JerloPH/HomeCinema/releases/download/v0.8.0.0/HomeCinema-Windows.zip "Download, Extract and Open 'HomeCinema' Executable file") <br>
 **Note: Untested on Windows 7/8, but it might work** <br>
 
 [**See here for Pre-release changes and logs**](UNRELEASED.md) <br>
@@ -58,6 +58,9 @@ View reviews and posts from [**GHacks.net**](https://www.ghacks.net/2021/06/06/h
 4. Click **[Browse]** button and navigate to the directory where your media files are located.
 5. Select the media type from the **Selection Box** with label **Type**.
 6. Select media source from the **Selection Box** with label **Source**.
+7. Finally, click the **[OK]** button.
+  - If its your first-time use, it will load all media files from the location selected.
+  - If you add media locations from the **Settings** form, an App restart is required to take effect.
 
 **IMPORTANT NOTE:** First-time loading of App takes a while to finish. Even longer if you have a huge collection of media files.
 

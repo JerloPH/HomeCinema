@@ -1,5 +1,63 @@
 # Version History Detailed
 
+## Released on v0.8
+### Fixes
+- FIX: Covers not updating when fetching from TMDB, causing duplicate cover images.
+- FIX: Sometimes, covers are not replaced by new cover.
+- FIX: Cannot connect to TMDB API.
+- FIX: Some Inaccuracy on query search.
+- FIX: Use English title on search results (from fetching info online), if it exists.
+- FIX: Duplicate TMDB request on finding movie IMDB Id.
+- FIX: Entry sub-items not resetting when updating its item.
+
+### Changes and Additions
+- REV: Prevent Loading of unsupported database (for release older than v0.8).
+- REV: Changed MediaLocation setting. Now, setting for Movie and TV Location paths are combined.
+- REV: Changed how Media Locations are loaded/saved. Breaks old media location settings.
+- NEW: Media Location form for selection of folder.
+- NEW: Add Anilist support to fetch Anime-related media.
+- NEW: Setting to change Image cover size.
+- NEW: **Search** panel and its filters are now collapsible / expandable.
+- NEW: Load API keys from config.json file, if file exists.
+- NEW: Add prompt on replacing current info with info fetched online, on Movie Info edit form.
+- NEW: Fetch Episode and Season counts.
+- MINOR: Center Setting form on Main Form upon Load.
+- GUI: Cleaner UI on some areas, and additional improvements to overall UI.
+- GUI: Changed some buttons colors.
+
+### Refactors
+- REV: Added RestSharp NuGet package for RESTful queries.
+- REV: MakarovDev.ExpandCollapsePanel NuGet package for Panel UI.
+- REV: Refactored new entry detection.
+  - Use dictionary to include additional info.
+  - Separate logic according to sources, for fetching media info.
+- REV: Refactor adding media mechanism.
+  - Only fetch info automatically, if it finds exactly 1 match.
+  - Use List for Medias and MediaLocation structures.
+  - Add each item with corresponding mediatype and source
+  - Moved MediaLocation loading to GetMediaFiles() method
+- REV: Use 'series' string to match any series type of media.
+- REV: Refactor SQLHelper InsertMovie() method.
+  - Set LastID only if first query is successful.
+  - Reset LastID to 0 when an success code is not larger than 0.
+- REV: Refactored TMDB Search form.
+  - Allow multi search (movie and tv) on TMDB Search form.
+  - Also, can be used to search on Anilist.
+  - Added default values and checker for null objects.
+  - Replace 'spaces' with '%20' on API search link endpoint.
+  - Always depend on current source for fetching info.
+- REV: TMDB and Anilist API wrappers has their own classes separated.
+- REV: Handle Rate-Limiting on Anilist.
+- REV: Refactor Settings saving and loading.
+- REV: Removed serieslocation file.
+- REV: Moved query-related GlobalVar method to SQLHelper.
+- REV: Better Robocopy script on Post-Build event.
+- REV: Add `UId` column to use as cross-reference between tables.
+- MINOR: Properly encode query into url searchable string.
+- MINOR: Removed all unused functions and variables.
+- MINOR: Cleanup queries.
+- Various code cleanups.
+
 ## Released on v0.7.2
 ### What's New?
 - FIX: Double apostrophe on entry title. Closes [Issue #11](https://github.com/JerloPH/HomeCinema/issues/11).

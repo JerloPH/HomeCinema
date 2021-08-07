@@ -1,5 +1,41 @@
 # HomeCinema - Project History:
 
+## HomeCinema v0.8
+### *release 40 - build 07 August 2021 PHT*
+### New Stuff!
+- Add **Anilist** support to fetch Anime-related media information. Closes [Issue #10](https://github.com/JerloPH/HomeCinema/issues/10).
+- Expandable and Collapsible **Search** panel and its filters. Closes [Issue #13](https://github.com/JerloPH/HomeCinema/issues/13).
+- Load your own TMDB API key from **'data/config.json'** file, if its not empty.
+- Add prompt on replacing current info with info fetched online, on **Movie Info edit** form.
+- Fetch **Episode** and **Season** counts.
+- Combined Media Location and Series Location paths. See the new setting on **Settings** form.
+- Fetch media info automatically, **only** if it finds exactly 1 match. More information on [Issue #14](https://github.com/JerloPH/HomeCinema/issues/14).
+
+### Fixes
+- Covers not updating when fetching from TMDB, causing duplicate cover images.
+- Sometimes, covers are not replaced by new cover.
+- Cannot connect to TMDB API.
+- Some Inaccuracy on query search.
+- Use English title on search results (from fetching info online), if it exists.
+- Duplicate TMDB request on finding movie IMDB Id.
+- Entry sub-items not resetting when updating its item.
+- Sanitize query with whitespaces on searching.
+- Search both Movie and TV Series on **Search** form.
+
+### Misc.
+- Added RestSharp NuGet package.
+- Added MakarovDev.ExpandCollapsePanel NuGet package.
+- Refactored database, and related codes:
+  - Use `UId` column for cross-referencing entries.
+  - Cleanup queries.
+  - Moved all codes related to database to its own class **'SQLHelper'**.
+- Refactored mechanism for Saving/Loading settings.
+- Better Robocopy script on Post-Build event.
+- Various code cleanups; Removed unused methods, functions, and variables.
+
+*Full and detailed changes on* [**'VERSION_HISTORY_DETAILED.md'**](docs/VERSION_HISTORY_DETAILED.md).
+****
+
 ## HomeCinema v0.7.2
 ### *release 39 - build 10 July 2021 PHT*
 ### Fixes and Changes
