@@ -360,17 +360,17 @@ namespace HomeCinema
         // Load Media Location file
         public static void LoadMediaLocations()
         {
-            string medialocContent = GlobalVars.ReadStringFromFile(GlobalVars.FILE_MEDIALOC, "frmMain");
+            string medialocContent = ReadStringFromFile(FILE_MEDIALOC, "frmMain");
             if (!String.IsNullOrWhiteSpace(medialocContent))
             {
-                GlobalVars.MEDIA_LOC?.Clear();
+                MEDIA_LOC?.Clear();
                 var arr = medialocContent.Split('|');
                 foreach (string arrFolder in arr)
                 {
                     var arr2 = arrFolder.Split('*');
                     if (arr2.Length > 2)
                     {
-                        GlobalVars.MEDIA_LOC.Add(new MediaLocations(arr2[0], arr2[1], arr2[2]));
+                        MEDIA_LOC.Add(new MediaLocations(arr2[0], arr2[1], arr2[2]));
                     }
                 }
             }
@@ -687,20 +687,6 @@ namespace HomeCinema
                 ShowError($"GlobalVars-SearchFoldersFromDirectory(), called by: {errFrom}", ex, false);
             }
             return list;
-        }
-        // Get folder using file dialog
-        public static string GetDirectoryFolder(string caption)
-        {
-            using (var fbd = new FolderBrowserDialog())
-            {
-                fbd.Description = caption;
-                DialogResult result = fbd.ShowDialog();
-                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
-                {
-                    return fbd.SelectedPath;
-                }
-            }
-            return "";
         }
         // Remove Newline characters from string
         public static string RemoveLine(string s)

@@ -110,6 +110,12 @@
     <Compile Include="frmAlert.Designer.cs">
       <DependentUpon>frmAlert.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmNewMediaLoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmNewMediaLoc.Designer.cs">
+      <DependentUpon>frmNewMediaLoc.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmSearchMedia.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -183,6 +189,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmLoading.resx">
       <DependentUpon>frmLoading.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmNewMediaLoc.resx">
+      <DependentUpon>frmNewMediaLoc.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmSettings.resx">
       <DependentUpon>frmSettings.cs</DependentUpon>

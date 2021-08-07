@@ -81,7 +81,7 @@ namespace HomeCinema
             lvSearchResult.ShowItemToolTips = true;
             lvSearchResult.Columns.Add("ColName");
             lvSearchResult.Columns.Add("ColSeriesName");
-            lvSearchResult.Columns.Add("ColEpName"); // Either [Episode Name] OR [Season Num + Episode Num]
+            lvSearchResult.Columns.Add("ColEpName"); // Either [Original Name] OR [Season Num + Episode Num]
             lvSearchResult.Columns.Add("ColYear");
             lvSearchResult.Columns[0].Width = lvSearchResult.ClientRectangle.Width / 3;
             lvSearchResult.Columns[1].Width = lvSearchResult.ClientRectangle.Width / 3;
@@ -801,6 +801,25 @@ namespace HomeCinema
             string logSkipped = Path.Combine(GlobalVars.PATH_LOG, "SkippedEntries.Log");
             int insertRes = 0;
 
+            // Build list of folders to search from
+            GlobalVars.LoadMediaLocations();
+            if (GlobalVars.MEDIA_LOC?.Count < 1)
+            {
+                string folder = "", src = "", mediatype = "";
+                // Browse for Dir
+                while (String.IsNullOrWhiteSpace(folder))
+                {
+                    var formNewMediaLoc = new frmNewMediaLoc("Select folder to search for Movie files", null);
+                    formNewMediaLoc.ShowDialog();
+                    folder = formNewMediaLoc.Path;
+                    src = formNewMediaLoc.Source;
+                    mediatype = formNewMediaLoc.Type;
+                    formNewMediaLoc.Dispose();
+                }
+                GlobalVars.MEDIA_LOC.Add(new MediaLocations(folder, mediatype, src));
+                GlobalVars.WriteToFile(GlobalVars.FILE_MEDIALOC, $"{folder}*{mediatype}*{src}");
+            }
+
             // Delegate task to frmLoading
             form.BackgroundWorker.DoWork += (sender1, e1) =>
             {
@@ -819,15 +838,6 @@ namespace HomeCinema
                     }
                 }
                 GlobalVars.FILTER_VIDEO = "Supported Media Files|" + tempExtToBrowse;
-
-                // Build list of folders to search from
-                GlobalVars.LoadMediaLocations();
-                if (GlobalVars.MEDIA_LOC?.Count < 1)
-                {
-                    var folder = GlobalVars.GetDirectoryFolder("Select folder to search for Movie files"); // Browse for Dir
-                    GlobalVars.MEDIA_LOC.Add(new MediaLocations(folder, "movie", "tmdb"));
-                    // Save MEDIA_LOC list to file
-                }
 
                 listAlreadyinDB = SQLHelper.DbQrySingle(HCTable.filepath, "[file]", calledFrom + "-listAlreadyinDB");
                 countMediaLocMax = GlobalVars.MEDIA_LOC.Count;
@@ -1165,6 +1175,7 @@ namespace HomeCinema
                 GlobalVars.ShowError("frmMain-Load", exc, false, this);
                 GlobalVars.ShowWarning("Default image is missing!\nRestart App", "", this);
                 IsLoadedSuccess = false;
+                return;
             }
 
             // Perform click on Change View
