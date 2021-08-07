@@ -100,9 +100,7 @@ namespace HomeCinema.SQLFunc
                 if (result.Rows.Count < 1)
                 {
                     DbExecNonQuery("INSERT INTO `config` (`Id`, `appBuild`, `dbVersion`)" +
-                        $" VALUES (" +
-                        $"1," +
-                        $" {GlobalVars.HOMECINEMA_BUILD}, " +
+                        $" VALUES (1,{GlobalVars.HOMECINEMA_BUILD}," +
                         $"{(IsNewDb? GlobalVars.HOMECINEMA_DBVER.ToString() : "1")});", CalledFrom);
                     dbVersion = IsNewDb ? GlobalVars.HOMECINEMA_DBVER : 1;
                 }
