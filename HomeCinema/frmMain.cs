@@ -648,6 +648,9 @@ namespace HomeCinema
 
             if (MOVIEID > 0)
             {
+                // Clear previous subitems
+                temp.SubItems.Clear();
+
                 // Set default text for item
                 temp.Text = resName;
 
