@@ -244,6 +244,8 @@ namespace HomeCinema
             // Theme-related
             btnColorBG.BackColor = BackgroundColor;
             btnColorFont.BackColor = FontColor;
+            btnSave.BackColor = Color.DarkGray;
+            btnCancel.BackColor = Color.DarkGray;
 
             CenterToParent();
         }
