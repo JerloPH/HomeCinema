@@ -19,6 +19,7 @@
 ##################################################################################### */
 #endregion
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -358,39 +359,39 @@ namespace HomeCinema
         }
         private void btnMediaLocAdd_Click(object sender, EventArgs e)
         {
-            using (var fbd = new FolderBrowserDialog())
+            List<string> paths = new List<string>();
+            if (dataGridMediaLoc.Rows.Count > 0)
             {
-                fbd.Description = "Select folder that contains media files";
-                DialogResult result = fbd.ShowDialog();
-                bool canAdd = true;
-
-                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                foreach (DataGridViewRow row in dataGridMediaLoc.Rows)
                 {
-                    if (dataGridMediaLoc.Rows.Count > 0)
+                    var cell = row.Cells["FolderPath"]?.Value;
+                    if (cell != null)
                     {
-                        foreach (DataGridViewRow row in dataGridMediaLoc.Rows)
-                        {
-                            if (row.Cells["FolderPath"]?.Value.ToString() == fbd.SelectedPath)
-                            {
-                                canAdd = false;
-                                break;
-                            }
+                        paths.Add(cell.ToString());
+                    }
 
-                        }
-                    }
-                    if (canAdd == false)
-                    {
-                        GlobalVars.ShowInfo("Path already exists!");
-                        return;
-                    }
-                    var index = dataGridMediaLoc.Rows.Add();
-                    var rowAdd = dataGridMediaLoc.Rows[index];
-                    rowAdd.Cells[0].Value = fbd.SelectedPath;
-                    rowAdd.Cells[1].Value = (rowAdd.Cells[1] as DataGridViewComboBoxCell).Items[0];
-                    rowAdd.Cells[2].Value = (rowAdd.Cells[2] as DataGridViewComboBoxCell).Items[0];
-                    dataGridMediaLoc.Refresh();
                 }
             }
+            var form = new frmNewMediaLoc("Select folder that contains media files", paths);
+            form.ShowDialog(this);
+            
+            if (!String.IsNullOrWhiteSpace(form.Path))
+            {
+                int index = dataGridMediaLoc.Rows.Add();
+                var rowAdd = dataGridMediaLoc.Rows[index];
+                int type = (form.Type.Equals("movie") ? 0 : 1);
+                int src = (form.Source.Equals("tmdb") ? 0 : 1);
+
+                rowAdd.Cells[0].Value = form.Path;
+                rowAdd.Cells[1].Value = (rowAdd.Cells[1] as DataGridViewComboBoxCell).Items[type];
+                rowAdd.Cells[2].Value = (rowAdd.Cells[2] as DataGridViewComboBoxCell).Items[src];
+                dataGridMediaLoc.Refresh();
+            }
+            else
+            {
+                GlobalVars.ShowWarning("Selected Path is not valid!", "", this);
+            }
+            form.Dispose();
         }
         private void btnMediaLocRemove_Click(object sender, EventArgs e)
         {

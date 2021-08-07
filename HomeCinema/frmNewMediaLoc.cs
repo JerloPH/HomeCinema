@@ -29,6 +29,10 @@ namespace HomeCinema
             // Theme-related
             BackColor = Settings.ColorBg;
             ForeColor = Settings.ColorFont;
+            btnBrowse.ForeColor = Color.Black;
+            btnOK.ForeColor = Color.Black;
+            btnBrowse.BackColor = Color.DarkGray;
+            btnOK.BackColor = Color.DarkGray;
 
             CenterToParent();
 
