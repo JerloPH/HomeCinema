@@ -84,7 +84,7 @@ namespace HomeCinema
             }
         }
 
-        private void frmPopulateMovie_Shown(object sender, EventArgs e)
+        private void frmLoading_Shown(object sender, EventArgs e)
         {
             if (BackgroundWorker.IsBusy)
                 return;
@@ -93,12 +93,13 @@ namespace HomeCinema
                 this.Top = TopPosition;
         }
 
-        private void frmPopulateMovie_FormClosing(object sender, FormClosingEventArgs e)
+        private void frmLoading_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (BackgroundWorker.IsBusy)
                 e.Cancel = true;
 
             pictureBox1.Image?.Dispose();
+            Dispose();
         }
 
         private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

@@ -80,9 +80,9 @@ namespace HomeCinema
             this.Name = "frmLoading";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Tag = "main";
-            this.Text = "frmPopulateMovie";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmPopulateMovie_FormClosing);
-            this.Shown += new System.EventHandler(this.frmPopulateMovie_Shown);
+            this.Text = "frmLoading";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmLoading_FormClosing);
+            this.Shown += new System.EventHandler(this.frmLoading_Shown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmLoading_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
