@@ -78,27 +78,32 @@ namespace HomeCinema
                             media.Country.Add(c.Name.Trim());
                         }
                         // Get genres
-                        if (content.Contains("genres"))
+                        try
                         {
-                            var jObj = (JObject)JsonConvert.DeserializeObject(content);
-                            var result = jObj["genres"]
-                                            .Select(item => new
-                                            {
-                                                name = (string)item["name"],
-                                            })
-                                            .ToList();
-                            if (result.Count > 0)
+                            if (content.Contains("genres"))
                             {
-                                foreach (var valGenre in result)
+                                var jObj = (JObject)JsonConvert.DeserializeObject(content);
+                                var result = jObj["genres"]
+                                                .Select(item => new
+                                                {
+                                                    name = (string)item["name"],
+                                                })
+                                                .ToList();
+                                if (result?.Count > 0)
                                 {
-                                    string valString = valGenre.ToString();
-                                    string valTrim = valString.Substring(valString.IndexOf("name = ") + 7);
-                                    valTrim = valTrim.TrimEnd('}');
-                                    valTrim.Trim();
-                                    media.Genre.Add(valTrim);
+                                    foreach (var valGenre in result)
+                                    {
+                                        string valString = valGenre.ToString();
+                                        string valTrim = valString.Substring(valString.IndexOf("name = ") + 7);
+                                        valTrim = valTrim.TrimEnd('}');
+                                        valTrim.Trim();
+                                        media.Genre.Add(valTrim);
+                                    }
                                 }
                             }
                         }
+                        catch { }
+
                         // Studio
                         try { media.Studio = movie.ProdCompanies.Select(a => a.Name).ToList().Aggregate((b, c) => b + ", " + c); }
                         catch { media.Studio = ""; }
