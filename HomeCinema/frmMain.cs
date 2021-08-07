@@ -964,9 +964,11 @@ namespace HomeCinema
                             // Add Item to ListView
                             // Convert ID object to ID int
                             long MOVIEID;
-                            var x = HCInfo.Id;
-                            try { MOVIEID = Convert.ToInt64(r[x]); }
-                            catch { MOVIEID = 0; GlobalVars.Log(errFrom, $"Invalid MovieID: {r[x].ToString()}"); }
+                            if (!long.TryParse(r[HCInfo.Id].ToString(), out MOVIEID))
+                            {
+                                MOVIEID = 0;
+                                GlobalVars.Log(errFrom, $"Invalid MovieID: {r[HCInfo.Id].ToString()}");
+                            }
 
                             // Add to listview lvSearchResult
                             if (MOVIEID > 0)
