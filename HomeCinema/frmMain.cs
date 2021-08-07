@@ -538,19 +538,21 @@ namespace HomeCinema
                     {
                         try
                         {
+                            // Get DataRow from DataTable passed by the BG worker
                             DataRow r = dtFile.Rows[0];
-                            // Get all strings from the DataRow, passed by the BG worker
-                            string r1 = r[HCInfo.name].ToString(); // name
-                            string r2 = r[HCInfo.name_orig].ToString(); // name_ep
-                            string r3 = r[HCInfo.name_series].ToString(); // name_series
-                            string r4 = r[HCInfo.season].ToString(); // season
-                            string r5 = r[HCInfo.episode].ToString(); // episode
-                            string r6 = r[HCInfo.year].ToString(); // year
-                            string r7 = r[HCInfo.summary].ToString(); // summary
-                            string r8 = r[HCInfo.genre].ToString(); // genre
-
                             // Edit Information on ListView Item
-                            LVItemSetDetails(lvItem, new string[] { MOVIEID.ToString(), r1, r2, r3, r4, r5, r6, r7, r8 });
+                            LVItemSetDetails(lvItem, new string[]
+                            {
+                                MOVIEID.ToString(),
+                                r[HCInfo.name].ToString(), // name
+                                r[HCInfo.name_orig].ToString(), // name_orig
+                                r[HCInfo.name_series].ToString(), // name_series
+                                r[HCInfo.season].ToString(), // season
+                                r[HCInfo.episode].ToString(), // episode
+                                r[HCInfo.year].ToString(), // year
+                                r[HCInfo.summary].ToString(), // summary
+                                r[HCInfo.genre].ToString() // genre
+                            });
                         }
                         catch { }
                     }
