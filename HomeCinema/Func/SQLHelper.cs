@@ -64,31 +64,31 @@ namespace HomeCinema.SQLFunc
         public static bool Initiate(string InitiatedFrom)
         {
             DB_PATH = GlobalVars.PATH_START + DB_NAME;
-            string CalledFrom = "SQLHelper (Instance)-" + InitiatedFrom;
+            string CalledFrom = "SQLHelper (Initiate)-" + InitiatedFrom;
             int dbVersion = 1;
             bool IsNewDb = DbExecNonQuery($"CREATE TABLE IF NOT EXISTS '{HCTable.info}' (" +
                 "'Id'	INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "'imdb'	TEXT DEFAULT 0, " +
-                "'anilist'	TEXT DEFAULT 0, " +
-                "'name'	TEXT, " +
-                "'name_orig'	TEXT, " +
-                "'name_series'  TEXT, " +
-                "'season'	INTEGER, " +
-                "'episode'	INTEGER, " +
-                "'country'	TEXT, " +
-                "'category'	VARCHAR(1) DEFAULT 0, " + // 0-None | 1-MOVIE | 2-TVSERIES | 3-ANIMEMOVIE | 4-ANIME SERIES | 5-ANIMATED MOVIE | 6-CARTOON SERIES
-                "'genre'	TEXT, " +
-                "'studio'	TEXT, " +
-                "'producer'	TEXT, " +
-                "'director'	TEXT, " +
-                "'artist'	TEXT, " +
-                "'year'	VARCHAR(5) DEFAULT 0, " +
-                "'summary'  TEXT DEFAULT 'This has no summary');", CalledFrom, -1) == 0;
+                $"'{HCInfo.imdb}'  TEXT DEFAULT 0, " +
+                $"'{HCInfo.anilist}'  TEXT DEFAULT 0, " +
+                $"'{HCInfo.name}'  TEXT, " +
+                $"'{HCInfo.name_orig}'  TEXT, " +
+                $"'{HCInfo.name_series}'  TEXT, " +
+                $"'{HCInfo.season}'  INTEGER, " +
+                $"'{HCInfo.episode}'  INTEGER, " +
+                $"'{HCInfo.country}'  TEXT, " +
+                $"'{HCInfo.category}'  VARCHAR(1) DEFAULT 0, " + // 0-None | 1-MOVIE | 2-TVSERIES | 3-ANIMEMOVIE | 4-ANIME SERIES | 5-ANIMATED MOVIE | 6-CARTOON SERIES
+                $"'{HCInfo.genre}'  TEXT, " +
+                $"'{HCInfo.studio}'  TEXT, " +
+                $"'{HCInfo.producer}'  TEXT, " +
+                $"'{HCInfo.director}'  TEXT, " +
+                $"'{HCInfo.artist}'  TEXT, " +
+                $"'{HCInfo.year}'  VARCHAR(5) DEFAULT 0, " +
+                $"'{HCInfo.summary}'  TEXT DEFAULT 'This has no summary');", CalledFrom, -1) == 0;
             DbExecNonQuery($"CREATE TABLE IF NOT EXISTS '{HCTable.filepath}' (" +
-                "[Id]	INTEGER  PRIMARY KEY AUTOINCREMENT, " +
-                "[file]	TEXT, " +
-                "[sub]	TEXT, " +
-                "[trailer] TEXT);", CalledFrom);
+                "[Id]  INTEGER  PRIMARY KEY AUTOINCREMENT, " +
+                $"[{HCFile.File}]  TEXT, " +
+                $"[{HCFile.Sub}]  TEXT, " +
+                $"[{HCFile.Trailer}]  TEXT);", CalledFrom);
             DbExecNonQuery($"CREATE TABLE IF NOT EXISTS `config` (" +
                 "[Id] INTEGER  PRIMARY KEY AUTOINCREMENT, " +
                 "[appBuild]	INTEGER, " +
