@@ -39,7 +39,7 @@ namespace HomeCinema
     }
     public static class HCFile
     {
-        public static string Id = "Id";
+        public static string Id = "UId";
         public static string File = "file";
         public static string Sub = "sub";
         public static string Trailer = "trailer";

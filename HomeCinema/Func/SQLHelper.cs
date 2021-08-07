@@ -126,6 +126,21 @@ namespace HomeCinema.SQLFunc
             GlobalVars.LogDb(CalledFrom, "Database is loaded succesfully!\n " + DB_PATH);
             return true;
         }
+        private static long DbGenerateId()
+        {
+            long Uid = 0L;
+            var dt = DbQuery($"SELECT MAX({HCInfo.Id}) AS 'maxid' FROM {HCTable.info};", "DbGenerateId");
+            if (dt?.Rows.Count == 1)
+            {
+                if (long.TryParse(dt.Rows[0]["maxid"].ToString(), out Uid))
+                {
+                    GlobalVars.LogDb("DbGenerateId", $"UID Fetched [{Uid}]");
+                }
+            }
+            Uid += 1;
+            GlobalVars.LogDb("DbGenerateId", $"UID Generated [{Uid}]");
+            return Uid;
+        }
         private static void DBUpgradeDatabase(int dbVersion)
         {
             // Upgrade dbVer to match requirements
@@ -382,17 +397,20 @@ namespace HomeCinema.SQLFunc
         /// <param name="dtFilepath">Dictionary for table 'filepath'</param>
         /// <param name="callFrom">Method calling.</param>
         /// <returns>LastID inserted or 0.</returns>
-        public static int DbInsertMovie(Dictionary<string, string> dtInfo, Dictionary<string, string> dtFilepath, string callFrom)
+        public static long DbInsertMovie(Dictionary<string, string> dtInfo, Dictionary<string, string> dtFilepath, string callFrom)
         {
             // Setups
             int retry = RetryCount;
             string errFrom = $"SQLHelper-DbInsertMovie [calledFrom: {callFrom}]";
-            int LastID = 0; // Last ID Inserted succesfully
+            long GeneratedID = 0L; // Last ID Inserted succesfully
             string infoCols = "", infoVals = ""; // info table
             string fileCols = "", fileVals = ""; // filepath table
             int successCode; // code after execute query
             string fPathFile = ""; // full path for file
             string value = ""; // variable to hold values
+
+            // Fetch new Id
+            GeneratedID = DbGenerateId();
 
             // Create pairing of colname and colvals
             foreach (var item in dtInfo)
@@ -438,17 +456,16 @@ namespace HomeCinema.SQLFunc
                     var transaction = conn.BeginTransaction();
 
                     // Insert entry
-                    cmd.CommandText = $"INSERT INTO {HCTable.info} ({infoCols}) VALUES({infoVals});";
+                    cmd.CommandText = $"INSERT INTO {HCTable.info} ({HCInfo.Id},{infoCols}) VALUES({GeneratedID},{infoVals});";
                     GlobalVars.LogDb($"{errFrom} (Insert query)", cmd.CommandText);
                     successCode = cmd.ExecuteNonQuery();
 
                     if (successCode > 0)
                     {
-                        LastID = (int)conn.LastInsertRowId;
-                        cmd.CommandText = $"INSERT INTO {HCTable.filepath} (Id, {fileCols}) VALUES({LastID},{fileVals});";
+                        cmd.CommandText = $"INSERT INTO {HCTable.filepath} ({HCFile.Id}, {fileCols}) VALUES({GeneratedID},{fileVals});";
                         successCode = cmd.ExecuteNonQuery();
                         // Add cover image by capturing media
-                        string coverFilepath = GlobalVars.PATH_IMG + LastID + ".jpg";
+                        string coverFilepath = GlobalVars.PATH_IMG + GeneratedID + ".jpg";
                         try
                         {
                             if (File.Exists(fPathFile))
@@ -469,19 +486,19 @@ namespace HomeCinema.SQLFunc
                     }
                     else
                     {
-                        GlobalVars.LogDb($"{errFrom} [Insert failed code: {successCode.ToString()}]", "Query: " + cmd.CommandText);
+                        GlobalVars.LogDb($"{errFrom} [Insert failed code: {successCode}]", "Query: " + cmd.CommandText);
                     }
 
                     // Commit transaction
                     if (successCode > 0)
                     {
                         transaction.Commit();
-                        GlobalVars.LogDb($"{errFrom} (FINISHED INSERT)", $"Last ID inserted: ({LastID.ToString()})");
+                        GlobalVars.LogDb($"{errFrom} (FINISHED INSERT)", $"Last UID inserted: ({GeneratedID})");
                         retry = -1;
                     }
                     else
                     {
-                        LastID = 0;
+                        GeneratedID = 0;
                         transaction.Rollback();
                         --retry;
                     }
@@ -492,7 +509,7 @@ namespace HomeCinema.SQLFunc
                     conn.Close();
                 }
             }
-            return LastID; // Return LastID inserted.
+            return GeneratedID; // Return LastID inserted.
         }
         /// <summary>
         /// Update specified table wih Dictionary keypair values.

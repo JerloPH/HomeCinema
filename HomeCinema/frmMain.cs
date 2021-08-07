@@ -254,7 +254,7 @@ namespace HomeCinema
                 dtFilepath.Add(HCFile.Sub, GetSubtitleFile(filePath)); // file sub
                 dtFilepath.Add(HCFile.Trailer, Media.Trailer); // trailer
 
-                int insertResult = SQLHelper.DbInsertMovie(dtInfo, dtFilepath, callFrom);
+                long insertResult = SQLHelper.DbInsertMovie(dtInfo, dtFilepath, callFrom);
                 if (insertResult > 0)
                 {
                     // Succesfully inserted
