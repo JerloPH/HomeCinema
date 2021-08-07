@@ -109,6 +109,12 @@ namespace HomeCinema.SQLFunc
                     try { dbVersion = Convert.ToInt32(result.Rows[0]["dbVersion"]); }
                     catch { dbVersion = 1; }
                 }
+                // Hardcoded limit, breaks support for previous databases.
+                if (dbVersion < 5) // 5 is the start of breaking changes
+                {
+                    GlobalVars.LogDb(CalledFrom, "Database is not supported anymore!");
+                    return false;
+                }
                 if (dbVersion < GlobalVars.HOMECINEMA_DBVER)
                 {
                     //GlobalVars.ShowNoParent("Outdated database!");
