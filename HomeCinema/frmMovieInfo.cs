@@ -177,7 +177,7 @@ namespace HomeCinema
 
             // Set textbox values from Database
             // Build query string
-            string qry = $"SELECT * FROM {HCTable.info} A LEFT JOIN {HCTable.filepath} B ON A.`Id`=B.`Id` WHERE A.`Id`={ID.TrimStart('0')} LIMIT 1;";
+            string qry = $"SELECT * FROM {HCTable.info} A LEFT JOIN {HCTable.filepath} B ON A.`{HCInfo.Id}`=B.`{HCInfo.Id}` WHERE A.`{HCInfo.Id}`={ID.TrimStart('0')} LIMIT 1;";
 
             using (DataTable dtFile = SQLHelper.DbQuery(qry, "frmMovie-LoadInformation"))
             {

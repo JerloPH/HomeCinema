@@ -312,7 +312,7 @@ namespace HomeCinema
         {
             string ret = "";
             string errFrom = $"frmMain-GetFilePath [calledFrom: {calledFrom}]";
-            string qry = $"SELECT `file` FROM { HCTable.filepath } WHERE `Id`={ID} LIMIT 1;";
+            string qry = $"SELECT `{HCFile.File}` FROM { HCTable.filepath } WHERE `{HCInfo.Id}`={ID} LIMIT 1;";
             using (DataTable dtFile = SQLHelper.DbQuery(qry, errFrom))
             {
                 if (dtFile.Rows.Count > 0)
@@ -529,7 +529,7 @@ namespace HomeCinema
                 string MOVIEID = lvItem.Tag.ToString().TrimStart('0');
 
                 // Change info of the item
-                string qry = $"SELECT * FROM {HCTable.info} WHERE `Id`={MOVIEID} LIMIT 1;";
+                string qry = $"SELECT * FROM {HCTable.info} WHERE `{HCInfo.Id}`={MOVIEID} LIMIT 1;";
 
                 using (DataTable dtFile = SQLHelper.DbQuery(qry, "frmMain-UpdateMovieItemOnLV")) // run the query
                 {
