@@ -34,7 +34,7 @@ namespace HomeCinema
     {
         // Editable vars
         private string MOVIE_ID { get; set; } = "";
-        private string MEDIA_TYPE { get; set; } = "";
+        private string MEDIA_TYPE { get; set; } = "movie";
         private Image MOVIE_COVER { get; set; } = null;
         private Image tempImage { get; set; } = null;
 
@@ -217,6 +217,7 @@ namespace HomeCinema
             // Disable setting metadata if series
             if (cbCategory.Text.ToLower().Contains("series"))
             {
+                MEDIA_TYPE = "tv";
                 cbSaveMetadata.Enabled = false;
             }
 
@@ -610,6 +611,9 @@ namespace HomeCinema
             {
                 txtStudio.Text = mediaInfo.Studio;
             }
+            //Season and Episode counts
+            txtEpNum.Text = mediaInfo.Episodes.ToString();
+            txtSeasonNum.Text = mediaInfo.Seasons.ToString();
             
             // Set Country
             if (mediaInfo.Country?.Count > 0)
