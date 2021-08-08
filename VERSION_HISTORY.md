@@ -10,6 +10,7 @@
 - Fetch **Episode** and **Season** counts.
 - Combined Media Location and Series Location paths. See the new setting on **Settings** form.
 - Fetch media info automatically, **only** if it finds exactly 1 match. More information on [Issue #14](https://github.com/JerloPH/HomeCinema/issues/14).
+- New setting to change size of entry cover image on Main form.
 
 ### Fixes
 - Covers not updating when fetching from TMDB, causing duplicate cover images.
