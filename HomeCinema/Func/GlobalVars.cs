@@ -306,8 +306,6 @@ namespace HomeCinema
             if (!File.Exists(FILE_LOG_APP)) { WriteToFile(FILE_LOG_APP, ""); }
             if (!File.Exists(FILE_LOG_ERROR)) { WriteToFile(FILE_LOG_ERROR, ""); }
             if (!File.Exists(FILE_LOG_DB)) { WriteToFile(FILE_LOG_DB, ""); }
-            // Use debugging Tmdb_Key
-            //TMDB_KEY = Debugger.IsAttached ? ReadStringFromFile(@"..\..\..\ignored\tmdb_API_Key.txt", "GlobalVar-CheckAllFiles-DEBUG") : TMDB_KEY;
             // Default config
             if (!File.Exists(FILE_CONFIG))
             {
@@ -642,32 +640,6 @@ namespace HomeCinema
             }
             return files;
         }
-        // Get All Files on MULTIPLE Directories
-        public static List<String> SearchFilesMultipleDir(string[] dirArray, string errFrom)
-        {
-            List<String> files = new List<String>();
-            // Return if null or empty
-            if (dirArray == null || dirArray?.Length < 1) { return files; }
-            try
-            {
-                foreach (string sDir in dirArray)
-                {
-                    foreach (string f in Directory.GetFiles(sDir.TrimEnd('\\')))
-                    {
-                        files.Add(f);
-                    }
-                    foreach (string d in Directory.GetDirectories(sDir.TrimEnd('\\')))
-                    {
-                        files.AddRange(SearchFilesSingleDir(d, errFrom));
-                    }
-                }
-            }
-            catch (Exception excpt)
-            {
-                ShowError(errFrom, excpt, false);
-            }
-            return files;
-        }
         // Get all folders inside a directory
         public static List<string> SearchFoldersFromDirectory(string sDir, string errFrom)
         {
@@ -748,32 +720,6 @@ namespace HomeCinema
             }
             selectFile.Dispose();
             return ret;
-        }
-        // Invoke a method on form
-        public static bool CallMethod(string FORM_NAME, string MethodName, object[] Params, string LogFrom, string LogInvokeFrom)
-        {
-            // Log who call this, the form in which the method is invoked from
-            Log(LogFrom, "Invoked method (" + MethodName  + ") in  " + LogInvokeFrom);
-            string LogExceptions = "GlobalVars-CallMethod ";
-
-            // Refresh parent form
-            Form f = Application.OpenForms[FORM_NAME];
-            if (f != null)
-            {
-                // do something with f.Text;
-                var classObj = f;
-                MethodInfo method = classObj.GetType().GetMethod(MethodName, BindingFlags.Instance | BindingFlags.Public);
-                try
-                {
-                    method.Invoke(classObj, Params);
-                    return true;
-                }
-                catch (Exception tex)
-                {
-                    ShowError(LogExceptions + " (Error)", tex);
-                }
-            }
-            return false;
         }
         // Check if there is an active Internet connection
         public static bool CheckConnection(String URL, int timeOutSec = 3)
