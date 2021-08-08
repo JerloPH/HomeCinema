@@ -218,7 +218,7 @@ namespace HomeCinema
                         string trailersite = anime.Trailer?.Site;
                         if (!String.IsNullOrWhiteSpace(trailersite))
                         {
-                            media.Trailer = (trailersite.ToLower().Contains("youtube")) ? anime.Trailer.Id : "";
+                            media.Trailer = (trailersite.ToLower().Contains("youtube")) ? GlobalVars.LINK_YT + anime.Trailer.Id : "";
                         }
                     }
                     catch { }
