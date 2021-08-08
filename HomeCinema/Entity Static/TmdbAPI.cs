@@ -119,7 +119,7 @@ namespace HomeCinema
                         var objJson = JsonConvert.DeserializeObject<TmdbVideos>(contents);
                         if (objJson.results[0].site.ToLower() == "youtube")
                         {
-                            media.Trailer = objJson.results[0].key;
+                            media.Trailer = GlobalVars.LINK_YT + objJson.results[0].key;
                         }
                     }
                     catch
