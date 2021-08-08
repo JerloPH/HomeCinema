@@ -230,7 +230,26 @@ namespace HomeCinema
                     GlobalVars.ShowError($"{errFrom}\n\tFile:\n\t{ Imagefile }", exc, false);
                 }
             }
+            // Adjust controls, if not series
+            if (!lblCategory.Text.ToLower().Contains("series"))
+            {
+                lblSeries.Enabled = false;
+                lblSeries.Visible = false;
+                lblNameSeries.Enabled = false;
+                lblNameSeries.Visible = false;
+                lblSeason.Enabled = false;
+                lblSeason.Visible = false;
+                lblEpisode.Enabled = false;
+                lblEpisode.Visible = false;
+                lblSeasonNum.Enabled = false;
+                lblSeasonNum.Visible = false;
+                lblEpNum.Enabled = false;
+                lblEpNum.Visible = false;
 
+                lblSummaryLbl.Top = lblSeries.Top;
+                lblSummary.Top = lblSummaryLbl.Bottom + 2;
+                lblSummary.Height += 50;
+            }
             // Adjust Trailer Frame
             TrailerFrame();
 

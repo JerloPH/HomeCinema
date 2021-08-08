@@ -44,11 +44,11 @@
             this.lblDirector = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
+            this.lblSummaryLbl = new System.Windows.Forms.Label();
             this.lblEpNum = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
+            this.lblEpisode = new System.Windows.Forms.Label();
             this.lblSeasonNum = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.lblSeason = new System.Windows.Forms.Label();
             this.lblNameOrig = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.lblCategory = new System.Windows.Forms.Label();
@@ -88,11 +88,11 @@
             this.groupBox2.Controls.Add(this.lblDirector);
             this.groupBox2.Controls.Add(this.label12);
             this.groupBox2.Controls.Add(this.label10);
-            this.groupBox2.Controls.Add(this.label24);
+            this.groupBox2.Controls.Add(this.lblSummaryLbl);
             this.groupBox2.Controls.Add(this.lblEpNum);
-            this.groupBox2.Controls.Add(this.label22);
+            this.groupBox2.Controls.Add(this.lblEpisode);
             this.groupBox2.Controls.Add(this.lblSeasonNum);
-            this.groupBox2.Controls.Add(this.label7);
+            this.groupBox2.Controls.Add(this.lblSeason);
             this.groupBox2.Controls.Add(this.lblNameOrig);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.lblCategory);
@@ -107,9 +107,9 @@
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.groupBox2.Location = new System.Drawing.Point(9, 40);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox2.Size = new System.Drawing.Size(700, 488);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
@@ -144,7 +144,7 @@
             this.txtArtist.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtArtist.ForeColor = System.Drawing.Color.Goldenrod;
             this.txtArtist.Location = new System.Drawing.Point(485, 328);
-            this.txtArtist.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtArtist.Margin = new System.Windows.Forms.Padding(2);
             this.txtArtist.Multiline = true;
             this.txtArtist.Name = "txtArtist";
             this.txtArtist.ReadOnly = true;
@@ -160,7 +160,7 @@
             this.txtCountry.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCountry.ForeColor = System.Drawing.Color.Goldenrod;
             this.txtCountry.Location = new System.Drawing.Point(444, 426);
-            this.txtCountry.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtCountry.Margin = new System.Windows.Forms.Padding(2);
             this.txtCountry.Multiline = true;
             this.txtCountry.Name = "txtCountry";
             this.txtCountry.ReadOnly = true;
@@ -176,7 +176,7 @@
             this.txtGenre.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtGenre.ForeColor = System.Drawing.Color.Goldenrod;
             this.txtGenre.Location = new System.Drawing.Point(143, 421);
-            this.txtGenre.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtGenre.Margin = new System.Windows.Forms.Padding(2);
             this.txtGenre.Multiline = true;
             this.txtGenre.Name = "txtGenre";
             this.txtGenre.ReadOnly = true;
@@ -259,7 +259,7 @@
             this.lblSummary.Font = new System.Drawing.Font("Calibri", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSummary.ForeColor = System.Drawing.Color.Goldenrod;
             this.lblSummary.Location = new System.Drawing.Point(142, 228);
-            this.lblSummary.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lblSummary.Margin = new System.Windows.Forms.Padding(2);
             this.lblSummary.Multiline = true;
             this.lblSummary.Name = "lblSummary";
             this.lblSummary.ReadOnly = true;
@@ -301,16 +301,16 @@
             this.label10.TabIndex = 25;
             this.label10.Text = "Director";
             // 
-            // label24
+            // lblSummaryLbl
             // 
-            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.ForeColor = System.Drawing.Color.White;
-            this.label24.Location = new System.Drawing.Point(139, 203);
-            this.label24.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(82, 20);
-            this.label24.TabIndex = 18;
-            this.label24.Text = "Summary:";
+            this.lblSummaryLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSummaryLbl.ForeColor = System.Drawing.Color.White;
+            this.lblSummaryLbl.Location = new System.Drawing.Point(139, 203);
+            this.lblSummaryLbl.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblSummaryLbl.Name = "lblSummaryLbl";
+            this.lblSummaryLbl.Size = new System.Drawing.Size(82, 20);
+            this.lblSummaryLbl.TabIndex = 18;
+            this.lblSummaryLbl.Text = "Summary:";
             // 
             // lblEpNum
             // 
@@ -323,17 +323,17 @@
             this.lblEpNum.TabIndex = 17;
             this.lblEpNum.Text = "00";
             // 
-            // label22
+            // lblEpisode
             // 
-            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label22.ForeColor = System.Drawing.Color.White;
-            this.label22.Location = new System.Drawing.Point(289, 40);
-            this.label22.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(76, 20);
-            this.label22.TabIndex = 16;
-            this.label22.Text = "Episode #";
-            this.label22.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lblEpisode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEpisode.ForeColor = System.Drawing.Color.White;
+            this.lblEpisode.Location = new System.Drawing.Point(289, 40);
+            this.lblEpisode.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblEpisode.Name = "lblEpisode";
+            this.lblEpisode.Size = new System.Drawing.Size(76, 20);
+            this.lblEpisode.TabIndex = 16;
+            this.lblEpisode.Text = "Episode #";
+            this.lblEpisode.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // lblSeasonNum
             // 
@@ -346,16 +346,16 @@
             this.lblSeasonNum.TabIndex = 15;
             this.lblSeasonNum.Text = "00";
             // 
-            // label7
+            // lblSeason
             // 
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(142, 41);
-            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(70, 20);
-            this.label7.TabIndex = 14;
-            this.label7.Text = "Season #";
+            this.lblSeason.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSeason.ForeColor = System.Drawing.Color.White;
+            this.lblSeason.Location = new System.Drawing.Point(142, 41);
+            this.lblSeason.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblSeason.Name = "lblSeason";
+            this.lblSeason.Size = new System.Drawing.Size(70, 20);
+            this.lblSeason.TabIndex = 14;
+            this.lblSeason.Text = "Season #";
             // 
             // lblNameOrig
             // 
@@ -441,7 +441,7 @@
             // webTrailer
             // 
             this.webTrailer.Location = new System.Drawing.Point(444, 29);
-            this.webTrailer.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.webTrailer.Margin = new System.Windows.Forms.Padding(2);
             this.webTrailer.MinimumSize = new System.Drawing.Size(15, 16);
             this.webTrailer.Name = "webTrailer";
             this.webTrailer.Size = new System.Drawing.Size(246, 203);
@@ -455,9 +455,9 @@
             this.groupBox3.Controls.Add(this.btnPlay);
             this.groupBox3.ForeColor = System.Drawing.Color.White;
             this.groupBox3.Location = new System.Drawing.Point(3, 267);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox3.Size = new System.Drawing.Size(133, 123);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
@@ -468,7 +468,7 @@
             this.btnDeleteMovie.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDeleteMovie.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
             this.btnDeleteMovie.Location = new System.Drawing.Point(4, 82);
-            this.btnDeleteMovie.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnDeleteMovie.Margin = new System.Windows.Forms.Padding(2);
             this.btnDeleteMovie.Name = "btnDeleteMovie";
             this.btnDeleteMovie.Size = new System.Drawing.Size(117, 28);
             this.btnDeleteMovie.TabIndex = 4;
@@ -481,7 +481,7 @@
             this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEdit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
             this.btnEdit.Location = new System.Drawing.Point(4, 50);
-            this.btnEdit.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnEdit.Margin = new System.Windows.Forms.Padding(2);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(117, 28);
             this.btnEdit.TabIndex = 3;
@@ -494,7 +494,7 @@
             this.btnPlay.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPlay.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
             this.btnPlay.Location = new System.Drawing.Point(4, 17);
-            this.btnPlay.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnPlay.Margin = new System.Windows.Forms.Padding(2);
             this.btnPlay.Name = "btnPlay";
             this.btnPlay.Size = new System.Drawing.Size(117, 28);
             this.btnPlay.TabIndex = 2;
@@ -505,7 +505,7 @@
             // picBox
             // 
             this.picBox.Location = new System.Drawing.Point(4, 17);
-            this.picBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.picBox.Margin = new System.Windows.Forms.Padding(2);
             this.picBox.Name = "picBox";
             this.picBox.Size = new System.Drawing.Size(133, 206);
             this.picBox.TabIndex = 0;
@@ -556,7 +556,7 @@
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.groupBox2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.Name = "frmMovie";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
@@ -588,10 +588,10 @@
         private System.Windows.Forms.Label lblNameOrig;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblEpNum;
-        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label lblEpisode;
         private System.Windows.Forms.Label lblSeasonNum;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label lblSeason;
+        private System.Windows.Forms.Label lblSummaryLbl;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label lblDirector;
