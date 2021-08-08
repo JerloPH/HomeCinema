@@ -29,13 +29,25 @@ namespace HomeCinema
                     label1.Text = value;
             }
         }
-        public int TopPosition { get; set; }
+        private long MaxProgressHidden = 0;
+        public long MaxProgress
+        {
+            get { return MaxProgressHidden; }
+            set { MaxProgressHidden = value; }
+        }
+        private long ProgressCountHidden = 0;
+        public long ProgressCount
+        {
+            get { return ProgressCountHidden; }
+            set { ProgressCountHidden = value; }
+        }
+
 
         public frmLoading()
         {
             InitializeComponent();
         }
-        public frmLoading(string message, string caption)
+        public frmLoading(string message, string caption, bool useProgress = false)
         {
             InitializeComponent();
             Icon = GlobalVars.HOMECINEMA_ICON;
@@ -43,10 +55,15 @@ namespace HomeCinema
             ForeColor = Settings.ColorFont;
             Message = message;
             Caption = caption;
-            TopPosition = 0;
             CenterToParent();
             pictureBox1.BackColor = Color.Transparent;
             pictureBox1.BringToFront();
+            if (useProgress)
+            {
+                this.BackgroundWorker.WorkerReportsProgress = true;
+                this.BackgroundWorker.ProgressChanged += new ProgressChangedEventHandler(this.BackgroundWorker_ProgressChanged);
+            }
+            lblProgress.Visible = useProgress;
         }
 
         public void SetIcon(int IconIndex = 0)
@@ -89,8 +106,6 @@ namespace HomeCinema
             if (BackgroundWorker.IsBusy)
                 return;
             BackgroundWorker.RunWorkerAsync();
-            if (TopPosition != 0)
-                this.Top = TopPosition;
         }
 
         private void frmLoading_FormClosing(object sender, FormClosingEventArgs e)
@@ -105,6 +120,19 @@ namespace HomeCinema
         private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Close();
+        }
+
+        private void BackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            if (e.ProgressPercentage > -1 && MaxProgress > 0)
+            {
+                try
+                {
+                    ProgressCount = Convert.ToInt64(e.UserState);
+                }
+                catch { ProgressCount += 1; }
+            }
+            lblProgress.Text = $"Progress: {ProgressCount} / {MaxProgress}";
         }
 
         private void frmLoading_KeyDown(object sender, KeyEventArgs e)

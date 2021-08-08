@@ -123,8 +123,13 @@ namespace HomeCinema
         #endregion
         // ####################################################################################### Database Functions
         #region Insert to Database
-        int InsertToDB(List<Medias> dtNewFiles, string errFrom)
+        long InsertToDB(List<Medias> dtNewFiles, string errFrom)
         {
+            long maxProgress = (long)dtNewFiles?.Count;
+            long progress = 0;
+            // exit when no entry to insert
+            if (maxProgress < 1) { return maxProgress; }
+
             string callFrom = $"frmMain ({Name})-InsertToDB-({errFrom})";
             string logFileInsert = Path.Combine(GlobalVars.PATH_LOG, "NewInsert_Success.log");
             string logFileInsertSkipped = Path.Combine(GlobalVars.PATH_LOG, "NewInsert_Skipped.log");
@@ -133,181 +138,189 @@ namespace HomeCinema
             string src;
             bool IsDownloadCover = false;
             int sleep = 10;
-            int count = 0; // count of inserts, whether success or fail
+            long count = 0; // count of successful inserts
             string logInsert = ""; // Log succesfully inserted
 
-            foreach (Medias item in dtNewFiles)
+            var form = new frmLoading($"Inserting {maxProgress} new found media files..", "New Entries Found!", true);
+            form.MaxProgress = maxProgress;
+            form.BackgroundWorker.DoWork += (sender1, e1) =>
             {
-                filePath = item.FilePath;
-                mediatype = item.MediaType;
-                src = item.Source;
-
-                // vars used for entries
-                MediaInfo Media = null;
-                string mName = "";
-                string yearFromFname = "";
-
-                string rCountry = "";
-                string rGenre = "";
-                string rYear = "";
-
-                // Get proper name, without the folder paths
-                try
+                foreach (Medias item in dtNewFiles)
                 {
-                    mName = (mediatype == "series") ? new DirectoryInfo(filePath).Name : Path.GetFileNameWithoutExtension(filePath);
-                }
-                catch (Exception ex)
-                {
-                    GlobalVars.WriteAppend(logFileInsertSkipped, "Error: " + filePath);
-                    GlobalVars.ShowError(callFrom, ex, false, this);
-                    continue; // skip when exception thrown
-                }
+                    progress += 1;
+                    filePath = item.FilePath;
+                    mediatype = item.MediaType;
+                    src = item.Source;
 
-                // Trim Movie Name
-                try
-                {
-                    mName = mName.ToLower();
-                    mName = mName.Replace('_', ' ').Replace('.', ' ');
-                    mName = mName.Replace("(", "");
-                    mName = mName.Replace(")", "");
-                    //mName = mName.Replace("-", "");
-                    // Remove "year" and "other strings" from movie file name
-                    string regExPattern = @"\b\d{4}\b"; // Match 4-digit number in the title
-                    Match r = Regex.Match(mName, @regExPattern);
-                    yearFromFname = r.Groups[r.Groups.Count - 1].Value;
-                    mName = (!String.IsNullOrWhiteSpace(yearFromFname)) ? mName.Substring(0, mName.IndexOf(yearFromFname)) : mName;
-                }
-                catch (Exception ex)
-                {
-                    GlobalVars.ShowError(errFrom, ex, false, this);
-                }
+                    // vars used for entries
+                    MediaInfo Media = null;
+                    string mName = "";
+                    string yearFromFname = "";
 
-                // Scrape from TMDB, for info and details
-                if (Settings.IsOffline == false)
-                {
-                    if (src == "tmdb" && GlobalVars.HAS_TMDB_KEY)
+                    string rCountry = "";
+                    string rGenre = "";
+                    string rYear = "";
+
+                    // Get proper name, without the folder paths
+                    try
                     {
-                        var movie = TmdbAPI.FindMovieTV(mName, "dummy", mediatype);
-                        if (movie?.TotalResults == 1)
-                        {
-                            Media = TmdbAPI.GetMovieInfoFromTmdb(movie?.Results[0].Id.ToString(), mediatype);
-                        }
-                        sleep = 15;
+                        mName = (mediatype == "series") ? new DirectoryInfo(filePath).Name : Path.GetFileNameWithoutExtension(filePath);
                     }
-                    else if (src == "anilist")
+                    catch (Exception ex)
                     {
-                        var anime = AnilistAPI.SearchForAnime(mName);
-                        if (anime != null)
+                        GlobalVars.WriteAppend(logFileInsertSkipped, "Error: " + filePath);
+                        GlobalVars.ShowError(callFrom, ex, false, this);
+                        continue; // skip when exception thrown
+                    }
+
+                    // Trim Movie Name
+                    try
+                    {
+                        mName = mName.ToLower();
+                        mName = mName.Replace('_', ' ').Replace('.', ' ');
+                        mName = mName.Replace("(", "");
+                        mName = mName.Replace(")", "");
+                        //mName = mName.Replace("-", "");
+                        // Remove "year" and "other strings" from movie file name
+                        string regExPattern = @"\b\d{4}\b"; // Match 4-digit number in the title
+                        Match r = Regex.Match(mName, @regExPattern);
+                        yearFromFname = r.Groups[r.Groups.Count - 1].Value;
+                        mName = (!String.IsNullOrWhiteSpace(yearFromFname)) ? mName.Substring(0, mName.IndexOf(yearFromFname)) : mName;
+                    }
+                    catch (Exception ex)
+                    {
+                        GlobalVars.ShowError(errFrom, ex, false, this);
+                    }
+
+                    // Scrape from TMDB, for info and details
+                    if (Settings.IsOffline == false)
+                    {
+                        if (src == "tmdb" && GlobalVars.HAS_TMDB_KEY)
+                        {
+                            var movie = TmdbAPI.FindMovieTV(mName, "dummy", mediatype);
+                            if (movie?.TotalResults == 1)
+                            {
+                                Media = TmdbAPI.GetMovieInfoFromTmdb(movie?.Results[0].Id.ToString(), mediatype);
+                            }
+                            sleep = 15;
+                        }
+                        else if (src == "anilist")
+                        {
+                            var anime = AnilistAPI.SearchForAnime(mName);
+                            if (anime != null)
+                            {
+                                try
+                                {
+                                    if (anime.Data.Page.PageInfo.Total == 1)
+                                    {
+                                        string getAnilist = anime.Data.Page.MediaList[0].Id.ToString();
+                                        Media = AnilistAPI.GetMovieInfoFromAnilist(getAnilist);
+                                    }
+                                }
+                                catch { }
+                            }
+                            sleep = 30;
+                        }
+                        if (Media != null)
+                        {
+                            try { rYear = Media.ReleaseDate.Substring(0, 4); }
+                            catch { rYear = ""; }
+                            rCountry = GlobalVars.ConvertListToString(Media.Country, ",", callFrom); // Get Country
+                            rGenre = GlobalVars.ConvertListToString(Media.Genre, ",", callFrom); // Get Genres
+                        }
+                    }
+                    if (Media == null)
+                    {
+                        // If cannot get info online, make use of defaults
+                        Media = new MediaInfo();
+                        Media.Title = mName.Trim();
+                    }
+                    // If Original title is the same as the main title, ignore it
+                    Media.OrigTitle = (Media.OrigTitle.Equals(Media.Title)) ? String.Empty : Media.OrigTitle;
+                    // If year is empty, use the year from regex
+                    rYear = (String.IsNullOrWhiteSpace(rYear)) ? yearFromFname : rYear;
+
+                    // Make the DataRow
+                    var dtInfo = new Dictionary<string, string>();
+                    var dtFilepath = new Dictionary<string, string>();
+                    dtInfo.Add(HCInfo.imdb, Media.Imdb); // IMDB
+                    dtInfo.Add(HCInfo.anilist, Media.Anilist); // Anilist
+                    dtInfo.Add(HCInfo.name, Media.Title); // name
+                    dtInfo.Add(HCInfo.name_orig, Media.OrigTitle); // episode name
+                    dtInfo.Add(HCInfo.name_series, Media.SeriesName); // series name
+                    dtInfo.Add(HCInfo.season, Media.Seasons.ToString()); // season number
+                    dtInfo.Add(HCInfo.episode, Media.Episodes.ToString()); // episode num
+                    dtInfo.Add(HCInfo.country, rCountry); // country
+                    dtInfo.Add(HCInfo.category, GlobalVars.GetCategoryByFilter(rGenre, rCountry, mediatype, src).ToString()); // category
+                    dtInfo.Add(HCInfo.genre, rGenre); // genre
+                    dtInfo.Add(HCInfo.studio, Media.Studio); // studio
+                    dtInfo.Add(HCInfo.producer, Media.Producer); // producer
+                    dtInfo.Add(HCInfo.director, Media.Director); // director
+                    dtInfo.Add(HCInfo.artist, Media.Actor); // artist
+                    dtInfo.Add(HCInfo.year, rYear); // year
+                    dtInfo.Add(HCInfo.summary, Media.Summary); // summary
+
+                    dtFilepath.Add(HCFile.File, filePath); // filepath
+                    dtFilepath.Add(HCFile.Sub, GetSubtitleFile(filePath)); // file sub
+                    dtFilepath.Add(HCFile.Trailer, Media.Trailer); // trailer
+
+                    long insertResult = SQLHelper.DbInsertMovie(dtInfo, dtFilepath, callFrom);
+                    if (insertResult > 0)
+                    {
+                        // Succesfully inserted
+                        count += 1; // add to count
+                        logInsert += $"{filePath}\n";
+
+                        // Clear prev cover images
+                        string movieId = insertResult.ToString();
+                        string oldFile = GlobalVars.PATH_TEMP + movieId + ".jpg"; // cover path for temporary cover
+                        string newFile = GlobalVars.ImgFullPath(movieId);
+                        if (File.Exists(oldFile))
+                        {
+                            GlobalVars.DeleteMove(oldFile, errFrom); // Delete cover in temp folder
+                        }
+                        if (File.Exists(newFile) && Settings.IsOffline == false)
+                        {
+                            GlobalVars.DeleteMove(newFile, errFrom); // Delete existing cover first
+                        }
+                        // Download cover, if not OFFLINE_MODE
+                        if (Settings.IsOffline == false && (!String.IsNullOrWhiteSpace(Media.PosterPath)))
+                        {
+                            Thread.Sleep((int)(sleep / 2)); // sleep to prevent overloading API
+                            if (GlobalVars.HAS_TMDB_KEY && src == "tmdb") // Use TMDB API
+                            {
+                                IsDownloadCover = TmdbAPI.DownloadCoverFromTMDB(movieId, Media.PosterPath, errFrom);
+                            }
+                            else if (src == "anilist") // Use ANILIST API
+                            {
+                                IsDownloadCover = AnilistAPI.DownloadCoverFromAnilist(movieId, Media.PosterPath, errFrom);
+                            }
+                            else { } //do nothing
+                        }
+                        if (IsDownloadCover)
                         {
                             try
                             {
-                                if (anime.Data.Page.PageInfo.Total == 1)
-                                {
-                                    string getAnilist = anime.Data.Page.MediaList[0].Id.ToString();
-                                    Media = AnilistAPI.GetMovieInfoFromAnilist(getAnilist);
-                                }
+                                // Move from temp folder to poster path
+                                File.Move(oldFile, newFile);
+                                GlobalVars.DeleteMove(oldFile, errFrom); // Delete temp cover afterwards
                             }
-                            catch { }
+                            catch (Exception ex)
+                            {
+                                GlobalVars.ShowError($"{errFrom}\nTemp File: {oldFile}\nCover File: {newFile}", ex, false, this);
+                            }
                         }
-                        sleep = 30;
                     }
-                    if (Media != null)
-                    {
-                        try { rYear = Media.ReleaseDate.Substring(0, 4); }
-                        catch { rYear = ""; }
-                        rCountry = GlobalVars.ConvertListToString(Media.Country, ",", callFrom); // Get Country
-                        rGenre = GlobalVars.ConvertListToString(Media.Genre, ",", callFrom); // Get Genres
-                    }
+                    form.BackgroundWorker.ReportProgress((int)((progress / maxProgress) * 100), progress);
+                    Thread.Sleep(sleep); // Prevent continuous request to TMDB, prevents overloading the site.
                 }
-                if (Media == null)
+                dtNewFiles.Clear();
+                if (!String.IsNullOrWhiteSpace(logInsert))
                 {
-                    // If cannot get info online, make use of defaults
-                    Media = new MediaInfo();
-                    Media.Title = mName.Trim();
+                    GlobalVars.WriteAppend(logFileInsert, logInsert);
                 }
-                // If Original title is the same as the main title, ignore it
-                Media.OrigTitle = (Media.OrigTitle.Equals(Media.Title)) ? String.Empty : Media.OrigTitle;
-                // If year is empty, use the year from regex
-                rYear = (String.IsNullOrWhiteSpace(rYear)) ? yearFromFname : rYear;
-
-                // Make the DataRow
-                var dtInfo = new Dictionary<string, string>();
-                var dtFilepath = new Dictionary<string, string>();
-                dtInfo.Add(HCInfo.imdb, Media.Imdb); // IMDB
-                dtInfo.Add(HCInfo.anilist, Media.Anilist); // Anilist
-                dtInfo.Add(HCInfo.name, Media.Title); // name
-                dtInfo.Add(HCInfo.name_orig, Media.OrigTitle); // episode name
-                dtInfo.Add(HCInfo.name_series, Media.SeriesName); // series name
-                dtInfo.Add(HCInfo.season, Media.Seasons.ToString()); // season number
-                dtInfo.Add(HCInfo.episode, Media.Episodes.ToString()); // episode num
-                dtInfo.Add(HCInfo.country, rCountry); // country
-                dtInfo.Add(HCInfo.category, GlobalVars.GetCategoryByFilter(rGenre, rCountry, mediatype, src).ToString()); // category
-                dtInfo.Add(HCInfo.genre, rGenre); // genre
-                dtInfo.Add(HCInfo.studio, Media.Studio); // studio
-                dtInfo.Add(HCInfo.producer, Media.Producer); // producer
-                dtInfo.Add(HCInfo.director, Media.Director); // director
-                dtInfo.Add(HCInfo.artist, Media.Actor); // artist
-                dtInfo.Add(HCInfo.year, rYear); // year
-                dtInfo.Add(HCInfo.summary, Media.Summary); // summary
-
-                dtFilepath.Add(HCFile.File, filePath); // filepath
-                dtFilepath.Add(HCFile.Sub, GetSubtitleFile(filePath)); // file sub
-                dtFilepath.Add(HCFile.Trailer, Media.Trailer); // trailer
-
-                long insertResult = SQLHelper.DbInsertMovie(dtInfo, dtFilepath, callFrom);
-                if (insertResult > 0)
-                {
-                    // Succesfully inserted
-                    count += 1; // add to count
-                    logInsert += $"{filePath}\n";
-
-                    // Clear prev cover images
-                    string movieId = insertResult.ToString();
-                    string oldFile = GlobalVars.PATH_TEMP + movieId + ".jpg"; // cover path for temporary cover
-                    string newFile = GlobalVars.ImgFullPath(movieId);
-                    if (File.Exists(oldFile))
-                    {
-                        GlobalVars.DeleteMove(oldFile, errFrom); // Delete cover in temp folder
-                    }
-                    if (File.Exists(newFile) && Settings.IsOffline==false)
-                    {
-                        GlobalVars.DeleteMove(newFile, errFrom); // Delete existing cover first
-                    }
-                    // Download cover, if not OFFLINE_MODE
-                    if (Settings.IsOffline == false && (!String.IsNullOrWhiteSpace(Media.PosterPath)))
-                    {
-                        Thread.Sleep((int)(sleep/2)); // sleep to prevent overloading API
-                        if (GlobalVars.HAS_TMDB_KEY && src == "tmdb") // Use TMDB API
-                        {
-                            IsDownloadCover = TmdbAPI.DownloadCoverFromTMDB(movieId, Media.PosterPath, errFrom);
-                        }
-                        else if (src == "anilist") // Use ANILIST API
-                        {
-                            IsDownloadCover = AnilistAPI.DownloadCoverFromAnilist(movieId, Media.PosterPath, errFrom);
-                        }
-                        else { } //do nothing
-                    }
-                    if (IsDownloadCover)
-                    {
-                        try
-                        {
-                            // Move from temp folder to poster path
-                            File.Move(oldFile, newFile);
-                            GlobalVars.DeleteMove(oldFile, errFrom); // Delete temp cover afterwards
-                        }
-                        catch (Exception ex)
-                        {
-                            GlobalVars.ShowError($"{errFrom}\nTemp File: {oldFile}\nCover File: {newFile}", ex, false, this);
-                        }
-                    }
-                }
-                Thread.Sleep(sleep); // Prevent continuous request to TMDB, prevents overloading the site.
-            }
-            dtNewFiles.Clear();
-            if (!String.IsNullOrWhiteSpace(logInsert))
-            {
-                GlobalVars.WriteAppend(logFileInsert, logInsert);
-            }
+            };
+            form.ShowDialog(this);
             return count;
         }
         // return filepath from DB
@@ -346,7 +359,7 @@ namespace HomeCinema
                 //GlobalVars.Log("frmMain-AddItem()", "Added: " + item.Text);
             }
         }
-        public static void AfterPopulatingMovieLV(ListView lv, int count = 0)
+        public static void AfterPopulatingMovieLV(ListView lv, long count = 0)
         {
             // Error log
             string errFrom = "frmMain-bgwMovie_DoneSearchMovie";
@@ -802,7 +815,7 @@ namespace HomeCinema
             int countMediaLoc = 0;
             int countMediaLocMax = 0;
             string logSkipped = Path.Combine(GlobalVars.PATH_LOG, "SkippedEntries.Log");
-            int insertRes = 0;
+            long insertRes = 0;
 
             // Build list of folders to search from
             GlobalVars.LoadMediaLocations();
@@ -927,12 +940,12 @@ namespace HomeCinema
                         }
                     }
                 }
-                form.UpdateMessage($"Inserting {dtNewFiles?.Count} new found media files..");
-                insertRes = InsertToDB(dtNewFiles, calledFrom + "-dtNewFiles");
                 // Clear previous lists
                 listAlreadyinDB?.Clear();
             };
             form.ShowDialog(this);
+
+            insertRes = InsertToDB(dtNewFiles, calledFrom + "-dtNewFiles");
             if (insertRes > 0)
             {
                 GlobalVars.ShowInfo($"Successfully inserted {insertRes} new entries!");
@@ -948,12 +961,12 @@ namespace HomeCinema
             lvSearchResult.SuspendLayout();
             lvSearchResult.Items.Clear(); // Clear previous list
             // Populate movie listview with new entries, from another form thread
-            frmLoading form = new frmLoading(AppStart ? "Loading collection.." : "Searching..", "Loading");
+            frmLoading form = new frmLoading(AppStart ? "Loading collection.." : "Searching..", "Loading", true);
             string qry = SEARCH_QUERY;
             string errFrom = "frmMain-PopulateMovieBG()";
             string fileNamePath;
-            int progress = 0;
-            int progressMax = 0;
+            long progress = 0;
+            long progressMax = 0;
 
             // If no query
             if (String.IsNullOrWhiteSpace(qry))
@@ -973,12 +986,13 @@ namespace HomeCinema
                 // Set Max Progress
                 if (dt != null)
                 {
-                    progressMax = dt.Rows.Count;
+                    progressMax = (long)dt.Rows.Count;
                 }
 
                 // Iterate thru all DataRows
                 if (progressMax > 0)
                 {
+                    form.MaxProgress = progressMax;
                     form.BackgroundWorker.DoWork += (sender1, e1) =>
                     {
                         foreach (DataRow r in dt.Rows)
@@ -1081,6 +1095,7 @@ namespace HomeCinema
                                 }
                                 catch { }
                             }
+                            form.BackgroundWorker.ReportProgress((int)((progress/progressMax)*100), progress);
                         }
                         GlobalVars.Log(errFrom, $"DONE Background worker from: {Name}");
                         if (!GlobalVars.HAS_TMDB_KEY && AppStart)
