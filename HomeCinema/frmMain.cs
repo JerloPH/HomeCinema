@@ -1389,6 +1389,14 @@ namespace HomeCinema
             lvSearchResult.Height = (ClientRectangle.Height - lvSearchResult.Top) - 2;
         }
 
+        private void btnFixNoInfo_Click(object sender, EventArgs e)
+        {
+            SEARCH_QUERY = $"SELECT * FROM {HCTable.info} " +
+                $"WHERE (`{HCInfo.imdb}`=null OR `{HCInfo.imdb}`='' OR `{HCInfo.imdb}`='0') AND " +
+                $"(`{HCInfo.anilist}`=null OR `{HCInfo.anilist}`='' OR `{HCInfo.anilist}`='0');";
+            PopulateMovieBG();
+        }
+
         private void cbSortOrder_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
