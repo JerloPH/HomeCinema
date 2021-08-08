@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lblNameSeries = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
             this.txtArtist = new System.Windows.Forms.TextBox();
             this.txtCountry = new System.Windows.Forms.TextBox();
             this.txtGenre = new System.Windows.Forms.TextBox();
@@ -51,7 +53,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.lblCategory = new System.Windows.Forms.Label();
             this.lblYear = new System.Windows.Forms.Label();
-            this.lblIMDB = new System.Windows.Forms.Label();
+            this.lblSourceId = new System.Windows.Forms.Label();
             this.lblID = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.webTrailer = new System.Windows.Forms.WebBrowser();
@@ -60,11 +62,9 @@
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnPlay = new System.Windows.Forms.Button();
             this.picBox = new System.Windows.Forms.PictureBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblSource = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
-            this.lblNameSeries = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
@@ -97,13 +97,13 @@
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.lblCategory);
             this.groupBox2.Controls.Add(this.lblYear);
-            this.groupBox2.Controls.Add(this.lblIMDB);
+            this.groupBox2.Controls.Add(this.lblSourceId);
             this.groupBox2.Controls.Add(this.lblID);
             this.groupBox2.Controls.Add(this.label15);
             this.groupBox2.Controls.Add(this.webTrailer);
             this.groupBox2.Controls.Add(this.groupBox3);
             this.groupBox2.Controls.Add(this.picBox);
-            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.lblSource);
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.groupBox2.Location = new System.Drawing.Point(12, 49);
@@ -112,6 +112,26 @@
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Information";
+            // 
+            // lblNameSeries
+            // 
+            this.lblNameSeries.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNameSeries.ForeColor = System.Drawing.Color.Yellow;
+            this.lblNameSeries.Location = new System.Drawing.Point(291, 169);
+            this.lblNameSeries.Name = "lblNameSeries";
+            this.lblNameSeries.Size = new System.Drawing.Size(295, 72);
+            this.lblNameSeries.TabIndex = 48;
+            this.lblNameSeries.Text = "Series name";
+            // 
+            // label20
+            // 
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.ForeColor = System.Drawing.Color.White;
+            this.label20.Location = new System.Drawing.Point(188, 168);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(95, 25);
+            this.label20.TabIndex = 47;
+            this.label20.Text = "Series";
             // 
             // txtArtist
             // 
@@ -356,16 +376,16 @@
             this.lblYear.TabIndex = 7;
             this.lblYear.Text = "000";
             // 
-            // lblIMDB
+            // lblSourceId
             // 
-            this.lblIMDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblIMDB.ForeColor = System.Drawing.Color.MediumTurquoise;
-            this.lblIMDB.Location = new System.Drawing.Point(268, 18);
-            this.lblIMDB.Name = "lblIMDB";
-            this.lblIMDB.Size = new System.Drawing.Size(148, 25);
-            this.lblIMDB.TabIndex = 6;
-            this.lblIMDB.Text = "ID";
-            this.lblIMDB.Click += new System.EventHandler(this.lblIMDB_Click);
+            this.lblSourceId.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSourceId.ForeColor = System.Drawing.Color.MediumTurquoise;
+            this.lblSourceId.Location = new System.Drawing.Point(268, 18);
+            this.lblSourceId.Name = "lblSourceId";
+            this.lblSourceId.Size = new System.Drawing.Size(148, 25);
+            this.lblSourceId.TabIndex = 6;
+            this.lblSourceId.Text = "ID";
+            this.lblSourceId.Click += new System.EventHandler(this.lblSourceId_Click);
             // 
             // lblID
             // 
@@ -456,15 +476,15 @@
             this.picBox.TabStop = false;
             this.picBox.Click += new System.EventHandler(this.picBox_Click);
             // 
-            // label2
+            // lblSource
             // 
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(189, 18);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(73, 25);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "IMDB";
+            this.lblSource.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSource.ForeColor = System.Drawing.Color.White;
+            this.lblSource.Location = new System.Drawing.Point(189, 18);
+            this.lblSource.Name = "lblSource";
+            this.lblSource.Size = new System.Drawing.Size(73, 25);
+            this.lblSource.TabIndex = 0;
+            this.lblSource.Text = "IMDB";
             // 
             // label8
             // 
@@ -487,26 +507,6 @@
             this.lblName.TabIndex = 9;
             this.lblName.Text = "MOVIE NAME";
             this.lblName.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // lblNameSeries
-            // 
-            this.lblNameSeries.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNameSeries.ForeColor = System.Drawing.Color.Yellow;
-            this.lblNameSeries.Location = new System.Drawing.Point(291, 169);
-            this.lblNameSeries.Name = "lblNameSeries";
-            this.lblNameSeries.Size = new System.Drawing.Size(295, 72);
-            this.lblNameSeries.TabIndex = 48;
-            this.lblNameSeries.Text = "Series name";
-            // 
-            // label20
-            // 
-            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.ForeColor = System.Drawing.Color.White;
-            this.label20.Location = new System.Drawing.Point(188, 168);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(95, 25);
-            this.label20.TabIndex = 47;
-            this.label20.Text = "Series";
             // 
             // frmMovie
             // 
@@ -535,7 +535,7 @@
 
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblSource;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button btnPlay;
         private System.Windows.Forms.PictureBox picBox;
@@ -543,7 +543,7 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label lblID;
         private System.Windows.Forms.Label lblYear;
-        private System.Windows.Forms.Label lblIMDB;
+        private System.Windows.Forms.Label lblSourceId;
         private System.Windows.Forms.Label lblCategory;
         private System.Windows.Forms.Label lblNameOrig;
         private System.Windows.Forms.Label label5;

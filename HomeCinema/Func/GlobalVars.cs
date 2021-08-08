@@ -54,6 +54,7 @@ namespace HomeCinema
         // Links for external websites
         public static string TMDB_KEY = "";
         public static string LINK_IMDB = "https://www.imdb.com/title/";
+        public static string LINK_ANILIST = "https://anilist.co/anime/";
         public static string LINK_YT = "https://www.youtube.com/watch?v=";
 
         // Paths for Files and Folders

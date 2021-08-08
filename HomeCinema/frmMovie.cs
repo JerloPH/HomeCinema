@@ -104,9 +104,29 @@ namespace HomeCinema
                 try { MOVIE_TRAILER = row[HCFile.Trailer].ToString(); }
                 catch { MOVIE_TRAILER = ""; }
 
-                // imdb
-                try { lblIMDB.Text = GlobalVars.ValidateAndReturn(row[HCInfo.imdb].ToString()); }
-                catch { lblIMDB.Text = ""; }
+                // Imdb and Anilist Id
+                try
+                {
+                    string imdb = row[HCInfo.imdb].ToString();
+                    string anilist = row[HCInfo.anilist].ToString();
+                    if (!String.IsNullOrWhiteSpace(imdb) && !imdb.Equals("0"))
+                    {
+                        lblSourceId.Text = imdb;
+                        lblSourceId.Tag = "imdb";
+                        lblSource.Text = "IMDB";
+                    }
+                    else
+                    {
+                        lblSourceId.Text = anilist;
+                        lblSourceId.Tag = "anilist";
+                        lblSource.Text = "Anilist";
+                    }
+                }
+                catch
+                {
+                    lblSourceId.Tag = "";
+                    lblSourceId.Text = "";
+                }
 
                 // name
                 try { lblName.Text = GlobalVars.ValidateAndReturn(row[HCInfo.name].ToString()); }
@@ -489,20 +509,26 @@ namespace HomeCinema
             }
         }
         // Open IMDB link using default browser
-        private void lblIMDB_Click(object sender, EventArgs e)
+        private void lblSourceId_Click(object sender, EventArgs e)
         {
-            string titleCode = lblIMDB.Text;
+            string titleCode = lblSourceId.Text;
+            string source = lblSourceId.Tag?.ToString();
+            string link = "";
+
+            if (String.IsNullOrWhiteSpace(source)) { return; }
+            link = source.Equals("imdb") ? GlobalVars.LINK_IMDB : GlobalVars.LINK_ANILIST;
+
             titleCode = titleCode.Trim();
             if ((String.IsNullOrWhiteSpace(titleCode) == false) && (titleCode != "0"))
             {
                 try
                 {
-                    Process.Start(GlobalVars.LINK_IMDB + titleCode);
+                    Process.Start(link + titleCode);
                 }
                 catch (Exception ex)
                 {
-                    GlobalVars.ShowError($"frmMovie({Name})-lblIMDB_Click", ex, false);
-                    GlobalVars.ShowWarning("Cannot open IMDB link on browser!");
+                    GlobalVars.ShowError($"frmMovie({Name})-lblSourceId_Click", ex, false);
+                    GlobalVars.ShowWarning("Cannot open link on browser!");
                 }
             }
         }
