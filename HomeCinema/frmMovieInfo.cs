@@ -330,12 +330,12 @@ namespace HomeCinema
             // Add new country to text file
             foreach (string item in listboxCountry.Items)
             {
-                GlobalVars.WriteAppend(GlobalVars.FILE_COUNTRY, $",{item}");
+                GlobalVars.WriteAppend(GlobalVars.FILE_COUNTRY, $",{item}", false);
             }
             // Add new genre to text file
             foreach (string item in listboxGenre.Items)
             {
-                GlobalVars.WriteAppend(GlobalVars.FILE_GENRE, $",{item}");
+                GlobalVars.WriteAppend(GlobalVars.FILE_GENRE, $",{item}", false);
             }
             Program.FormMain.PopulateCountryCB(); // Refresh Country list
             Program.FormMain.PopulateGenreCB(); // Refresh Genre list

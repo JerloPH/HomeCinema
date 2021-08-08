@@ -399,11 +399,11 @@ namespace HomeCinema
             return ret;
         }
         // Write to TextFile
-        public static void WriteAppend(string fName, string toWrite)
+        public static void WriteAppend(string fName, string toWrite, bool newline = true)
         {
             using (StreamWriter w = File.AppendText(fName))
             {
-                w.Write(toWrite);
+                w.Write(toWrite + (newline ? "\n" : ""));
             }
         }
         // Write to TextFile
