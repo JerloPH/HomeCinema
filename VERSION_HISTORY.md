@@ -1,5 +1,18 @@
 # HomeCinema - Project History:
 
+## HomeCinema v0.8.1
+### *release 41 - build 08 August 2021 PHT*
+### What's New?
+- Add **[No Info]** button, to show entries with no IMDB and Anilist Id.
+
+### Fixes
+- Youtube trailers not saved properly on automatic fetching of info.
+- Anilist Id not showing on **Movie Info** form.
+
+## Misc.
+- Series-related UIs are hidden on **Movie Info** form, if entry is not series.
+****
+
 ## HomeCinema v0.8
 ### *release 40 - build 07 August 2021 PHT*
 ### New Stuff!
