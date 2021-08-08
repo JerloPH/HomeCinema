@@ -1,6 +1,6 @@
 # HomeCinema - Media Organizer
 
-<img src="/data/v0.7.jpg"></img>
+<img src="/data/v0.8.1.jpg"></img>
 
 **version:**	0.8.1.0 <br>
 **release:**	41
