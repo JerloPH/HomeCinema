@@ -304,7 +304,10 @@ namespace HomeCinema
                 Thread.Sleep(sleep); // Prevent continuous request to TMDB, prevents overloading the site.
             }
             dtNewFiles.Clear();
-            GlobalVars.WriteAppend(logFileInsert, logInsert);
+            if (!String.IsNullOrWhiteSpace(logInsert))
+            {
+                GlobalVars.WriteAppend(logFileInsert, logInsert);
+            }
             return count;
         }
         // return filepath from DB
@@ -1025,7 +1028,7 @@ namespace HomeCinema
                                     }
                                     catch (Exception ex)
                                     {
-                                        GlobalVars.ShowError(errFrom, ex, false);
+                                        GlobalVars.ShowError($"{errFrom}\nFile: {fileNamePath}", ex, false);
                                         continue;
                                     }
                                 }
