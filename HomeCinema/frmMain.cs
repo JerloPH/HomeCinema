@@ -297,7 +297,7 @@ namespace HomeCinema
                         }
                         catch (Exception ex)
                         {
-                            GlobalVars.ShowError(errFrom, ex, false, this);
+                            GlobalVars.ShowError($"{errFrom}\nTemp File: {oldFile}\nCover File: {newFile}", ex, false, this);
                         }
                     }
                 }
