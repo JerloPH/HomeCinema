@@ -638,12 +638,17 @@ namespace HomeCinema
             // Ask to change cover - poster image
             if (String.IsNullOrWhiteSpace(mediaInfo.PosterPath) == false)
             {
-                if (GlobalVars.ShowYesNo("Do you want to change poster image?", this))
+                string moviePosterDL = GlobalVars.PATH_TEMP + MOVIE_ID + ".jpg";
+                string existingcover = $"{GlobalVars.PATH_IMG}{MOVIE_ID}.jpg";
+                bool downloadCover = true;
+                if (File.Exists(existingcover))
+                {
+                    downloadCover = GlobalVars.ShowYesNo("Do you want to change poster image?", this);
+                }
+                if (downloadCover)
                 {
                     // Show form loading
                     Thread.Sleep(2); // prevent overloading for TMDB or Anilist
-                    string moviePosterDL = GlobalVars.PATH_TEMP + MOVIE_ID + ".jpg";
-
                     form = new frmLoading($"Downloading cover from {source.ToUpper()}..", "Loading");
                     form.BackgroundWorker.DoWork += (sender1, e1) =>
                     {
