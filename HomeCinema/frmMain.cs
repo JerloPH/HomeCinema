@@ -311,7 +311,7 @@ namespace HomeCinema
                             }
                         }
                     }
-                    form.BackgroundWorker.ReportProgress((int)((progress / maxProgress) * 100), progress);
+                    form.UpdateProgress(progress);
                     Thread.Sleep(sleep); // Prevent continuous request to TMDB, prevents overloading the site.
                 }
                 dtNewFiles.Clear();
@@ -1095,7 +1095,7 @@ namespace HomeCinema
                                 }
                                 catch { }
                             }
-                            form.BackgroundWorker.ReportProgress((int)((progress/progressMax)*100), progress);
+                            form.UpdateProgress(progress);
                         }
                         GlobalVars.Log(errFrom, $"DONE Background worker from: {Name}");
                         if (!GlobalVars.HAS_TMDB_KEY && AppStart)

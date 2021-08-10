@@ -65,7 +65,18 @@ namespace HomeCinema
             }
             lblProgress.Visible = useProgress;
         }
-
+        #region Public Functions
+        public void UpdateProgress(long progress)
+        {
+            try
+            {
+                BackgroundWorker.ReportProgress((int)((progress / MaxProgress) * 100), progress);
+            }
+            catch (Exception ex)
+            {
+                GlobalVars.ShowError("frmLoading-UpdateProgress", ex, false, this);
+            }
+        }
         public void SetIcon(int IconIndex = 0)
         {
             Bitmap image = null;
@@ -100,6 +111,7 @@ namespace HomeCinema
                 label1.Text = message;
             }
         }
+        #endregion
 
         private void frmLoading_Shown(object sender, EventArgs e)
         {
