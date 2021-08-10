@@ -235,61 +235,6 @@ namespace HomeCinema.SQLFunc
             return DONE;
         }
         /// <summary>
-        /// Initialize a DataTable, with COLUMN [Id], and other columns.
-        /// </summary>
-        /// <param name="WITH_ID">Include [Id] to DataTable Column.</param>
-        /// <param name="cols">Column names.</param>
-        /// <returns>DataTable ref</returns>
-        public static DataTable InitializeDT(bool WITH_ID, String[] cols)
-        {
-            var dt = new DataTable();
-            if (WITH_ID)
-            {
-                // table initialization for columns with Id as first column
-                DataColumn column = new DataColumn();
-                column.DataType = System.Type.GetType("System.Int64");
-                column.ColumnName = "Id";
-                column.ReadOnly = true;
-                column.Unique = true;
-                // Add the Column to the DataColumnCollection.
-                dt.Columns.Add(column);
-
-                // Multiple col
-                foreach (string name in cols)
-                {
-                    if (name != "Id")
-                    {
-                        DataColumn col = new DataColumn();
-                        col.DataType = System.Type.GetType("System.String");
-                        col.ColumnName = name;
-                        col.ReadOnly = true;
-                        // Add the Column to the DataColumnCollection.
-                        dt.Columns.Add(col);
-                    }
-                }
-            }
-            else
-            {
-                // table initialization for ONLY Strings without [Id]
-                // Multiple col
-                foreach (string name in cols)
-                {
-                    if (name != "Id")
-                    {
-                        DataColumn col = new DataColumn();
-                        col.DataType = System.Type.GetType("System.String");
-                        col.ColumnName = name;
-                        col.ReadOnly = true;
-                        // Add the Column to the DataColumnCollection.
-                        dt.Columns.Add(col);
-                    }
-                }
-            }
-            // Apply changes to dt and return
-            dt.AcceptChanges();
-            return dt;
-        }
-        /// <summary>
         /// Execute generic query statement.
         /// </summary>
         /// <param name="qry">Query string to run.</param>
