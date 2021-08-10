@@ -76,6 +76,7 @@ namespace HomeCinema
                 }
     
                   title {
+                    english
                     romaji
                   }
                   startDate {
