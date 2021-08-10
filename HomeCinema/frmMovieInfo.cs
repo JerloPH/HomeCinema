@@ -67,9 +67,7 @@ namespace HomeCinema
 
             // Add items to cbCategory
             cbCategory.Items.AddRange(GlobalVars.DB_INFO_CATEGORY);
-
             cbSource.Items.AddRange(new string[] { "TMDB", "Anilist" });
-            cbSource.SelectedIndex = 0;
 
             // LOAD Information from DATABASE and SET to Controls
             if (Convert.ToInt16(MOVIE_ID) > 0)
@@ -77,6 +75,9 @@ namespace HomeCinema
                 LoadInformation(ID, text);
                 RefreshCountryAndGenre();
             }
+
+            // Chang default source, depending on loaded info
+            cbSource.SelectedIndex = (cbCategory.Text.ToLower().Contains("anime") ? 1 : 0);
 
             // Show the form
             StartPosition = FormStartPosition.CenterParent;
