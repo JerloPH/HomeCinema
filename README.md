@@ -82,7 +82,8 @@ D:\TV Series\Title of Series\Episode 1.mp4
 **Warning Icon** is from [*FreeIcons.io*](https://freeicons.io/regular-life-icons/sign-warning-icon-17898), by [**Anu Rocks**](https://freeicons.io/profile/730) <br>
 
 ### Third-Party API
-[**The Movie Database**](https://www.themoviedb.org/) - Used to fetch movie details from the web. <br>
+[**The Movie Database**](https://www.themoviedb.org/) - Used to fetch movie and tv series information. <br>
+[**Anilist**](https://anilist.co/) - Used to fetch anime information. <br>
 
 ### NuGet Packages Used
 [**Newtonsoft.Json**](https://www.newtonsoft.com/json) - JSON Parser.<br>

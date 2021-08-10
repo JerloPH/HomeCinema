@@ -45,6 +45,7 @@
   - Moved all codes related to database to its own class **'SQLHelper'**.
 - Refactored mechanism for Saving/Loading settings.
 - Better Robocopy script on Post-Build event.
+- Various GUI improvements and cleanups.
 - Various code cleanups; Removed unused methods, functions, and variables.
 
 *Full and detailed changes on* [**'VERSION_HISTORY_DETAILED.md'**](https://github.com/JerloPH/HomeCinema/blob/master/docs/VERSION_HISTORY_DETAILED.md#released-on-v08).
