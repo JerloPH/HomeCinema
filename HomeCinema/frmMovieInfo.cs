@@ -507,11 +507,21 @@ namespace HomeCinema
         // Fetch data from TMDB, using IMDB ID
         private void btnFetchData_Click(object sender, EventArgs e)
         {
-            if (!GlobalVars.ShowYesNo("Replace information?", this)) { return; }
+            // Declare vars
+            string errFrom = "frmMovieInfo-btnFetchData_Click";
+            string IMDB_ID = txtIMDB.Text;
+            string AnilistId = txtAnilist.Text;
             string source = cbSource.Text.ToLower();
+            long AniId = 0;
+            // Set default source
             if (String.IsNullOrWhiteSpace(source))
             {
                 source = "tmdb";
+            }
+            // Exit conditions
+            if (!String.IsNullOrWhiteSpace(txtYear.Text) && txtYear.Text!="0")
+            {
+                if (!GlobalVars.ShowYesNo("Replace information?", this)) { return; }
             }
             // Exit when no TMDB key
             if (!GlobalVars.HAS_TMDB_KEY && source.Equals("tmdb"))
@@ -519,17 +529,6 @@ namespace HomeCinema
                 GlobalVars.ShowWarning(GlobalVars.MSG_NO_TMDB);
                 return;
             }
-            // Declare vars
-            frmLoading form = null;
-            string errFrom = "frmMovieInfo-btnFetchData_Click";
-            string IMDB_ID = txtIMDB.Text;
-            string AnilistId = txtAnilist.Text;
-            int AniId = 0;
-            string country = ""; // country text
-            string genre = ""; // genre text 
-            bool coverDownloaded = false;
-            MediaInfo mediaInfo = null;
-
             // Exit if IMDB id is invalid
             if ((String.IsNullOrWhiteSpace(IMDB_ID) || IMDB_ID=="0" || (IMDB_ID.StartsWith("tt")==false)) && (source.Equals("tmdb")))
             {
@@ -538,13 +537,19 @@ namespace HomeCinema
                 return;
             }
             // Exit if Anilist id is invalid
-            if ((String.IsNullOrWhiteSpace(AnilistId) || AnilistId == "0" || !int.TryParse(AnilistId, out AniId)) && (source.Equals("anilist")))
+            if ((String.IsNullOrWhiteSpace(AnilistId) || AnilistId == "0" || !long.TryParse(AnilistId, out AniId)) && (source.Equals("anilist")))
             {
                 GlobalVars.ShowWarning("Invalid Anilist Id!");
                 txtAnilist.Focus();
                 return;
             }
-
+            // Variables used
+            frmLoading form = null;
+            string country = ""; // country text
+            string genre = ""; // genre text 
+            bool coverDownloaded = false;
+            MediaInfo mediaInfo = null;
+            
             // Get List of values from either TMDB or Anilist
             form = new frmLoading($"Fetching info from {source.ToUpper()}..", "Loading");
             form.BackgroundWorker.DoWork += (sender1, e1) =>
@@ -555,11 +560,7 @@ namespace HomeCinema
                 }
                 else
                 {
-                    string tag = "";
-                    if (txtIMDB.Tag != null)
-                    {
-                        tag = txtIMDB.Tag.ToString();
-                    }
+                    string tag = (txtIMDB.Tag != null) ? txtIMDB.Tag.ToString() : "";
                     string TmdbId = (String.IsNullOrWhiteSpace(tag)) ? TmdbAPI.GetTmdbFromImdb(IMDB_ID, MEDIA_TYPE) : tag;
                     mediaInfo = TmdbAPI.GetMovieInfoFromTmdb(TmdbId, MEDIA_TYPE);
                 }
@@ -674,7 +675,7 @@ namespace HomeCinema
                     }
                     else
                     {
-                        GlobalVars.ShowWarning("Image file cannot be\ndownloaded at the moment!\n Try again later...");
+                        GlobalVars.ShowWarning("Image file cannot be\ndownloaded at the moment!\nTry again later...");
                     }
                 }
             }
