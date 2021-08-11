@@ -408,7 +408,7 @@ namespace HomeCinema
                 }
                 else
                 {
-                    qry += $"`{HCInfo.year}` BETWEEN {txtYearFrom.Text} AND {DateTime.Now.Year.ToString()}";
+                    qry += $"`{HCInfo.year}`={txtYearFrom.Text}";
                 }
             }
             // Genre
