@@ -689,6 +689,8 @@ namespace HomeCinema
                     {
                         temp.SubItems.Add($"S{seasonNum} E{GlobalVars.ValidateNum(resEp)}");
                     }
+                    else
+                        temp.SubItems.Add($"Episodes {GlobalVars.ValidateNum(resEp)}");
                 }
                 // Year
                 temp.SubItems.Add(resYear);
