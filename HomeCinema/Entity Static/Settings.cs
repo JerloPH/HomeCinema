@@ -136,7 +136,7 @@ namespace HomeCinema
             {
                 // Load file contents to Config
                 contents = GlobalVars.ReadStringFromFile(GlobalVars.FILE_SETTINGS, $"{errorFrom} [FILE_SETTINGS]");
-                config = JsonConvert.DeserializeObject<SettingJson>(contents);
+                config = JsonConvert.DeserializeObject<SettingJson>(contents, GlobalVars.JSON_SETTING);
             }
 
             // Get Max log file size

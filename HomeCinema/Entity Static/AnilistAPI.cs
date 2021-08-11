@@ -92,6 +92,7 @@ namespace HomeCinema
 
         public static AnilistPageQuery SearchForAnime(string text)
         {
+            string errFrom = "AnilistAPI-SearchForAnime";
             int retry = 3;
             while (retry > 0)
             {
@@ -127,15 +128,16 @@ namespace HomeCinema
                     if (execute.StatusCode == HttpStatusCode.OK)
                     {
                         var result = execute.Content;
-                        var jsonObj = JsonConvert.DeserializeObject<AnilistPageQuery>(result);
+                        var jsonObj = JsonConvert.DeserializeObject<AnilistPageQuery>(result, GlobalVars.JSON_SETTING);
                         retry = -1;
                         return jsonObj;
                     }
-                    --retry;
+                    retry -= 1;
                 }
-                catch
+                catch (Exception ex)
                 {
-                    --retry;
+                    GlobalVars.ShowError(errFrom, ex, false);
+                    retry -= 1;
                 }
             }
             return null;
@@ -179,21 +181,21 @@ namespace HomeCinema
                     // Break on not 200
                     if (execute.StatusCode != HttpStatusCode.OK)
                     {
-                        --retry;
+                        retry -= 1;
                         continue;
                     }
                     var result = execute.Content;
-                    var jsonObj = JsonConvert.DeserializeObject<AnilistSingleQuery>(result);
+                    var jsonObj = JsonConvert.DeserializeObject<AnilistSingleQuery>(result, GlobalVars.JSON_SETTING);
 
                     var media = new MediaInfo();
                     var anime = jsonObj.Data.Media;
                     var studioEdge = anime.Studios.Edge;
                     List<String> studioList = new List<string>();
+
+                    foreach (var node in studioEdge)
                     {
-                        foreach (var node in studioEdge)
-                        {
-                            studioList.Add(node.Node.Name.Trim());
-                        }
+                        try { studioList.Add(node.Node.Name.Trim()); }
+                        catch (Exception ex) { GlobalVars.ShowError(calledFrom, ex, false); }
                     }
 
                     if (String.IsNullOrWhiteSpace(anime.Title.English))
@@ -207,12 +209,24 @@ namespace HomeCinema
                     }
 
                     media.Anilist = anime.Id.ToString();
-                    media.Episodes = anime.Episodes;
-                    media.Genre = anime.Genres;
-                    media.Summary = anime.Description;
-                    media.ReleaseDate = $"{anime.StartDate.Year}-{anime.StartDate.Month}-{anime.StartDate.Day}";
-                    media.PosterPath = anime.CoverImage.Large;
-                    media.Studio = GlobalVars.ConvertListToString(studioList, ",", calledFrom);
+
+                    try { media.Episodes = anime.Episodes; }
+                    catch (Exception ex) { GlobalVars.ShowError(calledFrom, ex, false); }
+
+                    try { media.Genre = anime.Genres; }
+                    catch (Exception ex) { GlobalVars.ShowError(calledFrom, ex, false); }
+
+                    try { media.Summary = anime.Description; }
+                    catch (Exception ex) { GlobalVars.ShowError(calledFrom, ex, false); }
+
+                    try { media.ReleaseDate = $"{anime.StartDate.Year}-{anime.StartDate.Month}-{anime.StartDate.Day}"; }
+                    catch (Exception ex) { GlobalVars.ShowError(calledFrom, ex, false); }
+
+                    try { media.PosterPath = anime.CoverImage.Large; }
+                    catch (Exception ex) { GlobalVars.ShowError(calledFrom, ex, false); }
+
+                    try { media.Studio = GlobalVars.ConvertListToString(studioList, ",", calledFrom); }
+                    catch (Exception ex) { GlobalVars.ShowError(calledFrom, ex, false); }
 
                     try
                     {
@@ -222,7 +236,7 @@ namespace HomeCinema
                             media.Trailer = (trailersite.ToLower().Contains("youtube")) ? GlobalVars.LINK_YT + anime.Trailer.Id : "";
                         }
                     }
-                    catch { }
+                    catch (Exception ex) { GlobalVars.ShowError(calledFrom, ex, false); }
 
                     try
                     {
@@ -253,9 +267,10 @@ namespace HomeCinema
                     retry = -1;
                     return media;
                 }
-                catch
+                catch (Exception ex)
                 {
-                    --retry;
+                    GlobalVars.ShowError(calledFrom, ex, false);
+                    retry -= 1;
                 }
             }
             return null;

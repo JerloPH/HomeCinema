@@ -106,6 +106,13 @@ namespace HomeCinema
         public static Form formSetting = null; // Check if settings is already open
         public static Form formAbout = null;
 
+        // Other objects
+        public static JsonSerializerSettings JSON_SETTING = new JsonSerializerSettings
+        {
+            NullValueHandling = NullValueHandling.Ignore,
+            MissingMemberHandling = MissingMemberHandling.Ignore
+        };
+
         //######################################################################################################## Functions
         /// <summary>
         /// Log messages to text file
@@ -315,7 +322,7 @@ namespace HomeCinema
             else
             {
                 var jsonContent = ReadStringFromFile(FILE_CONFIG, "GlobalVar-CheckAllFiles");
-                var config = JsonConvert.DeserializeObject<ConfigJson>(jsonContent);
+                var config = JsonConvert.DeserializeObject<ConfigJson>(jsonContent, JSON_SETTING);
                 if (!String.IsNullOrWhiteSpace(config.TmdbApiKey))
                 {
                     TMDB_KEY = config.TmdbApiKey;

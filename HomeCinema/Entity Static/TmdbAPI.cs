@@ -27,7 +27,7 @@ namespace HomeCinema
             if (GlobalVars.DownloadAndReplace(FileFindMedia, URLFindMedia, errFrom, showAMsg))
             {
                 string content = GlobalVars.ReadStringFromFile(FileFindMedia, errFrom);
-                media = JsonConvert.DeserializeObject<TmdbSearchResult>(content);
+                media = JsonConvert.DeserializeObject<TmdbSearchResult>(content, GlobalVars.JSON_SETTING);
             }
             GlobalVars.TryDelete(FileFindMedia, errFrom);
             return media;
@@ -51,7 +51,7 @@ namespace HomeCinema
                 if (GlobalVars.DownloadAndReplace(JSONmovieinfo, URLFindMovie, errFrom))
                 {
                     string content = GlobalVars.ReadStringFromFile(JSONmovieinfo, errFrom);
-                    var movie = JsonConvert.DeserializeObject<TmdbMovieInfo>(content);
+                    var movie = JsonConvert.DeserializeObject<TmdbMovieInfo>(content, GlobalVars.JSON_SETTING);
                     if (movie != null)
                     {
                         media.Imdb = movie.ExternalIds.Imdb;
@@ -82,7 +82,7 @@ namespace HomeCinema
                         {
                             if (content.Contains("genres"))
                             {
-                                var jObj = (JObject)JsonConvert.DeserializeObject(content);
+                                var jObj = (JObject)JsonConvert.DeserializeObject(content, GlobalVars.JSON_SETTING);
                                 var result = jObj["genres"]
                                                 .Select(item => new
                                                 {
@@ -116,7 +116,7 @@ namespace HomeCinema
                     string contents = GlobalVars.ReadStringFromFile(JSONmovievids, errFrom + " [JSONmovievids]");
                     try
                     {
-                        var objJson = JsonConvert.DeserializeObject<TmdbVideos>(contents);
+                        var objJson = JsonConvert.DeserializeObject<TmdbVideos>(contents, GlobalVars.JSON_SETTING);
                         if (objJson.results[0].site.ToLower() == "youtube")
                         {
                             media.Trailer = GlobalVars.LINK_YT + objJson.results[0].key;
@@ -132,7 +132,7 @@ namespace HomeCinema
                 {
                     // Unparse json into object list
                     string contents = GlobalVars.ReadStringFromFile(JSONcrewcast, errFrom + " [JSONcrewcast]");
-                    var castcrew = JsonConvert.DeserializeObject<TmdbCastCrew>(contents);
+                    var castcrew = JsonConvert.DeserializeObject<TmdbCastCrew>(contents, GlobalVars.JSON_SETTING);
 
                     string tmp = ""; // temporary string var. Use to get strings
                     string tmpDir = "", tmpProd = ""; // Use to get director and producer
@@ -182,7 +182,7 @@ namespace HomeCinema
                     GlobalVars.TryDelete(JSONgetImdb, errFrom);
                     try
                     {
-                        var objMovieInfo = JsonConvert.DeserializeObject<TmdbSearchMovieInfo>(JSONContents);
+                        var objMovieInfo = JsonConvert.DeserializeObject<TmdbSearchMovieInfo>(JSONContents, GlobalVars.JSON_SETTING);
                         return (mediatype == "movie") ? objMovieInfo.imdb_id : objMovieInfo.external_ids.Imdb;
                     }
                     catch { return String.Empty; }
@@ -204,7 +204,7 @@ namespace HomeCinema
                     GlobalVars.TryDelete(File, errFrom);
                     try
                     {
-                        var res = JsonConvert.DeserializeObject<TmdbSearchFromImdb>(JSONContents);
+                        var res = JsonConvert.DeserializeObject<TmdbSearchFromImdb>(JSONContents, GlobalVars.JSON_SETTING);
                         var ret = (mediatype.ToLower().Equals("movie") ? res.MovieResults[0].Id : res.TVResults[0].Id);
                         return ret.ToString();
                     }

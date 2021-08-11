@@ -110,7 +110,7 @@ namespace HomeCinema
                 if (GlobalVars.DownloadAndReplace(JSONgetID, urlJSONgetId, errFrom))
                 {
                     JSONContents = GlobalVars.ReadStringFromFile(JSONgetID, errFrom);
-                    var objPageResult = JsonConvert.DeserializeObject<TmdbPageResult>(JSONContents);
+                    var objPageResult = JsonConvert.DeserializeObject<TmdbPageResult>(JSONContents, GlobalVars.JSON_SETTING);
                     if (objPageResult.results.Count > 0)
                     {
                         // Add to ListView
