@@ -90,6 +90,7 @@
             this.btnFetchData = new System.Windows.Forms.Button();
             this.cbSource = new System.Windows.Forms.ComboBox();
             this.label20 = new System.Windows.Forms.Label();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
@@ -98,6 +99,7 @@
             this.groupBox4.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox2
@@ -203,12 +205,13 @@
             // 
             this.tabInfo.Controls.Add(this.tabPage1);
             this.tabInfo.Controls.Add(this.tabPage2);
+            this.tabInfo.Controls.Add(this.tabPage4);
             this.tabInfo.Controls.Add(this.tabPage3);
-            this.tabInfo.Location = new System.Drawing.Point(211, 44);
+            this.tabInfo.Location = new System.Drawing.Point(211, 57);
             this.tabInfo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabInfo.Name = "tabInfo";
             this.tabInfo.SelectedIndex = 0;
-            this.tabInfo.Size = new System.Drawing.Size(772, 491);
+            this.tabInfo.Size = new System.Drawing.Size(772, 478);
             this.tabInfo.TabIndex = 4;
             // 
             // tabPage1
@@ -232,7 +235,7 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage1.Size = new System.Drawing.Size(764, 462);
+            this.tabPage1.Size = new System.Drawing.Size(764, 449);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Basic";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -312,7 +315,7 @@
             this.txtSummary.Multiline = true;
             this.txtSummary.Name = "txtSummary";
             this.txtSummary.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtSummary.Size = new System.Drawing.Size(749, 170);
+            this.txtSummary.Size = new System.Drawing.Size(749, 157);
             this.txtSummary.TabIndex = 31;
             // 
             // groupBox4
@@ -462,26 +465,18 @@
             this.tabPage2.Controls.Add(this.listboxCountry);
             this.tabPage2.Controls.Add(this.label14);
             this.tabPage2.Controls.Add(this.label13);
-            this.tabPage2.Controls.Add(this.label12);
-            this.tabPage2.Controls.Add(this.txtArtist);
-            this.tabPage2.Controls.Add(this.label11);
-            this.tabPage2.Controls.Add(this.txtProducer);
-            this.tabPage2.Controls.Add(this.label10);
-            this.tabPage2.Controls.Add(this.txtDirector);
-            this.tabPage2.Controls.Add(this.label9);
-            this.tabPage2.Controls.Add(this.txtStudio);
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(764, 462);
+            this.tabPage2.Size = new System.Drawing.Size(764, 449);
             this.tabPage2.TabIndex = 2;
-            this.tabPage2.Text = "Advance";
+            this.tabPage2.Text = "Genre & Country";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // btnGenreClear
             // 
             this.btnGenreClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGenreClear.Location = new System.Drawing.Point(560, 424);
+            this.btnGenreClear.Location = new System.Drawing.Point(640, 43);
             this.btnGenreClear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnGenreClear.Name = "btnGenreClear";
             this.btnGenreClear.Size = new System.Drawing.Size(103, 34);
@@ -493,7 +488,7 @@
             // btnGenreRemove
             // 
             this.btnGenreRemove.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGenreRemove.Location = new System.Drawing.Point(432, 424);
+            this.btnGenreRemove.Location = new System.Drawing.Point(501, 43);
             this.btnGenreRemove.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnGenreRemove.Name = "btnGenreRemove";
             this.btnGenreRemove.Size = new System.Drawing.Size(120, 34);
@@ -505,10 +500,10 @@
             // btnGenreAdd
             // 
             this.btnGenreAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGenreAdd.Location = new System.Drawing.Point(350, 424);
+            this.btnGenreAdd.Location = new System.Drawing.Point(386, 43);
             this.btnGenreAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnGenreAdd.Name = "btnGenreAdd";
-            this.btnGenreAdd.Size = new System.Drawing.Size(76, 34);
+            this.btnGenreAdd.Size = new System.Drawing.Size(98, 34);
             this.btnGenreAdd.TabIndex = 59;
             this.btnGenreAdd.Text = "ADD";
             this.btnGenreAdd.UseVisualStyleBackColor = true;
@@ -517,7 +512,7 @@
             // btnCountryClear
             // 
             this.btnCountryClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCountryClear.Location = new System.Drawing.Point(225, 424);
+            this.btnCountryClear.Location = new System.Drawing.Point(262, 43);
             this.btnCountryClear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnCountryClear.Name = "btnCountryClear";
             this.btnCountryClear.Size = new System.Drawing.Size(103, 34);
@@ -529,7 +524,7 @@
             // btnCountryRemove
             // 
             this.btnCountryRemove.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCountryRemove.Location = new System.Drawing.Point(97, 424);
+            this.btnCountryRemove.Location = new System.Drawing.Point(123, 43);
             this.btnCountryRemove.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnCountryRemove.Name = "btnCountryRemove";
             this.btnCountryRemove.Size = new System.Drawing.Size(120, 34);
@@ -541,10 +536,10 @@
             // btnCountryAdd
             // 
             this.btnCountryAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCountryAdd.Location = new System.Drawing.Point(15, 424);
+            this.btnCountryAdd.Location = new System.Drawing.Point(8, 43);
             this.btnCountryAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnCountryAdd.Name = "btnCountryAdd";
-            this.btnCountryAdd.Size = new System.Drawing.Size(76, 34);
+            this.btnCountryAdd.Size = new System.Drawing.Size(98, 34);
             this.btnCountryAdd.TabIndex = 4;
             this.btnCountryAdd.Text = "ADD";
             this.btnCountryAdd.UseVisualStyleBackColor = true;
@@ -552,25 +547,27 @@
             // 
             // listboxGenre
             // 
+            this.listboxGenre.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listboxGenre.FormattingEnabled = true;
-            this.listboxGenre.ItemHeight = 16;
-            this.listboxGenre.Location = new System.Drawing.Point(349, 190);
+            this.listboxGenre.ItemHeight = 28;
+            this.listboxGenre.Location = new System.Drawing.Point(385, 83);
             this.listboxGenre.Margin = new System.Windows.Forms.Padding(4);
             this.listboxGenre.Name = "listboxGenre";
             this.listboxGenre.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listboxGenre.Size = new System.Drawing.Size(314, 228);
+            this.listboxGenre.Size = new System.Drawing.Size(358, 340);
             this.listboxGenre.Sorted = true;
             this.listboxGenre.TabIndex = 56;
             // 
             // listboxCountry
             // 
+            this.listboxCountry.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listboxCountry.FormattingEnabled = true;
-            this.listboxCountry.ItemHeight = 16;
-            this.listboxCountry.Location = new System.Drawing.Point(14, 190);
+            this.listboxCountry.ItemHeight = 28;
+            this.listboxCountry.Location = new System.Drawing.Point(8, 83);
             this.listboxCountry.Margin = new System.Windows.Forms.Padding(4);
             this.listboxCountry.Name = "listboxCountry";
             this.listboxCountry.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listboxCountry.Size = new System.Drawing.Size(314, 228);
+            this.listboxCountry.Size = new System.Drawing.Size(358, 340);
             this.listboxCountry.Sorted = true;
             this.listboxCountry.TabIndex = 55;
             // 
@@ -578,7 +575,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(347, 161);
+            this.label14.Location = new System.Drawing.Point(381, 5);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(66, 25);
             this.label14.TabIndex = 51;
@@ -588,7 +585,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(10, 161);
+            this.label13.Location = new System.Drawing.Point(7, 5);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(81, 25);
             this.label13.TabIndex = 50;
@@ -597,28 +594,28 @@
             // label12
             // 
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(416, 4);
+            this.label12.Location = new System.Drawing.Point(384, 226);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(74, 25);
             this.label12.TabIndex = 49;
-            this.label12.Text = "Actors";
+            this.label12.Text = "Casts: ";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // txtArtist
             // 
             this.txtArtist.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtArtist.Location = new System.Drawing.Point(420, 31);
+            this.txtArtist.Location = new System.Drawing.Point(388, 257);
             this.txtArtist.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtArtist.Multiline = true;
             this.txtArtist.Name = "txtArtist";
             this.txtArtist.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtArtist.Size = new System.Drawing.Size(329, 99);
+            this.txtArtist.Size = new System.Drawing.Size(358, 167);
             this.txtArtist.TabIndex = 46;
             // 
             // label11
             // 
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(10, 100);
+            this.label11.Location = new System.Drawing.Point(7, 226);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(97, 25);
             this.label11.TabIndex = 48;
@@ -627,16 +624,18 @@
             // txtProducer
             // 
             this.txtProducer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtProducer.Location = new System.Drawing.Point(114, 100);
+            this.txtProducer.Location = new System.Drawing.Point(11, 257);
             this.txtProducer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtProducer.Multiline = true;
             this.txtProducer.Name = "txtProducer";
-            this.txtProducer.Size = new System.Drawing.Size(299, 30);
+            this.txtProducer.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtProducer.Size = new System.Drawing.Size(358, 167);
             this.txtProducer.TabIndex = 45;
             // 
             // label10
             // 
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(10, 68);
+            this.label10.Location = new System.Drawing.Point(384, 14);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(97, 25);
             this.label10.TabIndex = 47;
@@ -645,16 +644,18 @@
             // txtDirector
             // 
             this.txtDirector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDirector.Location = new System.Drawing.Point(114, 66);
+            this.txtDirector.Location = new System.Drawing.Point(388, 41);
             this.txtDirector.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtDirector.Multiline = true;
             this.txtDirector.Name = "txtDirector";
-            this.txtDirector.Size = new System.Drawing.Size(299, 30);
+            this.txtDirector.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtDirector.Size = new System.Drawing.Size(358, 167);
             this.txtDirector.TabIndex = 43;
             // 
             // label9
             // 
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(10, 37);
+            this.label9.Location = new System.Drawing.Point(7, 14);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(97, 25);
             this.label9.TabIndex = 44;
@@ -663,10 +664,12 @@
             // txtStudio
             // 
             this.txtStudio.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtStudio.Location = new System.Drawing.Point(114, 32);
+            this.txtStudio.Location = new System.Drawing.Point(11, 41);
             this.txtStudio.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtStudio.Multiline = true;
             this.txtStudio.Name = "txtStudio";
-            this.txtStudio.Size = new System.Drawing.Size(299, 30);
+            this.txtStudio.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtStudio.Size = new System.Drawing.Size(358, 167);
             this.txtStudio.TabIndex = 42;
             // 
             // tabPage3
@@ -805,11 +808,28 @@
             this.label20.TabIndex = 39;
             this.label20.Text = "Source:";
             // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.txtStudio);
+            this.tabPage4.Controls.Add(this.label11);
+            this.tabPage4.Controls.Add(this.txtProducer);
+            this.tabPage4.Controls.Add(this.label10);
+            this.tabPage4.Controls.Add(this.label9);
+            this.tabPage4.Controls.Add(this.txtDirector);
+            this.tabPage4.Controls.Add(this.label12);
+            this.tabPage4.Controls.Add(this.txtArtist);
+            this.tabPage4.Location = new System.Drawing.Point(4, 25);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(764, 449);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Casts & Crew";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
             // frmMovieInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(991, 543);
+            this.ClientSize = new System.Drawing.Size(995, 543);
             this.Controls.Add(this.label20);
             this.Controls.Add(this.cbSource);
             this.Controls.Add(this.btnSearch);
@@ -822,6 +842,7 @@
             this.Name = "frmMovieInfo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmMovieInfo";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(frmMovieInfo_FormClosing);
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
@@ -835,6 +856,8 @@
             this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -904,5 +927,6 @@
         private System.Windows.Forms.Button btnFetchData;
         private System.Windows.Forms.ComboBox cbSource;
         private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.TabPage tabPage4;
     }
 }

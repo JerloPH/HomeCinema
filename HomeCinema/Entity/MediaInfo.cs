@@ -14,6 +14,29 @@ namespace HomeCinema
             Country = new List<string>();
             Genre = new List<string>();
         }
+        public void Dispose()
+        {
+            Id = "";
+            Imdb = "";
+            Anilist = "";
+            Title = "";
+            OrigTitle = "";
+            SeriesName = "";
+            Summary = "";
+            ReleaseDate = "";
+            Actor = "";
+            Director = "";
+            Producer = "";
+            Studio = "";
+            Trailer = "";
+            PosterPath = "";
+            FilePath = "";
+            FileSub = "";
+            Country.Clear();
+            Genre.Clear();
+        }
+        public string Id { get; set; } = "";
+        public int Category { get; set; } = 0;
         public string Imdb { get; set; } = "";
         public string Anilist { get; set; } = "";
         public string Title { get; set; } = "";
@@ -31,5 +54,7 @@ namespace HomeCinema
         public string PosterPath { get; set; } = "";
         public int Seasons { get; set; } = 0;
         public int Episodes { get; set; } = 0;
+        public string FilePath { get; set; } = "";
+        public string FileSub { get; set; } = "";
     }
 }
