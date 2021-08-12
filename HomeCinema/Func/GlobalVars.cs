@@ -533,6 +533,10 @@ namespace HomeCinema
         {
             return String.Format("{0:0000}", param);
         }
+        public static string ValidateNum(long num, int pad = 2)
+        {
+            return ValidateNum(num.ToString(), pad);
+        }
         public static String ValidateNum(string param, int pad = 2)
         {
             return param.PadLeft(pad, '0');
@@ -799,7 +803,7 @@ namespace HomeCinema
                     retry = -1;
                     break;
                 }
-                --retry;
+                retry -= 1;
             }
             return (DLStatus == 200);
         }

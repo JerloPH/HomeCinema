@@ -86,7 +86,7 @@ namespace HomeCinema.SQLFunc
                 $"'{HCInfo.year}'  VARCHAR(5) DEFAULT 0, " +
                 $"'{HCInfo.summary}'  TEXT DEFAULT 'This has no summary');", CalledFrom, -1) == 0;
             DbExecNonQuery($"CREATE TABLE IF NOT EXISTS '{HCTable.filepath}' (" +
-                "[Id]  INTEGER  PRIMARY KEY AUTOINCREMENT, " +
+                "'Id'  INTEGER  PRIMARY KEY AUTOINCREMENT, " +
                 $"'{HCFile.Id}'	INTEGER, " +
                 $"[{HCFile.File}]  TEXT, " +
                 $"[{HCFile.Sub}]  TEXT, " +
@@ -508,19 +508,40 @@ namespace HomeCinema.SQLFunc
         /// <param name="dt">Dictionary that contains key-pair of column-value.</param>
         /// <param name="from">Method calling.</param>
         /// <returns>True if succesful. Otherwise, false.</returns>
-        public static bool DbUpdateInfo(Dictionary<string, string> dt, string from)
+        public static bool DbUpdateInfo(MediaInfo media, string from)
         {
-            return DbUpdateTable(HCTable.info, dt, $"SQLHelper-DbUpdateInfo (calledFrom: {from})");
-        }
-        /// <summary>
-        /// Update Table FILEPATH, with new values.
-        /// </summary>
-        /// <param name="dt">Dictionary which contains the new values.</param>
-        /// <param name="from">Method calling.</param>
-        /// <returns>True if succesful. Otherwise, false.</returns>
-        public static bool DbUpdateFilepath(Dictionary<string, string> dt, string from)
-        {
-            return DbUpdateTable(HCTable.filepath, dt, $"SQLHelper-DbUpdateFilepath (CalledFrom: {from})");
+            string calledFrom = $"SQLHelper-DbUpdateInfo (calledFrom: {from})";
+            bool cont = false;
+            var entry = new Dictionary<string, string>();
+            entry.Add(HCInfo.Id, GlobalVars.ValidateEmptyOrNull(media.Id));
+            entry.Add(HCInfo.imdb, GlobalVars.ValidateEmptyOrNull(media.Imdb));
+            entry.Add(HCInfo.anilist, GlobalVars.ValidateEmptyOrNull(media.Anilist));
+            entry.Add(HCInfo.name, GlobalVars.ValidateEmptyOrNull(media.Title));
+            entry.Add(HCInfo.name_orig, GlobalVars.ValidateEmptyOrNull(media.OrigTitle));
+            entry.Add(HCInfo.name_series, GlobalVars.ValidateEmptyOrNull(media.SeriesName));
+            entry.Add(HCInfo.season, GlobalVars.ValidateEmptyOrNull(media.Seasons.ToString()));
+            entry.Add(HCInfo.episode, GlobalVars.ValidateEmptyOrNull(media.Episodes.ToString()));
+            entry.Add(HCInfo.country, GlobalVars.ConvertListToString(media.Country, ",", calledFrom));
+            entry.Add(HCInfo.category, media.Category.ToString());
+            entry.Add(HCInfo.genre, GlobalVars.ConvertListToString(media.Genre, ",", calledFrom));
+            entry.Add(HCInfo.studio, GlobalVars.ValidateEmptyOrNull(media.Studio));
+            entry.Add(HCInfo.producer, GlobalVars.ValidateEmptyOrNull(media.Producer));
+            entry.Add(HCInfo.director, GlobalVars.ValidateEmptyOrNull(media.Director));
+            entry.Add(HCInfo.artist, GlobalVars.ValidateEmptyOrNull(media.Actor));
+            entry.Add(HCInfo.year, GlobalVars.ValidateEmptyOrNull(media.ReleaseDate));
+            entry.Add(HCInfo.summary, GlobalVars.ValidateEmptyOrNull(media.Summary));
+
+            cont = DbUpdateTable(HCTable.info, entry, calledFrom);
+            if (cont)
+            {
+                var entryFile = new Dictionary<string, string>();
+                entryFile.Add(HCFile.Id, media.Id); // ID
+                entryFile.Add(HCFile.File, GlobalVars.ValidateEmptyOrNull(media.FilePath)); // file
+                entryFile.Add(HCFile.Sub, GlobalVars.ValidateEmptyOrNull(media.FileSub)); // sub
+                entryFile.Add(HCFile.Trailer, GlobalVars.ValidateEmptyOrNull(media.Trailer)); // trailers
+                cont = DbUpdateTable(HCTable.filepath, entryFile, calledFrom);
+            }
+            return cont;
         }
         /// <summary>
         /// Delete a MOVIE from Database.

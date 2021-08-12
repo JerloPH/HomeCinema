@@ -32,8 +32,9 @@ namespace HomeCinema
 {
     public partial class frmMovieInfo : Form
     {
-        // Editable vars
-        private string MOVIE_ID { get; set; } = "";
+        // Private Vars
+        private Form PARENT = null;
+        private long MOVIE_ID { get; set; } = 0;
         private string MEDIA_TYPE { get; set; } = "movie";
         private Image MOVIE_COVER { get; set; } = null;
         private Image tempImage { get; set; } = null;
@@ -41,25 +42,25 @@ namespace HomeCinema
         // Source ListView lvSearch Item index
         public ListViewItem LVITEM = null;
 
-        // Fixed vars
-        private Form PARENT = null;
-
         #region Initialize class
         public frmMovieInfo(Form parent,string ID, string text, string formName, ListViewItem lvitem)
         {
             InitializeComponent();
             // Form properties
             Name = formName;
-            Icon = parent.Icon; //GlobalVars.HOMECINEMA_ICON;
-            FormClosing += new FormClosingEventHandler(frmMovieInfo_FormClosing);
+            Icon = parent.Icon;
 
             // Set vars
-            MOVIE_ID = ID.TrimStart('0');
+            long movieId = 0;
+            if (long.TryParse(ID, out movieId))
+            {
+                MOVIE_ID = movieId;
+            }
             PARENT = parent;
             LVITEM = lvitem;
 
             // Set Controls text and properties
-            txtID.Text = MOVIE_ID;
+            txtID.Text = MOVIE_ID.ToString();
 
             // Set picBox size mode
             picBox.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -70,7 +71,7 @@ namespace HomeCinema
             cbSource.Items.AddRange(new string[] { "TMDB", "Anilist" });
 
             // LOAD Information from DATABASE and SET to Controls
-            if (Convert.ToInt16(MOVIE_ID) > 0)
+            if (MOVIE_ID > 0)
             {
                 LoadInformation(ID, text);
                 RefreshCountryAndGenre();
@@ -133,34 +134,6 @@ namespace HomeCinema
                 }
             }
         }
-        // ########################## FOR CATEGORY
-        // Get Category as integer, in string format
-        private string GetCategory()
-        {
-            return (cbCategory.SelectedIndex < 1) ? "0" : cbCategory.SelectedIndex.ToString();
-        }
-        // ########################## FOR GENRE
-        // Return genre [string], from checked checkboxes
-        public string GetGenre()
-        {
-            return GlobalVars.ConvertListBoxToString(listboxGenre);
-        }
-        // Add genres to ListBox that are in the media 'genre'
-        public void LoadGenre(string genre)
-        {
-            LoadListBoxItems(genre, listboxGenre);
-        }
-        // ########################## FOR COUNTRY
-        // Return country, from checkboxes
-        public string GetCountry()
-        {
-            return GlobalVars.ConvertListBoxToString(listboxCountry);
-        }
-        // Add countries to ListBox that are in the media 'country'
-        public void LoadCountry(string country)
-        {
-            LoadListBoxItems(country, listboxCountry);
-        }
         // ########################## OTHER FUNCTIONS
         // REFRESH INFORMATION
         public void LoadInformation(string ID, string text)
@@ -170,7 +143,7 @@ namespace HomeCinema
             Text = $"[EDIT] {text}";//text + " [Edit Information]";
 
             // Change cover image, if image exists in ImageList
-            MOVIE_COVER = GlobalVars.ImgGetImageFromList(MOVIE_ID);
+            MOVIE_COVER = GlobalVars.ImgGetImageFromList(MOVIE_ID.ToString());
             if (MOVIE_COVER != null)
             {
                 picBox.Image = MOVIE_COVER;
@@ -198,9 +171,9 @@ namespace HomeCinema
                     txtSeriesName.Text = row[HCInfo.name_series].ToString();
                     txtSeasonNum.Text = row[HCInfo.season].ToString();
                     txtEpNum.Text = row[HCInfo.episode].ToString();
-                    LoadCountry(row[HCInfo.country].ToString());
-                    cbCategory.SelectedIndex = Convert.ToInt32(row[HCInfo.category]);
-                    LoadGenre(row[HCInfo.genre].ToString());
+                    LoadListBoxItems(row[HCInfo.country].ToString(), listboxCountry);
+                    cbCategory.SelectedIndex = Convert.ToInt16(row[HCInfo.category]);
+                    LoadListBoxItems(row[HCInfo.genre].ToString(), listboxGenre);
                     txtStudio.Text = row[HCInfo.studio].ToString();
                     txtProducer.Text = row[HCInfo.producer].ToString();
                     txtDirector.Text = row[HCInfo.director].ToString();
@@ -265,9 +238,9 @@ namespace HomeCinema
             //GlobalVars.Log(ExceptionFrom, "Try adding Image from File");
 
             // Remove previous image from the ImgList, exit if not succesful and show warning
-            if (File.Exists(GlobalVars.ImgFullPath(MOVIE_ID)))
+            if (File.Exists(GlobalVars.ImgFullPath(MOVIE_ID.ToString())))
             {
-                if (GlobalVars.DeleteImageFromList(this, MOVIE_ID, ExceptionFrom + " (Previous Image)") == false)
+                if (GlobalVars.DeleteImageFromList(this, MOVIE_ID.ToString(), ExceptionFrom + " (Previous Image)") == false)
                 {
                     GlobalVars.ShowWarning("Cannot replace image!\nFile must be NOT in use!");
                     return;
@@ -278,7 +251,7 @@ namespace HomeCinema
 
             // Copy new file to App Path
             string sourceFile = selectedFilename;
-            string destFile = GlobalVars.ImgFullPath(MOVIE_ID);
+            string destFile = GlobalVars.ImgFullPath(MOVIE_ID.ToString());
 
             // Delete previous image file from disk
             GlobalVars.TryDelete(destFile, ExceptionFrom + $" [Delete Error, FILE: {destFile}]");
@@ -345,17 +318,11 @@ namespace HomeCinema
         // ############################################################################## Form Controls methods event
         private void frmMovieInfo_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (picBox.Image != null)
-            {
-                picBox.Image.Dispose();
-            }
-            if (tempImage != null)
-            {
-                tempImage.Dispose();
-            }
+            picBox.Image?.Dispose();
+            tempImage?.Dispose();
             foreach (Control c in Controls)
             {
-                c.Dispose();
+                c?.Dispose();
             }
             Dispose();
         }
@@ -380,41 +347,50 @@ namespace HomeCinema
             }
 
             // Check MOVIE ID value if Lower than 1 (Not existing)
-            if (Convert.ToInt32(MOVIE_ID) > 0)
+            if (MOVIE_ID > 0)
             {
                 // SAVE changes to EXISTING MOVIE
-                // Add row values
-                var entry = new Dictionary<string, string>();
-                entry.Add(HCInfo.Id, GlobalVars.ValidateEmptyOrNull(txtID.Text));
-                entry.Add(HCInfo.imdb, GlobalVars.ValidateEmptyOrNull(txtIMDB.Text));
-                entry.Add(HCInfo.anilist, GlobalVars.ValidateEmptyOrNull(txtAnilist.Text));
-                entry.Add(HCInfo.name, GlobalVars.ValidateEmptyOrNull(txtName.Text));
-                entry.Add(HCInfo.name_orig, GlobalVars.ValidateEmptyOrNull(txtNameOrig.Text));
-                entry.Add(HCInfo.name_series, GlobalVars.ValidateEmptyOrNull(txtSeriesName.Text));
-                entry.Add(HCInfo.season, GlobalVars.ValidateEmptyOrNull(txtSeasonNum.Text));
-                entry.Add(HCInfo.episode, GlobalVars.ValidateEmptyOrNull(txtEpNum.Text));
-                entry.Add(HCInfo.country, GetCountry()); //GlobalVars.ValidateEmptyOrNull(lblCountry.Text);
-                entry.Add(HCInfo.category, GetCategory());
-                entry.Add(HCInfo.genre, GetGenre());
-                entry.Add(HCInfo.studio, GlobalVars.ValidateEmptyOrNull(txtStudio.Text));
-                entry.Add(HCInfo.producer, GlobalVars.ValidateEmptyOrNull(txtProducer.Text));
-                entry.Add(HCInfo.director, GlobalVars.ValidateEmptyOrNull(txtDirector.Text));
-                entry.Add(HCInfo.artist, GlobalVars.ValidateEmptyOrNull(txtArtist.Text));
-                entry.Add(HCInfo.year, GlobalVars.ValidateEmptyOrNull(txtYear.Text));
-                entry.Add(HCInfo.summary, GlobalVars.ValidateEmptyOrNull(txtSummary.Text));
+                var entry = new MediaInfo();
+                int seasons = 0, eps = 0;
 
+                // Parse integers
+                int.TryParse(txtSeasonNum.Text, out seasons);
+                int.TryParse(txtEpNum.Text, out eps);
+
+                entry.Id = txtID.Text;
+                entry.Imdb = txtIMDB.Text;
+                entry.Anilist = txtAnilist.Text;
+                entry.Title = txtName.Text;
+                entry.OrigTitle = txtNameOrig.Text;
+                entry.SeriesName = txtSeriesName.Text;
+                entry.Seasons = seasons;
+                entry.Episodes = eps;
+                entry.Category = cbCategory.SelectedIndex;
+                entry.Studio = txtStudio.Text;
+                entry.Producer = txtProducer.Text;
+                entry.Director = txtDirector.Text;
+                entry.Actor = txtArtist.Text;
+                entry.ReleaseDate = txtYear.Text;
+                entry.Summary = txtSummary.Text;
+                foreach (var item in listboxCountry.Items)
+                {
+                    if (item != null)
+                        entry.Country.Add(item.ToString().Trim());
+                }
+                foreach (var item in listboxGenre.Items)
+                {
+                    if (item != null)
+                        entry.Genre.Add(item.ToString().Trim());
+                }
+                entry.FilePath = txtPathFile.Text;
+                entry.FileSub = txtPathSub.Text;
+                entry.Trailer = txtPathTrailer.Text;
                 // Check if first query successfully executed
                 ContAfterQry = SQLHelper.DbUpdateInfo(entry, callFrom);
-
-                // IF INFO is executed, continue to FILEPATH
-                if (ContAfterQry)
+                if (!ContAfterQry)
                 {
-                    var entryFile = new Dictionary<string, string>();
-                    entryFile.Add(HCFile.Id, GlobalVars.ValidateEmptyOrNull(txtID.Text)); // ID
-                    entryFile.Add(HCFile.File, GlobalVars.ValidateEmptyOrNull(txtPathFile.Text)); // file
-                    entryFile.Add(HCFile.Sub, GlobalVars.ValidateEmptyOrNull(txtPathSub.Text)); // sub
-                    entryFile.Add(HCFile.Trailer, GlobalVars.ValidateEmptyOrNull(txtPathTrailer.Text)); // trailers
-                    SQLHelper.DbUpdateFilepath(entryFile, callFrom);
+                    GlobalVars.ShowWarning("Not saved properly!\nReview data and Try again,", "", this);
+                    return;
                 }
             }
 
@@ -429,7 +405,7 @@ namespace HomeCinema
             {
                 // Refresh parent form fmMovie
                 var form = PARENT as frmMovie;
-                form.LoadInformation(MOVIE_ID);
+                form.LoadInformation(MOVIE_ID.ToString());
             }
             RefreshCountryAndGenre(); // Add new country/genre to text files
 
@@ -440,17 +416,17 @@ namespace HomeCinema
             if (cbSaveMetadata.Checked)
             {
                 // Save MetaData details
+                string stringGenre = GlobalVars.ConvertListBoxToString(listboxGenre);
                 var metaData = new List<string>(); // List for metadata values
                 metaData.Add(GlobalVars.ValidateEmptyOrNull(txtName.Text)); // title
                 metaData.Add(GlobalVars.ValidateEmptyOrNull(txtYear.Text)); // year
-                metaData.Add(GetGenre()); // genre
+                metaData.Add(stringGenre); // genre
                 metaData.Add(GlobalVars.ValidateEmptyOrNull(txtDirector.Text)); // director
                 metaData.Add(GlobalVars.ValidateEmptyOrNull(txtProducer.Text)); // producer
                 GlobalVars.SaveMetadata(txtPathFile.Text, metaData);
             }
 
-            // Close this form
-            Close();
+            Close(); // Close this form
         }
         // OpenDialog and Select Cover of Movie and Set it to picBox.Image
         private void btnChangeCover_Click(object sender, EventArgs e)
@@ -622,14 +598,14 @@ namespace HomeCinema
             {
                 listboxCountry.Items.Clear();
                 country = GlobalVars.ConvertListToString(mediaInfo.Country, ",", errFrom);
-                LoadCountry(country);
+                LoadListBoxItems(country, listboxCountry);
             }
             // Set Genres
             if (mediaInfo.Genre?.Count > 0)
             {
                 listboxGenre.Items.Clear();
                 genre = GlobalVars.ConvertListToString(mediaInfo.Genre, ",", errFrom);
-                LoadGenre(genre);
+                LoadListBoxItems(genre, listboxGenre);
             }
             // Set mediatype, after getting info from TMDB or Anilist
             if (!String.IsNullOrWhiteSpace(genre) && !String.IsNullOrWhiteSpace(country))
@@ -640,7 +616,7 @@ namespace HomeCinema
             // Ask to change cover - poster image
             if (String.IsNullOrWhiteSpace(mediaInfo.PosterPath) == false)
             {
-                string moviePosterDL = GlobalVars.PATH_TEMP + MOVIE_ID + ".jpg";
+                string moviePosterDL = $"{GlobalVars.PATH_TEMP}{MOVIE_ID}.jpg";
                 string existingcover = $"{GlobalVars.PATH_IMG}{MOVIE_ID}.jpg";
                 bool downloadCover = true;
                 if (File.Exists(existingcover))
@@ -657,11 +633,11 @@ namespace HomeCinema
                         // Parse image link from JSON and download it
                         if (source.Equals("anilist"))
                         {
-                            coverDownloaded = AnilistAPI.DownloadCoverFromAnilist(MOVIE_ID, mediaInfo.PosterPath, errFrom);
+                            coverDownloaded = AnilistAPI.DownloadCoverFromAnilist(MOVIE_ID.ToString(), mediaInfo.PosterPath, errFrom);
                         }
                         else
                         {
-                            coverDownloaded = TmdbAPI.DownloadCoverFromTMDB(MOVIE_ID, mediaInfo.PosterPath, errFrom);
+                            coverDownloaded = TmdbAPI.DownloadCoverFromTMDB(MOVIE_ID.ToString(), mediaInfo.PosterPath, errFrom);
                         }
                     };
                     form.ShowDialog(this);
