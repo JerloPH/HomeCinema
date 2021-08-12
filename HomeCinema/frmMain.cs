@@ -139,7 +139,8 @@ namespace HomeCinema
             bool IsDownloadCover = false;
             int sleep = 10;
             long count = 0; // count of successful inserts
-            string logInsert = ""; // Log succesfully inserted
+            string logInsert = GlobalVars.LogFormatted("Succesfully inserted files and/or folders", ""); // Log succesfully inserted
+            GlobalVars.WriteAppend(logFileInsertSkipped, GlobalVars.LogFormatted("Skipped files and folders", ""));
 
             var form = new frmLoading($"Inserting {maxProgress} new found media files..", "New Entries Found!", true);
             form.MaxProgress = maxProgress;
@@ -475,50 +476,48 @@ namespace HomeCinema
             // A movie/show is selected
             if (lvSearchResult.SelectedItems.Count > 0)
             {
-                // Validate ID
-                int ID;
-                try { ID = Convert.ToInt16(lvSearchResult.SelectedItems[0].Tag.ToString().TrimStart('0')); }
-                catch { return; };
-
-                if (ID < 1) { return;  }; // exit if ID is less than 1
-
-                // Just play the media
-                if (Settings.IsAutoplay)
+                try
                 {
-                    GlobalVars.PlayMedia(GetFilePath(ID.ToString(), "frmMain-OpenNewFormMovie"));
-                    return;
+                    long ID;
+                    ID = Convert.ToInt16(lvSearchResult.SelectedItems[0].Tag.ToString().TrimStart('0'));
+                    if (ID < 1) { return; }
+
+                    if (Settings.IsAutoplay)
+                    {
+                        GlobalVars.PlayMedia(GetFilePath(ID.ToString(), "frmMain-OpenNewFormMovie"));
+                        return;
+                    }
+                    else
+                        OpenNewFormMovie(); // Open Movie Details form
                 }
-                else
-                {
-                    OpenNewFormMovie(); // Open Movie Details form
-                }
+                catch (Exception ex) { GlobalVars.ShowError("frmMain-OpenFormPlayMovie", ex, false, this); };
             }
         }
         // Open Movie Details form
         private void OpenNewFormMovie()
         {
-            // Validate ID
-            int ID = 0;
-            try { ID = Convert.ToInt32(lvSearchResult.SelectedItems[0].Tag.ToString().TrimStart('0')); }
-            catch { return; };
-            if (ID < 1) { return; };
-
-            if (lvSearchResult.SelectedItems.Count > 0)
+            try
             {
-                // Create form to View Movie Details / Info
-                string text = Convert.ToString(lvSearchResult.SelectedItems[0].Text);
-                string formName = "movie" + ID.ToString();
-                Form fc = Application.OpenForms[formName];
-                if (fc != null)
+                long ID = 0;
+                ID = Convert.ToInt64(lvSearchResult.SelectedItems[0].Tag.ToString().TrimStart('0'));
+                if (lvSearchResult.SelectedItems.Count > 0 && ID > 0)
                 {
-                    fc.Focus();
-                }
-                else
-                {
-                    Form form = new frmMovie(this, ID.ToString(), text, lvSearchResult.SelectedItems[0]);
-                    form.Name = formName;
+                    // Create form to View Movie Details / Info
+                    string text = Convert.ToString(lvSearchResult.SelectedItems[0].Text);
+                    string formName = "movie" + ID.ToString();
+                    Form fc = Application.OpenForms[formName];
+                    if (fc != null)
+                    {
+                        fc.Focus();
+                    }
+                    else
+                    {
+                        Form form = new frmMovie(this, ID.ToString(), text, lvSearchResult.SelectedItems[0]);
+                        form.Name = formName;
+                    }
                 }
             }
+            catch (Exception ex) { GlobalVars.ShowError("frmMain-OpenNewFormMovie", ex, false, this); };
         }
         public void SearchBoxPlaceholder(object sender, EventArgs e)
         {
@@ -658,6 +657,8 @@ namespace HomeCinema
             string resYear = InfoString[6]; // year
             string resSummary = InfoString[7]; // summary
             string resGenre = InfoString[8]; // genre
+            long epCount = 0;
+            long.TryParse(resEp, out epCount);
             // Convert MovieId string to int
             try { MOVIEID = Convert.ToInt32(MovieId); }
             catch { MOVIEID = 0; }
@@ -671,18 +672,18 @@ namespace HomeCinema
                 temp.Text = resName;
 
                 // Append ToolTip on it
-                temp.ToolTipText = "Summary: \n" + GlobalVars.LimitString(resSummary, 350) + "\n\nGenre:\n" + resGenre.Replace(",", ", ");
-
-                // Is it a Movie? (by checking if there are no season)
-                // Add sub-item for Series Name, or Episode Name
-                if (String.IsNullOrWhiteSpace(resSeason))
+                temp.ToolTipText = "Summary: \n" + GlobalVars.LimitString(resSummary, 255) + "\n\nGenre:\n" + resGenre.Replace(",", ", ");
+                
+                // Check episode count and decide what to show as title
+                if (epCount < 2) // This is either a movie, or series with 1 ep only 
                 {
-                    temp.SubItems.Add(resNameSer); // Series Name
                     temp.SubItems.Add(resNameOrig); // Original Name
+                    temp.SubItems.Add(resNameSer); // Series Name, if its in a series
                 }
-                else
+                else // Otherwise, its series, or movie with multiple episodes
                 {
-                    // Set Series Name
+                    // Add episode to Tooltip
+                    temp.ToolTipText += $"\n\nEpisodes: {epCount}";
                     string seasonNum = GlobalVars.ValidateNum(resSeason);
                     temp.SubItems.Add(resNameOrig); // Original Name
                     if (!seasonNum.Equals("00"))
@@ -690,14 +691,14 @@ namespace HomeCinema
                         temp.SubItems.Add($"S{seasonNum} E{GlobalVars.ValidateNum(resEp)}");
                     }
                     else
-                        temp.SubItems.Add("");
+                        temp.SubItems.Add($"Episodes {GlobalVars.ValidateNum(epCount)}");
                 }
                 // Year
                 temp.SubItems.Add(resYear);
                 // Display image (From ImageList) based on ImageKey
                 temp.ImageKey = GlobalVars.ImgGetKey(MOVIEID.ToString());
                 // Add year to name/title of MOVIE
-                temp.Text = temp.Text + $" ({resYear})";
+                temp.Text += $" ({resYear})";
 
                 // Save the ID as Tag, to NOT SHOW it on LIST
                 temp.Name = Convert.ToString(MOVIEID);
