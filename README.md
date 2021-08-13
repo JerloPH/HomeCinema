@@ -78,8 +78,9 @@ D:\TV Series\Title of Series\Episode 1.mp4
 
 ### Resources
 **Animated Loading GIF** is from [**Icons8.com**](https://icons8.com/preloaders/) <br>
-**Checkmark Icon** is from [*FreeIcons.io*](https://freeicons.io/regular-life-icons/sign-check-icon-17888), by [**Anu Rocks**](https://freeicons.io/profile/730) <br>
-**Warning Icon** is from [*FreeIcons.io*](https://freeicons.io/regular-life-icons/sign-warning-icon-17898), by [**Anu Rocks**](https://freeicons.io/profile/730) <br>
+**Checkmark Icon** is from [**FreeIcons.io**](https://freeicons.io/regular-life-icons/sign-check-icon-17888), by [**Anu Rocks**](https://freeicons.io/profile/730) <br>
+**Warning Icon** is from [**FreeIcons.io**](https://freeicons.io/regular-life-icons/sign-warning-icon-17898), by [**Anu Rocks**](https://freeicons.io/profile/730) <br>
+**Various ToolStrip Icons** made by [**Freepik**](https://www.freepik.com) from [*www.flaticon.com*](https://www.flaticon.com/) <br>
 
 ### Third-Party API
 [**The Movie Database**](https://www.themoviedb.org/) - Used to fetch movie and tv series information. <br>

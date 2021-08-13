@@ -161,7 +161,7 @@
       <DependentUpon>frmSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Func\GlobalVars.cs" />
-    <Compile Include="Func\ListViewColumnSorter.cs" />
+    <Compile Include="UI Overrides\ListViewColumnSorter.cs" />
     <Compile Include="JSONs\ConfigJson.cs" />
     <Compile Include="JSONs\ImdbResult.cs" />
     <Compile Include="JSONs\TmdbSearchResult.cs" />
@@ -172,6 +172,7 @@
     <Compile Include="Entity\MediaLocations.cs" />
     <Compile Include="Entity\Medias.cs" />
     <Compile Include="Entity\MediaInfo.cs" />
+    <Compile Include="UI Overrides\ToolStripRender.cs" />
     <EmbeddedResource Include="frmAbout.resx">
       <DependentUpon>frmAbout.cs</DependentUpon>
     </EmbeddedResource>
@@ -242,8 +243,11 @@
     <Content Include="Resources\0.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\settings %281%29.png" />
     <None Include="Resources\IconCheckmark.png" />
     <None Include="Resources\IconWarning.png" />
+    <None Include="Resources\info.png" />
+    <None Include="Resources\clean.png" />
     <Content Include="Resources\Loading.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

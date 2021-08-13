@@ -257,7 +257,7 @@ namespace HomeCinema
         {
             GlobalVars.formSetting = null;
             Program.FormMain.lvSearchResult.BackColor = Settings.ColorBg;
-            
+
             Dispose();
 
             Program.FormMain.Focus();

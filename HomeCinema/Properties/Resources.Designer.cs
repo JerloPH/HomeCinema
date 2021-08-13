@@ -63,9 +63,39 @@ namespace HomeCinema.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CleanIcon {
+            get {
+                object obj = ResourceManager.GetObject("CleanIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GearIcon {
+            get {
+                object obj = ResourceManager.GetObject("GearIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap IconCheckmark {
             get {
                 object obj = ResourceManager.GetObject("IconCheckmark", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap IconInfo {
+            get {
+                object obj = ResourceManager.GetObject("IconInfo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -43,6 +43,7 @@ namespace HomeCinema
         // Objects
         ListViewColumnSorter lvSorter = new ListViewColumnSorter();
         ToolStripItem toolMenuView, toolMenuEdit, toolMenuFileExplorer;
+        ToolStripRender render = new ToolStripRender();
 
         #region frmMain
         public frmMain()
@@ -59,13 +60,11 @@ namespace HomeCinema
             // Load App Settings
             Settings.LoadSettings();
 
-            // Add events to controls
-            txtSearch.Text = SEARCHBOX_PLACEHOLDER;
+            // Adjust controls
+            txtSearch.Text = SEARCHBOX_PLACEHOLDER; // Set placeholder text to Search
 
             // Set tooltips for controls
             ToolTip ttShowNew = new ToolTip();
-            ttShowNew.SetToolTip(this.btnSettings, "Show Settings form");
-            ttShowNew.SetToolTip(this.btnClean, "Clean temporary files");
             ttShowNew.SetToolTip(this.cbHideAnim, "Filter out Animations from Search Results");
             ttShowNew.SetToolTip(this.cbSort, "Change Sorting By");
             ttShowNew.SetToolTip(this.btnChangeView, "Change Item view");
@@ -87,12 +86,13 @@ namespace HomeCinema
             lvSearchResult.Columns[1].Width = lvSearchResult.ClientRectangle.Width / 3;
             lvSearchResult.Columns[2].Width = lvSearchResult.ClientRectangle.Width / 3;
 
+            GlobalVars.MOVIE_IMGLIST.ImageSize = new Size(Settings.ImgTileWidth, Settings.ImgTileHeight);
+            GlobalVars.MOVIE_IMGLIST.ColorDepth = ColorDepth.Depth32Bit;
             lvSearchResult.LargeImageList = GlobalVars.MOVIE_IMGLIST;
             lvSearchResult.SmallImageList = GlobalVars.MOVIE_IMGLIST;
             int sizeW = (lvSearchResult.ClientRectangle.Width / 2) - Settings.ImgTileWidth;
             lvSearchResult.TileSize = new Size(sizeW, Settings.ImgTileHeight + 2); // lvSearchResult.Width - (GlobalVars.IMGTILE_WIDTH + 120)
-            GlobalVars.MOVIE_IMGLIST.ImageSize = new Size(Settings.ImgTileWidth, Settings.ImgTileHeight);
-            GlobalVars.MOVIE_IMGLIST.ColorDepth = ColorDepth.Depth32Bit;
+
             lvSearchResult.AllowDrop = false;
             lvSearchResult.AllowColumnReorder = false;
             lvSearchResult.MultiSelect = false;
@@ -108,15 +108,16 @@ namespace HomeCinema
             cbCategory.Items.AddRange(GlobalVars.DB_INFO_CATEGORY);
             cbCategory.Items[0] = "All";
             cbCategory.SelectedIndex = 0;
+            PopulateCountryCB(); // Populate combobox cbCountry, from file
+            PopulateGenreCB(); // Populate comboBox cbGenre from File
 
-            // Populate combobox cbCountry, from file
-            PopulateCountryCB();
-
-            // Populate comboBox cbGenre from File
-            PopulateGenreCB();
-
-            // Set background color of ListView, from settings 'background color'
-            lvSearchResult.BackColor = Settings.ColorBg;
+            lvSearchResult.BackColor = Settings.ColorBg; // Set background color of ListView, from settings 'background color'
+            // Others
+            expSearch.Left = 1;
+            expSearch.Top = tlstripMenu.Bottom + 2;
+            lvSearchResult.Top = expSearch.Bottom + 2;
+            tlstripMenu.RenderMode = ToolStripRenderMode.Professional;
+            tlstripMenu.Renderer = this.render;
 
             GlobalVars.Log("frmMain", "All UIs initialized!");
         }
@@ -1232,9 +1233,29 @@ namespace HomeCinema
             // Resize controls
             int ClientW = ClientRectangle.Width;
             int ClearBtnAdjust = (this.WindowState == FormWindowState.Maximized) ? 40 : 24;
-            int ControlsSize = (this.WindowState == FormWindowState.Maximized) ? (int)(0.12*ClientW) : (int)(0.11*ClientW);
+            int ControlsSize = (int)(0.11*ClientW);
             double size = (this.WindowState == FormWindowState.Maximized) ? 0.15 : 0.13;
             int buttonWidth = (int)(this.Width * size);
+            int expHeight = cbSort.Bottom + 8;
+
+            // Reposition 'Clear' button and 'Search after clear' checkbox
+            btnSearch.Left = (int)(this.Width - btnSearch.Width) - ClearBtnAdjust;
+            btnClear.Left = btnSearch.Left;
+            cbHideAnim.Left = (int)(this.Width - cbHideAnim.Width) - ClearBtnAdjust; // reposition 'Hide animations' checkbox
+            cbClearSearch.Left = btnClear.Left;
+            cbSort.Width = ControlsSize; // Set size for Sort By combobox
+            cbSortOrder.Width = ControlsSize;
+            cbSortOrder.Left = cbSort.Right + 4;
+            btnChangeView.Left = cbSortOrder.Right + 4;
+            btnFixNoInfo.Left = btnChangeView.Right + 4;
+            // Top-most controls
+            txtSearch.Width = (btnSearch.Left - txtSearch.Left) - 16;
+            expSearch.Left = 1;
+            expSearch.ClientSize = new Size(ClientW-2, expHeight);
+            expSearch.Width = ClientW;
+            lvSearchResult.Top = expSearch.Bottom + 2;
+            lvSearchResult.Height = (ClientRectangle.Height - lvSearchResult.Top) - 2;
+            // Other controls
             txtIMDB.Width = buttonWidth; // top row
             txtDirector.Width = buttonWidth;
             txtStudio.Width = buttonWidth;
@@ -1265,14 +1286,6 @@ namespace HomeCinema
             lblCast.Left = ControlLeftFromAttach(lblCast, txtCast);
             lblCountry.Left = ControlLeftFromAttach(lblCountry, cbCountry);
             lblCategory.Left = ControlLeftFromAttach(lblCategory, cbCategory);
-
-            // Reposition 'Clear' button and 'Search after clear' checkbox
-            btnClear.Left = (int)(this.Width - btnClear.Width) - ClearBtnAdjust;
-            cbHideAnim.Left = (int)(this.Width - cbHideAnim.Width) - ClearBtnAdjust; // reposition 'Hide animations' checkbox
-            cbClearSearch.Left = btnClear.Left;
-
-            // 'Controls' buttons
-            cbSort.Width = ControlsSize;
         }
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -1356,16 +1369,6 @@ namespace HomeCinema
                 }
             }
         }
-        // Show "Settings"" form.
-        private void btnSettings_Click(object sender, EventArgs e)
-        {
-            ShowSettingsForm();
-        }
-        // Delete files from temp
-        private void btnClean_Click(object sender, EventArgs e)
-        {
-            GlobalVars.CleanAppDirectory(true);
-        }
         // When ENTER Key is pressed on ListView
         private void lvSearchResult_KeyDown(object sender, KeyEventArgs e)
         {
@@ -1384,11 +1387,6 @@ namespace HomeCinema
             }
             SearchEntries();
         }
-        private void btnAbout_Click(object sender, EventArgs e)
-        {
-            //Show About form
-            ShowAboutForm();
-        }
         // Change lvSearchResult Sort by
         private void cbSort_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -1405,8 +1403,7 @@ namespace HomeCinema
 
         private void expSearch_ExpandCollapse(object sender, MakarovDev.ExpandCollapsePanel.ExpandCollapseEventArgs e)
         {
-            grpControls.Top = expSearch.Bottom + 2;
-            lvSearchResult.Top = grpControls.Bottom + 2;
+            lvSearchResult.Top = expSearch.Bottom + 2;
             lvSearchResult.Height = (ClientRectangle.Height - lvSearchResult.Top) - 2;
         }
 
@@ -1416,6 +1413,21 @@ namespace HomeCinema
                 $"WHERE (`{HCInfo.imdb}`=null OR `{HCInfo.imdb}`='' OR `{HCInfo.imdb}`='0') AND " +
                 $"(`{HCInfo.anilist}`=null OR `{HCInfo.anilist}`='' OR `{HCInfo.anilist}`='0');";
             PopulateMovieBG();
+        }
+
+        private void tlbtnSettings_Click(object sender, EventArgs e)
+        {
+            ShowSettingsForm();
+        }
+
+        private void tlbtnAbout_Click(object sender, EventArgs e)
+        {
+            ShowAboutForm(); //Show About form
+        }
+
+        private void tlbtnClean_Click(object sender, EventArgs e)
+        {
+            GlobalVars.CleanAppDirectory(true);
         }
 
         private void cbSortOrder_SelectedIndexChanged(object sender, EventArgs e)
