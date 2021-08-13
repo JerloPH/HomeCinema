@@ -70,7 +70,7 @@ namespace HomeCinema
             ttShowNew.SetToolTip(this.btnChangeView, "Change Item view");
 
             // Setup Sort and SortingOrder
-            cbSort.Items.AddRange(GlobalVars.TEXT_SORTBY);
+            cbSort.Items.AddRange(new string[] { "Sort Default", "Sort [A-Z]", "Sort by Year" });
             cbSort.SelectedIndex = 1;
             cbSortOrder.Items.Add("Ascending");
             cbSortOrder.Items.Add("Descending");

@@ -98,7 +98,6 @@ namespace HomeCinema
         public static string FILTER_VIDEO = "MP4 Video files (*.mp4)|*.mp4";
 
         // String Arrays for Controls
-        public static string[] TEXT_SORTBY = { "Sort Default", "Sort [A-Z]", "Sort by Year" };
         public static string[] TEXT_COUNTRY = { "" };
         public static string[] TEXT_GENRE = { "" };
 
