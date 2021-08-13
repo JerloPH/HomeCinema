@@ -224,7 +224,7 @@ namespace HomeCinema
                 {
                     string path = item.Path;
                     int mediatype = item.MediaType == "movie" ? 0 : 1;
-                    int source = item.Source == "tmdb" ? 0 : 1;
+                    int source = (item.Source.Equals(HCSource.tmdb) ? 0 : 1);
                     try
                     {
                         var index = dataGridMediaLoc.Rows.Add();
@@ -382,7 +382,7 @@ namespace HomeCinema
                 int index = dataGridMediaLoc.Rows.Add();
                 var rowAdd = dataGridMediaLoc.Rows[index];
                 int type = (form.Type.Equals("movie") ? 0 : 1);
-                int src = (form.Source.Equals("tmdb") ? 0 : 1);
+                int src = (form.Source.Equals(HCSource.tmdb) ? 0 : 1);
 
                 rowAdd.Cells[0].Value = form.Path;
                 rowAdd.Cells[1].Value = (rowAdd.Cells[1] as DataGridViewComboBoxCell).Items[type];

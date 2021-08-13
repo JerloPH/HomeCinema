@@ -20,7 +20,7 @@ namespace HomeCinema
         private ImageList imageList = new ImageList();
         private string result = "";
         private string mediatype = "";
-        private string Source = "tmdb";
+        private string Source = HCSource.tmdb;
         private string TmdbId = "";
         public string getResult
         {
@@ -37,13 +37,13 @@ namespace HomeCinema
             get { return TmdbId; }
             set { TmdbId = value; }
         }
-        public frmSearchMedia(string caption, string query, string id, string source = "tmdb")
+        public frmSearchMedia(string caption, string query, string id, string source = "")
         {
             InitializeComponent();
             // Set variables
             movieId = id;
             result = "";
-            Source = source;
+            Source = (!String.IsNullOrWhiteSpace(source) ? source : HCSource.tmdb);
             // Set textbox and labels
             txtInput.Text = query;
             Text = GlobalVars.HOMECINEMA_NAME;
@@ -296,7 +296,7 @@ namespace HomeCinema
             lvResult.BeginUpdate(); // Pause drawing events on ListView
             lvResult.SuspendLayout();
 
-            int size = Source.Equals("tmdb") ? SearchTmdb() : SearchAnilist();
+            int size = Source.Equals(HCSource.tmdb) ? SearchTmdb() : SearchAnilist();
             if (size > 0)
             {
                 GlobalVars.ShowInfo($"Found {size} results!", "", this);

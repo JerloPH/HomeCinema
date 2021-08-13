@@ -41,7 +41,7 @@ namespace HomeCinema
             PathList = existingList;
 
             // Set Properties of Controls
-            cbSource.Items.AddRange(new string[] { "TMDB", "Anilist" });
+            cbSource.Items.AddRange(HCSource.sources);
             cbType.Items.AddRange(new string[] { "Movie", "Series" });
             cbSource.SelectedIndex = 0;
             cbType.SelectedIndex = 0;

@@ -68,7 +68,7 @@ namespace HomeCinema
 
             // Add items to cbCategory
             cbCategory.Items.AddRange(GlobalVars.DB_INFO_CATEGORY);
-            cbSource.Items.AddRange(new string[] { "TMDB", "Anilist" });
+            cbSource.Items.AddRange(HCSource.sources);
 
             // LOAD Information from DATABASE and SET to Controls
             if (MOVIE_ID > 0)
@@ -492,7 +492,7 @@ namespace HomeCinema
             // Set default source
             if (String.IsNullOrWhiteSpace(source))
             {
-                source = "tmdb";
+                source = HCSource.tmdb;
             }
             // Exit conditions
             if (!String.IsNullOrWhiteSpace(txtYear.Text) && txtYear.Text!="0")
@@ -500,20 +500,20 @@ namespace HomeCinema
                 if (!GlobalVars.ShowYesNo("Replace information?", this)) { return; }
             }
             // Exit when no TMDB key
-            if (!GlobalVars.HAS_TMDB_KEY && source.Equals("tmdb"))
+            if (!GlobalVars.HAS_TMDB_KEY && source.Equals(HCSource.tmdb))
             {
                 GlobalVars.ShowWarning(GlobalVars.MSG_NO_TMDB);
                 return;
             }
             // Exit if IMDB id is invalid
-            if ((String.IsNullOrWhiteSpace(IMDB_ID) || IMDB_ID=="0" || (IMDB_ID.StartsWith("tt")==false)) && (source.Equals("tmdb")))
+            if ((String.IsNullOrWhiteSpace(IMDB_ID) || IMDB_ID=="0" || (IMDB_ID.StartsWith("tt")==false)) && (source.Equals(HCSource.tmdb)))
             {
                 GlobalVars.ShowWarning("Invalid IMDB Id!");
                 txtIMDB.Focus();
                 return;
             }
             // Exit if Anilist id is invalid
-            if ((String.IsNullOrWhiteSpace(AnilistId) || AnilistId == "0" || !long.TryParse(AnilistId, out AniId)) && (source.Equals("anilist")))
+            if ((String.IsNullOrWhiteSpace(AnilistId) || AnilistId == "0" || !long.TryParse(AnilistId, out AniId)) && (source.Equals(HCSource.anilist)))
             {
                 GlobalVars.ShowWarning("Invalid Anilist Id!");
                 txtAnilist.Focus();
@@ -530,7 +530,7 @@ namespace HomeCinema
             form = new frmLoading($"Fetching info from {source.ToUpper()}..", "Loading");
             form.BackgroundWorker.DoWork += (sender1, e1) =>
             {
-                if (source.Equals("anilist"))
+                if (source.Equals(HCSource.anilist))
                 {
                     mediaInfo = AnilistAPI.GetMovieInfoFromAnilist(AnilistId);
                 }
@@ -631,7 +631,7 @@ namespace HomeCinema
                     form.BackgroundWorker.DoWork += (sender1, e1) =>
                     {
                         // Parse image link from JSON and download it
-                        if (source.Equals("anilist"))
+                        if (source.Equals(HCSource.anilist))
                         {
                             coverDownloaded = AnilistAPI.DownloadCoverFromAnilist(MOVIE_ID.ToString(), mediaInfo.PosterPath, errFrom);
                         }
@@ -665,7 +665,7 @@ namespace HomeCinema
         {
             string source = cbSource.Text.ToLower();
             // Exit when no TMDB key
-            if (!GlobalVars.HAS_TMDB_KEY && source.Equals("tmdb"))
+            if (!GlobalVars.HAS_TMDB_KEY && source.Equals(HCSource.tmdb))
             {
                 GlobalVars.ShowWarning(GlobalVars.MSG_NO_TMDB);
                 return;
@@ -690,7 +690,7 @@ namespace HomeCinema
             // Get IMDB from TMDB json info
             if (String.IsNullOrWhiteSpace(getResult) == false)
             {
-                if (source.Equals("anilist"))
+                if (source.Equals(HCSource.anilist))
                 {
                     txtAnilist.Text = getResult;
                 }

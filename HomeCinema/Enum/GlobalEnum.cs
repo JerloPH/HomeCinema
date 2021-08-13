@@ -12,6 +12,12 @@ namespace HomeCinema
         Check = 1,
         Warning = 2
     }
+    public static class HCSource
+    {
+        public static string[] sources = new string[] { "TMDB", "Anilist" };
+        public static string tmdb = "tmdb";
+        public static string anilist = "anilist";
+    }
     public static class HCTable
     {
         public static string info = "info";

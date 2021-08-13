@@ -1016,7 +1016,7 @@ namespace HomeCinema
         // Return int category, based on various filters
         public static int GetCategoryByFilter(string genre, string country, string mediatype, string source)
         {
-            if (source == "anilist")
+            if (source.Equals(HCSource.anilist))
             {
                 return ((mediatype=="series" || mediatype=="tv") ? 4 : 3);
             }

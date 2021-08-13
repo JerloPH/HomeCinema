@@ -197,7 +197,7 @@ namespace HomeCinema
                     // Scrape from TMDB, for info and details
                     if (Settings.IsOffline == false)
                     {
-                        if (src == "tmdb" && GlobalVars.HAS_TMDB_KEY)
+                        if (src.Equals(HCSource.tmdb) && GlobalVars.HAS_TMDB_KEY)
                         {
                             var movie = TmdbAPI.FindMovieTV(mName, "dummy", mediatype);
                             if (movie?.TotalResults == 1)
@@ -206,7 +206,7 @@ namespace HomeCinema
                             }
                             sleep = 15;
                         }
-                        else if (src == "anilist")
+                        else if (src.Equals(HCSource.anilist))
                         {
                             var anime = AnilistAPI.SearchForAnime(mName);
                             if (anime != null)
@@ -289,11 +289,11 @@ namespace HomeCinema
                         if (Settings.IsOffline == false && (!String.IsNullOrWhiteSpace(Media.PosterPath)))
                         {
                             Thread.Sleep((int)(sleep / 2)); // sleep to prevent overloading API
-                            if (GlobalVars.HAS_TMDB_KEY && src == "tmdb") // Use TMDB API
+                            if (GlobalVars.HAS_TMDB_KEY && src.Equals(HCSource.tmdb)) // Use TMDB API
                             {
                                 IsDownloadCover = TmdbAPI.DownloadCoverFromTMDB(movieId, Media.PosterPath, errFrom);
                             }
-                            else if (src == "anilist") // Use ANILIST API
+                            else if (src == HCSource.anilist) // Use ANILIST API
                             {
                                 IsDownloadCover = AnilistAPI.DownloadCoverFromAnilist(movieId, Media.PosterPath, errFrom);
                             }

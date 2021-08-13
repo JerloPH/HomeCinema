@@ -112,13 +112,13 @@ namespace HomeCinema
                     if (!String.IsNullOrWhiteSpace(imdb) && !imdb.Equals("0"))
                     {
                         lblSourceId.Text = imdb;
-                        lblSourceId.Tag = "imdb";
+                        lblSourceId.Tag = HCSource.tmdb;
                         lblSource.Text = "IMDB";
                     }
                     else
                     {
                         lblSourceId.Text = anilist;
-                        lblSourceId.Tag = "anilist";
+                        lblSourceId.Tag = HCSource.anilist;
                         lblSource.Text = "Anilist";
                     }
                 }
@@ -535,7 +535,7 @@ namespace HomeCinema
             string link = "";
 
             if (String.IsNullOrWhiteSpace(source)) { return; }
-            link = source.Equals("imdb") ? GlobalVars.LINK_IMDB : GlobalVars.LINK_ANILIST;
+            link = source.Equals(HCSource.tmdb) ? GlobalVars.LINK_IMDB : GlobalVars.LINK_ANILIST;
 
             titleCode = titleCode.Trim();
             if ((String.IsNullOrWhiteSpace(titleCode) == false) && (titleCode != "0"))
