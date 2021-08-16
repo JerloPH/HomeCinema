@@ -187,10 +187,13 @@ namespace HomeCinema
                 // summary
                 try { lblSummary.Text = GlobalVars.ValidateAndReturn(row[HCInfo.summary].ToString()); }
                 catch { lblSummary.Text = ""; }
+
+                row.Delete();
             }
-            catch
+            catch (Exception ex)
             {
                 GlobalVars.ShowWarning("Cannot load movie info!", "", this);
+                GlobalVars.ShowError(errFrom, ex, false, this);
                 Close();
                 return;
             }
@@ -226,7 +229,6 @@ namespace HomeCinema
                 }
                 catch (Exception exc)
                 {
-                    // Error log
                     GlobalVars.ShowError($"{errFrom}\n\tFile:\n\t{ Imagefile }", exc, false);
                 }
             }
@@ -263,9 +265,9 @@ namespace HomeCinema
         // Dispose Image poster
         public void DisposePoster()
         {
-            picBox.Image.Dispose();
-            MOVIE_COVER.Dispose();
-            MOVIE_COVER_FULL.Dispose();
+            picBox.Image?.Dispose();
+            MOVIE_COVER?.Dispose();
+            MOVIE_COVER_FULL?.Dispose();
         }
         // Adjust settings on webDoc
         public void TrailerFrame()
@@ -422,8 +424,9 @@ namespace HomeCinema
         {
             // Dispose components
             webTrailer?.Dispose();
-            picBox.Image?.Dispose();
-            MOVIE_COVER_FULL?.Dispose();
+            DisposePoster();
+            //picBox.Image?.Dispose();
+            //MOVIE_COVER_FULL?.Dispose();
             foreach (Control c in groupBox2.Controls)
             {
                 c?.Dispose();
