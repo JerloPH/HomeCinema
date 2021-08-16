@@ -618,6 +618,10 @@ an absolute waiver of all civil liability in connection with the
 Program, unless a warranty or assumption of liability accompanies a
 copy of the Program in return for a fee.
 
+  18. Contributions are licensed under this license, as well as give
+all rights to use, modify, and distribute outside of this license
+to the repository owner, JerloPH (https://github.com/JerloPH).
+
                      END OF TERMS AND CONDITIONS
 
             How to Apply These Terms to Your New Programs
