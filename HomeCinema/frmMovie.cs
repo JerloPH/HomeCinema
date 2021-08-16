@@ -283,6 +283,7 @@ namespace HomeCinema
 
             // Get url
             string url;
+            string docText = "";
             if (MOVIE_TRAILER.StartsWith("http"))
             {
                 // Check internet connection first
@@ -297,97 +298,33 @@ namespace HomeCinema
                     url = MOVIE_TRAILER.Substring(MOVIE_TRAILER.IndexOf("?v=") + 3);
                     if (String.IsNullOrWhiteSpace(url) == false)
                     {
-                        webTrailer.DocumentText = YoutubeEmbed(url);
-                        // Log to file
-                        LogWebDoc(url);
+                        webTrailer.DocumentText = GlobalVars.TrailerYoutubeEmbed(url);
+                        LogWebDoc(url); // Log to file
                         return;
                     }
                     ShowImageONWeb(GlobalVars.FILE_NOTRAILER);
                 }
                 else
                 {
-                    url = MOVIE_TRAILER;
-                    webTrailer.Navigate(url);
+                    webTrailer.Navigate(MOVIE_TRAILER);
                 }
-                return;
             }
             else
             {
-                if (String.IsNullOrWhiteSpace(MOVIE_TRAILER))
+                docText = GlobalVars.TrailerLocalHtml("file://" + MOVIE_TRAILER);
+                if (!String.IsNullOrWhiteSpace(docText))
                 {
-                    ShowImageONWeb(GlobalVars.FILE_NOTRAILER);
-                    return;
+                    webTrailer.DocumentText = docText;
                 }
                 else
-                {
-                    if (File.Exists(MOVIE_TRAILER))
-                    {
-                        url = "file://" + MOVIE_TRAILER;
-                        webTrailer.DocumentText = WebLocalFile(url);
-                        return;
-                    }
-                    else
-                    {
-                        ShowImageONWeb(GlobalVars.FILE_NOTRAILER);
-                    }
-                }
+                    ShowImageONWeb(GlobalVars.FILE_NOTRAILER);
             }
         }
         private void LogWebDoc(string Youtube_ID)
         {
             // Log to file
             GlobalVars.WriteToFile(Path.Combine(GlobalVars.PATH_LOG, "WebTrailerDocText.log"), webTrailer.DocumentText);
-            GlobalVars.WriteToFile(Path.Combine(GlobalVars.PATH_LOG, "WebTrailer.log"), YoutubeEmbed(Youtube_ID));
-        }
-        public string YoutubeEmbed(string code)
-        {
-            string url = "https://www.youtube.com/embed/" + code + "?rel=0;autoplay=1;loop=1;showinfo=0;controls=0;playlist=" + code + ";listType=playlist;autohide=1;version=3"; // " ?autoplay=1;version=3&amp;rel=0;html5=1"
-            var sb = new StringBuilder();
-            sb.Append(@"<style>
-                iframe {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100 %;
-                height: 100 %;
-                } </style>");
-            sb.Append("<html>");
-            sb.Append("    <head>");
-            sb.Append("        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\"/>");
-            sb.Append("    </head>");
-            sb.Append("    <body marginheight=\"0\" marginwidth=\"0\" leftmargin=\"0\" topmargin=\"0\" style=\"overflow-y: hidden\">");
-            sb.Append($"        <iframe width=\"100%\" height=\"100%\" src=\"{url}\"");
-            sb.Append("         frameborder = \"0\" allow = \"autoplay; encrypted-media\" id=\"Overlayvideo\" allowfullscreen></iframe>");
-            sb.Append("    </body>");
-            sb.Append("</html>");
-
-            return sb.ToString();
-        }
-        private string WebLocalFile(string sourcelink)
-        {
-            var sb = new StringBuilder();
-            string src;
-            if (String.IsNullOrWhiteSpace(sourcelink))
-            {
-                ShowImageONWeb(GlobalVars.FILE_NOTRAILER);
-                return "";
-            }
-            src = sourcelink;
-            sb.Append("<html>");
-            sb.Append("    <head>");
-            sb.Append("        <meta name=\"viewport\" content=\"width=device-width; height=device-height;\">");
-            sb.Append("    </head>");
-            sb.Append("    <body marginheight=\"0\" marginwidth=\"0\" leftmargin=\"0\" topmargin=\"0\" style=\"overflow-y: hidden\">");
-            sb.Append("        <object width=\"100%\" height=\"100%\">");
-            sb.Append("            <param name=\"movie\" value=\"" + src + "\" />");
-            sb.Append("            <param name=\"allowFullScreen\" value=\"true\" />");
-            sb.Append("            <param name=\"allowscriptaccess\" value=\"always\" />");
-            sb.Append("            <embed src=\"" + src + "\" type=\"application/x-shockwave-flash\"");
-            sb.Append("                   width=\"100%\" height=\"100%\" allowscriptaccess=\"always\" allowfullscreen=\"true\" />");
-            sb.Append("        </object>");
-            sb.Append("    </body>");
-            sb.Append("</html>");
-            return sb.ToString();
+            //GlobalVars.WriteToFile(Path.Combine(GlobalVars.PATH_LOG, "WebTrailer.log"), YoutubeEmbed(Youtube_ID));
         }
         // Display a Fullscreen image
         private void ShowImageONWeb(string src)
@@ -411,7 +348,7 @@ namespace HomeCinema
                 webTrailer.DocumentText = sb.ToString();
                 return;
             }
-            webTrailer.DocumentText = "<html><body><h1>Unknown Error!</h1></body></html>";
+            webTrailer.DocumentText = "<html><body><h1>Default Trailer Cover Missing!</h1></body></html>";
         }
         #endregion
         // ############################################################################## Form Control events

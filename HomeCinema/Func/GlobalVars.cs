@@ -34,6 +34,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Microsoft.WindowsAPICodePack.Shell;
 using HomeCinema.SQLFunc;
+using System.Text;
 
 namespace HomeCinema
 {
@@ -1275,7 +1276,55 @@ namespace HomeCinema
             var list = lb.Items.Cast<String>().ToList();
             return (list.Count > 0) ? list.Aggregate((a, b) => a + "," + b) : "";
         }
-        
+        public static string TrailerLocalHtml(string sourcelink)
+        {
+            var sb = new StringBuilder();
+            string src;
+            if (String.IsNullOrWhiteSpace(sourcelink))
+            {
+                return "";
+            }
+            src = sourcelink;
+            sb.Append("<html>");
+            sb.Append("    <head>");
+            sb.Append("        <meta name=\"viewport\" content=\"width=device-width; height=device-height;\">");
+            sb.Append("    </head>");
+            sb.Append("    <body marginheight=\"0\" marginwidth=\"0\" leftmargin=\"0\" topmargin=\"0\" style=\"overflow-y: hidden\">");
+            sb.Append("        <object width=\"100%\" height=\"100%\">");
+            sb.Append("            <param name=\"movie\" value=\"" + src + "\" />");
+            sb.Append("            <param name=\"allowFullScreen\" value=\"true\" />");
+            sb.Append("            <param name=\"allowscriptaccess\" value=\"always\" />");
+            sb.Append("            <embed src=\"" + src + "\" type=\"application/x-shockwave-flash\"");
+            sb.Append("                   width=\"100%\" height=\"100%\" allowscriptaccess=\"always\" allowfullscreen=\"true\" />");
+            sb.Append("        </object>");
+            sb.Append("    </body>");
+            sb.Append("</html>");
+            return sb.ToString();
+        }
+        public static string TrailerYoutubeEmbed(string code)
+        {
+            string url = "https://www.youtube.com/embed/" + code + "?rel=0;autoplay=1;loop=1;showinfo=0;controls=0;playlist=" + code + ";listType=playlist;autohide=1;version=3"; // " ?autoplay=1;version=3&amp;rel=0;html5=1"
+            var sb = new StringBuilder();
+            sb.Append(@"<style>
+                iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100 %;
+                height: 100 %;
+                } </style>");
+            sb.Append("<html>");
+            sb.Append("    <head>");
+            sb.Append("        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\"/>");
+            sb.Append("    </head>");
+            sb.Append("    <body marginheight=\"0\" marginwidth=\"0\" leftmargin=\"0\" topmargin=\"0\" style=\"overflow-y: hidden\">");
+            sb.Append($"        <iframe width=\"100%\" height=\"100%\" src=\"{url}\"");
+            sb.Append("         frameborder = \"0\" allow = \"autoplay; encrypted-media\" id=\"Overlayvideo\" allowfullscreen></iframe>");
+            sb.Append("    </body>");
+            sb.Append("</html>");
+
+            return sb.ToString();
+        }
         // ######################################################################## END - Add code above
     }
 }
