@@ -29,7 +29,7 @@ namespace HomeCinema
 {
     public partial class frmMovie : Form
     {
-        private string childForm { get; set; } = "";
+        public Form ChildForm { get; set; } = null;
         private string MOVIE_ID { get; set; } = "";
         private string MOVIE_NAME { get; set; } = "";
         private string MOVIE_FILEPATH { get; set; } = "";
@@ -52,7 +52,6 @@ namespace HomeCinema
             // Assign values to vars
             MOVIE_ID = ID;
             MOVIE_NAME = name;
-            childForm = GlobalVars.PREFIX_MOVIEINFO + MOVIE_ID;
             LVITEM = lvitem;
 
             // Set picBox size mode
@@ -382,11 +381,12 @@ namespace HomeCinema
             {
                 Program.FormMain.RefreshMovieList();
             }
+            if (ChildForm != null)
+                ChildForm.Close();
             // Set focus to main
             Program.FormMain.Focus();
             Dispose();
         }
-        // Play File on Default Player
         private void btnPlay_Click(object sender, EventArgs e)
         {
             // Play Movie file, or browse folder of Series
@@ -394,8 +394,11 @@ namespace HomeCinema
         }
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            // Create form, or OPEN if already exists
-            GlobalVars.OpenFormMovieInfo(this, childForm, MOVIE_ID, MOVIE_NAME, "frmMovie-btnEdit_Click", LVITEM);
+            // Create form if not existing, and Focus
+            if (ChildForm == null)
+                ChildForm = new frmMovieInfo(this, MOVIE_ID, MOVIE_NAME, GlobalVars.PREFIX_MOVIEINFO + MOVIE_ID, LVITEM);
+
+            ChildForm.Focus();
         }
         // Click to see Large Image cover
         private void picBox_Click(object sender, EventArgs e)

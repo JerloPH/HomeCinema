@@ -318,6 +318,13 @@ namespace HomeCinema
         // ############################################################################## Form Controls methods event
         private void frmMovieInfo_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // If Parent is of type: frmMovie
+            if (PARENT is frmMovie && PARENT != null)
+            {
+                // Dispose from Parent
+                var form = PARENT as frmMovie;
+                form.ChildForm = null;
+            }
             picBox.Image?.Dispose();
             tempImage?.Dispose();
             foreach (Control c in Controls)
