@@ -71,6 +71,11 @@ namespace HomeCinema
                         image = Resources.IconCheckmark;
                         break;
                     }
+                    case (int)HCIcons.Question:
+                    {
+                        image = Resources.IconQuestion;
+                        break;
+                    }
                     default:
                     {
                         image = Resources.IconInfo;

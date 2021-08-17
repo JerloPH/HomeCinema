@@ -284,7 +284,7 @@ namespace HomeCinema
             try
             {
                 if (caller == null) { caller = Program.FormMain; }
-                return (new frmAlert(msg, CAPTION_DIALOG, 1, null, HCIcons.None).ShowDialog(caller) == DialogResult.Yes);
+                return (new frmAlert(msg, CAPTION_DIALOG, 1, caller, HCIcons.Question).ShowDialog(caller) == DialogResult.Yes);
                 //return (MessageBox.Show(msg, CAPTION_DIALOG, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes);
             }
             catch (Exception ex)

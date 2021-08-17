@@ -13,7 +13,8 @@ namespace HomeCinema
         Check = 2,
         Info = 3,
         Warning = 4,
-        Error = 5
+        Error = 5,
+        Question = 6
     }
     public static class HCSource
     {
