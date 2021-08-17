@@ -84,6 +84,8 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
+            this.cbConfirmAction = new System.Windows.Forms.ComboBox();
+            this.lblConfirmAction = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -115,6 +117,8 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.Black;
+            this.tabPage1.Controls.Add(this.cbConfirmAction);
+            this.tabPage1.Controls.Add(this.lblConfirmAction);
             this.tabPage1.Controls.Add(this.cbConfirmSearch);
             this.tabPage1.Controls.Add(this.lblConfirmSearch);
             this.tabPage1.Controls.Add(this.cbAutoClean);
@@ -185,10 +189,10 @@
             // 
             this.btnCheckUpdate.Font = new System.Drawing.Font("Calibri", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.btnCheckUpdate.ForeColor = System.Drawing.Color.Black;
-            this.btnCheckUpdate.Location = new System.Drawing.Point(9, 406);
+            this.btnCheckUpdate.Location = new System.Drawing.Point(472, 32);
             this.btnCheckUpdate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnCheckUpdate.Name = "btnCheckUpdate";
-            this.btnCheckUpdate.Size = new System.Drawing.Size(429, 45);
+            this.btnCheckUpdate.Size = new System.Drawing.Size(213, 45);
             this.btnCheckUpdate.TabIndex = 17;
             this.btnCheckUpdate.Text = "Check for Update";
             this.btnCheckUpdate.UseVisualStyleBackColor = true;
@@ -197,7 +201,7 @@
             // lblImdbSearchLimit
             // 
             this.lblImdbSearchLimit.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblImdbSearchLimit.Location = new System.Drawing.Point(5, 335);
+            this.lblImdbSearchLimit.Location = new System.Drawing.Point(5, 387);
             this.lblImdbSearchLimit.Name = "lblImdbSearchLimit";
             this.lblImdbSearchLimit.Size = new System.Drawing.Size(244, 31);
             this.lblImdbSearchLimit.TabIndex = 11;
@@ -206,7 +210,7 @@
             // txtImdbSearchLimit
             // 
             this.txtImdbSearchLimit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtImdbSearchLimit.Location = new System.Drawing.Point(271, 331);
+            this.txtImdbSearchLimit.Location = new System.Drawing.Point(271, 383);
             this.txtImdbSearchLimit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtImdbSearchLimit.Name = "txtImdbSearchLimit";
             this.txtImdbSearchLimit.Size = new System.Drawing.Size(167, 30);
@@ -215,7 +219,7 @@
             // lblItemDisplayCount
             // 
             this.lblItemDisplayCount.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblItemDisplayCount.Location = new System.Drawing.Point(5, 297);
+            this.lblItemDisplayCount.Location = new System.Drawing.Point(5, 349);
             this.lblItemDisplayCount.Name = "lblItemDisplayCount";
             this.lblItemDisplayCount.Size = new System.Drawing.Size(244, 31);
             this.lblItemDisplayCount.TabIndex = 9;
@@ -224,7 +228,7 @@
             // txtMaxItemCount
             // 
             this.txtMaxItemCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMaxItemCount.Location = new System.Drawing.Point(271, 293);
+            this.txtMaxItemCount.Location = new System.Drawing.Point(271, 345);
             this.txtMaxItemCount.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtMaxItemCount.Name = "txtMaxItemCount";
             this.txtMaxItemCount.Size = new System.Drawing.Size(167, 30);
@@ -233,7 +237,7 @@
             // lblMaxLogFileSize
             // 
             this.lblMaxLogFileSize.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMaxLogFileSize.Location = new System.Drawing.Point(5, 260);
+            this.lblMaxLogFileSize.Location = new System.Drawing.Point(5, 312);
             this.lblMaxLogFileSize.Name = "lblMaxLogFileSize";
             this.lblMaxLogFileSize.Size = new System.Drawing.Size(244, 31);
             this.lblMaxLogFileSize.TabIndex = 7;
@@ -242,7 +246,7 @@
             // txtLogSize
             // 
             this.txtLogSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLogSize.Location = new System.Drawing.Point(271, 254);
+            this.txtLogSize.Location = new System.Drawing.Point(271, 306);
             this.txtLogSize.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtLogSize.Name = "txtLogSize";
             this.txtLogSize.Size = new System.Drawing.Size(167, 30);
@@ -755,6 +759,26 @@
             this.label9.TabIndex = 16;
             this.label9.Text = "* Changes Apply after Restart";
             // 
+            // cbConfirmAction
+            // 
+            this.cbConfirmAction.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbConfirmAction.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbConfirmAction.FormattingEnabled = true;
+            this.cbConfirmAction.Location = new System.Drawing.Point(271, 252);
+            this.cbConfirmAction.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cbConfirmAction.Name = "cbConfirmAction";
+            this.cbConfirmAction.Size = new System.Drawing.Size(167, 33);
+            this.cbConfirmAction.TabIndex = 23;
+            // 
+            // lblConfirmAction
+            // 
+            this.lblConfirmAction.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblConfirmAction.Location = new System.Drawing.Point(5, 254);
+            this.lblConfirmAction.Name = "lblConfirmAction";
+            this.lblConfirmAction.Size = new System.Drawing.Size(249, 30);
+            this.lblConfirmAction.TabIndex = 22;
+            this.lblConfirmAction.Text = "Confirm Actions:";
+            // 
             // frmSettings
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
@@ -844,5 +868,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn FolderPath;
         private System.Windows.Forms.DataGridViewComboBoxColumn MediaType;
         private System.Windows.Forms.DataGridViewComboBoxColumn Source;
+        private System.Windows.Forms.ComboBox cbConfirmAction;
+        private System.Windows.Forms.Label lblConfirmAction;
     }
 }

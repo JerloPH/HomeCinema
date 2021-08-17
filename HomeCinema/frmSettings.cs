@@ -31,6 +31,7 @@ namespace HomeCinema
     {
         private Color BackgroundColor = Settings.ColorBg;
         private Color FontColor = Settings.ColorFont;
+        private ToolTip tooltip = new ToolTip();
         public frmSettings()
         {
             InitializeComponent();
@@ -126,7 +127,6 @@ namespace HomeCinema
         private void frmSettings_Load(object sender, EventArgs e)
         {
             string errFrom = "frmSettings-frmSettings_Load";
-            ToolTip tooltip = new ToolTip();
             string[] choice = { "Yes", "No" };
             string text = "";
 
@@ -140,6 +140,7 @@ namespace HomeCinema
             tooltip.SetToolTip(btnCheckUpdate, "Manually check for updates.");
             tooltip.SetToolTip(lblAutoClean, "Clean logs and temporary files on startup.");
             tooltip.SetToolTip(lblConfirmSearch, "Prompt when Searching or Reloading Items.");
+            tooltip.SetToolTip(lblConfirmAction, "Prompt when Confirming certain actions.");
 
             // setup contents
             cbAutoUpdate.Items.AddRange(choice);
@@ -147,6 +148,7 @@ namespace HomeCinema
             cbPlayMovie.Items.AddRange(choice);
             cbAutoClean.Items.AddRange(choice);
             cbConfirmSearch.Items.AddRange(choice);
+            cbConfirmAction.Items.AddRange(choice);
 
             // Setting Values Initialization
             // ##################### - GENERAL
@@ -165,6 +167,9 @@ namespace HomeCinema
 
             try { cbConfirmSearch.SelectedIndex = Convert.ToInt16(!Settings.IsConfirmSearch); }
             catch { cbConfirmSearch.SelectedIndex = 1; }
+
+            try { cbConfirmAction.SelectedIndex = Convert.ToInt16(!Settings.IsConfirmMsg); }
+            catch { cbConfirmAction.SelectedIndex = 1; }
 
             // TextBox
             try { txtLogSize.Text = (Settings.MaxLogSize / 1000000).ToString(); }
@@ -257,7 +262,7 @@ namespace HomeCinema
         {
             GlobalVars.formSetting = null;
             Program.FormMain.lvSearchResult.BackColor = Settings.ColorBg;
-
+            tooltip?.Dispose();
             Dispose();
 
             Program.FormMain.Focus();
@@ -279,6 +284,7 @@ namespace HomeCinema
             Settings.IsAutoplay = !Convert.ToBoolean(cbPlayMovie.SelectedIndex);
             Settings.IsAutoClean = !Convert.ToBoolean(cbAutoClean.SelectedIndex);
             Settings.IsConfirmSearch = !Convert.ToBoolean(cbConfirmSearch.SelectedIndex);
+            Settings.IsConfirmMsg = !Convert.ToBoolean(cbConfirmAction.SelectedIndex);
 
             // TextBox changes
             try { Settings.MaxLogSize = (int)Convert.ToInt32(txtLogSize.Text); }
