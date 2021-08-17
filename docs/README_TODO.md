@@ -1,6 +1,18 @@
 # HomeCinema - Features to Add / Bugs to Fix
 
 ## Priority List
+- Move all loggers to new static class: "Log".
+- Move all show alert methods to new static class: "Alert".
+- Add Icon to frmAlert, with default being HCIcons.None.
+- If no Icon to alert, update label size to fit window.
+- On "About" form, include tabs: { APP VERSION and INFO (links, etc.), Check for Update button, VERSION_HISTORY, LICENSE, CREDITS }
+- Make "About" form similar to "Settings" form when browsing tabs.
+- Remove check for update button on frmSetting.
+- Add new setting combobox for json properties: { "confirmMessage", "timeOut" }
+- Add new Menu selection "File" to ToolStrip Menu (before "Setting"). With elements: { "About", "Exit" }
+- Remove "About" on ToolStrip menu.
+- Convert { Producer, Director, Artist, Studio } from Textbox to ListBox, delimiter: ";".
+
 - Loading form before Main form is shown (On Program.cs, preferably)
 - Refactor database.
   - Save deleted Uid to 'uid_free' table. 
