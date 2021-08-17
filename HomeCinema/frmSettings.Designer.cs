@@ -49,6 +49,9 @@
             this.lblAutoUpdate = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dataGridMediaLoc = new System.Windows.Forms.DataGridView();
+            this.FolderPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MediaType = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Source = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.btnMediaLocClear = new System.Windows.Forms.Button();
             this.btnMediaLocRemove = new System.Windows.Forms.Button();
             this.btnMediaLocAdd = new System.Windows.Forms.Button();
@@ -81,9 +84,6 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
-            this.FolderPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MediaType = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Source = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -137,7 +137,7 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage1.Size = new System.Drawing.Size(778, 465);
+            this.tabPage1.Size = new System.Drawing.Size(710, 465);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "General";
             // 
@@ -345,6 +345,36 @@
             this.dataGridMediaLoc.Size = new System.Drawing.Size(568, 319);
             this.dataGridMediaLoc.TabIndex = 20;
             // 
+            // FolderPath
+            // 
+            this.FolderPath.HeaderText = "Path";
+            this.FolderPath.MinimumWidth = 120;
+            this.FolderPath.Name = "FolderPath";
+            this.FolderPath.ToolTipText = "Path to search media files, without the final backslash";
+            this.FolderPath.Width = 280;
+            // 
+            // MediaType
+            // 
+            this.MediaType.HeaderText = "Media";
+            this.MediaType.Items.AddRange(new object[] {
+            "Movie",
+            "Series"});
+            this.MediaType.MinimumWidth = 80;
+            this.MediaType.Name = "MediaType";
+            this.MediaType.ToolTipText = "Type of media, either Movie or Series";
+            this.MediaType.Width = 125;
+            // 
+            // Source
+            // 
+            this.Source.HeaderText = "Source";
+            this.Source.Items.AddRange(new object[] {
+            "TMDB",
+            "Anilist"});
+            this.Source.MinimumWidth = 80;
+            this.Source.Name = "Source";
+            this.Source.ToolTipText = "Source to search info";
+            this.Source.Width = 120;
+            // 
             // btnMediaLocClear
             // 
             this.btnMediaLocClear.Font = new System.Drawing.Font("Calibri", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -542,24 +572,26 @@
             // 
             // listboxCountry
             // 
+            this.listboxCountry.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listboxCountry.FormattingEnabled = true;
-            this.listboxCountry.ItemHeight = 22;
+            this.listboxCountry.ItemHeight = 29;
             this.listboxCountry.Location = new System.Drawing.Point(147, 262);
             this.listboxCountry.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listboxCountry.Name = "listboxCountry";
             this.listboxCountry.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listboxCountry.Size = new System.Drawing.Size(553, 180);
+            this.listboxCountry.Size = new System.Drawing.Size(553, 178);
             this.listboxCountry.TabIndex = 19;
             // 
             // listboxGenre
             // 
+            this.listboxGenre.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listboxGenre.FormattingEnabled = true;
-            this.listboxGenre.ItemHeight = 22;
+            this.listboxGenre.ItemHeight = 29;
             this.listboxGenre.Location = new System.Drawing.Point(147, 43);
             this.listboxGenre.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listboxGenre.Name = "listboxGenre";
             this.listboxGenre.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listboxGenre.Size = new System.Drawing.Size(553, 180);
+            this.listboxGenre.Size = new System.Drawing.Size(553, 178);
             this.listboxGenre.TabIndex = 18;
             // 
             // label7
@@ -722,35 +754,6 @@
             this.label9.Size = new System.Drawing.Size(335, 34);
             this.label9.TabIndex = 16;
             this.label9.Text = "* Changes Apply after Restart";
-            // 
-            // FolderPath
-            // 
-            this.FolderPath.HeaderText = "Path";
-            this.FolderPath.MinimumWidth = 120;
-            this.FolderPath.Name = "FolderPath";
-            this.FolderPath.ToolTipText = "Path to search media files, without the final backslash";
-            this.FolderPath.Width = 280;
-            // 
-            // MediaType
-            // 
-            this.MediaType.HeaderText = "Media";
-            this.MediaType.Items.AddRange(new object[] {
-            "Movie",
-            "Series"});
-            this.MediaType.MinimumWidth = 80;
-            this.MediaType.Name = "MediaType";
-            this.MediaType.ToolTipText = "Type of media, either Movie or Series";
-            // 
-            // Source
-            // 
-            this.Source.HeaderText = "Source";
-            this.Source.Items.AddRange(new object[] {
-            "TMDB",
-            "Anilist"});
-            this.Source.MinimumWidth = 80;
-            this.Source.Name = "Source";
-            this.Source.ToolTipText = "Source to search info";
-            this.Source.Width = 120;
             // 
             // frmSettings
             // 
