@@ -23,11 +23,12 @@ namespace HomeCinema
     {
         // Settings Config
         // Booleans
-        public int autoUpdate { get; set; } = 1;
-        public int offlineMode { get; set; } = 0;
-        public int instantPlayMovie { get; set; } = 1;
-        public int autoClean { get; set; } = 1; // Auto clean during startup
-        public int confirmSearch { get; set; } = 0; // confirm prompt for searching and/or reloading items
+        public bool autoUpdate { get; set; } = true;
+        public bool offlineMode { get; set; } = false;
+        public bool instantPlayMovie { get; set; } = true;
+        public bool autoClean { get; set; } = false; // Auto clean during startup
+        public bool confirmSearch { get; set; } = false; // confirm prompt for searching and/or reloading items
+        public bool confirmMessages { get; set; } = true; // Show confirmation dialogs to most actions
         // Strings PATH
         public string lastPathVideo { get; set; } = "";
         public string lastPathCover { get; set; } = "";

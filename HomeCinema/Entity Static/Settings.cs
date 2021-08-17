@@ -19,103 +19,50 @@ namespace HomeCinema
             set { MaxLogSize_v = value; }
         }
 
-        private static string LastPathCover_v = ""; // Last Path saved for changing cover image
-        public static string LastPathCover
-        {
-            get { return LastPathCover_v; }
-            set { LastPathCover_v = value; }
-        }
+        // Last Path saved for changing cover image
+        public static string LastPathCover { get; set; }
 
-        private static string LastPathVideo_v = ""; // Last path saved for changing media source
-        public static string LastPathVideo
-        {
-            get { return LastPathVideo_v; }
-            set { LastPathVideo_v = value; }
-        }
+        // Last path saved for changing media source
+        public static string LastPathVideo { get; set; }
 
-        private static bool IsOffline_v = false; // Use [automatic online functionalities] or not.
-        public static bool IsOffline
-        {
-            get { return IsOffline_v; }
-            set { IsOffline_v = value; }
-        }
+        // Use [automatic online functionalities] or not.
+        public static bool IsOffline { get; set; }
 
-        private static bool IsAutoplay_v = false; // auto play movie
-        public static bool IsAutoplay
-        {
-            get { return IsAutoplay_v; }
-            set { IsAutoplay_v = value; }
-        }
+        // auto play movie on double-click, instead of opening movie info
+        public static bool IsAutoplay { get; set; }
 
-        private static bool IsAutoUpdate_v = true; // auto check for update
-        public static bool IsAutoUpdate
-        {
-            get { return IsAutoUpdate_v; }
-            set { IsAutoUpdate_v = value; }
-        }
+        // auto check for update
+        public static bool IsAutoUpdate { get; set; }
 
-        private static bool IsAutoClean_v = false; // Automatically clean temp and logs on App Load
-        public static bool IsAutoClean
-        {
-            get { return IsAutoClean_v; }
-            set { IsAutoClean_v = value; }
-        }
+        // Automatically clean temp and logs on App Load
+        public static bool IsAutoClean { get; set; }
 
-        private static bool IsConfirmSearch_v = false; // Confirm prompt for searching / reloading ListView
-        public static bool IsConfirmSearch
-        {
-            get { return IsConfirmSearch_v; }
-            set { IsConfirmSearch_v = value; }
-        }
+        // Confirm prompt for searching / reloading ListView
+        public static bool IsConfirmSearch { get; set; }
 
-        private static int ItemLimit_v = 0; // limit the max items to query. '0' means unlimited
-        public static int ItemLimit
-        {
-            get { return ItemLimit_v; }
-            set { ItemLimit_v = value; }
-        }
+        // Use confirmation prompts on most dialogs
+        public static bool IsConfirmMsg { get; set; }
 
-        private static int SearchLimit_v = 0; // limit for searching on IMDB Id. '0' means unlimited
-        public static int SearchLimit
-        {
-            get { return SearchLimit_v; }
-            set { SearchLimit_v = value; }
-        }
+        // limit the max items to query. '0' means unlimited
+        public static int ItemLimit { get; set; }
 
-        private static int TimeOut_v = 3; // TimeOut in seconds (1000 ms)
-        public static int TimeOut
-        {
-            get { return TimeOut_v; }
-            set { TimeOut_v = value; }
-        }
+        // limit for searching on IMDB Id. '0' means unlimited
+        public static int SearchLimit { get; set; }
 
-        private static int ImgTileWidth_v = 96; // Width of Cover image
-        public static int ImgTileWidth
-        {
-            get { return ImgTileWidth_v; }
-            set { ImgTileWidth_v = value; }
-        }
+        // TimeOut in seconds (1000 ms)
+        public static int TimeOut { get; set; }
 
-        private static int ImgTileHeight_v = 128; // Height of Cover image
-        public static int ImgTileHeight
-        {
-            get { return ImgTileHeight_v; }
-            set { ImgTileHeight_v = value; }
-        }
+        // Width of Cover image
+        public static int ImgTileWidth { get; set; }
 
-        private static Color ColorBg_v = Color.Black; // default color for background
-        public static Color ColorBg
-        {
-            get { return ColorBg_v; }
-            set { ColorBg_v = value; }
-        }
+        // Height of Cover image
+        public static int ImgTileHeight { get; set; }
 
-        private static Color ColorFont_v = Color.White; // default font color
-        public static Color ColorFont
-        {
-            get { return ColorFont_v; }
-            set { ColorFont_v = value; }
-        }
+        // default color for background
+        public static Color ColorBg { get; set; }
+
+        // default font color
+        public static Color ColorFont { get; set; }
         #endregion
 
         #region Methods
@@ -126,61 +73,66 @@ namespace HomeCinema
             string errorFrom = "Settings-LoadSettings";
             string contents, sLastPathCover, sLastPathVideo;
             // If file does not exist, create it with default values from [Config.cs]
-            if (File.Exists(GlobalVars.FILE_SETTINGS) == false)
+            try
             {
-                config = new SettingJson();
-                contents = JsonConvert.SerializeObject(config, Formatting.Indented);
-                GlobalVars.WriteToFile(GlobalVars.FILE_SETTINGS, contents);
+                if (File.Exists(GlobalVars.FILE_SETTINGS) == false)
+                {
+                    config = new SettingJson();
+                    contents = JsonConvert.SerializeObject(config, Formatting.Indented);
+                    GlobalVars.WriteToFile(GlobalVars.FILE_SETTINGS, contents);
+                }
+                else
+                {
+                    // Load file contents to Config
+                    contents = GlobalVars.ReadStringFromFile(GlobalVars.FILE_SETTINGS, $"{errorFrom} [FILE_SETTINGS]");
+                    config = JsonConvert.DeserializeObject<SettingJson>(contents, GlobalVars.JSON_SETTING);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                // Load file contents to Config
-                contents = GlobalVars.ReadStringFromFile(GlobalVars.FILE_SETTINGS, $"{errorFrom} [FILE_SETTINGS]");
-                config = JsonConvert.DeserializeObject<SettingJson>(contents, GlobalVars.JSON_SETTING);
+                GlobalVars.ShowError(errorFrom, ex, false);
+                config = new SettingJson();
             }
 
             // Get Max log file size
             MaxLogSize = config.logsize;
             // Get last path of poster image
             sLastPathCover = config.lastPathCover;
-            if (String.IsNullOrWhiteSpace(sLastPathCover) == false)
-            {
-                LastPathCover = sLastPathCover;
-            }
-            else
+            if (String.IsNullOrWhiteSpace(sLastPathCover))
             {
                 try
                 {
-                    LastPathCover = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+                    sLastPathCover = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
                 }
                 catch (Exception ex)
                 {
+                    sLastPathCover = System.Windows.Forms.Application.StartupPath;
                     GlobalVars.ShowError($"{errorFrom} [LastPathCover]", ex, false);
                 }
             }
+            LastPathCover = sLastPathCover;
             // Get last path of media file when adding new one
             sLastPathVideo = config.lastPathVideo;
-            if (String.IsNullOrWhiteSpace(sLastPathVideo) == false)
-            {
-                LastPathVideo = sLastPathVideo;
-            }
-            else
+            if (String.IsNullOrWhiteSpace(sLastPathVideo))
             {
                 try
                 {
-                    LastPathVideo = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
+                    sLastPathVideo = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
                 }
                 catch (Exception ex)
                 {
-                    GlobalVars.ShowError($"{errorFrom} [PATH_GETVIDEO]", ex, false);
+                    sLastPathVideo = System.Windows.Forms.Application.StartupPath;
+                    GlobalVars.ShowError($"{errorFrom} [LastPathVideo]", ex, false);
                 }
             }
+            LastPathVideo = sLastPathVideo;
 
-            IsOffline = Convert.ToBoolean(config.offlineMode); // Get Offline Mode
-            IsAutoUpdate = Convert.ToBoolean(config.autoUpdate); // Get auto update
-            IsAutoplay = Convert.ToBoolean(config.instantPlayMovie); // AutoPlay Movie, instead of Viewing its Info / Details
-            IsAutoClean = Convert.ToBoolean(config.autoClean); // Auto clean on startup
-            IsConfirmSearch = Convert.ToBoolean(config.confirmSearch); // Confirm prompts on search and reload
+            IsOffline = config.offlineMode; // Get Offline Mode
+            IsAutoUpdate = config.autoUpdate; // Get auto update
+            IsAutoplay = config.instantPlayMovie; // AutoPlay Movie, instead of Viewing its Info / Details
+            IsAutoClean = config.autoClean; // Auto clean on startup
+            IsConfirmSearch = config.confirmSearch; // Confirm prompts on search and reload
+            IsConfirmMsg = config.confirmMessages; // Confirm prompts on some actions
 
             ItemLimit = config.itemMaxLimit; // Limit MAX items in query 
             SearchLimit = config.searchLimit; // Limit Item result on IMDB searching
@@ -203,19 +155,24 @@ namespace HomeCinema
         public static bool SaveSettings()
         {
             var config = new SettingJson();
-            config.logsize = MaxLogSize_v;
-            config.offlineMode = Convert.ToInt16(IsOffline);
+            
+            config.autoUpdate = IsAutoUpdate;
+            config.offlineMode = IsOffline;
+            config.instantPlayMovie = IsAutoplay;
+            config.autoClean = IsAutoClean;
+            config.confirmSearch = IsConfirmSearch;
+            config.confirmMessages = IsConfirmMsg;
+
             config.lastPathCover = LastPathCover;
             config.lastPathVideo = LastPathVideo;
-            config.autoUpdate = Convert.ToInt16(IsAutoUpdate);
-            config.instantPlayMovie = Convert.ToInt16(IsAutoplay);
-            config.autoClean = Convert.ToInt16(IsAutoClean);
+
+            config.logsize = MaxLogSize_v;
             config.itemMaxLimit = ItemLimit;
             config.searchLimit = SearchLimit;
             config.setTimeOut = TimeOut;
             config.BackgroundColor = ColorBg.ToArgb().ToString("x");
             config.FontColor = ColorFont.ToArgb().ToString("x");
-            config.confirmSearch = Convert.ToInt16(IsConfirmSearch);
+            
             config.ImgTileWidth = Convert.ToInt32(ImgTileWidth);
             config.ImgTileHeight = Convert.ToInt32(ImgTileHeight);
 
