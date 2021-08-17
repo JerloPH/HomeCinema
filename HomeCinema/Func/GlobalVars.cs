@@ -186,18 +186,6 @@ namespace HomeCinema
             if (!DEBUGGING) { return; }
             Log(Path.Combine(PATH_LOG, "DEBUG.log"), "", log);
         }
-        /// <summary>
-        /// Show default message box from Windows
-        /// </summary>
-        /// <param name="msg">Message</param>
-        /// <param name="caption">Caption</param>
-        /// <param name="mbbtn">Buttons</param>
-        /// <param name="mbIcon">Icon</param>
-        public static void ShowMsg(string msg, string caption, MessageBoxButtons mbbtn, MessageBoxIcon mbIcon)
-        {
-            try {  MessageBox.Show(new Form { TopMost = true }, msg, caption, mbbtn, mbIcon); }
-            catch (Exception ex) { ShowError("GlobalVars-ShowMsg", ex, false); }
-        }
         public static void ShowNoParent(string msg, string caption = "HomeCinema")
         {
             var form = new frmAlert(msg, caption, 0, false);
