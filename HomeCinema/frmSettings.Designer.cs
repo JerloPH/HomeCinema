@@ -30,6 +30,8 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.cbConfirmAction = new System.Windows.Forms.ComboBox();
+            this.lblConfirmAction = new System.Windows.Forms.Label();
             this.cbConfirmSearch = new System.Windows.Forms.ComboBox();
             this.lblConfirmSearch = new System.Windows.Forms.Label();
             this.cbAutoClean = new System.Windows.Forms.ComboBox();
@@ -84,8 +86,8 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
-            this.cbConfirmAction = new System.Windows.Forms.ComboBox();
-            this.lblConfirmAction = new System.Windows.Forms.Label();
+            this.lblTimeout = new System.Windows.Forms.Label();
+            this.txtTimeout = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -117,6 +119,8 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.Black;
+            this.tabPage1.Controls.Add(this.lblTimeout);
+            this.tabPage1.Controls.Add(this.txtTimeout);
             this.tabPage1.Controls.Add(this.cbConfirmAction);
             this.tabPage1.Controls.Add(this.lblConfirmAction);
             this.tabPage1.Controls.Add(this.cbConfirmSearch);
@@ -145,12 +149,32 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "General";
             // 
+            // cbConfirmAction
+            // 
+            this.cbConfirmAction.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbConfirmAction.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbConfirmAction.FormattingEnabled = true;
+            this.cbConfirmAction.Location = new System.Drawing.Point(271, 223);
+            this.cbConfirmAction.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cbConfirmAction.Name = "cbConfirmAction";
+            this.cbConfirmAction.Size = new System.Drawing.Size(167, 33);
+            this.cbConfirmAction.TabIndex = 23;
+            // 
+            // lblConfirmAction
+            // 
+            this.lblConfirmAction.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblConfirmAction.Location = new System.Drawing.Point(5, 225);
+            this.lblConfirmAction.Name = "lblConfirmAction";
+            this.lblConfirmAction.Size = new System.Drawing.Size(249, 30);
+            this.lblConfirmAction.TabIndex = 22;
+            this.lblConfirmAction.Text = "Confirm Actions:";
+            // 
             // cbConfirmSearch
             // 
             this.cbConfirmSearch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbConfirmSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbConfirmSearch.FormattingEnabled = true;
-            this.cbConfirmSearch.Location = new System.Drawing.Point(271, 206);
+            this.cbConfirmSearch.Location = new System.Drawing.Point(271, 181);
             this.cbConfirmSearch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbConfirmSearch.Name = "cbConfirmSearch";
             this.cbConfirmSearch.Size = new System.Drawing.Size(167, 33);
@@ -159,7 +183,7 @@
             // lblConfirmSearch
             // 
             this.lblConfirmSearch.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblConfirmSearch.Location = new System.Drawing.Point(5, 208);
+            this.lblConfirmSearch.Location = new System.Drawing.Point(5, 183);
             this.lblConfirmSearch.Name = "lblConfirmSearch";
             this.lblConfirmSearch.Size = new System.Drawing.Size(249, 30);
             this.lblConfirmSearch.TabIndex = 20;
@@ -170,7 +194,7 @@
             this.cbAutoClean.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbAutoClean.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbAutoClean.FormattingEnabled = true;
-            this.cbAutoClean.Location = new System.Drawing.Point(271, 161);
+            this.cbAutoClean.Location = new System.Drawing.Point(271, 139);
             this.cbAutoClean.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbAutoClean.Name = "cbAutoClean";
             this.cbAutoClean.Size = new System.Drawing.Size(167, 33);
@@ -179,7 +203,7 @@
             // lblAutoClean
             // 
             this.lblAutoClean.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAutoClean.Location = new System.Drawing.Point(5, 164);
+            this.lblAutoClean.Location = new System.Drawing.Point(5, 142);
             this.lblAutoClean.Name = "lblAutoClean";
             this.lblAutoClean.Size = new System.Drawing.Size(249, 30);
             this.lblAutoClean.TabIndex = 18;
@@ -201,7 +225,7 @@
             // lblImdbSearchLimit
             // 
             this.lblImdbSearchLimit.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblImdbSearchLimit.Location = new System.Drawing.Point(5, 387);
+            this.lblImdbSearchLimit.Location = new System.Drawing.Point(5, 357);
             this.lblImdbSearchLimit.Name = "lblImdbSearchLimit";
             this.lblImdbSearchLimit.Size = new System.Drawing.Size(244, 31);
             this.lblImdbSearchLimit.TabIndex = 11;
@@ -210,7 +234,7 @@
             // txtImdbSearchLimit
             // 
             this.txtImdbSearchLimit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtImdbSearchLimit.Location = new System.Drawing.Point(271, 383);
+            this.txtImdbSearchLimit.Location = new System.Drawing.Point(271, 353);
             this.txtImdbSearchLimit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtImdbSearchLimit.Name = "txtImdbSearchLimit";
             this.txtImdbSearchLimit.Size = new System.Drawing.Size(167, 30);
@@ -219,7 +243,7 @@
             // lblItemDisplayCount
             // 
             this.lblItemDisplayCount.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblItemDisplayCount.Location = new System.Drawing.Point(5, 349);
+            this.lblItemDisplayCount.Location = new System.Drawing.Point(5, 317);
             this.lblItemDisplayCount.Name = "lblItemDisplayCount";
             this.lblItemDisplayCount.Size = new System.Drawing.Size(244, 31);
             this.lblItemDisplayCount.TabIndex = 9;
@@ -228,7 +252,7 @@
             // txtMaxItemCount
             // 
             this.txtMaxItemCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMaxItemCount.Location = new System.Drawing.Point(271, 345);
+            this.txtMaxItemCount.Location = new System.Drawing.Point(271, 313);
             this.txtMaxItemCount.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtMaxItemCount.Name = "txtMaxItemCount";
             this.txtMaxItemCount.Size = new System.Drawing.Size(167, 30);
@@ -237,7 +261,7 @@
             // lblMaxLogFileSize
             // 
             this.lblMaxLogFileSize.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMaxLogFileSize.Location = new System.Drawing.Point(5, 312);
+            this.lblMaxLogFileSize.Location = new System.Drawing.Point(5, 280);
             this.lblMaxLogFileSize.Name = "lblMaxLogFileSize";
             this.lblMaxLogFileSize.Size = new System.Drawing.Size(244, 31);
             this.lblMaxLogFileSize.TabIndex = 7;
@@ -246,7 +270,7 @@
             // txtLogSize
             // 
             this.txtLogSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLogSize.Location = new System.Drawing.Point(271, 306);
+            this.txtLogSize.Location = new System.Drawing.Point(271, 274);
             this.txtLogSize.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtLogSize.Name = "txtLogSize";
             this.txtLogSize.Size = new System.Drawing.Size(167, 30);
@@ -257,7 +281,7 @@
             this.cbPlayMovie.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbPlayMovie.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbPlayMovie.FormattingEnabled = true;
-            this.cbPlayMovie.Location = new System.Drawing.Point(271, 117);
+            this.cbPlayMovie.Location = new System.Drawing.Point(271, 97);
             this.cbPlayMovie.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbPlayMovie.Name = "cbPlayMovie";
             this.cbPlayMovie.Size = new System.Drawing.Size(167, 33);
@@ -266,7 +290,7 @@
             // lblPlayMovieClick
             // 
             this.lblPlayMovieClick.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPlayMovieClick.Location = new System.Drawing.Point(5, 121);
+            this.lblPlayMovieClick.Location = new System.Drawing.Point(5, 101);
             this.lblPlayMovieClick.Name = "lblPlayMovieClick";
             this.lblPlayMovieClick.Size = new System.Drawing.Size(249, 23);
             this.lblPlayMovieClick.TabIndex = 4;
@@ -277,7 +301,7 @@
             this.cbOffline.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbOffline.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbOffline.FormattingEnabled = true;
-            this.cbOffline.Location = new System.Drawing.Point(271, 73);
+            this.cbOffline.Location = new System.Drawing.Point(271, 56);
             this.cbOffline.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbOffline.Name = "cbOffline";
             this.cbOffline.Size = new System.Drawing.Size(167, 33);
@@ -286,7 +310,7 @@
             // lblOfflineMode
             // 
             this.lblOfflineMode.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblOfflineMode.Location = new System.Drawing.Point(5, 76);
+            this.lblOfflineMode.Location = new System.Drawing.Point(5, 59);
             this.lblOfflineMode.Name = "lblOfflineMode";
             this.lblOfflineMode.Size = new System.Drawing.Size(244, 23);
             this.lblOfflineMode.TabIndex = 2;
@@ -297,7 +321,7 @@
             this.cbAutoUpdate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbAutoUpdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbAutoUpdate.FormattingEnabled = true;
-            this.cbAutoUpdate.Location = new System.Drawing.Point(271, 30);
+            this.cbAutoUpdate.Location = new System.Drawing.Point(271, 16);
             this.cbAutoUpdate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbAutoUpdate.Name = "cbAutoUpdate";
             this.cbAutoUpdate.Size = new System.Drawing.Size(167, 33);
@@ -306,7 +330,7 @@
             // lblAutoUpdate
             // 
             this.lblAutoUpdate.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAutoUpdate.Location = new System.Drawing.Point(5, 32);
+            this.lblAutoUpdate.Location = new System.Drawing.Point(5, 18);
             this.lblAutoUpdate.Name = "lblAutoUpdate";
             this.lblAutoUpdate.Size = new System.Drawing.Size(244, 23);
             this.lblAutoUpdate.TabIndex = 0;
@@ -759,25 +783,23 @@
             this.label9.TabIndex = 16;
             this.label9.Text = "* Changes Apply after Restart";
             // 
-            // cbConfirmAction
+            // lblTimeout
             // 
-            this.cbConfirmAction.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbConfirmAction.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbConfirmAction.FormattingEnabled = true;
-            this.cbConfirmAction.Location = new System.Drawing.Point(271, 252);
-            this.cbConfirmAction.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.cbConfirmAction.Name = "cbConfirmAction";
-            this.cbConfirmAction.Size = new System.Drawing.Size(167, 33);
-            this.cbConfirmAction.TabIndex = 23;
+            this.lblTimeout.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTimeout.Location = new System.Drawing.Point(5, 395);
+            this.lblTimeout.Name = "lblTimeout";
+            this.lblTimeout.Size = new System.Drawing.Size(244, 31);
+            this.lblTimeout.TabIndex = 25;
+            this.lblTimeout.Text = "Time Out (in millisecond)";
             // 
-            // lblConfirmAction
+            // txtTimeout
             // 
-            this.lblConfirmAction.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblConfirmAction.Location = new System.Drawing.Point(5, 254);
-            this.lblConfirmAction.Name = "lblConfirmAction";
-            this.lblConfirmAction.Size = new System.Drawing.Size(249, 30);
-            this.lblConfirmAction.TabIndex = 22;
-            this.lblConfirmAction.Text = "Confirm Actions:";
+            this.txtTimeout.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTimeout.Location = new System.Drawing.Point(271, 395);
+            this.txtTimeout.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtTimeout.Name = "txtTimeout";
+            this.txtTimeout.Size = new System.Drawing.Size(167, 30);
+            this.txtTimeout.TabIndex = 24;
             // 
             // frmSettings
             // 
@@ -870,5 +892,7 @@
         private System.Windows.Forms.DataGridViewComboBoxColumn Source;
         private System.Windows.Forms.ComboBox cbConfirmAction;
         private System.Windows.Forms.Label lblConfirmAction;
+        private System.Windows.Forms.Label lblTimeout;
+        private System.Windows.Forms.TextBox txtTimeout;
     }
 }

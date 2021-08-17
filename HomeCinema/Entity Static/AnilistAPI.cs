@@ -62,7 +62,7 @@ namespace HomeCinema
                     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
                     
                     var request = new RestRequest("/", Method.POST);
-                    request.Timeout = 0;
+                    request.Timeout = Settings.TimeOut;
                     request.AddJsonBody(new
                     {
                         query = Query,
@@ -113,7 +113,7 @@ namespace HomeCinema
                     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 
                     var request = new RestRequest("/", Method.POST);
-                    request.Timeout = 0;
+                    request.Timeout = Settings.TimeOut;
                     request.AddJsonBody(new
                     {
                         query = QueryWithId,

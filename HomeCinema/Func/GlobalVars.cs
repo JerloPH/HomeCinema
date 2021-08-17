@@ -747,18 +747,19 @@ namespace HomeCinema
             return ret;
         }
         // Check if there is an active Internet connection
-        public static bool CheckConnection(String URL, int timeOutSec = 3)
+        public static bool CheckConnection(String URL)
         {
             if (String.IsNullOrWhiteSpace(URL)) { return false; }
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
-                request.Timeout = timeOutSec * 1000;
+                request.Timeout = Settings.TimeOut;
                 request.Credentials = CredentialCache.DefaultNetworkCredentials;
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                bool ret = (response.StatusCode == HttpStatusCode.OK);
-                response.Dispose();
-                return ret;
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    bool ret = (response.StatusCode == HttpStatusCode.OK);
+                    return ret;
+                }
             }
             catch (Exception ex)
             {

@@ -141,6 +141,10 @@ namespace HomeCinema
             tooltip.SetToolTip(lblAutoClean, "Clean logs and temporary files on startup.");
             tooltip.SetToolTip(lblConfirmSearch, "Prompt when Searching or Reloading Items.");
             tooltip.SetToolTip(lblConfirmAction, "Prompt when Confirming certain actions.");
+            tooltip.SetToolTip(lblTimeout, "Timeout when connecting to internet." +
+                "\nHigher value = Ensures data is retrieved, slower requests." +
+                "\nLower value = Data might not be downloaded, faster requests." +
+                "\n0 = No Timeout.");
 
             // setup contents
             cbAutoUpdate.Items.AddRange(choice);
@@ -186,6 +190,9 @@ namespace HomeCinema
 
             try { txtImgTileHeight.Text = Settings.ImgTileHeight.ToString(); }
             catch { txtImgTileHeight.Text = "128"; }
+
+            try { txtTimeout.Text = Settings.TimeOut.ToString(); }
+            catch { txtTimeout.Text = "0"; }
 
             // ##################### - FILE changes
             // Country Texts
@@ -301,6 +308,9 @@ namespace HomeCinema
 
             try { Settings.ImgTileHeight = Convert.ToInt32(txtImgTileHeight.Text); }
             catch { error += Environment.NewLine + lblImgTileHeight.Text.Trim().TrimEnd(':'); }
+
+            try { Settings.TimeOut = Convert.ToInt32(txtTimeout.Text); }
+            catch { error += Environment.NewLine + lblTimeout.Text.Trim().TrimEnd(':'); }
 
             // Theme Settings
             Settings.ColorBg = BackgroundColor;
