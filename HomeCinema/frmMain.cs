@@ -1147,9 +1147,7 @@ namespace HomeCinema
                 string MOVIE_ID = lvSearchResult.SelectedItems[0].Tag.ToString();
                 if (MOVIE_ID != "0" && (!String.IsNullOrWhiteSpace(MOVIE_ID)))
                 {
-                    string MOVIE_NAME = lvSearchResult.SelectedItems[0].Text.ToString();
-                    string childForm = GlobalVars.PREFIX_MOVIEINFO + MOVIE_ID;
-                    GlobalVars.OpenFormMovieInfo(this, childForm, MOVIE_ID, $"{errFrom} [toolMenuEdit]", lvSearchResult.SelectedItems[0]);
+                    GlobalVars.OpenFormMovieInfo(this, MOVIE_ID, lvSearchResult.SelectedItems[0], $"{errFrom} [toolMenuEdit]");
                 }
             }
             else if (item == toolMenuFileExplorer)

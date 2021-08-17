@@ -80,9 +80,8 @@ namespace HomeCinema
             // Chang default source, depending on loaded info
             cbSource.SelectedIndex = (cbCategory.Text.ToLower().Contains("anime") ? 1 : 0);
 
-            // Show the form
+            // Show the form at center
             StartPosition = FormStartPosition.CenterParent;
-            ShowDialog(parent);
 
             // Set main focus at startup
             txtName.Focus();
@@ -320,10 +319,11 @@ namespace HomeCinema
         private void frmMovieInfo_FormClosing(object sender, FormClosingEventArgs e)
         {
             // If Parent is of type: frmMovie
-            if (PARENT is frmMovie && PARENT != null)
+            if (PARENT is frmMovie)
             {
                 var form = PARENT as frmMovie;
                 form.ChildForm = null;
+                GlobalVars.LogDebug("frmMovie Parent is null!");
             }
             picBox.Image?.Dispose();
             tempImage?.Dispose();

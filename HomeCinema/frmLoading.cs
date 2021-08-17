@@ -90,7 +90,7 @@ namespace HomeCinema
                 if (progress == MaxProgress)
                     percent = 100m;
 
-                GlobalVars.LogDebug($"Percent: [{percent.ToString("###.##")}], Progress: [{progress}], Max Progress: [{MaxProgress}]");
+                //GlobalVars.LogDebug($"Percent: [{percent.ToString("###.##")}], Progress: [{progress}], Max Progress: [{MaxProgress}]");
                 BackgroundWorker.ReportProgress((int)percent, progress);
             }
             catch (Exception ex)
@@ -181,7 +181,7 @@ namespace HomeCinema
             //GlobalVars.LogDebug($"Progress %: [{e.ProgressPercentage}], Actual Progress: [{ProgressCount}]");
             if (ProgressCount == MaxProgress)
             {
-                GlobalVars.LogDebug($"Done loading!\nProgress %: [{e.ProgressPercentage}], Actual Progress: [{ProgressCount}]\n");
+                //GlobalVars.LogDebug($"Done loading!\nProgress %: [{e.ProgressPercentage}], Actual Progress: [{ProgressCount}]\n");
                 ProgressText = $"Done loading!";
                 SetIcon((int)HCIcons.Check);
                 if (Settings.IsConfirmMsg)

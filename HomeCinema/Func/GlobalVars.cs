@@ -694,19 +694,25 @@ namespace HomeCinema
             return Regex.Replace(s, @"\t|\n|\r", "");
         }
         // Create / Open frmMovieInfo form [EDIT Movie details]
-        public static bool OpenFormMovieInfo(Form formParent, string formName, string MOVIE_ID, string From, ListViewItem lvItem = null)
+        public static Form OpenFormMovieInfo(Form formParent, string MOVIE_ID, ListViewItem lvItem, string From)
         {
+            string formName = $"{PREFIX_MOVIEINFO}{MOVIE_ID.TrimStart('0')}";
             Form fc = Application.OpenForms[formName];
             if (fc != null)
             {
+                if (fc.WindowState == FormWindowState.Minimized)
+                    fc.WindowState = FormWindowState.Normal;
+
                 fc.Focus();
-                return true;
+                return fc;
             }
             else
             {
                 Form formNew = new frmMovieInfo(formParent, MOVIE_ID, formName, lvItem);
                 Log($"{From} (PARENT: {formParent.Name})", "childOfThis formName: " + formNew.Name);
-                return false;
+                LogDebug($"{From} (PARENT: {formParent.Name}) childOfThis formName: " + formNew.Name);
+                formNew.Show(formParent);
+                return formNew;
             }
         }
         // Try to delete file

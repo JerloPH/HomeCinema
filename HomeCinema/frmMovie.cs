@@ -30,6 +30,7 @@ namespace HomeCinema
     public partial class frmMovie : Form
     {
         public Form ChildForm { get; set; } = null;
+
         private string MOVIE_ID { get; set; } = "";
         private string MOVIE_FILEPATH { get; set; } = "";
         private string MOVIE_TRAILER { get; set; } = "";
@@ -393,10 +394,7 @@ namespace HomeCinema
         private void btnEdit_Click(object sender, EventArgs e)
         {
             // Create form if not existing, and Focus
-            if (ChildForm == null)
-                ChildForm = new frmMovieInfo(this, MOVIE_ID, GlobalVars.PREFIX_MOVIEINFO + MOVIE_ID, LVITEM);
-
-            ChildForm.Focus();
+            ChildForm = GlobalVars.OpenFormMovieInfo(this, MOVIE_ID, LVITEM, "frmMovie-btnEdit_Click");
         }
         // Click to see Large Image cover
         private void picBox_Click(object sender, EventArgs e)
