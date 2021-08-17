@@ -8,9 +8,11 @@ namespace HomeCinema
 {
     public enum HCIcons
     {
-        Loading = 0,
-        Check = 1,
-        Warning = 2
+        None = 0,
+        Loading = 1,
+        Check = 2,
+        Warning = 3,
+        Error = 4
     }
     public static class HCSource
     {
