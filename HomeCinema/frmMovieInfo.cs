@@ -322,7 +322,6 @@ namespace HomeCinema
             // If Parent is of type: frmMovie
             if (PARENT is frmMovie && PARENT != null)
             {
-                // Dispose from Parent
                 var form = PARENT as frmMovie;
                 form.ChildForm = null;
             }
