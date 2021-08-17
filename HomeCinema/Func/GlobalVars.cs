@@ -978,15 +978,7 @@ namespace HomeCinema
             string errFrom = "GlobalVars-PlayMedia";
             try
             {
-                FileAttributes attr = File.GetAttributes(MOVIE_FILEPATH);
-                if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
-                {
-                    FileOpeninExplorer(MOVIE_FILEPATH, errFrom);
-                }
-                else
-                {
-                    Process.Start(MOVIE_FILEPATH);
-                }
+                Process.Start(MOVIE_FILEPATH);
             }
             catch (Exception ex)
             {
