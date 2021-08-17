@@ -63,7 +63,7 @@ namespace HomeCinema
                     }
                     case (int)HCIcons.Error:
                     {
-                        image = Resources.IconWarning;
+                        image = Resources.IconError;
                         break;
                     }
                     case (int)HCIcons.Check:

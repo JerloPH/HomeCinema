@@ -249,6 +249,7 @@
     <None Include="Resources\info.png" />
     <None Include="Resources\clean.png" />
     <None Include="Resources\IconQuestion.png" />
+    <None Include="Resources\IconError.png" />
     <Content Include="Resources\Loading.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

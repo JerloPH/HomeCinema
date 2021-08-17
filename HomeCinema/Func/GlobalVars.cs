@@ -262,16 +262,15 @@ namespace HomeCinema
             {
                 err = $"Error string:\n\t{error}";
             }
-            string file = FILE_LOG_ERROR;
             LogErr(codeFrom, err);
 
             if (ShowAMsg)
             {
-                ShowCustomMessage($"An error occured!\nError message: {err}\nError File Location:\n{file}", "Error occured!", parent, HCIcons.Error);
+                ShowCustomMessage($"An error occured!\nReport on project site\nand submit 'logs' subfolder.", "Error occured!", parent, HCIcons.Error);
                 // Open file in explorer
                 try
                 {
-                    Process.Start("explorer.exe", @"/select," + $"{ file }" + '"');
+                    Process.Start("explorer.exe", PATH_LOG);
                 }
                 catch (Exception ex)
                 {
@@ -285,7 +284,6 @@ namespace HomeCinema
             {
                 if (caller == null) { caller = Program.FormMain; }
                 return (new frmAlert(msg, CAPTION_DIALOG, 1, caller, HCIcons.Question).ShowDialog(caller) == DialogResult.Yes);
-                //return (MessageBox.Show(msg, CAPTION_DIALOG, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes);
             }
             catch (Exception ex)
             {
