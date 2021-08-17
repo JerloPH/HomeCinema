@@ -273,7 +273,7 @@ namespace HomeCinema
             // Exit if OfflineMOde
             if (Settings.IsOffline)
             {
-                ShowImageONWeb(GlobalVars.FILE_NOTRAILER);
+                webTrailer.DocumentText = GlobalVars.TrailerLocalImage();
                 return;
             }
             // Adjust Trailer Box
@@ -287,8 +287,7 @@ namespace HomeCinema
                 // Check internet connection first
                 if (GlobalVars.CheckConnection("https://www.youtube.com/") == false)
                 {
-                    //GlobalVars.ShowWarning("Cannot View Online Trailer!", "No Internet Connection");
-                    ShowImageONWeb(GlobalVars.FILE_NOTRAILER);
+                    webTrailer.DocumentText = GlobalVars.TrailerLocalImage();
                     return;
                 }
                 if (MOVIE_TRAILER.Contains("youtube.com"))
@@ -300,7 +299,7 @@ namespace HomeCinema
                         LogWebDoc(url); // Log to file
                         return;
                     }
-                    ShowImageONWeb(GlobalVars.FILE_NOTRAILER);
+                    webTrailer.DocumentText = GlobalVars.TrailerLocalImage();
                 }
                 else
                 {
@@ -315,7 +314,7 @@ namespace HomeCinema
                     webTrailer.DocumentText = docText;
                 }
                 else
-                    ShowImageONWeb(GlobalVars.FILE_NOTRAILER);
+                    webTrailer.DocumentText = GlobalVars.TrailerLocalImage();
             }
         }
         private void LogWebDoc(string Youtube_ID)
@@ -323,30 +322,6 @@ namespace HomeCinema
             // Log to file
             GlobalVars.WriteToFile(Path.Combine(GlobalVars.PATH_LOG, "WebTrailerDocText.log"), webTrailer.DocumentText);
             //GlobalVars.WriteToFile(Path.Combine(GlobalVars.PATH_LOG, "WebTrailer.log"), YoutubeEmbed(Youtube_ID));
-        }
-        // Display a Fullscreen image
-        private void ShowImageONWeb(string src)
-        {
-            if (File.Exists(GlobalVars.FILE_NOTRAILER))
-            {
-                if (String.IsNullOrWhiteSpace(src))
-                {
-                    return;
-                }
-                var sb = new StringBuilder();
-                sb.Append("<html>");
-                sb.Append("    <head>");
-                sb.Append("        <meta name=\"viewport\" content=\"width=device-width; height=device-height;\">");
-                sb.Append("    </head>");
-                sb.Append("    <body marginheight=\"0\" marginwidth=\"0\" leftmargin=\"0\" topmargin=\"0\" style=\"overflow-y: hidden\">");
-                sb.Append("        <img width=\"100%\" height=\"100%\" src=\"" + src + "\">");
-                sb.Append("        </img>");
-                sb.Append("    </body>");
-                sb.Append("</html>");
-                webTrailer.DocumentText = sb.ToString();
-                return;
-            }
-            webTrailer.DocumentText = "<html><body><h1>Default Trailer Cover Missing!</h1></body></html>";
         }
         #endregion
         // ############################################################################## Form Control events

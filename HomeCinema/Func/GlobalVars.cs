@@ -1295,7 +1295,7 @@ namespace HomeCinema
         {
             var sb = new StringBuilder();
             string src;
-            if (String.IsNullOrWhiteSpace(sourcelink))
+            if (String.IsNullOrWhiteSpace(sourcelink) || !File.Exists(sourcelink))
             {
                 return "";
             }
@@ -1338,6 +1338,25 @@ namespace HomeCinema
             sb.Append("    </body>");
             sb.Append("</html>");
 
+            return sb.ToString();
+        }
+        public static string TrailerLocalImage()
+        {
+            string imgfile = FILE_NOTRAILER;
+            if (!File.Exists(imgfile))
+            {
+                return "<html><body><h1>Default cover missing!</h1></body></html>";
+            }
+            var sb = new StringBuilder();
+            sb.Append("<html>");
+            sb.Append("    <head>");
+            sb.Append("        <meta name=\"viewport\" content=\"width=device-width; height=device-height;\">");
+            sb.Append("    </head>");
+            sb.Append("    <body marginheight=\"0\" marginwidth=\"0\" leftmargin=\"0\" topmargin=\"0\" style=\"overflow-y: hidden\">");
+            sb.Append("        <img width=\"100%\" height=\"100%\" src=\"" + imgfile + "\">");
+            sb.Append("        </img>");
+            sb.Append("    </body>");
+            sb.Append("</html>");
             return sb.ToString();
         }
         // ######################################################################## END - Add code above
