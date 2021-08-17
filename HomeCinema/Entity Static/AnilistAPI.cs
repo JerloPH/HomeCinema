@@ -78,6 +78,7 @@ namespace HomeCinema
                             GlobalVars.LogDebug($"Retry-After: [{val}]");
                             if (val > 0)
                             {
+                                val += 1;
                                 GlobalVars.LogDebug($"Sleeping thread for 60000ms(1 minute)");
                                 Thread.Sleep(val*1000);
                                 continue;

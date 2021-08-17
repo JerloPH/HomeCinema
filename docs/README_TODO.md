@@ -12,8 +12,7 @@
 
 - Loading form before Main form is shown (On Program.cs, preferably)
 - Refactor database.
-  - Save deleted Uid to 'uid_free' table. 
-- Refactor how frmMovie stores and access child forms.
+  - Save deleted Uid to 'uid_free' table.
 - Portability option
   - Add toggle in setting
   - save entries to '_portable' tables

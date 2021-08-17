@@ -138,7 +138,6 @@ namespace HomeCinema
             string filePath;
             string src;
             bool IsDownloadCover = false;
-            int sleep = 10;
             long count = 0; // count of successful inserts
             string logInsert = GlobalVars.LogFormatted("Succesfully inserted files and/or folders", ""); // Log succesfully inserted
             GlobalVars.WriteAppend(logFileInsertSkipped, GlobalVars.LogFormatted("Skipped files and folders", ""));
@@ -162,6 +161,7 @@ namespace HomeCinema
                     string rCountry = "";
                     string rGenre = "";
                     string rYear = "";
+                    string prevSrc = "";
 
                     // Get proper name, without the folder paths
                     try
@@ -199,15 +199,24 @@ namespace HomeCinema
                     {
                         if (src.Equals(HCSource.tmdb) && GlobalVars.HAS_TMDB_KEY)
                         {
+                            if (prevSrc.Equals(HCSource.tmdb))
+                                Thread.Sleep(100);
+
                             var movie = TmdbAPI.FindMovieTV(mName, "dummy", mediatype);
                             if (movie?.TotalResults == 1)
                             {
+                                if (prevSrc.Equals(HCSource.tmdb))
+                                    Thread.Sleep(100);
+
                                 Media = TmdbAPI.GetMovieInfoFromTmdb(movie?.Results[0].Id.ToString(), mediatype);
                             }
-                            sleep = 15;
+                            prevSrc = HCSource.tmdb;
                         }
                         else if (src.Equals(HCSource.anilist))
                         {
+                            if (prevSrc.Equals(HCSource.anilist))
+                                Thread.Sleep(200);
+
                             var anime = AnilistAPI.SearchForAnime(mName);
                             if (anime != null)
                             {
@@ -216,12 +225,13 @@ namespace HomeCinema
                                     if (anime.Data.Page.PageInfo.Total == 1)
                                     {
                                         string getAnilist = anime.Data.Page.MediaList[0].Id.ToString();
+                                        Thread.Sleep(20);
                                         Media = AnilistAPI.GetMovieInfoFromAnilist(getAnilist);
                                     }
                                 }
                                 catch { }
                             }
-                            sleep = 30;
+                            prevSrc = HCSource.anilist;
                         }
                         if (Media != null)
                         {
@@ -288,9 +298,9 @@ namespace HomeCinema
                         // Download cover, if not OFFLINE_MODE
                         if (Settings.IsOffline == false && (!String.IsNullOrWhiteSpace(Media.PosterPath)))
                         {
-                            Thread.Sleep((int)(sleep / 2)); // sleep to prevent overloading API
                             if (GlobalVars.HAS_TMDB_KEY && src.Equals(HCSource.tmdb)) // Use TMDB API
                             {
+                                Thread.Sleep(50); // sleep to prevent overloading API
                                 IsDownloadCover = TmdbAPI.DownloadCoverFromTMDB(movieId, Media.PosterPath, errFrom);
                             }
                             else if (src == HCSource.anilist) // Use ANILIST API
@@ -314,7 +324,6 @@ namespace HomeCinema
                         }
                     }
                     form.UpdateProgress(progress);
-                    Thread.Sleep(sleep); // Prevent continuous request to TMDB, prevents overloading the site.
                 }
                 dtNewFiles.Clear();
                 if (!String.IsNullOrWhiteSpace(logInsert))
