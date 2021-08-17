@@ -144,7 +144,7 @@ namespace HomeCinema
             tooltip.SetToolTip(lblTimeout, "Timeout when connecting to internet." +
                 "\nHigher value = Ensures data is retrieved, slower requests." +
                 "\nLower value = Data might not be downloaded, faster requests." +
-                "\n0 = No Timeout.");
+                "\nCannot be lower than 5 second ( 5,000 )");
 
             // setup contents
             cbAutoUpdate.Items.AddRange(choice);
@@ -309,7 +309,15 @@ namespace HomeCinema
             try { Settings.ImgTileHeight = Convert.ToInt32(txtImgTileHeight.Text); }
             catch { error += Environment.NewLine + lblImgTileHeight.Text.Trim().TrimEnd(':'); }
 
-            try { Settings.TimeOut = Convert.ToInt32(txtTimeout.Text); }
+            try
+            {
+                Settings.TimeOut = Convert.ToInt32(txtTimeout.Text.Replace(",", ""));
+                if (Settings.TimeOut < 5000)
+                {
+                    GlobalVars.ShowWarning("Timeout cannot be lower than 5,000!", "", this);
+                    return;
+                }
+            }
             catch { error += Environment.NewLine + lblTimeout.Text.Trim().TrimEnd(':'); }
 
             // Theme Settings
