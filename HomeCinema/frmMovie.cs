@@ -31,7 +31,6 @@ namespace HomeCinema
     {
         public Form ChildForm { get; set; } = null;
         private string MOVIE_ID { get; set; } = "";
-        private string MOVIE_NAME { get; set; } = "";
         private string MOVIE_FILEPATH { get; set; } = "";
         private string MOVIE_TRAILER { get; set; } = "";
         private Image MOVIE_COVER { get; set; } = null;
@@ -51,7 +50,6 @@ namespace HomeCinema
 
             // Assign values to vars
             MOVIE_ID = ID;
-            MOVIE_NAME = name;
             LVITEM = lvitem;
 
             // Set picBox size mode
@@ -396,7 +394,7 @@ namespace HomeCinema
         {
             // Create form if not existing, and Focus
             if (ChildForm == null)
-                ChildForm = new frmMovieInfo(this, MOVIE_ID, MOVIE_NAME, GlobalVars.PREFIX_MOVIEINFO + MOVIE_ID, LVITEM);
+                ChildForm = new frmMovieInfo(this, MOVIE_ID, GlobalVars.PREFIX_MOVIEINFO + MOVIE_ID, LVITEM);
 
             ChildForm.Focus();
         }
@@ -433,7 +431,7 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                GlobalVars.ShowError($"frmMovie({Name.ToString()})-picBox_Click", ex);
+                GlobalVars.ShowError($"frmMovie({Name})-picBox_Click", ex);
             }
         }
         // Delete movie from database

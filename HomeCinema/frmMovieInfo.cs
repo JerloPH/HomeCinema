@@ -43,7 +43,7 @@ namespace HomeCinema
         public ListViewItem LVITEM = null;
 
         #region Initialize class
-        public frmMovieInfo(Form parent,string ID, string text, string formName, ListViewItem lvitem)
+        public frmMovieInfo(Form parent,string ID, string formName, ListViewItem lvitem)
         {
             InitializeComponent();
             // Form properties
@@ -73,7 +73,7 @@ namespace HomeCinema
             // LOAD Information from DATABASE and SET to Controls
             if (MOVIE_ID > 0)
             {
-                LoadInformation(ID, text);
+                LoadInformation(ID);
                 RefreshCountryAndGenre();
             }
 
@@ -136,11 +136,11 @@ namespace HomeCinema
         }
         // ########################## OTHER FUNCTIONS
         // REFRESH INFORMATION
-        public void LoadInformation(string ID, string text)
+        public void LoadInformation(string ID)
         {
             string errFrom = $"frmMovieInfo-({Name})-LoadInformation";
             // Set Form Properties
-            Text = $"[EDIT] {text}";//text + " [Edit Information]";
+            Text = $"[EDIT] Unknown Movie";
 
             // Change cover image, if image exists in ImageList
             MOVIE_COVER = GlobalVars.ImgGetImageFromList(MOVIE_ID.ToString());
@@ -180,6 +180,7 @@ namespace HomeCinema
                     txtArtist.Text = row[HCInfo.artist].ToString();
                     txtYear.Text = row[HCInfo.year].ToString();
                     txtSummary.Text = row[HCInfo.summary].ToString();
+                    Text = $"[EDIT] {row[HCInfo.name].ToString()}";
                 }
                 catch (Exception ex)
                 {
