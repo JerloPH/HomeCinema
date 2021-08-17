@@ -1149,7 +1149,7 @@ namespace HomeCinema
                 {
                     string MOVIE_NAME = lvSearchResult.SelectedItems[0].Text.ToString();
                     string childForm = GlobalVars.PREFIX_MOVIEINFO + MOVIE_ID;
-                    GlobalVars.OpenFormMovieInfo(this, childForm, MOVIE_ID, MOVIE_NAME, $"{errFrom} [toolMenuEdit]", lvSearchResult.SelectedItems[0]);
+                    GlobalVars.OpenFormMovieInfo(this, childForm, MOVIE_ID, $"{errFrom} [toolMenuEdit]", lvSearchResult.SelectedItems[0]);
                 }
             }
             else if (item == toolMenuFileExplorer)

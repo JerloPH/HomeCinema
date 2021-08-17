@@ -198,35 +198,61 @@ namespace HomeCinema
             try {  MessageBox.Show(new Form { TopMost = true }, msg, caption, mbbtn, mbIcon); }
             catch (Exception ex) { ShowError("GlobalVars-ShowMsg", ex, false); }
         }
-        public static void ShowNoParent(string msg)
+        public static void ShowNoParent(string msg, string caption = "HomeCinema")
         {
-            var form = new frmAlert(msg, "HomeCinema", 0, false);
+            var form = new frmAlert(msg, caption, 0, false);
             form.TopMost = true;
             form.ShowDialog();
             form.Dispose();
         }
         public static void ShowInfo(string msg, string caption = "", Form parent = null)
         {
-            Form caller = (parent == null) ? Program.FormMain : parent;
-            if (Program.FormMain == null)
+            try
             {
-                ShowMsg(msg, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-            if (Program.FormMain.InvokeRequired)
-            {
-                Program.FormMain.Invoke(new Action(() =>
+                Form caller = (parent == null) ? Program.FormMain : parent;
+                if (Program.FormMain == null)
                 {
-                    var form = new frmAlert(msg, caption);
-                    form.ShowDialog(caller);
-                }));
+                    ShowNoParent(msg, caption);
+                    return;
+                }
+                if (caller == Program.FormMain)
+                {
+                    if (Program.FormMain.InvokeRequired)
+                    {
+                        Program.FormMain.BeginInvoke((Action) delegate
+                        {
+                            var form = new frmAlert(msg, caption, 0, true);
+                            form.ShowDialog(caller);
+                        });
+                    }
+                    else
+                    {
+                        var form = new frmAlert(msg, caption, 0, true);
+                        form.ShowDialog(caller);
+                    }
+                }
+                else
+                {
+                    if (caller.InvokeRequired)
+                    {
+                        caller.BeginInvoke((Action) delegate
+                        {
+                            var form = new frmAlert(msg, caption, 0, true);
+                            form.ShowDialog(caller);
+                        });
+                    }
+                    else
+                    {
+                        var form = new frmAlert(msg, caption, 0, true);
+                        form.ShowDialog(caller);
+                    }
+                }
             }
-            else
+            catch (Exception ex)
             {
-                var form = new frmAlert(msg, caption);
-                form.ShowDialog(caller);
+                ShowError("GlobalVars-ShowInfo", ex, false);
+                ShowNoParent(msg, caption);
             }
-            //ShowMsg(msg, CAPTION_DIALOG, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         public static void ShowWarning(string msg, string caption = "", Form parent = null)
         {
@@ -678,7 +704,7 @@ namespace HomeCinema
             return Regex.Replace(s, @"\t|\n|\r", "");
         }
         // Create / Open frmMovieInfo form [EDIT Movie details]
-        public static bool OpenFormMovieInfo(Form formParent, string formName, string MOVIE_ID, string MOVIE_NAME, string From, ListViewItem lvItem = null)
+        public static bool OpenFormMovieInfo(Form formParent, string formName, string MOVIE_ID, string From, ListViewItem lvItem = null)
         {
             Form fc = Application.OpenForms[formName];
             if (fc != null)
@@ -688,7 +714,7 @@ namespace HomeCinema
             }
             else
             {
-                Form formNew = new frmMovieInfo(formParent, MOVIE_ID, MOVIE_NAME, formName, lvItem);
+                Form formNew = new frmMovieInfo(formParent, MOVIE_ID, formName, lvItem);
                 Log($"{From} (PARENT: {formParent.Name})", "childOfThis formName: " + formNew.Name);
                 return false;
             }

@@ -16,7 +16,7 @@ namespace HomeCinema
         {
             InitializeComponent();
         }
-        public frmAlert(string message, string caption, int button = 0, bool hasParent = true)
+        public frmAlert(string message, string caption, int button, bool hasParent = true)
         {
             InitializeComponent();
             Icon = GlobalVars.HOMECINEMA_ICON;

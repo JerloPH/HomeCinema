@@ -29,6 +29,22 @@ namespace HomeCinema
                     label1.Text = value;
             }
         }
+        public string ProgressText
+        {
+            get { return lblProgress.Text; }
+            set
+            {
+                if (lblProgress.InvokeRequired)
+                {
+                    BeginInvoke((Action)delegate
+                    {
+                        lblProgress.Text = value;
+                    });
+                }
+                else
+                    lblProgress.Text = value;
+            }
+        }
         private long MaxProgressHidden = 0;
         public long MaxProgress
         {
@@ -70,11 +86,16 @@ namespace HomeCinema
         {
             try
             {
-                BackgroundWorker.ReportProgress((int)((progress / MaxProgress) * 100), progress);
+                decimal percent = ((decimal)progress / (decimal)MaxProgress) * 100m;
+                if (progress == MaxProgress)
+                    percent = 100m;
+
+                GlobalVars.LogDebug($"Percent: [{percent.ToString("###.##")}], Progress: [{progress}], Max Progress: [{MaxProgress}]");
+                BackgroundWorker.ReportProgress((int)percent, progress);
             }
             catch (Exception ex)
             {
-                GlobalVars.ShowError("frmLoading-UpdateProgress", ex, false, this);
+                GlobalVars.ShowError("frmLoading-UpdateProgress", ex, false);
             }
         }
         public void SetIcon(int IconIndex = 0)
@@ -94,10 +115,22 @@ namespace HomeCinema
                         image = Resources.LoadingColored;
                         break;
                 }
-                pictureBox1.Image?.Dispose();
-                pictureBox1.Image = image;
+                if (pictureBox1.InvokeRequired)
+                {
+                    this.BeginInvoke((Action)delegate
+                    {
+                        pictureBox1.Image?.Dispose();
+                        pictureBox1.Image = image;
+                    });
+                }
+                else
+                {
+                    pictureBox1.Image?.Dispose();
+                    pictureBox1.Image = image;
+                }
+                
             }
-            catch { }
+            catch (Exception ex) { GlobalVars.ShowError("frmLoading-SetIcon", ex, false, this); }
         }
         private delegate void UpdateMessageThreadSafeDelegate(string message);
         public void UpdateMessage(string message)
@@ -131,7 +164,8 @@ namespace HomeCinema
 
         private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            Close();
+            if (MaxProgress < 1)
+                Close();
         }
 
         private void BackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -144,7 +178,19 @@ namespace HomeCinema
                 }
                 catch { ProgressCount += 1; }
             }
-            lblProgress.Text = $"Progress: {ProgressCount} / {MaxProgress}";
+            //GlobalVars.LogDebug($"Progress %: [{e.ProgressPercentage}], Actual Progress: [{ProgressCount}]");
+            if (ProgressCount == MaxProgress)
+            {
+                GlobalVars.LogDebug($"Done loading!\nProgress %: [{e.ProgressPercentage}], Actual Progress: [{ProgressCount}]\n");
+                ProgressText = $"Done loading!";
+                SetIcon((int)HCIcons.Check);
+                if (Settings.IsConfirmMsg)
+                    GlobalVars.ShowInfo("Done loading!", "", this.ParentForm);
+
+                Close();
+            }
+            else
+                ProgressText = $"Progress: {ProgressCount} / {MaxProgress}";
         }
 
         private void frmLoading_KeyDown(object sender, KeyEventArgs e)
