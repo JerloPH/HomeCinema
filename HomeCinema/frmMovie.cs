@@ -37,7 +37,7 @@ namespace HomeCinema
         private Image MOVIE_COVER_FULL { get; set; } = null;
 
         // Source ListView lvSearch Item index
-        public ListViewItem LVITEM = null;
+        private ListViewItem LVITEM = null;
         private bool IsDeleted = false;
 
         public frmMovie(Form parent, string ID, string name, ListViewItem lvitem)
