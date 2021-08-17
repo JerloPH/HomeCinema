@@ -14,81 +14,41 @@ namespace HomeCinema
 {
     public static class AnilistAPI
     {
-        private static string Host = "https://graphql.anilist.co";
-        private static string Query = @"query ($search: String) {
-              Page (page: 1, perPage: 25)
-              {
+        private static readonly string Host = "https://graphql.anilist.co";
+        private static readonly string Query = @"query ($search: String) {
+            Page (page: 1, perPage: 25) {
                 pageInfo {
-                  total
-                  currentPage
-                  lastPage
-                  hasNextPage
-                  perPage
+                    total
+                    currentPage
+                    lastPage
+                    hasNextPage
+                    perPage
                 }
                 media (type: ANIME, search: $search) {
-                  id
-                  format
-                  episodes
-                  title {
-                    romaji
-                    english
-                  }
-                  coverImage {
-                    medium
-                  }
+                    id format episodes
+                    title { romaji english }
+                    coverImage { medium }
                 }
-              }
-            }";
-        private static string QueryWithId = @"query ($Id: Int) {
+            }
+        }";
+        private static readonly string QueryWithId = @"query ($Id: Int) {
             Media (id: $Id, type: ANIME) {
-                  id
-                  format
-                  episodes
-                  genres
-                  countryOfOrigin
-                  description
-                  trailer {
-                   id
-                   site
-                  }
+                id format episodes genres countryOfOrigin description
+                trailer { id site }
                 studios {
-                  edges {
-                    isMain
-                    node {
-                      id
-                      name
-                    }
-                  }
+                    edges { isMain node { id name } }
                 }
-  	            staff
-                {
-                  edges
-                  {
+                staff {
+                    edges {
                     role
-                    node
-                    {
-                      name
-                      {
-                        full
-                      }
+                    node { name { full } }
                     }
-                  }
                 }
-    
-                  title {
-                    english
-                    romaji
-                  }
-                  startDate {
-                  year
-                  month
-                  day
-                 }
-                  coverImage {
-                    large
-                  }
-                }
-              }";
+                title { english romaji }
+                startDate { year month day }
+                coverImage { medium large }
+            }
+        }";
 
         public static AnilistPageQuery SearchForAnime(string text)
         {
@@ -113,8 +73,7 @@ namespace HomeCinema
                     GlobalVars.LogDebug($"Finished search: [{text}]");
                     if (execute.Headers != null)
                     {
-                        int val;
-                        if (int.TryParse(execute.Headers.ToList().Find(x => x.Name == "Retry-After")?.Value.ToString(), out val))
+                        if (int.TryParse(execute.Headers.ToList().Find(x => x.Name == "Retry-After")?.Value.ToString(), out int val))
                         {
                             GlobalVars.LogDebug($"Retry-After: [{val}]");
                             if (val > 0)
@@ -166,8 +125,7 @@ namespace HomeCinema
                     // Handle TimeOut for Rate Limiting
                     if (execute.Headers != null)
                     {
-                        int val;
-                        if (int.TryParse(execute.Headers.ToList().Find(x => x.Name == "Retry-After")?.Value.ToString(), out val))
+                        if (int.TryParse(execute.Headers.ToList().Find(x => x.Name == "Retry-After")?.Value.ToString(), out int val))
                         {
                             GlobalVars.LogDebug($"Retry-After: [{val}]");
                             if (val > 0)
