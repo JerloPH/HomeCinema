@@ -188,12 +188,12 @@ namespace HomeCinema
         }
         public static void ShowNoParent(string msg, string caption = "HomeCinema")
         {
-            var form = new frmAlert(msg, caption, 0, false);
+            var form = new frmAlert(msg, caption, 0, null, HCIcons.None);
             form.TopMost = true;
             form.ShowDialog();
             form.Dispose();
         }
-        public static void ShowInfo(string msg, string caption = "", Form parent = null)
+        public static void ShowCustomMessage(string msg, string caption, Form parent, HCIcons icon)
         {
             try
             {
@@ -209,13 +209,13 @@ namespace HomeCinema
                     {
                         Program.FormMain.BeginInvoke((Action) delegate
                         {
-                            var form = new frmAlert(msg, caption, 0, true);
+                            var form = new frmAlert(msg, caption, 0, caller, icon);
                             form.ShowDialog(caller);
                         });
                     }
                     else
                     {
-                        var form = new frmAlert(msg, caption, 0, true);
+                        var form = new frmAlert(msg, caption, 0, caller, icon);
                         form.ShowDialog(caller);
                     }
                 }
@@ -225,13 +225,13 @@ namespace HomeCinema
                     {
                         caller.BeginInvoke((Action) delegate
                         {
-                            var form = new frmAlert(msg, caption, 0, true);
+                            var form = new frmAlert(msg, caption, 0, caller, icon);
                             form.ShowDialog(caller);
                         });
                     }
                     else
                     {
-                        var form = new frmAlert(msg, caption, 0, true);
+                        var form = new frmAlert(msg, caption, 0, caller, icon);
                         form.ShowDialog(caller);
                     }
                 }
@@ -242,9 +242,13 @@ namespace HomeCinema
                 ShowNoParent(msg, caption);
             }
         }
+        public static void ShowInfo(string msg, string caption = "", Form parent = null)
+        {
+            ShowCustomMessage(msg, caption, parent, HCIcons.Info);
+        }
         public static void ShowWarning(string msg, string caption = "", Form parent = null)
         {
-            ShowInfo(msg, caption, parent);
+            ShowCustomMessage(msg, caption, parent, HCIcons.Warning);
         }
         public static void ShowError(string codeFrom, Exception error, bool ShowAMsg = true, Form parent = null)
         {
@@ -263,7 +267,7 @@ namespace HomeCinema
 
             if (ShowAMsg)
             {
-                ShowInfo($"An error occured!\nError message: {err}\nError File Location:\n{file}", "Error occured!", parent);
+                ShowCustomMessage($"An error occured!\nError message: {err}\nError File Location:\n{file}", "Error occured!", parent, HCIcons.Error);
                 // Open file in explorer
                 try
                 {
@@ -271,7 +275,7 @@ namespace HomeCinema
                 }
                 catch (Exception ex)
                 {
-                    ShowWarning($"Cannot open folder containing error file!\n{ex.ToString()}", "Error occured", parent);
+                    ShowCustomMessage($"Cannot open folder containing error file!\n{ex.ToString()}", "Error occured", parent, HCIcons.Error);
                 }
             }
         }
@@ -280,7 +284,7 @@ namespace HomeCinema
             try
             {
                 if (caller == null) { caller = Program.FormMain; }
-                return (new frmAlert(msg, CAPTION_DIALOG, 1).ShowDialog(caller) == DialogResult.Yes);
+                return (new frmAlert(msg, CAPTION_DIALOG, 1, null, HCIcons.None).ShowDialog(caller) == DialogResult.Yes);
                 //return (MessageBox.Show(msg, CAPTION_DIALOG, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes);
             }
             catch (Exception ex)

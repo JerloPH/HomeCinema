@@ -185,7 +185,7 @@ namespace HomeCinema
                 ProgressText = $"Done loading!";
                 SetIcon((int)HCIcons.Check);
                 if (Settings.IsConfirmMsg)
-                    GlobalVars.ShowInfo("Done loading!", "", this.ParentForm);
+                    GlobalVars.ShowInfo("Done loading!\nClick 'OK' to continue..", "", this.ParentForm);
 
                 Close();
             }

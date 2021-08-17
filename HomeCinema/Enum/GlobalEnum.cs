@@ -11,8 +11,9 @@ namespace HomeCinema
         None = 0,
         Loading = 1,
         Check = 2,
-        Warning = 3,
-        Error = 4
+        Info = 3,
+        Warning = 4,
+        Error = 5
     }
     public static class HCSource
     {

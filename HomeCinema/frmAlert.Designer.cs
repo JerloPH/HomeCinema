@@ -33,13 +33,15 @@ namespace HomeCinema
             this.btnOk = new System.Windows.Forms.Button();
             this.btnYes = new System.Windows.Forms.Button();
             this.btnNo = new System.Windows.Forms.Button();
+            this.picIcon = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.picIcon)).BeginInit();
             this.SuspendLayout();
             // 
             // lblMessage
             // 
             this.lblMessage.AutoSize = true;
             this.lblMessage.Font = new System.Drawing.Font("Arial Narrow", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMessage.Location = new System.Drawing.Point(-1, 27);
+            this.lblMessage.Location = new System.Drawing.Point(100, 18);
             this.lblMessage.Name = "lblMessage";
             this.lblMessage.Size = new System.Drawing.Size(106, 33);
             this.lblMessage.TabIndex = 0;
@@ -77,11 +79,23 @@ namespace HomeCinema
             this.btnNo.Text = "NO";
             this.btnNo.UseVisualStyleBackColor = true;
             // 
+            // picIcon
+            // 
+            this.picIcon.BackColor = System.Drawing.Color.Transparent;
+            this.picIcon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.picIcon.Location = new System.Drawing.Point(19, 16);
+            this.picIcon.Name = "picIcon";
+            this.picIcon.Size = new System.Drawing.Size(75, 75);
+            this.picIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picIcon.TabIndex = 4;
+            this.picIcon.TabStop = false;
+            // 
             // frmAlert
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(446, 200);
+            this.Controls.Add(this.picIcon);
             this.Controls.Add(this.btnNo);
             this.Controls.Add(this.btnYes);
             this.Controls.Add(this.btnOk);
@@ -92,6 +106,7 @@ namespace HomeCinema
             this.Name = "frmAlert";
             this.Text = "frmAlert";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmAlert_FormClosing);
+            ((System.ComponentModel.ISupportInitialize)(this.picIcon)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -103,5 +118,6 @@ namespace HomeCinema
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnYes;
         private System.Windows.Forms.Button btnNo;
+        private System.Windows.Forms.PictureBox picIcon;
     }
 }
