@@ -1,7 +1,6 @@
 # HomeCinema - Features to Add / Bugs to Fix
 
 ## Priority List
-- Move all loggers to new static class: "Log".
 - Move all show alert methods to new static class: "Alert".
 - On "About" form, include tabs: { APP VERSION and INFO (links, etc.), Check for Update button, VERSION_HISTORY, LICENSE, CREDITS }
 - Make "About" form similar to "Settings" form when browsing tabs.

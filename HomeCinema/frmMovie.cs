@@ -43,7 +43,7 @@ namespace HomeCinema
 
         public frmMovie(Form parent, string ID, string name, ListViewItem lvitem)
         {
-            GlobalVars.Log(parent.Name + " (OPEN a MOVIE)", "MOVIE formName: " + Name);
+            Logs.Log(parent.Name + " (OPEN a MOVIE)", "MOVIE formName: " + Name);
             InitializeComponent();
 
             // Form properties
@@ -254,7 +254,7 @@ namespace HomeCinema
             TrailerFrame();
 
             // Log changes
-            GlobalVars.Log($"{errFrom} ({Name})", "Refreshed the Information!");
+            Logs.Log($"{errFrom} ({Name})", "Refreshed the Information!");
 
             // Set form title and focus
             Text = $"{lblName.Text} ({lblYear.Text})";
@@ -348,7 +348,7 @@ namespace HomeCinema
             // Dispose ICON Image
             Icon?.Dispose();
             // Log to file
-            GlobalVars.Log("Disposing frmMovie (" + Name + ")", "Controls are Disposed");
+            Logs.Log("Disposing frmMovie (" + Name + ")", "Controls are Disposed");
 
             // Refresh on Main form
             if (IsDeleted)

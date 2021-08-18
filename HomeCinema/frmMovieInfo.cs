@@ -183,7 +183,7 @@ namespace HomeCinema
                 }
                 catch (Exception ex)
                 {
-                    GlobalVars.LogErr(errFrom, ex.Message);
+                    Logs.LogErr(errFrom, ex.Message);
                     GlobalVars.ShowWarning("Entry not found!", "", this);
                 }
             }
@@ -265,7 +265,7 @@ namespace HomeCinema
                 Image imgFromFile = Image.FromFile(destFile);
                 GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(destFile), imgFromFile);
                 imgFromFile.Dispose();
-                GlobalVars.Log(ExceptionFrom + " [NEW Image File and Name]", sourceFile);
+                Logs.Log(ExceptionFrom + " [NEW Image File and Name]", sourceFile);
             }
             catch (Exception fex)
             {
@@ -323,7 +323,7 @@ namespace HomeCinema
             {
                 var form = PARENT as frmMovie;
                 form.ChildForm = null;
-                GlobalVars.LogDebug("frmMovie Parent is null!");
+                Logs.LogDebug("frmMovie Parent is null!");
             }
             picBox.Image?.Dispose();
             tempImage?.Dispose();

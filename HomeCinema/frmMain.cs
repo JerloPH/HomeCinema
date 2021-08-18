@@ -119,7 +119,7 @@ namespace HomeCinema
             tlstripMenu.RenderMode = ToolStripRenderMode.Professional;
             tlstripMenu.Renderer = this.render;
 
-            GlobalVars.Log("frmMain", "All UIs initialized!");
+            Logs.Log("frmMain", "All UIs initialized!");
         }
         #endregion
         // ####################################################################################### Database Functions
@@ -139,8 +139,8 @@ namespace HomeCinema
             string src;
             bool IsDownloadCover = false;
             long count = 0; // count of successful inserts
-            string logInsert = GlobalVars.LogFormatted("Succesfully inserted files and/or folders", ""); // Log succesfully inserted
-            GlobalVars.WriteAppend(logFileInsertSkipped, GlobalVars.LogFormatted("Skipped files and folders", ""));
+            string logInsert = Logs.LogFormatted("Succesfully inserted files and/or folders", ""); // Log succesfully inserted
+            GlobalVars.WriteAppend(logFileInsertSkipped, Logs.LogFormatted("Skipped files and folders", ""));
 
             var form = new frmLoading($"Inserting {maxProgress} new found media files..", "New Entries Found!", true);
             form.MaxProgress = maxProgress;
@@ -381,7 +381,7 @@ namespace HomeCinema
                 temp.Tag = "0";
                 temp.ImageIndex = 0;
                 AddItem(lv, temp);
-                GlobalVars.Log(errFrom, $"ResultSet is null or empty!");
+                Logs.Log(errFrom, $"ResultSet is null or empty!");
             }
             lv.EndUpdate(); // Draw the ListView
             lv.ResumeLayout();
@@ -819,7 +819,7 @@ namespace HomeCinema
         {
             // Get Movie files on Folder, even subFolder
             string calledFrom = $"frmMain-GetMediaFromFolders()";
-            GlobalVars.Log(calledFrom, "Search for Supported Media files in Folders..");
+            Logs.Log(calledFrom, "Search for Supported Media files in Folders..");
 
             // Declare vars
             frmLoading form = new frmLoading("Getting media files from directories..", "Loading");
@@ -874,7 +874,7 @@ namespace HomeCinema
                 {
                     countMediaLoc += 1;
                     form.UpdateMessage($"Loading directories ({countMediaLoc}/{countMediaLocMax})..");
-                    GlobalVars.Log(calledFrom, $"Searching in: ({mediaLoc.Path}), Mediatype: {mediaLoc.MediaType}, Source: {mediaLoc.Source}");
+                    Logs.Log(calledFrom, $"Searching in: ({mediaLoc.Path}), Mediatype: {mediaLoc.MediaType}, Source: {mediaLoc.Source}");
                     if (Directory.Exists(mediaLoc.Path))
                     {
                         // Add movies
@@ -1016,7 +1016,7 @@ namespace HomeCinema
                             if (!long.TryParse(r[HCInfo.Id].ToString(), out MOVIEID))
                             {
                                 MOVIEID = 0;
-                                GlobalVars.Log(errFrom, $"Invalid MovieID: {r[HCInfo.Id].ToString()}");
+                                Logs.Log(errFrom, $"Invalid MovieID: {r[HCInfo.Id].ToString()}");
                             }
 
                             // Add to listview lvSearchResult
@@ -1110,7 +1110,7 @@ namespace HomeCinema
                             }
                             form.UpdateProgress(progress);
                         }
-                        GlobalVars.Log(errFrom, $"DONE Background worker from: {Name}");
+                        Logs.Log(errFrom, $"DONE Background worker from: {Name}");
                         if (!GlobalVars.HAS_TMDB_KEY && AppStart)
                         {
                             GlobalVars.ShowWarning(GlobalVars.MSG_NO_TMDB);
@@ -1184,9 +1184,9 @@ namespace HomeCinema
                 GlobalVars.CleanAppDirectory();
             }
             // Delete previous log file, if exceeds file size limit
-            GlobalVars.CheckLogFile(GlobalVars.FILE_LOG_APP, "frmMain-(Delete AppLog)", Text + "\n  : Start of LogFile");
-            GlobalVars.CheckLogFile(GlobalVars.FILE_LOG_DB, "frmMain-(Delete App_DB.log)", Text + "\n  : Database Log");
-            GlobalVars.CheckLogFile(GlobalVars.FILE_LOG_ERROR, "frmMain-(Delete App_ErrorLog.log)", Text + "\n  : Error Logs");
+            GlobalVars.CheckLogFile(DataFile.FILE_LOG_APP, "frmMain-(Delete AppLog)", Text + "\n  : Start of LogFile");
+            GlobalVars.CheckLogFile(DataFile.FILE_LOG_DB, "frmMain-(Delete App_DB.log)", Text + "\n  : Database Log");
+            GlobalVars.CheckLogFile(DataFile.FILE_LOG_ERROR, "frmMain-(Delete App_ErrorLog.log)", Text + "\n  : Error Logs");
 
             // Put default Image on ImageList
             try

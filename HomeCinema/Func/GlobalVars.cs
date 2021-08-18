@@ -38,6 +38,13 @@ using System.Text;
 
 namespace HomeCinema
 {
+    // Class containing paths and data objects required by App
+    public static class DataFile
+    {
+        public static string FILE_LOG_APP = Path.Combine(GlobalVars.PATH_LOG, "App_Log.log");// Log all messages and actions
+        public static string FILE_LOG_ERROR = Path.Combine(GlobalVars.PATH_LOG, "App_ErrorLog.log"); // Contains only error Messages
+        public static string FILE_LOG_DB = Path.Combine(GlobalVars.PATH_LOG, "App_DB.log"); // Log all messages and actions for db-related
+    }
     public static class GlobalVars
     {
         // Variables ############################################################################################################
@@ -68,10 +75,6 @@ namespace HomeCinema
 
         public static string FILE_ICON = PATH_RES + @"HomeCinema.ico"; // Icon
         public static string FILE_DEFIMG = PATH_IMG + @"0.jpg"; // default cover image
-
-        public static string FILE_LOG_APP = Path.Combine(PATH_LOG, "App_Log.log");// Log all messages and actions
-        public static string FILE_LOG_ERROR = Path.Combine(PATH_LOG, "App_ErrorLog.log"); // Contains only error Messages
-        public static string FILE_LOG_DB = Path.Combine(PATH_LOG, "App_DB.log"); // Log all messages and actions for db-related
 
         // Data and files
         public static string FILE_CONFIG = Path.Combine(PATH_DATA, "config.json"); // configuration file to use for APIs
@@ -114,78 +117,6 @@ namespace HomeCinema
         };
 
         //######################################################################################################## Functions
-        /// <summary>
-        /// Log messages to text file
-        /// </summary>
-        /// <param name="filePath">full filepath of log file</param>
-        /// <param name="codefrom">form or method that calls</param>
-        /// <param name="log">string to log</param>
-        public static void Log(string filePath, string codefrom, string log)
-        {
-            string toLog = log;
-            if (!String.IsNullOrWhiteSpace(TMDB_KEY))
-            {
-                toLog = toLog.Replace(TMDB_KEY, "TMDB_KEY");
-            }
-            if (!File.Exists(filePath)) { WriteToFile(filePath, ""); }
-            try
-            {
-                using (StreamWriter w = File.AppendText(filePath))
-                {
-                    w.Write(LogFormatted(codefrom, toLog));
-                }
-            }
-            catch (Exception ex)
-            {
-                ShowError("GlobalVars-Log", ex, false);
-            }
-        }
-        /// <summary>
-        /// Format string for logging
-        /// </summary>
-        /// <param name="codefrom">form or method that calls</param>
-        /// <param name="logMessage">string to format</param>
-        /// <returns>Formatted message with time/date</returns>
-        public static string LogFormatted(string codefrom, string logMessage)
-        {
-            try
-            {
-                return ($"[{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:ffff")}]: [{ codefrom }] { logMessage }\n");
-            }
-            catch { return $"[Unknown DateTime][{ codefrom }] { logMessage }\n"; }
-        }
-        /// <summary>
-        /// Log database-related functions, to text file.
-        /// </summary>
-        /// <param name="codefrom">form or method that calls</param>
-        /// <param name="log">string to log</param>
-        public static void LogDb(string codefrom, string log)
-        {
-            Log(FILE_LOG_DB, codefrom, log);
-        }
-        /// <summary>
-        /// Log text to App_Log.log file
-        /// </summary>
-        /// <param name="codefrom">form or method that calls</param>
-        /// <param name="log">string to log</param>
-        public static void Log(string codefrom, string log)
-        {
-            Log(FILE_LOG_APP, codefrom, log);
-        }
-        /// <summary>
-        /// LOG Error Message to App_ErrorLog.log
-        /// </summary>
-        /// <param name="codefrom">Method caller</param>
-        /// <param name="log">string to log</param>
-        public static void LogErr(string codefrom, string log)
-        {
-            Log(FILE_LOG_ERROR, codefrom, log);
-        }
-        public static void LogDebug(string log)
-        {
-            if (!DEBUGGING) { return; }
-            Log(Path.Combine(PATH_LOG, "DEBUG.log"), "", log);
-        }
         public static void ShowNoParent(string msg, string caption = "HomeCinema")
         {
             var form = new frmAlert(msg, caption, 0, null, HCIcons.None);
@@ -262,7 +193,7 @@ namespace HomeCinema
             {
                 err = $"Error string:\n\t{error}";
             }
-            LogErr(codeFrom, err);
+            Logs.LogErr(codeFrom, err);
 
             if (ShowAMsg)
             {
@@ -302,7 +233,7 @@ namespace HomeCinema
                     if (f.Length > Settings.MaxLogSize)
                     {
                         File.Delete(logFile); // Delete LogFile permanently
-                        Log(calledFrom, log);
+                        Logs.Log(calledFrom, log);
                     }
                 }
                 catch (Exception ex)
@@ -326,9 +257,9 @@ namespace HomeCinema
             CopyFromRes(FILE_MEDIALOC);
             CopyFromRes(FILE_MEDIA_EXT);
             // Create empty Logs
-            if (!File.Exists(FILE_LOG_APP)) { WriteToFile(FILE_LOG_APP, ""); }
-            if (!File.Exists(FILE_LOG_ERROR)) { WriteToFile(FILE_LOG_ERROR, ""); }
-            if (!File.Exists(FILE_LOG_DB)) { WriteToFile(FILE_LOG_DB, ""); }
+            if (!File.Exists(DataFile.FILE_LOG_APP)) { WriteToFile(DataFile.FILE_LOG_APP, ""); }
+            if (!File.Exists(DataFile.FILE_LOG_ERROR)) { WriteToFile(DataFile.FILE_LOG_ERROR, ""); }
+            if (!File.Exists(DataFile.FILE_LOG_DB)) { WriteToFile(DataFile.FILE_LOG_DB, ""); }
             // Default config
             if (!File.Exists(FILE_CONFIG))
             {
@@ -402,7 +333,7 @@ namespace HomeCinema
         {
             string ret = "";
             string errFrom = "GlobalVars-ReadStringFromFile (" + calledFrom + ")";
-            Log(errFrom, "Reading File: " + localFile);
+            Logs.Log(errFrom, "Reading File: " + localFile);
             try
             {
                 using (StreamReader r = new StreamReader(localFile))
@@ -616,14 +547,14 @@ namespace HomeCinema
                     Image prevImg = MOVIE_IMGLIST.Images[index];
                     if (prevImg != null)
                     {
-                        Log($"{errFrom} - { logFrom } [Delete Image]", image_key);
+                        Logs.Log($"{errFrom} - { logFrom } [Delete Image]", image_key);
                         prevImg.Dispose();
                         MOVIE_IMGLIST.Images.RemoveByKey(image_key);
                         return true;
                     }
-                    Log($"{errFrom} - { logFrom } [Delete Image]", image_key + " [Index exists but Image object is null]");
+                    Logs.Log($"{errFrom} - { logFrom } [Delete Image]", image_key + " [Index exists but Image object is null]");
                 }
-                Log($"{errFrom} - { logFrom } [Delete Image]", image_key + " [No such Image index on the list]");
+                Logs.Log($"{errFrom} - { logFrom } [Delete Image]", image_key + " [No such Image index on the list]");
             }
             return false;
         }
@@ -709,8 +640,8 @@ namespace HomeCinema
             else
             {
                 Form formNew = new frmMovieInfo(formParent, MOVIE_ID, formName, lvItem);
-                Log($"{From} (PARENT: {formParent.Name})", "childOfThis formName: " + formNew.Name);
-                LogDebug($"{From} (PARENT: {formParent.Name}) childOfThis formName: " + formNew.Name);
+                Logs.Log($"{From} (PARENT: {formParent.Name})", "childOfThis formName: " + formNew.Name);
+                Logs.LogDebug($"{From} (PARENT: {formParent.Name}) childOfThis formName: " + formNew.Name);
                 formNew.Show(formParent);
                 return formNew;
             }
@@ -819,7 +750,7 @@ namespace HomeCinema
             int retry = 5;
             while (retry > 0)
             {
-                Log(errFrom, $"Downloading file: {urlFrom}, (retry left: {retry-1})");
+                Logs.Log(errFrom, $"Downloading file: {urlFrom}, (retry left: {retry-1})");
                 DLStatus = DownloadFrom(urlFrom, filePath, showAMsg);
                 if (File.Exists(filePath) || DLStatus==404) // File download success || File not found on server
                 {
@@ -898,7 +829,7 @@ namespace HomeCinema
                 frmLoading form = new frmLoading("Checking for Update..", "Update check");
                 form.BackgroundWorker.DoWork += (sender1, e1) =>
                 {
-                    Log(errFrom, "Will Check for Updates..");
+                    Logs.Log(errFrom, "Will Check for Updates..");
 
                     if (File.Exists(fileName))
                     {
@@ -907,7 +838,7 @@ namespace HomeCinema
                     // Keep trying to download version file, to check for update
                     while (tryCount > 0)
                     {
-                        Log(errFrom, $"Fetching update version.. (Tries Left: {tryCount.ToString()})");
+                        Logs.Log(errFrom, $"Fetching update version.. (Tries Left: {tryCount.ToString()})");
                         DownloadFrom(link, fileName, false);
                         tryCount -= 1;
                         tryCount = File.Exists(fileName) ? 0 : tryCount;
@@ -925,7 +856,7 @@ namespace HomeCinema
                         {
                             form.SetIcon((int)HCIcons.Check);
                             form.Message = "Update available!";
-                            Log(errFrom, "Update found!");
+                            Logs.Log(errFrom, "Update found!");
                             UpdateStatus = 1;
                         }
                         else
@@ -939,7 +870,7 @@ namespace HomeCinema
                     {
                         form.SetIcon((int)HCIcons.Warning);
                         form.Message = "Error on checking update!";
-                        Log(errFrom, "Cannot check for update!");
+                        Logs.Log(errFrom, "Cannot check for update!");
                         UpdateStatus = 3;
                     }
                 };

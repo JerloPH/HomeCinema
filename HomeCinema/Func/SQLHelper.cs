@@ -114,7 +114,7 @@ namespace HomeCinema.SQLFunc
                 // Hardcoded limit, breaks support for previous databases.
                 if (dbVersion < 5) // 5 is the start of breaking changes
                 {
-                    GlobalVars.LogDb(CalledFrom, "Database is not supported anymore!");
+                    Logs.LogDb(CalledFrom, "Database is not supported anymore!");
                     return false;
                 }
                 if (dbVersion < GlobalVars.HOMECINEMA_DBVER)
@@ -123,7 +123,7 @@ namespace HomeCinema.SQLFunc
                     DBUpgradeDatabase(dbVersion);
                 }
             }
-            GlobalVars.LogDb(CalledFrom, "Database is loaded succesfully!\n " + DB_PATH);
+            Logs.LogDb(CalledFrom, "Database is loaded succesfully!\n " + DB_PATH);
             return true;
         }
         private static long DbGenerateId()
@@ -134,11 +134,11 @@ namespace HomeCinema.SQLFunc
             {
                 if (long.TryParse(dt.Rows[0]["maxid"].ToString(), out Uid))
                 {
-                    GlobalVars.LogDb("DbGenerateId", $"UID Fetched [{Uid}]");
+                    Logs.LogDb("DbGenerateId", $"UID Fetched [{Uid}]");
                 }
             }
             Uid += 1;
-            GlobalVars.LogDb("DbGenerateId", $"UID Generated [{Uid}]");
+            Logs.LogDb("DbGenerateId", $"UID Generated [{Uid}]");
             return Uid;
         }
         private static void DBUpgradeDatabase(int dbVersion)
@@ -152,7 +152,7 @@ namespace HomeCinema.SQLFunc
                 retry -= 1;
                 if (retry > 0)
                 {
-                    GlobalVars.LogDb(calledFrom, $"Loaded dbVer: ({dbVersion}), Current dbVer: ({dbVer})");
+                    Logs.LogDb(calledFrom, $"Loaded dbVer: ({dbVersion}), Current dbVer: ({dbVer})");
                 }
                 else
                 {
@@ -205,7 +205,7 @@ namespace HomeCinema.SQLFunc
                 {
                     if (conn == null)
                     {
-                        GlobalVars.LogDb(errFrom, "Cannot establish connection to database (connection is null)!");
+                        Logs.LogDb(errFrom, "Cannot establish connection to database (connection is null)!");
                         retry -= 1;
                         continue;
                     }
@@ -214,9 +214,9 @@ namespace HomeCinema.SQLFunc
                         cmd.CommandText = qry;
                         try
                         {
-                            GlobalVars.LogDb($"Executing query..Retry left: ({retry})", qry);
+                            Logs.LogDb($"Executing query..Retry left: ({retry})", qry);
                             DONE = cmd.ExecuteNonQuery();
-                            GlobalVars.LogDb($"Query result: ({DONE})", "");
+                            Logs.LogDb($"Query result: ({DONE})", "");
                             retry = -1;
                         }
                         catch (SQLiteException ex)
@@ -260,13 +260,13 @@ namespace HomeCinema.SQLFunc
                             var dt = new DataTable();
 
                             // Execute query
-                            GlobalVars.LogDb($"{errFrom} (START) [Called by: {calledFrom}]", "qry: " + qry);
+                            Logs.LogDb($"{errFrom} (START) [Called by: {calledFrom}]", "qry: " + qry);
 
                             SQLiteDataAdapter sqlda = new SQLiteDataAdapter(qry, conn);
                             sqlda.Fill(dt);
 
                             // Log actions to textfile
-                            GlobalVars.LogDb($"{errFrom} (Finished executing Query)", "Number of Rows returned by query: " + Convert.ToString(dt.Rows.Count));
+                            Logs.LogDb($"{errFrom} (Finished executing Query)", "Number of Rows returned by query: " + Convert.ToString(dt.Rows.Count));
 
                             conn.Close();
                             retry = -1;
@@ -276,8 +276,8 @@ namespace HomeCinema.SQLFunc
                 }
                 catch (Exception ex)
                 {
-                    GlobalVars.LogDb($"{errFrom} (Called: {calledFrom})", ex.Message);
-                    --retry;
+                    Logs.LogDb($"{errFrom} (Called: {calledFrom})", ex.Message);
+                    retry -= 1;
                 }
             }
             return null;
@@ -301,8 +301,8 @@ namespace HomeCinema.SQLFunc
                 {
                     if (conn == null)
                     {
-                        GlobalVars.LogDb("SQLHelper-DbQrySingle", "Cannot establish connection to database (connection is null)!");
-                        --retry;
+                        Logs.LogDb("SQLHelper-DbQrySingle", "Cannot establish connection to database (connection is null)!");
+                        retry -= 1;
                         continue;
                     }
                     using (var cmd = new SQLiteCommand(conn))
@@ -311,7 +311,7 @@ namespace HomeCinema.SQLFunc
                         cmd.CommandText = qry;
 
                         // Execute query
-                        GlobalVars.LogDb($"SQLHelper-DbQrySingle (START)(From: {From})", "qry: " + qry);
+                        Logs.LogDb($"SQLHelper-DbQrySingle (START)(From: {From})", "qry: " + qry);
                         try
                         {
                             SQLiteDataReader r = cmd.ExecuteReader();
@@ -328,7 +328,7 @@ namespace HomeCinema.SQLFunc
                         }
                         catch { --retry; }
 
-                        GlobalVars.LogDb($"SQLHelper-DbQrySingle (END)(From: {From})", "Rows returned: " + list.Count.ToString());
+                        Logs.LogDb($"SQLHelper-DbQrySingle (END)(From: {From})", "Rows returned: " + list.Count.ToString());
                         conn.Close();
                     }
                 }
@@ -392,7 +392,7 @@ namespace HomeCinema.SQLFunc
                 {
                     if (conn == null)
                     {
-                        GlobalVars.LogDb("SQLHelper-DbInsertMovie", "Cannot establish connection to database (connection is null)!");
+                        Logs.LogDb("SQLHelper-DbInsertMovie", "Cannot establish connection to database (connection is null)!");
                         --retry;
                         continue;
                     }
@@ -402,7 +402,7 @@ namespace HomeCinema.SQLFunc
 
                     // Insert entry
                     cmd.CommandText = $"INSERT INTO {HCTable.info} ({HCInfo.Id},{infoCols}) VALUES({GeneratedID},{infoVals});";
-                    GlobalVars.LogDb($"{errFrom} (Insert query)", cmd.CommandText);
+                    Logs.LogDb($"{errFrom} (Insert query)", cmd.CommandText);
                     successCode = cmd.ExecuteNonQuery();
 
                     if (successCode > 0)
@@ -426,26 +426,26 @@ namespace HomeCinema.SQLFunc
                         }
                         catch (Exception exShell)
                         {
-                            GlobalVars.LogDb($"{errFrom} (ShellFile thumbnail Error)({coverFilepath})", exShell.Message);
+                            Logs.LogDb($"{errFrom} (ShellFile thumbnail Error)({coverFilepath})", exShell.Message);
                         }
                     }
                     else
                     {
-                        GlobalVars.LogDb($"{errFrom} [Insert failed code: {successCode}]", "Query: " + cmd.CommandText);
+                        Logs.LogDb($"{errFrom} [Insert failed code: {successCode}]", "Query: " + cmd.CommandText);
                     }
 
                     // Commit transaction
                     if (successCode > 0)
                     {
                         transaction.Commit();
-                        GlobalVars.LogDb($"{errFrom} (FINISHED INSERT)", $"Last UID inserted: ({GeneratedID})");
+                        Logs.LogDb($"{errFrom} (FINISHED INSERT)", $"Last UID inserted: ({GeneratedID})");
                         retry = -1;
                     }
                     else
                     {
                         GeneratedID = 0;
                         transaction.Rollback();
-                        --retry;
+                        retry -= 1;
                     }
                     transaction.Dispose();
 
@@ -475,7 +475,7 @@ namespace HomeCinema.SQLFunc
             catch { Id = ""; }
             if (String.IsNullOrWhiteSpace(Id))
             {
-                GlobalVars.LogDb(callFrom, "Cannot Update entry with empty Id!");
+                Logs.LogDb(callFrom, "Cannot Update entry with empty Id!");
                 return false;
             }
 
@@ -496,7 +496,7 @@ namespace HomeCinema.SQLFunc
                              $"WHERE `{HCInfo.Id}`={Id}";
                 if (DbExecNonQuery(qry, callFrom))
                 {
-                    GlobalVars.LogDb(callFrom, $"Entry with Id({Id}) is updated Succesfully!");
+                    Logs.LogDb(callFrom, $"Entry with Id({Id}) is updated Succesfully!");
                     return true;
                 }
             }
@@ -556,12 +556,12 @@ namespace HomeCinema.SQLFunc
             string qry = $"DELETE FROM {HCTable.info} WHERE `{HCInfo.Id}`={ID};";
             if (DbExecNonQuery(qry, calledFrom))
             {
-                GlobalVars.LogDb(errFrom, $"ID ({ID}) is removed from database! Table: ({HCTable.info})");
+                Logs.LogDb(errFrom, $"ID ({ID}) is removed from database! Table: ({HCTable.info})");
                 // Remove filepath
                 qry = $"DELETE FROM {HCTable.filepath} WHERE `{HCFile.Id}`={ID};";
                 if (DbExecNonQuery(qry, calledFrom))
                 {
-                    GlobalVars.LogDb(errFrom, $"ID ({ID}) is removed from database! Table: ({HCTable.filepath})");
+                    Logs.LogDb(errFrom, $"ID ({ID}) is removed from database! Table: ({HCTable.filepath})");
                     return true;
                 }
             }

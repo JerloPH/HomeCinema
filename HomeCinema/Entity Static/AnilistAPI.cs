@@ -68,18 +68,18 @@ namespace HomeCinema
                         query = Query,
                         variables = "{ \"search\": \"" + text.Replace("\"", string.Empty) + "\"}"
                     });
-                    GlobalVars.LogDebug($"Retry({retry-1}), Will search: [{text}]");
+                    Logs.LogDebug($"Retry({retry-1}), Will search: [{text}]");
                     var execute = client.Execute(request);
-                    GlobalVars.LogDebug($"Finished search: [{text}]");
+                    Logs.LogDebug($"Finished search: [{text}]");
                     if (execute.Headers != null)
                     {
                         if (int.TryParse(execute.Headers.ToList().Find(x => x.Name == "Retry-After")?.Value.ToString(), out int val))
                         {
-                            GlobalVars.LogDebug($"Retry-After: [{val}]");
+                            Logs.LogDebug($"Retry-After: [{val}]");
                             if (val > 0)
                             {
                                 val += 1;
-                                GlobalVars.LogDebug($"Sleeping thread for 60000ms(1 minute)");
+                                Logs.LogDebug($"Sleeping thread for 60000ms(1 minute)");
                                 Thread.Sleep(val*1000);
                                 continue;
                             }
@@ -120,18 +120,18 @@ namespace HomeCinema
                         query = QueryWithId,
                         variables = "{ \"Id\": " + Id + "}"
                     });
-                    GlobalVars.LogDebug($"Retry({retry-1}), Query Id: [{Id}]");
+                    Logs.LogDebug($"Retry({retry-1}), Query Id: [{Id}]");
                     var execute = client.Execute(request);
-                    GlobalVars.LogDebug("Done execute!");
+                    Logs.LogDebug("Done execute!");
                     // Handle TimeOut for Rate Limiting
                     if (execute.Headers != null)
                     {
                         if (int.TryParse(execute.Headers.ToList().Find(x => x.Name == "Retry-After")?.Value.ToString(), out int val))
                         {
-                            GlobalVars.LogDebug($"Retry-After: [{val}]");
+                            Logs.LogDebug($"Retry-After: [{val}]");
                             if (val > 0)
                             {
-                                GlobalVars.LogDebug($"Sleeping thread for 60000ms(1 minute)");
+                                Logs.Log(calledFrom, $"Anilist timeout, sleep thread ms: {val * 1000}");
                                 Thread.Sleep(val*1000);
                                 continue;
                             }
