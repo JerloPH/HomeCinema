@@ -32,7 +32,7 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                GlobalVars.ShowError("GlobalVars-Log", ex, false);
+                GlobalVars.ShowError("GlobalVars-Log", ex);
             }
         }
         /// <summary>
@@ -72,9 +72,17 @@ namespace HomeCinema
         /// </summary>
         /// <param name="codefrom">Method caller</param>
         /// <param name="log">string to log</param>
-        public static void LogErr(string codefrom, string log)
+        public static void LogErr(string codefrom, Exception error)
         {
-            Log(DataFile.FILE_LOG_ERROR, codefrom, log);
+            if (error == null) { return; }
+            try
+            {
+                Log(DataFile.FILE_LOG_ERROR, codefrom, $"Source: {error.Source}\n\tMessage: {error.Message}\n\tError string:\n\t{error}");
+            }
+            catch
+            {
+                Log(DataFile.FILE_LOG_ERROR, codefrom, $"Error string:\n\t{error}");
+            }
         }
         public static void LogDebug(string log)
         {

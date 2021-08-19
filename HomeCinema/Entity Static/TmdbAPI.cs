@@ -13,7 +13,7 @@ namespace HomeCinema
     {
         private static string TMDB_KEY = GlobalVars.TMDB_KEY;
 
-        public static TmdbSearchResult FindMovieTV(string query, string MovieId, string mediatype, bool showAMsg = false)
+        public static TmdbSearchResult FindMovieTV(string query, string MovieId, string mediatype)
         {
             TmdbSearchResult media = null;
             string errFrom = $"TmdbAPI-FindMovieTV";
@@ -24,7 +24,7 @@ namespace HomeCinema
             // Filepaths
             string FileFindMedia = GlobalVars.PATH_TEMP + MovieId + "_findMedia.json";
 
-            if (GlobalVars.DownloadAndReplace(FileFindMedia, URLFindMedia, errFrom, showAMsg))
+            if (GlobalVars.DownloadAndReplace(FileFindMedia, URLFindMedia, errFrom))
             {
                 string content = GlobalVars.ReadStringFromFile(FileFindMedia, errFrom);
                 media = JsonConvert.DeserializeObject<TmdbSearchResult>(content, GlobalVars.JSON_SETTING);
@@ -222,7 +222,7 @@ namespace HomeCinema
             {
                 string moviePosterDL = GlobalVars.PATH_TEMP + MOVIE_ID + ".jpg";
                 GlobalVars.DeleteMove(moviePosterDL, errFrom); // Delete prev file, if exists
-                return GlobalVars.DownloadLoop(moviePosterDL, "https://image.tmdb.org/t/p/original/" + linkPoster, errFrom, false);
+                return GlobalVars.DownloadLoop(moviePosterDL, "https://image.tmdb.org/t/p/original/" + linkPoster, errFrom);
             }
             return false;
         }

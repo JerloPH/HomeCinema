@@ -221,12 +221,12 @@ namespace HomeCinema.SQLFunc
                         }
                         catch (SQLiteException ex)
                         {
-                            GlobalVars.ShowError($"SQLHelper-DbExecNonQuery (SQL Error)({DONE})", ex, false);
+                            GlobalVars.ShowError($"SQLHelper-DbExecNonQuery (SQL Error)({DONE})", ex);
                             retry -= 1;
                         }
                         catch (Exception ex)
                         {
-                            GlobalVars.ShowError($"SQLHelper-DbExecNonQuery (Error)({DONE})", ex, false);
+                            GlobalVars.ShowError($"SQLHelper-DbExecNonQuery (Error)({DONE})", ex);
                             retry -= 1;
                         }
                     }

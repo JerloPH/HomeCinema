@@ -95,7 +95,7 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                GlobalVars.ShowError("frmLoading-UpdateProgress", ex, false);
+                Logs.LogErr("frmLoading-UpdateProgress", ex);
             }
         }
         public void SetIcon(int IconIndex = 0)
@@ -130,7 +130,7 @@ namespace HomeCinema
                 }
                 
             }
-            catch (Exception ex) { GlobalVars.ShowError("frmLoading-SetIcon", ex, false, this); }
+            catch (Exception ex) { Logs.LogErr("frmLoading-SetIcon", ex); }
         }
         private delegate void UpdateMessageThreadSafeDelegate(string message);
         public void UpdateMessage(string message)
@@ -172,11 +172,10 @@ namespace HomeCinema
         {
             if (e.ProgressPercentage > -1 && MaxProgress > 0)
             {
-                try
+                if (long.TryParse(e.UserState.ToString(), out long val))
                 {
-                    ProgressCount = Convert.ToInt64(e.UserState);
+                    ProgressCount = val;
                 }
-                catch { ProgressCount += 1; }
             }
             //GlobalVars.LogDebug($"Progress %: [{e.ProgressPercentage}], Actual Progress: [{ProgressCount}]");
             if (ProgressCount == MaxProgress)

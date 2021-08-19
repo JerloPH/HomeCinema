@@ -122,7 +122,7 @@ namespace HomeCinema
             var form = new frmAlert(msg, caption, 0, null, HCIcons.None);
             form.TopMost = true;
             form.ShowDialog();
-            form.Dispose();
+            form?.Dispose();
         }
         public static void ShowCustomMessage(string msg, string caption, Form parent, HCIcons icon)
         {
@@ -169,7 +169,7 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                ShowError("GlobalVars-ShowInfo", ex, false);
+                Logs.LogErr("GlobalVars-ShowInfo", ex);
                 ShowNoParent(msg, caption);
             }
         }
@@ -181,33 +181,33 @@ namespace HomeCinema
         {
             ShowCustomMessage(msg, caption, parent, HCIcons.Warning);
         }
-        public static void ShowError(string codeFrom, Exception error, bool ShowAMsg = true, Form parent = null)
+        public static void ShowError(string codeFrom, string msg, Form parent, Exception error, bool openLog)
         {
-            if (error == null) { return; }
-            string err = "";
-            try
-            {
-                err = $"Source: {error.Source?.ToString()}\n\tError string:\n\t{error.ToString()}";
-            }
-            catch
-            {
-                err = $"Error string:\n\t{error}";
-            }
-            Logs.LogErr(codeFrom, err);
-
+            Logs.LogErr(codeFrom, error);
+            bool ShowAMsg = (!String.IsNullOrWhiteSpace(msg));
             if (ShowAMsg)
             {
-                ShowCustomMessage($"An error occured!\nReport on project site\nand submit 'logs' subfolder.", "Error occured!", parent, HCIcons.Error);
+                string message = "An error occured!";
+                ShowCustomMessage($"{message}\nReport on project site\nand submit 'logs' subfolder.", "Error occured!", parent, HCIcons.Error);
                 // Open file in explorer
-                try
+                if (openLog)
                 {
-                    Process.Start("explorer.exe", PATH_LOG);
-                }
-                catch (Exception ex)
-                {
-                    ShowCustomMessage($"Cannot open folder containing error file!\n{ex.ToString()}", "Error occured", parent, HCIcons.Error);
+                    try { Process.Start("explorer.exe", PATH_LOG); }
+                    catch { }
                 }
             }
+        }
+        public static void ShowError(string codeFrom, Exception error)
+        {
+            ShowError(codeFrom, "", null, error, false);
+        }
+        public static void ShowError(string codeFrom, Exception error, string msg)
+        {
+            ShowError(codeFrom, msg, null, error, false);
+        }
+        public static void ShowError(string codeFrom, Exception error, string msg, Form parent)
+        {
+            ShowError(codeFrom, msg, parent, error, false);
         }
         public static bool ShowYesNo(string msg, Form caller = null)
         {
@@ -218,7 +218,7 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                ShowError("GlobalVars-ShowYesNo", ex, false);
+                ShowError("GlobalVars-ShowYesNo", ex, "Cannot show 'Yes/No' prompt!\nTry again.");
             }
             return false;
         }
@@ -238,8 +238,7 @@ namespace HomeCinema
                 }
                 catch (Exception ex)
                 {
-                    // Log error
-                    ShowError(calledFrom, ex, false);
+                    Logs.LogErr(calledFrom, ex);
                 }
             }
         }
@@ -288,7 +287,7 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                ShowError("(GlobalVars-CreateDir) Create Folder: " + fPath, ex);
+                ShowError($"(GlobalVars-CreateDir) Create Folder: {fPath}", ex, "Required folder not loaded!");
             }
         }
         // Copy from Resources if not on Root
@@ -305,7 +304,7 @@ namespace HomeCinema
                 }
                 catch (Exception ex)
                 {
-                    ShowError("(GlobalVars-CopyFromRes) Copying required files error. File: " + fName, ex, false);
+                    ShowError($"(GlobalVars-CopyFromRes) Copying required file: {fName}", ex, "Required file is not loaded!");
                 }
             }
             return false;
@@ -347,7 +346,7 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                ShowError(errFrom, ex, false);
+                Logs.LogErr(errFrom, ex);
             }
             return ret;
         }
@@ -372,7 +371,7 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                ShowError("GlobalVars-WriteToFile", ex, false);
+                Logs.LogErr("GlobalVars-WriteToFile", ex);
             }
             return false;
         }
@@ -402,7 +401,7 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                ShowError("GlobalVars-WriteArray", ex, false);
+                Logs.LogErr("GlobalVars-WriteArray", ex);
             }
             return false;
         }
@@ -431,7 +430,7 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                ShowError($"{errFrom} [calledFrom: {calledFrom}]", ex);
+                Logs.LogErr($"{errFrom} [calledFrom: {calledFrom}]", ex);
             }
             return new string[0];
         }
@@ -471,7 +470,7 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                ShowError($"{errFrom} [calledFrom: {calledFrom}]", ex);
+                Logs.LogErr($"{errFrom} [calledFrom: {calledFrom}]", ex);
             }
             return new string[0];
         }
@@ -594,7 +593,7 @@ namespace HomeCinema
             }
             catch (Exception excpt)
             {
-                ShowError(errFrom, excpt, false);
+                Logs.LogErr(errFrom, excpt);
             }
             return files;
         }
@@ -615,7 +614,7 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                ShowError($"GlobalVars-SearchFoldersFromDirectory(), called by: {errFrom}", ex, false);
+                Logs.LogErr($"GlobalVars-SearchFoldersFromDirectory(), called by: {errFrom}", ex);
             }
             return list;
         }
@@ -659,7 +658,7 @@ namespace HomeCinema
                 }
                 catch (Exception ex)
                 {
-                    ShowError($"{errFrom} [calledFrom: {calledFrom}]", ex, false);
+                    Logs.LogErr($"{errFrom} [calledFrom: {calledFrom}]", ex);
                 }
             }
             return false;
@@ -686,6 +685,27 @@ namespace HomeCinema
             return ret;
         }
         // Check if there is an active Internet connection
+        public static bool Ping(string url)
+        {
+            if (String.IsNullOrWhiteSpace(url)) { return false; }
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
+                request.Timeout = Settings.TimeOut;
+                request.AllowAutoRedirect = false;
+                request.Credentials = CredentialCache.DefaultNetworkCredentials;
+                request.Method = System.Net.WebRequestMethods.Http.Head;
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    return (response.StatusCode == HttpStatusCode.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logs.LogErr($"(GlobalVars-Ping)\nURL: {url}\n", ex);
+                return false;
+            }
+        }
         public static bool CheckConnection(String URL)
         {
             if (String.IsNullOrWhiteSpace(URL)) { return false; }
@@ -702,12 +722,12 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                ShowError($"(GlobalVars-CheckConnection)\nURL: {URL}\n", ex, false);
+                Logs.LogErr($"(GlobalVars-CheckConnection)\nURL: {URL}\n", ex);
                 return false;
             }
         }
         // Download file from the web
-        public static int DownloadFrom(string link, string saveTo, bool showAMsg = true)
+        public static int DownloadFrom(string link, string saveTo)
         {
             string errFrom = "GlobalVars-DownloadFrom";
             using (var client = new WebClient())
@@ -728,20 +748,19 @@ namespace HomeCinema
                     }
                     catch (Exception exw)
                     {
-                        // Log Error and Exit
-                        ShowError(errFrom, exw, showAMsg);
+                        Logs.LogErr(errFrom, exw);// Log Error and Exit
                         return -1;
                     }
                 }
                 catch (Exception ex)
                 {
-                    ShowError(errFrom, ex, showAMsg);
+                    Logs.LogErr(errFrom, ex);
                 }
             }
             return 0;
         }
         // Keep downloading file until successful, except during certain status codes
-        public static bool DownloadLoop(string filePath, string urlFrom, string calledFrom, bool showAMsg = false)
+        public static bool DownloadLoop(string filePath, string urlFrom, string calledFrom)
         {
             if (string.IsNullOrWhiteSpace(urlFrom)) { return false; }
             // Keep downloading
@@ -751,7 +770,7 @@ namespace HomeCinema
             while (retry > 0)
             {
                 Logs.Log(errFrom, $"Downloading file: {urlFrom}, (retry left: {retry-1})");
-                DLStatus = DownloadFrom(urlFrom, filePath, showAMsg);
+                DLStatus = DownloadFrom(urlFrom, filePath);
                 if (File.Exists(filePath) || DLStatus==404) // File download success || File not found on server
                 {
                     retry = -1;
@@ -762,7 +781,7 @@ namespace HomeCinema
             return (DLStatus == 200);
         }
         // Download a File, replacing prev file, and Keep trying to download it
-        public static bool DownloadAndReplace(string filePath, string urlFrom, string calledFrom, bool showAMsg = false)
+        public static bool DownloadAndReplace(string filePath, string urlFrom, string calledFrom)
         {
             string errFrom = $"GlobalVars-DownloadAndReplace [calledFrom: {calledFrom}]";
             // Delete previous file
@@ -770,7 +789,7 @@ namespace HomeCinema
             {
                 TryDelete(filePath, errFrom);
             }
-            return DownloadLoop(filePath, urlFrom, errFrom, showAMsg);
+            return DownloadLoop(filePath, urlFrom, errFrom);
         }
         // Move file to RecycleBin, instead of permanent delete
         public static bool DeleteMove(string file, string errFrom)
@@ -788,7 +807,7 @@ namespace HomeCinema
             catch (Exception ex)
             {
                 ShowWarning("File cannot be moved to Recycle Bin!\n" + file);
-                ShowError($"GlobalVars-DeleteMove ({errFrom})", ex, false);
+                Logs.LogErr($"GlobalVars-DeleteMove ({errFrom})", ex);
             }
             return false;
         }
@@ -839,7 +858,7 @@ namespace HomeCinema
                     while (tryCount > 0)
                     {
                         Logs.Log(errFrom, $"Fetching update version.. (Tries Left: {tryCount.ToString()})");
-                        DownloadFrom(link, fileName, false);
+                        DownloadFrom(link, fileName);
                         tryCount -= 1;
                         tryCount = File.Exists(fileName) ? 0 : tryCount;
                     }
@@ -891,7 +910,7 @@ namespace HomeCinema
                         catch (Exception ex)
                         {
                             ShowWarning("Update Error!\nTry Updating Later..", "Error occured during update", caller);
-                            ShowError(errFrom, ex, false);
+                            Logs.LogErr(errFrom, ex);
                         }
                     }
                     break;
@@ -919,8 +938,8 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                ShowError(errFrom, ex, false);
-                ShowWarning("File or folder not Found! \nIt may have been Moved or Deleted!", "File not Found!");
+                Logs.LogErr(errFrom, ex);
+                ShowWarning("File or folder not Found!\nIt may have been Moved or Deleted!", "File not Found!");
             }
         }
         // Return a string with Limited characters
@@ -940,7 +959,7 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                ShowError($"GlobalVar-ConvertListToString ({calledFrom})", ex, false);
+                Logs.LogErr($"GlobalVar-ConvertListToString ({calledFrom})", ex);
                 return "";
             }
         }
@@ -955,7 +974,7 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                ShowError(errFrom, ex, false);
+                ShowError(errFrom, ex, "Cannot open file!");
             }
             return false;
         }
@@ -1021,7 +1040,7 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                ShowError(errFrom, ex, false);
+                ShowError(errFrom, ex);
                 return "Unknown";
             }
         }

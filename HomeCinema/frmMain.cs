@@ -171,7 +171,7 @@ namespace HomeCinema
                     catch (Exception ex)
                     {
                         GlobalVars.WriteAppend(logFileInsertSkipped, "Error: " + filePath);
-                        GlobalVars.ShowError(callFrom, ex, false, this);
+                        Logs.LogErr(callFrom, ex);
                         continue; // skip when exception thrown
                     }
 
@@ -180,9 +180,8 @@ namespace HomeCinema
                     {
                         mName = mName.ToLower();
                         mName = mName.Replace('_', ' ').Replace('.', ' ');
-                        mName = mName.Replace("(", "");
-                        mName = mName.Replace(")", "");
-                        //mName = mName.Replace("-", "");
+                        mName = mName.Replace("(", " ");
+                        mName = mName.Replace(")", " ");
                         // Remove "year" and "other strings" from movie file name
                         string regExPattern = @"\b\d{4}\b"; // Match 4-digit number in the title
                         Match r = Regex.Match(mName, @regExPattern);
@@ -191,7 +190,7 @@ namespace HomeCinema
                     }
                     catch (Exception ex)
                     {
-                        GlobalVars.ShowError(errFrom, ex, false, this);
+                        Logs.LogErr(errFrom, ex);
                     }
 
                     // Scrape from TMDB, for info and details
@@ -305,6 +304,7 @@ namespace HomeCinema
                             }
                             else if (src == HCSource.anilist) // Use ANILIST API
                             {
+                                Thread.Sleep(50); // sleep to prevent overloading API
                                 IsDownloadCover = AnilistAPI.DownloadCoverFromAnilist(movieId, Media.PosterPath, errFrom);
                             }
                             else { } //do nothing
@@ -319,7 +319,7 @@ namespace HomeCinema
                             }
                             catch (Exception ex)
                             {
-                                GlobalVars.ShowError($"{errFrom}\nTemp File: {oldFile}\nCover File: {newFile}", ex, false, this);
+                                Logs.LogErr($"{errFrom}\nTemp File: {oldFile}\nCover File: {newFile}", ex);
                             }
                         }
                     }
@@ -483,24 +483,23 @@ namespace HomeCinema
         // Play Movie or Open Movie Details
         public void OpenFormPlayMovie()
         {
-            // A movie/show is selected
             if (lvSearchResult.SelectedItems.Count > 0)
             {
                 try
                 {
-                    long ID;
-                    ID = Convert.ToInt16(lvSearchResult.SelectedItems[0].Tag.ToString().TrimStart('0'));
-                    if (ID < 1) { return; }
-
-                    if (Settings.IsAutoplay)
+                    if (long.TryParse(lvSearchResult.SelectedItems[0].Tag.ToString().TrimStart('0'), out long ID))
                     {
-                        GlobalVars.PlayMedia(GetFilePath(ID.ToString(), "frmMain-OpenNewFormMovie"));
-                        return;
+                        if (ID < 1) { return; }
+                        if (Settings.IsAutoplay)
+                        {
+                            GlobalVars.PlayMedia(GetFilePath(ID.ToString(), "frmMain-OpenNewFormMovie"));
+                            return;
+                        }
+                        else
+                            OpenNewFormMovie(); // Open Movie Details form
                     }
-                    else
-                        OpenNewFormMovie(); // Open Movie Details form
                 }
-                catch (Exception ex) { GlobalVars.ShowError("frmMain-OpenFormPlayMovie", ex, false, this); };
+                catch (Exception ex) { Logs.LogErr("frmMain-OpenFormPlayMovie", ex); };
             }
         }
         // Open Movie Details form
@@ -508,26 +507,32 @@ namespace HomeCinema
         {
             try
             {
-                long ID = 0;
-                ID = Convert.ToInt64(lvSearchResult.SelectedItems[0].Tag.ToString().TrimStart('0'));
-                if (lvSearchResult.SelectedItems.Count > 0 && ID > 0)
+                if (lvSearchResult.SelectedItems.Count < 1)
                 {
-                    // Create form to View Movie Details / Info
-                    string text = Convert.ToString(lvSearchResult.SelectedItems[0].Text);
-                    string formName = "movie" + ID.ToString();
-                    Form fc = Application.OpenForms[formName];
-                    if (fc != null)
+                    GlobalVars.ShowWarning("Select an item to view its media information!");
+                    return;
+                }
+                if (long.TryParse(lvSearchResult.SelectedItems[0].Tag.ToString().TrimStart('0'), out long ID))
+                {
+                    if (ID > 0)
                     {
-                        fc.Focus();
-                    }
-                    else
-                    {
-                        Form form = new frmMovie(this, ID.ToString(), text, lvSearchResult.SelectedItems[0]);
-                        form.Name = formName;
+                        // Create form to View Movie Details / Info
+                        string text = lvSearchResult.SelectedItems[0].Text;
+                        string formName = $"movie{ID}";
+                        Form fc = Application.OpenForms[formName];
+                        if (fc != null)
+                        {
+                            fc.Focus();
+                        }
+                        else
+                        {
+                            Form form = new frmMovie(this, ID.ToString(), text, lvSearchResult.SelectedItems[0]);
+                            form.Name = formName;
+                        }
                     }
                 }
             }
-            catch (Exception ex) { GlobalVars.ShowError("frmMain-OpenNewFormMovie", ex, false, this); };
+            catch (Exception ex) { GlobalVars.ShowError("frmMain-OpenNewFormMovie", ex, "Error occured on viewing media info!", this); };
         }
         public void SearchBoxPlaceholder(object sender, EventArgs e)
         {
@@ -916,7 +921,7 @@ namespace HomeCinema
                                     catch (Exception ex)
                                     {
                                         GlobalVars.WriteAppend(logSkipped, $"Error: {file}");
-                                        GlobalVars.ShowError(calledFrom, ex, false, this);
+                                        Logs.LogErr(calledFrom, ex);
                                         continue;
                                     }
                                 }
@@ -1055,7 +1060,7 @@ namespace HomeCinema
                                     }
                                     catch (Exception ex)
                                     {
-                                        GlobalVars.ShowError($"{errFrom}\nFile: {fileNamePath}", ex, false);
+                                        Logs.LogErr($"{errFrom}\nFile: {fileNamePath}", ex);
                                         continue;
                                     }
                                 }
@@ -1078,7 +1083,7 @@ namespace HomeCinema
                                     }
                                     catch (Exception exImg)
                                     {
-                                        GlobalVars.ShowError($"{errFrom}\n\tFile:\n\t{Imagefile}", exImg, false);
+                                        Logs.LogErr($"{errFrom}\n\tFile:\n\t{Imagefile}", exImg);
                                     }
                                 }
 
@@ -1201,8 +1206,7 @@ namespace HomeCinema
             }
             catch (Exception exc)
             {
-                GlobalVars.ShowError("frmMain-Load", exc, false, this);
-                GlobalVars.ShowWarning("Default image is missing!\nRestart App", "", this);
+                GlobalVars.ShowError("frmMain-Load", exc, "Default image is missing!\nRestart App", this);
                 IsLoadedSuccess = false;
                 return;
             }
@@ -1397,14 +1401,11 @@ namespace HomeCinema
         // Change lvSearchResult Sort by
         private void cbSort_SelectedIndexChanged(object sender, EventArgs e)
         {
-            try
-            {
-                SortItemsInListView(cbSort.SelectedIndex);
-            }
-            catch (Exception ex)  // Log Error
+            try { SortItemsInListView(cbSort.SelectedIndex); }
+            catch (Exception ex)
             {
                 SortItemsInListView(0);
-                GlobalVars.ShowError("frmMain-cbSort_SelectedIndexChanged", ex, false);
+                GlobalVars.ShowError("frmMain-cbSort_SelectedIndexChanged", ex, "Error occured on sort!", this);
             }
         }
 
@@ -1439,15 +1440,11 @@ namespace HomeCinema
 
         private void cbSortOrder_SelectedIndexChanged(object sender, EventArgs e)
         {
-            try
+            try { SortItemsInListView(cbSort.SelectedIndex); }
+            catch (Exception ex)
             {
-                SortItemsInListView(cbSort.SelectedIndex);
-
-            } catch (Exception ex)
-            {
-                // Log Error
                 SortItemsInListView(0);
-                GlobalVars.ShowError("frmMain-cbSortOrder_SelectedIndexChanged", ex, false);
+                GlobalVars.ShowError("frmMain-cbSortOrder_SelectedIndexChanged", ex, "Error occured on sort!", this);
             }
         }
         // When ListView lvSearchResult is clicked on

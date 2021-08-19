@@ -190,8 +190,7 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                GlobalVars.ShowWarning("Cannot load movie info!", "", this);
-                GlobalVars.ShowError(errFrom, ex, false, this);
+                GlobalVars.ShowError(errFrom, ex, "Cannot load movie info!", this);
                 Close();
                 return;
             }
@@ -227,7 +226,7 @@ namespace HomeCinema
                 }
                 catch (Exception exc)
                 {
-                    GlobalVars.ShowError($"{errFrom}\n\tFile:\n\t{ Imagefile }", exc, false);
+                    GlobalVars.ShowError($"{errFrom}\n\tFile:\n\t{ Imagefile }", exc, "Cover image not loaded!", this);
                 }
             }
             // Adjust controls, if not series
@@ -285,7 +284,7 @@ namespace HomeCinema
             if (MOVIE_TRAILER.StartsWith("http"))
             {
                 // Check internet connection first
-                if (GlobalVars.CheckConnection("https://www.youtube.com/") == false)
+                if (GlobalVars.Ping("youtube.com") == false)
                 {
                     webTrailer.DocumentText = GlobalVars.TrailerLocalImage();
                     return;
@@ -404,7 +403,7 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                GlobalVars.ShowError($"frmMovie({Name})-picBox_Click", ex);
+                GlobalVars.ShowError($"frmMovie({Name})-picBox_Click", ex, "Cannot view fullscreen cover image!", this);
             }
         }
         // Delete movie from database
@@ -460,8 +459,7 @@ namespace HomeCinema
                 }
                 catch (Exception ex)
                 {
-                    GlobalVars.ShowError($"frmMovie({Name})-lblSourceId_Click", ex, false);
-                    GlobalVars.ShowWarning("Cannot open link on browser!");
+                    GlobalVars.ShowError($"frmMovie({Name})-lblSourceId_Click", ex, "Cannot open link on browser!", this);
                 }
             }
         }

@@ -247,7 +247,7 @@ namespace HomeCinema
                     }
                     catch (Exception ex)
                     {
-                        GlobalVars.ShowError("frmSetting", ex, false, this);
+                        GlobalVars.ShowError("frmSetting", ex, "Media Location setting not loaded!", this);
                     }
                 }
             }
@@ -263,7 +263,7 @@ namespace HomeCinema
         }
         private void dataGridMediaLoc_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
-            GlobalVars.ShowError("frmSetting-dataGridMediaLoc_DataError", e.Exception, false, this);
+            Logs.LogErr("frmSetting-dataGridMediaLoc_DataError", e.Exception);
         }
         private void frmSettings_FormClosing(object sender, FormClosingEventArgs e)
         {

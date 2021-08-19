@@ -183,7 +183,7 @@ namespace HomeCinema
                 }
                 catch (Exception ex)
                 {
-                    Logs.LogErr(errFrom, ex.Message);
+                    Logs.LogErr(errFrom, ex);
                     GlobalVars.ShowWarning("Entry not found!", "", this);
                 }
             }
@@ -225,7 +225,7 @@ namespace HomeCinema
                 }
                 catch (Exception exc)
                 {
-                    GlobalVars.ShowError(errFrom, exc);
+                    GlobalVars.ShowError(errFrom, exc, "Image selected is not loaded!", this);
                     return false;
                 }
             }
@@ -260,7 +260,6 @@ namespace HomeCinema
             try
             {
                 File.Copy(sourceFile, destFile, true);
-
                 // Set picBox Image, from File Selected
                 Image imgFromFile = Image.FromFile(destFile);
                 GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(destFile), imgFromFile);
@@ -269,7 +268,7 @@ namespace HomeCinema
             }
             catch (Exception fex)
             {
-                GlobalVars.ShowError(ExceptionFrom, fex);
+                GlobalVars.ShowError(ExceptionFrom, fex, "Image file selected is not saved!", this);
             }
         }
         // Dispose all Poster images

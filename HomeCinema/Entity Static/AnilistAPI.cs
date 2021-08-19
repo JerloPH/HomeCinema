@@ -96,7 +96,7 @@ namespace HomeCinema
                 }
                 catch (Exception ex)
                 {
-                    GlobalVars.ShowError(errFrom, ex, false);
+                    Logs.LogErr(errFrom, ex);
                     retry -= 1;
                 }
             }
@@ -154,7 +154,7 @@ namespace HomeCinema
                     foreach (var node in studioEdge)
                     {
                         try { studioList.Add(node.Node.Name.Trim()); }
-                        catch (Exception ex) { GlobalVars.ShowError(calledFrom, ex, false); }
+                        catch (Exception ex) { Logs.LogErr(calledFrom, ex); }
                     }
 
                     if (String.IsNullOrWhiteSpace(anime.Title.English))
@@ -170,22 +170,22 @@ namespace HomeCinema
                     media.Anilist = anime.Id.ToString();
 
                     try { media.Episodes = anime.Episodes; }
-                    catch (Exception ex) { GlobalVars.ShowError(calledFrom, ex, false); }
+                    catch (Exception ex) { Logs.LogErr(calledFrom, ex); }
 
                     try { media.Genre = anime.Genres; }
-                    catch (Exception ex) { GlobalVars.ShowError(calledFrom, ex, false); }
+                    catch (Exception ex) { Logs.LogErr(calledFrom, ex); }
 
                     try { media.Summary = anime.Description; }
-                    catch (Exception ex) { GlobalVars.ShowError(calledFrom, ex, false); }
+                    catch (Exception ex) { Logs.LogErr(calledFrom, ex); }
 
                     try { media.ReleaseDate = $"{anime.StartDate.Year}-{anime.StartDate.Month}-{anime.StartDate.Day}"; }
-                    catch (Exception ex) { GlobalVars.ShowError(calledFrom, ex, false); }
+                    catch (Exception ex) { Logs.LogErr(calledFrom, ex); }
 
                     try { media.PosterPath = anime.CoverImage.Large; }
-                    catch (Exception ex) { GlobalVars.ShowError(calledFrom, ex, false); }
+                    catch (Exception ex) { Logs.LogErr(calledFrom, ex); }
 
                     try { media.Studio = GlobalVars.ConvertListToString(studioList, ",", calledFrom); }
-                    catch (Exception ex) { GlobalVars.ShowError(calledFrom, ex, false); }
+                    catch (Exception ex) { Logs.LogErr(calledFrom, ex); }
 
                     try
                     {
@@ -195,7 +195,7 @@ namespace HomeCinema
                             media.Trailer = (trailersite.ToLower().Contains("youtube")) ? GlobalVars.LINK_YT + anime.Trailer.Id : "";
                         }
                     }
-                    catch (Exception ex) { GlobalVars.ShowError(calledFrom, ex, false); }
+                    catch (Exception ex) { Logs.LogErr(calledFrom, ex); }
 
                     try
                     {
@@ -228,7 +228,7 @@ namespace HomeCinema
                 }
                 catch (Exception ex)
                 {
-                    GlobalVars.ShowError(calledFrom, ex, false);
+                    Logs.LogErr(calledFrom, ex);
                     retry -= 1;
                 }
             }
@@ -243,7 +243,7 @@ namespace HomeCinema
             {
                 string moviePosterDL = GlobalVars.PATH_TEMP + MOVIE_ID + ".jpg";
                 GlobalVars.DeleteMove(moviePosterDL, errFrom); // Delete prev file, if exists
-                return GlobalVars.DownloadLoop(moviePosterDL, linkPoster, errFrom, false);
+                return GlobalVars.DownloadLoop(moviePosterDL, linkPoster, errFrom);
             }
             return false;
         }
