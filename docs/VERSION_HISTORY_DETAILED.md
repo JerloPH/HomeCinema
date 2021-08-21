@@ -1,6 +1,53 @@
 # Version History Detailed
 
-## Released on v0.8
+# Released on v0.8.2
+### What's New?
+- Keep track of progress on **'adding new entries'** and **'searching/loading collection'**.
+- Add Episode count to Tooltip text.
+- Add **ToolStrip Menu**, replacing most button controls.
+- New Setting, **'Confirm Actions'**. Setting it to **'No'** supresses some alert prompts.
+- New Setting to set timeout for various online functionalities.
+- Added various icons to alert prompts.
+
+### Fixes
+- Anilist API not fetching English titles.
+- Unsearchable media when results contains null json property.
+- 'Sort by Year' error.
+- Trailer not showing properly.
+
+### Changes
+- Confirm replacing cover image only if it has an existing one.
+- Confirm replacing info only if year is empty.
+- Set default source on Movie edit form, depending on loaded category.
+- If only 1 year is entered on search, use only that year.
+- When trying to open a series, load its folder instead of highlighting folder on Windows Explorer.
+- Improved handling of rate-limiting.
+- Improved error-handling and its alert prompts.
+- Updated UI of Movie Info edit form.
+- Settings form minor change.
+
+### Dev changes
+- Delete unreferenced method: **'SQLHelper.InitializeDT'**.
+- Change how Movie Info is updated
+  - Use MediaInfo class as Entity.
+  - MOVIE_ID changed from 'String' to 'long' data type.
+  - Removed obsolete methods.
+- Convert sources strings to static class for convenience
+- Move some methods to GlobalVar.
+- Refactor ChildForm property of frmMovie.
+- Removed MOVIE_NAME as param for frmMovie and frmMovieInfo.
+- Changed properties of Settings, removing duplicate private properties.
+- Add new entries to HCIcons enum.
+- New property on frmLoading to set Progress text.
+- Change Icon upon bgwork done, and prompt alert.
+- Change scope of an object in Movie form.
+- Moved loggers to its own static class.
+- Dispose image from frmMovie properly.
+- Removed unused codes
+- Various code refactor, and cleanups.
+****
+
+# Released on v0.8
 ### Fixes
 - FIX: Covers not updating when fetching from TMDB, causing duplicate cover images.
 - FIX: Sometimes, covers are not replaced by new cover.
@@ -57,8 +104,9 @@
 - MINOR: Removed all unused functions and variables.
 - MINOR: Cleanup queries.
 - Various code cleanups.
+****
 
-## Released on v0.7.2
+# Released on v0.7.2
 ### What's New?
 - FIX: Double apostrophe on entry title. Closes [Issue #11](https://github.com/JerloPH/HomeCinema/issues/11).
 - MINOR: When year is empty, default to "0".
@@ -76,6 +124,7 @@
 - MINOR: Moved some event call to designer class.
 - MINOR: Updated NuGet packages: **SQLite, Newtonsoft.JSON, and Microsoft UWP**.
 - Various code cleanup.
+****
 
 # Released on v0.6
 ### What's New?
@@ -99,6 +148,7 @@
 - MINOR: Don't show error message on method **'GlobalVars.ReadStringFromFile()'**. [9f5e362]
 - MINOR: Moved all pre-load setup to **'Program.cs'**. [7965d4b]
 - MINOR: Use **'MessageBox.Show()'** method if Main Form is not loaded. [b207f68]
+****
 
 # Released on v0.4.1
 **See** [**PR # 5**](https://github.com/JerloPH/HomeCinema/pull/5) **to see all commit ids**. <br>
@@ -127,6 +177,7 @@
 - MINOR: Renamed **GlobalVars.DirSearch** to **GlobalVars.SearchFilesSingleDir**, **GlobalVars.SearchFilesMultipleDir**. [d4a2d04]
 - MINOR: Removed linebreaks. [6486e7c]
 - MINOR: Refactor logging. [c8c0d3a]
+****
 
 # Released on v0.4
 **See** [**PR # 3**](https://github.com/JerloPH/HomeCinema/pull/3) **to see all commit ids**. <br>
@@ -145,6 +196,7 @@
 - REV: Increase TimeOut for **CheckConnection()**.
 - REV: Cast all API queries of TMDB to JSON files. **See** [**PR # 4**](https://github.com/JerloPH/HomeCinema/pull/4)
 - Code refactors and cleanup.
+****
 
 # Released on v0.3
 ### What's New?

@@ -1,4 +1,33 @@
-# HomeCinema - Project History:
+# HomeCinema - Project History
+
+## HomeCinema v0.8.2
+### *release 42 - build 21 August 2021 PHT*
+### What's New?
+- Keep track of progress on **'adding new entries'** and **'searching/loading collection'**.
+- Add Episode count to Tooltip text.
+- Add **ToolStrip Menu**, replacing most button controls.
+- New Setting, **'Confirm Actions'**. Setting it to **'No'** supresses some alert prompts.
+- New Setting to set timeout for various online functionalities.
+- Added various icons to alert prompts.
+
+### Fixes
+- Anilist API not fetching English titles.
+- Unsearchable media when results contains null json property.
+- 'Sort by Year' error.
+- Trailer not showing properly.
+
+### Changes
+- Confirm replacing cover image only if it has an existing one.
+- Confirm replacing info only if year is empty.
+- Set default source on Movie edit form, depending on loaded category.
+- If only 1 year is entered on search, use only that year.
+- When trying to open a series, load its folder instead of highlighting folder on Windows Explorer.
+- Improved handling of rate-limiting.
+- Improved error-handling and its alert prompts.
+- Updated UI of Movie Info edit form.
+- Settings form minor change.
+- Various code refactors and cleanups.
+****
 
 ## HomeCinema v0.8.1
 ### *release 41 - build 08 August 2021 PHT*
