@@ -29,6 +29,7 @@ namespace HomeCinema
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLoading));
             this.BackgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -43,9 +44,10 @@ namespace HomeCinema
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(0, 7);
+            this.label1.Location = new System.Drawing.Point(0, 9);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(356, 40);
+            this.label1.Size = new System.Drawing.Size(475, 49);
             this.label1.TabIndex = 2;
             this.label1.Text = "INSERT MESSAGE HERE";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -55,9 +57,10 @@ namespace HomeCinema
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pictureBox1.Image = global::HomeCinema.Properties.Resources.LoadingColored;
-            this.pictureBox1.Location = new System.Drawing.Point(127, 50);
+            this.pictureBox1.Location = new System.Drawing.Point(169, 62);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(96, 104);
+            this.pictureBox1.Size = new System.Drawing.Size(128, 128);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
@@ -65,25 +68,28 @@ namespace HomeCinema
             // lblProgress
             // 
             this.lblProgress.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProgress.Location = new System.Drawing.Point(0, 158);
+            this.lblProgress.Location = new System.Drawing.Point(0, 194);
+            this.lblProgress.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblProgress.Name = "lblProgress";
-            this.lblProgress.Size = new System.Drawing.Size(356, 40);
+            this.lblProgress.Size = new System.Drawing.Size(475, 49);
             this.lblProgress.TabIndex = 4;
             this.lblProgress.Text = "Progress: 1/1";
             this.lblProgress.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // frmLoading
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(365, 202);
+            this.ClientSize = new System.Drawing.Size(487, 249);
             this.ControlBox = false;
             this.Controls.Add(this.lblProgress);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmLoading";

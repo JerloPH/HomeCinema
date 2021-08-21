@@ -66,7 +66,6 @@ namespace HomeCinema
         public frmLoading(string message, string caption, bool useProgress = false)
         {
             InitializeComponent();
-            Icon = GlobalVars.HOMECINEMA_ICON;
             BackColor = Settings.ColorBg;
             ForeColor = Settings.ColorFont;
             Message = message;

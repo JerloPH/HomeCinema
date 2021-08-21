@@ -28,8 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSettings));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.lblTimeout = new System.Windows.Forms.Label();
+            this.txtTimeout = new System.Windows.Forms.TextBox();
             this.cbConfirmAction = new System.Windows.Forms.ComboBox();
             this.lblConfirmAction = new System.Windows.Forms.Label();
             this.cbConfirmSearch = new System.Windows.Forms.ComboBox();
@@ -86,8 +89,6 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
-            this.lblTimeout = new System.Windows.Forms.Label();
-            this.txtTimeout = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -148,6 +149,24 @@
             this.tabPage1.Size = new System.Drawing.Size(710, 465);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "General";
+            // 
+            // lblTimeout
+            // 
+            this.lblTimeout.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTimeout.Location = new System.Drawing.Point(5, 395);
+            this.lblTimeout.Name = "lblTimeout";
+            this.lblTimeout.Size = new System.Drawing.Size(244, 31);
+            this.lblTimeout.TabIndex = 25;
+            this.lblTimeout.Text = "Time Out (in millisecond)";
+            // 
+            // txtTimeout
+            // 
+            this.txtTimeout.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTimeout.Location = new System.Drawing.Point(271, 395);
+            this.txtTimeout.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtTimeout.Name = "txtTimeout";
+            this.txtTimeout.Size = new System.Drawing.Size(167, 30);
+            this.txtTimeout.TabIndex = 24;
             // 
             // cbConfirmAction
             // 
@@ -783,24 +802,6 @@
             this.label9.TabIndex = 16;
             this.label9.Text = "* Changes Apply after Restart";
             // 
-            // lblTimeout
-            // 
-            this.lblTimeout.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTimeout.Location = new System.Drawing.Point(5, 395);
-            this.lblTimeout.Name = "lblTimeout";
-            this.lblTimeout.Size = new System.Drawing.Size(244, 31);
-            this.lblTimeout.TabIndex = 25;
-            this.lblTimeout.Text = "Time Out (in millisecond)";
-            // 
-            // txtTimeout
-            // 
-            this.txtTimeout.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTimeout.Location = new System.Drawing.Point(271, 395);
-            this.txtTimeout.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtTimeout.Name = "txtTimeout";
-            this.txtTimeout.Size = new System.Drawing.Size(167, 30);
-            this.txtTimeout.TabIndex = 24;
-            // 
             // frmSettings
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
@@ -812,6 +813,7 @@
             this.Controls.Add(this.tabControl1);
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.Name = "frmSettings";

@@ -29,6 +29,7 @@ namespace HomeCinema
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmNewMediaLoc));
             this.label1 = new System.Windows.Forms.Label();
             this.txtPath = new System.Windows.Forms.TextBox();
             this.btnBrowse = new System.Windows.Forms.Button();
@@ -128,6 +129,7 @@ namespace HomeCinema
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "frmNewMediaLoc";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

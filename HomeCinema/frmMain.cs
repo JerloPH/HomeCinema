@@ -51,9 +51,6 @@ namespace HomeCinema
             // Start app
             InitializeComponent();
 
-            // Form properties
-            Icon = GlobalVars.HOMECINEMA_ICON;
-
             // Change Caption and Title
             Text = $"{GlobalVars.HOMECINEMA_NAME} - Media Organizer (v{GlobalVars.HOMECINEMA_VERSION} r{GlobalVars.HOMECINEMA_BUILD.ToString()})";
 
@@ -1310,7 +1307,6 @@ namespace HomeCinema
                 GlobalVars.MOVIE_IMGLIST.Images.Clear();
                 GlobalVars.MOVIE_IMGLIST.Dispose();
             }
-            GlobalVars.HOMECINEMA_ICON?.Dispose();
             GlobalVars.TILE_FONT?.Dispose();
             GlobalVars.MOVIE_EXTENSIONS?.Clear();
             GlobalVars.formAbout?.Dispose();

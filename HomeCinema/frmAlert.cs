@@ -23,7 +23,6 @@ namespace HomeCinema
             var centerForm = Width / 2; // center point of form
             int adjlbl = 0; // Adjust when there's an icon
 
-            Icon = GlobalVars.HOMECINEMA_ICON;
             BackColor = Settings.ColorBg;
             ForeColor = Settings.ColorFont;
             Text = String.IsNullOrWhiteSpace(caption) ? GlobalVars.CAPTION_DIALOG : caption;

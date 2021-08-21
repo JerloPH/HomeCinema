@@ -22,7 +22,6 @@ namespace HomeCinema
         public frmNewMediaLoc(string caption, List<string> existingList)
         {
             InitializeComponent();
-            Icon = GlobalVars.HOMECINEMA_ICON;
             Text = $"[Add New Location] {GlobalVars.HOMECINEMA_NAME} - Media Organizer (v{GlobalVars.HOMECINEMA_VERSION} r{GlobalVars.HOMECINEMA_BUILD})";
             FormClosing += new FormClosingEventHandler(frmNewMediaLoc_FormClosing);
 

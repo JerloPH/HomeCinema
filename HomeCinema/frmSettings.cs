@@ -37,7 +37,6 @@ namespace HomeCinema
             InitializeComponent();
             // Form properties
             FormClosing += new FormClosingEventHandler(frmSettings_FormClosing);
-            Icon = GlobalVars.HOMECINEMA_ICON;
             Text = $"[Settings] {GlobalVars.HOMECINEMA_NAME} - Media Organizer (v{GlobalVars.HOMECINEMA_VERSION} r{GlobalVars.HOMECINEMA_BUILD.ToString()})";
 
             // Controls

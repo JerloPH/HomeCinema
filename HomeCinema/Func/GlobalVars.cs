@@ -58,8 +58,6 @@ namespace HomeCinema
         public static string LINK_ANILIST = "https://anilist.co/anime/";
         public static string LINK_YT = "https://www.youtube.com/watch?v=";
 
-        public static Icon HOMECINEMA_ICON = new Icon(DataFile.FILE_ICON); // Icon as a resource, used by forms
-
         // Database Vars
         public static string[] DB_INFO_CATEGORY = new string[] { "None", "Movie", "TV Series", "Anime Movie", "Anime Series", "Animated Movie", "Cartoon Series" };
 

@@ -16,7 +16,6 @@ namespace HomeCinema
         {
             InitializeComponent();
             // Form properties
-            Icon = GlobalVars.HOMECINEMA_ICON;
             BackColor = Settings.ColorBg;
             ForeColor = Settings.ColorFont;
 
