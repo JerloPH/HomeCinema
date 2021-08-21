@@ -132,8 +132,8 @@ namespace HomeCinema
             if (maxProgress < 1) { return maxProgress; }
 
             string callFrom = $"frmMain ({Name})-InsertToDB-({errFrom})";
-            string logFileInsert = Path.Combine(GlobalVars.PATH_LOG, "NewInsert_Success.log");
-            string logFileInsertSkipped = Path.Combine(GlobalVars.PATH_LOG, "NewInsert_Skipped.log");
+            string logFileInsert = Path.Combine(DataFile.PATH_LOG, "NewInsert_Success.log");
+            string logFileInsertSkipped = Path.Combine(DataFile.PATH_LOG, "NewInsert_Skipped.log");
             string mediatype = "movie";
             string filePath;
             string src;
@@ -284,7 +284,7 @@ namespace HomeCinema
 
                         // Clear prev cover images
                         string movieId = insertResult.ToString();
-                        string oldFile = GlobalVars.PATH_TEMP + movieId + ".jpg"; // cover path for temporary cover
+                        string oldFile = $"{DataFile.PATH_TEMP}{movieId}.jpg"; // cover path for temporary cover
                         string newFile = GlobalVars.ImgFullPath(movieId);
                         if (File.Exists(oldFile))
                         {
@@ -727,7 +727,7 @@ namespace HomeCinema
         // Populate combobox cbCountry, from file
         public void PopulateCountryCB()
         {
-            GlobalVars.TEXT_COUNTRY = GlobalVars.BuildArrFromFile(GlobalVars.FILE_COUNTRY, "frmMain-PopulateCountryCB [FILE_COUNTRY]");
+            GlobalVars.TEXT_COUNTRY = GlobalVars.BuildArrFromFile(DataFile.FILE_COUNTRY, "frmMain-PopulateCountryCB [FILE_COUNTRY]");
             cbCountry.Items.Clear();
             cbCountry.Items.Add("All");
             foreach (string c in GlobalVars.TEXT_COUNTRY)
@@ -742,7 +742,7 @@ namespace HomeCinema
         // Populate combobox cbGenre, from file
         public void PopulateGenreCB()
         {
-            GlobalVars.TEXT_GENRE = GlobalVars.BuildArrFromFile(GlobalVars.FILE_GENRE, "frmMain-PopulateGenreCB [FILE_GENRE]");
+            GlobalVars.TEXT_GENRE = GlobalVars.BuildArrFromFile(DataFile.FILE_GENRE, "frmMain-PopulateGenreCB [FILE_GENRE]");
             cbGenre.Items.Clear();
             cbGenre.Items.Add("All");
             foreach (string c in GlobalVars.TEXT_GENRE)
@@ -796,7 +796,7 @@ namespace HomeCinema
                 toWrite += item + ",";
             }
             toWrite = toWrite.TrimEnd(',');
-            GlobalVars.WriteToFile(GlobalVars.FILE_COUNTRY, toWrite);
+            GlobalVars.WriteToFile(DataFile.FILE_COUNTRY, toWrite);
         }
         private void SaveGenreCB()
         {
@@ -810,7 +810,7 @@ namespace HomeCinema
                 toWrite += item + ",";
             }
             toWrite = toWrite.TrimEnd(',');
-            GlobalVars.WriteToFile(GlobalVars.FILE_GENRE, toWrite);
+            GlobalVars.WriteToFile(DataFile.FILE_GENRE, toWrite);
         }
         private int ControlLeftFromAttach(Control src, Control attachedTo) // return left property appropriate to control attached to another control
         {
@@ -832,7 +832,7 @@ namespace HomeCinema
             var dtNewFiles = new List<Medias>();
             int countMediaLoc = 0;
             int countMediaLocMax = 0;
-            string logSkipped = Path.Combine(GlobalVars.PATH_LOG, "SkippedEntries.Log");
+            string logSkipped = Path.Combine(DataFile.PATH_LOG, "SkippedEntries.Log");
             long insertRes = 0;
 
             // Build list of folders to search from
@@ -851,7 +851,7 @@ namespace HomeCinema
                     formNewMediaLoc.Dispose();
                 }
                 GlobalVars.MEDIA_LOC.Add(new MediaLocations(folder, mediatype, src));
-                GlobalVars.WriteToFile(GlobalVars.FILE_MEDIALOC, $"{folder}*{mediatype}*{src}");
+                GlobalVars.WriteToFile(DataFile.FILE_MEDIALOC, $"{folder}*{mediatype}*{src}");
             }
 
             // Delegate task to frmLoading
@@ -859,7 +859,7 @@ namespace HomeCinema
             {
                 // Build a list of Files in Directories from medialocation.hc-data
                 // Setup extensions for media files, load supported ext from file
-                string[] tempMediaExt = GlobalVars.BuildArrFromFile(GlobalVars.FILE_MEDIA_EXT, "frmMain-frmMain[FILE_MEDIA_EXT]");
+                string[] tempMediaExt = GlobalVars.BuildArrFromFile(DataFile.FILE_MEDIA_EXT, "frmMain-frmMain[FILE_MEDIA_EXT]");
                 string tempExtToBrowse = "";
                 string extToAdd = "";
                 foreach (string c in tempMediaExt)
@@ -1198,7 +1198,7 @@ namespace HomeCinema
             {
                 GlobalVars.MOVIE_IMGLIST.Images.Clear();
                 string imageFilePath = GlobalVars.ImgFullPath("0");
-                string Imagefile = (File.Exists(imageFilePath)) ? imageFilePath : GlobalVars.FILE_DEFIMG;
+                string Imagefile = (File.Exists(imageFilePath)) ? imageFilePath : DataFile.FILE_DEFIMG;
                 using (Image imgFromFile = Image.FromFile(Imagefile))
                 {
                     GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imgFromFile);

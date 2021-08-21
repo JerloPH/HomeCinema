@@ -241,7 +241,7 @@ namespace HomeCinema
             // Parse image link from JSON and download it
             if (String.IsNullOrWhiteSpace(linkPoster) == false)
             {
-                string moviePosterDL = GlobalVars.PATH_TEMP + MOVIE_ID + ".jpg";
+                string moviePosterDL = $"{DataFile.PATH_TEMP}{MOVIE_ID}.jpg";
                 GlobalVars.DeleteMove(moviePosterDL, errFrom); // Delete prev file, if exists
                 return GlobalVars.DownloadLoop(moviePosterDL, linkPoster, errFrom);
             }

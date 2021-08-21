@@ -305,12 +305,12 @@ namespace HomeCinema
             // Add new country to text file
             foreach (string item in listboxCountry.Items)
             {
-                GlobalVars.WriteAppend(GlobalVars.FILE_COUNTRY, $",{item}", false);
+                GlobalVars.WriteAppend(DataFile.FILE_COUNTRY, $",{item}", false);
             }
             // Add new genre to text file
             foreach (string item in listboxGenre.Items)
             {
-                GlobalVars.WriteAppend(GlobalVars.FILE_GENRE, $",{item}", false);
+                GlobalVars.WriteAppend(DataFile.FILE_GENRE, $",{item}", false);
             }
             Program.FormMain.PopulateCountryCB(); // Refresh Country list
             Program.FormMain.PopulateGenreCB(); // Refresh Genre list
@@ -625,8 +625,8 @@ namespace HomeCinema
             // Ask to change cover - poster image
             if (String.IsNullOrWhiteSpace(mediaInfo.PosterPath) == false)
             {
-                string moviePosterDL = $"{GlobalVars.PATH_TEMP}{MOVIE_ID}.jpg";
-                string existingcover = $"{GlobalVars.PATH_IMG}{MOVIE_ID}.jpg";
+                string moviePosterDL = $"{DataFile.PATH_TEMP}{MOVIE_ID}.jpg";
+                string existingcover = $"{DataFile.PATH_IMG}{MOVIE_ID}.jpg";
                 bool downloadCover = true;
                 if (File.Exists(existingcover))
                 {

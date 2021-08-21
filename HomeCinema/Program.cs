@@ -38,15 +38,9 @@ namespace HomeCinema
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-                // Pre-load setup
-                // Create directories
-                GlobalVars.CreateDir(GlobalVars.PATH_IMG);
-                GlobalVars.CreateDir(GlobalVars.PATH_DATA);
-                GlobalVars.CreateDir(GlobalVars.PATH_TEMP);
-                GlobalVars.CreateDir(GlobalVars.PATH_LOG);
-
                 // Check files first
-                GlobalVars.CheckAllFiles();
+                DataFile.Initialize();
+                DataFile.CheckAllFiles();
 
                 FormMain = new frmMain();
                 Application.Run(FormMain);

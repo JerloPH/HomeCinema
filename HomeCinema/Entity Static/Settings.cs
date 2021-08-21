@@ -75,16 +75,16 @@ namespace HomeCinema
             // If file does not exist, create it with default values from [Config.cs]
             try
             {
-                if (File.Exists(GlobalVars.FILE_SETTINGS) == false)
+                if (File.Exists(DataFile.FILE_SETTINGS) == false)
                 {
                     config = new SettingJson();
                     contents = JsonConvert.SerializeObject(config, Formatting.Indented);
-                    GlobalVars.WriteToFile(GlobalVars.FILE_SETTINGS, contents);
+                    GlobalVars.WriteToFile(DataFile.FILE_SETTINGS, contents);
                 }
                 else
                 {
                     // Load file contents to Config
-                    contents = GlobalVars.ReadStringFromFile(GlobalVars.FILE_SETTINGS, $"{errorFrom} [FILE_SETTINGS]");
+                    contents = GlobalVars.ReadStringFromFile(DataFile.FILE_SETTINGS, $"{errorFrom} [FILE_SETTINGS]");
                     config = JsonConvert.DeserializeObject<SettingJson>(contents, GlobalVars.JSON_SETTING);
                 }
             }
@@ -178,7 +178,7 @@ namespace HomeCinema
 
             // Seriliaze to JSON
             string json = JsonConvert.SerializeObject(config, Formatting.Indented);
-            return GlobalVars.WriteToFile(GlobalVars.FILE_SETTINGS, json);
+            return GlobalVars.WriteToFile(DataFile.FILE_SETTINGS, json);
         }
         #endregion
     }

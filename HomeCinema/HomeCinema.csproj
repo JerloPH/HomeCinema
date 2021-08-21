@@ -123,6 +123,7 @@
       <DependentUpon>frmSearchMedia.cs</DependentUpon>
     </Compile>
     <Compile Include="Enum\GlobalEnum.cs" />
+    <Compile Include="Func\DataFile.cs" />
     <Compile Include="Func\Log.cs" />
     <Compile Include="JSONs\AnilistPageQuery.cs" />
     <Compile Include="frmAbout.cs">

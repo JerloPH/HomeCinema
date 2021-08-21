@@ -38,13 +38,6 @@ using System.Text;
 
 namespace HomeCinema
 {
-    // Class containing paths and data objects required by App
-    public static class DataFile
-    {
-        public static string FILE_LOG_APP = Path.Combine(GlobalVars.PATH_LOG, "App_Log.log");// Log all messages and actions
-        public static string FILE_LOG_ERROR = Path.Combine(GlobalVars.PATH_LOG, "App_ErrorLog.log"); // Contains only error Messages
-        public static string FILE_LOG_DB = Path.Combine(GlobalVars.PATH_LOG, "App_DB.log"); // Log all messages and actions for db-related
-    }
     public static class GlobalVars
     {
         // Variables ############################################################################################################
@@ -65,27 +58,7 @@ namespace HomeCinema
         public static string LINK_ANILIST = "https://anilist.co/anime/";
         public static string LINK_YT = "https://www.youtube.com/watch?v=";
 
-        // Paths for Files and Folders
-        public static string PATH_START = AppContext.BaseDirectory;
-        public static string PATH_RES = Path.Combine(PATH_START, "Resources") + "\\";
-        public static string PATH_IMG = Path.Combine(PATH_START, "covers") + "\\";
-        public static string PATH_DATA = Path.Combine(PATH_START, "data") + "\\";
-        public static string PATH_TEMP = Path.Combine(PATH_START, "temp") + "\\";
-        public static string PATH_LOG = Path.Combine(PATH_START, "logs");
-
-        public static string FILE_ICON = PATH_RES + @"HomeCinema.ico"; // Icon
-        public static string FILE_DEFIMG = PATH_IMG + @"0.jpg"; // default cover image
-
-        // Data and files
-        public static string FILE_CONFIG = Path.Combine(PATH_DATA, "config.json"); // configuration file to use for APIs
-        public static string FILE_SETTINGS = Path.Combine(PATH_DATA, "settings.json"); // settings used in App
-        public static string FILE_COUNTRY = Path.Combine(PATH_DATA, "country.hc_data"); // list of countries
-        public static string FILE_GENRE = Path.Combine(PATH_DATA, "genre.hc_data"); // List of genres
-        public static string FILE_NOTRAILER = Path.Combine(PATH_DATA, "NoTrailer.jpg"); // default picture if no trailer link
-        public static string FILE_MEDIALOC = Path.Combine(PATH_DATA, "medialocation.hc_data"); // For movies, folder locations
-        public static string FILE_MEDIA_EXT = Path.Combine(PATH_DATA, "media_ext.hc_data"); // Extensions to check for movies
-
-        public static Icon HOMECINEMA_ICON = new Icon(FILE_ICON); // Icon as a resource, used by forms
+        public static Icon HOMECINEMA_ICON = new Icon(DataFile.FILE_ICON); // Icon as a resource, used by forms
 
         // Database Vars
         public static string[] DB_INFO_CATEGORY = new string[] { "None", "Movie", "TV Series", "Anime Movie", "Anime Series", "Animated Movie", "Cartoon Series" };
@@ -192,7 +165,7 @@ namespace HomeCinema
                 // Open file in explorer
                 if (openLog)
                 {
-                    try { Process.Start("explorer.exe", PATH_LOG); }
+                    try { Process.Start("explorer.exe", DataFile.PATH_LOG); }
                     catch { }
                 }
             }
@@ -242,77 +215,10 @@ namespace HomeCinema
                 }
             }
         }
-        // Check all FILES on Startup
-        public static void CheckAllFiles()
-        {
-            // resources
-            CopyFromRes(FILE_ICON);
-            // covers
-            CopyFromRes(FILE_DEFIMG);
-            // data
-            CopyFromRes(FILE_COUNTRY);
-            CopyFromRes(FILE_GENRE);
-            CopyFromRes(FILE_NOTRAILER);
-            CopyFromRes(FILE_MEDIALOC);
-            CopyFromRes(FILE_MEDIA_EXT);
-            // Create empty Logs
-            if (!File.Exists(DataFile.FILE_LOG_APP)) { WriteToFile(DataFile.FILE_LOG_APP, ""); }
-            if (!File.Exists(DataFile.FILE_LOG_ERROR)) { WriteToFile(DataFile.FILE_LOG_ERROR, ""); }
-            if (!File.Exists(DataFile.FILE_LOG_DB)) { WriteToFile(DataFile.FILE_LOG_DB, ""); }
-            // Default config
-            if (!File.Exists(FILE_CONFIG))
-            {
-                var json = JsonConvert.SerializeObject(new ConfigJson(), Formatting.Indented);
-                WriteToFile(FILE_CONFIG, json);
-            }
-            else
-            {
-                var jsonContent = ReadStringFromFile(FILE_CONFIG, "GlobalVar-CheckAllFiles");
-                var config = JsonConvert.DeserializeObject<ConfigJson>(jsonContent, JSON_SETTING);
-                if (!String.IsNullOrWhiteSpace(config.TmdbApiKey))
-                {
-                    TMDB_KEY = config.TmdbApiKey;
-                }
-            }
-            // Contains TMDB_KEY ?
-            HAS_TMDB_KEY = !String.IsNullOrWhiteSpace(TMDB_KEY);
-            DEBUGGING = Debugger.IsAttached;
-        }
-        // Create a directory, if not existing
-        public static void CreateDir(string fPath)
-        {
-            try
-            {
-                Directory.CreateDirectory(fPath);
-            }
-            catch (Exception ex)
-            {
-                ShowError($"(GlobalVars-CreateDir) Create Folder: {fPath}", ex, "Required folder not loaded!");
-            }
-        }
-        // Copy from Resources if not on Root
-        public static bool CopyFromRes(string fPath)
-        {
-            if (!File.Exists(fPath))
-            {
-                string fName = Path.GetFileName(fPath);
-                // try Copying
-                try
-                {
-                    File.Copy(PATH_RES + fName, fPath);
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    ShowError($"(GlobalVars-CopyFromRes) Copying required file: {fName}", ex, "Required file is not loaded!");
-                }
-            }
-            return false;
-        }
         // Load Media Location file
         public static void LoadMediaLocations()
         {
-            string medialocContent = ReadStringFromFile(FILE_MEDIALOC, "frmMain");
+            string medialocContent = ReadStringFromFile(DataFile.FILE_MEDIALOC, "frmMain");
             if (!String.IsNullOrWhiteSpace(medialocContent))
             {
                 MEDIA_LOC?.Clear();
@@ -499,17 +405,17 @@ namespace HomeCinema
         // Get string formatted on picture filepath
         public static string ImgFullPath(string movieID)
         {
-            return PATH_IMG + movieID + ".jpg";
+            return $"{DataFile.PATH_IMG}{movieID}.jpg";
         }
         // Return valid Picture filepath string
         public static string ImgFullPathWithDefault(string movieID)
         {
-            string path = PATH_IMG + movieID + ".jpg";
+            string path = $"{DataFile.PATH_IMG}{movieID}.jpg";
             if (File.Exists(path))
             {
                 return path;
             }
-            return (File.Exists(PATH_IMG + "0.jpg")) ? PATH_IMG + "0.jpg" : PATH_RES + "0.jpg";
+            return (File.Exists(ImgFullPath("0")) ? ImgFullPath("0") : DataFile.PATH_RES + "0.jpg");
         }
         // Get Image Key from ImageList
         public static string ImgGetKey(string MovieID)
@@ -838,7 +744,7 @@ namespace HomeCinema
             string errFrom = "GlobalVars - CheckForUpdate";
             Form caller = (parent == null) ? Program.FormMain : parent;
             int UpdateStatus = 0; // 0-default, 1=update, 2=latest ver, 3=error
-            string fileName = PATH_TEMP + "version";
+            string fileName = DataFile.PATH_TEMP + "version";
             string link = @"https://raw.githubusercontent.com/JerloPH/HomeCinema/master/data/version";
             string linkRelease = @"https://github.com/JerloPH/HomeCinema/releases";
             int tryCount = 3;
@@ -1072,13 +978,13 @@ namespace HomeCinema
             string calledFrom = "GlobalVars-CleanCoversNotInDb()";
             string filepath;
             List<string> listId = SQLHelper.DbQrySingle(HCTable.info, HCInfo.Id, calledFrom);
-            List<string> listCover = SearchFilesSingleDir(PATH_IMG, calledFrom, false);
+            List<string> listCover = SearchFilesSingleDir(DataFile.PATH_IMG, calledFrom, false);
             foreach (string i in listId)
             {
                 try
                 {
                     // Remove element if its in listId
-                    filepath = Path.Combine(PATH_IMG, $"{i}.jpg");
+                    filepath = Path.Combine(DataFile.PATH_IMG, $"{i}.jpg");
                     listCover.RemoveAt(listCover.IndexOf(filepath));
                 }
                 catch { }
@@ -1086,7 +992,7 @@ namespace HomeCinema
             // Remove 0.jpg
             try
             {
-                filepath = Path.Combine(PATH_IMG, "0.jpg");
+                filepath = Path.Combine(DataFile.PATH_IMG, "0.jpg");
                 listCover.RemoveAt(listCover.IndexOf(filepath));
             }
             catch { }
@@ -1219,18 +1125,18 @@ namespace HomeCinema
                 form.Message = "Removing images not in database..";
                 CleanCoversNotInDb();
                 form.Message = "Removing temporary image files..";
-                DeleteFilesExt(PATH_TEMP, ".jpg", calledFrom);
+                DeleteFilesExt(DataFile.PATH_TEMP, ".jpg", calledFrom);
                 form.Message = "Removing temporary json files..";
-                DeleteFilesExt(PATH_TEMP, ".json", calledFrom);
+                DeleteFilesExt(DataFile.PATH_TEMP, ".json", calledFrom);
                 form.Message = "Removing logs..";
-                DeleteFilesExt(PATH_LOG, ".log", calledFrom);
-                DeleteFilesExt(PATH_TEMP, ".log", calledFrom);
+                DeleteFilesExt(DataFile.PATH_LOG, ".log", calledFrom);
+                DeleteFilesExt(DataFile.PATH_TEMP, ".log", calledFrom);
                 form.Message = "Removing old version file..";
-                TryDelete(PATH_TEMP + "version", calledFrom);
+                TryDelete(DataFile.PATH_TEMP + "version", calledFrom);
                 form.Message = "Done!";
             };
             form.ShowDialog();
-            CheckAllFiles(); // re-check files if some are missing
+            DataFile.CheckAllFiles(); // re-check files if some are missing
             if (showMsg)
             {
                 ShowInfo("Cleanup Done!");
@@ -1292,7 +1198,7 @@ namespace HomeCinema
         }
         public static string TrailerLocalImage()
         {
-            string imgfile = FILE_NOTRAILER;
+            string imgfile = DataFile.FILE_NOTRAILER;
             if (!File.Exists(imgfile))
             {
                 return "<html><body><h1>Default cover missing!</h1></body></html>";

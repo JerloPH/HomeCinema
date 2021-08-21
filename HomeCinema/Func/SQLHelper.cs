@@ -63,7 +63,7 @@ namespace HomeCinema.SQLFunc
         /// <param name="InitiatedFrom">Caller of the function.</param>
         public static bool Initiate(string InitiatedFrom)
         {
-            DB_PATH = GlobalVars.PATH_START + DB_NAME;
+            DB_PATH = DataFile.PATH_START + DB_NAME;
             string CalledFrom = "SQLHelper (Initiate)-" + InitiatedFrom;
             int dbVersion = 1;
             bool IsNewDb = DbExecNonQuery($"CREATE TABLE IF NOT EXISTS '{HCTable.info}' (" +
@@ -410,7 +410,7 @@ namespace HomeCinema.SQLFunc
                         cmd.CommandText = $"INSERT INTO {HCTable.filepath} ({HCFile.Id}, {fileCols}) VALUES({GeneratedID},{fileVals});";
                         successCode = cmd.ExecuteNonQuery();
                         // Add cover image by capturing media
-                        string coverFilepath = GlobalVars.PATH_IMG + GeneratedID + ".jpg";
+                        string coverFilepath = $"{DataFile.PATH_IMG}{GeneratedID}.jpg";
                         try
                         {
                             if (File.Exists(fPathFile))

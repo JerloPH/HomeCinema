@@ -22,7 +22,7 @@ namespace HomeCinema
             // URLs
             string URLFindMedia = @"https://api.themoviedb.org/3/search/" + $"{mediatypeUrl}?api_key={TMDB_KEY}&query={Searchquery}";
             // Filepaths
-            string FileFindMedia = GlobalVars.PATH_TEMP + MovieId + "_findMedia.json";
+            string FileFindMedia = DataFile.PATH_TEMP + MovieId + "_findMedia.json";
 
             if (GlobalVars.DownloadAndReplace(FileFindMedia, URLFindMedia, errFrom))
             {
@@ -42,9 +42,9 @@ namespace HomeCinema
             string URLFindVids = @"https://api.themoviedb.org/3/" + $"{mediaTypeUrl}/{Tmdb}/videos?api_key={TMDB_KEY}";
             string URLFindCrew = @"https://api.themoviedb.org/3/" + $"{mediaTypeUrl}/{Tmdb}/credits?api_key={TMDB_KEY}";
             // File paths
-            string JSONmovieinfo = GlobalVars.PATH_TEMP + Tmdb + "_info.json";
-            string JSONmovievids = GlobalVars.PATH_TEMP + Tmdb + "_videos.json";
-            string JSONcrewcast = GlobalVars.PATH_TEMP + Tmdb + "_crewcast.json";
+            string JSONmovieinfo = DataFile.PATH_TEMP + Tmdb + "_info.json";
+            string JSONmovievids = DataFile.PATH_TEMP + Tmdb + "_videos.json";
+            string JSONcrewcast = DataFile.PATH_TEMP + Tmdb + "_crewcast.json";
 
             if (!String.IsNullOrWhiteSpace(Tmdb) && Tmdb!="0")
             {
@@ -170,7 +170,7 @@ namespace HomeCinema
         {
             string errFrom = $"TmdbAPI-GetImdbFromAPI";
             string mediaTypeUrl = mediatype.ToLower().Equals("movie") ? "movie" : "tv";
-            string JSONgetImdb = $"{GlobalVars.PATH_TEMP}tmdb{TmdbId}_movieInfo.json";
+            string JSONgetImdb = $"{DataFile.PATH_TEMP}tmdb{TmdbId}_movieInfo.json";
             string urlJSONgetImdb = @"https://api.themoviedb.org/3/" + $"{mediaTypeUrl}/{TmdbId}?api_key={TMDB_KEY}&append_to_response=external_ids";
             // Check if MovieID is not empty
             if (String.IsNullOrWhiteSpace(TmdbId) == false)
@@ -194,7 +194,7 @@ namespace HomeCinema
         {
             string errFrom = $"TmdbAPI-GetTmdbFromImdb";
             string URL = @"https://api.themoviedb.org/3/find/" + $"{ImdbId}?api_key={TMDB_KEY}&language=en-US&external_source=imdb_id";
-            string File = $"{GlobalVars.PATH_TEMP}{ImdbId}_findTmdb.json";
+            string File = $"{DataFile.PATH_TEMP}{ImdbId}_findTmdb.json";
             if (String.IsNullOrWhiteSpace(ImdbId) == false)
             {
                 // Download file if not existing (TO GET IMDB Id)
@@ -220,7 +220,7 @@ namespace HomeCinema
             // Parse image link from JSON and download it
             if (String.IsNullOrWhiteSpace(linkPoster) == false)
             {
-                string moviePosterDL = GlobalVars.PATH_TEMP + MOVIE_ID + ".jpg";
+                string moviePosterDL = $"{DataFile.PATH_TEMP}{MOVIE_ID}.jpg";
                 GlobalVars.DeleteMove(moviePosterDL, errFrom); // Delete prev file, if exists
                 return GlobalVars.DownloadLoop(moviePosterDL, "https://image.tmdb.org/t/p/original/" + linkPoster, errFrom);
             }

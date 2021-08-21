@@ -215,7 +215,7 @@ namespace HomeCinema
 
             // Media File Format / File Extensions Texts
             text = "";
-            foreach (string c in GlobalVars.BuildArrFromFile(GlobalVars.FILE_MEDIA_EXT, $"{errFrom}[FILE_MEDIA_EXT]"))
+            foreach (string c in GlobalVars.BuildArrFromFile(DataFile.FILE_MEDIA_EXT, $"{errFrom}[FILE_MEDIA_EXT]"))
             {
                 if (String.IsNullOrWhiteSpace(c) == false)
                 {
@@ -340,7 +340,7 @@ namespace HomeCinema
                     }
                 }
                 text.TrimEnd(',');
-                GlobalVars.WriteToFile(GlobalVars.FILE_MEDIA_EXT, text);
+                GlobalVars.WriteToFile(DataFile.FILE_MEDIA_EXT, text);
             }
             catch { error += Environment.NewLine + "Media Extensions"; }
 
@@ -356,21 +356,21 @@ namespace HomeCinema
                 newMediaLoc += $"{path}*{mediatype}*{source}|";
             }
             newMediaLoc = newMediaLoc.TrimEnd('|');
-            if (GlobalVars.WriteToFile(GlobalVars.FILE_MEDIALOC, newMediaLoc))
+            if (GlobalVars.WriteToFile(DataFile.FILE_MEDIALOC, newMediaLoc))
             {
                 GlobalVars.LoadMediaLocations();
             }
             else { error += Environment.NewLine + "Media Locations"; }
 
             // Replace country file
-            if (GlobalVars.WriteListBoxToFile(GlobalVars.FILE_COUNTRY, listboxCountry, ","))
+            if (GlobalVars.WriteListBoxToFile(DataFile.FILE_COUNTRY, listboxCountry, ","))
             {
                 Program.FormMain.PopulateCountryCB();
             }
             else { error += Environment.NewLine + "Country list"; }
 
             // Replace genre file
-            if (GlobalVars.WriteListBoxToFile(GlobalVars.FILE_GENRE, listboxGenre, ","))
+            if (GlobalVars.WriteListBoxToFile(DataFile.FILE_GENRE, listboxGenre, ","))
             {
                 Program.FormMain.PopulateGenreCB();
             }

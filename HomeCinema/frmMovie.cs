@@ -319,7 +319,7 @@ namespace HomeCinema
         private void LogWebDoc(string Youtube_ID)
         {
             // Log to file
-            GlobalVars.WriteToFile(Path.Combine(GlobalVars.PATH_LOG, "WebTrailerDocText.log"), webTrailer.DocumentText);
+            GlobalVars.WriteToFile(Path.Combine(DataFile.PATH_LOG, "WebTrailerDocText.log"), webTrailer.DocumentText);
             //GlobalVars.WriteToFile(Path.Combine(GlobalVars.PATH_LOG, "WebTrailer.log"), YoutubeEmbed(Youtube_ID));
         }
         #endregion

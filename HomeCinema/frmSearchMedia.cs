@@ -97,7 +97,7 @@ namespace HomeCinema
             string errFrom = $"frmSearchMedia-SearchTmdb";
             // Setup var and links
             string urlJSONgetId = @"https://api.themoviedb.org/3/search/multi?api_key=" + GlobalVars.TMDB_KEY + "&query=" + txtInput.Text.Replace(" ", "%20");
-            string JSONgetID = GlobalVars.PATH_TEMP + movieId + "_id.json";
+            string JSONgetID = $"{DataFile.PATH_TEMP}{movieId}_id.json";
             string JSONContents = "";
             string rPosterLink = "";
             int count = 0;
@@ -117,7 +117,7 @@ namespace HomeCinema
                         foreach (var result in objPageResult.results)
                         {
                             string ImdbFromApi = TmdbAPI.GetImdbFromAPI(result.Id.ToString(), result.MediaType);
-                            string imgFilePath = $"{GlobalVars.PATH_TEMP}{ImdbFromApi}.jpg";
+                            string imgFilePath = $"{DataFile.PATH_TEMP}{ImdbFromApi}.jpg";
                             string imgKey = "0";
                             // Skip entry if there is no Imdb Id associated
                             if (String.IsNullOrWhiteSpace(ImdbFromApi)) { continue; }
@@ -179,7 +179,7 @@ namespace HomeCinema
                         string mediaId = media.Id.ToString();
                         string cover = media.CoverImage.Medium;
                         string mediatype = media.Format.ToLower();
-                        string imgFilePath = $"{GlobalVars.PATH_TEMP}{mediaId}.jpg";
+                        string imgFilePath = $"{DataFile.PATH_TEMP}{mediaId}.jpg";
 
                         // Change mediatype
                         if (mediatype.Equals("movie") || media.Episodes < 2)
@@ -288,7 +288,7 @@ namespace HomeCinema
         private void btnSearch_Click(object sender, EventArgs e)
         {
             ClearImageList();
-            Image defImg = Image.FromFile(GlobalVars.FILE_DEFIMG);
+            Image defImg = Image.FromFile(DataFile.FILE_DEFIMG);
             imageList.Images.Add("0", defImg);
             defImg.Dispose();
             lvResult.View = View.LargeIcon;

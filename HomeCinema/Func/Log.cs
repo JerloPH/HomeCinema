@@ -87,7 +87,7 @@ namespace HomeCinema
         public static void LogDebug(string log)
         {
             if (!GlobalVars.DEBUGGING) { return; }
-            Log(Path.Combine(GlobalVars.PATH_LOG, "DEBUG.log"), "", log);
+            Log(Path.Combine(DataFile.PATH_LOG, "DEBUG.log"), "", log);
         }
     }
 }
