@@ -5,7 +5,7 @@
 **version:**	0.8.2.0 <br>
 **release:**	42
 
-| <a href="docs/REPORT_ISSUE.md">Report Issue/Bug/Error/Feature request</a> | <a href="(docs/CONTRIBUTING.md">Submit Pull Request</a>  | <a href="VERSION_HISTORY.md">See 'App Version History'</a> |
+| <a href="docs/REPORT_ISSUE.md">Report Issue/Bug/Error/Feature request</a> | <a href="docs/CONTRIBUTING.md">Submit Pull Request</a>  | <a href="VERSION_HISTORY.md">See 'App Version History'</a> |
 | -- | -- | -- |
 
 <br>
