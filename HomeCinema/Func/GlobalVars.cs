@@ -50,7 +50,7 @@ namespace HomeCinema
         // Variables ############################################################################################################
         public static string HOMECINEMA_NAME = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyTitleAttribute>().Title;
         public static string HOMECINEMA_VERSION = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-        public static int HOMECINEMA_BUILD = 41; // build use for updater
+        public static int HOMECINEMA_BUILD = 42; // build use for updater
         public static int HOMECINEMA_DBVER = 5; // for database, and data changes
 
         public static string PREFIX_MOVIEINFO = "movieInfo";
