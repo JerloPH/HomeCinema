@@ -220,7 +220,9 @@ namespace HomeCinema
                     picbox.Image = tempImage;
                     picbox.Tag = selectedFilename;
                     picbox.Refresh();
-                    GlobalVars.ShowInfo("Changed the image cover!");
+                    if (Settings.IsConfirmMsg)
+                        GlobalVars.ShowInfo("Changed the image cover!");
+                    
                     return true;
                 }
                 catch (Exception exc)
@@ -470,7 +472,8 @@ namespace HomeCinema
                     {
                         txtPathSub.Text = subFile;
                     }
-                    GlobalVars.ShowInfo("File is located!");
+                    if (Settings.IsConfirmMsg)
+                        GlobalVars.ShowInfo("File is located!");
                 }
                 else
                 {

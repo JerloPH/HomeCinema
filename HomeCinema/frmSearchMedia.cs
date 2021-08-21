@@ -297,7 +297,7 @@ namespace HomeCinema
             lvResult.SuspendLayout();
 
             int size = Source.Equals(HCSource.tmdb) ? SearchTmdb() : SearchAnilist();
-            if (size > 0)
+            if (size > 0 && Settings.IsConfirmMsg)
             {
                 GlobalVars.ShowInfo($"Found {size} results!", "", this);
             }
