@@ -308,16 +308,19 @@ namespace HomeCinema
             try { Settings.ImgTileHeight = Convert.ToInt32(txtImgTileHeight.Text); }
             catch { error += Environment.NewLine + lblImgTileHeight.Text.Trim().TrimEnd(':'); }
 
-            try
+            if (int.TryParse(txtTimeout.Text.Replace(",", ""), out int timeoutval))
             {
-                Settings.TimeOut = Convert.ToInt32(txtTimeout.Text.Replace(",", ""));
                 if (Settings.TimeOut < 5000)
                 {
                     GlobalVars.ShowWarning("Timeout cannot be lower than 5,000!", "", this);
+                    txtTimeout.SelectAll();
+                    txtTimeout.Focus();
                     return;
                 }
+                Settings.TimeOut = timeoutval;
             }
-            catch { error += Environment.NewLine + lblTimeout.Text.Trim().TrimEnd(':'); }
+            else
+                error += Environment.NewLine + lblTimeout.Text.Trim().TrimEnd(':');
 
             // Theme Settings
             Settings.ColorBg = BackgroundColor;
@@ -376,7 +379,7 @@ namespace HomeCinema
             else { error += Environment.NewLine + "Genre list"; }
 
             // Show message
-            GlobalVars.ShowInfo((String.IsNullOrWhiteSpace(error)) ? "Done saving Settings!" : "Some settings are not saved:" + error);
+            GlobalVars.ShowInfo((String.IsNullOrWhiteSpace(error)) ? "Done saving Settings!" : "Some settings have invalid values!" + error);
             if (String.IsNullOrWhiteSpace(error))
             {
                 Close();
