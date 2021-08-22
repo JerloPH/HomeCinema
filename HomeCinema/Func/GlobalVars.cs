@@ -884,13 +884,14 @@ namespace HomeCinema
         {
             try
             {
-                return list.Aggregate((a, b) => a + sep + b).Trim();
+                if (list?.Count > 0)
+                    return list.Aggregate((a, b) => a + sep + b).Trim();
             }
             catch (Exception ex)
             {
                 Logs.LogErr($"GlobalVar-ConvertListToString ({calledFrom})", ex);
-                return "";
             }
+            return "";
         }
         // Open file in explorer, highlighted
         public static bool FileOpeninExplorer(string filePath, string calledFrom)

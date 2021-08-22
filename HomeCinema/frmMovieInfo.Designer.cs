@@ -70,14 +70,14 @@
             this.listboxCountry = new System.Windows.Forms.ListBox();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.txtArtist = new System.Windows.Forms.TextBox();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.label11 = new System.Windows.Forms.Label();
             this.txtProducer = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.txtDirector = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.txtStudio = new System.Windows.Forms.TextBox();
+            this.txtDirector = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtArtist = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label18 = new System.Windows.Forms.Label();
             this.txtPathTrailer = new System.Windows.Forms.TextBox();
@@ -90,7 +90,7 @@
             this.btnFetchData = new System.Windows.Forms.Button();
             this.cbSource = new System.Windows.Forms.ComboBox();
             this.label20 = new System.Windows.Forms.Label();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.lboxStudio = new System.Windows.Forms.ListBox();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
@@ -98,8 +98,8 @@
             this.tabPage1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox2
@@ -591,26 +591,22 @@
             this.label13.TabIndex = 50;
             this.label13.Text = "Country";
             // 
-            // label12
+            // tabPage4
             // 
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(384, 226);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(74, 25);
-            this.label12.TabIndex = 49;
-            this.label12.Text = "Casts: ";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // txtArtist
-            // 
-            this.txtArtist.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtArtist.Location = new System.Drawing.Point(388, 257);
-            this.txtArtist.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtArtist.Multiline = true;
-            this.txtArtist.Name = "txtArtist";
-            this.txtArtist.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtArtist.Size = new System.Drawing.Size(358, 167);
-            this.txtArtist.TabIndex = 46;
+            this.tabPage4.Controls.Add(this.lboxStudio);
+            this.tabPage4.Controls.Add(this.label11);
+            this.tabPage4.Controls.Add(this.txtProducer);
+            this.tabPage4.Controls.Add(this.label10);
+            this.tabPage4.Controls.Add(this.label9);
+            this.tabPage4.Controls.Add(this.txtDirector);
+            this.tabPage4.Controls.Add(this.label12);
+            this.tabPage4.Controls.Add(this.txtArtist);
+            this.tabPage4.Location = new System.Drawing.Point(4, 25);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(764, 449);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Casts & Crew";
+            this.tabPage4.UseVisualStyleBackColor = true;
             // 
             // label11
             // 
@@ -641,6 +637,15 @@
             this.label10.TabIndex = 47;
             this.label10.Text = "Director";
             // 
+            // label9
+            // 
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(7, 14);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(97, 25);
+            this.label9.TabIndex = 44;
+            this.label9.Text = "Studio";
+            // 
             // txtDirector
             // 
             this.txtDirector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -652,25 +657,26 @@
             this.txtDirector.Size = new System.Drawing.Size(358, 167);
             this.txtDirector.TabIndex = 43;
             // 
-            // label9
+            // label12
             // 
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(7, 14);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(97, 25);
-            this.label9.TabIndex = 44;
-            this.label9.Text = "Studio";
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(384, 226);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(74, 25);
+            this.label12.TabIndex = 49;
+            this.label12.Text = "Casts: ";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // txtStudio
+            // txtArtist
             // 
-            this.txtStudio.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtStudio.Location = new System.Drawing.Point(11, 41);
-            this.txtStudio.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtStudio.Multiline = true;
-            this.txtStudio.Name = "txtStudio";
-            this.txtStudio.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtStudio.Size = new System.Drawing.Size(358, 167);
-            this.txtStudio.TabIndex = 42;
+            this.txtArtist.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtArtist.Location = new System.Drawing.Point(388, 257);
+            this.txtArtist.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtArtist.Multiline = true;
+            this.txtArtist.Name = "txtArtist";
+            this.txtArtist.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtArtist.Size = new System.Drawing.Size(358, 167);
+            this.txtArtist.TabIndex = 46;
             // 
             // tabPage3
             // 
@@ -685,7 +691,7 @@
             this.tabPage3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage3.Size = new System.Drawing.Size(764, 462);
+            this.tabPage3.Size = new System.Drawing.Size(764, 449);
             this.tabPage3.TabIndex = 1;
             this.tabPage3.Text = "File Paths";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -808,22 +814,18 @@
             this.label20.TabIndex = 39;
             this.label20.Text = "Source:";
             // 
-            // tabPage4
+            // lboxStudio
             // 
-            this.tabPage4.Controls.Add(this.txtStudio);
-            this.tabPage4.Controls.Add(this.label11);
-            this.tabPage4.Controls.Add(this.txtProducer);
-            this.tabPage4.Controls.Add(this.label10);
-            this.tabPage4.Controls.Add(this.label9);
-            this.tabPage4.Controls.Add(this.txtDirector);
-            this.tabPage4.Controls.Add(this.label12);
-            this.tabPage4.Controls.Add(this.txtArtist);
-            this.tabPage4.Location = new System.Drawing.Point(4, 25);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(764, 449);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "Casts & Crew";
-            this.tabPage4.UseVisualStyleBackColor = true;
+            this.lboxStudio.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lboxStudio.FormattingEnabled = true;
+            this.lboxStudio.ItemHeight = 28;
+            this.lboxStudio.Location = new System.Drawing.Point(11, 63);
+            this.lboxStudio.Margin = new System.Windows.Forms.Padding(4);
+            this.lboxStudio.Name = "lboxStudio";
+            this.lboxStudio.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.lboxStudio.Size = new System.Drawing.Size(358, 144);
+            this.lboxStudio.Sorted = true;
+            this.lboxStudio.TabIndex = 56;
             // 
             // frmMovieInfo
             // 
@@ -842,7 +844,7 @@
             this.Name = "frmMovieInfo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmMovieInfo";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(frmMovieInfo_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMovieInfo_FormClosing);
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
@@ -854,10 +856,10 @@
             this.groupBox4.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -897,7 +899,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox txtDirector;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox txtStudio;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox txtPathSub;
@@ -928,5 +929,6 @@
         private System.Windows.Forms.ComboBox cbSource;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.ListBox lboxStudio;
     }
 }

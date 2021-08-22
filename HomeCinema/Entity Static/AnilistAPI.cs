@@ -184,7 +184,7 @@ namespace HomeCinema
                     try { media.PosterPath = anime.CoverImage.Large; }
                     catch (Exception ex) { Logs.LogErr(calledFrom, ex); }
 
-                    try { media.Studio = GlobalVars.ConvertListToString(studioList, ",", calledFrom); }
+                    try { media.Studio = studioList; }
                     catch (Exception ex) { Logs.LogErr(calledFrom, ex); }
 
                     try

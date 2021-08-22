@@ -13,6 +13,7 @@ namespace HomeCinema
             Imdb = "";
             Country = new List<string>();
             Genre = new List<string>();
+            Studio = new List<string>();
         }
         public void Dispose()
         {
@@ -27,13 +28,13 @@ namespace HomeCinema
             Actor = "";
             Director = "";
             Producer = "";
-            Studio = "";
             Trailer = "";
             PosterPath = "";
             FilePath = "";
             FileSub = "";
             Country.Clear();
             Genre.Clear();
+            Studio.Clear();
         }
         public string Id { get; set; } = "";
         public int Category { get; set; } = 0;
@@ -47,7 +48,7 @@ namespace HomeCinema
         public string Actor { get; set; } = "";
         public string Director { get; set; } = "";
         public string Producer { get; set; } = "";
-        public string Studio { get; set; } = "";
+        public List<string> Studio { get; set; }
         public List<string> Country { get; set; }
         public List<string> Genre { get; set; }
         public string Trailer { get; set; } = "";

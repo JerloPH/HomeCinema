@@ -105,8 +105,8 @@ namespace HomeCinema
                         catch { }
 
                         // Studio
-                        try { media.Studio = movie.ProdCompanies.Select(a => a.Name).ToList().Aggregate((b, c) => b + ", " + c); }
-                        catch { media.Studio = ""; }
+                        try { media.Studio = movie.ProdCompanies.Select(a => a.Name).ToList(); }
+                        catch { }
                     }
                 }
                 // Get Trailer

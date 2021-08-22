@@ -120,11 +120,17 @@ namespace HomeCinema
             }
         }
         // Add items to ListBox
-        public void LoadListBoxItems(string itemsList, ListBox lb)
+        public void LoadListBoxItems(ListBox lb, object items, char sep)
         {
-            string[] temp = itemsList.Split(',');
+            var temp = GlobalVars.ValidateStringToArray(items, sep).ToList<string>();
+            LoadListBoxItems(temp, lb);
+        }
+        public void LoadListBoxItems(List<string> itemsList, ListBox lb)
+        {
             string itemAdd = "";
-            foreach (string item in temp)
+
+            lb.Items.Clear();
+            foreach (string item in itemsList)
             {
                 itemAdd = item.Trim();
                 if (CanAddToListBox(lb, itemAdd))
@@ -170,10 +176,10 @@ namespace HomeCinema
                     txtSeriesName.Text = row[HCInfo.name_series].ToString();
                     txtSeasonNum.Text = row[HCInfo.season].ToString();
                     txtEpNum.Text = row[HCInfo.episode].ToString();
-                    LoadListBoxItems(row[HCInfo.country].ToString(), listboxCountry);
+                    LoadListBoxItems(listboxCountry, row[HCInfo.country], ',');
                     cbCategory.SelectedIndex = Convert.ToInt16(row[HCInfo.category]);
-                    LoadListBoxItems(row[HCInfo.genre].ToString(), listboxGenre);
-                    txtStudio.Text = row[HCInfo.studio].ToString();
+                    LoadListBoxItems(listboxGenre, row[HCInfo.genre], ',');
+                    LoadListBoxItems(lboxStudio, row[HCInfo.studio], ';');
                     txtProducer.Text = row[HCInfo.producer].ToString();
                     txtDirector.Text = row[HCInfo.director].ToString();
                     txtArtist.Text = row[HCInfo.artist].ToString();
@@ -374,7 +380,6 @@ namespace HomeCinema
                 entry.Seasons = seasons;
                 entry.Episodes = eps;
                 entry.Category = cbCategory.SelectedIndex;
-                entry.Studio = txtStudio.Text;
                 entry.Producer = txtProducer.Text;
                 entry.Director = txtDirector.Text;
                 entry.Actor = txtArtist.Text;
@@ -389,6 +394,11 @@ namespace HomeCinema
                 {
                     if (item != null)
                         entry.Genre.Add(item.ToString().Trim());
+                }
+                foreach (var item in lboxStudio.Items)
+                {
+                    if (item != null)
+                        entry.Studio.Add(item.ToString().Trim());
                 }
                 entry.FilePath = txtPathFile.Text;
                 entry.FileSub = txtPathSub.Text;
@@ -594,10 +604,6 @@ namespace HomeCinema
             {
                 txtProducer.Text = mediaInfo.Producer;
             }
-            if (!String.IsNullOrWhiteSpace(mediaInfo.Studio)) // Studios
-            {
-                txtStudio.Text = mediaInfo.Studio;
-            }
             //Season and Episode counts
             txtEpNum.Text = mediaInfo.Episodes.ToString();
             txtSeasonNum.Text = mediaInfo.Seasons.ToString();
@@ -605,16 +611,17 @@ namespace HomeCinema
             // Set Country
             if (mediaInfo.Country?.Count > 0)
             {
-                listboxCountry.Items.Clear();
-                country = GlobalVars.ConvertListToString(mediaInfo.Country, ",", errFrom);
-                LoadListBoxItems(country, listboxCountry);
+                LoadListBoxItems(mediaInfo.Country, listboxCountry);
             }
             // Set Genres
             if (mediaInfo.Genre?.Count > 0)
             {
-                listboxGenre.Items.Clear();
-                genre = GlobalVars.ConvertListToString(mediaInfo.Genre, ",", errFrom);
-                LoadListBoxItems(genre, listboxGenre);
+                LoadListBoxItems(mediaInfo.Genre, listboxGenre);
+            }
+            // Set Studio
+            if (mediaInfo.Studio?.Count > 0)
+            {
+                LoadListBoxItems(mediaInfo.Studio, listboxGenre);
             }
             // Set mediatype, after getting info from TMDB or Anilist
             if (!String.IsNullOrWhiteSpace(genre) && !String.IsNullOrWhiteSpace(country))

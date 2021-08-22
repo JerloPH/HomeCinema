@@ -157,6 +157,7 @@ namespace HomeCinema
 
                     string rCountry = "";
                     string rGenre = "";
+                    string rStudio = "";
                     string rYear = "";
                     string prevSrc = "";
 
@@ -235,6 +236,7 @@ namespace HomeCinema
                             catch { rYear = ""; }
                             rCountry = GlobalVars.ConvertListToString(Media.Country, ",", callFrom); // Get Country
                             rGenre = GlobalVars.ConvertListToString(Media.Genre, ",", callFrom); // Get Genres
+                            rStudio = GlobalVars.ConvertListToString(Media.Studio, ";", callFrom); // Studio
                         }
                     }
                     if (Media == null)
@@ -261,7 +263,7 @@ namespace HomeCinema
                     dtInfo.Add(HCInfo.country, rCountry); // country
                     dtInfo.Add(HCInfo.category, GlobalVars.GetCategoryValue(mediatype, src).ToString()); // category
                     dtInfo.Add(HCInfo.genre, rGenre); // genre
-                    dtInfo.Add(HCInfo.studio, Media.Studio); // studio
+                    dtInfo.Add(HCInfo.studio, rStudio); // studio
                     dtInfo.Add(HCInfo.producer, Media.Producer); // producer
                     dtInfo.Add(HCInfo.director, Media.Director); // director
                     dtInfo.Add(HCInfo.artist, Media.Actor); // artist

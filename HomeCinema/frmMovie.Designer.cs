@@ -192,7 +192,7 @@
             // 
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(594, 335);
+            this.label11.Location = new System.Drawing.Point(594, 339);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(95, 25);
             this.label11.TabIndex = 34;
@@ -230,7 +230,7 @@
             // 
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.ForeColor = System.Drawing.Color.White;
-            this.label12.Location = new System.Drawing.Point(593, 395);
+            this.label12.Location = new System.Drawing.Point(593, 407);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(95, 25);
             this.label12.TabIndex = 27;
@@ -241,7 +241,7 @@
             // 
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.White;
-            this.label10.Location = new System.Drawing.Point(593, 365);
+            this.label10.Location = new System.Drawing.Point(593, 373);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(95, 25);
             this.label10.TabIndex = 25;
@@ -483,44 +483,48 @@
             // 
             this.cbStudio.BackColor = System.Drawing.Color.Black;
             this.cbStudio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbStudio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbStudio.ForeColor = System.Drawing.Color.Yellow;
             this.cbStudio.FormattingEnabled = true;
             this.cbStudio.Location = new System.Drawing.Point(695, 305);
             this.cbStudio.Name = "cbStudio";
-            this.cbStudio.Size = new System.Drawing.Size(217, 24);
+            this.cbStudio.Size = new System.Drawing.Size(217, 30);
             this.cbStudio.TabIndex = 49;
             // 
             // cbProducer
             // 
             this.cbProducer.BackColor = System.Drawing.Color.Black;
             this.cbProducer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbProducer.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbProducer.ForeColor = System.Drawing.Color.Yellow;
             this.cbProducer.FormattingEnabled = true;
-            this.cbProducer.Location = new System.Drawing.Point(695, 335);
+            this.cbProducer.Location = new System.Drawing.Point(695, 339);
             this.cbProducer.Name = "cbProducer";
-            this.cbProducer.Size = new System.Drawing.Size(217, 24);
+            this.cbProducer.Size = new System.Drawing.Size(217, 30);
             this.cbProducer.TabIndex = 50;
             // 
             // cbDirector
             // 
             this.cbDirector.BackColor = System.Drawing.Color.Black;
             this.cbDirector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbDirector.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbDirector.ForeColor = System.Drawing.Color.Yellow;
             this.cbDirector.FormattingEnabled = true;
-            this.cbDirector.Location = new System.Drawing.Point(695, 365);
+            this.cbDirector.Location = new System.Drawing.Point(695, 373);
             this.cbDirector.Name = "cbDirector";
-            this.cbDirector.Size = new System.Drawing.Size(217, 24);
+            this.cbDirector.Size = new System.Drawing.Size(217, 30);
             this.cbDirector.TabIndex = 51;
             // 
             // cbActor
             // 
             this.cbActor.BackColor = System.Drawing.Color.Black;
             this.cbActor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbActor.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbActor.ForeColor = System.Drawing.Color.Yellow;
             this.cbActor.FormattingEnabled = true;
-            this.cbActor.Location = new System.Drawing.Point(695, 395);
+            this.cbActor.Location = new System.Drawing.Point(695, 407);
             this.cbActor.Name = "cbActor";
-            this.cbActor.Size = new System.Drawing.Size(217, 24);
+            this.cbActor.Size = new System.Drawing.Size(217, 30);
             this.cbActor.TabIndex = 52;
             // 
             // frmMovie
