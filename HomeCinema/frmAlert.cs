@@ -31,6 +31,8 @@ namespace HomeCinema
             //Parent = (Form)Program.FormMain;
             if (parent != null)
                 CenterToParent();
+            else
+                CenterToScreen();
 
             lblMessage.Text = message;
 
