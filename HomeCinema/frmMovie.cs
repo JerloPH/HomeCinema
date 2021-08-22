@@ -163,20 +163,16 @@ namespace HomeCinema
                 catch { txtGenre.Text = ""; }
 
                 // studio
-                try { lblStudio.Text = GlobalVars.ValidateAndReturn(row[HCInfo.studio], ";"); }
-                catch { lblStudio.Text = ""; }
+                SetupCombobox(cbStudio, row[HCInfo.studio], ';');
 
                 // producer
-                try { lblProducer.Text = GlobalVars.ValidateAndReturn(row[HCInfo.producer], ";"); }
-                catch { lblProducer.Text = ""; }
+                SetupCombobox(cbProducer, row[HCInfo.producer], ';');
 
                 // director
-                try { lblDirector.Text = GlobalVars.ValidateAndReturn(row[HCInfo.director], ";"); }
-                catch { lblDirector.Text = ""; }
+                SetupCombobox(cbDirector, row[HCInfo.director], ';');
 
                 // artist
-                try { txtArtist.Text = GlobalVars.ValidateAndReturn(row[HCInfo.artist], ";"); }
-                catch { txtArtist.Text = ""; }
+                SetupCombobox(cbActor, row[HCInfo.artist], ';');
 
                 // year
                 try { lblYear.Text = GlobalVars.ValidateAndReturn(row[HCInfo.year]); }
@@ -258,6 +254,13 @@ namespace HomeCinema
             // Set form title and focus
             Text = $"{lblName.Text} ({lblYear.Text})";
             btnPlay.Focus();
+        }
+        // Setup ComboBoxes
+        public void SetupCombobox(ComboBox box, object param, char sep)
+        {
+            box.Items.AddRange(GlobalVars.ValidateStringToArray(param, sep));
+            if (box.Items.Count > 0)
+                box.SelectedIndex = 0;
         }
         // Dispose Image poster
         public void DisposePoster()

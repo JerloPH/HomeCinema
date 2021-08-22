@@ -408,6 +408,17 @@ namespace HomeCinema
         {
             return ValidateAndReturn(param, "");
         }
+        public static string[] ValidateStringToArray(object param, char sep)
+        {
+            if (param == null)
+                return new string[] { "(None)" };
+            
+            string text = param.ToString().Trim();
+            if (String.IsNullOrWhiteSpace(text))
+                return new string[] { "(None)" };
+
+            return text.Split(sep).Select(p => p.Trim()).ToArray();
+        }
         // Get string formatted on picture filepath
         public static string ImgFullPath(string movieID)
         {
