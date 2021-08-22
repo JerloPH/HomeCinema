@@ -210,17 +210,14 @@ namespace HomeCinema
 
                     foreach (var prod in anime.Staff.Edge)
                     {
-                        if (prod.Role.Trim().ToLower().Equals("producer"))
+                        string role = prod.Role.Trim().ToLower();
+                        if (role.Equals("producer"))
                         {
                             media.Producer = prod.Node.Name.Full.Trim();
                         }
-                        if (prod.Role.Trim().ToLower().Equals("director"))
+                        else if (role.Equals("director"))
                         {
-                            media.Director = prod.Node.Name.Full.Trim();
-                        }
-                        if (!String.IsNullOrWhiteSpace(media.Producer) && !String.IsNullOrWhiteSpace(media.Director))
-                        {
-                            break;
+                            media.Director.Add(prod.Node.Name.Full.Trim());
                         }
                     }
                     retry = -1;

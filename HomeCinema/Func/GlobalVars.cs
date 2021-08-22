@@ -1143,10 +1143,10 @@ namespace HomeCinema
                 ShowInfo("Cleanup Done!");
             }
         }
-        public static string ConvertListBoxToString(ListBox lb)
+        public static string ConvertListBoxToString(ListBox lb, string sep)
         {
             var list = lb.Items.Cast<String>().ToList();
-            return (list.Count > 0) ? list.Aggregate((a, b) => a + "," + b) : "";
+            return (list.Count > 0) ? list.Aggregate((a, b) => a + sep + b) : "";
         }
         public static string TrailerLocalHtml(string sourcelink)
         {

@@ -135,7 +135,7 @@ namespace HomeCinema
                     var castcrew = JsonConvert.DeserializeObject<TmdbCastCrew>(contents, GlobalVars.JSON_SETTING);
 
                     string tmp = ""; // temporary string var. Use to get strings
-                    string tmpDir = "", tmpProd = ""; // Use to get director and producer
+                    string tmpProd = ""; // Use to get director and producer
 
                     foreach (TmdbCast c in castcrew.cast)
                     {
@@ -151,15 +151,13 @@ namespace HomeCinema
                         // Get informations
                         if (c.job.Trim() == "Director")
                         {
-                            tmpDir += c.name + ", ";
+                            media.Director.Add(c.name.Trim());
                         }
                         else if (c.job.Contains("Producer"))
                         {
                             tmpProd += c.name + ", ";
                         }
                     }
-                    // Save to list as director and producer
-                    media.Director = tmpDir.Trim().TrimEnd(',');
                     media.Producer = tmpProd.Trim().TrimEnd(',');
                 }
             }

@@ -75,7 +75,6 @@
             this.txtProducer = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.txtDirector = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.txtArtist = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -91,6 +90,7 @@
             this.cbSource = new System.Windows.Forms.ComboBox();
             this.label20 = new System.Windows.Forms.Label();
             this.lboxStudio = new System.Windows.Forms.ListBox();
+            this.lboxDirector = new System.Windows.Forms.ListBox();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
@@ -593,12 +593,12 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.lboxDirector);
             this.tabPage4.Controls.Add(this.lboxStudio);
             this.tabPage4.Controls.Add(this.label11);
             this.tabPage4.Controls.Add(this.txtProducer);
             this.tabPage4.Controls.Add(this.label10);
             this.tabPage4.Controls.Add(this.label9);
-            this.tabPage4.Controls.Add(this.txtDirector);
             this.tabPage4.Controls.Add(this.label12);
             this.tabPage4.Controls.Add(this.txtArtist);
             this.tabPage4.Location = new System.Drawing.Point(4, 25);
@@ -645,17 +645,6 @@
             this.label9.Size = new System.Drawing.Size(97, 25);
             this.label9.TabIndex = 44;
             this.label9.Text = "Studio";
-            // 
-            // txtDirector
-            // 
-            this.txtDirector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDirector.Location = new System.Drawing.Point(388, 41);
-            this.txtDirector.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtDirector.Multiline = true;
-            this.txtDirector.Name = "txtDirector";
-            this.txtDirector.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtDirector.Size = new System.Drawing.Size(358, 167);
-            this.txtDirector.TabIndex = 43;
             // 
             // label12
             // 
@@ -827,6 +816,19 @@
             this.lboxStudio.Sorted = true;
             this.lboxStudio.TabIndex = 56;
             // 
+            // lboxDirector
+            // 
+            this.lboxDirector.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lboxDirector.FormattingEnabled = true;
+            this.lboxDirector.ItemHeight = 28;
+            this.lboxDirector.Location = new System.Drawing.Point(388, 63);
+            this.lboxDirector.Margin = new System.Windows.Forms.Padding(4);
+            this.lboxDirector.Name = "lboxDirector";
+            this.lboxDirector.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.lboxDirector.Size = new System.Drawing.Size(358, 144);
+            this.lboxDirector.Sorted = true;
+            this.lboxDirector.TabIndex = 57;
+            // 
             // frmMovieInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -897,7 +899,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txtProducer;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox txtDirector;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Label label16;
@@ -930,5 +931,6 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.ListBox lboxStudio;
+        private System.Windows.Forms.ListBox lboxDirector;
     }
 }
