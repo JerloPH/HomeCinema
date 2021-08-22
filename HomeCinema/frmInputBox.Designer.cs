@@ -34,6 +34,7 @@ namespace HomeCinema
             this.cbContents = new System.Windows.Forms.ComboBox();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.txtInput = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // lblMessage
@@ -49,10 +50,11 @@ namespace HomeCinema
             // 
             // cbContents
             // 
+            this.cbContents.Cursor = System.Windows.Forms.Cursors.Default;
             this.cbContents.Font = new System.Drawing.Font("Microsoft Sans Serif", 22.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbContents.FormattingEnabled = true;
             this.cbContents.Location = new System.Drawing.Point(15, 121);
-            this.cbContents.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.cbContents.Margin = new System.Windows.Forms.Padding(6);
             this.cbContents.Name = "cbContents";
             this.cbContents.Size = new System.Drawing.Size(551, 50);
             this.cbContents.TabIndex = 1;
@@ -61,8 +63,8 @@ namespace HomeCinema
             // btnOk
             // 
             this.btnOk.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOk.Location = new System.Drawing.Point(183, 202);
-            this.btnOk.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.btnOk.Location = new System.Drawing.Point(183, 235);
+            this.btnOk.Margin = new System.Windows.Forms.Padding(6);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(170, 45);
             this.btnOk.TabIndex = 2;
@@ -73,8 +75,8 @@ namespace HomeCinema
             // btnCancel
             // 
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(365, 202);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.btnCancel.Location = new System.Drawing.Point(365, 235);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(6);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(201, 45);
             this.btnCancel.TabIndex = 3;
@@ -82,10 +84,19 @@ namespace HomeCinema
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // txtInput
+            // 
+            this.txtInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 22.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtInput.Location = new System.Drawing.Point(15, 180);
+            this.txtInput.Name = "txtInput";
+            this.txtInput.Size = new System.Drawing.Size(551, 49);
+            this.txtInput.TabIndex = 4;
+            // 
             // frmInputBox
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
-            this.ClientSize = new System.Drawing.Size(581, 269);
+            this.ClientSize = new System.Drawing.Size(581, 295);
+            this.Controls.Add(this.txtInput);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.cbContents);
@@ -93,7 +104,7 @@ namespace HomeCinema
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmInputBox";
@@ -110,5 +121,6 @@ namespace HomeCinema
         private System.Windows.Forms.ComboBox cbContents;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.TextBox txtInput;
     }
 }

@@ -94,7 +94,7 @@ namespace HomeCinema
         }
         private void AddToListBox(ListBox lb, string caption = "Type here")
         {
-            string item = GlobalVars.GetStringInputBox(caption);
+            string item = GlobalVars.GetStringInputBox(caption, "");
             if (CanAddToListBox(lb, item))
             {
                 lb.Items.Add(item);

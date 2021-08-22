@@ -8,8 +8,9 @@ namespace HomeCinema
     public partial class frmInputBox : Form
     {
         public string Result { get; set; } = "";
+        public List<String> Values { get; set; } = null; // Values already existing
 
-        public frmInputBox(string message, List<String> contents)
+        public frmInputBox(string message, List<String> contents, string defValue)
         {
             InitializeComponent();
             // Initialized Properties
@@ -30,20 +31,43 @@ namespace HomeCinema
 
             // Initialize values
             lblMessage.Text = message;
-            foreach (var item in contents)
+            if (contents != null)
             {
-                cbContents.Items.Add(item);
+                foreach (var item in contents)
+                {
+                    cbContents.Items.Add(item);
+                }
+                txtInput.Enabled = txtInput.Visible = false;
+            }
+            else
+            {
+                txtInput.Top = cbContents.Top;
+                cbContents.Enabled = cbContents.Visible = false;
+                txtInput.Text = defValue;
             }
         }
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if (cbContents.Items.Contains(cbContents.Text))
+            if (Values != null)
             {
-                GlobalVars.ShowWarning("Value is already existing!", "", this);
-                return;
+                if (Values.Contains(cbContents.Text))
+                {
+                    GlobalVars.ShowWarning("Value is already existing!", "", this);
+                    return;
+                }
+                Result = cbContents.Text;
             }
-            Result = cbContents.Text;
+            else
+            {
+                if (String.IsNullOrWhiteSpace(txtInput.Text))
+                {
+                    GlobalVars.ShowWarning("Invalid value!", "", this);
+                    txtInput.Focus();
+                    return;
+                }
+                Result = txtInput.Text;
+            }
             Close();
         }
 

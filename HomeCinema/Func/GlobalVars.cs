@@ -1005,52 +1005,18 @@ namespace HomeCinema
             }
         }
         // Get string from InputBox
-        public static string GetStringInputBox(string caption, string defaultVal = "")
+        public static string GetStringInputBox(string caption, string defaultVal)
         {
-            var form = new Form();
-            var label = new Label();
-            var txtBox = new TextBox();
-            var buttonOk = new Button();
-            var buttonCancel = new Button();
-            string value;
-
-            form.Text = HOMECINEMA_NAME;
-            label.Text = caption;
-            txtBox.Text = "";
-
-            buttonOk.Text = "OK";
-            buttonCancel.Text = "Cancel";
-            buttonOk.DialogResult = DialogResult.OK;
-            buttonCancel.DialogResult = DialogResult.Cancel;
-
-            label.SetBounds(9, 20, 372, 13);
-            txtBox.SetBounds(12, 36, 372, 20);
-            buttonOk.SetBounds(228, 72, 75, 23);
-            buttonCancel.SetBounds(309, 72, 75, 23);
-
-            label.AutoSize = true;
-            txtBox.Anchor = txtBox.Anchor | AnchorStyles.Right;
-            buttonOk.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-
-            form.ClientSize = new Size(396, 107);
-            form.Controls.AddRange(new Control[] { label, txtBox, buttonOk, buttonCancel });
-            form.ClientSize = new Size(Math.Max(300, label.Right + 10), form.ClientSize.Height);
-            form.FormBorderStyle = FormBorderStyle.FixedDialog;
-            form.StartPosition = FormStartPosition.CenterScreen;
-            form.MinimizeBox = false;
-            form.MaximizeBox = false;
-            form.AcceptButton = buttonOk;
-            form.CancelButton = buttonCancel;
-
+            var form = new frmInputBox(caption, null, defaultVal);
             DialogResult dialogResult = form.ShowDialog();
-            value = (!String.IsNullOrWhiteSpace(txtBox.Text)) ? txtBox.Text.Trim() : String.Empty;
+            string value = (!String.IsNullOrWhiteSpace(form.Result)) ? form.Result.Trim() : String.Empty;
             form.Dispose();
-            return (dialogResult == DialogResult.OK) ? value : defaultVal;
+            return value;
         }
-        public static string GetStringInputBox(List<string> items, string caption = "Input item")
+        public static string GetStringInputBox(List<string> items, List<string> vals, string caption)
         {
-            var form = new frmInputBox(caption, items);
+            var form = new frmInputBox(caption, items, "");
+            form.Values = vals;
             DialogResult dialogResult = form.ShowDialog();
             string value = (!String.IsNullOrWhiteSpace(form.Result)) ? form.Result.Trim() : String.Empty;
             form.Dispose();
