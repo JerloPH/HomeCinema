@@ -396,9 +396,17 @@ namespace HomeCinema
             return (String.IsNullOrWhiteSpace(param)) ? "" : param.Replace("'", "''");
         }
         // Return [none] if string is Empty
-        public static String ValidateAndReturn(String param)
+        public static String ValidateAndReturn(object param, string sep)
         {
-            return (String.IsNullOrWhiteSpace(param)) ? " (None)" : param.Trim();
+            string text = param.ToString().Trim();
+            if (!String.IsNullOrWhiteSpace(sep))
+                text = text.Replace(sep, $"{sep} ").Trim();
+            
+            return (String.IsNullOrWhiteSpace(text)) ? " (None)" : text;
+        }
+        public static String ValidateAndReturn(object param)
+        {
+            return ValidateAndReturn(param, "");
         }
         // Get string formatted on picture filepath
         public static string ImgFullPath(string movieID)

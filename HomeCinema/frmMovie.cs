@@ -97,7 +97,7 @@ namespace HomeCinema
                 MOVIE_FILEPATH = row[HCFile.File].ToString(); // Get Filepath
 
                 // ID
-                lblID.Text = GlobalVars.ValidateAndReturn(row[HCInfo.Id].ToString());
+                lblID.Text = GlobalVars.ValidateAndReturn(row[HCInfo.Id]);
 
                 try { MOVIE_TRAILER = row[HCFile.Trailer].ToString(); }
                 catch { MOVIE_TRAILER = ""; }
@@ -127,7 +127,7 @@ namespace HomeCinema
                 }
 
                 // name
-                try { lblName.Text = GlobalVars.ValidateAndReturn(row[HCInfo.name].ToString()); }
+                try { lblName.Text = GlobalVars.ValidateAndReturn(row[HCInfo.name]); }
                 catch
                 {
                     try { lblName.Text = Path.GetFileName(MOVIE_FILEPATH); }
@@ -135,23 +135,23 @@ namespace HomeCinema
                 }
 
                 // name_ep # Original title from country of Origin
-                try { lblNameOrig.Text = GlobalVars.ValidateAndReturn(row[HCInfo.name_orig].ToString()); }
+                try { lblNameOrig.Text = GlobalVars.ValidateAndReturn(row[HCInfo.name_orig]); }
                 catch { lblNameOrig.Text = ""; }
 
                 // name_series
-                try { lblNameSeries.Text = GlobalVars.ValidateAndReturn(row[HCInfo.name_series].ToString()); }
+                try { lblNameSeries.Text = GlobalVars.ValidateAndReturn(row[HCInfo.name_series]); }
                 catch { lblNameSeries.Text = ""; }
 
                 // season
-                try { lblSeasonNum.Text = GlobalVars.ValidateAndReturn(row[HCInfo.season].ToString()); }
+                try { lblSeasonNum.Text = GlobalVars.ValidateAndReturn(row[HCInfo.season]); }
                 catch { lblSeasonNum.Text = ""; }
 
                 // episode
-                try { lblEpNum.Text = GlobalVars.ValidateAndReturn(row[HCInfo.episode].ToString()); }
+                try { lblEpNum.Text = GlobalVars.ValidateAndReturn(row[HCInfo.episode]); }
                 catch { lblEpNum.Text = ""; }
 
                 // country
-                try { txtCountry.Text = GlobalVars.RemoveLine(row[HCInfo.country].ToString()).Replace(",", ", "); }
+                try { txtCountry.Text = GlobalVars.ValidateAndReturn(row[HCInfo.country], ","); }
                 catch { txtCountry.Text = ""; }
 
                 // category
@@ -159,31 +159,31 @@ namespace HomeCinema
                 catch { lblCategory.Text = ""; }
 
                 // genre
-                try { txtGenre.Text = GlobalVars.ValidateAndReturn(row[HCInfo.genre].ToString().Replace(",", ", ")); }
+                try { txtGenre.Text = GlobalVars.ValidateAndReturn(row[HCInfo.genre], ","); }
                 catch { txtGenre.Text = ""; }
 
                 // studio
-                try { lblStudio.Text = GlobalVars.ValidateAndReturn(row[HCInfo.studio].ToString()); }
+                try { lblStudio.Text = GlobalVars.ValidateAndReturn(row[HCInfo.studio], ";"); }
                 catch { lblStudio.Text = ""; }
 
                 // producer
-                try { lblProducer.Text = GlobalVars.ValidateAndReturn(row[HCInfo.producer].ToString()); }
+                try { lblProducer.Text = GlobalVars.ValidateAndReturn(row[HCInfo.producer], ";"); }
                 catch { lblProducer.Text = ""; }
 
                 // director
-                try { lblDirector.Text = GlobalVars.ValidateAndReturn(row[HCInfo.director].ToString()); }
+                try { lblDirector.Text = GlobalVars.ValidateAndReturn(row[HCInfo.director], ";"); }
                 catch { lblDirector.Text = ""; }
 
                 // artist
-                try { txtArtist.Text = GlobalVars.ValidateAndReturn(row[HCInfo.artist].ToString()); }
+                try { txtArtist.Text = GlobalVars.ValidateAndReturn(row[HCInfo.artist], ";"); }
                 catch { txtArtist.Text = ""; }
 
                 // year
-                try { lblYear.Text = GlobalVars.ValidateAndReturn(row[HCInfo.year].ToString()); }
+                try { lblYear.Text = GlobalVars.ValidateAndReturn(row[HCInfo.year]); }
                 catch { lblYear.Text = ""; }
 
                 // summary
-                try { lblSummary.Text = GlobalVars.ValidateAndReturn(row[HCInfo.summary].ToString()); }
+                try { lblSummary.Text = GlobalVars.ValidateAndReturn(row[HCInfo.summary]); }
                 catch { lblSummary.Text = ""; }
 
                 row.Delete();
