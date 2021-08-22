@@ -1107,16 +1107,17 @@ namespace HomeCinema
                             form.UpdateProgress(progress);
                         }
                         Logs.Log(errFrom, $"DONE Background worker from: {Name}");
-                        if (!GlobalVars.HAS_TMDB_KEY && AppStart)
-                        {
-                            GlobalVars.ShowWarning(GlobalVars.MSG_NO_TMDB);
-                        }
                     };
                     form.ShowDialog();
                 }
             }
             filepaths?.Clear(); // micro optimization
             AfterPopulatingMovieLV(lvSearchResult, progress);
+            // Check if no TMDB Key
+            if (!GlobalVars.HAS_TMDB_KEY && AppStart)
+            {
+                GlobalVars.ShowWarning(GlobalVars.MSG_NO_TMDB);
+            }
             // Auto check update
             if ((Settings.IsOffline == false) && (Settings.IsAutoUpdate) && AppStart)
             {
