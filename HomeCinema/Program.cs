@@ -17,6 +17,8 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##################################################################################### */
 using System;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -25,7 +27,9 @@ namespace HomeCinema
     static class Program
     {
         public static frmMain FormMain;
-        static readonly Mutex mutex = new Mutex(true, "a1f8da5c-12ef-45a5-b4c5-d8fece8e3e32");
+        static readonly Assembly assembly = Assembly.GetExecutingAssembly();
+        static readonly GuidAttribute attrib = (GuidAttribute)assembly.GetCustomAttributes(typeof(GuidAttribute), true)[0];
+        static readonly Mutex mutex = new Mutex(true, "HomeCinema"+ attrib.Value);
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
