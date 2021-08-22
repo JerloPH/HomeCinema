@@ -410,7 +410,7 @@ namespace HomeCinema
                 foreach (var item in lboxCasts.Items)
                 {
                     if (item != null)
-                        entry.Actor.Add(item.ToString().Trim());
+                        entry.Casts.Add(item.ToString().Trim());
                 }
                 entry.FilePath = txtPathFile.Text;
                 entry.FileSub = txtPathSub.Text;
@@ -635,9 +635,9 @@ namespace HomeCinema
                 LoadListBoxItems(mediaInfo.Producer, lboxProducer);
             }
             // Set Casts
-            if (mediaInfo.Actor?.Count > 0)
+            if (mediaInfo.Casts?.Count > 0)
             {
-                LoadListBoxItems(mediaInfo.Actor, lboxCasts);
+                LoadListBoxItems(mediaInfo.Casts, lboxCasts);
             }
             // Set mediatype, after getting info from TMDB or Anilist
             if (!String.IsNullOrWhiteSpace(genre) && !String.IsNullOrWhiteSpace(country))

@@ -136,7 +136,7 @@ namespace HomeCinema
 
                     foreach (TmdbCast c in castcrew.cast)
                     {
-                        media.Actor.Add(c.name.Trim());
+                        media.Casts.Add(c.name.Trim());
                     }
 
                     // get Director and producer

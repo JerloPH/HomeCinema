@@ -242,7 +242,7 @@ namespace HomeCinema
                             rStudio = GlobalVars.ConvertListToString(Media.Studio, ";", callFrom); // Studio
                             rDirector = GlobalVars.ConvertListToString(Media.Director, ";", callFrom); // Director
                             rProd = GlobalVars.ConvertListToString(Media.Producer, ";", callFrom); // Producer
-                            rCasts = GlobalVars.ConvertListToString(Media.Actor, ";", callFrom); // Casts
+                            rCasts = GlobalVars.ConvertListToString(Media.Casts, ";", callFrom); // Casts
                         }
                     }
                     if (Media == null)
