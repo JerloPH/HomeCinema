@@ -458,7 +458,7 @@ namespace HomeCinema
             }
 
             // Filter out all animations
-            qry += (cbHideAnim.CheckState == CheckState.Checked) ? SQLHelper.QryWhere(qry) + $" (`{HCInfo.category}` <= 2)" : "";
+            qry += (cbHideAnim.CheckState == CheckState.Checked) ? SQLHelper.QryWhere(qry) + $" (`{HCInfo.category}` <= 2 AND `{HCInfo.genre}` NOT LIKE '%animation%')" : "";
 
             // Append to end
             qry += (Settings.ItemLimit > 0) ? $" LIMIT {Settings.ItemLimit};" : "";
