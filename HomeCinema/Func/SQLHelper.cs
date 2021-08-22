@@ -548,7 +548,7 @@ namespace HomeCinema.SQLFunc
             entry.Add(HCInfo.studio, GlobalVars.ConvertListToString(media.Studio, ";", calledFrom));
             entry.Add(HCInfo.producer, GlobalVars.ConvertListToString(media.Producer, ";", calledFrom));
             entry.Add(HCInfo.director, GlobalVars.ConvertListToString(media.Director, ";", calledFrom));
-            entry.Add(HCInfo.artist, GlobalVars.ValidateEmptyOrNull(media.Actor));
+            entry.Add(HCInfo.artist, GlobalVars.ConvertListToString(media.Actor, ";", calledFrom));
             entry.Add(HCInfo.year, GlobalVars.ValidateEmptyOrNull(media.ReleaseDate));
             entry.Add(HCInfo.summary, GlobalVars.ValidateEmptyOrNull(media.Summary));
 

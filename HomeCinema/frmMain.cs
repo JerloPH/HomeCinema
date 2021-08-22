@@ -160,7 +160,7 @@ namespace HomeCinema
                     string rStudio = "";
                     string rDirector = "";
                     string rProd = "";
-                    string rActor = "";
+                    string rCasts = "";
                     string rYear = "";
                     string prevSrc = "";
 
@@ -242,6 +242,7 @@ namespace HomeCinema
                             rStudio = GlobalVars.ConvertListToString(Media.Studio, ";", callFrom); // Studio
                             rDirector = GlobalVars.ConvertListToString(Media.Director, ";", callFrom); // Director
                             rProd = GlobalVars.ConvertListToString(Media.Producer, ";", callFrom); // Producer
+                            rCasts = GlobalVars.ConvertListToString(Media.Actor, ";", callFrom); // Casts
                         }
                     }
                     if (Media == null)
@@ -271,7 +272,7 @@ namespace HomeCinema
                     dtInfo.Add(HCInfo.studio, rStudio); // studio
                     dtInfo.Add(HCInfo.producer, rProd); // producer
                     dtInfo.Add(HCInfo.director, rDirector); // director
-                    dtInfo.Add(HCInfo.artist, Media.Actor); // artist
+                    dtInfo.Add(HCInfo.artist, rCasts); // casts
                     dtInfo.Add(HCInfo.year, rYear); // year
                     dtInfo.Add(HCInfo.summary, Media.Summary); // summary
 

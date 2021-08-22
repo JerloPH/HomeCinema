@@ -16,6 +16,7 @@ namespace HomeCinema
             Studio = new List<string>();
             Director = new List<string>();
             Producer = new List<string>();
+            Actor = new List<string>();
         }
         public void Dispose()
         {
@@ -27,7 +28,6 @@ namespace HomeCinema
             SeriesName = "";
             Summary = "";
             ReleaseDate = "";
-            Actor = "";
             Trailer = "";
             PosterPath = "";
             FilePath = "";
@@ -37,6 +37,7 @@ namespace HomeCinema
             Studio.Clear();
             Director.Clear();
             Producer.Clear();
+            Actor.Clear();
         }
         public string Id { get; set; } = "";
         public int Category { get; set; } = 0;
@@ -47,7 +48,7 @@ namespace HomeCinema
         public string SeriesName { get; set; } = "";
         public string Summary { get; set; } = "";
         public string ReleaseDate { get; set; } = "";
-        public string Actor { get; set; } = "";
+        public List<string> Actor { get; set; }
         public List<string> Director { get; set; }
         public List<string> Producer { get; set; }
         public List<string> Studio { get; set; }

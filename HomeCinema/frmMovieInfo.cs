@@ -182,7 +182,7 @@ namespace HomeCinema
                     LoadListBoxItems(lboxStudio, row[HCInfo.studio], ';');
                     LoadListBoxItems(lboxProducer, row[HCInfo.producer], ';');
                     LoadListBoxItems(lboxDirector, row[HCInfo.director], ';');
-                    txtArtist.Text = row[HCInfo.artist].ToString();
+                    LoadListBoxItems(lboxCasts, row[HCInfo.artist], ';');
                     txtYear.Text = row[HCInfo.year].ToString();
                     txtSummary.Text = row[HCInfo.summary].ToString();
                     Text = $"[EDIT] {row[HCInfo.name].ToString()}";
@@ -380,7 +380,6 @@ namespace HomeCinema
                 entry.Seasons = seasons;
                 entry.Episodes = eps;
                 entry.Category = cbCategory.SelectedIndex;
-                entry.Actor = txtArtist.Text;
                 entry.ReleaseDate = txtYear.Text;
                 entry.Summary = txtSummary.Text;
                 foreach (var item in listboxCountry.Items)
@@ -407,6 +406,11 @@ namespace HomeCinema
                 {
                     if (item != null)
                         entry.Producer.Add(item.ToString().Trim());
+                }
+                foreach (var item in lboxCasts.Items)
+                {
+                    if (item != null)
+                        entry.Actor.Add(item.ToString().Trim());
                 }
                 entry.FilePath = txtPathFile.Text;
                 entry.FileSub = txtPathSub.Text;
@@ -600,10 +604,6 @@ namespace HomeCinema
             {
                 txtYear.Text = mediaInfo.ReleaseDate.Substring(0, 4);
             }
-            if (!String.IsNullOrWhiteSpace(mediaInfo.Actor)) // Actor/Actress/Artists
-            {
-                txtArtist.Text = mediaInfo.Actor;
-            }
 
             //Season and Episode counts
             txtEpNum.Text = mediaInfo.Episodes.ToString();
@@ -633,6 +633,11 @@ namespace HomeCinema
             if (mediaInfo.Producer?.Count > 0)
             {
                 LoadListBoxItems(mediaInfo.Producer, lboxProducer);
+            }
+            // Set Casts
+            if (mediaInfo.Actor?.Count > 0)
+            {
+                LoadListBoxItems(mediaInfo.Actor, lboxCasts);
             }
             // Set mediatype, after getting info from TMDB or Anilist
             if (!String.IsNullOrWhiteSpace(genre) && !String.IsNullOrWhiteSpace(country))

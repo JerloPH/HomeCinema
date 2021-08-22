@@ -133,15 +133,11 @@ namespace HomeCinema
                     // Unparse json into object list
                     string contents = GlobalVars.ReadStringFromFile(JSONcrewcast, errFrom + " [JSONcrewcast]");
                     var castcrew = JsonConvert.DeserializeObject<TmdbCastCrew>(contents, GlobalVars.JSON_SETTING);
-                    string tmp = ""; // temporary string var. Use to get strings
 
                     foreach (TmdbCast c in castcrew.cast)
                     {
-                        // Get informations
-                        tmp += c.name + ", ";
+                        media.Actor.Add(c.name.Trim());
                     }
-                    // Save to list as artist
-                    media.Actor = tmp.Trim().TrimEnd(',');
 
                     // get Director and producer
                     foreach (TmdbCrew c in castcrew.crew)

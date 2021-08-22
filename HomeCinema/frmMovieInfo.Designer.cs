@@ -75,7 +75,6 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.txtArtist = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label18 = new System.Windows.Forms.Label();
             this.txtPathTrailer = new System.Windows.Forms.TextBox();
@@ -91,6 +90,7 @@
             this.lboxStudio = new System.Windows.Forms.ListBox();
             this.lboxDirector = new System.Windows.Forms.ListBox();
             this.lboxProducer = new System.Windows.Forms.ListBox();
+            this.lboxCasts = new System.Windows.Forms.ListBox();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
@@ -593,6 +593,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.lboxCasts);
             this.tabPage4.Controls.Add(this.lboxProducer);
             this.tabPage4.Controls.Add(this.lboxDirector);
             this.tabPage4.Controls.Add(this.lboxStudio);
@@ -600,7 +601,6 @@
             this.tabPage4.Controls.Add(this.label10);
             this.tabPage4.Controls.Add(this.label9);
             this.tabPage4.Controls.Add(this.label12);
-            this.tabPage4.Controls.Add(this.txtArtist);
             this.tabPage4.Location = new System.Drawing.Point(4, 25);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Size = new System.Drawing.Size(764, 449);
@@ -644,17 +644,6 @@
             this.label12.TabIndex = 49;
             this.label12.Text = "Casts: ";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // txtArtist
-            // 
-            this.txtArtist.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtArtist.Location = new System.Drawing.Point(388, 257);
-            this.txtArtist.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtArtist.Multiline = true;
-            this.txtArtist.Name = "txtArtist";
-            this.txtArtist.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtArtist.Size = new System.Drawing.Size(358, 167);
-            this.txtArtist.TabIndex = 46;
             // 
             // tabPage3
             // 
@@ -831,6 +820,19 @@
             this.lboxProducer.Sorted = true;
             this.lboxProducer.TabIndex = 58;
             // 
+            // lboxCasts
+            // 
+            this.lboxCasts.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lboxCasts.FormattingEnabled = true;
+            this.lboxCasts.ItemHeight = 28;
+            this.lboxCasts.Location = new System.Drawing.Point(388, 280);
+            this.lboxCasts.Margin = new System.Windows.Forms.Padding(4);
+            this.lboxCasts.Name = "lboxCasts";
+            this.lboxCasts.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.lboxCasts.Size = new System.Drawing.Size(358, 144);
+            this.lboxCasts.Sorted = true;
+            this.lboxCasts.TabIndex = 59;
+            // 
             // frmMovieInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -861,7 +863,6 @@
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.tabPage4.ResumeLayout(false);
-            this.tabPage4.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
@@ -897,7 +898,6 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox txtArtist;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
@@ -934,5 +934,6 @@
         private System.Windows.Forms.ListBox lboxStudio;
         private System.Windows.Forms.ListBox lboxDirector;
         private System.Windows.Forms.ListBox lboxProducer;
+        private System.Windows.Forms.ListBox lboxCasts;
     }
 }
