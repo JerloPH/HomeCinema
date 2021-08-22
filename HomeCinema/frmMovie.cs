@@ -155,7 +155,7 @@ namespace HomeCinema
                 catch { txtCountry.Text = ""; }
 
                 // category
-                try { lblCategory.Text = GlobalVars.GetCategory(row[HCInfo.category].ToString()); }
+                try { lblCategory.Text = GlobalVars.GetCategoryText(row[HCInfo.category].ToString()); }
                 catch { lblCategory.Text = ""; }
 
                 // genre

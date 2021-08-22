@@ -619,7 +619,7 @@ namespace HomeCinema
             // Set mediatype, after getting info from TMDB or Anilist
             if (!String.IsNullOrWhiteSpace(genre) && !String.IsNullOrWhiteSpace(country))
             {
-                cbCategory.SelectedIndex = GlobalVars.GetCategoryByFilter(genre, country, MEDIA_TYPE, source);
+                cbCategory.SelectedIndex = GlobalVars.GetCategoryValue(MEDIA_TYPE, source);
             }
 
             // Ask to change cover - poster image

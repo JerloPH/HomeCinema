@@ -59,7 +59,7 @@ namespace HomeCinema
         public static string LINK_YT = "https://www.youtube.com/watch?v=";
 
         // Database Vars
-        public static string[] DB_INFO_CATEGORY = new string[] { "None", "Movie", "TV Series", "Anime Movie", "Anime Series", "Animated Movie", "Cartoon Series" };
+        public static string[] DB_INFO_CATEGORY = new string[] { "None", "Movie", "TV Series", "Anime Movie", "Anime Series" };
 
         // For the items in frmMain media listview
         public static ImageList MOVIE_IMGLIST = new ImageList();
@@ -462,20 +462,26 @@ namespace HomeCinema
             return false;
         }
         // Get Category text from Int in DB
-        public static string GetCategory(string cat)
+        public static string GetCategoryText(string cat)
         {
-            if (Convert.ToInt32(cat) < 1)
+            if (int.TryParse(cat, out int val))
             {
-                return DB_INFO_CATEGORY[0];
+                if (val < 1 || val >= DB_INFO_CATEGORY.Length)
+                {
+                    return DB_INFO_CATEGORY[0];
+                }
+                return DB_INFO_CATEGORY[val];
             }
-            if (Convert.ToInt32(cat) < DB_INFO_CATEGORY.Length)
+            return DB_INFO_CATEGORY[0];
+        }
+        // Return int category, based on various filters
+        public static int GetCategoryValue(string mediatype, string source)
+        {
+            if (source.Equals(HCSource.anilist))
             {
-                return DB_INFO_CATEGORY[Convert.ToInt32(cat)];
+                return ((mediatype == "series" || mediatype == "tv") ? 4 : 3);
             }
-            else
-            {
-                return DB_INFO_CATEGORY[0];
-            }
+            return ((mediatype == "series" || mediatype == "tv") ? 2 : 1);
         }
         // Get All Files on single FOLDER, include SUBFOLDERS (FULL Path WITHOUT Final BACKSLASH)
         public static List<String> SearchFilesSingleDir(string sDir, string errFrom, bool recursive = true)
@@ -881,29 +887,6 @@ namespace HomeCinema
                 ShowError(errFrom, ex, "Cannot open file!");
             }
             return false;
-        }
-        // Return int category, based on various filters
-        public static int GetCategoryByFilter(string genre, string country, string mediatype, string source)
-        {
-            if (source.Equals(HCSource.anilist))
-            {
-                return ((mediatype=="series" || mediatype=="tv") ? 4 : 3);
-            }
-            else
-            {
-                if (genre.ToLower().Contains("animation"))
-                {
-                    if (country.ToLower().Contains("japan"))
-                    {
-                        return ((mediatype == "series" || mediatype == "tv") ? 4 : 3);
-                    }
-                    else
-                    {
-                        return ((mediatype == "series" || mediatype == "tv") ? 6 : 5);
-                    }
-                }
-                return ((mediatype == "series" || mediatype == "tv") ? 2 : 1);
-            }
         }
         // Return string File Size abbrev
         public static string GetFileSize(string filename)
