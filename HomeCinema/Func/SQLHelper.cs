@@ -66,6 +66,7 @@ namespace HomeCinema.SQLFunc
             DB_PATH = DataFile.PATH_START + DB_NAME;
             string CalledFrom = "SQLHelper (Initiate)-" + InitiatedFrom;
             int dbVersion = 1;
+            bool loaded = true;
             bool IsNewDb = DbExecNonQuery($"CREATE TABLE IF NOT EXISTS '{HCTable.info}' (" +
                 "'Id'	INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 $"'{HCInfo.Id}'	INTEGER, " +
@@ -114,17 +115,16 @@ namespace HomeCinema.SQLFunc
                 // Hardcoded limit, breaks support for previous databases.
                 if (dbVersion < 5) // 5 is the start of breaking changes
                 {
-                    Logs.LogDb(CalledFrom, "Database is not supported anymore!");
+                    GlobalVars.ShowWarning("Database is not supported anymore!");
                     return false;
                 }
                 if (dbVersion < GlobalVars.HOMECINEMA_DBVER)
                 {
-                    //GlobalVars.ShowNoParent("Outdated database!");
-                    DBUpgradeDatabase(dbVersion);
+                    loaded = DBUpgradeDatabase(dbVersion);
                 }
             }
-            Logs.LogDb(CalledFrom, "Database is loaded succesfully!\n " + DB_PATH);
-            return true;
+            Logs.LogDb(CalledFrom, (loaded ? $"Database is loaded succesfully!\n{DB_PATH}" : "Issue on loading database!"));
+            return loaded;
         }
         private static long DbGenerateId()
         {
@@ -141,7 +141,7 @@ namespace HomeCinema.SQLFunc
             Logs.LogDb("DbGenerateId", $"UID Generated [{Uid}]");
             return Uid;
         }
-        private static void DBUpgradeDatabase(int dbVersion)
+        private static bool DBUpgradeDatabase(int dbVersion)
         {
             // Upgrade dbVer to match requirements
             int dbVer = dbVersion;
@@ -153,6 +153,22 @@ namespace HomeCinema.SQLFunc
                 if (retry > 0)
                 {
                     Logs.LogDb(calledFrom, $"Loaded dbVer: ({dbVersion}), Current dbVer: ({dbVer})");
+                    switch (dbVer)
+                    {
+                        case 5:
+                        {
+                            string qry = $"UPDATE {HCTable.info} SET [{HCInfo.category}]=1 WHERE `{HCInfo.category}`=5;";
+                            if (DbExecNonQuery(qry, calledFrom, -1) >= 0)
+                            {
+                                qry = $"UPDATE {HCTable.info} SET [{HCInfo.category}]=2 WHERE `{HCInfo.category}`=6;";
+                                if (DbExecNonQuery(qry, calledFrom, -1) >= 0)
+                                {
+                                    dbVer += 1;
+                                }
+                            }
+                            break;
+                        }
+                    }
                 }
                 else
                 {
@@ -160,7 +176,12 @@ namespace HomeCinema.SQLFunc
                     break;
                 }
             }
-            DbExecNonQuery($"UPDATE `config` SET `dbVersion`={dbVer}, `appBuild`={GlobalVars.HOMECINEMA_BUILD} WHERE `Id`=1;", calledFrom);
+            if (dbVer == GlobalVars.HOMECINEMA_DBVER)
+            { 
+                DbExecNonQuery($"UPDATE `config` SET `dbVersion`={dbVer}, `appBuild`={GlobalVars.HOMECINEMA_BUILD} WHERE `Id`=1;", calledFrom);
+                return true;
+            }
+            return false;
         }
         /// <summary>
         /// Open connection to SQLite database.
