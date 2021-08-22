@@ -133,9 +133,7 @@ namespace HomeCinema
                     // Unparse json into object list
                     string contents = GlobalVars.ReadStringFromFile(JSONcrewcast, errFrom + " [JSONcrewcast]");
                     var castcrew = JsonConvert.DeserializeObject<TmdbCastCrew>(contents, GlobalVars.JSON_SETTING);
-
                     string tmp = ""; // temporary string var. Use to get strings
-                    string tmpProd = ""; // Use to get director and producer
 
                     foreach (TmdbCast c in castcrew.cast)
                     {
@@ -148,17 +146,16 @@ namespace HomeCinema
                     // get Director and producer
                     foreach (TmdbCrew c in castcrew.crew)
                     {
-                        // Get informations
-                        if (c.job.Trim() == "Director")
+                        string job = c.job.Trim().ToLower(); // Get informations
+                        if (job.Equals("director"))
                         {
                             media.Director.Add(c.name.Trim());
                         }
-                        else if (c.job.Contains("Producer"))
+                        else if (job.Contains("producer"))
                         {
-                            tmpProd += c.name + ", ";
+                            media.Producer.Add(c.name.Trim());
                         }
                     }
-                    media.Producer = tmpProd.Trim().TrimEnd(',');
                 }
             }
             return media;

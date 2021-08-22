@@ -213,7 +213,7 @@ namespace HomeCinema
                         string role = prod.Role.Trim().ToLower();
                         if (role.Equals("producer"))
                         {
-                            media.Producer = prod.Node.Name.Full.Trim();
+                            media.Producer.Add(prod.Node.Name.Full.Trim());
                         }
                         else if (role.Equals("director"))
                         {

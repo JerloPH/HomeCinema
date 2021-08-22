@@ -180,7 +180,7 @@ namespace HomeCinema
                     cbCategory.SelectedIndex = Convert.ToInt16(row[HCInfo.category]);
                     LoadListBoxItems(listboxGenre, row[HCInfo.genre], ',');
                     LoadListBoxItems(lboxStudio, row[HCInfo.studio], ';');
-                    txtProducer.Text = row[HCInfo.producer].ToString();
+                    LoadListBoxItems(lboxProducer, row[HCInfo.producer], ';');
                     LoadListBoxItems(lboxDirector, row[HCInfo.director], ';');
                     txtArtist.Text = row[HCInfo.artist].ToString();
                     txtYear.Text = row[HCInfo.year].ToString();
@@ -380,7 +380,6 @@ namespace HomeCinema
                 entry.Seasons = seasons;
                 entry.Episodes = eps;
                 entry.Category = cbCategory.SelectedIndex;
-                entry.Producer = txtProducer.Text;
                 entry.Actor = txtArtist.Text;
                 entry.ReleaseDate = txtYear.Text;
                 entry.Summary = txtSummary.Text;
@@ -403,6 +402,11 @@ namespace HomeCinema
                 {
                     if (item != null)
                         entry.Director.Add(item.ToString().Trim());
+                }
+                foreach (var item in lboxProducer.Items)
+                {
+                    if (item != null)
+                        entry.Producer.Add(item.ToString().Trim());
                 }
                 entry.FilePath = txtPathFile.Text;
                 entry.FileSub = txtPathSub.Text;
@@ -444,7 +448,7 @@ namespace HomeCinema
                 metaData.Add(GlobalVars.ValidateEmptyOrNull(txtYear.Text)); // year
                 metaData.Add(GlobalVars.ConvertListBoxToString(listboxGenre, ",")); // genre
                 metaData.Add(GlobalVars.ConvertListBoxToString(lboxDirector, ";")); // director
-                metaData.Add(GlobalVars.ValidateEmptyOrNull(txtProducer.Text)); // producer
+                metaData.Add(GlobalVars.ConvertListBoxToString(lboxProducer, ";")); // producer
                 GlobalVars.SaveMetadata(txtPathFile.Text, metaData);
             }
 
@@ -600,10 +604,7 @@ namespace HomeCinema
             {
                 txtArtist.Text = mediaInfo.Actor;
             }
-            if (!String.IsNullOrWhiteSpace(mediaInfo.Producer)) // Producer
-            {
-                txtProducer.Text = mediaInfo.Producer;
-            }
+
             //Season and Episode counts
             txtEpNum.Text = mediaInfo.Episodes.ToString();
             txtSeasonNum.Text = mediaInfo.Seasons.ToString();
@@ -621,12 +622,17 @@ namespace HomeCinema
             // Set Studio
             if (mediaInfo.Studio?.Count > 0)
             {
-                LoadListBoxItems(mediaInfo.Studio, listboxGenre);
+                LoadListBoxItems(mediaInfo.Studio, lboxStudio);
             }
             // Set Director
             if (mediaInfo.Director?.Count > 0)
             {
                 LoadListBoxItems(mediaInfo.Director, lboxDirector);
+            }
+            // Set Producer
+            if (mediaInfo.Producer?.Count > 0)
+            {
+                LoadListBoxItems(mediaInfo.Producer, lboxProducer);
             }
             // Set mediatype, after getting info from TMDB or Anilist
             if (!String.IsNullOrWhiteSpace(genre) && !String.IsNullOrWhiteSpace(country))

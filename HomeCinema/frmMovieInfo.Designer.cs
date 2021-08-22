@@ -72,7 +72,6 @@
             this.label13 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.label11 = new System.Windows.Forms.Label();
-            this.txtProducer = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -91,6 +90,7 @@
             this.label20 = new System.Windows.Forms.Label();
             this.lboxStudio = new System.Windows.Forms.ListBox();
             this.lboxDirector = new System.Windows.Forms.ListBox();
+            this.lboxProducer = new System.Windows.Forms.ListBox();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
@@ -593,10 +593,10 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.lboxProducer);
             this.tabPage4.Controls.Add(this.lboxDirector);
             this.tabPage4.Controls.Add(this.lboxStudio);
             this.tabPage4.Controls.Add(this.label11);
-            this.tabPage4.Controls.Add(this.txtProducer);
             this.tabPage4.Controls.Add(this.label10);
             this.tabPage4.Controls.Add(this.label9);
             this.tabPage4.Controls.Add(this.label12);
@@ -616,17 +616,6 @@
             this.label11.Size = new System.Drawing.Size(97, 25);
             this.label11.TabIndex = 48;
             this.label11.Text = "Producer";
-            // 
-            // txtProducer
-            // 
-            this.txtProducer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtProducer.Location = new System.Drawing.Point(11, 257);
-            this.txtProducer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtProducer.Multiline = true;
-            this.txtProducer.Name = "txtProducer";
-            this.txtProducer.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtProducer.Size = new System.Drawing.Size(358, 167);
-            this.txtProducer.TabIndex = 45;
             // 
             // label10
             // 
@@ -829,6 +818,19 @@
             this.lboxDirector.Sorted = true;
             this.lboxDirector.TabIndex = 57;
             // 
+            // lboxProducer
+            // 
+            this.lboxProducer.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lboxProducer.FormattingEnabled = true;
+            this.lboxProducer.ItemHeight = 28;
+            this.lboxProducer.Location = new System.Drawing.Point(11, 280);
+            this.lboxProducer.Margin = new System.Windows.Forms.Padding(4);
+            this.lboxProducer.Name = "lboxProducer";
+            this.lboxProducer.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.lboxProducer.Size = new System.Drawing.Size(358, 144);
+            this.lboxProducer.Sorted = true;
+            this.lboxProducer.TabIndex = 58;
+            // 
             // frmMovieInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -897,7 +899,6 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox txtArtist;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox txtProducer;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TabPage tabPage3;
@@ -932,5 +933,6 @@
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.ListBox lboxStudio;
         private System.Windows.Forms.ListBox lboxDirector;
+        private System.Windows.Forms.ListBox lboxProducer;
     }
 }

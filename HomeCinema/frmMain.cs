@@ -241,6 +241,7 @@ namespace HomeCinema
                             rGenre = GlobalVars.ConvertListToString(Media.Genre, ",", callFrom); // Get Genres
                             rStudio = GlobalVars.ConvertListToString(Media.Studio, ";", callFrom); // Studio
                             rDirector = GlobalVars.ConvertListToString(Media.Director, ";", callFrom); // Director
+                            rProd = GlobalVars.ConvertListToString(Media.Producer, ";", callFrom); // Producer
                         }
                     }
                     if (Media == null)
@@ -268,7 +269,7 @@ namespace HomeCinema
                     dtInfo.Add(HCInfo.category, GlobalVars.GetCategoryValue(mediatype, src).ToString()); // category
                     dtInfo.Add(HCInfo.genre, rGenre); // genre
                     dtInfo.Add(HCInfo.studio, rStudio); // studio
-                    dtInfo.Add(HCInfo.producer, Media.Producer); // producer
+                    dtInfo.Add(HCInfo.producer, rProd); // producer
                     dtInfo.Add(HCInfo.director, rDirector); // director
                     dtInfo.Add(HCInfo.artist, Media.Actor); // artist
                     dtInfo.Add(HCInfo.year, rYear); // year
