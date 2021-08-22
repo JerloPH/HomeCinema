@@ -973,7 +973,7 @@ namespace HomeCinema
             string fileNamePath;
             long progress = 0;
             long progressMax = 0;
-
+            Dictionary<string, string> filepaths = new Dictionary<string, string>();
             // If no query
             if (String.IsNullOrWhiteSpace(qry))
             {
@@ -985,8 +985,15 @@ namespace HomeCinema
             // SET as Previous query
             SEARCH_QUERY_PREV = SEARCH_QUERY;
 
-            // Count progress
-            progress = 0;
+            // Execute query to fetch file paths
+            using (var dtFile = SQLHelper.DbQuery($"SELECT `{HCFile.Id}`,`{HCFile.File}` FROM {HCTable.filepath};", errFrom))
+            {
+                foreach (DataRow item in dtFile.Rows)
+                {
+                    filepaths.Add(item[HCFile.Id].ToString(), item[HCFile.File].ToString());
+                }
+            }
+            // Execute query to fetch movie info
             using (DataTable dt = SQLHelper.DbQuery(qry, errFrom)) // Get DataTable from query
             {
                 // Set Max Progress
@@ -1011,12 +1018,13 @@ namespace HomeCinema
                                 MOVIEID = 0;
                                 Logs.Log(errFrom, $"Invalid MovieID: {r[HCInfo.Id].ToString()}");
                             }
-
+                            
                             // Add to listview lvSearchResult
                             if (MOVIEID > 0)
                             {
                                 // Skip entry if file does not exist
-                                fileNamePath = GetFilePath(MOVIEID.ToString(), errFrom);
+                                fileNamePath = "";
+                                filepaths.TryGetValue(MOVIEID.ToString(), out fileNamePath);
                                 if (!String.IsNullOrWhiteSpace(fileNamePath))
                                 {
                                     try
@@ -1024,18 +1032,13 @@ namespace HomeCinema
                                         FileAttributes attr = File.GetAttributes(fileNamePath);
                                         if (attr.HasFlag(FileAttributes.Directory))
                                         {
-                                            // Non existing directory, skip it
-                                            if (!Directory.Exists(fileNamePath))
-                                            {
+                                            if (!Directory.Exists(fileNamePath)) // Non existing directory, skip it
                                                 continue;
-                                            }
                                         }
                                         else
                                         {
-                                            if (!File.Exists(fileNamePath))
-                                            {
+                                            if (!File.Exists(fileNamePath)) // Non existing file, skip it
                                                 continue;
-                                            }
                                         }
                                     }
                                     catch (DirectoryNotFoundException)
@@ -1112,6 +1115,7 @@ namespace HomeCinema
                     form.ShowDialog();
                 }
             }
+            filepaths?.Clear(); // micro optimization
             AfterPopulatingMovieLV(lvSearchResult, progress);
             // Auto check update
             if ((Settings.IsOffline == false) && (Settings.IsAutoUpdate) && AppStart)
