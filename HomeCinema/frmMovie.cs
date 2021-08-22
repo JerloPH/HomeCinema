@@ -258,7 +258,7 @@ namespace HomeCinema
         // Setup ComboBoxes
         public void SetupCombobox(ComboBox box, object param, char sep)
         {
-            box.Items.AddRange(GlobalVars.ValidateStringToArray(param, sep));
+            box.Items.AddRange(GlobalVars.ValidateStringToArray(param, sep, true));
             if (box.Items.Count > 0)
                 box.SelectedIndex = 0;
         }

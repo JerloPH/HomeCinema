@@ -408,14 +408,15 @@ namespace HomeCinema
         {
             return ValidateAndReturn(param, "");
         }
-        public static string[] ValidateStringToArray(object param, char sep)
+        public static string[] ValidateStringToArray(object param, char sep, bool AddNone)
         {
+            string none = AddNone ? "(None)" : "";
             if (param == null)
-                return new string[] { "(None)" };
+                return new string[] { none };
             
             string text = param.ToString().Trim();
             if (String.IsNullOrWhiteSpace(text))
-                return new string[] { "(None)" };
+                return new string[] { none };
 
             return text.Split(sep).Select(p => p.Trim()).ToArray();
         }

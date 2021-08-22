@@ -122,13 +122,12 @@ namespace HomeCinema
         // Add items to ListBox
         public void LoadListBoxItems(ListBox lb, object items, char sep)
         {
-            var temp = GlobalVars.ValidateStringToArray(items, sep).ToList<string>();
+            var temp = GlobalVars.ValidateStringToArray(items, sep, false).ToList<string>();
             LoadListBoxItems(temp, lb);
         }
         public void LoadListBoxItems(List<string> itemsList, ListBox lb)
         {
             string itemAdd = "";
-
             lb.Items.Clear();
             foreach (string item in itemsList)
             {
@@ -689,7 +688,8 @@ namespace HomeCinema
             }
             else
             {
-                GlobalVars.ShowWarning($"No cover image fetched!\nSource: {source.ToUpper()}", "", this);
+                if (Settings.IsConfirmMsg)
+                    GlobalVars.ShowWarning($"No cover image fetched!\nSource: {source.ToUpper()}", "", this);
             }
         }
         // Get IMDB ID using Movie Name
@@ -719,7 +719,7 @@ namespace HomeCinema
             MEDIA_TYPE = form.getResultMedia.Equals("tv") ? "series" : "movie";
             form.Dispose();
 
-            // Get IMDB from TMDB json info
+            // Set Id from source result
             if (String.IsNullOrWhiteSpace(getResult) == false)
             {
                 if (source.Equals(HCSource.anilist))
