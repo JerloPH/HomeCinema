@@ -765,5 +765,65 @@ namespace HomeCinema
         {
             AddToListBox(listboxGenre, GlobalVars.TEXT_GENRE.ToList<string>(), "Type genre to add");
         }
+
+        private void btnStudioAdd_Click(object sender, EventArgs e)
+        {
+            AddToListBox(lboxStudio, lboxStudio.Items.Cast<String>().ToList(), "Add Studio name");
+        }
+
+        private void btnStudioRemove_Click(object sender, EventArgs e)
+        {
+            RemoveFromListBox(lboxStudio);
+        }
+
+        private void btnStudioClear_Click(object sender, EventArgs e)
+        {
+            lboxStudio.Items.Clear();
+        }
+
+        private void btnDirectorClear_Click(object sender, EventArgs e)
+        {
+            lboxDirector.Items.Clear();
+        }
+
+        private void btnDirectorRemove_Click(object sender, EventArgs e)
+        {
+            RemoveFromListBox(lboxDirector);
+        }
+
+        private void btnDirectorAdd_Click(object sender, EventArgs e)
+        {
+            AddToListBox(lboxDirector, lboxDirector.Items.Cast<String>().ToList(), "Add Director name");
+        }
+
+        private void btnProducerClear_Click(object sender, EventArgs e)
+        {
+            lboxProducer.Items.Clear();
+        }
+
+        private void btnCastsClear_Click(object sender, EventArgs e)
+        {
+            lboxCasts.Items.Clear();
+        }
+
+        private void btnCastsRemove_Click(object sender, EventArgs e)
+        {
+            RemoveFromListBox(lboxCasts);
+        }
+
+        private void btnProducerRemove_Click(object sender, EventArgs e)
+        {
+            RemoveFromListBox(lboxProducer);
+        }
+
+        private void btnProducerAdd_Click(object sender, EventArgs e)
+        {
+            AddToListBox(lboxProducer, lboxProducer.Items.Cast<String>().ToList(), "Add Producer name");
+        }
+
+        private void btnCastsAdd_Click(object sender, EventArgs e)
+        {
+            AddToListBox(lboxCasts, lboxCasts.Items.Cast<String>().ToList(), "Add Cast/Actor/Actress name");
+        }
     }
 }
