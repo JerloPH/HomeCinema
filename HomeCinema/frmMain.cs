@@ -321,6 +321,7 @@ namespace HomeCinema
                                 Logs.LogErr($"{errFrom}\nTemp File: {oldFile}\nCover File: {newFile}", ex);
                             }
                         }
+                        Media.Dispose();
                     }
                     form.UpdateProgress(progress);
                 }

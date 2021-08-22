@@ -405,6 +405,7 @@ namespace HomeCinema
                 entry.Trailer = txtPathTrailer.Text;
                 // Check if first query successfully executed
                 ContAfterQry = SQLHelper.DbUpdateInfo(entry, callFrom);
+                entry.Dispose();
                 if (!ContAfterQry)
                 {
                     GlobalVars.ShowWarning("Not saved properly!\nReview data and Try again,", "", this);
