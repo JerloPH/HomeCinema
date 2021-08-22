@@ -427,16 +427,7 @@ namespace HomeCinema
             {
                 int index = cbCategory.SelectedIndex;
                 qry += SQLHelper.QryWhere(qry);
-                // Search for all
-                if ((index < 1) || (index > 2))
-                {
-                    qry += $"`{HCInfo.category}`={index}";
-                }
-                else
-                {
-                    // Search for All type of Movies, if index == 1. Otherwise, Search for All types of Series
-                    qry += (index == 1) ? $" (`{HCInfo.category}`=1 OR `{HCInfo.category}`=3 OR `{HCInfo.category}`=5)" : $" (`{HCInfo.category}`=2 OR `{HCInfo.category}`=4 OR `{HCInfo.category}`=6)";
-                }
+                qry += $"`{HCInfo.category}`={index}"; // Search by category
             }
             // Studio
             if (String.IsNullOrWhiteSpace(txtStudio.Text) == false)
