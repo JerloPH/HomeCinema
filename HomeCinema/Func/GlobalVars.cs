@@ -1008,7 +1008,7 @@ namespace HomeCinema
         public static string GetStringInputBox(string caption, string defaultVal)
         {
             var form = new frmInputBox(caption, null, defaultVal);
-            DialogResult dialogResult = form.ShowDialog();
+            form.ShowDialog();
             string value = (!String.IsNullOrWhiteSpace(form.Result)) ? form.Result.Trim() : String.Empty;
             form.Dispose();
             return value;
@@ -1017,7 +1017,7 @@ namespace HomeCinema
         {
             var form = new frmInputBox(caption, items, "");
             form.Values = vals;
-            DialogResult dialogResult = form.ShowDialog();
+            form.ShowDialog();
             string value = (!String.IsNullOrWhiteSpace(form.Result)) ? form.Result.Trim() : String.Empty;
             form.Dispose();
             return value;
