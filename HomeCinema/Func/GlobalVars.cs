@@ -257,9 +257,16 @@ namespace HomeCinema
         // Write to TextFile
         public static void WriteAppend(string fName, string toWrite, bool newline = true)
         {
-            using (StreamWriter w = File.AppendText(fName))
+            try
             {
-                w.Write(toWrite + (newline ? "\n" : ""));
+                using (StreamWriter w = File.AppendText(fName))
+                {
+                    w.Write(toWrite + (newline ? "\n" : ""));
+                }
+            }
+            catch (Exception ex)
+            {
+                Logs.LogErr("GlobalVars-WriteAppend", ex);
             }
         }
         // Write to TextFile
