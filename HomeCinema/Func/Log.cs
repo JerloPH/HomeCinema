@@ -43,11 +43,12 @@ namespace HomeCinema
         /// <returns>Formatted message with time/date</returns>
         public static string LogFormatted(string codefrom, string logMessage)
         {
+            string caller = (!String.IsNullOrWhiteSpace(codefrom) ? $"[{codefrom}] " : "");
             try
             {
-                return ($"[{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:ffff")}]: [{ codefrom }] { logMessage }\n");
+                return ($"[{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:ffff")}]: { caller }{ logMessage }\n");
             }
-            catch { return $"[Unknown DateTime][{ codefrom }] { logMessage }\n"; }
+            catch { return $"[Unknown DateTime]{ caller }{ logMessage }\n"; }
         }
         /// <summary>
         /// Log database-related functions, to text file.
@@ -84,7 +85,11 @@ namespace HomeCinema
                 Log(DataFile.FILE_LOG_ERROR, codefrom, $"Error string:\n\t{error}");
             }
         }
-        public static void LogDebug(string log)
+        public static void LogSkip(string log)
+        {
+            GlobalVars.WriteAppend(DataFile.FILE_LOG_SKIPPED, log);
+        }
+        public static void Debug(string log)
         {
             if (!GlobalVars.DEBUGGING) { return; }
             Log(Path.Combine(DataFile.PATH_LOG, "DEBUG.log"), "", log);

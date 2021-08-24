@@ -51,6 +51,7 @@ namespace HomeCinema
     {
         public static string Id = "UId";
         public static string File = "file";
+        public static string Root = "rootFolder";
         public static string Sub = "sub";
         public static string Trailer = "trailer";
     }

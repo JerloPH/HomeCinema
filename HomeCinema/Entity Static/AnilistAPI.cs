@@ -68,18 +68,18 @@ namespace HomeCinema
                         query = Query,
                         variables = "{ \"search\": \"" + text.Replace("\"", string.Empty) + "\"}"
                     });
-                    Logs.LogDebug($"Retry({retry-1}), Will search: [{text}]");
+                    Logs.Debug($"Retry({retry-1}), Will search: [{text}]");
                     var execute = client.Execute(request);
-                    Logs.LogDebug($"Finished search: [{text}]");
+                    Logs.Debug($"Finished search: [{text}]");
                     if (execute.Headers != null)
                     {
                         if (int.TryParse(execute.Headers.ToList().Find(x => x.Name == "Retry-After")?.Value.ToString(), out int val))
                         {
-                            Logs.LogDebug($"Retry-After: [{val}]");
+                            Logs.Debug($"Retry-After: [{val}]");
                             if (val > 0)
                             {
                                 val += 1;
-                                Logs.LogDebug($"Sleeping thread for 60000ms(1 minute)");
+                                Logs.Debug($"Sleeping thread for 60000ms(1 minute)");
                                 Thread.Sleep(val*1000);
                                 continue;
                             }
@@ -120,15 +120,15 @@ namespace HomeCinema
                         query = QueryWithId,
                         variables = "{ \"Id\": " + Id + "}"
                     });
-                    Logs.LogDebug($"Retry({retry-1}), Query Id: [{Id}]");
+                    Logs.Debug($"Retry({retry-1}), Query Id: [{Id}]");
                     var execute = client.Execute(request);
-                    Logs.LogDebug("Done execute!");
+                    Logs.Debug("Done execute!");
                     // Handle TimeOut for Rate Limiting
                     if (execute.Headers != null)
                     {
                         if (int.TryParse(execute.Headers.ToList().Find(x => x.Name == "Retry-After")?.Value.ToString(), out int val))
                         {
-                            Logs.LogDebug($"Retry-After: [{val}]");
+                            Logs.Debug($"Retry-After: [{val}]");
                             if (val > 0)
                             {
                                 Logs.Log(calledFrom, $"Anilist timeout, sleep thread ms: {val * 1000}");

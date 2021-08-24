@@ -34,6 +34,7 @@ namespace HomeCinema.SQLFunc
         private static readonly int RetryCount = 5;
 
         // Methods for querying
+        #region Query String Helper
         // Check if the column is a numeric column
         public static bool QryColNumeric(string colName)
         {
@@ -57,6 +58,8 @@ namespace HomeCinema.SQLFunc
                 return (UseSingleQuote ? $"'{text}'" : $"{text}");
             }
         }
+        #endregion
+
         /// <summary>
         /// Initialize SQLite database. Create if NOT existing.
         /// </summary>
@@ -90,6 +93,7 @@ namespace HomeCinema.SQLFunc
                 "'Id'  INTEGER  PRIMARY KEY AUTOINCREMENT, " +
                 $"'{HCFile.Id}'	INTEGER, " +
                 $"[{HCFile.File}]  TEXT, " +
+                $"[{HCFile.Root}]  TEXT, " +
                 $"[{HCFile.Sub}]  TEXT, " +
                 $"[{HCFile.Trailer}]  TEXT);", CalledFrom);
             DbExecNonQuery($"CREATE TABLE IF NOT EXISTS `config` (" +
@@ -165,6 +169,15 @@ namespace HomeCinema.SQLFunc
                                 {
                                     dbVer += 1;
                                 }
+                            }
+                            break;
+                        }
+                        case 6:
+                        {
+                            string qry = $"ALTER TABLE {HCTable.filepath} ADD {HCFile.Root} TEXT DEFAULT '';";
+                            if (DbExecNonQuery(qry, calledFrom, -1) >= 0)
+                            {
+                                dbVer += 1;
                             }
                             break;
                         }

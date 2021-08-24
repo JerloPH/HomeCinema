@@ -329,7 +329,7 @@ namespace HomeCinema
             {
                 var form = PARENT as frmMovie;
                 form.ChildForm = null;
-                Logs.LogDebug("frmMovie Parent is null!");
+                Logs.Debug("frmMovie Parent is null!");
             }
             picBox.Image?.Dispose();
             tempImage?.Dispose();

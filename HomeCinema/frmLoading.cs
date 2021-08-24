@@ -81,16 +81,17 @@ namespace HomeCinema
             lblProgress.Visible = useProgress;
         }
         #region Public Functions
-        public void UpdateProgress(long progress)
+        public void UpdateProgress(long progress = 1)
         {
             try
             {
-                decimal percent = ((decimal)progress / (decimal)MaxProgress) * 100m;
-                if (progress == MaxProgress)
+                ProgressCount += 1;
+                decimal percent = ((decimal)ProgressCount / (decimal)MaxProgress) * 100m;
+                if (ProgressCount == MaxProgress)
                     percent = 100m;
 
                 //GlobalVars.LogDebug($"Percent: [{percent.ToString("###.##")}], Progress: [{progress}], Max Progress: [{MaxProgress}]");
-                BackgroundWorker.ReportProgress((int)percent, progress);
+                BackgroundWorker.ReportProgress((int)percent, ProgressCount);
             }
             catch (Exception ex)
             {

@@ -829,7 +829,6 @@ namespace HomeCinema
             var dtNewFiles = new List<Medias>();
             int countMediaLoc = 0;
             int countMediaLocMax = 0;
-            string logSkipped = Path.Combine(DataFile.PATH_LOG, "SkippedEntries.Log");
             long insertRes = 0;
 
             // Build list of folders to search from
@@ -912,12 +911,12 @@ namespace HomeCinema
                                         }
                                         else
                                         {
-                                            GlobalVars.WriteAppend(logSkipped, $"Not supported ext: {file}");
+                                            Logs.LogSkip($"Not supported ext: {file}");
                                         }
                                     }
                                     catch (Exception ex)
                                     {
-                                        GlobalVars.WriteAppend(logSkipped, $"Error: {file}");
+                                        Logs.LogSkip($"Error: {file}");
                                         Logs.LogErr(calledFrom, ex);
                                         continue;
                                     }
@@ -948,7 +947,7 @@ namespace HomeCinema
                                     }
                                     else
                                     {
-                                        GlobalVars.WriteAppend(logSkipped, $"Directory does not exist: {folderName}");
+                                        Logs.LogSkip($"Directory does not exist: {folderName}");
                                     }
                                 }
                             }
@@ -979,10 +978,11 @@ namespace HomeCinema
             frmLoading form = new frmLoading(AppStart ? "Loading collection.." : "Searching..", "Loading", true);
             string qry = SEARCH_QUERY;
             string errFrom = "frmMain-PopulateMovieBG()";
-            string fileNamePath;
+            string fileNamePath, fileRootFolder;
             long progress = 0;
             long progressMax = 0;
-            Dictionary<string, string> filepaths = new Dictionary<string, string>();
+            bool AddEntry = true;
+            Dictionary<string, Medias> filepaths = new Dictionary<string, Medias>();
             // If no query
             if (String.IsNullOrWhiteSpace(qry))
             {
@@ -993,92 +993,131 @@ namespace HomeCinema
 
             // SET as Previous query
             SEARCH_QUERY_PREV = SEARCH_QUERY;
-
+            Logs.Debug("Start Adding Items to ListView");
             // Execute query to fetch file paths
-            using (var dtFile = SQLHelper.DbQuery($"SELECT `{HCFile.Id}`,`{HCFile.File}` FROM {HCTable.filepath};", errFrom))
+            using (var dtFile = SQLHelper.DbQuery($"SELECT `{HCFile.Id}`,`{HCFile.File}`,`{HCFile.Root}` FROM {HCTable.filepath};", errFrom))
             {
-                foreach (DataRow item in dtFile.Rows)
+                Logs.Debug("Fetching.. filepaths");
+                if (dtFile != null)
                 {
-                    filepaths.Add(item[HCFile.Id].ToString(), item[HCFile.File].ToString());
+                    foreach (DataRow item in dtFile.Rows)
+                    {
+                        var fileMedia = new Medias(item[HCFile.File].ToString(), "", item[HCFile.Root].ToString());
+                        filepaths.Add(item[HCFile.Id].ToString(), fileMedia);
+                    }
+                    Logs.Debug("Fetched filepaths!");
                 }
             }
             // Execute query to fetch movie info
             using (DataTable dt = SQLHelper.DbQuery(qry, errFrom)) // Get DataTable from query
             {
+                Logs.Debug("Fetching.. info");
                 // Set Max Progress
                 if (dt != null)
                 {
                     progressMax = (long)dt.Rows.Count;
+                    Logs.Debug("Fetched info!\n");
                 }
-
                 // Iterate thru all DataRows
                 if (progressMax > 0)
                 {
+                    Logs.Debug($"Will go through items: {progressMax}");
                     form.MaxProgress = progressMax;
                     form.BackgroundWorker.DoWork += (sender1, e1) =>
                     {
+                        Logs.Debug("Perform foreach Iterate on DataRows\n\n");
                         foreach (DataRow r in dt.Rows)
                         {
+                            AddEntry = true;
                             // Add Item to ListView
-                            // Convert ID object to ID int
                             long MOVIEID;
-                            if (!long.TryParse(r[HCInfo.Id].ToString(), out MOVIEID))
+                            if (!long.TryParse(r[HCInfo.Id].ToString(), out MOVIEID)) // Convert ID object to ID int
                             {
                                 MOVIEID = 0;
                                 Logs.Log(errFrom, $"Invalid MovieID: {r[HCInfo.Id].ToString()}");
                             }
-                            
+                            Logs.Debug($"Initializing item with ID: {MOVIEID}");
+
                             // Add to listview lvSearchResult
                             if (MOVIEID > 0)
                             {
                                 // Skip entry if file does not exist
-                                fileNamePath = "";
-                                filepaths.TryGetValue(MOVIEID.ToString(), out fileNamePath);
-                                if (!String.IsNullOrWhiteSpace(fileNamePath))
+                                filepaths.TryGetValue(MOVIEID.ToString(), out Medias fileMedia);
+                                fileNamePath = fileMedia.FilePath;
+                                fileRootFolder = fileMedia.Source;
+
+                                if (String.IsNullOrWhiteSpace(fileRootFolder))
+                                {
+                                    try
+                                    {
+                                        foreach (var item in GlobalVars.MEDIA_LOC)
+                                        {
+                                            if (fileNamePath.Contains(item.Path))
+                                            {
+                                                fileRootFolder = item.Path;
+                                                break;
+                                            }
+                                        }
+                                        if (!String.IsNullOrWhiteSpace(fileRootFolder))
+                                        {
+                                            var dict = new Dictionary<String, String>();
+                                            dict.Add(HCFile.Id, MOVIEID.ToString());
+                                            dict.Add(HCFile.Root, fileRootFolder);
+                                            SQLHelper.DbUpdateTable(HCTable.filepath, dict, errFrom);
+                                        }
+                                        else
+                                        {
+                                            Logs.LogSkip($"Not in Media Locations: {fileNamePath}");
+                                            AddEntry = false;
+                                        }
+                                    }
+                                    catch (Exception ex) { Logs.LogErr(errFrom, ex); }
+                                }
+                                if (!String.IsNullOrWhiteSpace(fileNamePath) && AddEntry)
                                 {
                                     try
                                     {
                                         FileAttributes attr = File.GetAttributes(fileNamePath);
                                         if (attr.HasFlag(FileAttributes.Directory))
                                         {
-                                            if (!Directory.Exists(fileNamePath)) // Non existing directory, skip it
-                                                continue;
+                                            AddEntry = Directory.Exists(fileNamePath); // Non existing directory, skip it
                                         }
                                         else
                                         {
-                                            if (!File.Exists(fileNamePath)) // Non existing file, skip it
-                                                continue;
+                                            AddEntry = File.Exists(fileNamePath); // Non existing file, skip it
                                         }
                                     }
                                     catch (DirectoryNotFoundException)
                                     {
-                                        continue;
+                                        AddEntry = false;
                                     }
                                     catch (FileNotFoundException)
                                     {
-                                        continue;
+                                        AddEntry = false;
                                     }
                                     catch (Exception ex)
                                     {
                                         Logs.LogErr($"{errFrom}\nFile: {fileNamePath}", ex);
-                                        continue;
+                                        AddEntry = false;
                                     }
-                                }
 
+                                    if (!AddEntry)
+                                        Logs.LogSkip($"File or Directory not existing! : {fileNamePath}");
+                                }
                                 // Load 'cover' Image from 'cover' folder
-                                if (AppStart)
+                                if (AppStart && AddEntry)
                                 {
+                                    Logs.Debug($"Loading image for ID: {MOVIEID}");
                                     string Imagefile = GlobalVars.ImgFullPath(MOVIEID.ToString());
                                     try
                                     {
                                         if (File.Exists(Imagefile))
                                         {
-                                            this.Invoke(new Action(() =>
+                                            using (Image imageFromFile = Image.FromFile(Imagefile))
                                             {
-                                                Image imageFromFile = Image.FromFile(Imagefile);
                                                 GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imageFromFile);
-                                                imageFromFile.Dispose();
-                                            }));
+                                            }
+                                            Logs.Debug($"Image loaded for ID: {MOVIEID}, file: {Imagefile}");
                                         }
                                     }
                                     catch (Exception exImg)
@@ -1087,41 +1126,49 @@ namespace HomeCinema
                                     }
                                 }
 
-                                try
+                                if (AddEntry)
                                 {
-                                    // Get all strings from the DataRow, passed by the BG worker
-                                    string resName = r[HCInfo.name].ToString(); // name
-                                    string resNameEp = r[HCInfo.name_orig].ToString(); // name_ep
-                                    string resNameSer = r[HCInfo.name_series].ToString(); // name_series
-                                    string resSeason = r[HCInfo.season].ToString(); // season
-                                    string resEp = r[HCInfo.episode].ToString(); // episode
-                                    string resYear = r[HCInfo.year].ToString(); // year
-                                    string resSum = r[HCInfo.summary].ToString(); // summary
-                                    string resGenre = r[HCInfo.genre].ToString(); // genre
+                                    try
+                                    {
+                                        // Get all strings from the DataRow, passed by the BG worker
+                                        Logs.Debug($"Fetching DataRow info with ID: {MOVIEID}");
+                                        string resName = r[HCInfo.name].ToString(); // name
+                                        string resNameEp = r[HCInfo.name_orig].ToString(); // name_ep
+                                        string resNameSer = r[HCInfo.name_series].ToString(); // name_series
+                                        string resSeason = r[HCInfo.season].ToString(); // season
+                                        string resEp = r[HCInfo.episode].ToString(); // episode
+                                        string resYear = r[HCInfo.year].ToString(); // year
+                                        string resSum = r[HCInfo.summary].ToString(); // summary
+                                        string resGenre = r[HCInfo.genre].ToString(); // genre
 
-                                    // Make new ListView item, and assign properties to it
-                                    ListViewItem temp = new ListViewItem() { Text = resName };
+                                        // Make new ListView item, and assign properties to it
+                                        ListViewItem temp = new ListViewItem() { Text = resName };
 
-                                    // Edit Information on ListView Item
-                                    LVItemSetDetails(temp, new string[] { MOVIEID.ToString(),
-                                    resName, resNameEp, resNameSer,
-                                    resSeason, resEp, resYear, resSum, resGenre });
+                                        // Edit Information on ListView Item
+                                        Logs.Debug($"Setting Up ListView Item details: {MOVIEID}");
+                                        LVItemSetDetails(temp, new string[] { MOVIEID.ToString(),
+                                            resName, resNameEp, resNameSer,
+                                            resSeason, resEp, resYear, resSum, resGenre });
 
-                                    // Add Item to ListView lvSearchResult
-                                    AddItem(lvSearchResult, temp);
-                                    progress += 1;
+                                        // Add Item to ListView lvSearchResult
+                                        Logs.Debug($"Adding item to ListView, with ID: {MOVIEID}");
+                                        AddItem(lvSearchResult, temp);
+                                        progress += 1;
+                                    }
+                                    catch (Exception ex) { Logs.LogErr(errFrom, ex); }
                                 }
-                                catch { }
                             }
-                            form.UpdateProgress(progress);
+                            form.UpdateProgress();
+                            Logs.Debug($"Updated progress to {progress}\n\n");
                         }
-                        Logs.Log(errFrom, $"DONE Background worker from: {Name}");
+                        Logs.Debug($"DONE Loading ListView items BGworker from: {Name}");
                     };
                     form.ShowDialog();
                 }
             }
             filepaths?.Clear(); // micro optimization
             AfterPopulatingMovieLV(lvSearchResult, progress);
+            Logs.Debug("ListView loaded!");
             // Check if no TMDB Key
             if (!GlobalVars.HAS_TMDB_KEY && AppStart)
             {

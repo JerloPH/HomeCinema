@@ -28,6 +28,8 @@ namespace HomeCinema
         public static string FILE_MEDIALOC = "";
         public static string FILE_MEDIA_EXT = "";
 
+        public static string FILE_LOG_SKIPPED = "";
+
         // Check all FILES on Startup
         public static void Initialize()
         {
@@ -46,9 +48,11 @@ namespace HomeCinema
                 CreateDir(PATH_TEMP);
                 CreateDir(PATH_LOG);
 
-                FILE_LOG_APP = Path.Combine(PATH_LOG, "App_Log.log");// Log all messages and actions
-                FILE_LOG_ERROR = Path.Combine(PATH_LOG, "App_ErrorLog.log"); // Contains only error Messages
-                FILE_LOG_DB = Path.Combine(PATH_LOG, "App_DB.log"); // Log all messages and actions for db-related
+                var date = DateTime.Now.ToString("yyyy-MM-dd");
+                FILE_LOG_APP = Path.Combine(PATH_LOG, $"{date}_App.log");// Log all messages and actions
+                FILE_LOG_ERROR = Path.Combine(PATH_LOG, $"{date}_Error.log"); // Contains only error Messages
+                FILE_LOG_DB = Path.Combine(PATH_LOG, $"{date}_DB.log"); // Log all messages and actions for db-related
+                FILE_LOG_SKIPPED = Path.Combine(PATH_LOG, $"{date}_SkippedEntries.log"); // Entries skipped
 
                 FILE_ICON = PATH_RES + @"HomeCinema.ico"; // Icon
                 FILE_DEFIMG = PATH_IMG + @"0.jpg"; // default cover image
