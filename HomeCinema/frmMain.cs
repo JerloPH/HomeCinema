@@ -604,6 +604,18 @@ namespace HomeCinema
             }
             PopulateMovieBG(AppStart);
         }
+        public void RemoveItemInMovieList(ListViewItem lv)
+        {
+            try
+            {
+                lvSearchResult.Items.Remove(lv);
+            }
+            catch (Exception ex)
+            {
+                Logs.LogErr("frmMain-RemoveItemInMovieList", ex);
+                RefreshMovieList();
+            }
+        }
         // Sort Items in lvSearchResult ListView
         private void SortItemsInListView(int toggle)
         {

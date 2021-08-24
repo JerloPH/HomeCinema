@@ -334,31 +334,19 @@ namespace HomeCinema
         }
         private void frmMovie_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // Close children form, movie edit form
+            if (ChildForm != null)
+                ChildForm.Close();
+
             // Dispose components
             webTrailer?.Dispose();
             DisposePoster();
-            //picBox.Image?.Dispose();
-            //MOVIE_COVER_FULL?.Dispose();
-            foreach (Control c in groupBox2.Controls)
-            {
-                c?.Dispose();
-            }
-            foreach (Control cc in Controls)
-            {
-                cc?.Dispose();
-            }
-            // Dispose ICON Image
-            Icon?.Dispose();
-            // Log to file
-            Logs.Log("Disposing frmMovie (" + Name + ")", "Controls are Disposed");
-
+            Icon?.Dispose(); // Dispose ICON Image
             // Refresh on Main form
             if (IsDeleted)
             {
-                Program.FormMain.RefreshMovieList();
+                Program.FormMain.RemoveItemInMovieList(LVITEM);
             }
-            if (ChildForm != null)
-                ChildForm.Close();
             // Set focus to main
             Program.FormMain.Focus();
             Dispose();
