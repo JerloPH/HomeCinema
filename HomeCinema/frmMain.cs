@@ -514,17 +514,7 @@ namespace HomeCinema
                     {
                         // Create form to View Movie Details / Info
                         string text = lvSearchResult.SelectedItems[0].Text;
-                        string formName = $"movie{ID}";
-                        Form fc = Application.OpenForms[formName];
-                        if (fc != null)
-                        {
-                            fc.Focus();
-                        }
-                        else
-                        {
-                            Form form = new frmMovie(this, ID.ToString(), text, lvSearchResult.SelectedItems[0]);
-                            form.Name = formName;
-                        }
+                        GlobalVars.OpenFormMovie(this, lvSearchResult.SelectedItems[0], ID, text);
                     }
                 }
             }

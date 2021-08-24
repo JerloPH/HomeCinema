@@ -560,6 +560,26 @@ namespace HomeCinema
         {
             return Regex.Replace(s, @"\t|\n|\r", "");
         }
+        // Create / Open frmMovie form [View Movie Details]
+        public static Form OpenFormMovie(Form parent, ListViewItem item, long MovieId, string Caption)
+        {
+            string formName = $"movie{MovieId}";
+            Form fc = Application.OpenForms[formName];
+            if (fc != null)
+            {
+                if (fc.WindowState == FormWindowState.Minimized)
+                    fc.WindowState = FormWindowState.Normal;
+
+                fc.Focus();
+                return fc;
+            }
+            else
+            {
+                Form form = new frmMovie(parent, MovieId.ToString(), Caption, item);
+                form.Name = formName;
+                return form;
+            }
+        }
         // Create / Open frmMovieInfo form [EDIT Movie details]
         public static Form OpenFormMovieInfo(Form formParent, string MOVIE_ID, ListViewItem lvItem, string From)
         {
