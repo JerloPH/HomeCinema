@@ -37,7 +37,6 @@ namespace HomeCinema
         // Strings and others
         static string SEARCHBOX_PLACEHOLDER = "Type your Search query here...";
         string SEARCH_QUERY = "";
-        string SEARCH_QUERY_PREV = "";
         static bool IsLoadedSuccess = true;
 
         // Objects
@@ -591,11 +590,6 @@ namespace HomeCinema
         // Execute the query, by running bgWorker bgSearchInDB
         public void RefreshMovieList(bool AppStart = false)
         {
-            // Check if there was prev query
-            if (!String.IsNullOrWhiteSpace(SEARCH_QUERY_PREV))
-            {
-                SEARCH_QUERY = SEARCH_QUERY_PREV;
-            }
             // Check if SEARCH_QUERY is empty
             if (String.IsNullOrWhiteSpace(SEARCH_QUERY))
             {
@@ -1002,9 +996,6 @@ namespace HomeCinema
                 AfterPopulatingMovieLV(lvSearchResult);
                 return;
             }
-
-            // SET as Previous query
-            SEARCH_QUERY_PREV = SEARCH_QUERY;
             Logs.Debug("Start Adding Items to ListView");
             // Execute query to fetch file paths
             using (var dtFile = SQLHelper.DbQuery($"SELECT `{HCFile.Id}`,`{HCFile.File}`,`{HCFile.Root}` FROM {HCTable.filepath};", errFrom))
