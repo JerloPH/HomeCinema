@@ -1347,8 +1347,26 @@ namespace HomeCinema
             // Save text files
             SaveCountryCB(); // Replace Country text file
             SaveGenreCB(); // Replace Genre text file
+            // Close all forms
+            try
+            {
+                foreach (Form form in Application.OpenForms)
+                {
+                    if (form != this)
+                        form?.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Logs.LogErr("frmMain_FormClosing", ex);
+            }
+            // Clear imglist
             if (GlobalVars.MOVIE_IMGLIST != null)
             {
+                foreach (Image img in GlobalVars.MOVIE_IMGLIST.Images)
+                {
+                    img?.Dispose();
+                }
                 GlobalVars.MOVIE_IMGLIST.Images.Clear();
                 GlobalVars.MOVIE_IMGLIST.Dispose();
             }
