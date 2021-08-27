@@ -273,16 +273,14 @@ namespace HomeCinema
         // Save changes to settings
         private void btnSave_Click(object sender, EventArgs e)
         {
-            // Try settings values
             string error = "";
-
             // Booleans
-            Settings.IsAutoUpdate = !Convert.ToBoolean(cbAutoUpdate.SelectedIndex);
-            Settings.IsOffline = !Convert.ToBoolean(cbOffline.SelectedIndex);
-            Settings.IsAutoplay = !Convert.ToBoolean(cbPlayMovie.SelectedIndex);
-            Settings.IsAutoClean = !Convert.ToBoolean(cbAutoClean.SelectedIndex);
-            Settings.IsConfirmSearch = !Convert.ToBoolean(cbConfirmSearch.SelectedIndex);
-            Settings.IsConfirmMsg = !Convert.ToBoolean(cbConfirmAction.SelectedIndex);
+            Settings.IsAutoUpdate = cbAutoUpdate.SelectedIndex == 0;
+            Settings.IsOffline = cbOffline.SelectedIndex == 0;
+            Settings.IsAutoplay = cbPlayMovie.SelectedIndex == 0;
+            Settings.IsAutoClean = cbAutoClean.SelectedIndex == 0;
+            Settings.IsConfirmSearch = cbConfirmSearch.SelectedIndex == 0;
+            Settings.IsConfirmMsg = cbConfirmAction.SelectedIndex == 0;
             Settings.IsSkipNotMediaLoc = cbSkipNonMediaLoc.SelectedIndex == 0;
 
             // TextBox changes
