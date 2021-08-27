@@ -116,12 +116,12 @@ namespace HomeCinema
                         // Add to ListView
                         foreach (var result in objPageResult.results)
                         {
+                            if (count > Settings.SearchLimit && Settings.SearchLimit > 1) { break; } // Exit when item result count is reached
                             string ImdbFromApi = TmdbAPI.GetImdbFromAPI(result.Id.ToString(), result.MediaType);
                             string imgFilePath = $"{DataFile.PATH_TEMP}{ImdbFromApi}.jpg";
                             string imgKey = "0";
                             // Skip entry if there is no Imdb Id associated
                             if (String.IsNullOrWhiteSpace(ImdbFromApi)) { continue; }
-                            if (count > Settings.SearchLimit) { break; } // Exit when item result count is reached
                             // Add image to ImageList
                             rPosterLink = result.PosterPath;
                             GlobalVars.TryDelete(imgFilePath, errFrom);
@@ -151,8 +151,8 @@ namespace HomeCinema
                             lvItem.Tag = $"{ImdbFromApi}*{result.MediaType}*{result.Id}";
                             lvItem.ImageIndex = (index > 0) ? index : 0;
                             AddItem(lvResult, lvItem);
-                            ++count;
-                            ++resultCount;
+                            count += 1;
+                            resultCount += 1;
                         }
                     }
                 }
