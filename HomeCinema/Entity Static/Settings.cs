@@ -43,6 +43,9 @@ namespace HomeCinema
         // Use confirmation prompts on most dialogs
         public static bool IsConfirmMsg { get; set; }
 
+        // Skip entries not in media location settings
+        public static bool IsSkipNotMediaLoc { get; set; }
+
         // limit the max items to query. '0' means unlimited
         public static int ItemLimit { get; set; }
 
@@ -133,6 +136,7 @@ namespace HomeCinema
             IsAutoClean = config.autoClean; // Auto clean on startup
             IsConfirmSearch = config.confirmSearch; // Confirm prompts on search and reload
             IsConfirmMsg = config.confirmMessages; // Confirm prompts on some actions
+            IsSkipNotMediaLoc = config.skipEntryNotInMediaLoc; // Skip entry if root folder is not on media location
 
             ItemLimit = config.itemMaxLimit; // Limit MAX items in query 
             SearchLimit = config.searchLimit; // Limit Item result on IMDB searching
@@ -162,6 +166,7 @@ namespace HomeCinema
             config.autoClean = IsAutoClean;
             config.confirmSearch = IsConfirmSearch;
             config.confirmMessages = IsConfirmMsg;
+            config.skipEntryNotInMediaLoc = IsSkipNotMediaLoc;
 
             config.lastPathCover = LastPathCover;
             config.lastPathVideo = LastPathVideo;

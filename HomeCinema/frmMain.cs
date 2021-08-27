@@ -1060,8 +1060,11 @@ namespace HomeCinema
                                         }
                                         else
                                         {
-                                            Logs.LogSkip($"Not in Media Locations: {fileNamePath}");
-                                            AddEntry = false;
+                                            if (Settings.IsSkipNotMediaLoc)
+                                            {
+                                                Logs.LogSkip($"Not in Media Locations: {fileNamePath}");
+                                                AddEntry = false;
+                                            }
                                         }
                                     }
                                     catch (Exception ex) { Logs.LogErr(errFrom, ex); }
@@ -1106,10 +1109,13 @@ namespace HomeCinema
                                     {
                                         if (File.Exists(Imagefile))
                                         {
-                                            using (Image imageFromFile = Image.FromFile(Imagefile))
+                                            this.Invoke(new Action(() =>
                                             {
-                                                GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imageFromFile);
-                                            }
+                                                using (Image imageFromFile = Image.FromFile(Imagefile))
+                                                {
+                                                    GlobalVars.MOVIE_IMGLIST.Images.Add(Path.GetFileName(Imagefile), imageFromFile);
+                                                }
+                                            }));
                                             Logs.Debug($"Image loaded for ID: {MOVIEID}, file: {Imagefile}");
                                         }
                                     }

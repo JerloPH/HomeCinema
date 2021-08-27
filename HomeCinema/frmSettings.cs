@@ -47,28 +47,24 @@ namespace HomeCinema
         {
             Graphics g = e.Graphics;
             Brush _textBrush;
-
             // Get the item from the collection.
             TabPage _tabPage = tabControl1.TabPages[e.Index];
-
             // Get the real bounds for the tab rectangle.
             Rectangle _tabBounds = tabControl1.GetTabRect(e.Index);
+            // Use our own font.
+            Font _tabFont = new Font("Calibri", 18.0f, FontStyle.Bold, GraphicsUnit.Pixel);
 
             if (e.State == DrawItemState.Selected)
             {
-
                 // Draw a different background color, and don't paint a focus rectangle.
                 _textBrush = new SolidBrush(Color.Yellow);
                 g.FillRectangle(Brushes.Black, e.Bounds);
             }
             else
             {
-                _textBrush = new System.Drawing.SolidBrush(e.ForeColor);
+                _textBrush = new SolidBrush(e.ForeColor);
                 e.DrawBackground();
             }
-
-            // Use our own font.
-            Font _tabFont = new Font("Calibri", 18.0f, FontStyle.Bold, GraphicsUnit.Pixel);
 
             // Draw string. Center the text.
             StringFormat _stringFlags = new StringFormat();
@@ -130,6 +126,10 @@ namespace HomeCinema
             string text = "";
 
             // Add ToolTips
+            tooltip.BackColor = Settings.ColorBg;
+            tooltip.ForeColor = Settings.ColorFont;
+            tooltip.ShowAlways = true;
+
             tooltip.SetToolTip(lblAutoUpdate, "Automatically check for App updates.");
             tooltip.SetToolTip(lblOfflineMode, "Disable Automatic online functionalities. Overrides Auto update.");
             tooltip.SetToolTip(lblPlayMovieClick, "On double-clicking an item, plays the File, instead of viewing its details.");
@@ -144,6 +144,7 @@ namespace HomeCinema
                 "\nHigher value = Ensures data is retrieved, slower requests." +
                 "\nLower value = Data might not be downloaded, faster requests." +
                 "\nCannot be lower than 5 second ( 5,000 )");
+            tooltip.SetToolTip(lblSkipNonMediaLoc, "Skip entries if its root folder is NOT included\nin 'Media Locations' setting.");
 
             // setup contents
             cbAutoUpdate.Items.AddRange(choice);
@@ -152,27 +153,18 @@ namespace HomeCinema
             cbAutoClean.Items.AddRange(choice);
             cbConfirmSearch.Items.AddRange(choice);
             cbConfirmAction.Items.AddRange(choice);
+            cbSkipNonMediaLoc.Items.AddRange(choice);
 
             // Setting Values Initialization
             // ##################### - GENERAL
             // Booleans
-            try { cbAutoUpdate.SelectedIndex = Convert.ToInt16(!Settings.IsAutoUpdate); }
-            catch { cbAutoUpdate.SelectedIndex = 0; }
-
-            try { cbOffline.SelectedIndex = Convert.ToInt16(!Settings.IsOffline); }
-            catch { cbOffline.SelectedIndex = 1; }
-
-            try { cbPlayMovie.SelectedIndex = Convert.ToInt16(!Settings.IsAutoplay); }
-            catch { cbPlayMovie.SelectedIndex = 0; }
-
-            try { cbAutoClean.SelectedIndex = Convert.ToInt16(!Settings.IsAutoClean); }
-            catch { cbAutoClean.SelectedIndex = 1; }
-
-            try { cbConfirmSearch.SelectedIndex = Convert.ToInt16(!Settings.IsConfirmSearch); }
-            catch { cbConfirmSearch.SelectedIndex = 1; }
-
-            try { cbConfirmAction.SelectedIndex = Convert.ToInt16(!Settings.IsConfirmMsg); }
-            catch { cbConfirmAction.SelectedIndex = 1; }
+            cbAutoUpdate.SelectedIndex = Settings.IsAutoUpdate ? 0 : 1;
+            cbOffline.SelectedIndex = Settings.IsOffline ? 0 : 1;
+            cbPlayMovie.SelectedIndex = Settings.IsAutoplay ? 0 : 1;
+            cbAutoClean.SelectedIndex = Settings.IsAutoClean ? 0 : 1;
+            cbConfirmSearch.SelectedIndex = Settings.IsConfirmSearch ? 0 : 1;
+            cbConfirmAction.SelectedIndex = Settings.IsConfirmMsg ? 0 : 1;
+            cbSkipNonMediaLoc.SelectedIndex = Settings.IsSkipNotMediaLoc ? 0 : 1;
 
             // TextBox
             try { txtLogSize.Text = (Settings.MaxLogSize / 1000000).ToString(); }
@@ -291,6 +283,7 @@ namespace HomeCinema
             Settings.IsAutoClean = !Convert.ToBoolean(cbAutoClean.SelectedIndex);
             Settings.IsConfirmSearch = !Convert.ToBoolean(cbConfirmSearch.SelectedIndex);
             Settings.IsConfirmMsg = !Convert.ToBoolean(cbConfirmAction.SelectedIndex);
+            Settings.IsSkipNotMediaLoc = cbSkipNonMediaLoc.SelectedIndex == 0;
 
             // TextBox changes
             try { Settings.MaxLogSize = (int)Convert.ToInt32(txtLogSize.Text); }

@@ -29,6 +29,7 @@ namespace HomeCinema
         public bool autoClean { get; set; } = false; // Auto clean during startup
         public bool confirmSearch { get; set; } = false; // confirm prompt for searching and/or reloading items
         public bool confirmMessages { get; set; } = true; // Show confirmation dialogs to most actions
+        public bool skipEntryNotInMediaLoc { get; set; } = false; // Skip entry if its root folder is not in media locations
         // Strings PATH
         public string lastPathVideo { get; set; } = "";
         public string lastPathCover { get; set; } = "";
