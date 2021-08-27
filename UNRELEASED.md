@@ -1,5 +1,7 @@
 # Changes not released
-
+- NEW: Setting to skip entries not on Media Location
+- MINOR: Break search on TMDB if SearchLimit is larger than 1
+- REV: Parametized some query on SQLHelper
 - REV: Closes all other forms upon exit
 - REV: Moved opening movie info form to GlobalVars
 - REV: Properly delete listview item, if movie is deleted
