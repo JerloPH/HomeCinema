@@ -57,7 +57,7 @@ namespace HomeCinema
         /// <param name="log">string to log</param>
         public static void LogDb(string codefrom, string log)
         {
-            Log(DataFile.FILE_LOG_DB, codefrom, log);
+            Log(DataFile.FILE_LOG_DB, codefrom, $"\n{log}");
         }
         /// <summary>
         /// Log text to App_Log.log file

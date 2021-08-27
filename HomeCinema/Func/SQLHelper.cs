@@ -24,6 +24,7 @@ using System.Data;
 using Microsoft.WindowsAPICodePack.Shell;
 using System.Drawing;
 using System.Data.Common;
+using System.Data.SqlClient;
 
 namespace HomeCinema.SQLFunc
 {
@@ -217,9 +218,17 @@ namespace HomeCinema.SQLFunc
         /// <param name="qry">SQL string query.</param>
         /// <param name="calledFrom">Caller of this function.</param>
         /// <returns>True, if query affected 1 or more rows. Otherwise, false</returns>
+        public static bool DbExecNonQuery(string qry, string calledFrom, Dictionary<string, string> dt)
+        {
+            return (DbExecNonQuery(qry, calledFrom, dt, -1) > 0);
+        }
         public static bool DbExecNonQuery(string qry, string calledFrom)
         {
-            return (DbExecNonQuery(qry, calledFrom, -1) > 0);
+            return (DbExecNonQuery(qry, calledFrom, null, -1) > 0);
+        }
+        public static int DbExecNonQuery(string qry, string calledFrom, int defaultValue)
+        {
+            return DbExecNonQuery(qry, calledFrom, null, defaultValue);
         }
         /// <summary>
         /// Execute a query that has no return row.
@@ -228,7 +237,7 @@ namespace HomeCinema.SQLFunc
         /// <param name="calledFrom">Caller of this function.</param>
         /// <param name="defaultValue">Default value when query is unsuccessful</param>
         /// <returns>Returns query result as int</returns>
-        public static int DbExecNonQuery(string qry, string calledFrom, int defaultValue)
+        public static int DbExecNonQuery(string qry, string calledFrom, Dictionary<string, string> dt, int defaultValue)
         {
             int DONE = defaultValue;
             int retry = RetryCount;
@@ -248,7 +257,15 @@ namespace HomeCinema.SQLFunc
                         cmd.CommandText = qry;
                         try
                         {
-                            Logs.LogDb($"Executing query..Retry left: ({retry})", qry);
+                            // Parameters
+                            if (dt != null)
+                            {
+                                foreach (var item in dt)
+                                {
+                                    cmd.Parameters.AddWithValue($"@{item.Key}", item.Value);
+                                }
+                            }
+                            Logs.LogDb($"Executing query..Retry count: {RetryCount-retry+1}/{RetryCount}", $"Query: {qry}");
                             DONE = cmd.ExecuteNonQuery();
                             Logs.LogDb($"Query result: ({DONE})", "");
                             retry = -1;
@@ -289,19 +306,13 @@ namespace HomeCinema.SQLFunc
                         using (var cmd = new SQLiteCommand(conn))
                         {
                             cmd.CommandText = qry;
-
-                            // Create DataTable for results
-                            var dt = new DataTable();
-
+                            var dt = new DataTable(); // Create DataTable for results
                             // Execute query
-                            Logs.LogDb($"{errFrom} (START) [Called by: {calledFrom}]", "qry: " + qry);
-
+                            Logs.LogDb($"Executing query..Retry count: {RetryCount - retry + 1}/{RetryCount}", "Query: " + qry);
                             SQLiteDataAdapter sqlda = new SQLiteDataAdapter(qry, conn);
                             sqlda.Fill(dt);
-
                             // Log actions to textfile
-                            Logs.LogDb($"{errFrom} (Finished executing Query)", "Number of Rows returned by query: " + Convert.ToString(dt.Rows.Count));
-
+                            Logs.LogDb($"{errFrom} [CalledFrom: {calledFrom}] (Finished executing Query)", $"Rows returned: {dt.Rows.Count}");
                             conn.Close();
                             retry = -1;
                             return dt;
@@ -381,24 +392,19 @@ namespace HomeCinema.SQLFunc
             // Setups
             int retry = RetryCount;
             string errFrom = $"SQLHelper-DbInsertMovie [calledFrom: {callFrom}]";
-            long GeneratedID = 0L; // Last ID Inserted succesfully
             string infoCols = "", infoVals = ""; // info table
             string fileCols = "", fileVals = ""; // filepath table
             int successCode; // code after execute query
             string fPathFile = ""; // full path for file
-            string value = ""; // variable to hold values
-
-            // Fetch new Id
-            GeneratedID = DbGenerateId();
+            long GeneratedID = DbGenerateId(); // Fetch new Id
 
             // Create pairing of colname and colvals
             foreach (var item in dtInfo)
             {
                 if (item.Key != HCInfo.Id)
                 {
-                    value = item.Value.Replace("'", "''").Replace("\"", String.Empty);
-                    infoCols += item.Key + ",";
-                    infoVals += QryString(value, !QryColNumeric(item.Key)) + ",";
+                    infoCols += $"'{item.Key}',";
+                    infoVals += $"@{item.Key},"; //QryString(value, !QryColNumeric(item.Key)) + ",";
                 }
             }
             infoCols = infoCols.TrimEnd(',');
@@ -408,13 +414,11 @@ namespace HomeCinema.SQLFunc
             {
                 if (item.Key != HCInfo.Id)
                 {
-                    fileCols += item.Key + ",";
-                    fileVals += QryString(item.Value.Replace("'", "''"), true) + ",";
+                    fileCols += $"'{item.Key}',";
+                    fileVals += $"@{item.Key},"; //QryString(item.Value.Replace("'", "''"), true) + ",";
                 }
                 if (item.Key == HCFile.File)
-                {
                     fPathFile = item.Value;
-                }
             }
             fileCols = fileCols.TrimEnd(',');
             fileVals = fileVals.TrimEnd(',');
@@ -424,25 +428,43 @@ namespace HomeCinema.SQLFunc
                 // Create Connection to database
                 using (var conn = DbOpen())
                 {
+                    Logs.LogDb("SQLHelper-DbInsertMovie", $"Retry count: {RetryCount-retry+1}/{RetryCount}");
                     if (conn == null)
                     {
                         Logs.LogDb("SQLHelper-DbInsertMovie", "Cannot establish connection to database (connection is null)!");
-                        --retry;
+                        retry -= 1;
                         continue;
                     }
                     // Make Command and Transaction
                     var cmd = new SQLiteCommand(conn);
                     var transaction = conn.BeginTransaction();
-
                     // Insert entry
-                    cmd.CommandText = $"INSERT INTO {HCTable.info} ({HCInfo.Id},{infoCols}) VALUES({GeneratedID},{infoVals});";
-                    Logs.LogDb($"{errFrom} (Insert query)", cmd.CommandText);
-                    successCode = cmd.ExecuteNonQuery();
-
+                    cmd.CommandText = String.Format("INSERT INTO {0} ({1}) VALUES ({2})", HCTable.info, $"'{HCInfo.Id}',{infoCols}", $"@Uid,{infoVals}");
+                    cmd.Parameters.AddWithValue("@Uid", GeneratedID.ToString());
+                    foreach (var item in dtInfo)
+                    {
+                        if (item.Key != HCInfo.Id)
+                        {
+                            cmd.Parameters.AddWithValue($"@{item.Key}", item.Value);
+                        }
+                    }
+                    successCode = cmd.ExecuteNonQuery();// Execute first query
                     if (successCode > 0)
                     {
-                        cmd.CommandText = $"INSERT INTO {HCTable.filepath} ({HCFile.Id}, {fileCols}) VALUES({GeneratedID},{fileVals});";
+                        cmd.CommandText = String.Format("INSERT INTO {0} ({1}) VALUES ({2})", HCTable.filepath, $"'{HCInfo.Id}',{fileCols}", $"@Uid,{fileVals}");
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@Uid", GeneratedID.ToString());
+                        foreach (var item in dtFilepath)
+                        {
+                            if (item.Key != HCFile.Id)
+                            {
+                                cmd.Parameters.AddWithValue($"@{item.Key}", item.Value);
+                            }
+                        }
                         successCode = cmd.ExecuteNonQuery();
+                        if (successCode < 1)
+                            DbLogQuery(errFrom, successCode, cmd.CommandText, cmd.Parameters);
+
                         // Add cover image by capturing media
                         string coverFilepath = $"{DataFile.PATH_IMG}{GeneratedID}.jpg";
                         try
@@ -460,13 +482,11 @@ namespace HomeCinema.SQLFunc
                         }
                         catch (Exception exShell)
                         {
-                            Logs.LogDb($"{errFrom} (ShellFile thumbnail Error)({coverFilepath})", exShell.Message);
+                            Logs.LogErr($"{errFrom} (ShellFile thumbnail Error)({coverFilepath})", exShell);
                         }
                     }
                     else
-                    {
-                        Logs.LogDb($"{errFrom} [Insert failed code: {successCode}]", "Query: " + cmd.CommandText);
-                    }
+                        DbLogQuery(errFrom, successCode, cmd.CommandText, cmd.Parameters);
 
                     // Commit transaction
                     if (successCode > 0)
@@ -517,7 +537,7 @@ namespace HomeCinema.SQLFunc
             {
                 if (item.Key != HCInfo.Id)
                 {
-                    valpair += "[" + item.Key + "]=" + QryString(item.Value, !QryColNumeric(item.Key)) + ",";
+                    valpair += $"'{item.Key}'=@{item.Key},";
                 }
             }
             valpair = valpair.TrimEnd(',');
@@ -528,7 +548,7 @@ namespace HomeCinema.SQLFunc
                 string qry = $"UPDATE {TableName} " +
                              $"SET {valpair} " +
                              $"WHERE `{HCInfo.Id}`={Id}";
-                if (DbExecNonQuery(qry, callFrom))
+                if (DbExecNonQuery(qry, callFrom, dt))
                 {
                     Logs.LogDb(callFrom, $"Entry with Id({Id}) is updated Succesfully!");
                     return true;
@@ -600,6 +620,23 @@ namespace HomeCinema.SQLFunc
                 }
             }
             return false;
+        }
+
+        public static void DbLogQuery(string errFrom, int code, string qry, SQLiteParameterCollection Param)
+        {
+            string query = qry;
+            foreach (SqlParameter p in Param)
+            {
+                try
+                {
+                    query = System.Text.RegularExpressions.Regex.Replace(query, @"\B" + p.ParameterName + @"\b", p.Value.ToString());
+                }
+                catch (Exception ex)
+                {
+                    Logs.LogErr(errFrom, ex);
+                }
+            }
+            Logs.LogDb($"{errFrom} [Insert failed code: {code}]", $"Query: {query}");
         }
     }
 }
