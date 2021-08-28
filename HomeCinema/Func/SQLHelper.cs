@@ -556,17 +556,13 @@ namespace HomeCinema.SQLFunc
             // Set values
             string valpair = "";
             string Id = "";
-            try
-            {
-                dt.TryGetValue(HCInfo.Id, out Id);
-            }
+            try { dt.TryGetValue(HCInfo.Id, out Id); }
             catch { Id = ""; }
             if (String.IsNullOrWhiteSpace(Id))
             {
                 Logs.LogDb(callFrom, "Cannot Update entry with empty Id!");
                 return false;
             }
-
             foreach (var item in dt)
             {
                 if (item.Key != HCInfo.Id)
@@ -575,14 +571,10 @@ namespace HomeCinema.SQLFunc
                 }
             }
             valpair = valpair.TrimEnd(',');
-
             // Query to db
             if (!String.IsNullOrWhiteSpace(valpair))
             {
-                string qry = $"UPDATE {TableName} " +
-                             $"SET {valpair} " +
-                             $"WHERE `{HCInfo.Id}`={Id}";
-                if (DbExecNonQuery(qry, callFrom, dt))
+                if (DbExecNonQuery($"UPDATE {TableName} SET {valpair} WHERE `{HCInfo.Id}`={Id}", callFrom, dt))
                 {
                     Logs.LogDb(callFrom, $"Entry with Id({Id}) is updated Succesfully!");
                     return true;
