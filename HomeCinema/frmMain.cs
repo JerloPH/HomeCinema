@@ -988,10 +988,10 @@ namespace HomeCinema
                 return;
             }
             Logs.Debug("Start Adding Items to ListView");
+            Logs.Debug("Fetching.. filepaths");
             // Execute query to fetch file paths
             using (var dtFile = SQLHelper.DbQuery($"SELECT `{HCFile.Id}`,`{HCFile.File}`,`{HCFile.Root}` FROM {HCTable.filepath};", errFrom))
             {
-                Logs.Debug("Fetching.. filepaths");
                 if (dtFile != null)
                 {
                     foreach (DataRow item in dtFile.Rows)
@@ -1002,10 +1002,10 @@ namespace HomeCinema
                     Logs.Debug("Fetched filepaths!");
                 }
             }
+            Logs.Debug("Fetching.. info");
             // Execute query to fetch movie info
             using (DataTable dt = SQLHelper.DbQuery(qry, errFrom)) // Get DataTable from query
             {
-                Logs.Debug("Fetching.. info");
                 // Set Max Progress
                 if (dt != null)
                 {
@@ -1031,7 +1031,6 @@ namespace HomeCinema
                                 Logs.Log(errFrom, $"Invalid MovieID: {r[HCInfo.Id].ToString()}");
                             }
                             Logs.Debug($"Initializing item with ID: {MOVIEID}");
-
                             // Add to listview lvSearchResult
                             if (MOVIEID > 0)
                             {

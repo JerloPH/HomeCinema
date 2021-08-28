@@ -96,6 +96,8 @@ namespace HomeCinema
                 Msg.ShowError(errorFrom, ex);
                 config = new SettingJson();
             }
+            if (config.isdebugging)
+                GlobalVars.DEBUGGING = true;
 
             // Get Max log file size
             MaxLogSize = config.logsize;
@@ -109,7 +111,7 @@ namespace HomeCinema
                 }
                 catch (Exception ex)
                 {
-                    sLastPathCover = System.Windows.Forms.Application.StartupPath;
+                    sLastPathCover = DataFile.PATH_START;
                     Msg.ShowError($"{errorFrom} [LastPathCover]", ex);
                 }
             }
@@ -124,7 +126,7 @@ namespace HomeCinema
                 }
                 catch (Exception ex)
                 {
-                    sLastPathVideo = System.Windows.Forms.Application.StartupPath;
+                    sLastPathVideo = DataFile.PATH_START;
                     Msg.ShowError($"{errorFrom} [LastPathVideo]", ex);
                 }
             }

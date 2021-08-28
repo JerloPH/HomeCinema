@@ -23,6 +23,7 @@ namespace HomeCinema
     {
         // Settings Config
         // Booleans
+        public bool isdebugging { get; set; } = false;
         public bool autoUpdate { get; set; } = true;
         public bool offlineMode { get; set; } = false;
         public bool instantPlayMovie { get; set; } = true;
