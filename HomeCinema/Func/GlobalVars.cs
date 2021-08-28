@@ -921,24 +921,6 @@ namespace HomeCinema
                 DeleteMove(file, calledFrom);
             }
         }
-        // Get string from InputBox
-        public static string GetStringInputBox(string caption, string defaultVal)
-        {
-            var form = new frmInputBox(caption, null, defaultVal);
-            form.ShowDialog();
-            string value = (!String.IsNullOrWhiteSpace(form.Result)) ? form.Result.Trim() : String.Empty;
-            form.Dispose();
-            return value;
-        }
-        public static string GetStringInputBox(List<string> items, List<string> vals, string caption)
-        {
-            var form = new frmInputBox(caption, items, "");
-            form.Values = vals;
-            form.ShowDialog();
-            string value = (!String.IsNullOrWhiteSpace(form.Result)) ? form.Result.Trim() : String.Empty;
-            form.Dispose();
-            return value;
-        }
         public static void CleanAppDirectory(bool showMsg = false)
         {
             string calledFrom = "GlobalVars-CleanAppDirectory";

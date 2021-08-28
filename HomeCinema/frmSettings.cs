@@ -90,7 +90,7 @@ namespace HomeCinema
         }
         private void AddToListBox(ListBox lb, string caption = "Type here")
         {
-            string item = GlobalVars.GetStringInputBox(caption, "");
+            string item = Msg.GetStringInputBox(caption, "");
             if (CanAddToListBox(lb, item))
             {
                 lb.Items.Add(item);
@@ -113,7 +113,7 @@ namespace HomeCinema
                 pos = lb.Items.IndexOf(lb.Items[item]);
                 if (pos > -1)
                 {
-                    lb.Items[pos] = GlobalVars.GetStringInputBox($"Change '{lb.Items[item]}' to", lb.Items[item].ToString());
+                    lb.Items[pos] = Msg.GetStringInputBox($"Change '{lb.Items[item]}' to", lb.Items[item].ToString());
                 }
             }
         }
