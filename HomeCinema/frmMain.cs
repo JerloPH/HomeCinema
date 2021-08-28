@@ -278,6 +278,7 @@ namespace HomeCinema
                     dtFilepath.Add(HCFile.File, filePath); // filepath
                     dtFilepath.Add(HCFile.Sub, GetSubtitleFile(filePath)); // file sub
                     dtFilepath.Add(HCFile.Trailer, Media.Trailer); // trailer
+                    dtFilepath.Add(HCFile.Root, item.RootFolder); // RootFolder
 
                     long insertResult = SQLHelper.DbInsertMovie(dtInfo, dtFilepath, callFrom);
                     if (insertResult > 0)
@@ -890,7 +891,7 @@ namespace HomeCinema
                                             {
                                                 if (!listAlreadyinDB.Contains(file))
                                                 {
-                                                    dtNewFiles.Add(new Medias(file, mediaLoc.MediaType, mediaLoc.Source));
+                                                    dtNewFiles.Add(new Medias(file, mediaLoc.MediaType, mediaLoc.Source, mediaLoc.Path));
                                                 }
                                                 else
                                                 {
@@ -902,7 +903,7 @@ namespace HomeCinema
                                             }
                                             else
                                             {
-                                                dtNewFiles.Add(new Medias(file, mediaLoc.MediaType, mediaLoc.Source));
+                                                dtNewFiles.Add(new Medias(file, mediaLoc.MediaType, mediaLoc.Source, mediaLoc.Path));
                                             }
                                         }
                                         else
@@ -931,7 +932,7 @@ namespace HomeCinema
                                     {
                                         if (!listAlreadyinDB.Contains(folderName))
                                         {
-                                            dtNewFiles.Add(new Medias(folderName, mediaLoc.MediaType, mediaLoc.Source));
+                                            dtNewFiles.Add(new Medias(folderName, mediaLoc.MediaType, mediaLoc.Source, mediaLoc.Path));
                                         }
                                         else
                                         {
@@ -995,7 +996,7 @@ namespace HomeCinema
                 {
                     foreach (DataRow item in dtFile.Rows)
                     {
-                        var fileMedia = new Medias(item[HCFile.File].ToString(), "", item[HCFile.Root].ToString());
+                        var fileMedia = new Medias(item[HCFile.File].ToString(), "", "", item[HCFile.Root].ToString());
                         filepaths.Add(item[HCFile.Id].ToString(), fileMedia);
                     }
                     Logs.Debug("Fetched filepaths!");
@@ -1037,7 +1038,7 @@ namespace HomeCinema
                                 // Skip entry if file does not exist
                                 filepaths.TryGetValue(MOVIEID.ToString(), out Medias fileMedia);
                                 fileNamePath = fileMedia.FilePath;
-                                fileRootFolder = fileMedia.Source;
+                                fileRootFolder = fileMedia.RootFolder;
 
                                 if (String.IsNullOrWhiteSpace(fileRootFolder))
                                 {
