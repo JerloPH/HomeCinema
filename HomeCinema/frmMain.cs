@@ -578,27 +578,13 @@ namespace HomeCinema
                 lvSearchResult.Refresh();
             }
         }
-        // Execute the query, by running bgWorker bgSearchInDB
-        public void RefreshMovieList(bool AppStart = false)
-        {
-            // Check if SEARCH_QUERY is empty
-            if (String.IsNullOrWhiteSpace(SEARCH_QUERY))
-            {
-                // Default SELECT Query
-                SEARCH_QUERY = $"SELECT * FROM {HCTable.info}";
-            }
-            PopulateMovieBG(AppStart);
-        }
         public void RemoveItemInMovieList(ListViewItem lv)
         {
-            try
-            {
-                lvSearchResult.Items.Remove(lv);
-            }
+            try { lvSearchResult.Items.Remove(lv); }
             catch (Exception ex)
             {
                 Logs.LogErr("frmMain-RemoveItemInMovieList", ex);
-                RefreshMovieList();
+                PopulateMovieBG();
             }
         }
         // Sort Items in lvSearchResult ListView
@@ -955,13 +941,14 @@ namespace HomeCinema
                 listAlreadyinDB?.Clear();
             };
             form.ShowDialog(this);
-
             insertRes = InsertToDB(dtNewFiles, calledFrom + "-dtNewFiles");
             if (insertRes > 0)
             {
                 Msg.ShowInfo($"Successfully inserted {insertRes} new entries!");
             }
-            RefreshMovieList(true);
+            // Load ListView collection
+            SEARCH_QUERY = $"SELECT * FROM {HCTable.info}";
+            PopulateMovieBG(true);
         }
         #endregion
         #region BG Worker: Populate MOVIE ListView
