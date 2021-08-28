@@ -109,7 +109,7 @@ namespace HomeCinema.SQLFunc
                 {
                     DbExecNonQuery("INSERT INTO `config` (`Id`, `appBuild`, `dbVersion`)" +
                         $" VALUES (1,{GlobalVars.HOMECINEMA_BUILD}," +
-                        $"{(IsNewDb? GlobalVars.HOMECINEMA_DBVER.ToString() : "1")});", CalledFrom);
+                        $"{(IsNewDb ? GlobalVars.HOMECINEMA_DBVER.ToString() : "1")});", CalledFrom);
                     dbVersion = IsNewDb ? GlobalVars.HOMECINEMA_DBVER : 1;
                 }
                 else
@@ -128,7 +128,7 @@ namespace HomeCinema.SQLFunc
                     loaded = DBUpgradeDatabase(dbVersion);
                 }
             }
-            Logs.LogDb(CalledFrom, (loaded ? $"Database is loaded succesfully!\n{DB_PATH}" : "Issue on loading database!"));
+            Logs.LogDb(CalledFrom, (loaded ? $"Database is loaded succesfully!\n{DB_PATH}" : "Encountered Issue on loading database!"));
             return loaded;
         }
         private static long DbGenerateId()
