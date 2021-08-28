@@ -93,7 +93,7 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                GlobalVars.ShowError(errorFrom, ex);
+                Msg.ShowError(errorFrom, ex);
                 config = new SettingJson();
             }
 
@@ -110,7 +110,7 @@ namespace HomeCinema
                 catch (Exception ex)
                 {
                     sLastPathCover = System.Windows.Forms.Application.StartupPath;
-                    GlobalVars.ShowError($"{errorFrom} [LastPathCover]", ex);
+                    Msg.ShowError($"{errorFrom} [LastPathCover]", ex);
                 }
             }
             LastPathCover = sLastPathCover;
@@ -125,7 +125,7 @@ namespace HomeCinema
                 catch (Exception ex)
                 {
                     sLastPathVideo = System.Windows.Forms.Application.StartupPath;
-                    GlobalVars.ShowError($"{errorFrom} [LastPathVideo]", ex);
+                    Msg.ShowError($"{errorFrom} [LastPathVideo]", ex);
                 }
             }
             LastPathVideo = sLastPathVideo;

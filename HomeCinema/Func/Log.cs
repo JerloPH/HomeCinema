@@ -32,7 +32,7 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                GlobalVars.ShowError("GlobalVars-Log", ex);
+                Msg.ShowError("GlobalVars-Log", ex);
             }
         }
         /// <summary>

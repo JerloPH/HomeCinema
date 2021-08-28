@@ -505,7 +505,7 @@ namespace HomeCinema
             {
                 if (lvSearchResult.SelectedItems.Count < 1)
                 {
-                    GlobalVars.ShowWarning("Select an item to view its media information!");
+                    Msg.ShowWarning("Select an item to view its media information!");
                     return;
                 }
                 if (long.TryParse(lvSearchResult.SelectedItems[0].Tag.ToString().TrimStart('0'), out long ID))
@@ -518,7 +518,7 @@ namespace HomeCinema
                     }
                 }
             }
-            catch (Exception ex) { GlobalVars.ShowError("frmMain-OpenNewFormMovie", ex, "Error occured on viewing media info!", this); };
+            catch (Exception ex) { Msg.ShowError("frmMain-OpenNewFormMovie", ex, "Error occured on viewing media info!", this); };
         }
         public void SearchBoxPlaceholder(object sender, EventArgs e)
         {
@@ -610,7 +610,7 @@ namespace HomeCinema
             switch (toggle)
             {
                 case 0:
-                    //GlobalVars.ShowInfo("Sorted default");
+                    //Msg.ShowInfo("Sorted default");
                     lvSearchResult.Sorting = Sorting;
                     lvSearchResult.ListViewItemSorter = null;
                     var items = lvSearchResult.Items.Cast<ListViewItem>().OrderBy(x => x.Tag.ToString()).ToList();
@@ -618,14 +618,14 @@ namespace HomeCinema
                     lvSearchResult.Items.AddRange(items.ToArray());
                     break;
                 case 1:
-                    //GlobalVars.ShowInfo("Sorted AZ");
+                    //Msg.ShowInfo("Sorted AZ");
                     lvSorter.SortColumn = 0;
                     lvSorter.Order = Sorting;
                     lvSearchResult.ListViewItemSorter = lvSorter;
                     lvSearchResult.Sort();
                     break;
                 case 2:
-                    //GlobalVars.ShowInfo("Sorted year");
+                    //Msg.ShowInfo("Sorted year");
                     lvSorter.SortColumn = 3;
                     lvSorter.Order = Sorting;
                     lvSearchResult.ListViewItemSorter = lvSorter;
@@ -958,7 +958,7 @@ namespace HomeCinema
             insertRes = InsertToDB(dtNewFiles, calledFrom + "-dtNewFiles");
             if (insertRes > 0)
             {
-                GlobalVars.ShowInfo($"Successfully inserted {insertRes} new entries!");
+                Msg.ShowInfo($"Successfully inserted {insertRes} new entries!");
             }
             RefreshMovieList(true);
         }
@@ -1171,7 +1171,7 @@ namespace HomeCinema
             // Check if no TMDB Key
             if (!GlobalVars.HAS_TMDB_KEY && AppStart)
             {
-                GlobalVars.ShowWarning(GlobalVars.MSG_NO_TMDB);
+                Msg.ShowWarning(GlobalVars.MSG_NO_TMDB);
             }
             // Auto check update
             if ((Settings.IsOffline == false) && (Settings.IsAutoUpdate) && AppStart)
@@ -1254,7 +1254,7 @@ namespace HomeCinema
             }
             catch (Exception exc)
             {
-                GlobalVars.ShowError("frmMain-Load", exc, "Default image is missing!\nRestart App", this);
+                Msg.ShowError("frmMain-Load", exc, "Default image is missing!\nRestart App", this);
                 IsLoadedSuccess = false;
                 return;
             }
@@ -1269,7 +1269,7 @@ namespace HomeCinema
                 if (!SQLHelper.Initiate("frmMain"))
                 {
                     // Database not loaded!
-                    GlobalVars.ShowWarning("Database is possibly corrupted!\nDelete HomeCinema.db and try again\nNOTE: This will remove all your entries", "", loadForm);
+                    Msg.ShowWarning("Database is possibly corrupted!\nDelete HomeCinema.db and try again\nNOTE: This will remove all your entries", "", loadForm);
                     IsLoadedSuccess = false;
                 }
             };
@@ -1390,7 +1390,7 @@ namespace HomeCinema
         {
             if (Settings.IsConfirmSearch)
             {
-                if (!GlobalVars.ShowYesNo("Are you sure of your search filters?", this)) { return; }
+                if (!Msg.ShowYesNo("Are you sure of your search filters?", this)) { return; }
             }
             SearchEntries();
         }
@@ -1424,7 +1424,7 @@ namespace HomeCinema
             {
                 if (Settings.IsConfirmSearch)
                 {
-                    if (!GlobalVars.ShowYesNo("Reload entries?", this)) {
+                    if (!Msg.ShowYesNo("Reload entries?", this)) {
                         return;
                     }
                 }
@@ -1459,7 +1459,7 @@ namespace HomeCinema
             // Perform Search
             if (Settings.IsConfirmSearch)
             {
-                if (!GlobalVars.ShowYesNo("Reload entries?", this)) { return; }
+                if (!Msg.ShowYesNo("Reload entries?", this)) { return; }
             }
             SearchEntries();
         }
@@ -1470,7 +1470,7 @@ namespace HomeCinema
             catch (Exception ex)
             {
                 SortItemsInListView(0);
-                GlobalVars.ShowError("frmMain-cbSort_SelectedIndexChanged", ex, "Error occured on sort!", this);
+                Msg.ShowError("frmMain-cbSort_SelectedIndexChanged", ex, "Error occured on sort!", this);
             }
         }
 
@@ -1509,7 +1509,7 @@ namespace HomeCinema
             catch (Exception ex)
             {
                 SortItemsInListView(0);
-                GlobalVars.ShowError("frmMain-cbSortOrder_SelectedIndexChanged", ex, "Error occured on sort!", this);
+                Msg.ShowError("frmMain-cbSortOrder_SelectedIndexChanged", ex, "Error occured on sort!", this);
             }
         }
         // When ListView lvSearchResult is clicked on

@@ -120,7 +120,7 @@ namespace HomeCinema.SQLFunc
                 // Hardcoded limit, breaks support for previous databases.
                 if (dbVersion < 5) // 5 is the start of breaking changes
                 {
-                    GlobalVars.ShowWarning("Database is not supported anymore!");
+                    Msg.ShowWarning("Database is not supported anymore!");
                     return false;
                 }
                 if (dbVersion < GlobalVars.HOMECINEMA_DBVER)
@@ -207,7 +207,7 @@ namespace HomeCinema.SQLFunc
                 }
                 else
                 {
-                    GlobalVars.ShowWarning("Database is corrupted! Delete 'HomeCinema.db' to reset data collection.", "Unable to upgrade database");
+                    Msg.ShowWarning("Database is corrupted! Delete 'HomeCinema.db' to reset data collection.", "Unable to upgrade database");
                     break;
                 }
             }
@@ -307,12 +307,12 @@ namespace HomeCinema.SQLFunc
                         }
                         catch (SQLiteException ex)
                         {
-                            GlobalVars.ShowError($"SQLHelper-DbExecNonQuery (SQL Error)({DONE})", ex);
+                            Msg.ShowError($"SQLHelper-DbExecNonQuery (SQL Error)({DONE})", ex);
                             retry -= 1;
                         }
                         catch (Exception ex)
                         {
-                            GlobalVars.ShowError($"SQLHelper-DbExecNonQuery (Error)({DONE})", ex);
+                            Msg.ShowError($"SQLHelper-DbExecNonQuery (Error)({DONE})", ex);
                             retry -= 1;
                         }
                     }

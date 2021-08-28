@@ -238,7 +238,7 @@ namespace HomeCinema
                     }
                     catch (Exception ex)
                     {
-                        GlobalVars.ShowError("frmSetting", ex, "Media Location setting not loaded!", this);
+                        Msg.ShowError("frmSetting", ex, "Media Location setting not loaded!", this);
                     }
                 }
             }
@@ -303,7 +303,7 @@ namespace HomeCinema
             {
                 if (Settings.TimeOut < 5000)
                 {
-                    GlobalVars.ShowWarning("Timeout cannot be lower than 5,000!", "", this);
+                    Msg.ShowWarning("Timeout cannot be lower than 5,000!", "", this);
                     txtTimeout.SelectAll();
                     txtTimeout.Focus();
                     return;
@@ -370,7 +370,7 @@ namespace HomeCinema
             else { error += Environment.NewLine + "Genre list"; }
 
             // Show message
-            GlobalVars.ShowInfo((String.IsNullOrWhiteSpace(error)) ? "Done saving Settings!" : "Some settings have invalid values!" + error);
+            Msg.ShowInfo((String.IsNullOrWhiteSpace(error)) ? "Done saving Settings!" : "Some settings have invalid values!" + error);
             if (String.IsNullOrWhiteSpace(error))
             {
                 Close();
@@ -408,7 +408,7 @@ namespace HomeCinema
             }
             else
             {
-                GlobalVars.ShowWarning("Selected Path is not valid!", "", this);
+                Msg.ShowWarning("Selected Path is not valid!", "", this);
             }
             form.Dispose();
         }

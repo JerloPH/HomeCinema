@@ -131,6 +131,7 @@
     <Compile Include="Enum\GlobalEnum.cs" />
     <Compile Include="Func\DataFile.cs" />
     <Compile Include="Func\Log.cs" />
+    <Compile Include="Func\Msg.cs" />
     <Compile Include="JSONs\AnilistPageQuery.cs" />
     <Compile Include="frmAbout.cs">
       <SubType>Form</SubType>

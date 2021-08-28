@@ -76,7 +76,7 @@ namespace HomeCinema
             {
                 if (PathList.Contains(txtPath.Text))
                 {
-                    GlobalVars.ShowInfo("Path is already existing!\nSelect a different folder", "", this);
+                    Msg.ShowInfo("Path is already existing!\nSelect a different folder", "", this);
                     return;
                 }
             }

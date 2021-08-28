@@ -186,7 +186,7 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                GlobalVars.ShowError(errFrom, ex, "Cannot load movie info!", this);
+                Msg.ShowError(errFrom, ex, "Cannot load movie info!", this);
                 Close();
                 return;
             }
@@ -222,7 +222,7 @@ namespace HomeCinema
                 }
                 catch (Exception exc)
                 {
-                    GlobalVars.ShowError($"{errFrom}\n\tFile:\n\t{ Imagefile }", exc, "Cover image not loaded!", this);
+                    Msg.ShowError($"{errFrom}\n\tFile:\n\t{ Imagefile }", exc, "Cover image not loaded!", this);
                 }
             }
             // Adjust controls, if not series
@@ -394,7 +394,7 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                GlobalVars.ShowError($"frmMovie({Name})-picBox_Click", ex, "Cannot view fullscreen cover image!", this);
+                Msg.ShowError($"frmMovie({Name})-picBox_Click", ex, "Cannot view fullscreen cover image!", this);
             }
         }
         // Delete movie from database
@@ -403,7 +403,7 @@ namespace HomeCinema
             string errFrom = $"frmMovie ({Name})-btnDeleteMovie_Click";
             frmLoading form = new frmLoading("Deleting media from disk..", "Loading");
             // Delete Movie WIP
-            if (GlobalVars.ShowYesNo($"Are you sure you want to delete\n[{Text}]?", this))
+            if (Msg.ShowYesNo($"Are you sure you want to delete\n[{Text}]?", this))
             {
                 form.BackgroundWorker.DoWork += (sender1, e1) =>
                 {
@@ -420,7 +420,7 @@ namespace HomeCinema
                         GlobalVars.DeleteMove(MOVIE_FILEPATH, errFrom);
 
                         // Show message
-                        GlobalVars.ShowInfo($"[{Text}] is Deleted!");
+                        Msg.ShowInfo($"[{Text}] is Deleted!");
 
                         // Deleted and perform refresh on main form
                         IsDeleted = true;
@@ -450,7 +450,7 @@ namespace HomeCinema
                 }
                 catch (Exception ex)
                 {
-                    GlobalVars.ShowError($"frmMovie({Name})-lblSourceId_Click", ex, "Cannot open link on browser!", this);
+                    Msg.ShowError($"frmMovie({Name})-lblSourceId_Click", ex, "Cannot open link on browser!", this);
                 }
             }
         }

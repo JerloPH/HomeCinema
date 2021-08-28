@@ -259,7 +259,7 @@ namespace HomeCinema
                         }
                         if (String.IsNullOrWhiteSpace(result))
                         {
-                            GlobalVars.ShowWarning("Selected item has no valid Id!");
+                            Msg.ShowWarning("Selected item has no valid Id!");
                             return;
                         }
                     }
@@ -267,21 +267,21 @@ namespace HomeCinema
                     {
                         if (String.IsNullOrWhiteSpace(result))
                         {
-                            GlobalVars.ShowWarning("Selected item is invalid!");
+                            Msg.ShowWarning("Selected item is invalid!");
                             return;
                         }
                     }
                 }
                 else
                 {
-                    GlobalVars.ShowWarning("No result found!\nSearch using different query");
+                    Msg.ShowWarning("No result found!\nSearch using different query");
                     return;
                 }
                 Close();
             }
             else
             {
-                GlobalVars.ShowWarning("No selected result!");
+                Msg.ShowWarning("No selected result!");
             }
         }
 
@@ -299,7 +299,7 @@ namespace HomeCinema
             int size = Source.Equals(HCSource.tmdb) ? SearchTmdb() : SearchAnilist();
             if (size > 0 && Settings.IsConfirmMsg)
             {
-                GlobalVars.ShowInfo($"Found {size} results!", "", this);
+                Msg.ShowInfo($"Found {size} results!", "", this);
             }
 
             lvResult.EndUpdate(); // Draw the ListView

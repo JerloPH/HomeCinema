@@ -88,111 +88,6 @@ namespace HomeCinema
         };
 
         //######################################################################################################## Functions
-        public static void ShowNoParent(string msg, string caption = "HomeCinema")
-        {
-            var form = new frmAlert(msg, caption, 0, null, HCIcons.None);
-            form.TopMost = true;
-            form.ShowDialog();
-            form?.Dispose();
-        }
-        public static void ShowCustomMessage(string msg, string caption, Form parent, HCIcons icon)
-        {
-            try
-            {
-                Form caller = (parent == null) ? Program.FormMain : parent;
-                if (Program.FormMain == null)
-                {
-                    ShowNoParent(msg, caption);
-                    return;
-                }
-                if (caller == Program.FormMain)
-                {
-                    if (Program.FormMain.InvokeRequired)
-                    {
-                        Program.FormMain.BeginInvoke((Action) delegate
-                        {
-                            var form = new frmAlert(msg, caption, 0, caller, icon);
-                            form.ShowDialog(caller);
-                        });
-                    }
-                    else
-                    {
-                        var form = new frmAlert(msg, caption, 0, caller, icon);
-                        form.ShowDialog(caller);
-                    }
-                }
-                else
-                {
-                    if (caller.InvokeRequired)
-                    {
-                        caller.BeginInvoke((Action) delegate
-                        {
-                            var form = new frmAlert(msg, caption, 0, caller, icon);
-                            form.ShowDialog(caller);
-                        });
-                    }
-                    else
-                    {
-                        var form = new frmAlert(msg, caption, 0, caller, icon);
-                        form.ShowDialog(caller);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Logs.LogErr("GlobalVars-ShowInfo", ex);
-                ShowNoParent(msg, caption);
-            }
-        }
-        public static void ShowInfo(string msg, string caption = "", Form parent = null)
-        {
-            ShowCustomMessage(msg, caption, parent, HCIcons.Info);
-        }
-        public static void ShowWarning(string msg, string caption = "", Form parent = null)
-        {
-            ShowCustomMessage(msg, caption, parent, HCIcons.Warning);
-        }
-        public static void ShowError(string codeFrom, string msg, Form parent, Exception error, bool openLog)
-        {
-            Logs.LogErr(codeFrom, error);
-            bool ShowAMsg = (!String.IsNullOrWhiteSpace(msg));
-            if (ShowAMsg)
-            {
-                string message = "An error occured!";
-                ShowCustomMessage($"{message}\nReport on project site\nand submit 'logs' subfolder.", "Error occured!", parent, HCIcons.Error);
-                // Open file in explorer
-                if (openLog)
-                {
-                    try { Process.Start("explorer.exe", DataFile.PATH_LOG); }
-                    catch { }
-                }
-            }
-        }
-        public static void ShowError(string codeFrom, Exception error)
-        {
-            ShowError(codeFrom, "", null, error, false);
-        }
-        public static void ShowError(string codeFrom, Exception error, string msg)
-        {
-            ShowError(codeFrom, msg, null, error, false);
-        }
-        public static void ShowError(string codeFrom, Exception error, string msg, Form parent)
-        {
-            ShowError(codeFrom, msg, parent, error, false);
-        }
-        public static bool ShowYesNo(string msg, Form caller = null)
-        {
-            try
-            {
-                if (caller == null) { caller = Program.FormMain; }
-                return (new frmAlert(msg, CAPTION_DIALOG, 1, caller, HCIcons.Question).ShowDialog(caller) == DialogResult.Yes);
-            }
-            catch (Exception ex)
-            {
-                ShowError("GlobalVars-ShowYesNo", ex, "Cannot show 'Yes/No' prompt!\nTry again.");
-            }
-            return false;
-        }
         // Check Log File if exceed limit and delete it
         public static void CheckLogFile(string logFile, string calledFrom, string log)
         {
@@ -762,7 +657,7 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                ShowWarning("File cannot be moved to Recycle Bin!\n" + file);
+                Msg.ShowWarning("File cannot be moved to Recycle Bin!\n" + file);
                 Logs.LogErr($"GlobalVars-DeleteMove ({errFrom})", ex);
             }
             return false;
@@ -857,7 +752,7 @@ namespace HomeCinema
             {
                 case 1:
                     // there is an update, goto page of releases
-                    if (ShowYesNo("There is an update!\nGo to Download Page?\nNOTE: It will open a Link in your\nDefault Web Browser", caller))
+                    if (Msg.ShowYesNo("There is an update!\nGo to Download Page?\nNOTE: It will open a Link in your\nDefault Web Browser", caller))
                     {
                         try
                         {
@@ -865,7 +760,7 @@ namespace HomeCinema
                         }
                         catch (Exception ex)
                         {
-                            ShowWarning("Update Error!\nTry Updating Later..", "Error occured during update", caller);
+                            Msg.ShowWarning("Update Error!\nTry Updating Later..", "Error occured during update", caller);
                             Logs.LogErr(errFrom, ex);
                         }
                     }
@@ -873,13 +768,13 @@ namespace HomeCinema
                 case 2:
                     if (showMsg)
                     {
-                        ShowInfo("You are using the latest version!", "Update check", caller);
+                        Msg.ShowInfo("You are using the latest version!", "Update check", caller);
                     }
                     break;
                 default:
                     if (showMsg)
                     {
-                        ShowWarning("Cannot check for update!\nTry again later", "Update error", caller);
+                        Msg.ShowWarning("Cannot check for update!\nTry again later", "Update error", caller);
                     }
                     break;
             }
@@ -887,15 +782,11 @@ namespace HomeCinema
         // Play media file / Open it in default player
         public static void PlayMedia(string MOVIE_FILEPATH)
         {
-            string errFrom = "GlobalVars-PlayMedia";
-            try
-            {
-                Process.Start(MOVIE_FILEPATH);
-            }
+            try { Process.Start(MOVIE_FILEPATH); }
             catch (Exception ex)
             {
-                Logs.LogErr(errFrom, ex);
-                ShowWarning("File or folder not Found!\nIt may have been Moved or Deleted!", "File not Found!");
+                Logs.LogErr("GlobalVars-PlayMedia", ex);
+                Msg.ShowWarning("File or folder not Found!\nIt may have been Moved or Deleted!", "File not Found!");
             }
         }
         // Return a string with Limited characters
@@ -931,7 +822,7 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                ShowError(errFrom, ex, "Cannot open file!");
+                Msg.ShowError(errFrom, ex, "Cannot open file!");
             }
             return false;
         }
@@ -974,7 +865,7 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                ShowError(errFrom, ex);
+                Msg.ShowError(errFrom, ex);
                 return "Unknown";
             }
         }
@@ -1071,7 +962,7 @@ namespace HomeCinema
             DataFile.CheckAllFiles(); // re-check files if some are missing
             if (showMsg)
             {
-                ShowInfo("Cleanup Done!");
+                Msg.ShowInfo("Cleanup Done!");
             }
         }
         public static string ConvertListBoxToString(ListBox lb, string sep)

@@ -53,7 +53,7 @@ namespace HomeCinema
             {
                 if (Values.Contains(cbContents.Text))
                 {
-                    GlobalVars.ShowWarning("Value is already existing!", "", this);
+                    Msg.ShowWarning("Value is already existing!", "", this);
                     return;
                 }
                 Result = cbContents.Text;
@@ -62,7 +62,7 @@ namespace HomeCinema
             {
                 if (String.IsNullOrWhiteSpace(txtInput.Text))
                 {
-                    GlobalVars.ShowWarning("Invalid value!", "", this);
+                    Msg.ShowWarning("Invalid value!", "", this);
                     txtInput.Focus();
                     return;
                 }

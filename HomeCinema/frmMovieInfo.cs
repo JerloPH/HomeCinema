@@ -189,7 +189,7 @@ namespace HomeCinema
                 catch (Exception ex)
                 {
                     Logs.LogErr(errFrom, ex);
-                    GlobalVars.ShowWarning("Entry not found!", "", this);
+                    Msg.ShowWarning("Entry not found!", "", this);
                 }
             }
 
@@ -226,13 +226,13 @@ namespace HomeCinema
                     picbox.Tag = selectedFilename;
                     picbox.Refresh();
                     if (Settings.IsConfirmMsg)
-                        GlobalVars.ShowInfo("Changed the image cover!");
+                        Msg.ShowInfo("Changed the image cover!");
                     
                     return true;
                 }
                 catch (Exception exc)
                 {
-                    GlobalVars.ShowError(errFrom, exc, "Image selected is not loaded!", this);
+                    Msg.ShowError(errFrom, exc, "Image selected is not loaded!", this);
                     return false;
                 }
             }
@@ -249,7 +249,7 @@ namespace HomeCinema
             {
                 if (GlobalVars.DeleteImageFromList(this, MOVIE_ID.ToString(), ExceptionFrom + " (Previous Image)") == false)
                 {
-                    GlobalVars.ShowWarning("Cannot replace image!\nFile must be NOT in use!");
+                    Msg.ShowWarning("Cannot replace image!\nFile must be NOT in use!");
                     return;
                 }
             }
@@ -275,7 +275,7 @@ namespace HomeCinema
             }
             catch (Exception fex)
             {
-                GlobalVars.ShowError(ExceptionFrom, fex, "Image file selected is not saved!", this);
+                Msg.ShowError(ExceptionFrom, fex, "Image file selected is not saved!", this);
             }
         }
         // Dispose all Poster images
@@ -348,7 +348,7 @@ namespace HomeCinema
             // Exit if Movie Name is empty
             if (String.IsNullOrWhiteSpace(txtName.Text))
             {
-                GlobalVars.ShowWarning("Name cannot be Empty!");
+                Msg.ShowWarning("Name cannot be Empty!");
                 txtName.Focus();
                 return;
             }
@@ -419,7 +419,7 @@ namespace HomeCinema
                 entry.Dispose();
                 if (!ContAfterQry)
                 {
-                    GlobalVars.ShowWarning("Not saved properly!\nReview data and Try again,", "", this);
+                    Msg.ShowWarning("Not saved properly!\nReview data and Try again,", "", this);
                     return;
                 }
             }
@@ -494,16 +494,16 @@ namespace HomeCinema
                         txtPathSub.Text = subFile;
                     }
                     if (Settings.IsConfirmMsg)
-                        GlobalVars.ShowInfo("File is located!");
+                        Msg.ShowInfo("File is located!");
                 }
                 else
                 {
-                    GlobalVars.ShowWarning("File does not exists!");
+                    Msg.ShowWarning("File does not exists!");
                 }
             }
             else
             {
-                GlobalVars.ShowWarning("No File selected!");
+                Msg.ShowWarning("No File selected!");
             }
         }
         private void btnCancel_Click(object sender, EventArgs e)
@@ -527,25 +527,25 @@ namespace HomeCinema
             // Exit conditions
             if (!String.IsNullOrWhiteSpace(txtYear.Text) && txtYear.Text!="0")
             {
-                if (!GlobalVars.ShowYesNo("Replace information?", this)) { return; }
+                if (!Msg.ShowYesNo("Replace information?", this)) { return; }
             }
             // Exit when no TMDB key
             if (!GlobalVars.HAS_TMDB_KEY && source.Equals(HCSource.tmdb))
             {
-                GlobalVars.ShowWarning(GlobalVars.MSG_NO_TMDB);
+                Msg.ShowWarning(GlobalVars.MSG_NO_TMDB);
                 return;
             }
             // Exit if IMDB id is invalid
             if ((String.IsNullOrWhiteSpace(IMDB_ID) || IMDB_ID=="0" || (IMDB_ID.StartsWith("tt")==false)) && (source.Equals(HCSource.tmdb)))
             {
-                GlobalVars.ShowWarning("Invalid IMDB Id!");
+                Msg.ShowWarning("Invalid IMDB Id!");
                 txtIMDB.Focus();
                 return;
             }
             // Exit if Anilist id is invalid
             if ((String.IsNullOrWhiteSpace(AnilistId) || AnilistId == "0" || !long.TryParse(AnilistId, out AniId)) && (source.Equals(HCSource.anilist)))
             {
-                GlobalVars.ShowWarning("Invalid Anilist Id!");
+                Msg.ShowWarning("Invalid Anilist Id!");
                 txtAnilist.Focus();
                 return;
             }
@@ -575,7 +575,7 @@ namespace HomeCinema
 
             if (mediaInfo == null)
             {
-                GlobalVars.ShowWarning("Title not found!", "", this);
+                Msg.ShowWarning("Title not found!", "", this);
                 return;
             }
 
@@ -652,7 +652,7 @@ namespace HomeCinema
                 bool downloadCover = true;
                 if (File.Exists(existingcover))
                 {
-                    downloadCover = GlobalVars.ShowYesNo("Do you want to change poster image?", this);
+                    downloadCover = Msg.ShowYesNo("Do you want to change poster image?", this);
                 }
                 if (downloadCover)
                 {
@@ -677,19 +677,19 @@ namespace HomeCinema
                     {
                         if (SetPicboxImgFromFile(picBox, moviePosterDL, errFrom) == false)
                         {
-                            GlobalVars.ShowWarning("Cover cannot be changed! File may be in use..");
+                            Msg.ShowWarning("Cover cannot be changed! File may be in use..");
                         }
                     }
                     else
                     {
-                        GlobalVars.ShowWarning("Image file cannot be\ndownloaded at the moment!\nTry again later...");
+                        Msg.ShowWarning("Image file cannot be\ndownloaded at the moment!\nTry again later...");
                     }
                 }
             }
             else
             {
                 if (Settings.IsConfirmMsg)
-                    GlobalVars.ShowWarning($"No cover image fetched!\nSource: {source.ToUpper()}", "", this);
+                    Msg.ShowWarning($"No cover image fetched!\nSource: {source.ToUpper()}", "", this);
             }
         }
         // Get IMDB ID using Movie Name
@@ -699,14 +699,14 @@ namespace HomeCinema
             // Exit when no TMDB key
             if (!GlobalVars.HAS_TMDB_KEY && source.Equals(HCSource.tmdb))
             {
-                GlobalVars.ShowWarning(GlobalVars.MSG_NO_TMDB);
+                Msg.ShowWarning(GlobalVars.MSG_NO_TMDB);
                 return;
             }
 
             // Check if txtName is valid
             if (String.IsNullOrWhiteSpace(txtName.Text))
             {
-                GlobalVars.ShowWarning("Invalid Name!");
+                Msg.ShowWarning("Invalid Name!");
                 txtName.Focus();
                 return;
             }

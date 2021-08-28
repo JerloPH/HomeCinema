@@ -68,7 +68,7 @@ namespace HomeCinema
             }
             catch (Exception ex)
             {
-                GlobalVars.ShowError("DataFile-Initialize", ex, "Required files are not loaded!");
+                Msg.ShowError("DataFile-Initialize", ex, "Required files are not loaded!");
             }
         }
         // Check required files
@@ -120,7 +120,7 @@ namespace HomeCinema
                 }
                 catch (Exception ex)
                 {
-                    GlobalVars.ShowError($"(DataFile-CopyFromRes) Copying required file: {fName}", ex, "Required file is not loaded!");
+                    Msg.ShowError($"(DataFile-CopyFromRes) Copying required file: {fName}", ex, "Required file is not loaded!");
                 }
                 return false;
             }
@@ -132,7 +132,7 @@ namespace HomeCinema
             try { Directory.CreateDirectory(fPath); }
             catch (Exception ex)
             {
-                GlobalVars.ShowError($"(DataFile-CreateDir) Create Folder: {fPath}", ex, "Required folder not loaded!");
+                Msg.ShowError($"(DataFile-CreateDir) Create Folder: {fPath}", ex, "Required folder not loaded!");
             }
         }
     }
