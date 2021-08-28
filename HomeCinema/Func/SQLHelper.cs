@@ -135,7 +135,7 @@ namespace HomeCinema.SQLFunc
         {
             long Uid = 0L;
             var dt = DbQuery($"SELECT MAX({HCInfo.Id}) AS 'maxid' FROM {HCTable.info};", "DbGenerateId");
-            if (dt?.Rows.Count == 1)
+            if (dt?.Rows.Count > 0)
             {
                 long.TryParse(dt.Rows[0]["maxid"].ToString(), out Uid);
             }
@@ -171,7 +171,7 @@ namespace HomeCinema.SQLFunc
                             if (count == 3) { dbVer += 1; }
                             break;
                         }
-                        case 6:
+                        case 6: // Changed separator for multiple columns
                         {
                             int count = 0;
                             string qry = $"SELECT `{HCInfo.Id}`,`{HCInfo.director}`,`{HCInfo.producer}`,`{HCInfo.studio}`,`{HCInfo.artist}` FROM {HCTable.info}";
