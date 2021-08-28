@@ -151,7 +151,7 @@ namespace HomeCinema.SQLFunc
             // Upgrade dbVer to match requirements
             int dbVer = dbVersion;
             string calledFrom = "DBUpgradeDatabase";
-            int retry = 5;
+            int retry = RetryCount;
             while (dbVer < GlobalVars.HOMECINEMA_DBVER)
             {
                 retry -= 1;
@@ -162,24 +162,44 @@ namespace HomeCinema.SQLFunc
                     {
                         case 5:
                         {
-                            string qry = $"UPDATE {HCTable.info} SET [{HCInfo.category}]=1 WHERE `{HCInfo.category}`=5;";
-                            if (DbExecNonQuery(qry, calledFrom, -1) >= 0)
-                            {
-                                qry = $"UPDATE {HCTable.info} SET [{HCInfo.category}]=2 WHERE `{HCInfo.category}`=6;";
-                                if (DbExecNonQuery(qry, calledFrom, -1) >= 0)
-                                {
-                                    dbVer += 1;
-                                }
-                            }
+                            int count = 0;
+                            // Changed Category: Animated Movie -> Movie, Cartoon Series -> TV Series
+                            if (DbExecNonQuery($"UPDATE {HCTable.info} SET [{HCInfo.category}]=1 WHERE `{HCInfo.category}`=5;", calledFrom, -1) >= 0)
+                            { count += 1;}
+                            if (DbExecNonQuery($"UPDATE {HCTable.info} SET [{HCInfo.category}]=2 WHERE `{HCInfo.category}`=6;", calledFrom, -1) >= 0)
+                            { count += 1; }
+                            // ADD: 'rootFolder' column to 'info'
+                            if (DbExecNonQuery($"ALTER TABLE {HCTable.filepath} ADD {HCFile.Root} TEXT DEFAULT '';", calledFrom, -1) >= 0)
+                            { count += 1; }
+                            if (count == 3) { dbVer += 1; }
                             break;
                         }
                         case 6:
                         {
-                            string qry = $"ALTER TABLE {HCTable.filepath} ADD {HCFile.Root} TEXT DEFAULT '';";
-                            if (DbExecNonQuery(qry, calledFrom, -1) >= 0)
+                            int count = 0;
+                            string qry = $"SELECT `{HCInfo.Id}`,`{HCInfo.director}`,`{HCInfo.producer}`,`{HCInfo.studio}`,`{HCInfo.artist}` FROM {HCTable.info}";
+                            using (var dt = DbQuery(qry, calledFrom))
                             {
-                                dbVer += 1;
+                                if (dt?.Rows.Count > 0)
+                                {
+                                    foreach (DataRow item in dt.Rows)
+                                    {
+                                        var data = new Dictionary<string, string>();
+                                        data.Add(HCInfo.Id, item[HCInfo.Id].ToString());
+                                        try { data.Add(HCInfo.director, item[HCInfo.director].ToString().Replace(',', ';')); }
+                                        catch { }
+                                        try { data.Add(HCInfo.producer, item[HCInfo.producer].ToString().Replace(',', ';')); }
+                                        catch { }
+                                        try { data.Add(HCInfo.studio, item[HCInfo.studio].ToString().Replace(',', ';')); }
+                                        catch { }
+                                        try { data.Add(HCInfo.artist, item[HCInfo.artist].ToString().Replace(',', ';')); }
+                                        catch { }
+                                        DbUpdateTable(HCTable.info, data, calledFrom);
+                                    }
+                                }
+                                count += 1;
                             }
+                            if (count == 1) { dbVer += 1; }
                             break;
                         }
                     }
