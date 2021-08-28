@@ -36,7 +36,6 @@ namespace HomeCinema
     {
         // Strings and others
         static string SEARCHBOX_PLACEHOLDER = "Type your Search query here...";
-        string SEARCH_QUERY = "";
         static bool IsLoadedSuccess = true;
 
         // Objects
@@ -398,13 +397,8 @@ namespace HomeCinema
         // Search for Entries filtered
         private void SearchEntries()
         {
-            // Search the db for movie with filters
-            // Setup columns needed
-            string qry = "";
-            SEARCH_QUERY = ""; // reset query
-
             // Default SELECT Query
-            qry = $"SELECT * FROM {HCTable.info}";
+            string qry = $"SELECT * FROM {HCTable.info}";
 
             // Build Filter for Query
             // Name Text search
@@ -472,10 +466,8 @@ namespace HomeCinema
             // Append to end
             qry += (Settings.ItemLimit > 0) ? $" LIMIT {Settings.ItemLimit};" : "";
 
-            // Set query to perform on search
-            SEARCH_QUERY = qry;
             // Re-populate ListView of movies
-            PopulateMovieBG();
+            PopulateMovieBG(qry, false);
         }
         // Play Movie or Open Movie Details
         public void OpenFormPlayMovie()
@@ -584,7 +576,7 @@ namespace HomeCinema
             catch (Exception ex)
             {
                 Logs.LogErr("frmMain-RemoveItemInMovieList", ex);
-                PopulateMovieBG();
+                PopulateMovieBG("", false);
             }
         }
         // Sort Items in lvSearchResult ListView
@@ -947,12 +939,11 @@ namespace HomeCinema
                 Msg.ShowInfo($"Successfully inserted {insertRes} new entries!");
             }
             // Load ListView collection
-            SEARCH_QUERY = $"SELECT * FROM {HCTable.info}";
-            PopulateMovieBG(true);
+            PopulateMovieBG($"SELECT * FROM {HCTable.info}", true);
         }
         #endregion
         #region BG Worker: Populate MOVIE ListView
-        private void PopulateMovieBG(bool AppStart = false)
+        private void PopulateMovieBG(string query, bool AppStart)
         {
             // Stop ListView form Drawing
             lvSearchResult.BeginUpdate(); // Pause drawing events on ListView
@@ -960,7 +951,7 @@ namespace HomeCinema
             lvSearchResult.Items.Clear(); // Clear previous list
             // Populate movie listview with new entries, from another form thread
             frmLoading form = new frmLoading(AppStart ? "Loading collection.." : "Searching..", "Loading", true);
-            string qry = SEARCH_QUERY;
+            string qry = query;
             string errFrom = "frmMain-PopulateMovieBG()";
             string fileNamePath, fileRootFolder;
             long progress = 0;
@@ -970,9 +961,7 @@ namespace HomeCinema
             // If no query
             if (String.IsNullOrWhiteSpace(qry))
             {
-                // Exit
-                AfterPopulatingMovieLV(lvSearchResult);
-                return;
+                qry = $"SELECT * FROM {HCTable.info}";
             }
             Logs.Debug("Start Adding Items to ListView");
             Logs.Debug("Fetching.. filepaths");
@@ -1403,9 +1392,6 @@ namespace HomeCinema
             cbCountry.SelectedIndex = 0;
             cbGenre.SelectedIndex = 0;
 
-            // Clear values of vars
-            SEARCH_QUERY = "";
-
             // Perform click on search button: btnSearch
             if (cbClearSearch.CheckState == CheckState.Checked)
             {
@@ -1469,10 +1455,10 @@ namespace HomeCinema
 
         private void btnFixNoInfo_Click(object sender, EventArgs e)
         {
-            SEARCH_QUERY = $"SELECT * FROM {HCTable.info} " +
+            string qry = $"SELECT * FROM {HCTable.info} " +
                 $"WHERE (`{HCInfo.imdb}`=null OR `{HCInfo.imdb}`='' OR `{HCInfo.imdb}`='0') AND " +
                 $"(`{HCInfo.anilist}`=null OR `{HCInfo.anilist}`='' OR `{HCInfo.anilist}`='0');";
-            PopulateMovieBG();
+            PopulateMovieBG(qry, false);
         }
 
         private void tlbtnSettings_Click(object sender, EventArgs e)
