@@ -137,10 +137,7 @@ namespace HomeCinema.SQLFunc
             var dt = DbQuery($"SELECT MAX({HCInfo.Id}) AS 'maxid' FROM {HCTable.info};", "DbGenerateId");
             if (dt?.Rows.Count == 1)
             {
-                if (long.TryParse(dt.Rows[0]["maxid"].ToString(), out Uid))
-                {
-                    Logs.LogDb("DbGenerateId", $"UID Fetched [{Uid}]");
-                }
+                long.TryParse(dt.Rows[0]["maxid"].ToString(), out Uid);
             }
             Uid += 1;
             Logs.LogDb("DbGenerateId", $"UID Generated [{Uid}]");
