@@ -131,6 +131,10 @@ namespace HomeCinema.SQLFunc
             Logs.LogDb(CalledFrom, (loaded ? $"Database is loaded succesfully!\n{DB_PATH}" : "Encountered Issue on loading database!"));
             return loaded;
         }
+        /// <summary>
+        /// Generate new Uid to insert new entry.
+        /// </summary>
+        /// <returns>Generated Uid as long</returns>
         private static long DbGenerateId()
         {
             long Uid = 0L;
@@ -217,7 +221,6 @@ namespace HomeCinema.SQLFunc
         /// <summary>
         /// Open connection to SQLite database.
         /// </summary>
-        /// <param name="connectionString">Connection string to use.</param>
         /// <returns>Handle of the SQLite connection.</returns>
         public static SQLiteConnection DbOpen()
         {
@@ -234,15 +237,29 @@ namespace HomeCinema.SQLFunc
         /// </summary>
         /// <param name="qry">SQL string query.</param>
         /// <param name="calledFrom">Caller of this function.</param>
+        /// <param name="dt">Dictionary containing parameterized values.</param>
         /// <returns>True, if query affected 1 or more rows. Otherwise, false</returns>
         public static bool DbExecNonQuery(string qry, string calledFrom, Dictionary<string, string> dt)
         {
             return (DbExecNonQuery(qry, calledFrom, dt, -1) > 0);
         }
+        /// <summary>
+        /// Execute a query that has no return row.
+        /// </summary>
+        /// <param name="qry">SQL string query.</param>
+        /// <param name="calledFrom">Caller of this function.</param>
+        /// <returns>True, if query affected 1 or more rows. Otherwise, false</returns>
         public static bool DbExecNonQuery(string qry, string calledFrom)
         {
             return (DbExecNonQuery(qry, calledFrom, null, -1) > 0);
         }
+        /// <summary>
+        /// Execute a query that has no return row.
+        /// </summary>
+        /// <param name="qry">SQL string query.</param>
+        /// <param name="calledFrom">Caller of this function.</param>
+        /// <param name="defaultValue">Default rturn Value when query is unsuccesful.</param>
+        /// <returns>True, if query affected 1 or more rows. Otherwise, false</returns>
         public static int DbExecNonQuery(string qry, string calledFrom, int defaultValue)
         {
             return DbExecNonQuery(qry, calledFrom, null, defaultValue);
@@ -252,6 +269,7 @@ namespace HomeCinema.SQLFunc
         /// </summary>
         /// <param name="qry">SQL string query.</param>
         /// <param name="calledFrom">Caller of this function.</param>
+        /// <param name="dt">Dictionary containing parameterized values.</param>
         /// <param name="defaultValue">Default value when query is unsuccessful</param>
         /// <returns>Returns query result as int</returns>
         public static int DbExecNonQuery(string qry, string calledFrom, Dictionary<string, string> dt, int defaultValue)
@@ -306,7 +324,6 @@ namespace HomeCinema.SQLFunc
         /// Execute generic query statement.
         /// </summary>
         /// <param name="qry">Query string to run.</param>
-        /// <param name="cols">Columns for return.</param>
         /// <param name="calledFrom">Method calling this function.</param>
         /// <returns>DataTable, filled with result sets.</returns>
         public static DataTable DbQuery(string qry, string calledFrom)
