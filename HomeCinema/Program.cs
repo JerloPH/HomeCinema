@@ -55,7 +55,7 @@ namespace HomeCinema
             }
             else
             {
-                GlobalVars.ShowNoParent("HomeCinema is already open!");
+                Msg.ShowNoParent("HomeCinema is already open!");
             }
         }
     }
