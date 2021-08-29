@@ -50,6 +50,8 @@ namespace HomeCinema
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
+            this.tpLMS = new System.Windows.Forms.TabPage();
+            this.textBox6 = new System.Windows.Forms.TextBox();
             this.tabMain.SuspendLayout();
             this.tpHome.SuspendLayout();
             this.tpLicense.SuspendLayout();
@@ -60,6 +62,7 @@ namespace HomeCinema
             this.tpLSqlite.SuspendLayout();
             this.tpLECpanel.SuspendLayout();
             this.tpWinApi.SuspendLayout();
+            this.tpLMS.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtTitle
@@ -126,6 +129,7 @@ namespace HomeCinema
             // tabLicense
             // 
             this.tabLicense.Controls.Add(this.tpLHC);
+            this.tabLicense.Controls.Add(this.tpLMS);
             this.tabLicense.Controls.Add(this.tpLNewton);
             this.tabLicense.Controls.Add(this.tpLRest);
             this.tabLicense.Controls.Add(this.tpLSqlite);
@@ -262,7 +266,7 @@ namespace HomeCinema
             this.textBox1.Size = new System.Drawing.Size(741, 312);
             this.textBox1.TabIndex = 4;
             this.textBox1.TabStop = false;
-            this.textBox1.Text = "Licensed under GPL";
+            this.textBox1.Text = resources.GetString("textBox1.Text");
             // 
             // textBox2
             // 
@@ -279,7 +283,7 @@ namespace HomeCinema
             this.textBox2.Size = new System.Drawing.Size(747, 318);
             this.textBox2.TabIndex = 5;
             this.textBox2.TabStop = false;
-            this.textBox2.Text = "Licensed under GPL";
+            this.textBox2.Text = resources.GetString("textBox2.Text");
             // 
             // textBox3
             // 
@@ -296,7 +300,7 @@ namespace HomeCinema
             this.textBox3.Size = new System.Drawing.Size(747, 318);
             this.textBox3.TabIndex = 5;
             this.textBox3.TabStop = false;
-            this.textBox3.Text = "Licensed under GPL";
+            this.textBox3.Text = resources.GetString("textBox3.Text");
             // 
             // textBox4
             // 
@@ -313,7 +317,7 @@ namespace HomeCinema
             this.textBox4.Size = new System.Drawing.Size(747, 318);
             this.textBox4.TabIndex = 5;
             this.textBox4.TabStop = false;
-            this.textBox4.Text = "Licensed under GPL";
+            this.textBox4.Text = resources.GetString("textBox4.Text");
             // 
             // textBox5
             // 
@@ -330,7 +334,34 @@ namespace HomeCinema
             this.textBox5.Size = new System.Drawing.Size(747, 318);
             this.textBox5.TabIndex = 5;
             this.textBox5.TabStop = false;
-            this.textBox5.Text = "Licensed under GPL";
+            this.textBox5.Text = resources.GetString("textBox5.Text");
+            // 
+            // tpLMS
+            // 
+            this.tpLMS.Controls.Add(this.textBox6);
+            this.tpLMS.Location = new System.Drawing.Point(4, 29);
+            this.tpLMS.Name = "tpLMS";
+            this.tpLMS.Size = new System.Drawing.Size(747, 318);
+            this.tpLMS.TabIndex = 6;
+            this.tpLMS.Text = "dotNet";
+            this.tpLMS.UseVisualStyleBackColor = true;
+            // 
+            // textBox6
+            // 
+            this.textBox6.BackColor = System.Drawing.Color.Black;
+            this.textBox6.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.textBox6.Location = new System.Drawing.Point(0, 0);
+            this.textBox6.Multiline = true;
+            this.textBox6.Name = "textBox6";
+            this.textBox6.ReadOnly = true;
+            this.textBox6.ShortcutsEnabled = false;
+            this.textBox6.Size = new System.Drawing.Size(747, 318);
+            this.textBox6.TabIndex = 5;
+            this.textBox6.TabStop = false;
+            this.textBox6.Text = resources.GetString("textBox6.Text");
             // 
             // frmAbout
             // 
@@ -369,6 +400,8 @@ namespace HomeCinema
             this.tpLECpanel.PerformLayout();
             this.tpWinApi.ResumeLayout(false);
             this.tpWinApi.PerformLayout();
+            this.tpLMS.ResumeLayout(false);
+            this.tpLMS.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -395,5 +428,7 @@ namespace HomeCinema
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TabPage tpLMS;
+        private System.Windows.Forms.TextBox textBox6;
     }
 }
