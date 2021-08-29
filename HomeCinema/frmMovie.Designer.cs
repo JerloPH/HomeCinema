@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cbActor = new System.Windows.Forms.ComboBox();
+            this.cbDirector = new System.Windows.Forms.ComboBox();
+            this.cbProducer = new System.Windows.Forms.ComboBox();
+            this.cbStudio = new System.Windows.Forms.ComboBox();
             this.lblNameSeries = new System.Windows.Forms.Label();
             this.lblSeries = new System.Windows.Forms.Label();
             this.txtCountry = new System.Windows.Forms.TextBox();
@@ -50,7 +54,6 @@
             this.lblCategory = new System.Windows.Forms.Label();
             this.lblYear = new System.Windows.Forms.Label();
             this.lblSourceId = new System.Windows.Forms.Label();
-            this.lblID = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.webTrailer = new System.Windows.Forms.WebBrowser();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -61,10 +64,6 @@
             this.lblSource = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
-            this.cbStudio = new System.Windows.Forms.ComboBox();
-            this.cbProducer = new System.Windows.Forms.ComboBox();
-            this.cbDirector = new System.Windows.Forms.ComboBox();
-            this.cbActor = new System.Windows.Forms.ComboBox();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
@@ -98,7 +97,6 @@
             this.groupBox2.Controls.Add(this.lblCategory);
             this.groupBox2.Controls.Add(this.lblYear);
             this.groupBox2.Controls.Add(this.lblSourceId);
-            this.groupBox2.Controls.Add(this.lblID);
             this.groupBox2.Controls.Add(this.label15);
             this.groupBox2.Controls.Add(this.webTrailer);
             this.groupBox2.Controls.Add(this.groupBox3);
@@ -114,6 +112,54 @@
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Information";
+            // 
+            // cbActor
+            // 
+            this.cbActor.BackColor = System.Drawing.Color.Black;
+            this.cbActor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbActor.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbActor.ForeColor = System.Drawing.Color.Yellow;
+            this.cbActor.FormattingEnabled = true;
+            this.cbActor.Location = new System.Drawing.Point(695, 407);
+            this.cbActor.Name = "cbActor";
+            this.cbActor.Size = new System.Drawing.Size(217, 30);
+            this.cbActor.TabIndex = 52;
+            // 
+            // cbDirector
+            // 
+            this.cbDirector.BackColor = System.Drawing.Color.Black;
+            this.cbDirector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbDirector.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbDirector.ForeColor = System.Drawing.Color.Yellow;
+            this.cbDirector.FormattingEnabled = true;
+            this.cbDirector.Location = new System.Drawing.Point(695, 373);
+            this.cbDirector.Name = "cbDirector";
+            this.cbDirector.Size = new System.Drawing.Size(217, 30);
+            this.cbDirector.TabIndex = 51;
+            // 
+            // cbProducer
+            // 
+            this.cbProducer.BackColor = System.Drawing.Color.Black;
+            this.cbProducer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbProducer.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbProducer.ForeColor = System.Drawing.Color.Yellow;
+            this.cbProducer.FormattingEnabled = true;
+            this.cbProducer.Location = new System.Drawing.Point(695, 339);
+            this.cbProducer.Name = "cbProducer";
+            this.cbProducer.Size = new System.Drawing.Size(217, 30);
+            this.cbProducer.TabIndex = 50;
+            // 
+            // cbStudio
+            // 
+            this.cbStudio.BackColor = System.Drawing.Color.Black;
+            this.cbStudio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbStudio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbStudio.ForeColor = System.Drawing.Color.Yellow;
+            this.cbStudio.FormattingEnabled = true;
+            this.cbStudio.Location = new System.Drawing.Point(695, 305);
+            this.cbStudio.Name = "cbStudio";
+            this.cbStudio.Size = new System.Drawing.Size(217, 30);
+            this.cbStudio.TabIndex = 49;
             // 
             // lblNameSeries
             // 
@@ -351,17 +397,6 @@
             this.lblSourceId.Text = "ID";
             this.lblSourceId.Click += new System.EventHandler(this.lblSourceId_Click);
             // 
-            // lblID
-            // 
-            this.lblID.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblID.ForeColor = System.Drawing.Color.Yellow;
-            this.lblID.Location = new System.Drawing.Point(1, 496);
-            this.lblID.Name = "lblID";
-            this.lblID.Size = new System.Drawing.Size(145, 25);
-            this.lblID.TabIndex = 5;
-            this.lblID.Text = "ID Hidden";
-            this.lblID.Visible = false;
-            // 
             // label15
             // 
             this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -389,7 +424,7 @@
             this.groupBox3.Controls.Add(this.btnEdit);
             this.groupBox3.Controls.Add(this.btnPlay);
             this.groupBox3.ForeColor = System.Drawing.Color.White;
-            this.groupBox3.Location = new System.Drawing.Point(4, 329);
+            this.groupBox3.Location = new System.Drawing.Point(3, 329);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -479,54 +514,6 @@
             this.lblName.Text = "MOVIE NAME";
             this.lblName.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // cbStudio
-            // 
-            this.cbStudio.BackColor = System.Drawing.Color.Black;
-            this.cbStudio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbStudio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbStudio.ForeColor = System.Drawing.Color.Yellow;
-            this.cbStudio.FormattingEnabled = true;
-            this.cbStudio.Location = new System.Drawing.Point(695, 305);
-            this.cbStudio.Name = "cbStudio";
-            this.cbStudio.Size = new System.Drawing.Size(217, 30);
-            this.cbStudio.TabIndex = 49;
-            // 
-            // cbProducer
-            // 
-            this.cbProducer.BackColor = System.Drawing.Color.Black;
-            this.cbProducer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbProducer.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbProducer.ForeColor = System.Drawing.Color.Yellow;
-            this.cbProducer.FormattingEnabled = true;
-            this.cbProducer.Location = new System.Drawing.Point(695, 339);
-            this.cbProducer.Name = "cbProducer";
-            this.cbProducer.Size = new System.Drawing.Size(217, 30);
-            this.cbProducer.TabIndex = 50;
-            // 
-            // cbDirector
-            // 
-            this.cbDirector.BackColor = System.Drawing.Color.Black;
-            this.cbDirector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbDirector.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbDirector.ForeColor = System.Drawing.Color.Yellow;
-            this.cbDirector.FormattingEnabled = true;
-            this.cbDirector.Location = new System.Drawing.Point(695, 373);
-            this.cbDirector.Name = "cbDirector";
-            this.cbDirector.Size = new System.Drawing.Size(217, 30);
-            this.cbDirector.TabIndex = 51;
-            // 
-            // cbActor
-            // 
-            this.cbActor.BackColor = System.Drawing.Color.Black;
-            this.cbActor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbActor.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbActor.ForeColor = System.Drawing.Color.Yellow;
-            this.cbActor.FormattingEnabled = true;
-            this.cbActor.Location = new System.Drawing.Point(695, 407);
-            this.cbActor.Name = "cbActor";
-            this.cbActor.Size = new System.Drawing.Size(217, 30);
-            this.cbActor.TabIndex = 52;
-            // 
             // frmMovie
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -561,7 +548,6 @@
         private System.Windows.Forms.PictureBox picBox;
         private System.Windows.Forms.WebBrowser webTrailer;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label lblID;
         private System.Windows.Forms.Label lblYear;
         private System.Windows.Forms.Label lblSourceId;
         private System.Windows.Forms.Label lblCategory;

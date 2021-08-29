@@ -75,33 +75,24 @@ namespace HomeCinema
         {
             // Set textbox values from Database
             string errFrom = "frmMovie-LoadInformation";
-            string qry, Imagefile;
+            string Imagefile;
             var dtInfo = new DataTable();
             var tp = new ToolTip();
             frmLoading form = new frmLoading("Opening media info..", "Loading");
-
-            // Build query for FilePath, and Movie Info
-            qry = $"SELECT * FROM {HCTable.info} A LEFT JOIN {HCTable.filepath} B ON A.`{HCInfo.Id}`=B.`{HCInfo.Id}` WHERE A.`{HCInfo.Id}`={ID} LIMIT 1;";
-
             form.BackgroundWorker.DoWork += (sender1, e1) =>
             {
                 // Execute queries
-                dtInfo = SQLHelper.DbQuery(qry, errFrom);
+                dtInfo = SQLHelper.DbQuery($"SELECT * FROM {HCTable.info} A LEFT JOIN {HCTable.filepath} B ON A.`{HCInfo.Id}`=B.`{HCInfo.Id}` WHERE A.`{HCInfo.Id}`={ID} LIMIT 1;", errFrom);
             };
             form.ShowDialog(this);
-
             // Get ResultSet for FilePaths
             try
             {
                 DataRow row = dtInfo.Rows[0];
+                MOVIE_ID = GlobalVars.ValidateAndReturn(row[HCInfo.Id]);
                 MOVIE_FILEPATH = row[HCFile.File].ToString(); // Get Filepath
-
-                // ID
-                lblID.Text = GlobalVars.ValidateAndReturn(row[HCInfo.Id]);
-
-                try { MOVIE_TRAILER = row[HCFile.Trailer].ToString(); }
+                try { MOVIE_TRAILER = row[HCFile.Trailer].ToString(); } // Get Trailer
                 catch { MOVIE_TRAILER = ""; }
-
                 // Imdb and Anilist Id
                 try
                 {
@@ -133,55 +124,38 @@ namespace HomeCinema
                     try { lblName.Text = Path.GetFileName(MOVIE_FILEPATH); }
                     catch { lblName.Text = ""; }
                 }
-
                 // name_ep # Original title from country of Origin
                 try { lblNameOrig.Text = GlobalVars.ValidateAndReturn(row[HCInfo.name_orig]); }
                 catch { lblNameOrig.Text = ""; }
-
                 // name_series
                 try { lblNameSeries.Text = GlobalVars.ValidateAndReturn(row[HCInfo.name_series]); }
                 catch { lblNameSeries.Text = ""; }
-
                 // season
                 try { lblSeasonNum.Text = GlobalVars.ValidateAndReturn(row[HCInfo.season]); }
                 catch { lblSeasonNum.Text = ""; }
-
                 // episode
                 try { lblEpNum.Text = GlobalVars.ValidateAndReturn(row[HCInfo.episode]); }
                 catch { lblEpNum.Text = ""; }
-
                 // country
                 try { txtCountry.Text = GlobalVars.ValidateAndReturn(row[HCInfo.country], ","); }
                 catch { txtCountry.Text = ""; }
-
                 // category
                 try { lblCategory.Text = GlobalVars.GetCategoryText(row[HCInfo.category].ToString()); }
                 catch { lblCategory.Text = ""; }
-
                 // genre
                 try { txtGenre.Text = GlobalVars.ValidateAndReturn(row[HCInfo.genre], ","); }
                 catch { txtGenre.Text = ""; }
-
-                // studio
-                SetupCombobox(cbStudio, row[HCInfo.studio], ';');
-
-                // producer
-                SetupCombobox(cbProducer, row[HCInfo.producer], ';');
-
-                // director
-                SetupCombobox(cbDirector, row[HCInfo.director], ';');
-
-                // artist
-                SetupCombobox(cbActor, row[HCInfo.artist], ';');
-
                 // year
                 try { lblYear.Text = GlobalVars.ValidateAndReturn(row[HCInfo.year]); }
                 catch { lblYear.Text = ""; }
-
                 // summary
                 try { lblSummary.Text = GlobalVars.ValidateAndReturn(row[HCInfo.summary]); }
                 catch { lblSummary.Text = ""; }
-
+                // Combo Box controls
+                SetupCombobox(cbStudio, row[HCInfo.studio], ';'); // studio
+                SetupCombobox(cbProducer, row[HCInfo.producer], ';'); // producer
+                SetupCombobox(cbDirector, row[HCInfo.director], ';'); // director
+                SetupCombobox(cbActor, row[HCInfo.artist], ';'); // artist
                 row.Delete();
             }
             catch (Exception ex)
@@ -215,7 +189,7 @@ namespace HomeCinema
                 }
 
                 // Set MOVIE_COVER_FULL | Image from file
-                Imagefile = GlobalVars.ImgFullPathWithDefault(lblID.Text);
+                Imagefile = GlobalVars.ImgFullPathWithDefault(MOVIE_ID);
                 try
                 {
                     MOVIE_COVER_FULL = Image.FromFile(Imagefile);
