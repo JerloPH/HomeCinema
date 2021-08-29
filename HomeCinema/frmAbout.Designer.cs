@@ -52,9 +52,11 @@ namespace HomeCinema
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.tpLMS = new System.Windows.Forms.TabPage();
             this.textBox6 = new System.Windows.Forms.TextBox();
+            this.txtCredit = new System.Windows.Forms.TextBox();
             this.tabMain.SuspendLayout();
             this.tpHome.SuspendLayout();
             this.tpLicense.SuspendLayout();
+            this.tpCredits.SuspendLayout();
             this.tabLicense.SuspendLayout();
             this.tpLHC.SuspendLayout();
             this.tpLNewton.SuspendLayout();
@@ -118,6 +120,7 @@ namespace HomeCinema
             // 
             // tpCredits
             // 
+            this.tpCredits.Controls.Add(this.txtCredit);
             this.tpCredits.Location = new System.Drawing.Point(4, 29);
             this.tpCredits.Name = "tpCredits";
             this.tpCredits.Padding = new System.Windows.Forms.Padding(3);
@@ -363,6 +366,23 @@ namespace HomeCinema
             this.textBox6.TabStop = false;
             this.textBox6.Text = resources.GetString("textBox6.Text");
             // 
+            // txtCredit
+            // 
+            this.txtCredit.BackColor = System.Drawing.Color.Black;
+            this.txtCredit.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtCredit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtCredit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCredit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.txtCredit.Location = new System.Drawing.Point(3, 3);
+            this.txtCredit.Multiline = true;
+            this.txtCredit.Name = "txtCredit";
+            this.txtCredit.ReadOnly = true;
+            this.txtCredit.ShortcutsEnabled = false;
+            this.txtCredit.Size = new System.Drawing.Size(755, 351);
+            this.txtCredit.TabIndex = 5;
+            this.txtCredit.TabStop = false;
+            this.txtCredit.Text = resources.GetString("txtCredit.Text");
+            // 
             // frmAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
@@ -387,6 +407,8 @@ namespace HomeCinema
             this.tpHome.ResumeLayout(false);
             this.tpHome.PerformLayout();
             this.tpLicense.ResumeLayout(false);
+            this.tpCredits.ResumeLayout(false);
+            this.tpCredits.PerformLayout();
             this.tabLicense.ResumeLayout(false);
             this.tpLHC.ResumeLayout(false);
             this.tpLHC.PerformLayout();
@@ -430,5 +452,6 @@ namespace HomeCinema
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.TabPage tpLMS;
         private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox txtCredit;
     }
 }
