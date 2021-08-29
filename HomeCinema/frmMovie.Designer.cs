@@ -165,7 +165,7 @@
             // 
             this.lblNameSeries.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNameSeries.ForeColor = System.Drawing.Color.Yellow;
-            this.lblNameSeries.Location = new System.Drawing.Point(291, 169);
+            this.lblNameSeries.Location = new System.Drawing.Point(291, 142);
             this.lblNameSeries.Name = "lblNameSeries";
             this.lblNameSeries.Size = new System.Drawing.Size(295, 71);
             this.lblNameSeries.TabIndex = 48;
@@ -175,7 +175,7 @@
             // 
             this.lblSeries.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSeries.ForeColor = System.Drawing.Color.White;
-            this.lblSeries.Location = new System.Drawing.Point(188, 167);
+            this.lblSeries.Location = new System.Drawing.Point(188, 140);
             this.lblSeries.Name = "lblSeries";
             this.lblSeries.Size = new System.Drawing.Size(95, 25);
             this.lblSeries.TabIndex = 47;
@@ -209,7 +209,7 @@
             this.txtGenre.Name = "txtGenre";
             this.txtGenre.ReadOnly = true;
             this.txtGenre.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtGenre.Size = new System.Drawing.Size(387, 54);
+            this.txtGenre.Size = new System.Drawing.Size(387, 63);
             this.txtGenre.TabIndex = 44;
             this.txtGenre.Text = "Genre";
             // 
@@ -217,12 +217,11 @@
             // 
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label14.ForeColor = System.Drawing.Color.White;
-            this.label14.Location = new System.Drawing.Point(92, 514);
+            this.label14.Location = new System.Drawing.Point(185, 491);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(89, 25);
             this.label14.TabIndex = 43;
             this.label14.Text = "Genre";
-            this.label14.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label13
             // 
@@ -262,13 +261,13 @@
             this.lblSummary.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lblSummary.Font = new System.Drawing.Font("Calibri", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSummary.ForeColor = System.Drawing.Color.Goldenrod;
-            this.lblSummary.Location = new System.Drawing.Point(189, 281);
+            this.lblSummary.Location = new System.Drawing.Point(189, 254);
             this.lblSummary.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lblSummary.Multiline = true;
             this.lblSummary.Name = "lblSummary";
             this.lblSummary.ReadOnly = true;
             this.lblSummary.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.lblSummary.Size = new System.Drawing.Size(387, 223);
+            this.lblSummary.Size = new System.Drawing.Size(387, 224);
             this.lblSummary.TabIndex = 32;
             this.lblSummary.Text = "Summary";
             // 
@@ -298,7 +297,7 @@
             // 
             this.lblSummaryLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSummaryLbl.ForeColor = System.Drawing.Color.White;
-            this.lblSummaryLbl.Location = new System.Drawing.Point(185, 250);
+            this.lblSummaryLbl.Location = new System.Drawing.Point(185, 223);
             this.lblSummaryLbl.Name = "lblSummaryLbl";
             this.lblSummaryLbl.Size = new System.Drawing.Size(109, 25);
             this.lblSummaryLbl.TabIndex = 18;
@@ -308,7 +307,7 @@
             // 
             this.lblEpNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEpNum.ForeColor = System.Drawing.Color.Yellow;
-            this.lblEpNum.Location = new System.Drawing.Point(517, 50);
+            this.lblEpNum.Location = new System.Drawing.Point(517, 23);
             this.lblEpNum.Name = "lblEpNum";
             this.lblEpNum.Size = new System.Drawing.Size(63, 25);
             this.lblEpNum.TabIndex = 17;
@@ -318,7 +317,7 @@
             // 
             this.lblEpisode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEpisode.ForeColor = System.Drawing.Color.White;
-            this.lblEpisode.Location = new System.Drawing.Point(385, 49);
+            this.lblEpisode.Location = new System.Drawing.Point(385, 22);
             this.lblEpisode.Name = "lblEpisode";
             this.lblEpisode.Size = new System.Drawing.Size(101, 25);
             this.lblEpisode.TabIndex = 16;
@@ -329,7 +328,7 @@
             // 
             this.lblSeasonNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSeasonNum.ForeColor = System.Drawing.Color.Yellow;
-            this.lblSeasonNum.Location = new System.Drawing.Point(291, 49);
+            this.lblSeasonNum.Location = new System.Drawing.Point(291, 22);
             this.lblSeasonNum.Name = "lblSeasonNum";
             this.lblSeasonNum.Size = new System.Drawing.Size(43, 25);
             this.lblSeasonNum.TabIndex = 15;
@@ -339,7 +338,7 @@
             // 
             this.lblSeason.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSeason.ForeColor = System.Drawing.Color.White;
-            this.lblSeason.Location = new System.Drawing.Point(189, 50);
+            this.lblSeason.Location = new System.Drawing.Point(189, 23);
             this.lblSeason.Name = "lblSeason";
             this.lblSeason.Size = new System.Drawing.Size(93, 25);
             this.lblSeason.TabIndex = 14;
@@ -349,7 +348,7 @@
             // 
             this.lblNameOrig.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNameOrig.ForeColor = System.Drawing.Color.Yellow;
-            this.lblNameOrig.Location = new System.Drawing.Point(291, 81);
+            this.lblNameOrig.Location = new System.Drawing.Point(291, 54);
             this.lblNameOrig.Name = "lblNameOrig";
             this.lblNameOrig.Size = new System.Drawing.Size(295, 78);
             this.lblNameOrig.TabIndex = 13;
@@ -359,7 +358,7 @@
             // 
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(189, 79);
+            this.label5.Location = new System.Drawing.Point(189, 52);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(95, 25);
             this.label5.TabIndex = 12;
@@ -380,7 +379,7 @@
             // 
             this.lblYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblYear.ForeColor = System.Drawing.Color.Yellow;
-            this.lblYear.Location = new System.Drawing.Point(509, 18);
+            this.lblYear.Location = new System.Drawing.Point(100, 556);
             this.lblYear.Name = "lblYear";
             this.lblYear.Size = new System.Drawing.Size(67, 25);
             this.lblYear.TabIndex = 7;
@@ -390,7 +389,7 @@
             // 
             this.lblSourceId.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSourceId.ForeColor = System.Drawing.Color.MediumTurquoise;
-            this.lblSourceId.Location = new System.Drawing.Point(268, 18);
+            this.lblSourceId.Location = new System.Drawing.Point(19, 518);
             this.lblSourceId.Name = "lblSourceId";
             this.lblSourceId.Size = new System.Drawing.Size(148, 25);
             this.lblSourceId.TabIndex = 6;
@@ -424,7 +423,7 @@
             this.groupBox3.Controls.Add(this.btnEdit);
             this.groupBox3.Controls.Add(this.btnPlay);
             this.groupBox3.ForeColor = System.Drawing.Color.White;
-            this.groupBox3.Location = new System.Drawing.Point(3, 329);
+            this.groupBox3.Location = new System.Drawing.Point(6, 327);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -486,7 +485,7 @@
             // 
             this.lblSource.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSource.ForeColor = System.Drawing.Color.White;
-            this.lblSource.Location = new System.Drawing.Point(189, 18);
+            this.lblSource.Location = new System.Drawing.Point(6, 489);
             this.lblSource.Name = "lblSource";
             this.lblSource.Size = new System.Drawing.Size(73, 25);
             this.lblSource.TabIndex = 0;
@@ -496,12 +495,11 @@
             // 
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Location = new System.Drawing.Point(421, 18);
+            this.label8.Location = new System.Drawing.Point(5, 556);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(64, 25);
             this.label8.TabIndex = 3;
             this.label8.Text = "Year";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // lblName
             // 
