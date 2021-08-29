@@ -70,6 +70,12 @@ namespace HomeCinema
             cbCategory.Items.AddRange(GlobalVars.DB_INFO_CATEGORY);
             cbSource.Items.AddRange(HCSource.sources);
 
+            // Add items to cbRootFolder
+            foreach (var item in GlobalVars.MEDIA_LOC)
+            {
+                cbRootFolder.Items.Add(item.Path);
+            }
+
             // LOAD Information from DATABASE and SET to Controls
             if (MOVIE_ID > 0)
             {
@@ -165,6 +171,7 @@ namespace HomeCinema
                     txtPathFile.Text = row[HCFile.File].ToString();
                     txtPathSub.Text = row[HCFile.Sub].ToString();
                     txtPathTrailer.Text = row[HCFile.Trailer].ToString();
+                    cbRootFolder.Text = row[HCFile.Root].ToString();
 
                     // Set textboxes
                     txtIMDB.Text = row[HCInfo.imdb].ToString();

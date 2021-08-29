@@ -71,6 +71,22 @@
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.btnCastsClear = new System.Windows.Forms.Button();
+            this.btnCastsRemove = new System.Windows.Forms.Button();
+            this.btnCastsAdd = new System.Windows.Forms.Button();
+            this.btnDirectorClear = new System.Windows.Forms.Button();
+            this.btnDirectorRemove = new System.Windows.Forms.Button();
+            this.btnDirectorAdd = new System.Windows.Forms.Button();
+            this.btnStudioClear = new System.Windows.Forms.Button();
+            this.btnStudioRemove = new System.Windows.Forms.Button();
+            this.btnStudioAdd = new System.Windows.Forms.Button();
+            this.btnProducerClear = new System.Windows.Forms.Button();
+            this.btnProducerRemove = new System.Windows.Forms.Button();
+            this.btnProducerAdd = new System.Windows.Forms.Button();
+            this.lboxCasts = new System.Windows.Forms.ListBox();
+            this.lboxProducer = new System.Windows.Forms.ListBox();
+            this.lboxDirector = new System.Windows.Forms.ListBox();
+            this.lboxStudio = new System.Windows.Forms.ListBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -87,22 +103,8 @@
             this.btnFetchData = new System.Windows.Forms.Button();
             this.cbSource = new System.Windows.Forms.ComboBox();
             this.label20 = new System.Windows.Forms.Label();
-            this.lboxStudio = new System.Windows.Forms.ListBox();
-            this.lboxDirector = new System.Windows.Forms.ListBox();
-            this.lboxProducer = new System.Windows.Forms.ListBox();
-            this.lboxCasts = new System.Windows.Forms.ListBox();
-            this.btnProducerClear = new System.Windows.Forms.Button();
-            this.btnProducerRemove = new System.Windows.Forms.Button();
-            this.btnProducerAdd = new System.Windows.Forms.Button();
-            this.btnStudioClear = new System.Windows.Forms.Button();
-            this.btnStudioRemove = new System.Windows.Forms.Button();
-            this.btnStudioAdd = new System.Windows.Forms.Button();
-            this.btnDirectorClear = new System.Windows.Forms.Button();
-            this.btnDirectorRemove = new System.Windows.Forms.Button();
-            this.btnDirectorAdd = new System.Windows.Forms.Button();
-            this.btnCastsClear = new System.Windows.Forms.Button();
-            this.btnCastsRemove = new System.Windows.Forms.Button();
-            this.btnCastsAdd = new System.Windows.Forms.Button();
+            this.cbRootFolder = new System.Windows.Forms.ComboBox();
+            this.label21 = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
@@ -632,6 +634,202 @@
             this.tabPage4.Text = "Casts & Crew";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // btnCastsClear
+            // 
+            this.btnCastsClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCastsClear.Location = new System.Drawing.Point(643, 253);
+            this.btnCastsClear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCastsClear.Name = "btnCastsClear";
+            this.btnCastsClear.Size = new System.Drawing.Size(103, 34);
+            this.btnCastsClear.TabIndex = 71;
+            this.btnCastsClear.Text = "CLEAR";
+            this.btnCastsClear.UseVisualStyleBackColor = true;
+            this.btnCastsClear.Click += new System.EventHandler(this.btnCastsClear_Click);
+            // 
+            // btnCastsRemove
+            // 
+            this.btnCastsRemove.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCastsRemove.Location = new System.Drawing.Point(504, 253);
+            this.btnCastsRemove.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCastsRemove.Name = "btnCastsRemove";
+            this.btnCastsRemove.Size = new System.Drawing.Size(120, 34);
+            this.btnCastsRemove.TabIndex = 70;
+            this.btnCastsRemove.Text = "REMOVE";
+            this.btnCastsRemove.UseVisualStyleBackColor = true;
+            this.btnCastsRemove.Click += new System.EventHandler(this.btnCastsRemove_Click);
+            // 
+            // btnCastsAdd
+            // 
+            this.btnCastsAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCastsAdd.Location = new System.Drawing.Point(389, 253);
+            this.btnCastsAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCastsAdd.Name = "btnCastsAdd";
+            this.btnCastsAdd.Size = new System.Drawing.Size(98, 34);
+            this.btnCastsAdd.TabIndex = 69;
+            this.btnCastsAdd.Text = "ADD";
+            this.btnCastsAdd.UseVisualStyleBackColor = true;
+            this.btnCastsAdd.Click += new System.EventHandler(this.btnCastsAdd_Click);
+            // 
+            // btnDirectorClear
+            // 
+            this.btnDirectorClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDirectorClear.Location = new System.Drawing.Point(643, 38);
+            this.btnDirectorClear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnDirectorClear.Name = "btnDirectorClear";
+            this.btnDirectorClear.Size = new System.Drawing.Size(103, 34);
+            this.btnDirectorClear.TabIndex = 68;
+            this.btnDirectorClear.Text = "CLEAR";
+            this.btnDirectorClear.UseVisualStyleBackColor = true;
+            this.btnDirectorClear.Click += new System.EventHandler(this.btnDirectorClear_Click);
+            // 
+            // btnDirectorRemove
+            // 
+            this.btnDirectorRemove.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDirectorRemove.Location = new System.Drawing.Point(504, 38);
+            this.btnDirectorRemove.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnDirectorRemove.Name = "btnDirectorRemove";
+            this.btnDirectorRemove.Size = new System.Drawing.Size(120, 34);
+            this.btnDirectorRemove.TabIndex = 67;
+            this.btnDirectorRemove.Text = "REMOVE";
+            this.btnDirectorRemove.UseVisualStyleBackColor = true;
+            this.btnDirectorRemove.Click += new System.EventHandler(this.btnDirectorRemove_Click);
+            // 
+            // btnDirectorAdd
+            // 
+            this.btnDirectorAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDirectorAdd.Location = new System.Drawing.Point(389, 38);
+            this.btnDirectorAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnDirectorAdd.Name = "btnDirectorAdd";
+            this.btnDirectorAdd.Size = new System.Drawing.Size(98, 34);
+            this.btnDirectorAdd.TabIndex = 66;
+            this.btnDirectorAdd.Text = "ADD";
+            this.btnDirectorAdd.UseVisualStyleBackColor = true;
+            this.btnDirectorAdd.Click += new System.EventHandler(this.btnDirectorAdd_Click);
+            // 
+            // btnStudioClear
+            // 
+            this.btnStudioClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnStudioClear.Location = new System.Drawing.Point(266, 36);
+            this.btnStudioClear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnStudioClear.Name = "btnStudioClear";
+            this.btnStudioClear.Size = new System.Drawing.Size(103, 34);
+            this.btnStudioClear.TabIndex = 65;
+            this.btnStudioClear.Text = "CLEAR";
+            this.btnStudioClear.UseVisualStyleBackColor = true;
+            this.btnStudioClear.Click += new System.EventHandler(this.btnStudioClear_Click);
+            // 
+            // btnStudioRemove
+            // 
+            this.btnStudioRemove.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnStudioRemove.Location = new System.Drawing.Point(127, 36);
+            this.btnStudioRemove.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnStudioRemove.Name = "btnStudioRemove";
+            this.btnStudioRemove.Size = new System.Drawing.Size(120, 34);
+            this.btnStudioRemove.TabIndex = 64;
+            this.btnStudioRemove.Text = "REMOVE";
+            this.btnStudioRemove.UseVisualStyleBackColor = true;
+            this.btnStudioRemove.Click += new System.EventHandler(this.btnStudioRemove_Click);
+            // 
+            // btnStudioAdd
+            // 
+            this.btnStudioAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnStudioAdd.Location = new System.Drawing.Point(12, 36);
+            this.btnStudioAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnStudioAdd.Name = "btnStudioAdd";
+            this.btnStudioAdd.Size = new System.Drawing.Size(98, 34);
+            this.btnStudioAdd.TabIndex = 63;
+            this.btnStudioAdd.Text = "ADD";
+            this.btnStudioAdd.UseVisualStyleBackColor = true;
+            this.btnStudioAdd.Click += new System.EventHandler(this.btnStudioAdd_Click);
+            // 
+            // btnProducerClear
+            // 
+            this.btnProducerClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnProducerClear.Location = new System.Drawing.Point(266, 254);
+            this.btnProducerClear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnProducerClear.Name = "btnProducerClear";
+            this.btnProducerClear.Size = new System.Drawing.Size(103, 34);
+            this.btnProducerClear.TabIndex = 62;
+            this.btnProducerClear.Text = "CLEAR";
+            this.btnProducerClear.UseVisualStyleBackColor = true;
+            this.btnProducerClear.Click += new System.EventHandler(this.btnProducerClear_Click);
+            // 
+            // btnProducerRemove
+            // 
+            this.btnProducerRemove.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnProducerRemove.Location = new System.Drawing.Point(127, 254);
+            this.btnProducerRemove.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnProducerRemove.Name = "btnProducerRemove";
+            this.btnProducerRemove.Size = new System.Drawing.Size(120, 34);
+            this.btnProducerRemove.TabIndex = 61;
+            this.btnProducerRemove.Text = "REMOVE";
+            this.btnProducerRemove.UseVisualStyleBackColor = true;
+            this.btnProducerRemove.Click += new System.EventHandler(this.btnProducerRemove_Click);
+            // 
+            // btnProducerAdd
+            // 
+            this.btnProducerAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnProducerAdd.Location = new System.Drawing.Point(12, 254);
+            this.btnProducerAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnProducerAdd.Name = "btnProducerAdd";
+            this.btnProducerAdd.Size = new System.Drawing.Size(98, 34);
+            this.btnProducerAdd.TabIndex = 60;
+            this.btnProducerAdd.Text = "ADD";
+            this.btnProducerAdd.UseVisualStyleBackColor = true;
+            this.btnProducerAdd.Click += new System.EventHandler(this.btnProducerAdd_Click);
+            // 
+            // lboxCasts
+            // 
+            this.lboxCasts.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lboxCasts.FormattingEnabled = true;
+            this.lboxCasts.ItemHeight = 28;
+            this.lboxCasts.Location = new System.Drawing.Point(388, 293);
+            this.lboxCasts.Margin = new System.Windows.Forms.Padding(4);
+            this.lboxCasts.Name = "lboxCasts";
+            this.lboxCasts.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.lboxCasts.Size = new System.Drawing.Size(358, 144);
+            this.lboxCasts.Sorted = true;
+            this.lboxCasts.TabIndex = 59;
+            // 
+            // lboxProducer
+            // 
+            this.lboxProducer.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lboxProducer.FormattingEnabled = true;
+            this.lboxProducer.ItemHeight = 28;
+            this.lboxProducer.Location = new System.Drawing.Point(11, 293);
+            this.lboxProducer.Margin = new System.Windows.Forms.Padding(4);
+            this.lboxProducer.Name = "lboxProducer";
+            this.lboxProducer.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.lboxProducer.Size = new System.Drawing.Size(358, 144);
+            this.lboxProducer.Sorted = true;
+            this.lboxProducer.TabIndex = 58;
+            // 
+            // lboxDirector
+            // 
+            this.lboxDirector.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lboxDirector.FormattingEnabled = true;
+            this.lboxDirector.ItemHeight = 28;
+            this.lboxDirector.Location = new System.Drawing.Point(388, 78);
+            this.lboxDirector.Margin = new System.Windows.Forms.Padding(4);
+            this.lboxDirector.Name = "lboxDirector";
+            this.lboxDirector.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.lboxDirector.Size = new System.Drawing.Size(358, 144);
+            this.lboxDirector.Sorted = true;
+            this.lboxDirector.TabIndex = 57;
+            // 
+            // lboxStudio
+            // 
+            this.lboxStudio.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lboxStudio.FormattingEnabled = true;
+            this.lboxStudio.ItemHeight = 28;
+            this.lboxStudio.Location = new System.Drawing.Point(11, 76);
+            this.lboxStudio.Margin = new System.Windows.Forms.Padding(4);
+            this.lboxStudio.Name = "lboxStudio";
+            this.lboxStudio.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.lboxStudio.Size = new System.Drawing.Size(358, 144);
+            this.lboxStudio.Sorted = true;
+            this.lboxStudio.TabIndex = 56;
+            // 
             // label11
             // 
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -671,6 +869,8 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.label21);
+            this.tabPage3.Controls.Add(this.cbRootFolder);
             this.tabPage3.Controls.Add(this.label18);
             this.tabPage3.Controls.Add(this.txtPathTrailer);
             this.tabPage3.Controls.Add(this.label16);
@@ -695,12 +895,11 @@
             this.label18.Size = new System.Drawing.Size(83, 25);
             this.label18.TabIndex = 35;
             this.label18.Text = "Trailer";
-            this.label18.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // txtPathTrailer
             // 
             this.txtPathTrailer.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPathTrailer.Location = new System.Drawing.Point(93, 114);
+            this.txtPathTrailer.Location = new System.Drawing.Point(94, 112);
             this.txtPathTrailer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtPathTrailer.Name = "txtPathTrailer";
             this.txtPathTrailer.Size = new System.Drawing.Size(485, 27);
@@ -714,12 +913,11 @@
             this.label16.Size = new System.Drawing.Size(83, 25);
             this.label16.TabIndex = 33;
             this.label16.Text = "Subtitle";
-            this.label16.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // txtPathSub
             // 
             this.txtPathSub.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPathSub.Location = new System.Drawing.Point(93, 66);
+            this.txtPathSub.Location = new System.Drawing.Point(94, 64);
             this.txtPathSub.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtPathSub.Name = "txtPathSub";
             this.txtPathSub.Size = new System.Drawing.Size(485, 27);
@@ -745,15 +943,14 @@
             this.label15.Size = new System.Drawing.Size(83, 25);
             this.label15.TabIndex = 30;
             this.label15.Text = "File";
-            this.label15.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // txtPathFile
             // 
-            this.txtPathFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPathFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPathFile.Location = new System.Drawing.Point(93, 18);
             this.txtPathFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtPathFile.Name = "txtPathFile";
-            this.txtPathFile.Size = new System.Drawing.Size(485, 27);
+            this.txtPathFile.Size = new System.Drawing.Size(485, 28);
             this.txtPathFile.TabIndex = 31;
             this.txtPathFile.Text = "Path to file";
             // 
@@ -805,201 +1002,23 @@
             this.label20.TabIndex = 39;
             this.label20.Text = "Source:";
             // 
-            // lboxStudio
+            // cbRootFolder
             // 
-            this.lboxStudio.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lboxStudio.FormattingEnabled = true;
-            this.lboxStudio.ItemHeight = 28;
-            this.lboxStudio.Location = new System.Drawing.Point(11, 76);
-            this.lboxStudio.Margin = new System.Windows.Forms.Padding(4);
-            this.lboxStudio.Name = "lboxStudio";
-            this.lboxStudio.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lboxStudio.Size = new System.Drawing.Size(358, 144);
-            this.lboxStudio.Sorted = true;
-            this.lboxStudio.TabIndex = 56;
+            this.cbRootFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbRootFolder.FormattingEnabled = true;
+            this.cbRootFolder.Location = new System.Drawing.Point(94, 195);
+            this.cbRootFolder.Name = "cbRootFolder";
+            this.cbRootFolder.Size = new System.Drawing.Size(486, 30);
+            this.cbRootFolder.TabIndex = 37;
             // 
-            // lboxDirector
+            // label21
             // 
-            this.lboxDirector.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lboxDirector.FormattingEnabled = true;
-            this.lboxDirector.ItemHeight = 28;
-            this.lboxDirector.Location = new System.Drawing.Point(388, 78);
-            this.lboxDirector.Margin = new System.Windows.Forms.Padding(4);
-            this.lboxDirector.Name = "lboxDirector";
-            this.lboxDirector.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lboxDirector.Size = new System.Drawing.Size(358, 144);
-            this.lboxDirector.Sorted = true;
-            this.lboxDirector.TabIndex = 57;
-            // 
-            // lboxProducer
-            // 
-            this.lboxProducer.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lboxProducer.FormattingEnabled = true;
-            this.lboxProducer.ItemHeight = 28;
-            this.lboxProducer.Location = new System.Drawing.Point(11, 293);
-            this.lboxProducer.Margin = new System.Windows.Forms.Padding(4);
-            this.lboxProducer.Name = "lboxProducer";
-            this.lboxProducer.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lboxProducer.Size = new System.Drawing.Size(358, 144);
-            this.lboxProducer.Sorted = true;
-            this.lboxProducer.TabIndex = 58;
-            // 
-            // lboxCasts
-            // 
-            this.lboxCasts.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lboxCasts.FormattingEnabled = true;
-            this.lboxCasts.ItemHeight = 28;
-            this.lboxCasts.Location = new System.Drawing.Point(388, 293);
-            this.lboxCasts.Margin = new System.Windows.Forms.Padding(4);
-            this.lboxCasts.Name = "lboxCasts";
-            this.lboxCasts.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lboxCasts.Size = new System.Drawing.Size(358, 144);
-            this.lboxCasts.Sorted = true;
-            this.lboxCasts.TabIndex = 59;
-            // 
-            // btnProducerClear
-            // 
-            this.btnProducerClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnProducerClear.Location = new System.Drawing.Point(266, 254);
-            this.btnProducerClear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnProducerClear.Name = "btnProducerClear";
-            this.btnProducerClear.Size = new System.Drawing.Size(103, 34);
-            this.btnProducerClear.TabIndex = 62;
-            this.btnProducerClear.Text = "CLEAR";
-            this.btnProducerClear.UseVisualStyleBackColor = true;
-            this.btnProducerClear.Click += new System.EventHandler(this.btnProducerClear_Click);
-            // 
-            // btnProducerRemove
-            // 
-            this.btnProducerRemove.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnProducerRemove.Location = new System.Drawing.Point(127, 254);
-            this.btnProducerRemove.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnProducerRemove.Name = "btnProducerRemove";
-            this.btnProducerRemove.Size = new System.Drawing.Size(120, 34);
-            this.btnProducerRemove.TabIndex = 61;
-            this.btnProducerRemove.Text = "REMOVE";
-            this.btnProducerRemove.UseVisualStyleBackColor = true;
-            this.btnProducerRemove.Click += new System.EventHandler(this.btnProducerRemove_Click);
-            // 
-            // btnProducerAdd
-            // 
-            this.btnProducerAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnProducerAdd.Location = new System.Drawing.Point(12, 254);
-            this.btnProducerAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnProducerAdd.Name = "btnProducerAdd";
-            this.btnProducerAdd.Size = new System.Drawing.Size(98, 34);
-            this.btnProducerAdd.TabIndex = 60;
-            this.btnProducerAdd.Text = "ADD";
-            this.btnProducerAdd.UseVisualStyleBackColor = true;
-            this.btnProducerAdd.Click += new System.EventHandler(this.btnProducerAdd_Click);
-            // 
-            // btnStudioClear
-            // 
-            this.btnStudioClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStudioClear.Location = new System.Drawing.Point(266, 36);
-            this.btnStudioClear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnStudioClear.Name = "btnStudioClear";
-            this.btnStudioClear.Size = new System.Drawing.Size(103, 34);
-            this.btnStudioClear.TabIndex = 65;
-            this.btnStudioClear.Text = "CLEAR";
-            this.btnStudioClear.UseVisualStyleBackColor = true;
-            this.btnStudioClear.Click += new System.EventHandler(this.btnStudioClear_Click);
-            // 
-            // btnStudioRemove
-            // 
-            this.btnStudioRemove.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStudioRemove.Location = new System.Drawing.Point(127, 36);
-            this.btnStudioRemove.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnStudioRemove.Name = "btnStudioRemove";
-            this.btnStudioRemove.Size = new System.Drawing.Size(120, 34);
-            this.btnStudioRemove.TabIndex = 64;
-            this.btnStudioRemove.Text = "REMOVE";
-            this.btnStudioRemove.UseVisualStyleBackColor = true;
-            this.btnStudioRemove.Click += new System.EventHandler(this.btnStudioRemove_Click);
-            // 
-            // btnStudioAdd
-            // 
-            this.btnStudioAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStudioAdd.Location = new System.Drawing.Point(12, 36);
-            this.btnStudioAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnStudioAdd.Name = "btnStudioAdd";
-            this.btnStudioAdd.Size = new System.Drawing.Size(98, 34);
-            this.btnStudioAdd.TabIndex = 63;
-            this.btnStudioAdd.Text = "ADD";
-            this.btnStudioAdd.UseVisualStyleBackColor = true;
-            this.btnStudioAdd.Click += new System.EventHandler(this.btnStudioAdd_Click);
-            // 
-            // btnDirectorClear
-            // 
-            this.btnDirectorClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDirectorClear.Location = new System.Drawing.Point(643, 38);
-            this.btnDirectorClear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnDirectorClear.Name = "btnDirectorClear";
-            this.btnDirectorClear.Size = new System.Drawing.Size(103, 34);
-            this.btnDirectorClear.TabIndex = 68;
-            this.btnDirectorClear.Text = "CLEAR";
-            this.btnDirectorClear.UseVisualStyleBackColor = true;
-            this.btnDirectorClear.Click += new System.EventHandler(this.btnDirectorClear_Click);
-            // 
-            // btnDirectorRemove
-            // 
-            this.btnDirectorRemove.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDirectorRemove.Location = new System.Drawing.Point(504, 38);
-            this.btnDirectorRemove.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnDirectorRemove.Name = "btnDirectorRemove";
-            this.btnDirectorRemove.Size = new System.Drawing.Size(120, 34);
-            this.btnDirectorRemove.TabIndex = 67;
-            this.btnDirectorRemove.Text = "REMOVE";
-            this.btnDirectorRemove.UseVisualStyleBackColor = true;
-            this.btnDirectorRemove.Click += new System.EventHandler(this.btnDirectorRemove_Click);
-            // 
-            // btnDirectorAdd
-            // 
-            this.btnDirectorAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDirectorAdd.Location = new System.Drawing.Point(389, 38);
-            this.btnDirectorAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnDirectorAdd.Name = "btnDirectorAdd";
-            this.btnDirectorAdd.Size = new System.Drawing.Size(98, 34);
-            this.btnDirectorAdd.TabIndex = 66;
-            this.btnDirectorAdd.Text = "ADD";
-            this.btnDirectorAdd.UseVisualStyleBackColor = true;
-            this.btnDirectorAdd.Click += new System.EventHandler(this.btnDirectorAdd_Click);
-            // 
-            // btnCastsClear
-            // 
-            this.btnCastsClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCastsClear.Location = new System.Drawing.Point(643, 253);
-            this.btnCastsClear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnCastsClear.Name = "btnCastsClear";
-            this.btnCastsClear.Size = new System.Drawing.Size(103, 34);
-            this.btnCastsClear.TabIndex = 71;
-            this.btnCastsClear.Text = "CLEAR";
-            this.btnCastsClear.UseVisualStyleBackColor = true;
-            this.btnCastsClear.Click += new System.EventHandler(this.btnCastsClear_Click);
-            // 
-            // btnCastsRemove
-            // 
-            this.btnCastsRemove.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCastsRemove.Location = new System.Drawing.Point(504, 253);
-            this.btnCastsRemove.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnCastsRemove.Name = "btnCastsRemove";
-            this.btnCastsRemove.Size = new System.Drawing.Size(120, 34);
-            this.btnCastsRemove.TabIndex = 70;
-            this.btnCastsRemove.Text = "REMOVE";
-            this.btnCastsRemove.UseVisualStyleBackColor = true;
-            this.btnCastsRemove.Click += new System.EventHandler(this.btnCastsRemove_Click);
-            // 
-            // btnCastsAdd
-            // 
-            this.btnCastsAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCastsAdd.Location = new System.Drawing.Point(389, 253);
-            this.btnCastsAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnCastsAdd.Name = "btnCastsAdd";
-            this.btnCastsAdd.Size = new System.Drawing.Size(98, 34);
-            this.btnCastsAdd.TabIndex = 69;
-            this.btnCastsAdd.Text = "ADD";
-            this.btnCastsAdd.UseVisualStyleBackColor = true;
-            this.btnCastsAdd.Click += new System.EventHandler(this.btnCastsAdd_Click);
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Location = new System.Drawing.Point(5, 167);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(121, 25);
+            this.label21.TabIndex = 38;
+            this.label21.Text = "Root Folder";
             // 
             // frmMovieInfo
             // 
@@ -1115,5 +1134,7 @@
         private System.Windows.Forms.Button btnProducerClear;
         private System.Windows.Forms.Button btnProducerRemove;
         private System.Windows.Forms.Button btnProducerAdd;
+        private System.Windows.Forms.ComboBox cbRootFolder;
+        private System.Windows.Forms.Label label21;
     }
 }
