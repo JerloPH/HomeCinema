@@ -480,11 +480,6 @@ namespace HomeCinema
             EditListBoxItems(listboxCountry);
         }
 
-        private void btnCheckUpdate_Click(object sender, EventArgs e)
-        {
-            GlobalVars.CheckForUpdate(this, true);
-        }
-
         private void btnChangeColorBG_Click(object sender, EventArgs e)
         {
             var col = new ColorDialog();

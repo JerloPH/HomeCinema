@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSettings));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.cbSkipNonMediaLoc = new System.Windows.Forms.ComboBox();
+            this.lblSkipNonMediaLoc = new System.Windows.Forms.Label();
             this.lblTimeout = new System.Windows.Forms.Label();
             this.txtTimeout = new System.Windows.Forms.TextBox();
             this.cbConfirmAction = new System.Windows.Forms.ComboBox();
@@ -39,7 +41,6 @@
             this.lblConfirmSearch = new System.Windows.Forms.Label();
             this.cbAutoClean = new System.Windows.Forms.ComboBox();
             this.lblAutoClean = new System.Windows.Forms.Label();
-            this.btnCheckUpdate = new System.Windows.Forms.Button();
             this.lblImdbSearchLimit = new System.Windows.Forms.Label();
             this.txtImdbSearchLimit = new System.Windows.Forms.TextBox();
             this.lblItemDisplayCount = new System.Windows.Forms.Label();
@@ -89,8 +90,6 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
-            this.cbSkipNonMediaLoc = new System.Windows.Forms.ComboBox();
-            this.lblSkipNonMediaLoc = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -132,7 +131,6 @@
             this.tabPage1.Controls.Add(this.lblConfirmSearch);
             this.tabPage1.Controls.Add(this.cbAutoClean);
             this.tabPage1.Controls.Add(this.lblAutoClean);
-            this.tabPage1.Controls.Add(this.btnCheckUpdate);
             this.tabPage1.Controls.Add(this.lblImdbSearchLimit);
             this.tabPage1.Controls.Add(this.txtImdbSearchLimit);
             this.tabPage1.Controls.Add(this.lblItemDisplayCount);
@@ -153,6 +151,26 @@
             this.tabPage1.Size = new System.Drawing.Size(710, 465);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "General";
+            // 
+            // cbSkipNonMediaLoc
+            // 
+            this.cbSkipNonMediaLoc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbSkipNonMediaLoc.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbSkipNonMediaLoc.FormattingEnabled = true;
+            this.cbSkipNonMediaLoc.Location = new System.Drawing.Point(271, 264);
+            this.cbSkipNonMediaLoc.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cbSkipNonMediaLoc.Name = "cbSkipNonMediaLoc";
+            this.cbSkipNonMediaLoc.Size = new System.Drawing.Size(167, 33);
+            this.cbSkipNonMediaLoc.TabIndex = 27;
+            // 
+            // lblSkipNonMediaLoc
+            // 
+            this.lblSkipNonMediaLoc.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSkipNonMediaLoc.Location = new System.Drawing.Point(5, 266);
+            this.lblSkipNonMediaLoc.Name = "lblSkipNonMediaLoc";
+            this.lblSkipNonMediaLoc.Size = new System.Drawing.Size(249, 30);
+            this.lblSkipNonMediaLoc.TabIndex = 26;
+            this.lblSkipNonMediaLoc.Text = "Skip Non-Media Location:";
             // 
             // lblTimeout
             // 
@@ -231,19 +249,6 @@
             this.lblAutoClean.Size = new System.Drawing.Size(249, 30);
             this.lblAutoClean.TabIndex = 18;
             this.lblAutoClean.Text = "Clean at Startup :";
-            // 
-            // btnCheckUpdate
-            // 
-            this.btnCheckUpdate.Font = new System.Drawing.Font("Calibri", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.btnCheckUpdate.ForeColor = System.Drawing.Color.Black;
-            this.btnCheckUpdate.Location = new System.Drawing.Point(472, 32);
-            this.btnCheckUpdate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnCheckUpdate.Name = "btnCheckUpdate";
-            this.btnCheckUpdate.Size = new System.Drawing.Size(213, 45);
-            this.btnCheckUpdate.TabIndex = 17;
-            this.btnCheckUpdate.Text = "Check for Update";
-            this.btnCheckUpdate.UseVisualStyleBackColor = true;
-            this.btnCheckUpdate.Click += new System.EventHandler(this.btnCheckUpdate_Click);
             // 
             // lblImdbSearchLimit
             // 
@@ -806,26 +811,6 @@
             this.label9.TabIndex = 16;
             this.label9.Text = "* Changes Apply after Restart";
             // 
-            // cbSkipNonMediaLoc
-            // 
-            this.cbSkipNonMediaLoc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbSkipNonMediaLoc.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbSkipNonMediaLoc.FormattingEnabled = true;
-            this.cbSkipNonMediaLoc.Location = new System.Drawing.Point(271, 264);
-            this.cbSkipNonMediaLoc.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.cbSkipNonMediaLoc.Name = "cbSkipNonMediaLoc";
-            this.cbSkipNonMediaLoc.Size = new System.Drawing.Size(167, 33);
-            this.cbSkipNonMediaLoc.TabIndex = 27;
-            // 
-            // lblSkipNonMediaLoc
-            // 
-            this.lblSkipNonMediaLoc.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSkipNonMediaLoc.Location = new System.Drawing.Point(5, 266);
-            this.lblSkipNonMediaLoc.Name = "lblSkipNonMediaLoc";
-            this.lblSkipNonMediaLoc.Size = new System.Drawing.Size(249, 30);
-            this.lblSkipNonMediaLoc.TabIndex = 26;
-            this.lblSkipNonMediaLoc.Text = "Skip Non-Media Location:";
-            // 
             // frmSettings
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
@@ -897,7 +882,6 @@
         private System.Windows.Forms.Button btnCountryAdd;
         private System.Windows.Forms.Label lblImdbSearchLimit;
         private System.Windows.Forms.TextBox txtImdbSearchLimit;
-        private System.Windows.Forms.Button btnCheckUpdate;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.Button btnChangeColorBG;
         private System.Windows.Forms.Button btnColorBG;
