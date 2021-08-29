@@ -1324,8 +1324,7 @@ namespace HomeCinema
         }
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Save settings
-            Settings.SaveSettings();
+            // Settings.SaveSettings(); // Save settings
             // Save text files
             SaveCountryCB(); // Replace Country text file
             SaveGenreCB(); // Replace Genre text file
