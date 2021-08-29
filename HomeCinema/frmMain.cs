@@ -765,6 +765,7 @@ namespace HomeCinema
             {
                 if (item.Equals("All"))
                     continue;
+
                 toWrite += item + ",";
             }
             toWrite = toWrite.TrimEnd(',');
