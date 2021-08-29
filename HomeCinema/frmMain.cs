@@ -756,11 +756,11 @@ namespace HomeCinema
                 GlobalVars.formAbout.Focus();
             }
         }
-        private void SaveCountryCB()
+        private void SaveComboBoxItemsToFile(ComboBox cb)
         {
             // save cbCountry contents to FILE_COUNTRY
             string toWrite = "";
-            var list = cbCountry.Items.Cast<string>().OrderBy(s => s);
+            var list = cb.Items.Cast<string>().OrderBy(s => s);
             foreach (string item in list)
             {
                 if (item.Equals("All"))
@@ -769,20 +769,6 @@ namespace HomeCinema
             }
             toWrite = toWrite.TrimEnd(',');
             GlobalVars.WriteToFile(DataFile.FILE_COUNTRY, toWrite);
-        }
-        private void SaveGenreCB()
-        {
-            // save cbGenre contents to FILE_GENRE
-            string toWrite = "";
-            var list = cbGenre.Items.Cast<string>().OrderBy(s => s);
-            foreach (string item in list)
-            {
-                if (item.Equals("All"))
-                    continue;
-                toWrite += item + ",";
-            }
-            toWrite = toWrite.TrimEnd(',');
-            GlobalVars.WriteToFile(DataFile.FILE_GENRE, toWrite);
         }
         private int ControlLeftFromAttach(Control src, Control attachedTo) // return left property appropriate to control attached to another control
         {
@@ -1325,9 +1311,8 @@ namespace HomeCinema
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Settings.SaveSettings(); // Save settings
-            // Save text files
-            SaveCountryCB(); // Replace Country text file
-            SaveGenreCB(); // Replace Genre text file
+            SaveComboBoxItemsToFile(cbCountry); // Replace Country text file
+            SaveComboBoxItemsToFile(cbGenre); // Replace Genre text file
             // Close all forms
             try
             {
