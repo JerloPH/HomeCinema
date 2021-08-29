@@ -756,7 +756,7 @@ namespace HomeCinema
                 GlobalVars.formAbout.Focus();
             }
         }
-        private void SaveComboBoxItemsToFile(ComboBox cb)
+        private void SaveComboBoxItemsToFile(ComboBox cb, string file)
         {
             // save cbCountry contents to FILE_COUNTRY
             string toWrite = "";
@@ -769,7 +769,7 @@ namespace HomeCinema
                 toWrite += item + ",";
             }
             toWrite = toWrite.TrimEnd(',');
-            GlobalVars.WriteToFile(DataFile.FILE_COUNTRY, toWrite);
+            GlobalVars.WriteToFile(file, toWrite);
         }
         private int ControlLeftFromAttach(Control src, Control attachedTo) // return left property appropriate to control attached to another control
         {
@@ -1312,8 +1312,8 @@ namespace HomeCinema
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Settings.SaveSettings(); // Save settings
-            SaveComboBoxItemsToFile(cbCountry); // Replace Country text file
-            SaveComboBoxItemsToFile(cbGenre); // Replace Genre text file
+            SaveComboBoxItemsToFile(cbCountry, DataFile.FILE_COUNTRY); // Replace Country text file
+            SaveComboBoxItemsToFile(cbGenre, DataFile.FILE_GENRE); // Replace Genre text file
             // Close all forms
             try
             {
