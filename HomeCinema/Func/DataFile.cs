@@ -18,7 +18,6 @@ namespace HomeCinema
         public static string FILE_LOG_APP = "";
         public static string FILE_LOG_ERROR = "";
         public static string FILE_LOG_DB = "";
-        public static string FILE_ICON = "";
         public static string FILE_DEFIMG = "";
         public static string FILE_CONFIG = "";
         public static string FILE_SETTINGS = "";
@@ -41,23 +40,18 @@ namespace HomeCinema
                 PATH_DATA = Path.Combine(PATH_START, "data") + "\\";
                 PATH_TEMP = Path.Combine(PATH_START, "temp") + "\\";
                 PATH_LOG = Path.Combine(PATH_START, "logs");
-
                 // Create directories
                 CreateDir(PATH_IMG);
                 CreateDir(PATH_DATA);
                 CreateDir(PATH_TEMP);
                 CreateDir(PATH_LOG);
-
                 var date = DateTime.Now.ToString("yyyy-MM-dd");
                 FILE_LOG_APP = Path.Combine(PATH_LOG, $"{date}_App.log");// Log all messages and actions
                 FILE_LOG_ERROR = Path.Combine(PATH_LOG, $"{date}_Error.log"); // Contains only error Messages
                 FILE_LOG_DB = Path.Combine(PATH_LOG, $"{date}_DB.log"); // Log all messages and actions for db-related
                 FILE_LOG_SKIPPED = Path.Combine(PATH_LOG, $"{date}_SkippedEntries.log"); // Entries skipped
-
-                FILE_ICON = PATH_RES + @"HomeCinema.ico"; // Icon
-                FILE_DEFIMG = PATH_IMG + @"0.jpg"; // default cover image
-
                 // Data and files
+                FILE_DEFIMG = PATH_IMG + @"0.jpg"; // default cover image
                 FILE_CONFIG = Path.Combine(PATH_DATA, "config.json"); // configuration file to use for APIs
                 FILE_SETTINGS = Path.Combine(PATH_DATA, "settings.json"); // settings used in App
                 FILE_COUNTRY = Path.Combine(PATH_DATA, "country.hc_data"); // list of countries
@@ -77,9 +71,7 @@ namespace HomeCinema
         public static void CheckAllFiles()
         {
             // resources
-            CopyFromRes(FILE_ICON);
-            // covers
-            CopyFromRes(FILE_DEFIMG);
+            CopyFromRes(FILE_DEFIMG); // covers
             // data
             CopyFromRes(FILE_COUNTRY);
             CopyFromRes(FILE_GENRE);
