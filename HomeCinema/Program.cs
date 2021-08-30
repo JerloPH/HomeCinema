@@ -43,11 +43,12 @@ namespace HomeCinema
                 Application.SetCompatibleTextRenderingDefault(false);
 
                 // Check files first
-                DataFile.Initialize();
-                DataFile.CheckAllFiles();
-
-                FormMain = new frmMain();
-                Application.Run(FormMain);
+                if (DataFile.Initialize())
+                {
+                    DataFile.CheckAllFiles();
+                    FormMain = new frmMain();
+                    Application.Run(FormMain);
+                }
 
                 // release mutex after the form is closed.
                 mutex.ReleaseMutex();

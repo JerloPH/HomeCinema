@@ -31,7 +31,7 @@ namespace HomeCinema
         public static string FILE_LOG_SKIPPED = "";
 
         // Check all FILES on Startup
-        public static void Initialize()
+        public static bool Initialize()
         {
             try  // Paths for Files and Folders
             {
@@ -65,11 +65,13 @@ namespace HomeCinema
                 FILE_NOTRAILER = Path.Combine(PATH_DATA, "NoTrailer.jpg"); // default picture if no trailer link
                 FILE_MEDIALOC = Path.Combine(PATH_DATA, "medialocation.hc_data"); // For movies, folder locations
                 FILE_MEDIA_EXT = Path.Combine(PATH_DATA, "media_ext.hc_data"); // Extensions to check for movies
+                return true;
             }
             catch (Exception ex)
             {
                 Msg.ShowError("DataFile-Initialize", ex, "Required files are not loaded!");
             }
+            return false;
         }
         // Check required files
         public static void CheckAllFiles()
@@ -106,6 +108,8 @@ namespace HomeCinema
             // Contains TMDB_KEY ?
             GlobalVars.HAS_TMDB_KEY = !String.IsNullOrWhiteSpace(GlobalVars.TMDB_KEY);
             GlobalVars.DEBUGGING = Debugger.IsAttached;
+            if (Debugger.IsAttached)
+                GlobalVars.WriteToFile(Path.Combine(PATH_LOG, "DEBUG.log"), ""); // delete debug.log
         }
         // Copy from Resources if not on Root
         public static bool CopyFromRes(string fPath)
