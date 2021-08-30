@@ -95,6 +95,7 @@ D:\TV Series\Title of Series\Episode 1.mp4
 [**Microsoft Universal Windows Platform**](https://www.nuget.org/packages/Microsoft.NETCore.UniversalWindowsPlatform/) - For various functions. <br>
 [**RestSharp**](https://github.com/restsharp/RestSharp) - Wrapper for easy RESTful queries on APIs. <br>
 [**MakarovDev.ExpandCollapsePanel**](https://github.com/alexander-makarov/ExpandCollapsePanel) - Expandable and Collapsible Panel. <br>
+[**Markdig**](https://github.com/xoofx/markdig) - Markdown support. <br>
 ****
 
 ## License

@@ -25,20 +25,32 @@ namespace HomeCinema
             // Fore Color
             txtTitle.ForeColor = Settings.ColorFont;
             txtLicense.ForeColor = Settings.ColorFont;
+            // events
+            webHC.Navigating += new WebBrowserNavigatingEventHandler(webHC_Navigating);
             // Focus
             Focus();
         }
         // ######################################################### Events
         private void frmAbout_Load(object sender, EventArgs e)
         {
-            string line = Environment.NewLine;
-            string header = $"{GlobalVars.HOMECINEMA_NAME}{line}v{GlobalVars.HOMECINEMA_VERSION} build {GlobalVars.HOMECINEMA_BUILD}";
-            string version = GlobalVars.ReadStringFromFile(Path.Combine(DataFile.PATH_START, "VERSION_HISTORY.md"), "frmAbout_Load");
-            txtHomeCinema.Text = $"{header}{line}{version}";
+            try
+            {
+                string version = GlobalVars.ReadStringFromFile(Path.Combine(DataFile.PATH_START, "VERSION_HISTORY.md"), "frmAbout_Load");
+                string style = $"body {{ background-color: {ColorTranslator.ToHtml(Settings.ColorBg)};" +
+                    $"color: {ColorTranslator.ToHtml(Settings.ColorFont)} }}";
+                var html = $"<html><head><style>{style}</style></head>{Markdig.Markdown.ToHtml($"{version}")}</body></html>";
+                webHC.DocumentText = html;
+                Logs.Debug(html);
+            }
+            catch (Exception ex)
+            {
+                Logs.LogErr("frmAbout_Load", ex);
+            }
         }
         private void frmAbout_FormClosing(object sender, FormClosingEventArgs e)
         {
             GlobalVars.formAbout = null;
+            webHC?.Dispose();
             Dispose();
         }
         private void frmAbout_Resize(object sender, EventArgs e)
@@ -49,7 +61,20 @@ namespace HomeCinema
             tabMain.Height = rect.Height - adj - tabMain.Top;
             btnCheckUpdate.Left = tabMain.Right - (adj3 + btnCheckUpdate.Width);
         }
-
+        public void webHC_Navigating(object sender, WebBrowserNavigatingEventArgs e)
+        {
+            if (!(e.Url.ToString().Equals("about:blank", StringComparison.InvariantCultureIgnoreCase)))
+            {
+                //cancel the current event
+                e.Cancel = true;
+                //this opens the URL in the user's default browser
+                try { System.Diagnostics.Process.Start(e.Url.ToString()); }
+                catch (Exception ex)
+                {
+                    Logs.LogErr("webHC_Navigating", ex);
+                }
+            }
+        }
         private void btnCheckUpdate_Click(object sender, EventArgs e)
         {
             GlobalVars.CheckForUpdate(this, true);
