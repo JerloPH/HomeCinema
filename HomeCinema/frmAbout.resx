@@ -117,19 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="txtCredit.Text" xml:space="preserve">
-    <value>Various API and resources used:
-
-Anilist API, https://anilist.co/
-
-TheMovieDatabase API, https://www.themoviedb.org/
-
-Loading GIF from https://icons8.com/preloaders/
-
-Warning and Check icon from https://freeicons.io/profile/730
-
-Various ToolStrip Icons made by 'Freepik' from www.flaticon.com</value>
-  </data>
   <data name="txtLicense.Text" xml:space="preserve">
     <value>This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -143,6 +130,30 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.</value>
+  </data>
+  <data name="textBox6.Text" xml:space="preserve">
+    <value>See: https://github.com/microsoft/dotnet/blob/master/LICENSE
+
+The MIT License (MIT)
+Copyright (c) 2019 Microsoft
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</value>
   </data>
   <data name="textBox1.Text" xml:space="preserve">
     <value>See: https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md
@@ -204,7 +215,6 @@ domain dedications on file. So the SQLite code base is clean and is uncontaminat
     <value>See: https://github.com/alexander-makarov/ExpandCollapsePanel/blob/master/LICENSE
 
 The MIT License (MIT)
-
 Copyright (c) 2013 Alexander Makarov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -241,30 +251,18 @@ The terms also apply to any Microsoft
 for this software, unless other terms accompany those items. If so, those terms apply.
 _______________________________________________________________________________________</value>
   </data>
-  <data name="textBox6.Text" xml:space="preserve">
-    <value>See: https://github.com/microsoft/dotnet/blob/master/LICENSE
+  <data name="txtCredit.Text" xml:space="preserve">
+    <value>Various API and resources used:
 
-The MIT License (MIT)
+Anilist API, https://anilist.co/
 
-Copyright (c) 2019 Microsoft
+TheMovieDatabase API, https://www.themoviedb.org/
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Loading GIF from https://icons8.com/preloaders/
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Warning and Check icon from https://freeicons.io/profile/730
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.</value>
+Various ToolStrip Icons made by 'Freepik' from www.flaticon.com</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

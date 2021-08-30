@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,12 +28,13 @@ namespace HomeCinema
             // Focus
             Focus();
         }
-        // ######################################################### Methods
         // ######################################################### Events
         private void frmAbout_Load(object sender, EventArgs e)
         {
             string line = Environment.NewLine;
-            txtHomeCinema.Text = $"{GlobalVars.HOMECINEMA_NAME}{line}v{GlobalVars.HOMECINEMA_VERSION} build {GlobalVars.HOMECINEMA_BUILD}";
+            string header = $"{GlobalVars.HOMECINEMA_NAME}{line}v{GlobalVars.HOMECINEMA_VERSION} build {GlobalVars.HOMECINEMA_BUILD}";
+            string version = GlobalVars.ReadStringFromFile(Path.Combine(DataFile.PATH_START, "VERSION_HISTORY.md"), "frmAbout_Load");
+            txtHomeCinema.Text = $"{header}{line}{version}";
         }
         private void frmAbout_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -42,7 +44,7 @@ namespace HomeCinema
         private void frmAbout_Resize(object sender, EventArgs e)
         {
             var rect = this.ClientRectangle;
-            int adj = 12, adj2 = 18, adj3 = 32;
+            int adj = 12, adj2 = 18, adj3 = 50;
             tabMain.Width = rect.Width - adj2;
             tabMain.Height = rect.Height - adj - tabMain.Top;
             btnCheckUpdate.Left = tabMain.Right - (adj3 + btnCheckUpdate.Width);
