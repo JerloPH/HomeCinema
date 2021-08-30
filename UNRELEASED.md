@@ -16,6 +16,7 @@
 - REV: Add control buttons for Casts and Crews
 - Renamed 'Actor' to 'Casts'
 - REV: Convert 'Casts, Producer, Director, Studio' to List
+- REV: Changed prod,studio,artist,director separator on upgrade database call.
 - Dispose media Entity after single-time use
 - REV: Refactor fields with multiple values
   - Producer, Director, Studio, Actor/Artist
@@ -35,7 +36,20 @@
 - REV: Better timeout setting checker
 - REV: Set Static Icon to forms
 - REV: Moved all Data Files paths to its own class
-
+- NuGet: Updated SQLite packages
+- REV: Initialize checker, debug file delete on debugger
+- REV: Don't replace settings on app close
+- REV: Removed SEARCH_QUERY property of frmMain
+- REV: New debugging setting
+- REV: Save RootFolder of new entries
+- REV: moved other input prompts to Msg class
+- REV: Removed string replace for single quote on DbUpdate
+- REV: Moved basic alert prompts to its own class
+- UI: Major UI Change on **'About'** form.
+- UI: Removed check update button from settings and moved it to About form
+- UI: Re-order movie info form
+- UI: Add Root Folder to Movie Edit form
+- Minor refactor to code on generating new UID
 
 # KNOWN BUGS on Stable
 - Folder names with special characters are sometimes not loaded when trying to open it with Windows Explorer.
