@@ -461,7 +461,6 @@ namespace HomeCinema
                 metaData.Add(GlobalVars.ConvertListBoxToString(lboxProducer, ";")); // producer
                 GlobalVars.SaveMetadata(txtPathFile.Text, metaData);
             }
-
             Close(); // Close this form
         }
         // OpenDialog and Select Cover of Movie and Set it to picBox.Image
@@ -515,6 +514,7 @@ namespace HomeCinema
         }
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            PARENT?.Focus();
             Close();
         }
         // Fetch data from TMDB, using IMDB ID
