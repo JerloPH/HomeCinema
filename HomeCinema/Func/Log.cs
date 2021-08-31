@@ -91,8 +91,12 @@ namespace HomeCinema
         }
         public static void Debug(string log)
         {
+            Debug(Path.Combine(DataFile.PATH_LOG, "DEBUG.log"), log);
+        }
+        public static void Debug(string file, string log)
+        {
             if (!GlobalVars.DEBUGGING) { return; }
-            Log(Path.Combine(DataFile.PATH_LOG, "DEBUG.log"), "", log);
+            Log(file, "", log);
         }
     }
 }

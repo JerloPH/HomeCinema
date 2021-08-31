@@ -37,20 +37,16 @@ namespace HomeCinema
             MediaInfo media = new MediaInfo();
             string errFrom = $"TmdbAPI-GetMovieInfoFromTmdb";
             string mediaTypeUrl = mediatype.ToLower().Equals("movie") ? "movie" : "tv";
-            // URLs
-            string URLFindMovie = @"https://api.themoviedb.org/3/" + $"{mediaTypeUrl}/{Tmdb}?api_key={TMDB_KEY}&append_to_response=external_ids";
-            string URLFindVids = @"https://api.themoviedb.org/3/" + $"{mediaTypeUrl}/{Tmdb}/videos?api_key={TMDB_KEY}";
-            string URLFindCrew = @"https://api.themoviedb.org/3/" + $"{mediaTypeUrl}/{Tmdb}/credits?api_key={TMDB_KEY}";
-            // File paths
-            string JSONmovieinfo = DataFile.PATH_TEMP + Tmdb + "_info.json";
-            string JSONmovievids = DataFile.PATH_TEMP + Tmdb + "_videos.json";
-            string JSONcrewcast = DataFile.PATH_TEMP + Tmdb + "_crewcast.json";
-
-            if (!String.IsNullOrWhiteSpace(Tmdb) && Tmdb!="0")
+            // URLs and filepaths
+            string URLFindMovie = @"https://api.themoviedb.org/3/" + $"{mediaTypeUrl}/{Tmdb}?api_key={TMDB_KEY}&append_to_response=external_ids,videos,credits";
+            string JSONmovieinfo = $"{DataFile.PATH_TEMP}{Tmdb}_info.json";
+            // Validate
+            if (!String.IsNullOrWhiteSpace(Tmdb) && Tmdb != "0")
             {
                 if (GlobalVars.DownloadAndReplace(JSONmovieinfo, URLFindMovie, errFrom))
                 {
                     string content = GlobalVars.ReadStringFromFile(JSONmovieinfo, errFrom);
+                    Logs.Debug(DataFile.PATH_LOG+"\\json_debug.json", content);
                     var movie = JsonConvert.DeserializeObject<TmdbMovieInfo>(content, GlobalVars.JSON_SETTING);
                     if (movie != null)
                     {
@@ -72,84 +68,78 @@ namespace HomeCinema
                         }
                         media.Summary = movie.Summary; // summary / overview
                         media.PosterPath = (!String.IsNullOrWhiteSpace(movie.PosterPath)) ? movie.PosterPath : String.Empty; // poster_path
-                        // Country
-                        foreach (TmdbProdCountry c in movie.ProdCountries)
-                        {
-                            media.Country.Add(c.Name.Trim());
-                        }
-                        // Get genres
-                        try
-                        {
-                            if (content.Contains("genres"))
-                            {
-                                var jObj = (JObject)JsonConvert.DeserializeObject(content, GlobalVars.JSON_SETTING);
-                                var result = jObj["genres"]
-                                                .Select(item => new
-                                                {
-                                                    name = (string)item["name"],
-                                                })
-                                                .ToList();
-                                if (result?.Count > 0)
-                                {
-                                    foreach (var valGenre in result)
-                                    {
-                                        string valString = valGenre.ToString();
-                                        string valTrim = valString.Substring(valString.IndexOf("name = ") + 7);
-                                        valTrim = valTrim.TrimEnd('}');
-                                        valTrim.Trim();
-                                        media.Genre.Add(valTrim);
-                                    }
-                                }
-                            }
-                        }
-                        catch { }
-
                         // Studio
                         try { media.Studio = movie.ProdCompanies.Select(a => a.Name).ToList(); }
                         catch { }
-                    }
-                }
-                // Get Trailer
-                if (GlobalVars.DownloadAndReplace(JSONmovievids, URLFindVids, errFrom))
-                {
-                    // Get contents of JSON file
-                    string contents = GlobalVars.ReadStringFromFile(JSONmovievids, errFrom + " [JSONmovievids]");
-                    try
-                    {
-                        var objJson = JsonConvert.DeserializeObject<TmdbVideos>(contents, GlobalVars.JSON_SETTING);
-                        if (objJson.results[0].site.ToLower() == "youtube")
+                        // Country
+                        if (movie.ProdCountries?.Count > 0)
                         {
-                            media.Trailer = GlobalVars.LINK_YT + objJson.results[0].key;
+                            foreach (TmdbProdCountry c in movie.ProdCountries)
+                            {
+                                media.Country.Add(c.Name.Trim());
+                            }
                         }
-                    }
-                    catch
-                    {
-                        media.Trailer = "";
-                    }
-                }
-                // Get Crews and Casts
-                if (GlobalVars.DownloadAndReplace(JSONcrewcast, URLFindCrew, errFrom))
-                {
-                    // Unparse json into object list
-                    string contents = GlobalVars.ReadStringFromFile(JSONcrewcast, errFrom + " [JSONcrewcast]");
-                    var castcrew = JsonConvert.DeserializeObject<TmdbCastCrew>(contents, GlobalVars.JSON_SETTING);
-
-                    foreach (TmdbCast c in castcrew.cast)
-                    {
-                        media.Casts.Add(c.name.Trim());
-                    }
-
-                    // get Director and producer
-                    foreach (TmdbCrew c in castcrew.crew)
-                    {
-                        string job = c.job.Trim().ToLower(); // Get informations
-                        if (job.Equals("director"))
+                        // Get genres
+                        if (movie.Genres?.Count > 0)
                         {
-                            media.Director.Add(c.name.Trim());
+                            try
+                            {
+                                foreach (var item in movie.Genres)
+                                {
+                                    media.Genre.Add(item.Name);
+                                }
+                            }
+                            catch (Exception ex) { Logs.LogErr(errFrom, ex); }
                         }
-                        else if (job.Contains("producer"))
+                        // Trailer Video
+                        if (movie.Videos != null)
                         {
-                            media.Producer.Add(c.name.Trim());
+                            if (movie.Videos.results?.Count > 0)
+                            {
+                                try
+                                {
+                                    foreach (var item in movie.Videos.results)
+                                    {
+                                        if (item.site.ToLower().Equals("youtube"))
+                                        {
+                                            media.Trailer = GlobalVars.LINK_YT + item.key;
+                                            break;
+                                        }
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    media.Trailer = "";
+                                    Logs.LogErr(errFrom, ex);
+                                }
+                            }
+                        }
+                        // Cast and Crews
+                        if (movie.CastCrew != null)
+                        {
+                            if (movie.CastCrew.cast?.Count > 0)
+                            {
+                                foreach (TmdbCast c in movie.CastCrew.cast)
+                                {
+                                    media.Casts.Add(c.name.Trim());
+                                }
+                            }
+                            // get Director and producer
+                            if (movie.CastCrew.crew?.Count > 0)
+                            {
+                                foreach (TmdbCrew c in movie.CastCrew.crew)
+                                {
+                                    string job = c.job.Trim().ToLower(); // Get informations
+                                    if (job.Equals("director"))
+                                    {
+                                        media.Director.Add(c.name.Trim());
+                                    }
+                                    else if (job.Contains("producer"))
+                                    {
+                                        media.Producer.Add(c.name.Trim());
+                                    }
+                                }
+                            }
                         }
                     }
                 }

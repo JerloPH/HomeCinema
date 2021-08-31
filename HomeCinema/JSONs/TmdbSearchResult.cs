@@ -13,9 +13,6 @@ namespace HomeCinema
     }
     public class TmdbPageResult
     {
-        [JsonProperty("page")]
-        public int page { get; set; } = 0;
-
         [JsonProperty("results")]
         public List<TmdbResult> results { get; set; }
 
@@ -55,9 +52,6 @@ namespace HomeCinema
     }
     public class TmdbMovieInfo
     {
-        [JsonProperty("id")]
-        public int Id{ get; set; } = 0;
-
         [JsonProperty("title")]
         public string Title { get; set; } = "";
 
@@ -88,9 +82,6 @@ namespace HomeCinema
         [JsonProperty("number_of_seasons")]
         public int SeasonsCount { get; set; } = 0;
 
-        [JsonProperty("origin_country")]
-        public List<string> OriginCountry { get; set; } = new List<string>();
-
         [JsonProperty("genres")]
         public List<TmdbGenre> Genres { get; set; } = new List<TmdbGenre>();
 
@@ -102,6 +93,12 @@ namespace HomeCinema
 
         [JsonProperty("production_companies")]
         public List<TmdbProdCompany> ProdCompanies { get; set; } = new List<TmdbProdCompany>();
+
+        [JsonProperty("videos")]
+        public TmdbVideos Videos { get; set; } = new TmdbVideos();
+
+        [JsonProperty("credits")]
+        public TmdbCastCrew CastCrew { get; set; } = new TmdbCastCrew();
     }
 
     public class TmdbExternalIds
@@ -158,8 +155,6 @@ namespace HomeCinema
 
     public class TmdbResultVid
     {
-        [JsonProperty("name")]
-        public string name { get; set; } = "";
         [JsonProperty("key")]
         public string key { get; set; } = "";
         [JsonProperty("site")]
