@@ -304,7 +304,7 @@ namespace HomeCinema
 
             if (int.TryParse(txtTimeout.Text.Replace(",", ""), out int timeoutval))
             {
-                if (Settings.TimeOut < 5000)
+                if (timeoutval < 5000)
                 {
                     Msg.ShowWarning("Timeout cannot be lower than 5,000!", "", this);
                     txtTimeout.SelectAll();
