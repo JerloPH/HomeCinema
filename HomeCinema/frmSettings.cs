@@ -273,7 +273,6 @@ namespace HomeCinema
         private void btnSave_Click(object sender, EventArgs e)
         {
             string error = "";
-            // Booleans
             Settings.IsAutoUpdate = cbAutoUpdate.SelectedIndex == 0;
             Settings.IsOffline = cbOffline.SelectedIndex == 0;
             Settings.IsAutoplay = cbPlayMovie.SelectedIndex == 0;
@@ -319,9 +318,7 @@ namespace HomeCinema
             // Theme Settings
             Settings.ColorBg = BackgroundColor;
             Settings.ColorFont = FontColor;
-
-            // Save settings to file
-            Settings.SaveSettings();
+            Settings.SaveSettings(); // Save settings to file
 
             // Write supported file extensions
             try
@@ -339,7 +336,6 @@ namespace HomeCinema
                 GlobalVars.WriteToFile(DataFile.FILE_MEDIA_EXT, text);
             }
             catch { error += Environment.NewLine + "Media Extensions"; }
-
             // Save medialocation.hc_data file with new contents
             string newMediaLoc = "";
             foreach (DataGridViewRow item in dataGridMediaLoc.Rows)
@@ -357,14 +353,12 @@ namespace HomeCinema
                 GlobalVars.LoadMediaLocations();
             }
             else { error += Environment.NewLine + "Media Locations"; }
-
             // Replace country file
             if (GlobalVars.WriteListBoxToFile(DataFile.FILE_COUNTRY, listboxCountry, ","))
             {
                 Program.FormMain.PopulateCountryCB();
             }
             else { error += Environment.NewLine + "Country list"; }
-
             // Replace genre file
             if (GlobalVars.WriteListBoxToFile(DataFile.FILE_GENRE, listboxGenre, ","))
             {
@@ -373,10 +367,16 @@ namespace HomeCinema
             else { error += Environment.NewLine + "Genre list"; }
 
             // Show message
-            Msg.ShowInfo((String.IsNullOrWhiteSpace(error)) ? "Done saving Settings!" : "Some settings have\ninvalid values!" + error, "", this);
             if (String.IsNullOrWhiteSpace(error))
             {
+                if (Settings.IsConfirmMsg)
+                    Msg.ShowInfo( "Done saving Settings!", "", this);
+
                 Close();
+            }
+            else
+            {
+                Msg.ShowWarning("Some settings have\ninvalid values!" + error, "", this);
             }
         }
         private void btnMediaLocAdd_Click(object sender, EventArgs e)
