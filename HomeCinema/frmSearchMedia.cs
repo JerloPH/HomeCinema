@@ -94,40 +94,33 @@ namespace HomeCinema
         }
         private int SearchTmdb()
         {
-            string errFrom = $"frmSearchMedia-SearchTmdb";
             // Setup var and links
-            string urlJSONgetId = @"https://api.themoviedb.org/3/search/multi?api_key=" + GlobalVars.TMDB_KEY + "&query=" + txtInput.Text.Replace(" ", "%20");
-            string JSONgetID = $"{DataFile.PATH_TEMP}{movieId}_id.json";
-            string JSONContents = "";
+            string errFrom = $"frmSearchMedia-SearchTmdb";
             string rPosterLink = "";
             int count = 0;
-            int resultCount = 0;
+            string query = txtInput.Text;
 
-            var form = new frmLoading($"Searching for {txtInput.Text}", GlobalVars.HOMECINEMA_NAME);
+            var form = new frmLoading($"Searching for {query}", GlobalVars.HOMECINEMA_NAME);
             form.BackgroundWorker.DoWork += (sender1, e1) =>
             {
-                // Download json file of search results
-                if (GlobalVars.DownloadAndReplace(JSONgetID, urlJSONgetId, errFrom))
+                var objPageResult = TmdbAPI.FindMulti(query, movieId);
+                if (objPageResult != null)
                 {
-                    JSONContents = GlobalVars.ReadStringFromFile(JSONgetID, errFrom);
-                    var objPageResult = JsonConvert.DeserializeObject<TmdbPageResult>(JSONContents, GlobalVars.JSON_SETTING);
-                    if (objPageResult.results.Count > 0)
+                    if (objPageResult.results?.Count > 0)
                     {
                         // Add to ListView
                         foreach (var result in objPageResult.results)
                         {
-                            if (count > Settings.SearchLimit && Settings.SearchLimit > 1) { break; } // Exit when item result count is reached
-                            string ImdbFromApi = TmdbAPI.GetImdbFromAPI(result.Id.ToString(), result.MediaType);
-                            string imgFilePath = $"{DataFile.PATH_TEMP}{ImdbFromApi}.jpg";
+                            if (count > Settings.SearchLimit && Settings.SearchLimit > 0) { break; } // Exit when item result count is reached
+                            string TmdbId = result.Id.ToString();
+                            string imgFilePath = $"{DataFile.PATH_TEMP}{TmdbId}.jpg";
                             string imgKey = "0";
-                            // Skip entry if there is no Imdb Id associated
-                            if (String.IsNullOrWhiteSpace(ImdbFromApi)) { continue; }
                             // Add image to ImageList
                             rPosterLink = result.PosterPath;
                             GlobalVars.TryDelete(imgFilePath, errFrom);
                             if (!String.IsNullOrWhiteSpace(rPosterLink))
                             {
-                                TmdbAPI.DownloadCoverFromTMDB(ImdbFromApi, rPosterLink, errFrom);
+                                TmdbAPI.DownloadCoverFromTMDB(TmdbId, rPosterLink, errFrom);
                             }
                             if (File.Exists(imgFilePath))
                             {
@@ -135,7 +128,7 @@ namespace HomeCinema
                                 try
                                 {
                                     this.Invoke(new Action(() =>
-                                    { 
+                                    {
                                         Image img = Image.FromFile(imgFilePath);
                                         imageList.Images.Add(imgKey, img);
                                         img.Dispose();
@@ -148,17 +141,16 @@ namespace HomeCinema
                             ListViewItem lvItem = new ListViewItem();
                             int index = imageList.Images.IndexOfKey(imgKey);
                             lvItem.Text = result.MediaType.Equals("movie") ? result.Title : result.Name;
-                            lvItem.Tag = $"{ImdbFromApi}*{result.MediaType}*{result.Id}";
+                            lvItem.Tag = $"tmdb*{result.Id}*{result.MediaType}";
                             lvItem.ImageIndex = (index > 0) ? index : 0;
                             AddItem(lvResult, lvItem);
                             count += 1;
-                            resultCount += 1;
                         }
                     }
                 }
             };
             form.ShowDialog(this);
-            return resultCount;
+            return count;
         }
 
         private int SearchAnilist()
@@ -213,11 +205,11 @@ namespace HomeCinema
                         ListViewItem lvItem = new ListViewItem();
                         int index = imageList.Images.IndexOfKey(imgKey);
                         lvItem.Text = title;
-                        lvItem.Tag = $"{mediaId}*{mediatype}";
+                        lvItem.Tag = $"anilist*{mediaId}*{mediatype}";
                         lvItem.ImageIndex = (index > 0) ? index : 0;
                         AddItem(lvResult, lvItem);
-                        ++resultCount;
-                        Thread.Sleep(10);
+                        resultCount += 1;
+                        Thread.Sleep(100);
                     }
                 }
             };
@@ -251,16 +243,32 @@ namespace HomeCinema
                     string[] resultString = lvResult.SelectedItems[0].Tag.ToString().Split('*');
                     if (resultString.Length > 1)
                     {
-                        result = resultString[0];
-                        mediatype = resultString[1];
-                        if (resultString.Length > 2)
+                        result = resultString[1];
+                        mediatype = resultString[2];
+                        if (resultString[0].Equals("tmdb"))
                         {
-                            TmdbId = resultString[2];
+                            string imdb = "";
+                            TmdbId = resultString[1];
+                            var form = new frmLoading("Fetching Imdb..", "Fetching data");
+                            form.BackgroundWorker.DoWork += (sender1, e1) =>
+                            {
+                                imdb = TmdbAPI.GetImdbFromAPI(resultString[1], resultString[2]);
+                            };
+                            form.ShowDialog(this);
+                            result = imdb;
+                            if (String.IsNullOrWhiteSpace(result))
+                            {
+                                Msg.ShowWarning("Selected item has no IMDB Id!");
+                                return;
+                            }
                         }
-                        if (String.IsNullOrWhiteSpace(result))
+                        else
                         {
-                            Msg.ShowWarning("Selected item has no valid Id!");
-                            return;
+                            if (String.IsNullOrWhiteSpace(result))
+                            {
+                                Msg.ShowWarning("Selected item has no valid Id!");
+                                return;
+                            }
                         }
                     }
                     else
@@ -280,13 +288,16 @@ namespace HomeCinema
                 Close();
             }
             else
-            {
                 Msg.ShowWarning("No selected result!");
-            }
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            if (String.IsNullOrWhiteSpace(txtInput.Text))
+            {
+                Msg.ShowWarning("Invalid search query!");
+                return;
+            }
             ClearImageList();
             Image defImg = Image.FromFile(DataFile.FILE_DEFIMG);
             imageList.Images.Add("0", defImg);
@@ -295,13 +306,11 @@ namespace HomeCinema
             lvResult.Items.Clear();
             lvResult.BeginUpdate(); // Pause drawing events on ListView
             lvResult.SuspendLayout();
-
             int size = Source.Equals(HCSource.tmdb) ? SearchTmdb() : SearchAnilist();
             if (size > 0 && Settings.IsConfirmMsg)
             {
                 Msg.ShowInfo($"Found {size} results!", "", this);
             }
-
             lvResult.EndUpdate(); // Draw the ListView
             lvResult.ResumeLayout();
             lvResult.Refresh();

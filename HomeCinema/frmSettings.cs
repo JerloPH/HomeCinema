@@ -133,7 +133,7 @@ namespace HomeCinema
             tooltip.SetToolTip(lblAutoUpdate, "Automatically check for App updates.");
             tooltip.SetToolTip(lblOfflineMode, "Disable Automatic online functionalities. Overrides Auto update.");
             tooltip.SetToolTip(lblPlayMovieClick, "On double-clicking an item, plays the File, instead of viewing its details.");
-            tooltip.SetToolTip(lblMaxLogFileSize, "Maximum file size of log before deleting it.");
+            tooltip.SetToolTip(lblMaxLogFileSize, "Maximum file size of log before deleting it.\n'0' = don't delete logs.");
             tooltip.SetToolTip(lblItemDisplayCount, "Maximum number of Items displayed for Search results.\n'0' displays all.");
             tooltip.SetToolTip(lblImdbSearchLimit, "Limit Search results in searching Imdb entry.");
             tooltip.SetToolTip(lblAutoClean, "Clean logs and temporary files on startup.");
@@ -283,9 +283,13 @@ namespace HomeCinema
             Settings.IsSkipNotMediaLoc = cbSkipNonMediaLoc.SelectedIndex == 0;
 
             // TextBox changes
-            try { Settings.MaxLogSize = (int)Convert.ToInt32(txtLogSize.Text); }
-            catch { error += Environment.NewLine + lblMaxLogFileSize.Text.Trim().TrimEnd(':'); }
-            
+            if (int.TryParse(txtLogSize.Text, out int val))
+            {
+                Settings.MaxLogSize = val;
+            }
+            else
+                error += Environment.NewLine + lblMaxLogFileSize.Text.Trim().TrimEnd(':');
+
             try { Settings.ItemLimit = Convert.ToInt32(txtMaxItemCount.Text); }
             catch { error += Environment.NewLine + lblItemDisplayCount.Text.Trim().TrimEnd(':'); }
 

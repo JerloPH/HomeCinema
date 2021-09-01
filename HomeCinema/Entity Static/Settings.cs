@@ -12,11 +12,11 @@ namespace HomeCinema
     {
         #region Properties
         // Properties
-        private static int MaxLogSize_v = 0; // Maximum file size of Logfile. (in Bytes)
-        public static int MaxLogSize
+        private static int MaxLogSize_v = 0; // Maximum file size of Logfile. (in MegaBytes)
+        public static long MaxLogSize
         { 
-            get { return MaxLogSize_v * 1000000; } // Convert to Megabytes when using
-            set { MaxLogSize_v = value; }
+            get { return MaxLogSize_v * 1000000; } // Convert to bytes when using
+            set { MaxLogSize_v = (int)value; }
         }
 
         // Last Path saved for changing cover image
@@ -86,7 +86,6 @@ namespace HomeCinema
                 }
                 else
                 {
-                    // Load file contents to Config
                     contents = GlobalVars.ReadStringFromFile(DataFile.FILE_SETTINGS, $"{errorFrom} [FILE_SETTINGS]");
                     config = JsonConvert.DeserializeObject<SettingJson>(contents, GlobalVars.JSON_SETTING);
                 }
@@ -131,7 +130,7 @@ namespace HomeCinema
                 }
             }
             LastPathVideo = sLastPathVideo;
-
+            // Booleans
             IsOffline = config.offlineMode; // Get Offline Mode
             IsAutoUpdate = config.autoUpdate; // Get auto update
             IsAutoplay = config.instantPlayMovie; // AutoPlay Movie, instead of Viewing its Info / Details
@@ -139,11 +138,10 @@ namespace HomeCinema
             IsConfirmSearch = config.confirmSearch; // Confirm prompts on search and reload
             IsConfirmMsg = config.confirmMessages; // Confirm prompts on some actions
             IsSkipNotMediaLoc = config.skipEntryNotInMediaLoc; // Skip entry if root folder is not on media location
-
+            // Values
             ItemLimit = config.itemMaxLimit; // Limit MAX items in query 
             SearchLimit = config.searchLimit; // Limit Item result on IMDB searching
-            TimeOut = config.setTimeOut; // TimeOut for Internet connections
-            
+            TimeOut = config.setTimeOut; // TimeOut for Internet connections            
             // Set theme
             ImgTileWidth = config.ImgTileWidth; // Cover Image width
             ImgTileHeight = config.ImgTileHeight; // Cover Image height

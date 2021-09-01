@@ -13,16 +13,30 @@ namespace HomeCinema
     {
         private static string TMDB_KEY = GlobalVars.TMDB_KEY;
 
+        public static TmdbPageResult FindMulti(string query, string MovieId)
+        {
+            string errFrom = $"TmdbAPI-FindMulti";
+            string urlJSONgetId = @"https://api.themoviedb.org/3/search/multi?api_key=" + $"{GlobalVars.TMDB_KEY}&query={Uri.EscapeDataString(query)}";
+            string JSONgetID = $"{DataFile.PATH_TEMP}{MovieId}_findMulti.json";
+            // Download json file of search results
+            if (GlobalVars.DownloadAndReplace(JSONgetID, urlJSONgetId, errFrom))
+            {
+                string JSONContents = GlobalVars.ReadStringFromFile(JSONgetID, errFrom);
+                try { return JsonConvert.DeserializeObject<TmdbPageResult>(JSONContents, GlobalVars.JSON_SETTING); }
+                catch (Exception ex) { Logs.LogErr(errFrom, ex); }
+            }
+            return null;
+        }
         public static TmdbSearchResult FindMovieTV(string query, string MovieId, string mediatype)
         {
             TmdbSearchResult media = null;
             string errFrom = $"TmdbAPI-FindMovieTV";
             string mediatypeUrl = mediatype.ToLower().Equals("movie") ? "movie" : "tv";
-            string Searchquery = System.Net.WebUtility.UrlEncode(query);
+            string Searchquery = Uri.EscapeDataString(query);//System.Net.WebUtility.UrlEncode(query);
             // URLs
             string URLFindMedia = @"https://api.themoviedb.org/3/search/" + $"{mediatypeUrl}?api_key={TMDB_KEY}&query={Searchquery}";
             // Filepaths
-            string FileFindMedia = DataFile.PATH_TEMP + MovieId + "_findMedia.json";
+            string FileFindMedia = DataFile.PATH_TEMP + MovieId + "_findMovieTV.json";
 
             if (GlobalVars.DownloadAndReplace(FileFindMedia, URLFindMedia, errFrom))
             {
@@ -46,7 +60,6 @@ namespace HomeCinema
                 if (GlobalVars.DownloadAndReplace(JSONmovieinfo, URLFindMovie, errFrom))
                 {
                     string content = GlobalVars.ReadStringFromFile(JSONmovieinfo, errFrom);
-                    Logs.Debug(DataFile.PATH_LOG+"\\json_debug.json", content);
                     var movie = JsonConvert.DeserializeObject<TmdbMovieInfo>(content, GlobalVars.JSON_SETTING);
                     if (movie != null)
                     {
