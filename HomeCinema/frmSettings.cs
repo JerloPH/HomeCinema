@@ -373,7 +373,7 @@ namespace HomeCinema
             else { error += Environment.NewLine + "Genre list"; }
 
             // Show message
-            Msg.ShowInfo((String.IsNullOrWhiteSpace(error)) ? "Done saving Settings!" : "Some settings have invalid values!" + error);
+            Msg.ShowInfo((String.IsNullOrWhiteSpace(error)) ? "Done saving Settings!" : "Some settings have\ninvalid values!" + error, "", this);
             if (String.IsNullOrWhiteSpace(error))
             {
                 Close();
