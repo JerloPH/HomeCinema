@@ -11,6 +11,9 @@ namespace HomeCinema
     public static class Settings
     {
         #region Properties
+        // Toggle Portable Mode
+        public static bool PortableMode { get; set; } = false;
+
         // Properties
         private static int MaxLogSize_v = 0; // Maximum file size of Logfile. (in MegaBytes)
         public static long MaxLogSize
