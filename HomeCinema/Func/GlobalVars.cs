@@ -35,6 +35,7 @@ using Newtonsoft.Json.Linq;
 using Microsoft.WindowsAPICodePack.Shell;
 using HomeCinema.SQLFunc;
 using System.Text;
+using System.Data;
 
 namespace HomeCinema
 {
@@ -104,6 +105,27 @@ namespace HomeCinema
                         MEDIA_LOC.Add(new MediaLocations(arr2[0], arr2[1], arr2[2]));
                     }
                 }
+            }
+        }
+        // return filepath from DB
+        public static string GetFilePath(string ID, string calledFrom)
+        {
+            string ret = "";
+            string errFrom = $"GlobalVars-GetFilePath [calledFrom: {calledFrom}]";
+            string qry = $"SELECT `{HCFile.File}` FROM { HCTable.filepath } WHERE `{HCInfo.Id}`={ID} LIMIT 1;";
+            using (DataTable dtFile = SQLHelper.DbQuery(qry, errFrom))
+            {
+                if (dtFile == null) { return ret; }
+                if (dtFile.Rows?.Count > 0)
+                {
+                    try
+                    {
+                        DataRow r = dtFile.Rows[0];
+                        ret = r[HCFile.File].ToString();
+                    }
+                    catch (Exception ex) { Logs.LogErr(errFrom, ex); }
+                }
+                return ret;
             }
         }
         // Read String From File

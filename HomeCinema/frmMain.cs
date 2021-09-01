@@ -330,26 +330,6 @@ namespace HomeCinema
             form.ShowDialog(this);
             return count;
         }
-        // return filepath from DB
-        private string GetFilePath(string ID, string calledFrom)
-        {
-            string ret = "";
-            string errFrom = $"frmMain-GetFilePath [calledFrom: {calledFrom}]";
-            string qry = $"SELECT `{HCFile.File}` FROM { HCTable.filepath } WHERE `{HCInfo.Id}`={ID} LIMIT 1;";
-            using (DataTable dtFile = SQLHelper.DbQuery(qry, errFrom))
-            {
-                if (dtFile.Rows.Count > 0)
-                {
-                    try
-                    {
-                        DataRow r = dtFile.Rows[0];
-                        ret = r[HCFile.File].ToString();
-                    }
-                    catch { }
-                }
-                return ret;
-            }
-        }
         #endregion
         // ####################################################################################### Thread-safe static functions
         #region Thread-safe static func
@@ -472,7 +452,8 @@ namespace HomeCinema
                         if (ID < 1) { return; }
                         if (Settings.IsAutoplay)
                         {
-                            GlobalVars.PlayMedia(GetFilePath(ID.ToString(), "frmMain-OpenNewFormMovie"));
+                            string file = GlobalVars.GetFilePath(ID.ToString(), "frmMain-OpenNewFormMovie");
+                            GlobalVars.PlayMedia(file);
                             return;
                         }
                         else
@@ -1172,7 +1153,7 @@ namespace HomeCinema
                 string MOVIE_ID = lvSearchResult.SelectedItems[0].Tag.ToString();
                 if (MOVIE_ID != "0" && (!String.IsNullOrWhiteSpace(MOVIE_ID)))
                 {
-                    string file = GetFilePath(MOVIE_ID, $"{errFrom} [toolMenuFileExplorer]");
+                    string file = GlobalVars.GetFilePath(MOVIE_ID, $"{errFrom} [toolMenuFileExplorer]");
                     GlobalVars.FileOpeninExplorer(file, $"{errFrom} [toolMenuFileExplorer]");
                 }
             }
