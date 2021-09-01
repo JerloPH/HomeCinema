@@ -88,26 +88,6 @@ namespace HomeCinema
         };
 
         //######################################################################################################## Functions
-        // Check Log File if exceed limit and delete it
-        public static void CheckLogFile(string logFile, string calledFrom, string log)
-        {
-            if (File.Exists(logFile))
-            {
-                try
-                {
-                    FileInfo f = new FileInfo(logFile);
-                    if (f.Length > Settings.MaxLogSize)
-                    {
-                        File.Delete(logFile); // Delete LogFile permanently
-                        Logs.Log(calledFrom, log);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Logs.LogErr(calledFrom, ex);
-                }
-            }
-        }
         // Load Media Location file
         public static void LoadMediaLocations()
         {

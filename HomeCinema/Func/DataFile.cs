@@ -72,7 +72,6 @@ namespace HomeCinema
         {
             // resources
             CopyFromRes(FILE_DEFIMG); // covers
-            // data
             CopyFromRes(FILE_COUNTRY);
             CopyFromRes(FILE_GENRE);
             CopyFromRes(FILE_NOTRAILER);

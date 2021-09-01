@@ -48,29 +48,21 @@ namespace HomeCinema
         {
             // Start app
             InitializeComponent();
-
             // Change Caption and Title
             Text = $"{GlobalVars.HOMECINEMA_NAME} - Media Organizer (v{GlobalVars.HOMECINEMA_VERSION} r{GlobalVars.HOMECINEMA_BUILD.ToString()})";
-
-            // Load App Settings
-            Settings.LoadSettings();
-
             // Adjust controls
             txtSearch.Text = SEARCHBOX_PLACEHOLDER; // Set placeholder text to Search
-
             // Set tooltips for controls
             ToolTip ttShowNew = new ToolTip();
             ttShowNew.SetToolTip(this.cbHideAnim, "Filter out Animations from Search Results");
             ttShowNew.SetToolTip(this.cbSort, "Change Sorting By");
             ttShowNew.SetToolTip(this.btnChangeView, "Change Item view");
-
             // Setup Sort and SortingOrder
             cbSort.Items.AddRange(new string[] { "Sort Default", "Sort [A-Z]", "Sort by Year" });
             cbSort.SelectedIndex = 1;
             cbSortOrder.Items.Add("Ascending");
             cbSortOrder.Items.Add("Descending");
             cbSortOrder.SelectedIndex = 0;
-
             // Setup listview lvSearchResult
             lvSearchResult.ShowItemToolTips = true;
             lvSearchResult.Columns.Add("ColName");
@@ -113,7 +105,6 @@ namespace HomeCinema
             lvSearchResult.Top = expSearch.Bottom + 2;
             tlstripMenu.RenderMode = ToolStripRenderMode.Professional;
             tlstripMenu.Renderer = this.render;
-
             Logs.Log("frmMain", "All UIs initialized!");
         }
         #endregion
@@ -1199,11 +1190,6 @@ namespace HomeCinema
             {
                 GlobalVars.CleanAppDirectory();
             }
-            // Delete previous log file, if exceeds file size limit
-            GlobalVars.CheckLogFile(DataFile.FILE_LOG_APP, "frmMain-(Delete AppLog)", Text + "\n  : Start of LogFile");
-            GlobalVars.CheckLogFile(DataFile.FILE_LOG_DB, "frmMain-(Delete App_DB.log)", Text + "\n  : Database Log");
-            GlobalVars.CheckLogFile(DataFile.FILE_LOG_ERROR, "frmMain-(Delete App_ErrorLog.log)", Text + "\n  : Error Logs");
-
             // Put default Image on ImageList
             try
             {
@@ -1221,10 +1207,8 @@ namespace HomeCinema
                 IsLoadedSuccess = false;
                 return;
             }
-
             // Perform click on Change View
             btnChangeView.PerformClick();
-
             // Initialize connection to database
             var loadForm = new frmLoading("Loading database", "Please wait while loading..");
             loadForm.BackgroundWorker.DoWork += (sender1, e1) =>

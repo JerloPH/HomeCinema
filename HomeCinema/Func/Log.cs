@@ -23,6 +23,7 @@ namespace HomeCinema
                 toLog = toLog.Replace(GlobalVars.TMDB_KEY, "TMDB_KEY");
             }
             if (!File.Exists(filePath)) { GlobalVars.WriteToFile(filePath, ""); }
+            CheckLogFile(filePath);
             try
             {
                 using (StreamWriter w = File.AppendText(filePath))
@@ -97,6 +98,25 @@ namespace HomeCinema
         {
             if (!GlobalVars.DEBUGGING) { return; }
             Log(file, "", log);
+        }
+        // Check Log File if exceed limit and delete it
+        public static void CheckLogFile(string logFile)
+        {
+            if (File.Exists(logFile) && Settings.MaxLogSize > 0)
+            {
+                try
+                {
+                    FileInfo f = new FileInfo(logFile);
+                    if (f.Length > Settings.MaxLogSize)
+                    {
+                        File.Delete(logFile); // Delete LogFile permanently
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogErr("Log-CheckLogFile", ex);
+                }
+            }
         }
     }
 }
