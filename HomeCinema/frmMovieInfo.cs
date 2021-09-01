@@ -832,5 +832,11 @@ namespace HomeCinema
         {
             AddToListBox(lboxCasts, lboxCasts.Items.Cast<String>().ToList(), "Add Cast/Actor/Actress name");
         }
+
+        private void btnGotoFile_Click(object sender, EventArgs e)
+        {
+            string file = GlobalVars.GetFilePath(MOVIE_ID.ToString(), "btnGotoFile_Click");
+            GlobalVars.FileOpeninExplorer(file, "btnGotoFile_Click");
+        }
     }
 }

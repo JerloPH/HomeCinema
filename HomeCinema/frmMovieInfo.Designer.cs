@@ -92,6 +92,8 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label21 = new System.Windows.Forms.Label();
+            this.cbRootFolder = new System.Windows.Forms.ComboBox();
             this.label18 = new System.Windows.Forms.Label();
             this.txtPathTrailer = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
@@ -103,8 +105,7 @@
             this.btnFetchData = new System.Windows.Forms.Button();
             this.cbSource = new System.Windows.Forms.ComboBox();
             this.label20 = new System.Windows.Forms.Label();
-            this.cbRootFolder = new System.Windows.Forms.ComboBox();
-            this.label21 = new System.Windows.Forms.Label();
+            this.btnGotoFile = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
@@ -869,6 +870,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.btnGotoFile);
             this.tabPage3.Controls.Add(this.label21);
             this.tabPage3.Controls.Add(this.cbRootFolder);
             this.tabPage3.Controls.Add(this.label18);
@@ -886,6 +888,24 @@
             this.tabPage3.TabIndex = 1;
             this.tabPage3.Text = "File Paths";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // label21
+            // 
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Location = new System.Drawing.Point(5, 167);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(121, 25);
+            this.label21.TabIndex = 38;
+            this.label21.Text = "Root Folder";
+            // 
+            // cbRootFolder
+            // 
+            this.cbRootFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbRootFolder.FormattingEnabled = true;
+            this.cbRootFolder.Location = new System.Drawing.Point(94, 195);
+            this.cbRootFolder.Name = "cbRootFolder";
+            this.cbRootFolder.Size = new System.Drawing.Size(486, 30);
+            this.cbRootFolder.TabIndex = 37;
             // 
             // label18
             // 
@@ -931,7 +951,7 @@
             this.btnChangeFile.Name = "btnChangeFile";
             this.btnChangeFile.Size = new System.Drawing.Size(164, 38);
             this.btnChangeFile.TabIndex = 29;
-            this.btnChangeFile.Text = "BROWSE";
+            this.btnChangeFile.Text = "CHANGE";
             this.btnChangeFile.UseVisualStyleBackColor = true;
             this.btnChangeFile.Click += new System.EventHandler(this.btnChangeFile_Click);
             // 
@@ -1002,23 +1022,18 @@
             this.label20.TabIndex = 39;
             this.label20.Text = "Source:";
             // 
-            // cbRootFolder
+            // btnGotoFile
             // 
-            this.cbRootFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbRootFolder.FormattingEnabled = true;
-            this.cbRootFolder.Location = new System.Drawing.Point(94, 195);
-            this.cbRootFolder.Name = "cbRootFolder";
-            this.cbRootFolder.Size = new System.Drawing.Size(486, 30);
-            this.cbRootFolder.TabIndex = 37;
-            // 
-            // label21
-            // 
-            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.Location = new System.Drawing.Point(5, 167);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(121, 25);
-            this.label21.TabIndex = 38;
-            this.label21.Text = "Root Folder";
+            this.btnGotoFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGotoFile.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.btnGotoFile.Location = new System.Drawing.Point(585, 66);
+            this.btnGotoFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnGotoFile.Name = "btnGotoFile";
+            this.btnGotoFile.Size = new System.Drawing.Size(164, 37);
+            this.btnGotoFile.TabIndex = 39;
+            this.btnGotoFile.Text = "VIEW FILE";
+            this.btnGotoFile.UseVisualStyleBackColor = true;
+            this.btnGotoFile.Click += new System.EventHandler(this.btnGotoFile_Click);
             // 
             // frmMovieInfo
             // 
@@ -1136,5 +1151,6 @@
         private System.Windows.Forms.Button btnProducerAdd;
         private System.Windows.Forms.ComboBox cbRootFolder;
         private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Button btnGotoFile;
     }
 }
