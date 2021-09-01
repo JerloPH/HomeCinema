@@ -18,8 +18,8 @@
 **NOTE: Expect some bugs from Pre-release versions, and documents not matching the App behaviour since it changes frequently**
 
 ### Download Counts
-[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/total.svg)]() &nbsp;
-[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/latest/HomeCinema-Windows.zip)]()
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/total.svg)](https://github.com/JerloPH/HomeCinema/releases) &nbsp;
+[![](https://img.shields.io/github/downloads/JerloPH/HomeCinema/latest/HomeCinema-Windows.zip)](https://github.com/JerloPH/HomeCinema/releases/latest)
 
 ## Requirements
 - 4GB or more RAM. <br>
