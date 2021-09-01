@@ -46,6 +46,7 @@ namespace HomeCinema
                 if (DataFile.Initialize())
                 {
                     DataFile.CheckAllFiles();
+                    Settings.LoadSettings(); // Load App Settings
                     FormMain = new frmMain();
                     Application.Run(FormMain);
                 }
