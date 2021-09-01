@@ -239,36 +239,6 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</value>
   </data>
-  <data name="textBox5.Text" xml:space="preserve">
-    <value>See: https://github.com/contre/Windows-API-Code-Pack-1.1/blob/master/LICENSE
-
-License: Custom License
-MICROSOFT SOFTWARE LICENSE TERMS
-MICROSOFT WINDOWS API CODE PACK FOR MICROSOFT .NET FRAMEWORK
-___________________________________________________
-These license terms are an agreement between Microsoft Corporation (or based on where you live, one of its affiliates) and you.
-Please read them. They apply to the software named above, which includes the media on which you received it, if any.
-The terms also apply to any Microsoft
-• updates,
-• supplements,
-• Internet-based services, and 
-• support services
-for this software, unless other terms accompany those items. If so, those terms apply.
-_______________________________________________________________________________________</value>
-  </data>
-  <data name="txtCredit.Text" xml:space="preserve">
-    <value>Various API and resources used:
-
-Anilist API, https://anilist.co/
-
-TheMovieDatabase API, https://www.themoviedb.org/
-
-Loading GIF from https://icons8.com/preloaders/
-
-Warning and Check icon from https://freeicons.io/profile/730
-
-Various ToolStrip Icons made by 'Freepik' from www.flaticon.com</value>
-  </data>
   <data name="textBox7.Text" xml:space="preserve">
     <value>See: https://github.com/xoofx/markdig/blob/master/license.txt
 
@@ -295,6 +265,37 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</value>
+  </data>
+  <data name="textBox5.Text" xml:space="preserve">
+    <value>See: https://github.com/contre/Windows-API-Code-Pack-1.1/blob/master/LICENSE
+
+License: Custom License
+MICROSOFT SOFTWARE LICENSE TERMS
+MICROSOFT WINDOWS API CODE PACK FOR MICROSOFT .NET FRAMEWORK
+___________________________________________________
+These license terms are an agreement between Microsoft Corporation (or based on where you live, one of its affiliates) and you.
+Please read them. They apply to the software named above, which includes the media on which you received it, if any.
+The terms also apply to any Microsoft
+• updates,
+• supplements,
+• Internet-based services, and 
+• support services
+for this software, unless other terms accompany those items. If so, those terms apply.
+_______________________________________________________________________________________</value>
+  </data>
+  <data name="txtCredit.Text" xml:space="preserve">
+    <value>Various API and resources used:
+
+Anilist API, https://anilist.co/
+
+TheMovieDatabase API, https://www.themoviedb.org/
+"This product uses the TMDB API but is not endorsed or certified by TMDB."
+
+Loading GIF from https://icons8.com/preloaders/
+
+Warning and Check icon from https://freeicons.io/profile/730
+
+Various ToolStrip Icons made by 'Freepik' from www.flaticon.com</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

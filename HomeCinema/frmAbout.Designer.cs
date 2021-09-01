@@ -33,7 +33,7 @@ namespace HomeCinema
             this.txtTitle = new System.Windows.Forms.TextBox();
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tpHome = new System.Windows.Forms.TabPage();
-            this.btnCheckUpdate = new System.Windows.Forms.Button();
+            this.webHC = new System.Windows.Forms.WebBrowser();
             this.tpLicense = new System.Windows.Forms.TabPage();
             this.tabLicense = new System.Windows.Forms.TabControl();
             this.tpLHC = new System.Windows.Forms.TabPage();
@@ -48,13 +48,14 @@ namespace HomeCinema
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.tpLECpanel = new System.Windows.Forms.TabPage();
             this.textBox4 = new System.Windows.Forms.TextBox();
+            this.tpMarkdig = new System.Windows.Forms.TabPage();
+            this.textBox7 = new System.Windows.Forms.TextBox();
             this.tpWinApi = new System.Windows.Forms.TabPage();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.tpCredits = new System.Windows.Forms.TabPage();
             this.txtCredit = new System.Windows.Forms.TextBox();
-            this.webHC = new System.Windows.Forms.WebBrowser();
-            this.tpMarkdig = new System.Windows.Forms.TabPage();
-            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.btnCheckUpdate = new System.Windows.Forms.Button();
+            this.picTmdb = new System.Windows.Forms.PictureBox();
             this.tabMain.SuspendLayout();
             this.tpHome.SuspendLayout();
             this.tpLicense.SuspendLayout();
@@ -65,9 +66,10 @@ namespace HomeCinema
             this.tpLRest.SuspendLayout();
             this.tpLSqlite.SuspendLayout();
             this.tpLECpanel.SuspendLayout();
+            this.tpMarkdig.SuspendLayout();
             this.tpWinApi.SuspendLayout();
             this.tpCredits.SuspendLayout();
-            this.tpMarkdig.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picTmdb)).BeginInit();
             this.SuspendLayout();
             // 
             // txtTitle
@@ -110,18 +112,15 @@ namespace HomeCinema
             this.tpHome.Text = "HomeCinema";
             this.tpHome.UseVisualStyleBackColor = true;
             // 
-            // btnCheckUpdate
+            // webHC
             // 
-            this.btnCheckUpdate.Font = new System.Drawing.Font("Calibri", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.btnCheckUpdate.ForeColor = System.Drawing.Color.Black;
-            this.btnCheckUpdate.Location = new System.Drawing.Point(602, 12);
-            this.btnCheckUpdate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnCheckUpdate.Name = "btnCheckUpdate";
-            this.btnCheckUpdate.Size = new System.Drawing.Size(213, 45);
-            this.btnCheckUpdate.TabIndex = 18;
-            this.btnCheckUpdate.Text = "Check for Update";
-            this.btnCheckUpdate.UseVisualStyleBackColor = true;
-            this.btnCheckUpdate.Click += new System.EventHandler(this.btnCheckUpdate_Click);
+            this.webHC.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webHC.Location = new System.Drawing.Point(3, 3);
+            this.webHC.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webHC.Name = "webHC";
+            this.webHC.Size = new System.Drawing.Size(789, 351);
+            this.webHC.TabIndex = 19;
+            this.webHC.WebBrowserShortcutsEnabled = false;
             // 
             // tpLicense
             // 
@@ -269,7 +268,7 @@ namespace HomeCinema
             this.tpLSqlite.Controls.Add(this.textBox3);
             this.tpLSqlite.Location = new System.Drawing.Point(4, 29);
             this.tpLSqlite.Name = "tpLSqlite";
-            this.tpLSqlite.Size = new System.Drawing.Size(781, 318);
+            this.tpLSqlite.Size = new System.Drawing.Size(781, 322);
             this.tpLSqlite.TabIndex = 3;
             this.tpLSqlite.Text = "SQLite";
             this.tpLSqlite.UseVisualStyleBackColor = true;
@@ -287,7 +286,7 @@ namespace HomeCinema
             this.textBox3.ReadOnly = true;
             this.textBox3.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox3.ShortcutsEnabled = false;
-            this.textBox3.Size = new System.Drawing.Size(781, 318);
+            this.textBox3.Size = new System.Drawing.Size(781, 322);
             this.textBox3.TabIndex = 5;
             this.textBox3.TabStop = false;
             this.textBox3.Text = resources.GetString("textBox3.Text");
@@ -297,7 +296,7 @@ namespace HomeCinema
             this.tpLECpanel.Controls.Add(this.textBox4);
             this.tpLECpanel.Location = new System.Drawing.Point(4, 29);
             this.tpLECpanel.Name = "tpLECpanel";
-            this.tpLECpanel.Size = new System.Drawing.Size(781, 318);
+            this.tpLECpanel.Size = new System.Drawing.Size(781, 322);
             this.tpLECpanel.TabIndex = 4;
             this.tpLECpanel.Text = "ExpandCollapsePanel";
             this.tpLECpanel.UseVisualStyleBackColor = true;
@@ -315,83 +314,17 @@ namespace HomeCinema
             this.textBox4.ReadOnly = true;
             this.textBox4.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox4.ShortcutsEnabled = false;
-            this.textBox4.Size = new System.Drawing.Size(781, 318);
+            this.textBox4.Size = new System.Drawing.Size(781, 322);
             this.textBox4.TabIndex = 5;
             this.textBox4.TabStop = false;
             this.textBox4.Text = resources.GetString("textBox4.Text");
-            // 
-            // tpWinApi
-            // 
-            this.tpWinApi.Controls.Add(this.textBox5);
-            this.tpWinApi.Location = new System.Drawing.Point(4, 29);
-            this.tpWinApi.Name = "tpWinApi";
-            this.tpWinApi.Size = new System.Drawing.Size(781, 318);
-            this.tpWinApi.TabIndex = 5;
-            this.tpWinApi.Text = "Windows API";
-            this.tpWinApi.UseVisualStyleBackColor = true;
-            // 
-            // textBox5
-            // 
-            this.textBox5.BackColor = System.Drawing.Color.Black;
-            this.textBox5.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.textBox5.Location = new System.Drawing.Point(0, 0);
-            this.textBox5.Multiline = true;
-            this.textBox5.Name = "textBox5";
-            this.textBox5.ReadOnly = true;
-            this.textBox5.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox5.ShortcutsEnabled = false;
-            this.textBox5.Size = new System.Drawing.Size(781, 318);
-            this.textBox5.TabIndex = 5;
-            this.textBox5.TabStop = false;
-            this.textBox5.Text = resources.GetString("textBox5.Text");
-            // 
-            // tpCredits
-            // 
-            this.tpCredits.Controls.Add(this.txtCredit);
-            this.tpCredits.Location = new System.Drawing.Point(4, 29);
-            this.tpCredits.Name = "tpCredits";
-            this.tpCredits.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCredits.Size = new System.Drawing.Size(761, 357);
-            this.tpCredits.TabIndex = 2;
-            this.tpCredits.Text = "Credits";
-            this.tpCredits.UseVisualStyleBackColor = true;
-            // 
-            // txtCredit
-            // 
-            this.txtCredit.BackColor = System.Drawing.Color.Black;
-            this.txtCredit.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtCredit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtCredit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCredit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.txtCredit.Location = new System.Drawing.Point(3, 3);
-            this.txtCredit.Multiline = true;
-            this.txtCredit.Name = "txtCredit";
-            this.txtCredit.ReadOnly = true;
-            this.txtCredit.ShortcutsEnabled = false;
-            this.txtCredit.Size = new System.Drawing.Size(755, 351);
-            this.txtCredit.TabIndex = 5;
-            this.txtCredit.TabStop = false;
-            this.txtCredit.Text = resources.GetString("txtCredit.Text");
-            // 
-            // webHC
-            // 
-            this.webHC.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webHC.Location = new System.Drawing.Point(3, 3);
-            this.webHC.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webHC.Name = "webHC";
-            this.webHC.Size = new System.Drawing.Size(789, 351);
-            this.webHC.TabIndex = 19;
-            this.webHC.WebBrowserShortcutsEnabled = false;
             // 
             // tpMarkdig
             // 
             this.tpMarkdig.Controls.Add(this.textBox7);
             this.tpMarkdig.Location = new System.Drawing.Point(4, 29);
             this.tpMarkdig.Name = "tpMarkdig";
-            this.tpMarkdig.Size = new System.Drawing.Size(781, 318);
+            this.tpMarkdig.Size = new System.Drawing.Size(781, 322);
             this.tpMarkdig.TabIndex = 7;
             this.tpMarkdig.Text = "Markdig";
             this.tpMarkdig.UseVisualStyleBackColor = true;
@@ -409,10 +342,92 @@ namespace HomeCinema
             this.textBox7.ReadOnly = true;
             this.textBox7.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox7.ShortcutsEnabled = false;
-            this.textBox7.Size = new System.Drawing.Size(781, 318);
+            this.textBox7.Size = new System.Drawing.Size(781, 322);
             this.textBox7.TabIndex = 6;
             this.textBox7.TabStop = false;
             this.textBox7.Text = resources.GetString("textBox7.Text");
+            // 
+            // tpWinApi
+            // 
+            this.tpWinApi.Controls.Add(this.textBox5);
+            this.tpWinApi.Location = new System.Drawing.Point(4, 29);
+            this.tpWinApi.Name = "tpWinApi";
+            this.tpWinApi.Size = new System.Drawing.Size(781, 322);
+            this.tpWinApi.TabIndex = 5;
+            this.tpWinApi.Text = "Windows API";
+            this.tpWinApi.UseVisualStyleBackColor = true;
+            // 
+            // textBox5
+            // 
+            this.textBox5.BackColor = System.Drawing.Color.Black;
+            this.textBox5.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.textBox5.Location = new System.Drawing.Point(0, 0);
+            this.textBox5.Multiline = true;
+            this.textBox5.Name = "textBox5";
+            this.textBox5.ReadOnly = true;
+            this.textBox5.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox5.ShortcutsEnabled = false;
+            this.textBox5.Size = new System.Drawing.Size(781, 322);
+            this.textBox5.TabIndex = 5;
+            this.textBox5.TabStop = false;
+            this.textBox5.Text = resources.GetString("textBox5.Text");
+            // 
+            // tpCredits
+            // 
+            this.tpCredits.Controls.Add(this.picTmdb);
+            this.tpCredits.Controls.Add(this.txtCredit);
+            this.tpCredits.Location = new System.Drawing.Point(4, 29);
+            this.tpCredits.Name = "tpCredits";
+            this.tpCredits.Padding = new System.Windows.Forms.Padding(3);
+            this.tpCredits.Size = new System.Drawing.Size(795, 357);
+            this.tpCredits.TabIndex = 2;
+            this.tpCredits.Text = "Credits";
+            this.tpCredits.UseVisualStyleBackColor = true;
+            // 
+            // txtCredit
+            // 
+            this.txtCredit.BackColor = System.Drawing.Color.Black;
+            this.txtCredit.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtCredit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtCredit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCredit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.txtCredit.Location = new System.Drawing.Point(3, 3);
+            this.txtCredit.Multiline = true;
+            this.txtCredit.Name = "txtCredit";
+            this.txtCredit.ReadOnly = true;
+            this.txtCredit.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtCredit.ShortcutsEnabled = false;
+            this.txtCredit.Size = new System.Drawing.Size(789, 351);
+            this.txtCredit.TabIndex = 5;
+            this.txtCredit.TabStop = false;
+            this.txtCredit.Text = resources.GetString("txtCredit.Text");
+            // 
+            // btnCheckUpdate
+            // 
+            this.btnCheckUpdate.Font = new System.Drawing.Font("Calibri", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.btnCheckUpdate.ForeColor = System.Drawing.Color.Black;
+            this.btnCheckUpdate.Location = new System.Drawing.Point(602, 12);
+            this.btnCheckUpdate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCheckUpdate.Name = "btnCheckUpdate";
+            this.btnCheckUpdate.Size = new System.Drawing.Size(213, 45);
+            this.btnCheckUpdate.TabIndex = 18;
+            this.btnCheckUpdate.Text = "Check for Update";
+            this.btnCheckUpdate.UseVisualStyleBackColor = true;
+            this.btnCheckUpdate.Click += new System.EventHandler(this.btnCheckUpdate_Click);
+            // 
+            // picTmdb
+            // 
+            this.picTmdb.BackColor = System.Drawing.Color.Transparent;
+            this.picTmdb.Image = global::HomeCinema.Properties.Resources.TMDB_Logo;
+            this.picTmdb.Location = new System.Drawing.Point(647, 15);
+            this.picTmdb.Name = "picTmdb";
+            this.picTmdb.Size = new System.Drawing.Size(114, 102);
+            this.picTmdb.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picTmdb.TabIndex = 6;
+            this.picTmdb.TabStop = false;
             // 
             // frmAbout
             // 
@@ -427,6 +442,7 @@ namespace HomeCinema
             this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
+            this.MinimumSize = new System.Drawing.Size(845, 542);
             this.Name = "frmAbout";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -450,12 +466,13 @@ namespace HomeCinema
             this.tpLSqlite.PerformLayout();
             this.tpLECpanel.ResumeLayout(false);
             this.tpLECpanel.PerformLayout();
+            this.tpMarkdig.ResumeLayout(false);
+            this.tpMarkdig.PerformLayout();
             this.tpWinApi.ResumeLayout(false);
             this.tpWinApi.PerformLayout();
             this.tpCredits.ResumeLayout(false);
             this.tpCredits.PerformLayout();
-            this.tpMarkdig.ResumeLayout(false);
-            this.tpMarkdig.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picTmdb)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -487,5 +504,6 @@ namespace HomeCinema
         private System.Windows.Forms.WebBrowser webHC;
         private System.Windows.Forms.TabPage tpMarkdig;
         private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.PictureBox picTmdb;
     }
 }

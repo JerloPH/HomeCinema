@@ -60,6 +60,7 @@ namespace HomeCinema
             tabMain.Width = rect.Width - adj2;
             tabMain.Height = rect.Height - adj - tabMain.Top;
             btnCheckUpdate.Left = tabMain.Right - (adj3 + btnCheckUpdate.Width);
+            picTmdb.Left = tabMain.Right - (adj3 + picTmdb.Width);
         }
         public void webHC_Navigating(object sender, WebBrowserNavigatingEventArgs e)
         {

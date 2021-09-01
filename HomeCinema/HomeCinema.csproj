@@ -256,9 +256,6 @@
     <None Include="Resources\media_ext.hc_data">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\settings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -267,6 +264,7 @@
     <Content Include="Resources\0.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\TMDB Logo.png" />
     <None Include="Resources\settings %281%29.png" />
     <None Include="Resources\IconCheckmark.png" />
     <None Include="Resources\IconWarning.png" />
@@ -274,9 +272,6 @@
     <None Include="Resources\clean.png" />
     <None Include="Resources\IconQuestion.png" />
     <None Include="Resources\IconError.png" />
-    <Content Include="Resources\Loading.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\HomeCinema.ico">
