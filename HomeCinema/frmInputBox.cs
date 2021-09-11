@@ -83,5 +83,16 @@ namespace HomeCinema
                 btnOk.PerformClick();
             }
         }
+
+        private void frmInputBox_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Set focus
+            try { this.Parent.Focus(); }
+            catch
+            {
+                try { Program.FormMain.Focus(); }
+                catch { }
+            }
+        }
     }
 }

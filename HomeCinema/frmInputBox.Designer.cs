@@ -110,6 +110,7 @@ namespace HomeCinema
             this.Name = "frmInputBox";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmInputBox";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmInputBox_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
