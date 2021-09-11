@@ -1,5 +1,40 @@
 # HomeCinema - Project History
 
+## HomeCinema v0.8.3
+### *release 43 - build 11 September 2021 PHT*
+### What's New?
+- Setting to skip entries not on *Media Locations* in setting.
+- **[View File]** button: Browse to file on Movie Edit form.
+
+### Fixes
+- Timeout value not saving properly on settings.
+- Some alerts doesn't fit the message.
+
+### UI Changes
+- Changed controls from TextBox to ListBox for:
+  - **'Casts'**, **'Producer'**, **'Director'**, and **'Studio'**.
+- Renamed **'Actor'** to **'Casts'**.
+- Removed **'Animated Movie'** and **'Cartoon series'** from **'Category'**.
+- Major UI Change on **'About'** form.
+- Moved **[Check for Updates]** button to **'About'** form.
+- Add **'Root folder'** on Movie Edit form.
+- Add hint to Media Extension settings form.
+- Supress some messages when **'Confirm Actions'** setting is toggled off.
+- Use custom Message Box for various Input prompts.
+
+### Other Changes
+- Closes all other forms upon exit, freeing memory.
+- Focus on Main form after clicking **Cancel** on Movie Edit form.
+- Limit search results on TMDB if **'Search Limit'** is larger than 0.
+- Add current Date to log filenames.
+- Moved **'No TMDB Key'** prompt to before update checking.
+- Center alert on screen, if no parent form.
+- Don't replace settings on app close.
+- Improvement on Internet connectivity checker.
+- Properly delete ListView item, if Movie is deleted.
+- Various other changes. See [**'VERSION_HISTORY_DETAILED.md'**](https://github.com/JerloPH/HomeCinema/blob/master/docs/VERSION_HISTORY_DETAILED.md#released-on-v083).
+****
+
 ## HomeCinema v0.8.2
 ### *release 42 - build 21 August 2021 PHT*
 ### What's New?

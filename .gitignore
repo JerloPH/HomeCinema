@@ -341,3 +341,4 @@ healthchecksdb
 
 # Custom
 ignored/
+output.txt

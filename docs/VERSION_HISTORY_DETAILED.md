@@ -1,4 +1,62 @@
-# Version History Detailed
+# Detailed Version History
+
+# Released on v0.8.3
+### What's New?
+- Setting to skip entries not on *Media Locations* in setting.
+- **[View File]** button: Browse to file on Movie Edit form.
+
+### Fixes
+- Timeout value not saving properly on settings.
+- Some alerts doesn't fit the message.
+
+### UI Changes
+- Changed controls from TextBox to ListBox for:
+  - **'Casts'**, **'Producer'**, **'Director'**, and **'Studio'**.
+- Renamed **'Actor'** to **'Casts'**.
+- Removed **'Animated Movie'** and **'Cartoon series'** from **'Category'**.
+- Major UI Change on **'About'** form.
+- Moved **[Check for Updates]** button to **'About'** form.
+- Add **'Root folder'** on Movie Edit form.
+- Add hint to Media Extension settings form.
+- Supress some messages when **'Confirm Actions'** setting is toggled off.
+- Use custom Message Box for various Input prompts.
+
+### Other Changes
+- Closes all other forms upon exit, freeing memory.
+- Focus on Main form after clicking **Cancel** on Movie Edit form.
+- Limit search results on TMDB if **'Search Limit'** is larger than 0.
+- Add current Date to log filenames.
+- Moved **'No TMDB Key'** prompt to before update checking.
+- Center alert on screen, if no parent form.
+- Don't replace settings on app close.
+- Improvement on Internet connectivity checker.
+- Properly delete ListView item, if Movie is deleted.
+
+### Various code changes and refactors
+- NuGet: Updated **SQLite** packages.
+- Changed Mutex UID.
+- Moved loading of settings to **Program** class.
+- Parametized some query on **SQLHelper** class.
+- Set Static Icon resource to forms.
+- Properly Dispose media Entity after single-time use.
+- Refactor file-checking upon first load.
+- Refactor to **'Hide Animation'** flag.
+- Refactor code on **category**.
+  - Refactor search query for **category**.
+- Refactor on **'SearchTmdb'** method of **TmdbAPI** class.
+- Refactor TMDB Movie Info search query.
+- Minor change on generating new UID.
+- Moved all Data Files paths to its own class, **DataFile**.
+- Moved basic alert prompts and input prompts to its own class, **Msg**.
+- Moved some functions to **GlobalVars** class.
+- Add script to auto generate commit messages from last tag release to current.
+- Removed **'SEARCH_QUERY'** property of **frmMain**.
+- Removed string replace for single quote on **'DbUpdate'** method of **SQLHelper** class.
+- Removed unused resources.
+- Added new debugger flag with initialization.
+- WIP: Code setup for portable mode
+- Various code cleanups.
+****
 
 # Released on v0.8.2
 ### What's New?
