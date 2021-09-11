@@ -90,6 +90,7 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -367,6 +368,7 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Black;
+            this.tabPage2.Controls.Add(this.label1);
             this.tabPage2.Controls.Add(this.dataGridMediaLoc);
             this.tabPage2.Controls.Add(this.btnMediaLocClear);
             this.tabPage2.Controls.Add(this.btnMediaLocRemove);
@@ -394,11 +396,11 @@
             this.MediaType,
             this.Source});
             this.dataGridMediaLoc.GridColor = System.Drawing.Color.Black;
-            this.dataGridMediaLoc.Location = new System.Drawing.Point(132, 138);
+            this.dataGridMediaLoc.Location = new System.Drawing.Point(132, 187);
             this.dataGridMediaLoc.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridMediaLoc.Name = "dataGridMediaLoc";
             this.dataGridMediaLoc.RowHeadersWidth = 51;
-            this.dataGridMediaLoc.Size = new System.Drawing.Size(568, 319);
+            this.dataGridMediaLoc.Size = new System.Drawing.Size(568, 270);
             this.dataGridMediaLoc.TabIndex = 20;
             // 
             // FolderPath
@@ -435,7 +437,7 @@
             // 
             this.btnMediaLocClear.Font = new System.Drawing.Font("Calibri", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMediaLocClear.ForeColor = System.Drawing.Color.Black;
-            this.btnMediaLocClear.Location = new System.Drawing.Point(11, 222);
+            this.btnMediaLocClear.Location = new System.Drawing.Point(10, 271);
             this.btnMediaLocClear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnMediaLocClear.Name = "btnMediaLocClear";
             this.btnMediaLocClear.Size = new System.Drawing.Size(117, 37);
@@ -448,7 +450,7 @@
             // 
             this.btnMediaLocRemove.Font = new System.Drawing.Font("Calibri", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMediaLocRemove.ForeColor = System.Drawing.Color.Black;
-            this.btnMediaLocRemove.Location = new System.Drawing.Point(11, 180);
+            this.btnMediaLocRemove.Location = new System.Drawing.Point(10, 229);
             this.btnMediaLocRemove.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnMediaLocRemove.Name = "btnMediaLocRemove";
             this.btnMediaLocRemove.Size = new System.Drawing.Size(117, 37);
@@ -461,7 +463,7 @@
             // 
             this.btnMediaLocAdd.Font = new System.Drawing.Font("Calibri", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMediaLocAdd.ForeColor = System.Drawing.Color.Black;
-            this.btnMediaLocAdd.Location = new System.Drawing.Point(11, 138);
+            this.btnMediaLocAdd.Location = new System.Drawing.Point(10, 187);
             this.btnMediaLocAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnMediaLocAdd.Name = "btnMediaLocAdd";
             this.btnMediaLocAdd.Size = new System.Drawing.Size(116, 37);
@@ -473,7 +475,7 @@
             // label8
             // 
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(5, 111);
+            this.label8.Location = new System.Drawing.Point(6, 153);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(181, 31);
             this.label8.TabIndex = 15;
@@ -491,7 +493,7 @@
             // txtMediaExt
             // 
             this.txtMediaExt.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMediaExt.Location = new System.Drawing.Point(8, 39);
+            this.txtMediaExt.Location = new System.Drawing.Point(8, 78);
             this.txtMediaExt.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtMediaExt.Multiline = true;
             this.txtMediaExt.Name = "txtMediaExt";
@@ -811,6 +813,15 @@
             this.label9.TabIndex = 16;
             this.label9.Text = "* Changes Apply after Restart";
             // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(6, 36);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(694, 31);
+            this.label1.TabIndex = 21;
+            this.label1.Text = "Separated by comma \',\' automatically trimming whitespaces";
+            // 
             // frmSettings
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
@@ -906,5 +917,6 @@
         private System.Windows.Forms.TextBox txtTimeout;
         private System.Windows.Forms.ComboBox cbSkipNonMediaLoc;
         private System.Windows.Forms.Label lblSkipNonMediaLoc;
+        private System.Windows.Forms.Label label1;
     }
 }
