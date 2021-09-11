@@ -159,6 +159,15 @@ namespace HomeCinema
                 e.Cancel = true;
 
             pictureBox1.Image?.Dispose();
+
+            // Set focus
+            try { this.Parent.Focus(); }
+            catch
+            {
+                try { Program.FormMain.Focus(); }
+                catch { }
+            }
+
             Dispose();
         }
 
