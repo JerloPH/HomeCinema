@@ -1033,7 +1033,7 @@ namespace HomeCinema
                                     }
 
                                     if (!AddEntry)
-                                        Logs.LogSkip($"File or Directory not existing! : {fileNamePath}");
+                                        Logs.LogSkip($"File or Directory missing! : {fileNamePath}");
                                 }
                                 // Load 'cover' Image from 'cover' folder
                                 if (AppStart && AddEntry)
