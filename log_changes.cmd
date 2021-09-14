@@ -3,4 +3,4 @@ CD /d "%~dp0"
 @echo off
 set /p lefttag="Type tag of last commit (left side): "
 
-git log %lefttag%..HEAD > output.txt
+git log --format=%%B %lefttag%..HEAD > output.txt
