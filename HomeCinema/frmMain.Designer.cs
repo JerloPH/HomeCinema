@@ -66,6 +66,7 @@ namespace HomeCinema
             this.tlbtnSettings = new System.Windows.Forms.ToolStripButton();
             this.tlbtnAbout = new System.Windows.Forms.ToolStripButton();
             this.tlbtnClean = new System.Windows.Forms.ToolStripButton();
+            this.lblStatus = new System.Windows.Forms.Label();
             this.expSearch.SuspendLayout();
             this.tlstripMenu.SuspendLayout();
             this.SuspendLayout();
@@ -433,6 +434,7 @@ namespace HomeCinema
             // 
             this.expSearch.BackColor = System.Drawing.Color.Black;
             this.expSearch.ButtonStyle = MakarovDev.ExpandCollapsePanel.ExpandCollapseButton.ExpandButtonStyle.Circle;
+            this.expSearch.Controls.Add(this.lblStatus);
             this.expSearch.Controls.Add(this.btnFixNoInfo);
             this.expSearch.Controls.Add(this.cbSortOrder);
             this.expSearch.Controls.Add(this.cbSort);
@@ -520,6 +522,17 @@ namespace HomeCinema
             this.tlbtnClean.ToolTipText = "Clean temporary files";
             this.tlbtnClean.Click += new System.EventHandler(this.tlbtnClean_Click);
             // 
+            // lblStatus
+            // 
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblStatus.ForeColor = System.Drawing.Color.White;
+            this.lblStatus.Location = new System.Drawing.Point(684, 173);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(79, 29);
+            this.lblStatus.TabIndex = 32;
+            this.lblStatus.Text = "Status";
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -586,6 +599,7 @@ namespace HomeCinema
         private ToolStripButton tlbtnSettings;
         private ToolStripButton tlbtnAbout;
         private ToolStripButton tlbtnClean;
+        private Label lblStatus;
     }
 }
 

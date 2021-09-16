@@ -29,6 +29,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace HomeCinema
 {
@@ -37,6 +38,7 @@ namespace HomeCinema
         // Strings and others
         static string SEARCHBOX_PLACEHOLDER = "Type your Search query here...";
         static bool IsLoadedSuccess = true;
+        bool IsSearchingEntries = false;
 
         // Objects
         ListViewColumnSorter lvSorter = new ListViewColumnSorter();
@@ -333,6 +335,22 @@ namespace HomeCinema
         #endregion
         // ####################################################################################### Thread-safe static functions
         #region Thread-safe static func
+        public static void UpdateText(Control ctrl, string text)
+        {
+            try
+            {
+                if (ctrl.InvokeRequired)
+                {
+                    ctrl.BeginInvoke(new Action(() =>
+                    {
+                        ctrl.Text = text;
+                    }));
+                }
+                else
+                    ctrl.Text = text;
+            }
+            catch (Exception ex) { Logs.LogErr("frmMain-UpdateText", ex); }
+        }
         private delegate void AddItemDelegate(ListView lv, ListViewItem item);
         public static void AddItem(ListView lv, ListViewItem item)
         {
@@ -346,7 +364,7 @@ namespace HomeCinema
                 //GlobalVars.Log("frmMain-AddItem()", "Added: " + item.Text);
             }
         }
-        public static void AfterPopulatingMovieLV(ListView lv, long count = 0)
+        public void AfterPopulatingMovieLV(long count = 0)
         {
             // Error log
             string errFrom = "frmMain-bgwMovie_DoneSearchMovie";
@@ -356,11 +374,14 @@ namespace HomeCinema
                 ListViewItem temp = new ListViewItem() { Text = "No Search Results!" };
                 temp.Tag = "0";
                 temp.ImageIndex = 0;
-                AddItem(lv, temp);
+                AddItem(lvSearchResult, temp);
                 Logs.Log(errFrom, $"ResultSet is null or empty!");
+                UpdateText(lblStatus, "No Results found!");
             }
-            lv.EndUpdate(); // Draw the ListView
-            lv.ResumeLayout();
+            else
+                UpdateText(lblStatus, $"Results: {count}");
+            
+            IsSearchingEntries = false;
         }
         #endregion
         // ####################################################################################### Functions
@@ -902,58 +923,47 @@ namespace HomeCinema
         }
         #endregion
         #region BG Worker: Populate MOVIE ListView
-        private void PopulateMovieBG(string query, bool AppStart)
+        private async Task<long> PopulateMovieResultTask(string qry, bool AppStart)
         {
-            // Stop ListView form Drawing
-            lvSearchResult.BeginUpdate(); // Pause drawing events on ListView
-            lvSearchResult.SuspendLayout();
-            lvSearchResult.Items.Clear(); // Clear previous list
-            // Populate movie listview with new entries, from another form thread
-            frmLoading form = new frmLoading(AppStart ? "Loading collection.." : "Searching..", "Loading", true);
-            string qry = query;
-            string errFrom = "frmMain-PopulateMovieBG()";
+            string errFrom = "frmMain-PopulateMovieResultTask()";
             string fileNamePath, fileRootFolder;
-            long progress = 0;
+            string searchingCaption = AppStart ? "Loading collection.." : "Searching..";
             long progressMax = 0;
+            long progress = 0, success = 0;
             bool AddEntry = true;
             Dictionary<string, Medias> filepaths = new Dictionary<string, Medias>();
-            // If no query
-            if (String.IsNullOrWhiteSpace(qry))
+            UpdateText(lblStatus, searchingCaption);
+            return await Task.Run(delegate
             {
-                qry = $"SELECT * FROM {HCTable.info}";
-            }
-            Logs.Debug("Start Adding Items to ListView");
-            Logs.Debug("Fetching.. filepaths");
-            // Execute query to fetch file paths
-            using (var dtFile = SQLHelper.DbQuery($"SELECT `{HCFile.Id}`,`{HCFile.File}`,`{HCFile.Root}` FROM {HCTable.filepath};", errFrom))
-            {
-                if (dtFile != null)
+                Logs.Debug("Start Adding Items to ListView");
+                Logs.Debug("Fetching.. filepaths");
+                // Execute query to fetch file paths
+                using (var dtFile = SQLHelper.DbQuery($"SELECT `{HCFile.Id}`,`{HCFile.File}`,`{HCFile.Root}` FROM {HCTable.filepath};", errFrom))
                 {
-                    foreach (DataRow item in dtFile.Rows)
+                    if (dtFile != null)
                     {
-                        var fileMedia = new Medias(item[HCFile.File].ToString(), "", "", item[HCFile.Root].ToString());
-                        filepaths.Add(item[HCFile.Id].ToString(), fileMedia);
+                        foreach (DataRow item in dtFile.Rows)
+                        {
+                            var fileMedia = new Medias(item[HCFile.File].ToString(), "", "", item[HCFile.Root].ToString());
+                            filepaths.Add(item[HCFile.Id].ToString(), fileMedia);
+                        }
+                        Logs.Debug("Fetched filepaths!");
                     }
-                    Logs.Debug("Fetched filepaths!");
                 }
-            }
-            Logs.Debug("Fetching.. info");
-            // Execute query to fetch movie info
-            using (DataTable dt = SQLHelper.DbQuery(qry, errFrom)) // Get DataTable from query
-            {
-                // Set Max Progress
-                if (dt != null)
+                Logs.Debug("Fetching.. info");
+                // Execute query to fetch movie info
+                using (DataTable dt = SQLHelper.DbQuery(qry, errFrom)) // Get DataTable from query
                 {
-                    progressMax = (long)dt.Rows.Count;
-                    Logs.Debug("Fetched info!\n");
-                }
-                // Iterate thru all DataRows
-                if (progressMax > 0)
-                {
-                    Logs.Debug($"Will go through items: {progressMax}");
-                    form.MaxProgress = progressMax;
-                    form.BackgroundWorker.DoWork += (sender1, e1) =>
+                    // Set Max Progress
+                    if (dt != null)
                     {
+                        progressMax = (long)dt.Rows.Count;
+                        Logs.Debug("Fetched info!\n");
+                    }
+                    // Iterate thru all DataRows
+                    if (progressMax > 0)
+                    {
+                        Logs.Debug($"Will go through items: {progressMax}");
                         Logs.Debug("Perform foreach Iterate on DataRows\n\n");
                         foreach (DataRow r in dt.Rows)
                         {
@@ -965,10 +975,10 @@ namespace HomeCinema
                                 MOVIEID = 0;
                                 Logs.Log(errFrom, $"Invalid MovieID: {r[HCInfo.Id].ToString()}");
                             }
-                            Logs.Debug($"Initializing item with ID: {MOVIEID}");
                             // Add to listview lvSearchResult
                             if (MOVIEID > 0)
                             {
+                                Logs.Debug($"Initializing item with ID: {MOVIEID}");
                                 // Skip entry if file does not exist
                                 filepaths.TryGetValue(MOVIEID.ToString(), out Medias fileMedia);
                                 fileNamePath = fileMedia.FilePath;
@@ -1002,7 +1012,7 @@ namespace HomeCinema
                                             }
                                         }
                                     }
-                                    catch (Exception ex) { Logs.LogErr(errFrom, ex); }
+                                    catch (Exception ex) { Logs.LogSkip($"Error occured (Selecting RootFolder)! : {fileNamePath}"); Logs.LogErr(errFrom, ex); }
                                 }
                                 if (!String.IsNullOrWhiteSpace(fileNamePath) && AddEntry)
                                 {
@@ -1010,30 +1020,29 @@ namespace HomeCinema
                                     {
                                         FileAttributes attr = File.GetAttributes(fileNamePath);
                                         if (attr.HasFlag(FileAttributes.Directory))
-                                        {
                                             AddEntry = Directory.Exists(fileNamePath); // Non existing directory, skip it
-                                        }
                                         else
-                                        {
                                             AddEntry = File.Exists(fileNamePath); // Non existing file, skip it
-                                        }
+
+                                        if (!AddEntry)
+                                            Logs.LogSkip($"File or Directory missing! : {fileNamePath}");
                                     }
                                     catch (DirectoryNotFoundException)
                                     {
                                         AddEntry = false;
+                                        Logs.LogSkip($"Directory missing! : {fileNamePath}");
                                     }
                                     catch (FileNotFoundException)
                                     {
                                         AddEntry = false;
+                                        Logs.LogSkip($"File missing! : {fileNamePath}");
                                     }
                                     catch (Exception ex)
                                     {
                                         Logs.LogErr($"{errFrom}\nFile: {fileNamePath}", ex);
+                                        Logs.LogSkip($"Error occured! : {fileNamePath}");
                                         AddEntry = false;
                                     }
-
-                                    if (!AddEntry)
-                                        Logs.LogSkip($"File or Directory missing! : {fileNamePath}");
                                 }
                                 // Load 'cover' Image from 'cover' folder
                                 if (AppStart && AddEntry)
@@ -1059,12 +1068,11 @@ namespace HomeCinema
                                         Logs.LogErr($"{errFrom}\n\tFile:\n\t{Imagefile}", exImg);
                                     }
                                 }
-
+                                // Get all values from DataTable result from query
                                 if (AddEntry)
                                 {
                                     try
                                     {
-                                        // Get all strings from the DataRow, passed by the BG worker
                                         Logs.Debug($"Fetching DataRow info with ID: {MOVIEID}");
                                         string resName = r[HCInfo.name].ToString(); // name
                                         string resNameEp = r[HCInfo.name_orig].ToString(); // name_ep
@@ -1081,27 +1089,47 @@ namespace HomeCinema
                                         // Edit Information on ListView Item
                                         Logs.Debug($"Setting Up ListView Item details: {MOVIEID}");
                                         LVItemSetDetails(temp, new string[] { MOVIEID.ToString(),
-                                            resName, resNameEp, resNameSer,
-                                            resSeason, resEp, resYear, resSum, resGenre });
+                                        resName, resNameEp, resNameSer,
+                                        resSeason, resEp, resYear, resSum, resGenre });
 
                                         // Add Item to ListView lvSearchResult
                                         Logs.Debug($"Adding item to ListView, with ID: {MOVIEID}");
                                         AddItem(lvSearchResult, temp);
-                                        progress += 1;
+                                        success += 1;
                                     }
                                     catch (Exception ex) { Logs.LogErr(errFrom, ex); }
                                 }
                             }
-                            form.UpdateProgress();
+                            progress += 1;
+                            UpdateText(lblStatus, $"{searchingCaption}{progress}/{progressMax}");
                             Logs.Debug($"Updated progress to {progress}\n\n");
                         }
-                        Logs.Debug($"DONE Loading ListView items BGworker from: {Name}");
-                    };
-                    form.ShowDialog();
+                        Logs.Debug($"DONE Loading ListView items BGworker from: {Name}, Succesful items over Total: {success}/{progress}");
+                    }
                 }
+                filepaths?.Clear(); // micro optimization
+                return success;
+            });
+        }
+        private async void PopulateMovieBG(string query, bool AppStart)
+        {
+            if (IsSearchingEntries)
+            {
+                Msg.ShowWarning("Ongoing search!\nWait for it to finish.");
+                return;
             }
-            filepaths?.Clear(); // micro optimization
-            AfterPopulatingMovieLV(lvSearchResult, progress);
+
+            IsSearchingEntries = true;
+            lvSearchResult.Items.Clear(); // Clear previous list
+            
+            string qry = query;
+            long progress = 0;
+            // If no query, set to default
+            if (String.IsNullOrWhiteSpace(qry))
+                qry = $"SELECT * FROM {HCTable.info}";
+
+            progress = await PopulateMovieResultTask(qry, AppStart);
+            AfterPopulatingMovieLV(progress);
             Logs.Debug("ListView loaded!");
             // Check if no TMDB Key
             if (!GlobalVars.HAS_TMDB_KEY && AppStart)
@@ -1110,9 +1138,7 @@ namespace HomeCinema
             }
             // Auto check update
             if ((Settings.IsOffline == false) && (Settings.IsAutoUpdate) && AppStart)
-            {
                 GlobalVars.CheckForUpdate(this, false);
-            }
         }
         #endregion
         // ####################################################################################### Form CUSTOM events
@@ -1209,7 +1235,7 @@ namespace HomeCinema
             }
             else
             {
-                AfterPopulatingMovieLV(lvSearchResult, 0);
+                AfterPopulatingMovieLV(0);
                 btnSearch.Enabled = false;
                 cbHideAnim.Enabled = false;
                 cbClearSearch.Enabled = false;
@@ -1235,6 +1261,7 @@ namespace HomeCinema
             cbSortOrder.Left = cbSort.Right + 4;
             btnChangeView.Left = cbSortOrder.Right + 4;
             btnFixNoInfo.Left = btnChangeView.Right + 4;
+            lblStatus.Left = btnFixNoInfo.Right + 4;
             // Top-most controls
             txtSearch.Width = (btnSearch.Left - txtSearch.Left) - 16;
             expSearch.Left = 1;
@@ -1252,7 +1279,6 @@ namespace HomeCinema
             txtCast.Width = buttonWidth;
             cbCountry.Width = buttonWidth;
             cbCategory.Width = buttonWidth;
-
             // Reposition 'Search' controls
             txtIMDB.Left = (int)(this.Width * 0.06); // top row
             txtDirector.Left = (int)(this.Width * 0.27);
