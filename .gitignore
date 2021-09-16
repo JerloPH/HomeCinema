@@ -341,4 +341,5 @@ healthchecksdb
 
 # Custom
 ignored/
+MigrationBackup/
 output.txt
