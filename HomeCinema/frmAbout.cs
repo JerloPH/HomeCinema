@@ -32,6 +32,9 @@ namespace HomeCinema
                 string version = GlobalVars.ReadStringFromFile(Path.Combine(DataFile.PATH_START, "VERSION_HISTORY.md"), "frmAbout_Load");
                 string style = $"body {{ background-color: {ColorTranslator.ToHtml(Settings.ColorBg)};" +
                     $"color: {ColorTranslator.ToHtml(Settings.ColorFont)} }}";
+                if (String.IsNullOrWhiteSpace(version))
+                    version = "**Version History file is missing!**";
+
                 var html = $"<html><head><style>{style}</style></head>{Markdig.Markdown.ToHtml($"{version}")}</body></html>";
                 webHC.DocumentText = html;
                 Logs.Debug(html);

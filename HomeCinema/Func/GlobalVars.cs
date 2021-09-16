@@ -57,6 +57,8 @@ namespace HomeCinema
         public static string LINK_IMDB = "https://www.imdb.com/title/";
         public static string LINK_ANILIST = "https://anilist.co/anime/";
         public static string LINK_YT = "https://www.youtube.com/watch?v=";
+        public static string LINK_GITHUB_RAW = "https://raw.githubusercontent.com/JerloPH/HomeCinema/main/";
+        public static string LINK_GITHUB = "https://github.com/JerloPH/HomeCinema/";
 
         // Database Vars
         public static string[] DB_INFO_CATEGORY = new string[] { "None", "Movie", "TV Series", "Anime Movie", "Anime Series" };
@@ -691,17 +693,23 @@ namespace HomeCinema
             Form caller = (parent == null) ? Program.FormMain : parent;
             int UpdateStatus = 0; // 0-default, 1=update, 2=latest ver, 3=error
             string fileName = DataFile.PATH_TEMP + "version";
-            string link = @"https://raw.githubusercontent.com/JerloPH/HomeCinema/master/data/version";
-            string linkRelease = @"https://github.com/JerloPH/HomeCinema/releases";
+            string fileVersionHistory = Path.Combine(DataFile.PATH_START, "VERSION_HISTORY.md");
+            string link = $"{LINK_GITHUB_RAW}data/version";
+            string linkVersionHistory = $"{LINK_GITHUB_RAW}VERSION_HISTORY.md";
+            string linkRelease = $"{LINK_GITHUB}releases";
             int tryCount = 3;
-
             try
             {
                 frmLoading form = new frmLoading("Checking for Update..", "Update check");
                 form.BackgroundWorker.DoWork += (sender1, e1) =>
                 {
+                    if (!File.Exists(fileVersionHistory))
+                    {
+                        Logs.Log(errFrom, "Downloading version history..");
+                        if (DownloadLoop(fileVersionHistory, linkVersionHistory, errFrom))
+                            Logs.Log(errFrom, "Version history downloaded!");
+                    }
                     Logs.Log(errFrom, "Will Check for Updates..");
-
                     if (File.Exists(fileName))
                     {
                         TryDelete(fileName, errFrom);
