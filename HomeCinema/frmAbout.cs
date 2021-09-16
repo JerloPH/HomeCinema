@@ -51,6 +51,7 @@ namespace HomeCinema
         {
             GlobalVars.formAbout = null;
             webHC?.Dispose();
+            GlobalVars.Refocus(this);
             Dispose();
         }
         private void frmAbout_Resize(object sender, EventArgs e)
