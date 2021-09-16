@@ -23,7 +23,6 @@ using System.Data.SQLite;
 using System.Data;
 using Microsoft.WindowsAPICodePack.Shell;
 using System.Drawing;
-using System.Data.Common;
 using System.Data.SqlClient;
 
 namespace HomeCinema.SQLFunc

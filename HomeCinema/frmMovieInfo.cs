@@ -22,9 +22,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
 using HomeCinema.SQLFunc;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using System.Linq;
 using System.Threading;
 

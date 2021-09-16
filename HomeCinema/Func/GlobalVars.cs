@@ -31,7 +31,6 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using Microsoft.VisualBasic.FileIO;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Microsoft.WindowsAPICodePack.Shell;
 using HomeCinema.SQLFunc;
 using System.Text;
