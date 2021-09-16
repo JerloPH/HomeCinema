@@ -58,6 +58,12 @@
   <PropertyGroup>
     <ApplicationIcon>Resources\HomeCinema.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>HomeCinemaSign.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CustomMarshalers" />
     <Reference Include="MakarovDev.ExpandCollapsePanel, Version=1.0.7197.27666, Culture=neutral, PublicKeyToken=6cb45db4006534c2, processorArchitecture=MSIL">
@@ -233,6 +239,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="HomeCinemaSign.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
