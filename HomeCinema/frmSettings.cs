@@ -261,8 +261,7 @@ namespace HomeCinema
             Program.FormMain.lvSearchResult.BackColor = Settings.ColorBg;
             tooltip?.Dispose();
             Dispose();
-
-            Program.FormMain.Focus();
+            GlobalVars.Refocus(this);
         }
         // Exit settings form
         private void btnCancel_Click(object sender, EventArgs e)
