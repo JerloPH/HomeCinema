@@ -149,14 +149,7 @@ namespace HomeCinema
             if (picIcon.Visible)
                 picIcon.Image?.Dispose();
 
-            // Set focus
-            try { this.Parent.Focus(); }
-            catch
-            {
-                try { Program.FormMain.Focus(); }
-                catch { }
-            }
-
+            GlobalVars.Refocus(this);
             Dispose(); // Finally, dispose
         }
 

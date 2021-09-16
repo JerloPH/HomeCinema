@@ -86,13 +86,7 @@ namespace HomeCinema
 
         private void frmInputBox_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Set focus
-            try { this.Parent.Focus(); }
-            catch
-            {
-                try { Program.FormMain.Focus(); }
-                catch { }
-            }
+            GlobalVars.Refocus(this);
         }
     }
 }

@@ -1022,6 +1022,15 @@ namespace HomeCinema
             sb.Append("</html>");
             return sb.ToString();
         }
+        public static void Refocus(Form app)
+        {
+            try { app.Parent.Focus(); }
+            catch
+            {
+                try { Program.FormMain.Focus(); }
+                catch { }
+            }
+        }
         // ######################################################################## END - Add code above
     }
 }
