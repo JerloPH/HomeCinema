@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using Markdig;
 
 namespace HomeCinema
 {
@@ -35,7 +36,7 @@ namespace HomeCinema
                 if (String.IsNullOrWhiteSpace(version))
                     version = "**Version History file is missing!**";
 
-                var html = $"<html><head><style>{style}</style></head>{Markdig.Markdown.ToHtml($"{version}")}</body></html>";
+                var html = $"<html><head><style>{style}</style></head>{Markdown.ToHtml($"{version}")}</body></html>";
                 webHC.DocumentText = html;
                 Logs.Debug(html);
             }
