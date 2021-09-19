@@ -31,29 +31,16 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSettings));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.cbSkipNonMediaLoc = new System.Windows.Forms.ComboBox();
-            this.lblSkipNonMediaLoc = new System.Windows.Forms.Label();
             this.lblTimeout = new System.Windows.Forms.Label();
             this.txtTimeout = new System.Windows.Forms.TextBox();
-            this.cbConfirmAction = new System.Windows.Forms.ComboBox();
-            this.lblConfirmAction = new System.Windows.Forms.Label();
-            this.cbConfirmSearch = new System.Windows.Forms.ComboBox();
-            this.lblConfirmSearch = new System.Windows.Forms.Label();
-            this.cbAutoClean = new System.Windows.Forms.ComboBox();
-            this.lblAutoClean = new System.Windows.Forms.Label();
             this.lblImdbSearchLimit = new System.Windows.Forms.Label();
             this.txtImdbSearchLimit = new System.Windows.Forms.TextBox();
             this.lblItemDisplayCount = new System.Windows.Forms.Label();
             this.txtMaxItemCount = new System.Windows.Forms.TextBox();
             this.lblMaxLogFileSize = new System.Windows.Forms.Label();
             this.txtLogSize = new System.Windows.Forms.TextBox();
-            this.cbPlayMovie = new System.Windows.Forms.ComboBox();
-            this.lblPlayMovieClick = new System.Windows.Forms.Label();
-            this.cbOffline = new System.Windows.Forms.ComboBox();
-            this.lblOfflineMode = new System.Windows.Forms.Label();
-            this.cbAutoUpdate = new System.Windows.Forms.ComboBox();
-            this.lblAutoUpdate = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
             this.dataGridMediaLoc = new System.Windows.Forms.DataGridView();
             this.FolderPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MediaType = new System.Windows.Forms.DataGridViewComboBoxColumn();
@@ -90,7 +77,13 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.cbAutoUpdate = new System.Windows.Forms.CheckBox();
+            this.cbOfflineMode = new System.Windows.Forms.CheckBox();
+            this.cbAutoplay = new System.Windows.Forms.CheckBox();
+            this.cbAutoClean = new System.Windows.Forms.CheckBox();
+            this.cbConfirmSearch = new System.Windows.Forms.CheckBox();
+            this.cbConfirmAction = new System.Windows.Forms.CheckBox();
+            this.cbSkipNonMediaLoc = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -123,27 +116,20 @@
             // 
             this.tabPage1.BackColor = System.Drawing.Color.Black;
             this.tabPage1.Controls.Add(this.cbSkipNonMediaLoc);
-            this.tabPage1.Controls.Add(this.lblSkipNonMediaLoc);
+            this.tabPage1.Controls.Add(this.cbConfirmAction);
+            this.tabPage1.Controls.Add(this.cbConfirmSearch);
+            this.tabPage1.Controls.Add(this.cbAutoClean);
+            this.tabPage1.Controls.Add(this.cbAutoplay);
+            this.tabPage1.Controls.Add(this.cbOfflineMode);
+            this.tabPage1.Controls.Add(this.cbAutoUpdate);
             this.tabPage1.Controls.Add(this.lblTimeout);
             this.tabPage1.Controls.Add(this.txtTimeout);
-            this.tabPage1.Controls.Add(this.cbConfirmAction);
-            this.tabPage1.Controls.Add(this.lblConfirmAction);
-            this.tabPage1.Controls.Add(this.cbConfirmSearch);
-            this.tabPage1.Controls.Add(this.lblConfirmSearch);
-            this.tabPage1.Controls.Add(this.cbAutoClean);
-            this.tabPage1.Controls.Add(this.lblAutoClean);
             this.tabPage1.Controls.Add(this.lblImdbSearchLimit);
             this.tabPage1.Controls.Add(this.txtImdbSearchLimit);
             this.tabPage1.Controls.Add(this.lblItemDisplayCount);
             this.tabPage1.Controls.Add(this.txtMaxItemCount);
             this.tabPage1.Controls.Add(this.lblMaxLogFileSize);
             this.tabPage1.Controls.Add(this.txtLogSize);
-            this.tabPage1.Controls.Add(this.cbPlayMovie);
-            this.tabPage1.Controls.Add(this.lblPlayMovieClick);
-            this.tabPage1.Controls.Add(this.cbOffline);
-            this.tabPage1.Controls.Add(this.lblOfflineMode);
-            this.tabPage1.Controls.Add(this.cbAutoUpdate);
-            this.tabPage1.Controls.Add(this.lblAutoUpdate);
             this.tabPage1.ForeColor = System.Drawing.Color.White;
             this.tabPage1.Location = new System.Drawing.Point(104, 4);
             this.tabPage1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -152,26 +138,6 @@
             this.tabPage1.Size = new System.Drawing.Size(710, 465);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "General";
-            // 
-            // cbSkipNonMediaLoc
-            // 
-            this.cbSkipNonMediaLoc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbSkipNonMediaLoc.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbSkipNonMediaLoc.FormattingEnabled = true;
-            this.cbSkipNonMediaLoc.Location = new System.Drawing.Point(271, 264);
-            this.cbSkipNonMediaLoc.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.cbSkipNonMediaLoc.Name = "cbSkipNonMediaLoc";
-            this.cbSkipNonMediaLoc.Size = new System.Drawing.Size(167, 33);
-            this.cbSkipNonMediaLoc.TabIndex = 27;
-            // 
-            // lblSkipNonMediaLoc
-            // 
-            this.lblSkipNonMediaLoc.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSkipNonMediaLoc.Location = new System.Drawing.Point(5, 266);
-            this.lblSkipNonMediaLoc.Name = "lblSkipNonMediaLoc";
-            this.lblSkipNonMediaLoc.Size = new System.Drawing.Size(249, 30);
-            this.lblSkipNonMediaLoc.TabIndex = 26;
-            this.lblSkipNonMediaLoc.Text = "Skip Non-Media Location:";
             // 
             // lblTimeout
             // 
@@ -190,66 +156,6 @@
             this.txtTimeout.Name = "txtTimeout";
             this.txtTimeout.Size = new System.Drawing.Size(167, 30);
             this.txtTimeout.TabIndex = 24;
-            // 
-            // cbConfirmAction
-            // 
-            this.cbConfirmAction.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbConfirmAction.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbConfirmAction.FormattingEnabled = true;
-            this.cbConfirmAction.Location = new System.Drawing.Point(271, 223);
-            this.cbConfirmAction.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.cbConfirmAction.Name = "cbConfirmAction";
-            this.cbConfirmAction.Size = new System.Drawing.Size(167, 33);
-            this.cbConfirmAction.TabIndex = 23;
-            // 
-            // lblConfirmAction
-            // 
-            this.lblConfirmAction.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblConfirmAction.Location = new System.Drawing.Point(5, 225);
-            this.lblConfirmAction.Name = "lblConfirmAction";
-            this.lblConfirmAction.Size = new System.Drawing.Size(249, 30);
-            this.lblConfirmAction.TabIndex = 22;
-            this.lblConfirmAction.Text = "Confirm Actions:";
-            // 
-            // cbConfirmSearch
-            // 
-            this.cbConfirmSearch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbConfirmSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbConfirmSearch.FormattingEnabled = true;
-            this.cbConfirmSearch.Location = new System.Drawing.Point(271, 181);
-            this.cbConfirmSearch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.cbConfirmSearch.Name = "cbConfirmSearch";
-            this.cbConfirmSearch.Size = new System.Drawing.Size(167, 33);
-            this.cbConfirmSearch.TabIndex = 21;
-            // 
-            // lblConfirmSearch
-            // 
-            this.lblConfirmSearch.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblConfirmSearch.Location = new System.Drawing.Point(5, 183);
-            this.lblConfirmSearch.Name = "lblConfirmSearch";
-            this.lblConfirmSearch.Size = new System.Drawing.Size(249, 30);
-            this.lblConfirmSearch.TabIndex = 20;
-            this.lblConfirmSearch.Text = "Confirm Search or Reload:";
-            // 
-            // cbAutoClean
-            // 
-            this.cbAutoClean.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbAutoClean.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbAutoClean.FormattingEnabled = true;
-            this.cbAutoClean.Location = new System.Drawing.Point(271, 139);
-            this.cbAutoClean.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.cbAutoClean.Name = "cbAutoClean";
-            this.cbAutoClean.Size = new System.Drawing.Size(167, 33);
-            this.cbAutoClean.TabIndex = 19;
-            // 
-            // lblAutoClean
-            // 
-            this.lblAutoClean.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAutoClean.Location = new System.Drawing.Point(5, 142);
-            this.lblAutoClean.Name = "lblAutoClean";
-            this.lblAutoClean.Size = new System.Drawing.Size(249, 30);
-            this.lblAutoClean.TabIndex = 18;
-            this.lblAutoClean.Text = "Clean at Startup :";
             // 
             // lblImdbSearchLimit
             // 
@@ -305,66 +211,6 @@
             this.txtLogSize.Size = new System.Drawing.Size(167, 30);
             this.txtLogSize.TabIndex = 6;
             // 
-            // cbPlayMovie
-            // 
-            this.cbPlayMovie.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbPlayMovie.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbPlayMovie.FormattingEnabled = true;
-            this.cbPlayMovie.Location = new System.Drawing.Point(271, 97);
-            this.cbPlayMovie.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.cbPlayMovie.Name = "cbPlayMovie";
-            this.cbPlayMovie.Size = new System.Drawing.Size(167, 33);
-            this.cbPlayMovie.TabIndex = 5;
-            // 
-            // lblPlayMovieClick
-            // 
-            this.lblPlayMovieClick.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPlayMovieClick.Location = new System.Drawing.Point(5, 101);
-            this.lblPlayMovieClick.Name = "lblPlayMovieClick";
-            this.lblPlayMovieClick.Size = new System.Drawing.Size(249, 23);
-            this.lblPlayMovieClick.TabIndex = 4;
-            this.lblPlayMovieClick.Text = "Play Movie on Click :";
-            // 
-            // cbOffline
-            // 
-            this.cbOffline.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbOffline.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbOffline.FormattingEnabled = true;
-            this.cbOffline.Location = new System.Drawing.Point(271, 56);
-            this.cbOffline.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.cbOffline.Name = "cbOffline";
-            this.cbOffline.Size = new System.Drawing.Size(167, 33);
-            this.cbOffline.TabIndex = 3;
-            // 
-            // lblOfflineMode
-            // 
-            this.lblOfflineMode.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblOfflineMode.Location = new System.Drawing.Point(5, 59);
-            this.lblOfflineMode.Name = "lblOfflineMode";
-            this.lblOfflineMode.Size = new System.Drawing.Size(244, 23);
-            this.lblOfflineMode.TabIndex = 2;
-            this.lblOfflineMode.Text = "Offline Mode :";
-            // 
-            // cbAutoUpdate
-            // 
-            this.cbAutoUpdate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbAutoUpdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbAutoUpdate.FormattingEnabled = true;
-            this.cbAutoUpdate.Location = new System.Drawing.Point(271, 16);
-            this.cbAutoUpdate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.cbAutoUpdate.Name = "cbAutoUpdate";
-            this.cbAutoUpdate.Size = new System.Drawing.Size(167, 33);
-            this.cbAutoUpdate.TabIndex = 1;
-            // 
-            // lblAutoUpdate
-            // 
-            this.lblAutoUpdate.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAutoUpdate.Location = new System.Drawing.Point(5, 18);
-            this.lblAutoUpdate.Name = "lblAutoUpdate";
-            this.lblAutoUpdate.Size = new System.Drawing.Size(244, 23);
-            this.lblAutoUpdate.TabIndex = 0;
-            this.lblAutoUpdate.Text = "Auto Check for Update :";
-            // 
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Black;
@@ -384,6 +230,15 @@
             this.tabPage2.Size = new System.Drawing.Size(710, 465);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "File";
+            // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(6, 36);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(694, 31);
+            this.label1.TabIndex = 21;
+            this.label1.Text = "Separated by comma \',\' automatically trimming whitespaces";
             // 
             // dataGridMediaLoc
             // 
@@ -813,14 +668,82 @@
             this.label9.TabIndex = 16;
             this.label9.Text = "* Changes Apply after Restart";
             // 
-            // label1
+            // cbAutoUpdate
             // 
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(6, 36);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(694, 31);
-            this.label1.TabIndex = 21;
-            this.label1.Text = "Separated by comma \',\' automatically trimming whitespaces";
+            this.cbAutoUpdate.AutoSize = true;
+            this.cbAutoUpdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbAutoUpdate.Location = new System.Drawing.Point(9, 23);
+            this.cbAutoUpdate.Name = "cbAutoUpdate";
+            this.cbAutoUpdate.Size = new System.Drawing.Size(275, 33);
+            this.cbAutoUpdate.TabIndex = 27;
+            this.cbAutoUpdate.Text = "Auto Check for Update";
+            this.cbAutoUpdate.UseVisualStyleBackColor = true;
+            // 
+            // cbOfflineMode
+            // 
+            this.cbOfflineMode.AutoSize = true;
+            this.cbOfflineMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbOfflineMode.Location = new System.Drawing.Point(9, 62);
+            this.cbOfflineMode.Name = "cbOfflineMode";
+            this.cbOfflineMode.Size = new System.Drawing.Size(173, 33);
+            this.cbOfflineMode.TabIndex = 28;
+            this.cbOfflineMode.Text = "Offline Mode";
+            this.cbOfflineMode.UseVisualStyleBackColor = true;
+            // 
+            // cbAutoplay
+            // 
+            this.cbAutoplay.AutoSize = true;
+            this.cbAutoplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbAutoplay.Location = new System.Drawing.Point(9, 101);
+            this.cbAutoplay.Name = "cbAutoplay";
+            this.cbAutoplay.Size = new System.Drawing.Size(244, 33);
+            this.cbAutoplay.TabIndex = 29;
+            this.cbAutoplay.Text = "Play Movie on Click";
+            this.cbAutoplay.UseVisualStyleBackColor = true;
+            // 
+            // cbAutoClean
+            // 
+            this.cbAutoClean.AutoSize = true;
+            this.cbAutoClean.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbAutoClean.Location = new System.Drawing.Point(9, 141);
+            this.cbAutoClean.Name = "cbAutoClean";
+            this.cbAutoClean.Size = new System.Drawing.Size(205, 33);
+            this.cbAutoClean.TabIndex = 30;
+            this.cbAutoClean.Text = "Clean at Startup";
+            this.cbAutoClean.UseVisualStyleBackColor = true;
+            // 
+            // cbConfirmSearch
+            // 
+            this.cbConfirmSearch.AutoSize = true;
+            this.cbConfirmSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbConfirmSearch.Location = new System.Drawing.Point(9, 182);
+            this.cbConfirmSearch.Name = "cbConfirmSearch";
+            this.cbConfirmSearch.Size = new System.Drawing.Size(313, 33);
+            this.cbConfirmSearch.TabIndex = 31;
+            this.cbConfirmSearch.Text = "Confirm Search or Reload";
+            this.cbConfirmSearch.UseVisualStyleBackColor = true;
+            // 
+            // cbConfirmAction
+            // 
+            this.cbConfirmAction.AutoSize = true;
+            this.cbConfirmAction.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbConfirmAction.Location = new System.Drawing.Point(9, 219);
+            this.cbConfirmAction.Name = "cbConfirmAction";
+            this.cbConfirmAction.Size = new System.Drawing.Size(203, 33);
+            this.cbConfirmAction.TabIndex = 32;
+            this.cbConfirmAction.Text = "Confirm Actions";
+            this.cbConfirmAction.UseVisualStyleBackColor = true;
+            // 
+            // cbSkipNonMediaLoc
+            // 
+            this.cbSkipNonMediaLoc.AutoSize = true;
+            this.cbSkipNonMediaLoc.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbSkipNonMediaLoc.Location = new System.Drawing.Point(9, 265);
+            this.cbSkipNonMediaLoc.Name = "cbSkipNonMediaLoc";
+            this.cbSkipNonMediaLoc.Size = new System.Drawing.Size(306, 33);
+            this.cbSkipNonMediaLoc.TabIndex = 33;
+            this.cbSkipNonMediaLoc.Text = "Skip Non-Media Location";
+            this.cbSkipNonMediaLoc.UseVisualStyleBackColor = true;
             // 
             // frmSettings
             // 
@@ -859,12 +782,6 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.Label lblAutoUpdate;
-        private System.Windows.Forms.ComboBox cbOffline;
-        private System.Windows.Forms.Label lblOfflineMode;
-        private System.Windows.Forms.ComboBox cbAutoUpdate;
-        private System.Windows.Forms.ComboBox cbPlayMovie;
-        private System.Windows.Forms.Label lblPlayMovieClick;
         private System.Windows.Forms.Label lblMaxLogFileSize;
         private System.Windows.Forms.TextBox txtLogSize;
         private System.Windows.Forms.Label label5;
@@ -899,10 +816,6 @@
         private System.Windows.Forms.Button btnChangeColorFont;
         private System.Windows.Forms.Button btnColorFont;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox cbAutoClean;
-        private System.Windows.Forms.Label lblAutoClean;
-        private System.Windows.Forms.ComboBox cbConfirmSearch;
-        private System.Windows.Forms.Label lblConfirmSearch;
         private System.Windows.Forms.DataGridView dataGridMediaLoc;
         private System.Windows.Forms.Label lblImgTileWidth;
         private System.Windows.Forms.TextBox txtImgTileWidth;
@@ -911,12 +824,15 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn FolderPath;
         private System.Windows.Forms.DataGridViewComboBoxColumn MediaType;
         private System.Windows.Forms.DataGridViewComboBoxColumn Source;
-        private System.Windows.Forms.ComboBox cbConfirmAction;
-        private System.Windows.Forms.Label lblConfirmAction;
         private System.Windows.Forms.Label lblTimeout;
         private System.Windows.Forms.TextBox txtTimeout;
-        private System.Windows.Forms.ComboBox cbSkipNonMediaLoc;
-        private System.Windows.Forms.Label lblSkipNonMediaLoc;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox cbAutoUpdate;
+        private System.Windows.Forms.CheckBox cbSkipNonMediaLoc;
+        private System.Windows.Forms.CheckBox cbConfirmAction;
+        private System.Windows.Forms.CheckBox cbConfirmSearch;
+        private System.Windows.Forms.CheckBox cbAutoClean;
+        private System.Windows.Forms.CheckBox cbAutoplay;
+        private System.Windows.Forms.CheckBox cbOfflineMode;
     }
 }

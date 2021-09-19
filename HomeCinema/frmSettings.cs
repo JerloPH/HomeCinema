@@ -128,40 +128,31 @@ namespace HomeCinema
             tooltip.ForeColor = Settings.ColorFont;
             tooltip.ShowAlways = true;
 
-            tooltip.SetToolTip(lblAutoUpdate, "Automatically check for App updates.");
-            tooltip.SetToolTip(lblOfflineMode, "Disable Automatic online functionalities. Overrides Auto update.");
-            tooltip.SetToolTip(lblPlayMovieClick, "On double-clicking an item, plays the File, instead of viewing its details.");
+            tooltip.SetToolTip(cbAutoUpdate, "Automatically check for App updates.");
+            tooltip.SetToolTip(cbOfflineMode, "Disable Automatic online functionalities. Overrides Auto update.");
+            tooltip.SetToolTip(cbAutoplay, "On double-clicking an item, plays the File, instead of viewing its details.");
             tooltip.SetToolTip(lblMaxLogFileSize, "Maximum file size of log before deleting it.\n'0' = don't delete logs.");
             tooltip.SetToolTip(lblItemDisplayCount, "Maximum number of Items displayed for Search results.\n'0' displays all.");
             tooltip.SetToolTip(lblImdbSearchLimit, "Limit Search results in searching Imdb entry.");
-            tooltip.SetToolTip(lblAutoClean, "Clean logs and temporary files on startup.");
-            tooltip.SetToolTip(lblConfirmSearch, "Prompt when Searching or Reloading Items.");
-            tooltip.SetToolTip(lblConfirmAction, "Prompt when Confirming certain actions.");
+            tooltip.SetToolTip(cbAutoClean, "Clean logs and temporary files on startup.");
+            tooltip.SetToolTip(cbConfirmSearch, "Prompt when Searching or Reloading Items.");
+            tooltip.SetToolTip(cbConfirmAction, "Prompt when Confirming certain actions.");
             tooltip.SetToolTip(lblTimeout, "Timeout when connecting to internet." +
                 "\nHigher value = Ensures data is retrieved, slower requests." +
                 "\nLower value = Data might not be downloaded, faster requests." +
                 "\nCannot be lower than 5 second ( 5,000 )");
-            tooltip.SetToolTip(lblSkipNonMediaLoc, "Skip entries if its root folder is NOT included\nin 'Media Locations' setting.");
-
-            // setup contents
-            cbAutoUpdate.Items.AddRange(choice);
-            cbOffline.Items.AddRange(choice);
-            cbPlayMovie.Items.AddRange(choice);
-            cbAutoClean.Items.AddRange(choice);
-            cbConfirmSearch.Items.AddRange(choice);
-            cbConfirmAction.Items.AddRange(choice);
-            cbSkipNonMediaLoc.Items.AddRange(choice);
+            tooltip.SetToolTip(cbSkipNonMediaLoc, "Skip entries if its root folder is NOT included\nin 'Media Locations' setting.");
 
             // Setting Values Initialization
             // ##################### - GENERAL
             // Booleans
-            cbAutoUpdate.SelectedIndex = Settings.IsAutoUpdate ? 0 : 1;
-            cbOffline.SelectedIndex = Settings.IsOffline ? 0 : 1;
-            cbPlayMovie.SelectedIndex = Settings.IsAutoplay ? 0 : 1;
-            cbAutoClean.SelectedIndex = Settings.IsAutoClean ? 0 : 1;
-            cbConfirmSearch.SelectedIndex = Settings.IsConfirmSearch ? 0 : 1;
-            cbConfirmAction.SelectedIndex = Settings.IsConfirmMsg ? 0 : 1;
-            cbSkipNonMediaLoc.SelectedIndex = Settings.IsSkipNotMediaLoc ? 0 : 1;
+            cbAutoUpdate.Checked = Settings.IsAutoUpdate;
+            cbOfflineMode.Checked = Settings.IsOffline;
+            cbAutoplay.Checked = Settings.IsAutoplay;
+            cbAutoClean.Checked = Settings.IsAutoClean;
+            cbConfirmSearch.Checked = Settings.IsConfirmSearch;
+            cbConfirmAction.Checked = Settings.IsConfirmMsg;
+            cbSkipNonMediaLoc.Checked = Settings.IsSkipNotMediaLoc;
 
             // TextBox
             try { txtLogSize.Text = (Settings.MaxLogSize / 1000000).ToString(); }
@@ -270,13 +261,13 @@ namespace HomeCinema
         private void btnSave_Click(object sender, EventArgs e)
         {
             string error = "";
-            Settings.IsAutoUpdate = cbAutoUpdate.SelectedIndex == 0;
-            Settings.IsOffline = cbOffline.SelectedIndex == 0;
-            Settings.IsAutoplay = cbPlayMovie.SelectedIndex == 0;
-            Settings.IsAutoClean = cbAutoClean.SelectedIndex == 0;
-            Settings.IsConfirmSearch = cbConfirmSearch.SelectedIndex == 0;
-            Settings.IsConfirmMsg = cbConfirmAction.SelectedIndex == 0;
-            Settings.IsSkipNotMediaLoc = cbSkipNonMediaLoc.SelectedIndex == 0;
+            Settings.IsAutoUpdate = cbAutoUpdate.Checked;
+            Settings.IsOffline = cbOfflineMode.Checked;
+            Settings.IsAutoplay = cbAutoplay.Checked;
+            Settings.IsAutoClean = cbAutoClean.Checked;
+            Settings.IsConfirmSearch = cbConfirmSearch.Checked;
+            Settings.IsConfirmMsg = cbConfirmAction.Checked;
+            Settings.IsSkipNotMediaLoc = cbSkipNonMediaLoc.Checked;
 
             // TextBox changes
             if (int.TryParse(txtLogSize.Text, out int val))
