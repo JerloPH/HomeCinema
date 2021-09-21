@@ -47,7 +47,29 @@ namespace HomeCinema
             // Form properties
             Name = formName;
             Icon = parent.Icon;
-
+            // set theme
+            var list = new List<Control>();
+            foreach (Control item in this.Controls)
+            {
+                list.Add(item);
+            }
+            foreach (TabPage page in tabInfo.TabPages)
+            {
+                list.Add(page);
+                foreach (Control item in page.Controls)
+                {
+                    list.Add(item);
+                }
+            }
+            foreach (Control item in grpInfo.Controls)
+            {
+                list.Add(item);
+            }
+            foreach (Control item in grpControl.Controls)
+            {
+                list.Add(item);
+            }
+            Themes.SetThemeAndBtns(this, list);
             // Set vars
             long movieId = 0;
             if (long.TryParse(ID, out movieId))
@@ -56,37 +78,29 @@ namespace HomeCinema
             }
             PARENT = parent;
             LVITEM = lvitem;
-
             // Set Controls text and properties
             txtID.Text = MOVIE_ID.ToString();
-
             // Set picBox size mode
             picBox.SizeMode = PictureBoxSizeMode.StretchImage;
             picBox.Tag = null;
-
             // Add items to cbCategory
             cbCategory.Items.AddRange(GlobalVars.DB_INFO_CATEGORY);
             cbSource.Items.AddRange(HCSource.sources);
-
             // Add items to cbRootFolder
             foreach (var item in GlobalVars.MEDIA_LOC)
             {
                 cbRootFolder.Items.Add(item.Path);
             }
-
             // LOAD Information from DATABASE and SET to Controls
             if (MOVIE_ID > 0)
             {
                 LoadInformation(ID);
                 RefreshCountryAndGenre();
             }
-
             // Chang default source, depending on loaded info
             cbSource.SelectedIndex = (cbCategory.Text.ToLower().Contains("anime") ? 1 : 0);
-
             // Show the form at center
             StartPosition = FormStartPosition.CenterParent;
-
             // Set main focus at startup
             txtName.Focus();
         }
@@ -149,18 +163,15 @@ namespace HomeCinema
             string errFrom = $"frmMovieInfo-({Name})-LoadInformation";
             // Set Form Properties
             Text = $"[EDIT] Unknown Movie";
-
             // Change cover image, if image exists in ImageList
             MOVIE_COVER = GlobalVars.ImgGetImageFromList(MOVIE_ID.ToString());
             if (MOVIE_COVER != null)
             {
                 picBox.Image = MOVIE_COVER;
             }
-
             // Set textbox values from Database
             // Build query string
             string qry = $"SELECT * FROM {HCTable.info} A LEFT JOIN {HCTable.filepath} B ON A.`{HCInfo.Id}`=B.`{HCInfo.Id}` WHERE A.`{HCInfo.Id}`={ID.TrimStart('0')} LIMIT 1;";
-
             using (DataTable dtFile = SQLHelper.DbQuery(qry, "frmMovie-LoadInformation"))
             {
                 try
@@ -197,14 +208,12 @@ namespace HomeCinema
                     Msg.ShowWarning("Entry not found!", "", this);
                 }
             }
-
             // Disable setting metadata if series
             if (cbCategory.Text.ToLower().Contains("series"))
             {
                 MEDIA_TYPE = "tv";
-                cbSaveMetadata.Enabled = false;
+                cbSaveMetadata.Enabled = cbSaveMetadata.Visible = false;
             }
-
             // Set control focus
             txtName.Focus();
         }
@@ -717,7 +726,7 @@ namespace HomeCinema
             }
 
             // Show form for tmdb searching
-            var form = new frmSearchMedia($"Search for {txtName.Text}", txtName.Text, txtID.Text, source);
+            var form = new frmSearchMedia(txtName.Text, txtName.Text, txtID.Text, source);
             form.ShowDialog(this);
             var getResult = form.getResult;
             var getTmdb = form.getResultTmdb;

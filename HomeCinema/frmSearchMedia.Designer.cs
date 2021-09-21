@@ -53,7 +53,7 @@ namespace HomeCinema
             this.btnSearch.Location = new System.Drawing.Point(592, 34);
             this.btnSearch.Margin = new System.Windows.Forms.Padding(4);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(134, 31);
+            this.btnSearch.Size = new System.Drawing.Size(134, 42);
             this.btnSearch.TabIndex = 1;
             this.btnSearch.Text = "SEARCH";
             this.btnSearch.UseVisualStyleBackColor = true;
@@ -62,10 +62,10 @@ namespace HomeCinema
             // btnOK
             // 
             this.btnOK.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOK.Location = new System.Drawing.Point(484, 314);
+            this.btnOK.Location = new System.Drawing.Point(443, 323);
             this.btnOK.Margin = new System.Windows.Forms.Padding(4);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(100, 34);
+            this.btnOK.Size = new System.Drawing.Size(120, 42);
             this.btnOK.TabIndex = 2;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
@@ -74,10 +74,10 @@ namespace HomeCinema
             // btnCancel
             // 
             this.btnCancel.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(592, 314);
+            this.btnCancel.Location = new System.Drawing.Point(582, 323);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(134, 34);
+            this.btnCancel.Size = new System.Drawing.Size(140, 42);
             this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "CANCEL";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -104,7 +104,7 @@ namespace HomeCinema
             this.lvResult.Location = new System.Drawing.Point(17, 83);
             this.lvResult.MultiSelect = false;
             this.lvResult.Name = "lvResult";
-            this.lvResult.Size = new System.Drawing.Size(706, 224);
+            this.lvResult.Size = new System.Drawing.Size(706, 235);
             this.lvResult.TabIndex = 23;
             this.lvResult.UseCompatibleStateImageBehavior = false;
             this.lvResult.DoubleClick += new System.EventHandler(this.lvResult_DoubleClick);
@@ -113,7 +113,7 @@ namespace HomeCinema
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(735, 357);
+            this.ClientSize = new System.Drawing.Size(735, 368);
             this.Controls.Add(this.lvResult);
             this.Controls.Add(this.lblCaption);
             this.Controls.Add(this.btnCancel);

@@ -59,7 +59,7 @@
     <ApplicationIcon>Resources\HomeCinema.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>HomeCinemaSign.pfx</AssemblyOriginatorKeyFile>
@@ -198,6 +198,7 @@
     <Compile Include="Entity\MediaLocations.cs" />
     <Compile Include="Entity\Medias.cs" />
     <Compile Include="Entity\MediaInfo.cs" />
+    <Compile Include="UI Overrides\Themes.cs" />
     <Compile Include="UI Overrides\ToolStripRender.cs" />
     <EmbeddedResource Include="frmAbout.resx">
       <DependentUpon>frmAbout.cs</DependentUpon>

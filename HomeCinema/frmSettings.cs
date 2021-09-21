@@ -34,9 +34,18 @@ namespace HomeCinema
         {
             InitializeComponent();
             // Form properties
+            List<Control> ctrls = new List<Control>() { tabControl1, btnSave, btnCancel };
             FormClosing += new FormClosingEventHandler(frmSettings_FormClosing);
             Text = $"[Settings] {GlobalVars.HOMECINEMA_NAME} - Media Organizer (v{GlobalVars.HOMECINEMA_VERSION} r{GlobalVars.HOMECINEMA_BUILD.ToString()})";
-
+            // get all controls
+            foreach (TabPage page in tabControl1.TabPages)
+            {
+                foreach (Control item in page.Controls)
+                {
+                    ctrls.Add(item);
+                }
+            }
+            Themes.SetThemeAndBtns(this, ctrls);
             // Controls
             tabControl1.DrawItem += new DrawItemEventHandler(tabControl1_DrawItem);
         }
@@ -45,31 +54,27 @@ namespace HomeCinema
         {
             Graphics g = e.Graphics;
             Brush _textBrush;
-            // Get the item from the collection.
-            TabPage _tabPage = tabControl1.TabPages[e.Index];
-            // Get the real bounds for the tab rectangle.
-            Rectangle _tabBounds = tabControl1.GetTabRect(e.Index);
-            // Use our own font.
-            Font _tabFont = new Font("Calibri", 18.0f, FontStyle.Bold, GraphicsUnit.Pixel);
-
+            TabPage _tabPage = tabControl1.TabPages[e.Index]; // Get the item from the collection.
+            Rectangle _tabBounds = tabControl1.GetTabRect(e.Index); // Get the real bounds for the tab rectangle.
+            Font _tabFont = new Font("Calibri", 18.0f, FontStyle.Bold, GraphicsUnit.Pixel); // Use our own font.
             if (e.State == DrawItemState.Selected)
             {
                 // Draw a different background color, and don't paint a focus rectangle.
                 _textBrush = new SolidBrush(Color.Yellow);
-                g.FillRectangle(Brushes.Black, e.Bounds);
+                g.FillRectangle(new SolidBrush(Settings.ColorBg), e.Bounds);
             }
             else
             {
                 _textBrush = new SolidBrush(e.ForeColor);
                 e.DrawBackground();
             }
-
             // Draw string. Center the text.
-            StringFormat _stringFlags = new StringFormat();
-            _stringFlags.Alignment = StringAlignment.Center;
-            _stringFlags.LineAlignment = StringAlignment.Center;
-            g.DrawString(_tabPage.Text, _tabFont, _textBrush, _tabBounds, new StringFormat(_stringFlags));
-            _stringFlags.Dispose();
+            using (StringFormat _stringFlags = new StringFormat())
+            {
+                _stringFlags.Alignment = StringAlignment.Center;
+                _stringFlags.LineAlignment = StringAlignment.Center;
+                g.DrawString(_tabPage.Text, _tabFont, _textBrush, _tabBounds, new StringFormat(_stringFlags));
+            }
         }
         // ############################################################################################### FUNCTIONS
         #region Functions
@@ -122,12 +127,10 @@ namespace HomeCinema
             string errFrom = "frmSettings-frmSettings_Load";
             string[] choice = { "Yes", "No" };
             string text = "";
-
             // Add ToolTips
             tooltip.BackColor = Settings.ColorBg;
             tooltip.ForeColor = Settings.ColorFont;
             tooltip.ShowAlways = true;
-
             tooltip.SetToolTip(cbAutoUpdate, "Automatically check for App updates.");
             tooltip.SetToolTip(cbOfflineMode, "Disable Automatic online functionalities. Overrides Auto update.");
             tooltip.SetToolTip(cbAutoplay, "On double-clicking an item, plays the File, instead of viewing its details.");
@@ -231,13 +234,9 @@ namespace HomeCinema
                 }
             }
             dataGridMediaLoc.Refresh();
-
             // Theme-related
             btnColorBG.BackColor = BackgroundColor;
             btnColorFont.BackColor = FontColor;
-            btnSave.BackColor = Color.DarkGray;
-            btnCancel.BackColor = Color.DarkGray;
-
             CenterToParent();
         }
         private void dataGridMediaLoc_DataError(object sender, DataGridViewDataErrorEventArgs e)

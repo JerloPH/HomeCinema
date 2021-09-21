@@ -66,10 +66,9 @@ namespace HomeCinema
         public frmLoading(string message, string caption, bool useProgress = false)
         {
             InitializeComponent();
-            BackColor = Settings.ColorBg;
-            ForeColor = Settings.ColorFont;
             Message = message;
             Caption = caption;
+            Themes.SetTheme(this);
             CenterToParent();
             pictureBox1.BackColor = Color.Transparent;
             pictureBox1.BringToFront();

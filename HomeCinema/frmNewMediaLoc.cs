@@ -19,21 +19,12 @@ namespace HomeCinema
             InitializeComponent();
             Text = $"[Add New Location] {GlobalVars.HOMECINEMA_NAME} - Media Organizer (v{GlobalVars.HOMECINEMA_VERSION} r{GlobalVars.HOMECINEMA_BUILD})";
             FormClosing += new FormClosingEventHandler(frmNewMediaLoc_FormClosing);
-
             // Theme-related
-            BackColor = Settings.ColorBg;
-            ForeColor = Settings.ColorFont;
-            btnBrowse.ForeColor = Color.Black;
-            btnOK.ForeColor = Color.Black;
-            btnBrowse.BackColor = Color.DarkGray;
-            btnOK.BackColor = Color.DarkGray;
-
+            Themes.SetThemeAndBtns(this, new List<Control>() { cbSource, cbType, btnOK, btnBrowse });
             CenterToParent();
-
             // Vars
             Caption = caption;
             PathList = existingList;
-
             // Set Properties of Controls
             cbSource.Items.AddRange(HCSource.sources);
             cbType.Items.AddRange(new string[] { "Movie", "Series" });

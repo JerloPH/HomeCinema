@@ -17,17 +17,13 @@ namespace HomeCinema
             this.Text = GlobalVars.HOMECINEMA_NAME;
             this.AcceptButton = btnOk;
             this.CancelButton = btnCancel;
-            this.ForeColor = Settings.ColorFont;
-            this.BackColor = Settings.ColorBg;
             this.Font = GlobalVars.TILE_FONT;
+            Themes.SetTheme(this); // Themes
 
             cbContents.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             cbContents.AutoCompleteSource = AutoCompleteSource.ListItems;
             cbContents.DropDownStyle = ComboBoxStyle.DropDown;
-            btnOk.ForeColor = Color.Black;
-            btnCancel.ForeColor = Color.Black;
-            btnOk.BackColor = Color.DarkGray;
-            btnCancel.BackColor = Color.DarkGray;
+            Themes.SetButtons(new List<Button>() { btnOk, btnCancel });
 
             // Initialize values
             lblMessage.Text = message;

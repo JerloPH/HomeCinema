@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.grpInfo = new System.Windows.Forms.GroupBox();
             this.cbCategory = new System.Windows.Forms.ComboBox();
             this.btnChangeCover = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.grpControl = new System.Windows.Forms.GroupBox();
             this.cbSaveMetadata = new System.Windows.Forms.CheckBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
@@ -92,6 +92,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.btnGotoFile = new System.Windows.Forms.Button();
             this.label21 = new System.Windows.Forms.Label();
             this.cbRootFolder = new System.Windows.Forms.ComboBox();
             this.label18 = new System.Windows.Forms.Label();
@@ -105,9 +106,8 @@
             this.btnFetchData = new System.Windows.Forms.Button();
             this.cbSource = new System.Windows.Forms.ComboBox();
             this.label20 = new System.Windows.Forms.Label();
-            this.btnGotoFile = new System.Windows.Forms.Button();
-            this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
+            this.grpInfo.SuspendLayout();
+            this.grpControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
             this.tabInfo.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -117,20 +117,20 @@
             this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
-            // groupBox2
+            // grpInfo
             // 
-            this.groupBox2.Controls.Add(this.cbCategory);
-            this.groupBox2.Controls.Add(this.btnChangeCover);
-            this.groupBox2.Controls.Add(this.groupBox3);
-            this.groupBox2.Controls.Add(this.picBox);
-            this.groupBox2.Location = new System.Drawing.Point(12, 12);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox2.Size = new System.Drawing.Size(192, 523);
-            this.groupBox2.TabIndex = 0;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Information";
+            this.grpInfo.Controls.Add(this.cbCategory);
+            this.grpInfo.Controls.Add(this.btnChangeCover);
+            this.grpInfo.Controls.Add(this.grpControl);
+            this.grpInfo.Controls.Add(this.picBox);
+            this.grpInfo.Location = new System.Drawing.Point(12, 12);
+            this.grpInfo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.grpInfo.Name = "grpInfo";
+            this.grpInfo.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.grpInfo.Size = new System.Drawing.Size(192, 523);
+            this.grpInfo.TabIndex = 0;
+            this.grpInfo.TabStop = false;
+            this.grpInfo.Text = "Information";
             // 
             // cbCategory
             // 
@@ -158,27 +158,28 @@
             this.btnChangeCover.UseVisualStyleBackColor = true;
             this.btnChangeCover.Click += new System.EventHandler(this.btnChangeCover_Click);
             // 
-            // groupBox3
+            // grpControl
             // 
-            this.groupBox3.Controls.Add(this.cbSaveMetadata);
-            this.groupBox3.Controls.Add(this.btnCancel);
-            this.groupBox3.Controls.Add(this.btnSave);
-            this.groupBox3.Location = new System.Drawing.Point(5, 377);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox3.Size = new System.Drawing.Size(177, 135);
-            this.groupBox3.TabIndex = 0;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Controls";
+            this.grpControl.Controls.Add(this.cbSaveMetadata);
+            this.grpControl.Controls.Add(this.btnCancel);
+            this.grpControl.Controls.Add(this.btnSave);
+            this.grpControl.Location = new System.Drawing.Point(5, 377);
+            this.grpControl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.grpControl.Name = "grpControl";
+            this.grpControl.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.grpControl.Size = new System.Drawing.Size(177, 135);
+            this.grpControl.TabIndex = 0;
+            this.grpControl.TabStop = false;
+            this.grpControl.Text = "Controls";
             // 
             // cbSaveMetadata
             // 
             this.cbSaveMetadata.AutoSize = true;
-            this.cbSaveMetadata.Location = new System.Drawing.Point(0, 65);
+            this.cbSaveMetadata.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbSaveMetadata.Location = new System.Drawing.Point(2, 21);
             this.cbSaveMetadata.Margin = new System.Windows.Forms.Padding(4);
             this.cbSaveMetadata.Name = "cbSaveMetadata";
-            this.cbSaveMetadata.Size = new System.Drawing.Size(127, 21);
+            this.cbSaveMetadata.Size = new System.Drawing.Size(157, 28);
             this.cbSaveMetadata.TabIndex = 3;
             this.cbSaveMetadata.Text = "Save MetaData";
             this.cbSaveMetadata.UseVisualStyleBackColor = true;
@@ -198,7 +199,7 @@
             // btnSave
             // 
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(0, 21);
+            this.btnSave.Location = new System.Drawing.Point(0, 49);
             this.btnSave.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(177, 38);
@@ -889,6 +890,19 @@
             this.tabPage3.Text = "File Paths";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // btnGotoFile
+            // 
+            this.btnGotoFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGotoFile.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.btnGotoFile.Location = new System.Drawing.Point(585, 66);
+            this.btnGotoFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnGotoFile.Name = "btnGotoFile";
+            this.btnGotoFile.Size = new System.Drawing.Size(164, 37);
+            this.btnGotoFile.TabIndex = 39;
+            this.btnGotoFile.Text = "VIEW FILE";
+            this.btnGotoFile.UseVisualStyleBackColor = true;
+            this.btnGotoFile.Click += new System.EventHandler(this.btnGotoFile_Click);
+            // 
             // label21
             // 
             this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1022,19 +1036,6 @@
             this.label20.TabIndex = 39;
             this.label20.Text = "Source:";
             // 
-            // btnGotoFile
-            // 
-            this.btnGotoFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGotoFile.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.btnGotoFile.Location = new System.Drawing.Point(585, 66);
-            this.btnGotoFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnGotoFile.Name = "btnGotoFile";
-            this.btnGotoFile.Size = new System.Drawing.Size(164, 37);
-            this.btnGotoFile.TabIndex = 39;
-            this.btnGotoFile.Text = "VIEW FILE";
-            this.btnGotoFile.UseVisualStyleBackColor = true;
-            this.btnGotoFile.Click += new System.EventHandler(this.btnGotoFile_Click);
-            // 
             // frmMovieInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1045,7 +1046,7 @@
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.btnFetchData);
             this.Controls.Add(this.tabInfo);
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.grpInfo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
@@ -1053,9 +1054,9 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmMovieInfo";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMovieInfo_FormClosing);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
+            this.grpInfo.ResumeLayout(false);
+            this.grpControl.ResumeLayout(false);
+            this.grpControl.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).EndInit();
             this.tabInfo.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -1074,8 +1075,8 @@
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox grpInfo;
+        private System.Windows.Forms.GroupBox grpControl;
         private System.Windows.Forms.PictureBox picBox;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnChangeCover;

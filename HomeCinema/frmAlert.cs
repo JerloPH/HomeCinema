@@ -16,9 +16,7 @@ namespace HomeCinema
             InitializeComponent();
             var centerForm = Width / 2; // center point of form
             int adjlbl = 0; // Adjust when there's an icon
-
-            BackColor = Settings.ColorBg;
-            ForeColor = Settings.ColorFont;
+            Themes.SetTheme(this); // Themes
             Text = String.IsNullOrWhiteSpace(caption) ? GlobalVars.CAPTION_DIALOG : caption;
             TopMost = true;
             //TopLevel = false;

@@ -49,6 +49,7 @@ namespace HomeCinema
         {
             // Start app
             InitializeComponent();
+            Themes.SetTheme(this, new List<Control>() { lvSearchResult }); // Themes
             // Change Caption and Title
             Text = $"{GlobalVars.HOMECINEMA_NAME} - Media Organizer (v{GlobalVars.HOMECINEMA_VERSION} r{GlobalVars.HOMECINEMA_BUILD.ToString()})";
             // Adjust controls
@@ -99,7 +100,6 @@ namespace HomeCinema
             PopulateCountryCB(); // Populate combobox cbCountry, from file
             PopulateGenreCB(); // Populate comboBox cbGenre from File
 
-            lvSearchResult.BackColor = Settings.ColorBg; // Set background color of ListView, from settings 'background color'
             // Others
             expSearch.Left = 1;
             expSearch.Top = tlstripMenu.Bottom + 2;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Threading;
@@ -32,6 +33,7 @@ namespace HomeCinema
         public frmSearchMedia(string caption, string query, string id, string source = "")
         {
             InitializeComponent();
+            Themes.SetThemeAndBtns(this, this.Controls);
             // Set variables
             movieId = id;
             result = "";
@@ -39,7 +41,7 @@ namespace HomeCinema
             // Set textbox and labels
             txtInput.Text = query;
             Text = GlobalVars.HOMECINEMA_NAME;
-            lblCaption.Text = caption;
+            lblCaption.Text = $"Search for: {caption}";
             // Set control properties
             FormClosed += frmSearchMedia_FormClosed;
             //btnOK.DialogResult = DialogResult.OK;
@@ -291,10 +293,21 @@ namespace HomeCinema
                 Msg.ShowWarning("Invalid search query!");
                 return;
             }
+            lblCaption.Text = $"Search for: {txtInput.Text}";
             ClearImageList();
-            Image defImg = Image.FromFile(DataFile.FILE_DEFIMG);
-            imageList.Images.Add("0", defImg);
-            defImg.Dispose();
+            Image defImg = null;
+            try
+            {
+                defImg = Image.FromFile(DataFile.FILE_DEFIMG);
+                imageList.Images.Add("0", defImg);
+                defImg.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Logs.LogErr("frmSearchMedia-btnSearch_Click", ex);
+                Msg.ShowWarning("Default image is missing!");
+                return;
+            }
             lvResult.View = View.LargeIcon;
             lvResult.Items.Clear();
             lvResult.BeginUpdate(); // Pause drawing events on ListView
