@@ -13,7 +13,7 @@ namespace HomeCinema
         public frmAbout()
         {
             InitializeComponent();
-            Themes.SetTheme(this, new List<Control>() { txtTitle, txtLicense });
+            Themes.SetThemeParent(this, new List<Control>() { txtTitle, txtLicense });
             // events
             webHC.Navigating += new WebBrowserNavigatingEventHandler(webHC_Navigating);
             // Focus

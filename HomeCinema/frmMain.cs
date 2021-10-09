@@ -49,7 +49,7 @@ namespace HomeCinema
         {
             // Start app
             InitializeComponent();
-            Themes.SetTheme(this, new List<Control>() { lvSearchResult }); // Themes
+            Themes.SetThemeParent(this, new List<Control>() { lvSearchResult }); // Themes
             // Change Caption and Title
             Text = $"{GlobalVars.HOMECINEMA_NAME} - Media Organizer (v{GlobalVars.HOMECINEMA_VERSION} r{GlobalVars.HOMECINEMA_BUILD.ToString()})";
             // Adjust controls

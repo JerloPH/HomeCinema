@@ -20,7 +20,7 @@ namespace HomeCinema
             Text = $"[Add New Location] {GlobalVars.HOMECINEMA_NAME} - Media Organizer (v{GlobalVars.HOMECINEMA_VERSION} r{GlobalVars.HOMECINEMA_BUILD})";
             FormClosing += new FormClosingEventHandler(frmNewMediaLoc_FormClosing);
             // Theme-related
-            Themes.SetThemeAndBtns(this, new List<Control>() { cbSource, cbType, btnOK, btnBrowse });
+            Themes.SetThemeAndBtns(this, this.Controls);
             CenterToParent();
             // Vars
             Caption = caption;

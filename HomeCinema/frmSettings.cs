@@ -34,18 +34,9 @@ namespace HomeCinema
         {
             InitializeComponent();
             // Form properties
-            List<Control> ctrls = new List<Control>() { tabControl1, btnSave, btnCancel };
             FormClosing += new FormClosingEventHandler(frmSettings_FormClosing);
             Text = $"[Settings] {GlobalVars.HOMECINEMA_NAME} - Media Organizer (v{GlobalVars.HOMECINEMA_VERSION} r{GlobalVars.HOMECINEMA_BUILD.ToString()})";
-            // get all controls
-            foreach (TabPage page in tabControl1.TabPages)
-            {
-                foreach (Control item in page.Controls)
-                {
-                    ctrls.Add(item);
-                }
-            }
-            Themes.SetThemeAndBtns(this, ctrls);
+            Themes.SetThemeAndBtns(this, this.Controls);
             // Controls
             tabControl1.DrawItem += new DrawItemEventHandler(tabControl1_DrawItem);
         }

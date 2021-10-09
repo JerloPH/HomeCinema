@@ -10,7 +10,19 @@ namespace HomeCinema
 {
     public static class Themes
     {
-        public static void SetTheme(Form parent, List<Control> ctrls)
+        public static void SetTheme(Control item)
+        {
+            item.BackColor = Settings.ColorBg;
+            item.ForeColor = Settings.ColorFont;
+            if (item.HasChildren)
+            {
+                foreach (Control child in item.Controls)
+                {
+                    SetTheme(child);
+                }
+            }
+        }
+        public static void SetThemeParent(Form parent, List<Control> ctrls)
         {
             // Form properties
             parent.BackColor = Settings.ColorBg;
@@ -18,13 +30,12 @@ namespace HomeCinema
             // Controls
             foreach (Control item in ctrls)
             {
-                item.BackColor = Settings.ColorBg;
-                item.ForeColor = Settings.ColorFont;
+                SetTheme(item);
             }
         }
         public static void SetTheme(Form parent)
         {
-            SetTheme(parent, new List<Control>() { });
+            SetThemeParent(parent, new List<Control>() { });
         }
         public static void SetThemeAndBtns(Form parent, List<Control> ctrls)
         {
@@ -39,12 +50,14 @@ namespace HomeCinema
                 {
                     listBtn.Add((Button)item);
                 }
-                else if (!(item is TextBox))
+                else if (item is TextBox || item is ComboBox)
                 {
-                    item.BackColor = Settings.ColorBg;
-                    item.ForeColor = Settings.ColorFont;
+                    // TODO: Different theme for TextBox and ComboBox
+                    item.BackColor = Color.FromArgb(31,27,36);
+                    item.ForeColor = Color.White;
                 }
-                else { }
+                else
+                    SetTheme(item);
             }
             SetButtons(listBtn);
         }

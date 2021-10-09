@@ -48,28 +48,28 @@ namespace HomeCinema
             Name = formName;
             Icon = parent.Icon;
             // set theme
-            var list = new List<Control>();
-            foreach (Control item in this.Controls)
-            {
-                list.Add(item);
-            }
-            foreach (TabPage page in tabInfo.TabPages)
-            {
-                list.Add(page);
-                foreach (Control item in page.Controls)
-                {
-                    list.Add(item);
-                }
-            }
-            foreach (Control item in grpInfo.Controls)
-            {
-                list.Add(item);
-            }
-            foreach (Control item in grpControl.Controls)
-            {
-                list.Add(item);
-            }
-            Themes.SetThemeAndBtns(this, list);
+            //var list = new List<Control>();
+            //foreach (Control item in this.Controls)
+            //{
+            //    list.Add(item);
+            //}
+            //foreach (TabPage page in tabInfo.TabPages)
+            //{
+            //    list.Add(page);
+            //    foreach (Control item in page.Controls)
+            //    {
+            //        list.Add(item);
+            //    }
+            //}
+            //foreach (Control item in grpInfo.Controls)
+            //{
+            //    list.Add(item);
+            //}
+            //foreach (Control item in grpControl.Controls)
+            //{
+            //    list.Add(item);
+            //}
+            Themes.SetThemeAndBtns(this, Controls);
             // Set vars
             long movieId = 0;
             if (long.TryParse(ID, out movieId))
