@@ -1,9 +1,9 @@
 # HomeCinema - Media Organizer
 
-<img src="/data/v0.8.2.jpg"></img>
+<img src="/data/main.jpg"></img>
 
-**version:**	0.8.3.0 <br>
-**release:**	43
+**version:**	0.8.4.0 <br>
+**release:**	44
 
 | <a href="docs/REPORT_ISSUE.md">Report Issue/Bug/Error/Feature request</a> | <a href="docs/CONTRIBUTING.md">Submit Pull Request</a>  | <a href="VERSION_HISTORY.md">See 'App Version History'</a> |
 | -- | -- | -- |
@@ -88,14 +88,13 @@ D:\TV Series\Title of Series\Episode 1.mp4
 
 ### NuGet Packages Used
 [**Newtonsoft.Json**](https://www.newtonsoft.com/json) - JSON Parser.<br>
-[**SQLite**](https://www.nuget.org/packages/System.Data.SQLite.Core/) - Local Database setup.<br>
+[**SQLite**](https://www.nuget.org/packages/System.Data.SQLite.Core/) - Local Database.<br>
 [**SQLite Stub**](https://packages.nuget.org/packages/Stub.System.Data.SQLite.Core.NetFramework/) - Used to connect to a Local Database. <br>
 [**Microsoft Windows API CodePack Core**](https://www.nuget.org/packages/Microsoft-WindowsAPICodePack-Core/) - For various functions. <br>
 [**Microsoft Windows API CodePack Shell**](https://www.nuget.org/packages/Microsoft-WindowsAPICodePack-Shell/) - For various functions. <br>
-[**Microsoft Universal Windows Platform**](https://www.nuget.org/packages/Microsoft.NETCore.UniversalWindowsPlatform/) - For various functions. <br>
 [**RestSharp**](https://github.com/restsharp/RestSharp) - Wrapper for easy RESTful queries on APIs. <br>
 [**MakarovDev.ExpandCollapsePanel**](https://github.com/alexander-makarov/ExpandCollapsePanel) - Expandable and Collapsible Panel. <br>
-[**Markdig**](https://github.com/xoofx/markdig) - Markdown support. <br>
+[**Markdig.Signed**](https://github.com/xoofx/markdig) - Markdown support. <br>
 ****
 
 ## License

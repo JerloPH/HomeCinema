@@ -1,5 +1,23 @@
 # HomeCinema - Project History
 
+## HomeCinema v0.8.4
+### *release 44 - build 09 October 2021 PHT*
+### New and Changes
+- NEW: Apply UI settings to other form dialogs.
+- NEW: Refreshing entries are now done on background.
+- NEW: Search results count.
+- Download **VERSION_HISTORY** file if missing.
+- Refocus App when form dialog closes.
+- UI: Changed settings dropdowns to checkbox.
+
+### Other Changes
+- Target x64 for Release. (Applied on earlier build).
+- Removed unused namespaces.
+- NUGET: Removed **UWP**.
+- NUGET: Changed **Narkdig** to **Markdig Signed**.
+- NUGET: Updated **System.Runtime.CompielrServices.Unsafe**.
+****
+
 ## HomeCinema v0.8.3
 ### *release 43 - build 11 September 2021 PHT*
 ### What's New?
